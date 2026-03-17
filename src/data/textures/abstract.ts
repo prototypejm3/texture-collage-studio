@@ -77,4 +77,22 @@ export const abstractTextures: TextureSwatch[] = [
     category: 'Abstract',
     cssBackground: `url(/textures/ripple-lattice.png)`,
   },
+  {
+    id: 'abstract-tiedye-rainbow',
+    name: 'Tye Daze Rainbow',
+    category: 'Abstract',
+    cssBackground: `url(/textures/tiedye-rainbow.png)`,
+  },
+  {
+    id: 'abstract-tiedye-neutral',
+    name: 'Tye Daze Neutral',
+    category: 'Abstract',
+    cssBackground: `url(/textures/tiedye-neutral.png)`,
+  },
+  {
+    id: 'abstract-tiedye-blush',
+    name: 'Tye Daze Blush',
+    category: 'Abstract',
+    cssBackground: `url(/textures/tiedye-blush.png)`,
+  },
 ];
