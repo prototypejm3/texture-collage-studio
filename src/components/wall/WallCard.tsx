@@ -130,7 +130,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
       );
     case 'shadow-box':
       return (
-        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]" style={texOverlay}>
+        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]">
           <div className="border-2 border-[hsl(0,0%,30%)]">
             <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">
               {children}
