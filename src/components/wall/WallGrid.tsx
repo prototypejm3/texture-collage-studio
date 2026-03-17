@@ -79,7 +79,27 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     return <CuratedLayout designs={designs} cardProps={cardProps} />;
   }
 
-  // Default grid — gallery feel: 2-3 columns, generous gaps
+  // Default grid — respects per-design displaySize
+  const hasMixedSizes = designs.some(d => (d.displaySize || 'medium') !== 'medium');
+
+  if (hasMixedSizes) {
+    return (
+      <div className="grid grid-cols-6 gap-8 items-start">
+        <AnimatePresence>
+          {designs.map(d => {
+            const sz = d.displaySize || 'medium';
+            const spanClass = sz === 'large' ? 'col-span-4' : sz === 'small' ? 'col-span-2' : 'col-span-3';
+            return (
+              <div key={d.id} className={spanClass}>
+                <WallCard {...cardProps(d, sz === 'large' ? 'large' : 'normal')} />
+              </div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
       <AnimatePresence>
