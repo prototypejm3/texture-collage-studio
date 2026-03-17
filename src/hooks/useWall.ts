@@ -121,6 +121,7 @@ export function useWall() {
     duplicateDesign,
     reorderDesigns,
     togglePin,
+    toggleHide,
     updateSettings,
   };
 }
