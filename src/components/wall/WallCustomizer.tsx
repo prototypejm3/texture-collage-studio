@@ -18,12 +18,12 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
 ];
 
 const backgrounds: { value: WallBackground; label: string; color: string }[] = [
-  { value: 'warm-white', label: 'Warm White', color: 'hsl(40, 20%, 97%)' },
-  { value: 'cream', label: 'Cream', color: 'hsl(38, 30%, 92%)' },
-  { value: 'soft-gray', label: 'Soft Gray', color: 'hsl(220, 10%, 92%)' },
-  { value: 'charcoal', label: 'Charcoal', color: 'hsl(220, 15%, 22%)' },
-  { value: 'paper', label: 'Paper', color: 'hsl(38, 20%, 88%)' },
-  { value: 'linen', label: 'Linen', color: 'hsl(35, 15%, 85%)' },
+  { value: 'brick', label: 'Brick', color: 'hsl(10, 45%, 45%)' },
+  { value: 'concrete', label: 'Concrete', color: 'hsl(210, 5%, 70%)' },
+  { value: 'limewash', label: 'Limewash', color: 'hsl(38, 20%, 88%)' },
+  { value: 'black-brick', label: 'Black Brick', color: 'hsl(0, 0%, 18%)' },
+  { value: 'black-concrete', label: 'Black Concrete', color: 'hsl(210, 5%, 22%)' },
+  { value: 'white-brick', label: 'White Brick', color: 'hsl(40, 15%, 93%)' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
