@@ -1,6 +1,6 @@
 export type TextureCategory = 
   | 'Boucle' | 'Linen' | 'Velvet' | 'Leather' | 'Suede' 
-  | 'Marble' | 'Wood' | 'Terrazzo' | 'Abstract';
+  | 'Marble' | 'Wood' | 'Terrazzo' | 'Abstract' | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn';

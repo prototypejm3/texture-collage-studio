@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { CanvasElement as CanvasElementType, MaterialEffects } from '@/types/studio';
+import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
 /**
@@ -62,9 +62,10 @@ interface Props {
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
+  customTextures?: TextureSwatch[];
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
@@ -93,7 +94,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     };
   }, [isDragging, onUpdate]);
 
-  const texture = textures.find(t => t.id === element.textureId);
+  const allTex = [...textures, ...customTextures];
+  const texture = allTex.find(t => t.id === element.textureId);
   if (!texture) return null;
 
   const effectStyles = getEffectStyles(element.effects);

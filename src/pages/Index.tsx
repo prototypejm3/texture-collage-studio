@@ -1,6 +1,8 @@
 import { useRef, useCallback, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { useStudio } from '@/hooks/useStudio';
+import { useCustomTextures } from '@/hooks/useCustomTextures';
+import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
@@ -11,6 +13,8 @@ import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
   const studio = useStudio();
+  const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
+  const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [vibesOpen, setVibesOpen] = useState(false);
 
@@ -40,13 +44,21 @@ const Index = () => {
     }
   }, []);
 
-  // When a section is selected AND user clicks a texture in the library,
-  // fill that section. We pass this via onTextureClick to TextureLibrary.
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.activeVibe && studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
   }, [studio]);
+
+  const handleUploadTexture = useCallback(async (file: File) => {
+    await addCustomTexture(file);
+    toast({ title: 'Texture added!', description: `"${file.name}" is now available in your library.` });
+  }, [addCustomTexture]);
+
+  const handleUploadTemplate = useCallback(async (file: File) => {
+    await uploadTemplate(file);
+    toast({ title: 'Reference set!', description: 'Image is shown as a canvas background guide.' });
+  }, [uploadTemplate]);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -61,6 +73,11 @@ const Index = () => {
         onSave={handleSave}
         onToggleVibes={() => setVibesOpen(v => !v)}
         vibesActive={vibesOpen}
+        customTemplate={customTemplate}
+        templateOpacity={templateOpacity}
+        onUploadTemplate={handleUploadTemplate}
+        onClearTemplate={clearTemplate}
+        onTemplateOpacityChange={setTemplateOpacity}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
@@ -68,6 +85,9 @@ const Index = () => {
             onDragStart={handleDragStartLib}
             onTextureClick={handleTextureClick}
             activeSectionId={studio.activeVibe ? studio.selectedSectionId : null}
+            customTextures={customTextures}
+            onUploadTexture={handleUploadTexture}
+            onRemoveCustomTexture={removeCustomTexture}
           />
         </div>
         <Canvas
@@ -78,6 +98,9 @@ const Index = () => {
           activeVibe={studio.activeVibe}
           vibeFills={studio.vibeFills}
           selectedSectionId={studio.selectedSectionId}
+          customTemplate={customTemplate}
+          templateOpacity={templateOpacity}
+          customTextures={customTextures}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}

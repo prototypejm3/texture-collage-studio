@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Vibe, VibeFills } from '@/types/studio';
+import { Vibe, VibeFills, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
 interface Props {
@@ -10,12 +10,14 @@ interface Props {
   canvasHeight: number;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  customTextures?: TextureSwatch[];
 }
 
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
   onSelectSection, onDropInSection,
+  customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -35,7 +37,8 @@ export function VibeOutline({
       <defs>
         {/* Create pattern fills for each filled section */}
         {Object.entries(fills).map(([sectionId, textureId]) => {
-          const tex = textures.find(t => t.id === textureId);
+          const allTex = [...textures, ...customTextures];
+          const tex = allTex.find(t => t.id === textureId);
           if (!tex) return null;
           return (
             <pattern

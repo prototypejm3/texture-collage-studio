@@ -1,6 +1,9 @@
+import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette } from 'lucide-react';
+import { CustomTemplate } from '@/hooks/useCustomTemplate';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
 
 interface Props {
   frameSize: FrameSize;
@@ -13,6 +16,12 @@ interface Props {
   onSave: () => void;
   onToggleVibes: () => void;
   vibesActive: boolean;
+  // Template
+  customTemplate: CustomTemplate | null;
+  templateOpacity: number;
+  onUploadTemplate: (file: File) => void;
+  onClearTemplate: () => void;
+  onTemplateOpacityChange: (val: number) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -30,7 +39,17 @@ export function TopToolbar({
   onFrameSizeChange, onFrameColorChange,
   onGenerate, onShuffle, onClear, onSave,
   onToggleVibes, vibesActive,
+  customTemplate, templateOpacity,
+  onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
 }: Props) {
+  const templateInputRef = useRef<HTMLInputElement>(null);
+
+  const handleTemplateFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+    e.target.value = '';
+  };
+
   return (
     <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border">
       {/* Left: Logo */}
@@ -77,6 +96,54 @@ export function TopToolbar({
               style={{ backgroundColor: c.color }}
             />
           ))}
+        </div>
+
+        <div className="w-px h-5 bg-border" />
+
+        {/* Template reference image */}
+        <div className="flex items-center gap-1.5">
+          {!customTemplate ? (
+            <>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => templateInputRef.current?.click()}
+                className="gap-1.5 text-xs"
+                title="Upload a reference image as canvas background"
+              >
+                <ImagePlus className="w-3.5 h-3.5" /> Reference
+              </Button>
+              <input
+                ref={templateInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleTemplateFile}
+              />
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-muted-foreground truncate max-w-[80px]" title={customTemplate.name}>
+                📷 {customTemplate.name}
+              </span>
+              <div className="w-16">
+                <Slider
+                  value={[templateOpacity * 100]}
+                  min={5}
+                  max={80}
+                  step={5}
+                  onValueChange={([v]) => onTemplateOpacityChange(v / 100)}
+                />
+              </div>
+              <button
+                onClick={onClearTemplate}
+                className="p-0.5 rounded hover:bg-secondary transition-colors"
+                title="Remove reference image"
+              >
+                <X className="w-3 h-3 text-muted-foreground" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
