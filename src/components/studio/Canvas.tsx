@@ -45,6 +45,7 @@ export function Canvas({
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, canvasRef,
+  customTextures = [],
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { w, h } = frameSizeMap[frameSize];
