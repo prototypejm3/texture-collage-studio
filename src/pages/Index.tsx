@@ -19,6 +19,7 @@ import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const studio = useStudio();
   const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
@@ -28,6 +29,19 @@ const Index = () => {
   const [vibesOpen, setVibesOpen] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
+  const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
+
+  // Load design state when editing from wall
+  useEffect(() => {
+    const editId = searchParams.get('edit');
+    if (editId) {
+      const design = wall.designs.find(d => d.id === editId);
+      if (design?.studioState) {
+        studio.loadState(design.studioState);
+        setEditingDesignId(editId);
+      }
+    }
+  }, []); // Run once on mount
 
   const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
