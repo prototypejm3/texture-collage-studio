@@ -31,8 +31,7 @@ export function VibeOutline({
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
 
-  // Compute scale from vibe viewBox to actual canvas size
-  const [, , vbW, vbH] = vibe.viewBox.split(' ').map(Number);
+  const patternIdFor = (sectionId: string, textureId: string) => `fill-${sectionId}-${textureId}`;
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
     e.preventDefault();
