@@ -98,11 +98,12 @@ export function VibeOutline({
             <path
               d={section.path}
               fill="none"
-              stroke={isSelected ? 'hsl(24, 80%, 50%)' : isHovered ? 'hsl(24, 60%, 60%)' : 'hsl(220, 15%, 30%)'}
-              strokeWidth={isSelected ? 3 : 2}
+              stroke={isSelected ? 'hsl(24, 80%, 50%)' : isHovered ? 'hsl(24, 60%, 60%)' : 'hsl(220, 15%, 25%)'}
+              strokeWidth={isSelected ? 4.5 : 3.5}
               strokeLinejoin="round"
+              strokeLinecap="round"
               className="pointer-events-none transition-colors"
-              style={{ opacity: isFilled ? 0.4 : 0.8 }}
+              style={{ opacity: isFilled ? 0.5 : 0.9 }}
             />
 
             {/* Empty state label */}
