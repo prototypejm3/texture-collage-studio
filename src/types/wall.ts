@@ -19,7 +19,7 @@ export interface SavedDesign {
   pinned: boolean;
   hidden: boolean;
   frameStyle: FrameStyle;
-  frameTexture: FrameTexture;
+  
   displaySize: DesignSize;
   /** Position on wall in freeform mode (percentage-based) */
   wallX?: number;

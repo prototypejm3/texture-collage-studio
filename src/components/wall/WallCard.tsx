@@ -119,7 +119,6 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
     return <MetallicFrame metal={style}>{children}</MetallicFrame>;
   }
 
-  const texOverlay = getTextureOverlay(texture);
 
   switch (style) {
     case 'minimal':
