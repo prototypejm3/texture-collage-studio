@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Vibe, VibeFills } from '@/types/studio';
+import { Vibe, VibeFills, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   canvasHeight: number;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  customTextures?: TextureSwatch[];
 }
 
 export function VibeOutline({
