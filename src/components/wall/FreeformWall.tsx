@@ -4,9 +4,9 @@ import { WallCard } from './WallCard';
 import { AnimatePresence } from 'framer-motion';
 
 const sizeWidths: Record<DesignSize, number> = {
-  small: 160,
-  medium: 240,
-  large: 340,
+  small: 140,
+  medium: 210,
+  large: 280,
 };
 
 interface FreeformWallProps {
