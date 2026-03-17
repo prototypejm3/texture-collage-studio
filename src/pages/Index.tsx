@@ -6,6 +6,7 @@ import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
+import { BottomBar } from '@/components/studio/BottomBar';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { VibeSelector } from '@/components/studio/VibeSelector';
 import { Vibe } from '@/types/studio';
@@ -18,9 +19,7 @@ const Index = () => {
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [vibesOpen, setVibesOpen] = useState(false);
 
-  const handleDragStartLib = useCallback((textureId: string) => {
-    // TextureLibrary handles dataTransfer.setData('textureId', ...)
-  }, []);
+  const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
   const handleDrop = useCallback((textureId: string, x: number, y: number) => {
     studio.addElement(textureId, x, y);
@@ -108,6 +107,8 @@ const Index = () => {
           onDropInSection={studio.fillSection}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
+
+        {/* Floating toolbar — now at TOP of canvas */}
         {studio.selectedElement && !studio.activeVibe && (
           <FloatingToolbar
             element={studio.selectedElement}
@@ -127,6 +128,12 @@ const Index = () => {
           onShuffle={studio.shuffleVibeFills}
         />
       </div>
+
+      {/* Frame size at bottom */}
+      <BottomBar
+        frameSize={studio.frameSize}
+        onFrameSizeChange={studio.setFrameSize}
+      />
 
       {/* SVG Filters for wrinkle effects */}
       <svg className="svg-filters" xmlns="http://www.w3.org/2000/svg">
