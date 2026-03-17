@@ -181,7 +181,8 @@ const cat: Vibe = {
 };
 
 // ── DOG ──
-// Simple dog silhouette: head, ear, body, tail
+// Grounded, slightly angular dog — stable stance, thick base
+// More segmented than cat, still bold & scissor-cuttable
 const dog: Vibe = {
   id: 'rugged-warm',
   name: 'Dog',
@@ -193,29 +194,29 @@ const dog: Vibe = {
       id: 'dog-head',
       label: 'Head',
       tone: 'medium',
-      // Square-ish dog head with snout
-      path: 'M150,160 Q150,120 190,110 L290,110 Q330,120 330,160 L330,220 L340,250 Q340,270 320,270 L160,270 Q140,270 140,250 L150,220 Z',
+      // Chunky block head with rounded snout — no eyes/nose
+      path: 'M140,155 Q140,115 175,100 L295,100 Q330,115 330,155 L332,215 Q335,245 320,260 L160,260 Q145,245 148,215 Z',
     },
     {
       id: 'dog-ear',
       label: 'Ear',
       tone: 'dark',
-      // Floppy ear on right side
-      path: 'M310,110 Q340,90 360,100 Q380,110 375,150 Q370,190 340,210 L330,200 L330,160 Q330,130 310,110 Z',
+      // Large floppy ear — thick rounded drop shape
+      path: 'M305,100 Q345,80 370,90 Q400,105 395,150 Q390,200 360,225 Q340,240 330,230 L330,155 Q330,125 305,100 Z',
     },
     {
       id: 'dog-body',
       label: 'Body',
       tone: 'medium',
-      // Stocky body
-      path: 'M130,270 L350,270 Q390,290 400,340 Q410,400 380,430 L100,430 Q70,400 80,340 Q90,290 130,270 Z',
+      // Wide, grounded body — thick base, stable stance
+      path: 'M120,260 L360,260 Q405,285 415,345 Q425,410 390,445 L90,445 Q55,410 65,345 Q75,285 120,260 Z',
     },
     {
       id: 'dog-tail',
       label: 'Tail',
       tone: 'accent',
-      // Short upward tail
-      path: 'M380,330 Q400,300 420,280 Q435,270 440,280 Q445,295 430,320 Q415,340 400,360 Q390,370 380,360 Z',
+      // Thick upward-curving tail — chunky and bold
+      path: 'M390,330 Q415,295 435,270 Q450,255 460,265 Q470,280 455,310 Q438,345 415,375 Q400,395 390,380 Z',
     },
   ],
   lightTextures: ['linen-natural', 'linen-white', 'wood-ash', 'boucle-cream'],
