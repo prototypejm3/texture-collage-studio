@@ -108,16 +108,22 @@ const Index = () => {
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
 
-        {/* Floating toolbar — works in both free and vibe mode */}
-        {studio.selectedElement && (
-          <FloatingToolbar
-            element={studio.selectedElement}
-            onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-            onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-            onDelete={() => studio.deleteElement(studio.selectedId!)}
-          />
-        )}
+        {/* Docked toolbar on right side */}
+        <div className="w-[240px] flex-shrink-0 border-l border-border bg-popover overflow-y-auto">
+          {studio.selectedElement ? (
+            <FloatingToolbar
+              element={studio.selectedElement}
+              onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+              onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+              onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+              onDelete={() => studio.deleteElement(studio.selectedId!)}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full p-4">
+              <p className="text-xs text-muted-foreground text-center">Click an element to edit its shape, size, and effects</p>
+            </div>
+          )}
+        </div>
 
         {/* Vibe selector overlay */}
         <VibeSelector
