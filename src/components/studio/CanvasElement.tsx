@@ -62,9 +62,10 @@ interface Props {
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
+  customTextures?: TextureSwatch[];
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
