@@ -28,4 +28,16 @@ export const speckleTextures: TextureSwatch[] = [
       radial-gradient(circle 0.5px, hsla(130, 18%, 40%, 0.25) 0%, transparent 100%) 2px 6px / 12px 12px,
       linear-gradient(180deg, hsl(128, 15%, 72%) 0%, hsl(126, 12%, 68%) 100%)`,
   },
+  {
+    id: 'speckle-ink',
+    name: 'Ink Speckle',
+    category: 'Speckle',
+    cssBackground: `url(/textures/speckle-ink.png)`,
+  },
+  {
+    id: 'speckle-blue',
+    name: 'Blue Speckle',
+    category: 'Speckle',
+    cssBackground: `url(/textures/speckle-blue.png)`,
+  },
 ];
