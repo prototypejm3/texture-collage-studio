@@ -115,7 +115,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

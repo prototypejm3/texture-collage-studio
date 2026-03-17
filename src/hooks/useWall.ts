@@ -113,6 +113,10 @@ export function useWall() {
     setSettings(prev => ({ ...prev, ...updates }));
   }, []);
 
+  const applyFrameToAll = useCallback((style: FrameStyle) => {
+    setDesigns(prev => prev.map(d => ({ ...d, frameStyle: style })));
+  }, []);
+
   return {
     designs,
     settings,
@@ -125,5 +129,6 @@ export function useWall() {
     togglePin,
     toggleHide,
     updateSettings,
+    applyFrameToAll,
   };
 }
