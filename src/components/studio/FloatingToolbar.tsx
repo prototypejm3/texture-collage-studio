@@ -86,7 +86,7 @@ const shadowOptions: { value: ShadowDepth; label: string }[] = [
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(false);
-  const [showStencils, setShowStencils] = useState(true);
+  const [showShapes, setShowShapes] = useState(true);
 
   return (
     <div className="p-3 space-y-2">
