@@ -94,7 +94,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     };
   }, [isDragging, onUpdate]);
 
-  const texture = textures.find(t => t.id === element.textureId);
+  const allTex = [...textures, ...customTextures];
+  const texture = allTex.find(t => t.id === element.textureId);
   if (!texture) return null;
 
   const effectStyles = getEffectStyles(element.effects);
