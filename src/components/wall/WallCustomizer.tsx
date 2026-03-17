@@ -85,10 +85,10 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                 onClick={() => !locked && onUpdate({ layout: l.value })}
                 className={`p-1.5 rounded-md transition-colors ${
                   settings.layout === l.value
-                    ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-primary shadow-sm'
+                    ? isDark ? 'bg-background/20 text-background' : 'bg-background text-primary shadow-sm'
                     : locked
                       ? 'text-muted-foreground/30 cursor-not-allowed'
-                      : isCharcoal ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
+                      : isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
                 }`}
                 title={locked ? 'Premium only' : l.label}
               >
