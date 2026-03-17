@@ -86,8 +86,8 @@ export function VibeOutline({
             if (!tex) return null;
             return (
               <pattern
-                key={sectionId}
-                id={`fill-${sectionId}`}
+                key={`${sectionId}-${textureId}`}
+                id={patternIdFor(sectionId, textureId)}
                 patternUnits="userSpaceOnUse"
                 width="40"
                 height="40"
