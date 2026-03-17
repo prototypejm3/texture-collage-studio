@@ -1,7 +1,8 @@
 import { Vibe } from '@/types/studio';
 
 // ── SUNSET ──
-// Curved horizontal bands: sky → mid glow → horizon → warm ground → dark earth
+// Soft wavy horizontal bands — uneven spacing, organic curves
+// Feels: calm, gradient, emotional
 const sunset: Vibe = {
   id: 'sunset',
   name: 'Sunset',
@@ -13,31 +14,32 @@ const sunset: Vibe = {
       id: 'sun-sky',
       label: 'Sky',
       tone: 'light',
-      path: 'M0,0 L480,0 L480,100 Q400,120 240,110 Q80,100 0,120 Z',
+      // Wide top band with gentle undulation
+      path: 'M0,0 L480,0 L480,85 Q400,105 320,95 Q240,85 160,100 Q80,115 0,95 Z',
+    },
+    {
+      id: 'sun-upperglow',
+      label: 'Upper Glow',
+      tone: 'light',
+      path: 'M0,95 Q80,115 160,100 Q240,85 320,95 Q400,105 480,85 L480,190 Q390,215 300,200 Q210,185 120,205 Q60,218 0,200 Z',
     },
     {
       id: 'sun-midglow',
       label: 'Mid Glow',
-      tone: 'light',
-      path: 'M0,120 Q80,100 240,110 Q400,120 480,100 L480,210 Q380,230 240,220 Q100,210 0,235 Z',
+      tone: 'medium',
+      path: 'M0,200 Q60,218 120,205 Q210,185 300,200 Q390,215 480,190 L480,300 Q410,330 330,315 Q250,298 170,318 Q90,338 0,310 Z',
     },
     {
       id: 'sun-horizon',
       label: 'Horizon',
-      tone: 'medium',
-      path: 'M0,235 Q100,210 240,220 Q380,230 480,210 L480,320 Q400,340 240,330 Q80,320 0,345 Z',
+      tone: 'dark',
+      path: 'M0,310 Q90,338 170,318 Q250,298 330,315 Q410,330 480,300 L480,400 Q400,420 310,410 Q220,400 130,415 Q60,425 0,408 Z',
     },
     {
       id: 'sun-ground',
       label: 'Ground',
       tone: 'dark',
-      path: 'M0,345 Q80,320 240,330 Q400,340 480,320 L480,410 Q380,425 240,418 Q100,410 0,430 Z',
-    },
-    {
-      id: 'sun-earth',
-      label: 'Earth',
-      tone: 'dark',
-      path: 'M0,430 Q100,410 240,418 Q380,425 480,410 L480,480 L0,480 Z',
+      path: 'M0,408 Q60,425 130,415 Q220,400 310,410 Q400,420 480,400 L480,480 L0,480 Z',
     },
   ],
   lightTextures: ['linen-white', 'linen-natural', 'boucle-cream', 'boucle-ivory'],
