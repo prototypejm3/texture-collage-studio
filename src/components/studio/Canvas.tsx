@@ -133,6 +133,7 @@ export function Canvas({
               canvasHeight={h}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
+              customTextures={customTextures}
             />
           )}
         </div>
