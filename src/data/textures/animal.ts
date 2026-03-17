@@ -5,12 +5,7 @@ export const animalTextures: TextureSwatch[] = [
     id: 'animal-cow',
     name: 'Cow Print',
     category: 'Animal',
-    cssBackground: `radial-gradient(ellipse 18px 14px at 25% 30%, hsl(0, 0%, 10%) 0%, hsl(0, 0%, 10%) 80%, transparent 81%) no-repeat,
-      radial-gradient(ellipse 22px 16px at 70% 20%, hsl(0, 0%, 8%) 0%, hsl(0, 0%, 8%) 80%, transparent 81%) no-repeat,
-      radial-gradient(ellipse 15px 20px at 50% 65%, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 12%) 80%, transparent 81%) no-repeat,
-      radial-gradient(ellipse 20px 12px at 15% 75%, hsl(0, 0%, 10%) 0%, hsl(0, 0%, 10%) 80%, transparent 81%) no-repeat,
-      radial-gradient(ellipse 16px 18px at 80% 70%, hsl(0, 0%, 8%) 0%, hsl(0, 0%, 8%) 80%, transparent 81%) no-repeat,
-      linear-gradient(180deg, hsl(40, 15%, 95%) 0%, hsl(38, 12%, 92%) 100%)`,
+    cssBackground: `url(/textures/cow-print.png)`,
   },
   {
     id: 'animal-zebra',

@@ -156,7 +156,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
         background: texture.cssBackground,
-        backgroundSize: '40px 40px',
+        backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
         clipPath,
         ...effectStyles,
       }}

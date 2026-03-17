@@ -136,7 +136,10 @@ export function TextureLibrary({
               >
                 <div
                   className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
-                  style={{ background: tex.cssBackground, backgroundSize: isCustom ? 'cover' : '40px 40px' }}
+                  style={{
+                    background: tex.cssBackground,
+                    backgroundSize: (isCustom || tex.cssBackground.startsWith('url(')) ? 'cover' : '40px 40px',
+                  }}
                 />
                 <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
                   {tex.name}
