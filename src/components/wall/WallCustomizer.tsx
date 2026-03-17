@@ -17,13 +17,15 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'curated', label: 'Curated', icon: <Sparkles className="w-3.5 h-3.5" /> },
 ];
 
-const backgrounds: { value: WallBackground; label: string; color: string }[] = [
-  { value: 'brick', label: 'Brick', color: 'hsl(10, 45%, 45%)' },
-  { value: 'concrete', label: 'Concrete', color: 'hsl(210, 5%, 70%)' },
-  { value: 'limewash', label: 'Limewash', color: 'hsl(38, 20%, 88%)' },
-  { value: 'black-brick', label: 'Black Brick', color: 'hsl(0, 0%, 18%)' },
-  { value: 'black-concrete', label: 'Black Concrete', color: 'hsl(210, 5%, 22%)' },
-  { value: 'white-brick', label: 'White Brick', color: 'hsl(40, 15%, 93%)' },
+const backgrounds: { value: WallBackground; label: string; preview: string }[] = [
+  { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
+  { value: 'brick', label: 'Brick', preview: '/walls/brick.png' },
+  { value: 'concrete', label: 'Concrete', preview: '/walls/concrete.png' },
+  { value: 'limewash', label: 'Limewash', preview: '/walls/limewash.png' },
+  { value: 'cream', label: 'Cream', preview: '/walls/cream.png' },
+  { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
+  { value: 'black-concrete', label: 'Black Concrete', preview: '/walls/black-concrete.png' },
+  { value: 'red-velvet', label: 'Red Velvet', preview: '/walls/red-velvet.png' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
