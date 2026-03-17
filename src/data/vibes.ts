@@ -363,4 +363,132 @@ const beehive: Vibe = {
   accentTextures: ['linen-mustard', 'suede-terracotta', 'boucle-blush', 'leather-caramel'],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive];
+// ── CACTUS ──
+// Chunky saguaro — main body + 2 arms + base
+const cactus: Vibe = {
+  id: 'cactus',
+  name: 'Cactus',
+  emoji: '🌵',
+  description: 'Desert silhouette — bold & playful',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'cactus-body',
+      label: 'Body',
+      tone: 'medium',
+      // Thick rounded main trunk
+      path: 'M200,120 Q195,90 215,75 Q235,65 255,68 Q275,72 282,90 L285,340 Q288,370 270,380 L210,380 Q192,370 195,340 Z',
+    },
+    {
+      id: 'cactus-arm-left',
+      label: 'Left Arm',
+      tone: 'accent',
+      // Chunky left arm curving up
+      path: 'M200,220 Q170,225 148,215 Q125,200 120,175 Q118,150 130,138 Q145,128 158,135 Q170,145 172,168 Q175,190 178,200 L200,195 Z',
+    },
+    {
+      id: 'cactus-arm-right',
+      label: 'Right Arm',
+      tone: 'accent',
+      // Chunky right arm curving up
+      path: 'M282,180 Q310,175 330,165 Q352,150 358,128 Q362,108 350,98 Q335,90 322,100 Q312,112 310,135 Q308,158 305,170 L282,168 Z',
+    },
+    {
+      id: 'cactus-base',
+      label: 'Base',
+      tone: 'dark',
+      // Ground base
+      path: 'M130,380 L350,380 Q370,392 375,412 Q372,435 348,442 L132,442 Q108,435 105,412 Q110,392 130,380 Z',
+    },
+  ],
+  lightTextures: ['linen-white', 'linen-natural', 'boucle-cream'],
+  mediumTextures: ['linen-sage', 'suede-sage', 'velvet-emerald', 'velvet-forest'],
+  darkTextures: ['suede-charcoal', 'wood-walnut', 'leather-cognac'],
+  accentTextures: ['linen-sage', 'suede-sage', 'linen-mustard', 'suede-camel'],
+};
+
+// ── NEW YORK BUILDINGS ──
+// 3 rectangular building blocks + base — bold skyline
+const nyBuildings: Vibe = {
+  id: 'ny-buildings',
+  name: 'New York',
+  emoji: '🏙️',
+  description: 'Bold skyline blocks — urban & graphic',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'ny-tall',
+      label: 'Tall Tower',
+      tone: 'dark',
+      // Tallest building left-center
+      path: 'M120,80 Q118,72 130,68 L195,68 Q207,72 205,80 L205,380 L120,380 Z',
+    },
+    {
+      id: 'ny-mid',
+      label: 'Mid Building',
+      tone: 'medium',
+      // Medium building center
+      path: 'M215,155 Q213,148 225,145 L305,145 Q317,148 315,155 L315,380 L215,380 Z',
+    },
+    {
+      id: 'ny-short',
+      label: 'Short Building',
+      tone: 'accent',
+      // Shorter wide building right
+      path: 'M325,220 Q323,212 335,208 L395,208 Q407,212 405,220 L405,380 L325,380 Z',
+    },
+    {
+      id: 'ny-base',
+      label: 'Ground',
+      tone: 'dark',
+      // Wide ground strip
+      path: 'M60,380 L420,380 Q438,392 440,415 Q438,438 420,445 L60,445 Q42,438 40,415 Q42,392 60,380 Z',
+    },
+  ],
+  lightTextures: ['marble-carrara', 'linen-white', 'marble-calacatta'],
+  mediumTextures: ['suede-slate', 'linen-slate', 'marble-verde', 'suede-charcoal'],
+  darkTextures: ['leather-black', 'velvet-navy', 'marble-nero', 'wood-ebony'],
+  accentTextures: ['suede-camel', 'leather-cognac', 'wood-teak', 'marble-rose'],
+};
+
+// ── RAINBOW ──
+// 4 stacked arch layers — bold, thick, evenly spaced
+const rainbow: Vibe = {
+  id: 'rainbow',
+  name: 'Rainbow',
+  emoji: '🌈',
+  description: 'Stacked color arches — joyful & bold',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'bow-outer',
+      label: 'Outer Arch',
+      tone: 'accent',
+      path: 'M50,400 Q45,250 95,170 Q155,85 240,70 Q325,85 385,170 Q435,250 430,400 L385,400 Q388,265 350,195 Q310,125 240,112 Q170,125 130,195 Q92,265 95,400 Z',
+    },
+    {
+      id: 'bow-mid-outer',
+      label: 'Mid Outer',
+      tone: 'medium',
+      path: 'M95,400 Q92,265 130,195 Q170,125 240,112 Q310,125 350,195 Q388,265 385,400 L345,400 Q348,280 318,218 Q288,162 240,150 Q192,162 162,218 Q132,280 135,400 Z',
+    },
+    {
+      id: 'bow-mid-inner',
+      label: 'Mid Inner',
+      tone: 'light',
+      path: 'M135,400 Q132,280 162,218 Q192,162 240,150 Q288,162 318,218 Q348,280 345,400 L305,400 Q308,295 285,245 Q265,200 240,192 Q215,200 195,245 Q172,295 175,400 Z',
+    },
+    {
+      id: 'bow-inner',
+      label: 'Inner Arch',
+      tone: 'accent',
+      path: 'M175,400 Q172,295 195,245 Q215,200 240,192 Q265,200 285,245 Q308,295 305,400 Z',
+    },
+  ],
+  lightTextures: ['linen-white', 'linen-natural', 'boucle-cream', 'boucle-ivory'],
+  mediumTextures: ['linen-mustard', 'suede-camel', 'boucle-oat', 'linen-sage'],
+  darkTextures: ['velvet-rust', 'suede-terracotta', 'leather-cognac'],
+  accentTextures: ['boucle-blush', 'suede-lavender', 'linen-dusty-rose', 'velvet-sapphire'],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, cactus, nyBuildings, rainbow];
