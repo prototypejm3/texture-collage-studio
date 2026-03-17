@@ -217,6 +217,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
+      style={{ rotate: `${design.rotation || 0}deg` }}
     >
       <div
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
