@@ -20,6 +20,7 @@ interface Props {
   onDrop: (textureId: string, x: number, y: number) => void;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
 }
 
