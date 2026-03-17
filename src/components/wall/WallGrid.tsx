@@ -90,7 +90,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
             const spanClass = sz === 'large' ? 'col-span-4' : sz === 'small' ? 'col-span-2' : 'col-span-3';
             return (
               <div key={d.id} className={spanClass}>
-                <WallCard {...cardProps(d, sz === 'large' ? 'large' : 'normal')} />
+                <WallCard {...cardProps(d, sz)} />
               </div>
             );
           })}
