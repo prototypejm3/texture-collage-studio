@@ -271,3 +271,4 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
           )}
     </div>
   );
+}
