@@ -22,18 +22,11 @@ const bgStyles: Record<WallBackground, string> = {
   'black-brick': 'wall-bg-black-brick',
   'black-concrete': 'wall-bg-black-concrete',
   'white-brick': 'wall-bg-white-brick',
-  'cream': 'wall-bg-cream',
-  'red-velvet': 'wall-bg-red-velvet',
   'clean-white': 'wall-bg-clean-white',
   'dark-brick': 'wall-bg-dark-brick',
   'gray-brick': 'wall-bg-gray-brick',
   'black-stone': 'wall-bg-black-stone',
-  'emerald-velvet': 'wall-bg-emerald-velvet',
-  'navy-fabric': 'wall-bg-navy-fabric',
-  'mauve-velvet': 'wall-bg-mauve-velvet',
-  'sand-suede': 'wall-bg-sand-suede',
   'speckled-white': 'wall-bg-speckled-white',
-  'soft-white': 'wall-bg-soft-white',
 };
 
 const MyWall = () => {
@@ -51,7 +44,7 @@ const MyWall = () => {
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
-  const isDark = ['black-brick', 'black-concrete', 'red-velvet', 'dark-brick', 'black-stone', 'navy-fabric'].includes(wall.settings.background);
+  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate('/');
