@@ -1,6 +1,6 @@
 import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { motion } from 'framer-motion';
-import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil } from 'lucide-react';
+import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface WallCardProps {
@@ -217,6 +217,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
+      style={{ rotate: `${design.rotation || 0}deg` }}
     >
       <div
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
@@ -336,6 +337,33 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
+                    <div className="border-t border-border my-1" />
+                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
+                    <div className="flex items-center gap-1 px-3 py-1.5">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }}
+                        className="p-1 rounded hover:bg-secondary text-foreground"
+                        title="Rotate left"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                      </button>
+                      <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }}
+                        className="p-1 rounded hover:bg-secondary text-foreground"
+                        title="Rotate right"
+                      >
+                        <RotateCw className="w-3 h-3" />
+                      </button>
+                      {(design.rotation || 0) !== 0 && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }}
+                          className="ml-1 text-[10px] text-muted-foreground hover:text-foreground"
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
                   </>
                 )}
               </div>
