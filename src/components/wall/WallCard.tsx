@@ -223,6 +223,18 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                 {isPremium && (
                   <>
                     <div className="border-t border-border my-1" />
+                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
+                    {([['small', 'Small', Minimize2], ['medium', 'Medium', Square], ['large', 'Large', Maximize2]] as const).map(([val, label, Icon]) => (
+                      <button
+                        key={val}
+                        onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, val); setMenuOpen(false); }}
+                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${(design.displaySize || 'medium') === val ? 'text-primary font-medium' : 'text-foreground'}`}
+                      >
+                        <Icon className="w-3 h-3" />
+                        {label}
+                      </button>
+                    ))}
+                    <div className="border-t border-border my-1" />
                     <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
                     {frameStyles.map(fs => (
                       <button
