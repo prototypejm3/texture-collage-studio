@@ -12,28 +12,18 @@ import { toast } from '@/hooks/use-toast';
 const Index = () => {
   const studio = useStudio();
   const canvasRef = useRef<HTMLDivElement>(null!);
-  const dragTextureRef = useRef<string | null>(null);
   const [vibesOpen, setVibesOpen] = useState(false);
 
-  const handleDragStart = useCallback((textureId: string) => {
-    dragTextureRef.current = textureId;
+  const handleDragStartLib = useCallback((textureId: string) => {
+    // TextureLibrary handles dataTransfer.setData('textureId', ...)
   }, []);
 
   const handleDrop = useCallback((textureId: string, x: number, y: number) => {
     studio.addElement(textureId, x, y);
   }, [studio]);
 
-  const handleDropInSection = useCallback((sectionId: string, textureId: string) => {
-    if (!studio.activeVibe) return;
-    const section = studio.activeVibe.template.sections.find(s => s.id === sectionId);
-    if (!section || !canvasRef.current) return;
-    const rect = canvasRef.current;
-    studio.addElementToSection(sectionId, textureId, section, rect.offsetWidth, rect.offsetHeight);
-  }, [studio]);
-
   const handleSelectVibe = useCallback((vibe: Vibe) => {
-    if (!canvasRef.current) return;
-    studio.applyVibe(vibe, canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
+    studio.selectVibe(vibe);
   }, [studio]);
 
   const handleSave = useCallback(async () => {
@@ -49,6 +39,14 @@ const Index = () => {
       toast({ title: 'Error', description: 'Failed to export image.', variant: 'destructive' });
     }
   }, []);
+
+  // When a section is selected AND user clicks a texture in the library,
+  // fill that section. We pass this via onTextureClick to TextureLibrary.
+  const handleTextureClick = useCallback((textureId: string) => {
+    if (studio.activeVibe && studio.selectedSectionId) {
+      studio.fillSection(studio.selectedSectionId, textureId);
+    }
+  }, [studio]);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -66,21 +64,28 @@ const Index = () => {
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
-          <TextureLibrary onDragStart={handleDragStart} />
+          <TextureLibrary
+            onDragStart={handleDragStartLib}
+            onTextureClick={handleTextureClick}
+            activeSectionId={studio.activeVibe ? studio.selectedSectionId : null}
+          />
         </div>
         <Canvas
           elements={studio.elements}
           selectedId={studio.selectedId}
           frameSize={studio.frameSize}
           frameColor={studio.frameColor}
-          templateSections={studio.activeVibe?.template.sections ?? null}
+          activeVibe={studio.activeVibe}
+          vibeFills={studio.vibeFills}
+          selectedSectionId={studio.selectedSectionId}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
-          onDropInSection={handleDropInSection}
+          onSelectSection={studio.selectSection}
+          onDropInSection={studio.fillSection}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
-        {studio.selectedElement && (
+        {studio.selectedElement && !studio.activeVibe && (
           <FloatingToolbar
             element={studio.selectedElement}
             onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
@@ -96,7 +101,7 @@ const Index = () => {
           activeVibeId={studio.activeVibe?.id ?? null}
           onClose={() => setVibesOpen(false)}
           onSelectVibe={handleSelectVibe}
-          onShuffle={studio.shuffleVibe}
+          onShuffle={studio.shuffleVibeFills}
         />
       </div>
 

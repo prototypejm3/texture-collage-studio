@@ -10,9 +10,11 @@ const categories: TextureCategory[] = [
 
 interface TextureLibraryProps {
   onDragStart: (textureId: string) => void;
+  onTextureClick?: (textureId: string) => void;
+  activeSectionId?: string | null;
 }
 
-export function TextureLibrary({ onDragStart }: TextureLibraryProps) {
+export function TextureLibrary({ onDragStart, onTextureClick, activeSectionId }: TextureLibraryProps) {
   const [activeCategory, setActiveCategory] = useState<TextureCategory | 'All'>('All');
 
   const filtered = activeCategory === 'All'
@@ -25,6 +27,16 @@ export function TextureLibrary({ onDragStart }: TextureLibraryProps) {
         <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground mb-3">
           Textures
         </h2>
+
+        {/* Section fill hint */}
+        {activeSectionId && (
+          <div className="mb-3 px-2 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
+            <p className="text-[10px] text-primary font-medium">
+              👆 Click a texture to fill the selected section
+            </p>
+          </div>
+        )}
+
         <div className="flex flex-wrap gap-1.5">
           <button
             onClick={() => setActiveCategory('All')}
@@ -56,14 +68,17 @@ export function TextureLibrary({ onDragStart }: TextureLibraryProps) {
           {filtered.map(tex => (
             <motion.div
               key={tex.id}
-            draggable
+              draggable
               onDragStart={(e) => {
                 (e as any).dataTransfer?.setData('textureId', tex.id);
                 onDragStart(tex.id);
               }}
+              onClick={() => onTextureClick?.(tex.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
-              className="cursor-grab active:cursor-grabbing group"
+              className={`cursor-grab active:cursor-grabbing group ${
+                activeSectionId ? 'cursor-pointer' : ''
+              }`}
             >
               <div
                 className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
