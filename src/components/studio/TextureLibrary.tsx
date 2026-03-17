@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { Upload, X } from 'lucide-react';
 
 const categories: TextureCategory[] = [
-  'Boucle', 'Linen', 'Velvet', 'Leather', 'Suede',
-  'Marble', 'Wood', 'Terrazzo', 'Abstract',
+  'Boucle', 'Linen', 'Velvet', 'Leather', 'Suede', 'Silk',
+  'Denim', 'Corduroy', 'Tweed', 'Felt', 'Yarn',
+  'Marble', 'Wood', 'Terrazzo', 'Concrete', 'Sand', 'Stone', 'Cork',
+  'Abstract', 'Stripe', 'Plaid', 'Grid', 'Speckle', 'Herringbone',
 ];
 
 interface TextureLibraryProps {
@@ -113,7 +115,7 @@ export function TextureLibrary({
         </div>
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-3">
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-3 gap-2">
           {filtered.map(tex => {
             const isCustom = tex.id.startsWith('custom-');
             return (

@@ -67,7 +67,7 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
           {/* Header */}
           <div className="flex items-center justify-between mb-2.5">
             <h3 className="text-xs font-semibold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              Choose a Vibe
+              Choose a Stencil
             </h3>
             <div className="flex items-center gap-1.5">
               {activeVibeId && (

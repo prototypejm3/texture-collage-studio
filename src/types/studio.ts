@@ -6,7 +6,7 @@ export type TextureCategory =
   | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
-export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn';
+export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scallop' | 'zigzag' | 'wave';
 export type WrinkleLevel = 'none' | 'light' | 'medium' | 'heavy';
 export type ShadowDepth = 'flat' | 'lifted' | 'floating';
 export type FrameSize = '8x8' | '12x12' | '16x16' | 'gallery';

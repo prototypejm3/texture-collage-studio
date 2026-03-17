@@ -52,7 +52,7 @@ function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }
   }
 }
 
-const stencilShapes: { value: ElementShape; label: string }[] = [
+const shapeOptions: { value: ElementShape; label: string }[] = [
   { value: 'soft-square', label: 'Soft Square' },
   { value: 'torn-edge', label: 'Torn Edge' },
   { value: 'circle', label: 'Circle' },
@@ -65,6 +65,10 @@ const edgeOptions: { value: EdgeStyle; label: string }[] = [
   { value: 'clean', label: 'Clean' },
   { value: 'soft-fray', label: 'Soft Fray' },
   { value: 'rough-torn', label: 'Rough Torn' },
+  { value: 'pinking', label: '✂ Pinking' },
+  { value: 'scallop', label: '✂ Scallop' },
+  { value: 'zigzag', label: '✂ Zigzag' },
+  { value: 'wave', label: '✂ Wave' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string }[] = [
@@ -82,22 +86,22 @@ const shadowOptions: { value: ShadowDepth; label: string }[] = [
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(false);
-  const [showStencils, setShowStencils] = useState(true);
+  const [showShapes, setShowShapes] = useState(true);
 
   return (
     <div className="p-3 space-y-2">
-          {/* Stencils section */}
+          {/* Shapes section */}
           <button
-            onClick={() => setShowStencils(!showStencils)}
+            onClick={() => setShowShapes(!showShapes)}
             className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1"
           >
-            ✂️ Stencils
-            {showStencils ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+            ✂️ Shapes
+            {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
           </button>
 
-          {showStencils && (
+          {showShapes && (
             <div className="flex flex-wrap items-center gap-1 mb-2 px-1">
-              {stencilShapes.map(s => (
+              {shapeOptions.map(s => (
                 <Button
                   key={s.value}
                   size="sm"
@@ -195,13 +199,13 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
                 {/* Edge Style */}
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style</label>
-                  <div className="flex gap-1">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style (✂ = Scissor Cuts)</label>
+                  <div className="flex flex-wrap gap-1">
                     {edgeOptions.map(o => (
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ edgeStyle: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`text-[10px] py-1.5 px-2 rounded-md transition-colors ${
                           element.effects.edgeStyle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
