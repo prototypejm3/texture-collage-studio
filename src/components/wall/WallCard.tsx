@@ -80,10 +80,9 @@ const metallicGradients: Record<string, {
   },
 };
 
-function MetallicFrame({ metal, texture, children }: { metal: string; texture: FrameTexture; children: React.ReactNode }) {
+function MetallicFrame({ metal, children }: { metal: string; children: React.ReactNode }) {
   const g = metallicGradients[metal];
   if (!g) return <>{children}</>;
-  const texOverlay = getTextureOverlay(texture);
 
   return (
     <div
@@ -94,7 +93,6 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
         borderLeft: g.borderLeft,
         borderRight: g.borderRight,
         borderBottom: g.borderBottom,
-        ...texOverlay,
       }}
     >
       <div
