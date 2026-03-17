@@ -1,0 +1,58 @@
+import { TextureSwatch } from '@/types/studio';
+
+export const linenTextures: TextureSwatch[] = [
+  {
+    id: 'linen-natural',
+    name: 'Natural Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(42, 20%, 78%) 1px, hsl(42, 20%, 78%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(40, 18%, 80%) 2px, hsl(40, 18%, 80%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 5px, hsl(41, 15%, 76%) 5px, hsl(41, 15%, 76%) 6px),
+      linear-gradient(135deg, hsl(40, 22%, 82%) 0%, hsl(38, 18%, 78%) 100%)`,
+  },
+  {
+    id: 'linen-white',
+    name: 'White Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(40, 10%, 92%) 1px, hsl(40, 10%, 92%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(38, 8%, 90%) 2px, hsl(38, 8%, 90%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 6px, hsl(39, 7%, 89%) 6px, hsl(39, 7%, 89%) 7px),
+      linear-gradient(135deg, hsl(40, 12%, 94%) 0%, hsl(38, 10%, 90%) 100%)`,
+  },
+  {
+    id: 'linen-sage',
+    name: 'Sage Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(140, 12%, 68%) 1px, hsl(140, 12%, 68%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(138, 10%, 66%) 2px, hsl(138, 10%, 66%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 5px, hsl(139, 9%, 64%) 5px, hsl(139, 9%, 64%) 6px),
+      linear-gradient(135deg, hsl(140, 14%, 72%) 0%, hsl(138, 12%, 68%) 100%)`,
+  },
+  {
+    id: 'linen-dusty-rose',
+    name: 'Dusty Rose Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(350, 18%, 72%) 1px, hsl(350, 18%, 72%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(348, 15%, 70%) 2px, hsl(348, 15%, 70%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 5px, hsl(349, 14%, 68%) 5px, hsl(349, 14%, 68%) 6px),
+      linear-gradient(135deg, hsl(350, 20%, 76%) 0%, hsl(348, 16%, 70%) 100%)`,
+  },
+  {
+    id: 'linen-slate',
+    name: 'Slate Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(215, 10%, 55%) 1px, hsl(215, 10%, 55%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(213, 8%, 53%) 2px, hsl(213, 8%, 53%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 5px, hsl(214, 7%, 51%) 5px, hsl(214, 7%, 51%) 6px),
+      linear-gradient(135deg, hsl(215, 12%, 58%) 0%, hsl(213, 10%, 54%) 100%)`,
+  },
+  {
+    id: 'linen-mustard',
+    name: 'Mustard Linen',
+    category: 'Linen',
+    cssBackground: `repeating-linear-gradient(0deg, transparent, transparent 1px, hsl(42, 55%, 55%) 1px, hsl(42, 55%, 55%) 2px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, hsl(40, 50%, 53%) 2px, hsl(40, 50%, 53%) 3px),
+      repeating-linear-gradient(0deg, transparent, transparent 5px, hsl(41, 48%, 51%) 5px, hsl(41, 48%, 51%) 6px),
+      linear-gradient(135deg, hsl(42, 52%, 58%) 0%, hsl(40, 48%, 52%) 100%)`,
+  },
+];
