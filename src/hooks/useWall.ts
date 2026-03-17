@@ -63,6 +63,7 @@ export function useWall() {
       status: 'in-progress',
       builtIRL: false,
       pinned: false,
+      hidden: false,
       frameStyle: settings.defaultFrameStyle,
       studioState,
     };
