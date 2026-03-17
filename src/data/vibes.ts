@@ -52,7 +52,7 @@ const frameInFrame: FrameTemplate = {
     { id: 'fif-left', x: 0, y: 18, width: 18, height: 64, shape: 'rectangle', tone: 'light' },
     { id: 'fif-right', x: 82, y: 18, width: 18, height: 64, shape: 'rectangle', tone: 'light' },
     // center focus
-    { id: 'fif-center', x: 18, y: 18, width: 64, height: 64, shape: 'square', tone: 'accent' },
+    { id: 'fif-center', x: 18, y: 18, width: 64, height: 64, shape: 'soft-square', tone: 'accent' },
   ],
 };
 
