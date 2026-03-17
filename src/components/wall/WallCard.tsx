@@ -1,4 +1,4 @@
-import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
+import { SavedDesign, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
 import { motion } from 'framer-motion';
 import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square } from 'lucide-react';
 import { useState } from 'react';
@@ -12,26 +12,150 @@ interface WallCardProps {
   onToggleIRL: (id: string) => void;
   onToggleHide: (id: string) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
+  onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
   size?: 'normal' | 'large';
 }
 
-const frameStyles: { value: FrameStyle; label: string }[] = [
+const frameStyleList: { value: FrameStyle; label: string }[] = [
+  { value: 'gold', label: 'Gold' },
+  { value: 'chrome', label: 'Chrome' },
+  { value: 'copper', label: 'Copper' },
+  { value: 'silver', label: 'Silver' },
   { value: 'minimal', label: 'Minimal' },
   { value: 'shadow-box', label: 'Shadow Box' },
   { value: 'wood', label: 'Wood' },
   { value: 'floating', label: 'Floating' },
   { value: 'polaroid', label: 'Polaroid' },
-  { value: 'gold', label: 'Gold' },
   { value: 'none', label: 'None' },
 ];
 
-function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
+const frameTextureList: { value: FrameTexture; label: string }[] = [
+  { value: 'smooth', label: 'Smooth' },
+  { value: 'brushed', label: 'Brushed' },
+  { value: 'hammered', label: 'Hammered' },
+  { value: 'antiqued', label: 'Antiqued' },
+  { value: 'matte', label: 'Matte' },
+];
+
+/* ─── Texture overlay CSS ─── */
+function getTextureOverlay(texture: FrameTexture): React.CSSProperties {
+  switch (texture) {
+    case 'brushed':
+      return {
+        backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255,255,255,0.04) 1px, rgba(255,255,255,0.04) 2px)',
+      };
+    case 'hammered':
+      return {
+        backgroundImage: 'radial-gradient(circle 3px at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle 2px at 70% 60%, rgba(0,0,0,0.06) 0%, transparent 50%), radial-gradient(circle 4px at 50% 20%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle 3px at 20% 80%, rgba(0,0,0,0.04) 0%, transparent 50%)',
+      };
+    case 'antiqued':
+      return {
+        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.08) 0%, transparent 30%, rgba(0,0,0,0.05) 60%, transparent 80%, rgba(0,0,0,0.1) 100%)',
+      };
+    case 'matte':
+      return {
+        filter: 'saturate(0.7) brightness(0.95)',
+      };
+    default: // smooth
+      return {};
+  }
+}
+
+/* ─── Metallic gradient configs ─── */
+const metallicGradients: Record<string, {
+  main: string;
+  inner: string;
+  borderTop: string;
+  borderLeft: string;
+  borderRight: string;
+  borderBottom: string;
+  matBg: string;
+}> = {
+  gold: {
+    main: 'linear-gradient(145deg, hsl(43, 60%, 55%) 0%, hsl(38, 65%, 45%) 20%, hsl(43, 70%, 60%) 40%, hsl(38, 55%, 40%) 60%, hsl(43, 60%, 55%) 80%, hsl(40, 65%, 50%) 100%)',
+    inner: 'linear-gradient(135deg, hsl(43, 55%, 50%) 0%, hsl(40, 60%, 58%) 50%, hsl(43, 55%, 50%) 100%)',
+    borderTop: '2px solid hsl(43, 70%, 70%)',
+    borderLeft: '2px solid hsl(43, 60%, 58%)',
+    borderRight: '2px solid hsl(38, 55%, 38%)',
+    borderBottom: '2px solid hsl(38, 50%, 35%)',
+    matBg: 'hsl(40, 15%, 95%)',
+  },
+  chrome: {
+    main: 'linear-gradient(145deg, hsl(210, 5%, 78%) 0%, hsl(210, 8%, 60%) 20%, hsl(210, 5%, 85%) 40%, hsl(210, 8%, 55%) 60%, hsl(210, 5%, 75%) 80%, hsl(210, 8%, 65%) 100%)',
+    inner: 'linear-gradient(135deg, hsl(210, 5%, 70%) 0%, hsl(210, 8%, 80%) 50%, hsl(210, 5%, 70%) 100%)',
+    borderTop: '2px solid hsl(210, 5%, 88%)',
+    borderLeft: '2px solid hsl(210, 5%, 75%)',
+    borderRight: '2px solid hsl(210, 8%, 50%)',
+    borderBottom: '2px solid hsl(210, 8%, 45%)',
+    matBg: 'hsl(210, 5%, 96%)',
+  },
+  copper: {
+    main: 'linear-gradient(145deg, hsl(18, 55%, 55%) 0%, hsl(15, 60%, 42%) 20%, hsl(20, 50%, 58%) 40%, hsl(15, 55%, 38%) 60%, hsl(18, 55%, 52%) 80%, hsl(20, 60%, 48%) 100%)',
+    inner: 'linear-gradient(135deg, hsl(18, 50%, 48%) 0%, hsl(20, 55%, 55%) 50%, hsl(18, 50%, 48%) 100%)',
+    borderTop: '2px solid hsl(18, 55%, 65%)',
+    borderLeft: '2px solid hsl(18, 50%, 55%)',
+    borderRight: '2px solid hsl(15, 55%, 35%)',
+    borderBottom: '2px solid hsl(15, 50%, 30%)',
+    matBg: 'hsl(20, 15%, 95%)',
+  },
+  silver: {
+    main: 'linear-gradient(145deg, hsl(220, 8%, 72%) 0%, hsl(220, 10%, 58%) 20%, hsl(220, 6%, 80%) 40%, hsl(220, 10%, 52%) 60%, hsl(220, 8%, 70%) 80%, hsl(220, 10%, 62%) 100%)',
+    inner: 'linear-gradient(135deg, hsl(220, 6%, 65%) 0%, hsl(220, 8%, 75%) 50%, hsl(220, 6%, 65%) 100%)',
+    borderTop: '2px solid hsl(220, 6%, 82%)',
+    borderLeft: '2px solid hsl(220, 6%, 70%)',
+    borderRight: '2px solid hsl(220, 10%, 48%)',
+    borderBottom: '2px solid hsl(220, 10%, 42%)',
+    matBg: 'hsl(220, 5%, 96%)',
+  },
+};
+
+function MetallicFrame({ metal, texture, children }: { metal: string; texture: FrameTexture; children: React.ReactNode }) {
+  const g = metallicGradients[metal];
+  if (!g) return <>{children}</>;
+  const texOverlay = getTextureOverlay(texture);
+
+  return (
+    <div
+      className="p-[clamp(10px,2.5%,18px)] shadow-[0_6px_28px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.3)]"
+      style={{
+        background: g.main,
+        borderTop: g.borderTop,
+        borderLeft: g.borderLeft,
+        borderRight: g.borderRight,
+        borderBottom: g.borderBottom,
+        ...texOverlay,
+      }}
+    >
+      <div
+        className="p-[clamp(3px,0.8%,5px)]"
+        style={{
+          background: g.inner,
+          boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
+          ...texOverlay,
+        }}
+      >
+        <div style={{ backgroundColor: g.matBg }} className="p-[clamp(6px,1.5%,12px)]">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture: FrameTexture; children: React.ReactNode }) {
+  // Metallic frames
+  if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
+    return <MetallicFrame metal={style} texture={texture}>{children}</MetallicFrame>;
+  }
+
+  const texOverlay = getTextureOverlay(texture);
+
   switch (style) {
     case 'minimal':
       return (
-        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]" style={texOverlay}>
           <div className="border border-[hsl(0,0%,20%)] border-opacity-80">
             <div className="bg-white p-[clamp(8px,2%,16px)]">
               {children}
@@ -41,7 +165,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
       );
     case 'shadow-box':
       return (
-        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]">
+        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]" style={texOverlay}>
           <div className="border-2 border-[hsl(0,0%,30%)]">
             <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">
               {children}
@@ -56,6 +180,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
           style={{
             background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)',
             backgroundSize: '200% 200%',
+            ...texOverlay,
           }}
         >
           <div className="bg-white p-[clamp(8px,2%,14px)]">
@@ -80,31 +205,6 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
           {children}
         </div>
       );
-    case 'gold':
-      return (
-        <div
-          className="p-[clamp(10px,2.5%,18px)] shadow-[0_6px_28px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.3)]"
-          style={{
-            background: 'linear-gradient(145deg, hsl(43, 60%, 55%) 0%, hsl(38, 65%, 45%) 20%, hsl(43, 70%, 60%) 40%, hsl(38, 55%, 40%) 60%, hsl(43, 60%, 55%) 80%, hsl(40, 65%, 50%) 100%)',
-            borderTop: '2px solid hsl(43, 70%, 70%)',
-            borderLeft: '2px solid hsl(43, 60%, 58%)',
-            borderRight: '2px solid hsl(38, 55%, 38%)',
-            borderBottom: '2px solid hsl(38, 50%, 35%)',
-          }}
-        >
-          <div
-            className="p-[clamp(3px,0.8%,5px)]"
-            style={{
-              background: 'linear-gradient(135deg, hsl(43, 55%, 50%) 0%, hsl(40, 60%, 58%) 50%, hsl(43, 55%, 50%) 100%)',
-              boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
-            }}
-          >
-            <div className="bg-[hsl(40,15%,95%)] p-[clamp(6px,1.5%,12px)]">
-              {children}
-            </div>
-          </div>
-        </div>
-      );
     case 'none':
     default:
       return (
@@ -115,8 +215,10 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onFrameTextureChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isMetallic = ['gold', 'chrome', 'copper', 'silver'].includes(design.frameStyle);
 
   return (
     <motion.div
@@ -131,7 +233,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
         onClick={() => onOpen(design.id)}
       >
-        <FrameWrapper style={design.frameStyle}>
+        <FrameWrapper style={design.frameStyle} texture={design.frameTexture || 'smooth'}>
           <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
             <img
               src={design.previewImage}
@@ -164,7 +266,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         </div>
       )}
 
-      {/* Hover actions - subtle bottom-right */}
+      {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <button
           onClick={(e) => { e.stopPropagation(); onOpen(design.id); }}
@@ -190,7 +292,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
           {menuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
-              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[70vh] overflow-y-auto">
                 <button
                   onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }}
                   className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
@@ -236,7 +338,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                     ))}
                     <div className="border-t border-border my-1" />
                     <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
-                    {frameStyles.map(fs => (
+                    {frameStyleList.map(fs => (
                       <button
                         key={fs.value}
                         onClick={(e) => { e.stopPropagation(); onFrameStyleChange(design.id, fs.value); setMenuOpen(false); }}
@@ -245,6 +347,22 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
+                    {/* Texture picker — shown for frames that support it */}
+                    {design.frameStyle !== 'none' && design.frameStyle !== 'polaroid' && design.frameStyle !== 'floating' && (
+                      <>
+                        <div className="border-t border-border my-1" />
+                        <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Texture</p>
+                        {frameTextureList.map(ft => (
+                          <button
+                            key={ft.value}
+                            onClick={(e) => { e.stopPropagation(); onFrameTextureChange(design.id, ft.value); setMenuOpen(false); }}
+                            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${(design.frameTexture || 'smooth') === ft.value ? 'text-primary font-medium' : 'text-foreground'}`}
+                          >
+                            {ft.label}
+                          </button>
+                        ))}
+                      </>
+                    )}
                   </>
                 )}
               </div>
