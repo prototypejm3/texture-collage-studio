@@ -23,6 +23,8 @@ import { plaidTextures } from './plaid';
 import { gridTextures } from './grid';
 import { speckleTextures } from './speckle';
 import { herringboneTextures } from './herringbone';
+import { animalTextures } from './animal';
+import { noveltyTextures } from './novelty';
 
 export const textures: TextureSwatch[] = [
   // Fabrics
@@ -52,4 +54,7 @@ export const textures: TextureSwatch[] = [
   ...gridTextures,
   ...speckleTextures,
   ...herringboneTextures,
+  // Animal & Fun
+  ...animalTextures,
+  ...noveltyTextures,
 ];
