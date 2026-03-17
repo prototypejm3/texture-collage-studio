@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Pencil, Check } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCustomizerProps {
@@ -9,10 +9,11 @@ interface WallCustomizerProps {
 }
 
 const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
-  { value: 'grid', label: 'Grid', icon: <LayoutGrid className="w-4 h-4" /> },
-  { value: 'masonry', label: 'Masonry', icon: <Columns className="w-4 h-4" /> },
-  { value: 'single', label: 'Column', icon: <AlignJustify className="w-4 h-4" /> },
-  { value: 'featured', label: 'Featured', icon: <Star className="w-4 h-4" /> },
+  { value: 'grid', label: 'Grid', icon: <LayoutGrid className="w-3.5 h-3.5" /> },
+  { value: 'masonry', label: 'Masonry', icon: <Columns className="w-3.5 h-3.5" /> },
+  { value: 'single', label: 'Gallery', icon: <AlignJustify className="w-3.5 h-3.5" /> },
+  { value: 'featured', label: 'Featured', icon: <Star className="w-3.5 h-3.5" /> },
+  { value: 'curated', label: 'Curated', icon: <Sparkles className="w-3.5 h-3.5" /> },
 ];
 
 const backgrounds: { value: WallBackground; label: string; color: string }[] = [
@@ -28,9 +29,11 @@ export function WallCustomizer({ settings, onUpdate, isPremium }: WallCustomizer
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
 
+  const isCharcoal = settings.background === 'charcoal';
+
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">
-      {/* Title */}
+      {/* Title — understated */}
       <div className="flex items-center gap-2 mr-auto">
         {editingTitle ? (
           <div className="flex items-center gap-1">
@@ -39,62 +42,65 @@ export function WallCustomizer({ settings, onUpdate, isPremium }: WallCustomizer
               value={titleDraft}
               onChange={e => setTitleDraft(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') { onUpdate({ title: titleDraft }); setEditingTitle(false); } }}
-              className="text-xl font-bold bg-transparent border-b-2 border-primary outline-none text-foreground w-48"
+              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isCharcoal ? 'text-background' : 'text-foreground'}`}
             />
-            <button onClick={() => { onUpdate({ title: titleDraft }); setEditingTitle(false); }} className="p-1 text-primary">
-              <Check className="w-4 h-4" />
+            <button onClick={() => { onUpdate({ title: titleDraft }); setEditingTitle(false); }} className="p-1 text-primary/60 hover:text-primary">
+              <Check className="w-3.5 h-3.5" />
             </button>
           </div>
         ) : (
           <h1
-            className="text-xl font-bold text-foreground cursor-pointer flex items-center gap-2 group"
+            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isCharcoal ? 'text-background/80' : 'text-foreground/70'}`}
             onClick={() => { setTitleDraft(settings.title); setEditingTitle(true); }}
           >
             {settings.title}
-            <Pencil className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Pencil className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
           </h1>
         )}
       </div>
 
-      {/* Layout picker */}
-      <div className="flex items-center gap-1 bg-secondary rounded-lg p-0.5">
-        {layouts.map(l => {
-          const locked = l.value !== 'grid' && !isPremium;
-          return (
-            <button
-              key={l.value}
-              onClick={() => !locked && onUpdate({ layout: l.value })}
-              className={`p-1.5 rounded-md transition-colors ${
-                settings.layout === l.value
-                  ? 'bg-background text-primary shadow-sm'
-                  : locked
-                    ? 'text-muted-foreground/40 cursor-not-allowed'
-                    : 'text-muted-foreground hover:text-foreground'
-              }`}
-              title={locked ? 'Premium only' : l.label}
-            >
-              {l.icon}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Background picker */}
-      {isPremium && (
-        <div className="flex items-center gap-1.5">
-          {backgrounds.map(bg => (
-            <button
-              key={bg.value}
-              onClick={() => onUpdate({ background: bg.value })}
-              className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${
-                settings.background === bg.value ? 'border-primary scale-110' : 'border-border'
-              }`}
-              style={{ backgroundColor: bg.color }}
-              title={bg.label}
-            />
-          ))}
+      {/* Layout + Background — grouped */}
+      <div className="flex items-center gap-3">
+        {/* Layout picker */}
+        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/50'}`}>
+          {layouts.map(l => {
+            const locked = l.value !== 'grid' && !isPremium;
+            return (
+              <button
+                key={l.value}
+                onClick={() => !locked && onUpdate({ layout: l.value })}
+                className={`p-1.5 rounded-md transition-colors ${
+                  settings.layout === l.value
+                    ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-primary shadow-sm'
+                    : locked
+                      ? 'text-muted-foreground/30 cursor-not-allowed'
+                      : isCharcoal ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
+                }`}
+                title={locked ? 'Premium only' : l.label}
+              >
+                {l.icon}
+              </button>
+            );
+          })}
         </div>
-      )}
+
+        {/* Background picker */}
+        {isPremium && (
+          <div className="flex items-center gap-1">
+            {backgrounds.map(bg => (
+              <button
+                key={bg.value}
+                onClick={() => onUpdate({ background: bg.value })}
+                className={`w-5 h-5 rounded-full border transition-transform hover:scale-110 ${
+                  settings.background === bg.value ? 'border-primary scale-110 shadow-sm' : 'border-border/50'
+                }`}
+                style={{ backgroundColor: bg.color }}
+                title={bg.label}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
