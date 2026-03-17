@@ -73,6 +73,37 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
           </div>
         </div>
       );
+    case 'polaroid':
+      return (
+        <div className="bg-white p-[clamp(8px,2%,14px)] pb-[clamp(36px,10%,56px)] shadow-[0_4px_20px_rgba(0,0,0,0.1)] rotate-[0.5deg]">
+          {children}
+        </div>
+      );
+    case 'gold':
+      return (
+        <div
+          className="p-[clamp(10px,2.5%,18px)] shadow-[0_6px_28px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.3)]"
+          style={{
+            background: 'linear-gradient(145deg, hsl(43, 60%, 55%) 0%, hsl(38, 65%, 45%) 20%, hsl(43, 70%, 60%) 40%, hsl(38, 55%, 40%) 60%, hsl(43, 60%, 55%) 80%, hsl(40, 65%, 50%) 100%)',
+            borderTop: '2px solid hsl(43, 70%, 70%)',
+            borderLeft: '2px solid hsl(43, 60%, 58%)',
+            borderRight: '2px solid hsl(38, 55%, 38%)',
+            borderBottom: '2px solid hsl(38, 50%, 35%)',
+          }}
+        >
+          <div
+            className="p-[clamp(3px,0.8%,5px)]"
+            style={{
+              background: 'linear-gradient(135deg, hsl(43, 55%, 50%) 0%, hsl(40, 60%, 58%) 50%, hsl(43, 55%, 50%) 100%)',
+              boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
+            }}
+          >
+            <div className="bg-[hsl(40,15%,95%)] p-[clamp(6px,1.5%,12px)]">
+              {children}
+            </div>
+          </div>
+        </div>
+      );
     case 'none':
     default:
       return (
