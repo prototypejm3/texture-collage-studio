@@ -364,6 +364,8 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         </button>
                       )}
                     </div>
+                  </>
+                )}
               </div>
             </>
           )}
