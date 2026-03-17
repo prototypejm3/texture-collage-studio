@@ -118,7 +118,7 @@ export function VibeOutline({
               {/* Fill layer */}
               <path
                 d={section.path}
-                fill={isFilled ? `url(#fill-${section.id})` : 'transparent'}
+                fill={isFilled ? `url(#${patternIdFor(section.id, fills[section.id])})` : 'transparent'}
                 className="pointer-events-auto cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
