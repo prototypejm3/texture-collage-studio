@@ -61,9 +61,17 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
   // Gallery mode: 2-3 per row, generous spacing
   if (layout === 'single') {
     return (
-      <div className="max-w-lg mx-auto flex flex-col gap-16">
+      <div className="flex flex-col gap-16">
         <AnimatePresence>
-          {designs.map(d => <WallCard {...cardProps(d, 'large')} />)}
+          {designs.map(d => {
+            const sz = d.displaySize || 'medium';
+            const widthClass = sz === 'large' ? 'max-w-xl' : sz === 'small' ? 'max-w-sm' : 'max-w-lg';
+            return (
+              <div key={d.id} className={`w-full ${widthClass} mx-auto`}>
+                <WallCard {...cardProps(d, sz)} />
+              </div>
+            );
+          })}
         </AnimatePresence>
       </div>
     );
