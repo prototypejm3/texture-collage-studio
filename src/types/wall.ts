@@ -21,6 +21,9 @@ export interface SavedDesign {
   frameStyle: FrameStyle;
   frameTexture: FrameTexture;
   displaySize: DesignSize;
+  /** Position on wall in freeform mode (percentage-based) */
+  wallX?: number;
+  wallY?: number;
   /** Serialized studio state for re-editing */
   studioState?: string;
 }
