@@ -180,6 +180,7 @@ const MyWall = () => {
                 onTogglePin={wall.togglePin}
                 onToggleIRL={handleToggleIRL}
                 onToggleHide={wall.toggleHide}
+                onUpdate={wall.updateDesign}
                 onFrameStyleChange={handleFrameStyle}
                 onFrameTextureChange={handleFrameTexture}
                 onSizeChange={handleSizeChange}

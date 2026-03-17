@@ -9,6 +9,7 @@ export type UserTier = 'free' | 'premium';
 export interface SavedDesign {
   id: string;
   name: string;
+  description?: string;
   vibeName?: string;
   previewImage: string; // data URL
   createdAt: string;
