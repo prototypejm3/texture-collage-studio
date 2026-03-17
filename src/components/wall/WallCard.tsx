@@ -145,7 +145,6 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
           style={{
             background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)',
             backgroundSize: '200% 200%',
-            ...texOverlay,
           }}
         >
           <div className="bg-white p-[clamp(8px,2%,14px)]">
