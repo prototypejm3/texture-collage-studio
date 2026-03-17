@@ -56,8 +56,11 @@ export function TextureLibrary({ onDragStart }: TextureLibraryProps) {
           {filtered.map(tex => (
             <motion.div
               key={tex.id}
-              draggable
-              onDragStart={() => onDragStart(tex.id)}
+            draggable
+              onDragStart={(e) => {
+                (e as any).dataTransfer?.setData('textureId', tex.id);
+                onDragStart(tex.id);
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="cursor-grab active:cursor-grabbing group"

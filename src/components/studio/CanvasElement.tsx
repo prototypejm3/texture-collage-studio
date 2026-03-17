@@ -2,59 +2,32 @@ import { useRef, useState, useCallback, useEffect } from 'react';
 import { CanvasElement as CanvasElementType, MaterialEffects } from '@/types/studio';
 import { textures } from '@/data/textures';
 
-interface Props {
-  element: CanvasElementType;
-  isSelected: boolean;
-  onSelect: () => void;
-  onUpdate: (updates: Partial<CanvasElementType>) => void;
-}
-
 function getClipPath(shape: CanvasElementType['shape']): string | undefined {
   switch (shape) {
     case 'circle': return 'ellipse(50% 50% at 50% 50%)';
-    case 'strip': return undefined;
-    case 'rectangle': return undefined;
-    case 'square': return undefined;
     default: return undefined;
   }
 }
 
 function getEffectStyles(effects: MaterialEffects): React.CSSProperties {
   const filters: string[] = [];
-
-  // Bleach/Fade
   if (effects.bleachFade > 0) {
-    const sat = 100 - effects.bleachFade * 0.8;
-    const bright = 100 + effects.bleachFade * 0.4;
-    filters.push(`saturate(${sat}%) brightness(${bright}%)`);
+    filters.push(`saturate(${100 - effects.bleachFade * 0.8}%) brightness(${100 + effects.bleachFade * 0.4}%)`);
   }
-
-  // Grain boost - use contrast
   if (effects.grainBoost > 0) {
     filters.push(`contrast(${100 + effects.grainBoost * 0.3}%)`);
   }
-
-  // Wrinkle - subtle wave via filter
   if (effects.wrinkle !== 'none') {
-    const url = `url(#wrinkle-${effects.wrinkle})`;
-    filters.push(url);
+    filters.push(`url(#wrinkle-${effects.wrinkle})`);
   }
 
-  // Shadow depth
   let boxShadow = 'none';
-  if (effects.shadowDepth === 'lifted') {
-    boxShadow = '0 4px 12px -2px hsla(220, 20%, 12%, 0.25)';
-  } else if (effects.shadowDepth === 'floating') {
-    boxShadow = '0 12px 32px -4px hsla(220, 20%, 12%, 0.35), 0 4px 8px -2px hsla(220, 20%, 12%, 0.15)';
-  }
+  if (effects.shadowDepth === 'lifted') boxShadow = '0 4px 12px -2px hsla(220, 20%, 12%, 0.25)';
+  else if (effects.shadowDepth === 'floating') boxShadow = '0 12px 32px -4px hsla(220, 20%, 12%, 0.35), 0 4px 8px -2px hsla(220, 20%, 12%, 0.15)';
 
-  // Edge style
   let borderRadius = '4px';
-  if (effects.edgeStyle === 'soft-fray') {
-    borderRadius = '8px 2px 12px 4px';
-  } else if (effects.edgeStyle === 'rough-torn') {
-    borderRadius = '12px 2px 16px 6px / 4px 14px 6px 10px';
-  }
+  if (effects.edgeStyle === 'soft-fray') borderRadius = '8px 2px 12px 4px';
+  else if (effects.edgeStyle === 'rough-torn') borderRadius = '12px 2px 16px 6px / 4px 14px 6px 10px';
 
   return {
     filter: filters.length > 0 ? filters.join(' ') : undefined,
@@ -63,16 +36,17 @@ function getEffectStyles(effects: MaterialEffects): React.CSSProperties {
   };
 }
 
+interface Props {
+  element: CanvasElementType;
+  isSelected: boolean;
+  onSelect: () => void;
+  onUpdate: (updates: Partial<CanvasElementType>) => void;
+}
+
 export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
-
-  const texture = textures.find(t => t.id === element.textureId);
-  if (!texture) return null;
-
-  const effectStyles = getEffectStyles(element.effects);
-  const clipPath = getClipPath(element.shape);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -97,6 +71,12 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       window.removeEventListener('mouseup', handleUp);
     };
   }, [isDragging, onUpdate]);
+
+  const texture = textures.find(t => t.id === element.textureId);
+  if (!texture) return null;
+
+  const effectStyles = getEffectStyles(element.effects);
+  const clipPath = getClipPath(element.shape);
 
   return (
     <div
