@@ -13,7 +13,6 @@ interface WallCardProps {
   onToggleHide: (id: string) => void;
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
-  onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
   size?: 'normal' | 'large';
