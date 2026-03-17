@@ -1,4 +1,4 @@
-import { SavedDesign, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { motion } from 'framer-motion';
 import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil } from 'lucide-react';
 import { useState, useRef } from 'react';
