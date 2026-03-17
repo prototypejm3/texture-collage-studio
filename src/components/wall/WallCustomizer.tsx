@@ -44,7 +44,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
 
-  const isCharcoal = settings.background === 'charcoal';
+  const isDark = ['black-brick', 'black-concrete'].includes(settings.background);
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">

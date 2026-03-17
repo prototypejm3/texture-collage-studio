@@ -130,7 +130,7 @@ const MyWall = () => {
                 <>
                   <button
                     onClick={() => setShowControls(!showControls)}
-                    className={`p-2 rounded-lg transition-colors ${isCharcoal ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
+                    className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
                   >
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
