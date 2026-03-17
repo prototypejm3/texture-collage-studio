@@ -25,4 +25,22 @@ export const stripeTextures: TextureSwatch[] = [
     category: 'Stripe',
     cssBackground: `repeating-linear-gradient(90deg, hsl(0, 0%, 95%) 0px, hsl(0, 0%, 95%) 8px, hsl(215, 30%, 35%) 8px, hsl(215, 30%, 35%) 10px)`,
   },
+  {
+    id: 'stripe-woven',
+    name: 'Woven Micro Stripe',
+    category: 'Stripe',
+    cssBackground: `url(/textures/stripe-woven.png)`,
+  },
+  {
+    id: 'stripe-pinstripe',
+    name: 'Pinstripe',
+    category: 'Stripe',
+    cssBackground: `url(/textures/stripe-pinstripe.png)`,
+  },
+  {
+    id: 'stripe-ink',
+    name: 'Ink Stripe',
+    category: 'Stripe',
+    cssBackground: `url(/textures/stripe-ink.png)`,
+  },
 ];
