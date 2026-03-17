@@ -3,7 +3,7 @@ export type TextureCategory =
   | 'Denim' | 'Corduroy' | 'Tweed' | 'Felt' | 'Yarn'
   | 'Marble' | 'Wood' | 'Terrazzo' | 'Concrete' | 'Sand' | 'Stone' | 'Cork'
   | 'Abstract' | 'Stripe' | 'Plaid' | 'Grid' | 'Speckle' | 'Herringbone'
-  | 'Custom';
+  | 'Animal' | 'Novelty' | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scallop' | 'zigzag' | 'wave';
