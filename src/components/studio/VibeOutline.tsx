@@ -31,8 +31,7 @@ export function VibeOutline({
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
 
-  // Compute scale from vibe viewBox to actual canvas size
-  const [, , vbW, vbH] = vibe.viewBox.split(' ').map(Number);
+  const patternIdFor = (sectionId: string, textureId: string) => `fill-${sectionId}-${textureId}`;
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
     e.preventDefault();
@@ -87,8 +86,8 @@ export function VibeOutline({
             if (!tex) return null;
             return (
               <pattern
-                key={sectionId}
-                id={`fill-${sectionId}`}
+                key={`${sectionId}-${textureId}`}
+                id={patternIdFor(sectionId, textureId)}
                 patternUnits="userSpaceOnUse"
                 width="40"
                 height="40"
@@ -119,7 +118,7 @@ export function VibeOutline({
               {/* Fill layer */}
               <path
                 d={section.path}
-                fill={isFilled ? `url(#fill-${section.id})` : 'transparent'}
+                fill={isFilled ? `url(#${patternIdFor(section.id, fills[section.id] as string)})` : 'transparent'}
                 className="pointer-events-auto cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
