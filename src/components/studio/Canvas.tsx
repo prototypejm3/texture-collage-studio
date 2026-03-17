@@ -112,8 +112,8 @@ export function Canvas({
             />
           )}
 
-          {/* Free-placed elements (non-vibe mode) */}
-          {!activeVibe && elements.map(el => (
+          {/* Free-placed elements (always rendered, even in vibe mode) */}
+          {elements.map(el => (
             <CanvasElementComponent
               key={el.id}
               element={el}
