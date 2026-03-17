@@ -1,0 +1,58 @@
+import { TextureSwatch } from '@/types/studio';
+
+export const leatherTextures: TextureSwatch[] = [
+  {
+    id: 'leather-cognac',
+    name: 'Cognac Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(24, 60%, 34%, 0.15) 3px, hsla(24, 60%, 34%, 0.15) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(22, 55%, 38%, 0.1) 5px, hsla(22, 55%, 38%, 0.1) 6px),
+      radial-gradient(ellipse 8px 6px at 30% 40%, hsla(24, 50%, 36%, 0.12) 50%, transparent 50%),
+      radial-gradient(ellipse 6px 8px at 70% 70%, hsla(22, 48%, 40%, 0.1) 50%, transparent 50%),
+      linear-gradient(135deg, hsl(24, 55%, 42%) 0%, hsl(22, 50%, 36%) 100%)`,
+  },
+  {
+    id: 'leather-black',
+    name: 'Black Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(0, 0%, 8%, 0.2) 3px, hsla(0, 0%, 8%, 0.2) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(0, 0%, 10%, 0.15) 5px, hsla(0, 0%, 10%, 0.15) 6px),
+      radial-gradient(ellipse 8px 6px at 25% 35%, hsla(0, 0%, 18%, 0.12) 50%, transparent 50%),
+      linear-gradient(135deg, hsl(0, 0%, 15%) 0%, hsl(0, 0%, 10%) 100%)`,
+  },
+  {
+    id: 'leather-tan',
+    name: 'Tan Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(30, 45%, 54%, 0.15) 3px, hsla(30, 45%, 54%, 0.15) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(28, 42%, 56%, 0.1) 5px, hsla(28, 42%, 56%, 0.1) 6px),
+      radial-gradient(ellipse 8px 6px at 60% 30%, hsla(30, 40%, 58%, 0.12) 50%, transparent 50%),
+      linear-gradient(135deg, hsl(30, 50%, 62%) 0%, hsl(28, 45%, 56%) 100%)`,
+  },
+  {
+    id: 'leather-oxblood',
+    name: 'Oxblood Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(0, 55%, 22%, 0.18) 3px, hsla(0, 55%, 22%, 0.18) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(355, 50%, 24%, 0.12) 5px, hsla(355, 50%, 24%, 0.12) 6px),
+      radial-gradient(ellipse 8px 6px at 45% 55%, hsla(0, 48%, 28%, 0.1) 50%, transparent 50%),
+      linear-gradient(135deg, hsl(0, 50%, 28%) 0%, hsl(355, 48%, 22%) 100%)`,
+  },
+  {
+    id: 'leather-olive',
+    name: 'Olive Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(80, 20%, 30%, 0.15) 3px, hsla(80, 20%, 30%, 0.15) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(78, 18%, 32%, 0.1) 5px, hsla(78, 18%, 32%, 0.1) 6px),
+      linear-gradient(135deg, hsl(80, 22%, 36%) 0%, hsl(78, 18%, 30%) 100%)`,
+  },
+  {
+    id: 'leather-caramel',
+    name: 'Caramel Leather',
+    category: 'Leather',
+    cssBackground: `repeating-linear-gradient(45deg, transparent 0px, transparent 3px, hsla(28, 60%, 42%, 0.15) 3px, hsla(28, 60%, 42%, 0.15) 4px),
+      repeating-linear-gradient(-30deg, transparent 0px, transparent 5px, hsla(26, 55%, 44%, 0.1) 5px, hsla(26, 55%, 44%, 0.1) 6px),
+      radial-gradient(ellipse 8px 6px at 55% 45%, hsla(28, 52%, 46%, 0.1) 50%, transparent 50%),
+      linear-gradient(135deg, hsl(28, 58%, 48%) 0%, hsl(26, 52%, 42%) 100%)`,
+  },
+];
