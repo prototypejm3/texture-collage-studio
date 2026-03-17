@@ -1,6 +1,6 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { toPng } from 'html-to-image';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
 import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
