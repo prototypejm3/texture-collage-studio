@@ -20,14 +20,23 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
 
 const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [
   { value: 'clean-white', label: 'Clean White', previewColor: 'hsl(0 0% 98%)' },
+  { value: 'soft-white', label: 'Soft White', preview: '/walls/soft-white.png' },
+  { value: 'speckled-white', label: 'Speckled White', preview: '/walls/speckled-white.png' },
   { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
   { value: 'brick', label: 'Brick', preview: '/walls/brick.png' },
+  { value: 'dark-brick', label: 'Dark Brick', preview: '/walls/dark-brick.png' },
+  { value: 'gray-brick', label: 'Gray Brick', preview: '/walls/gray-brick.png' },
+  { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
+  { value: 'black-stone', label: 'Black Stone', preview: '/walls/black-stone.png' },
   { value: 'concrete', label: 'Concrete', preview: '/walls/concrete.png' },
+  { value: 'black-concrete', label: 'Black Concrete', preview: '/walls/black-concrete.png' },
   { value: 'limewash', label: 'Limewash', preview: '/walls/limewash.png' },
   { value: 'cream', label: 'Cream', preview: '/walls/cream.png' },
-  { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
-  { value: 'black-concrete', label: 'Black Concrete', preview: '/walls/black-concrete.png' },
+  { value: 'sand-suede', label: 'Sand Suede', preview: '/walls/sand-suede.png' },
   { value: 'red-velvet', label: 'Red Velvet', preview: '/walls/red-velvet.png' },
+  { value: 'mauve-velvet', label: 'Mauve Velvet', preview: '/walls/mauve-velvet.png' },
+  { value: 'emerald-velvet', label: 'Emerald Velvet', preview: '/walls/emerald-velvet.png' },
+  { value: 'navy-fabric', label: 'Navy Fabric', preview: '/walls/navy-fabric.png' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
@@ -48,7 +57,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
 
-  const isDark = ['black-brick', 'black-concrete', 'red-velvet'].includes(settings.background);
+  const isDark = ['black-brick', 'black-concrete', 'red-velvet', 'dark-brick', 'black-stone', 'navy-fabric'].includes(settings.background);
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">

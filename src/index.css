@@ -157,3 +157,39 @@
   background-color: hsl(0 0% 98%);
   background-image: none;
 }
+
+.wall-bg-dark-brick {
+  background: url('/walls/dark-brick.png') center/cover no-repeat;
+}
+
+.wall-bg-gray-brick {
+  background: url('/walls/gray-brick.png') center/cover no-repeat;
+}
+
+.wall-bg-black-stone {
+  background: url('/walls/black-stone.png') center/cover no-repeat;
+}
+
+.wall-bg-emerald-velvet {
+  background: url('/walls/emerald-velvet.png') center/cover no-repeat;
+}
+
+.wall-bg-navy-fabric {
+  background: url('/walls/navy-fabric.png') center/cover no-repeat;
+}
+
+.wall-bg-mauve-velvet {
+  background: url('/walls/mauve-velvet.png') center/cover no-repeat;
+}
+
+.wall-bg-sand-suede {
+  background: url('/walls/sand-suede.png') center/cover no-repeat;
+}
+
+.wall-bg-speckled-white {
+  background: url('/walls/speckled-white.png') center/cover no-repeat;
+}
+
+.wall-bg-soft-white {
+  background: url('/walls/soft-white.png') center/cover no-repeat;
+}
