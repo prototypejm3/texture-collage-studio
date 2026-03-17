@@ -90,18 +90,18 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
   return (
     <div className="p-3 space-y-2">
-          {/* Stencils section */}
+          {/* Shapes section */}
           <button
-            onClick={() => setShowStencils(!showStencils)}
+            onClick={() => setShowShapes(!showShapes)}
             className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1"
           >
-            ✂️ Stencils
-            {showStencils ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+            ✂️ Shapes
+            {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
           </button>
 
-          {showStencils && (
+          {showShapes && (
             <div className="flex flex-wrap items-center gap-1 mb-2 px-1">
-              {stencilShapes.map(s => (
+              {shapeOptions.map(s => (
                 <Button
                   key={s.value}
                   size="sm"
