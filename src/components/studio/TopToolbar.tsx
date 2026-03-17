@@ -24,7 +24,6 @@ interface Props {
   onTemplateOpacityChange: (val: number) => void;
 }
 
-const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 const frameColors: { value: FrameColor; color: string; label: string }[] = [
   { value: 'white', color: 'hsl(0, 0%, 95%)', label: 'White' },
   { value: 'cream', color: 'hsl(40, 30%, 90%)', label: 'Cream' },
@@ -35,8 +34,8 @@ const frameColors: { value: FrameColor; color: string; label: string }[] = [
 ];
 
 export function TopToolbar({
-  frameSize, frameColor,
-  onFrameSizeChange, onFrameColorChange,
+  frameColor,
+  onFrameColorChange,
   onGenerate, onShuffle, onClear, onSave,
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
@@ -60,28 +59,8 @@ export function TopToolbar({
         </h1>
       </div>
 
-      {/* Center: Frame controls */}
+      {/* Center: Frame color + reference */}
       <div className="flex items-center gap-4">
-        {/* Frame size */}
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-1">Size</span>
-          {frameSizes.map(s => (
-            <button
-              key={s}
-              onClick={() => onFrameSizeChange(s)}
-              className={`px-2.5 py-1 text-[11px] rounded-md transition-colors ${
-                frameSize === s
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-
-        <div className="w-px h-5 bg-border" />
-
         {/* Frame color */}
         <div className="flex items-center gap-1.5">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-1">Frame</span>

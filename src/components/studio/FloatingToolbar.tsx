@@ -90,7 +90,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50"
+        className="absolute top-4 left-1/2 -translate-x-1/2 z-50"
       >
         <div className="bg-popover border border-border rounded-xl shadow-xl p-2 min-w-[360px]">
           {/* Stencils section */}
