@@ -24,6 +24,8 @@ export interface SavedDesign {
   /** Position on wall in freeform mode (percentage-based) */
   wallX?: number;
   wallY?: number;
+  /** Rotation in degrees */
+  rotation?: number;
   /** Serialized studio state for re-editing */
   studioState?: string;
 }

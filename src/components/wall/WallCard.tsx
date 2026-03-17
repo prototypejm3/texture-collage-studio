@@ -337,8 +337,33 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
-                  </>
-                )}
+                    <div className="border-t border-border my-1" />
+                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
+                    <div className="flex items-center gap-1 px-3 py-1.5">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }}
+                        className="p-1 rounded hover:bg-secondary text-foreground"
+                        title="Rotate left"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                      </button>
+                      <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }}
+                        className="p-1 rounded hover:bg-secondary text-foreground"
+                        title="Rotate right"
+                      >
+                        <RotateCw className="w-3 h-3" />
+                      </button>
+                      {(design.rotation || 0) !== 0 && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }}
+                          className="ml-1 text-[10px] text-muted-foreground hover:text-foreground"
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
               </div>
             </>
           )}
