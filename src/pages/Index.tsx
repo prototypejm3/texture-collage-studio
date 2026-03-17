@@ -100,6 +100,7 @@ const Index = () => {
           selectedSectionId={studio.selectedSectionId}
           customTemplate={customTemplate}
           templateOpacity={templateOpacity}
+          customTextures={customTextures}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
