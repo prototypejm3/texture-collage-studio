@@ -1,4 +1,4 @@
-import { SavedDesign, WallLayout, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, WallLayout, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { FreeformWall } from './FreeformWall';
 import Masonry from 'react-masonry-css';
@@ -17,11 +17,10 @@ interface WallGridProps {
   onToggleHide: (id: string) => void;
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
-  onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onFrameTextureChange, onSizeChange }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange }: WallGridProps) {
   const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
     key: d.id,
     design: d,
@@ -33,7 +32,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     onToggleHide,
     onUpdate,
     onFrameStyleChange,
-    onFrameTextureChange,
+    
     onSizeChange,
     isPremium,
     size,
@@ -53,7 +52,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
         onToggleHide={onToggleHide}
         onUpdate={onUpdate}
         onFrameStyleChange={onFrameStyleChange}
-        onFrameTextureChange={onFrameTextureChange}
+        
         onSizeChange={onSizeChange}
       />
     );

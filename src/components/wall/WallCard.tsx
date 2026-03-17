@@ -1,4 +1,4 @@
-import { SavedDesign, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { motion } from 'framer-motion';
 import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil } from 'lucide-react';
 import { useState, useRef } from 'react';
@@ -13,7 +13,6 @@ interface WallCardProps {
   onToggleHide: (id: string) => void;
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
-  onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
   size?: 'normal' | 'large';
@@ -32,37 +31,6 @@ const frameStyleList: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-const frameTextureList: { value: FrameTexture; label: string }[] = [
-  { value: 'smooth', label: 'Smooth' },
-  { value: 'brushed', label: 'Brushed' },
-  { value: 'hammered', label: 'Hammered' },
-  { value: 'antiqued', label: 'Antiqued' },
-  { value: 'matte', label: 'Matte' },
-];
-
-/* ─── Texture overlay CSS ─── */
-function getTextureOverlay(texture: FrameTexture): React.CSSProperties {
-  switch (texture) {
-    case 'brushed':
-      return {
-        backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255,255,255,0.04) 1px, rgba(255,255,255,0.04) 2px)',
-      };
-    case 'hammered':
-      return {
-        backgroundImage: 'radial-gradient(circle 3px at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle 2px at 70% 60%, rgba(0,0,0,0.06) 0%, transparent 50%), radial-gradient(circle 4px at 50% 20%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle 3px at 20% 80%, rgba(0,0,0,0.04) 0%, transparent 50%)',
-      };
-    case 'antiqued':
-      return {
-        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.08) 0%, transparent 30%, rgba(0,0,0,0.05) 60%, transparent 80%, rgba(0,0,0,0.1) 100%)',
-      };
-    case 'matte':
-      return {
-        filter: 'saturate(0.7) brightness(0.95)',
-      };
-    default: // smooth
-      return {};
-  }
-}
 
 /* ─── Metallic gradient configs ─── */
 const metallicGradients: Record<string, {
@@ -112,10 +80,9 @@ const metallicGradients: Record<string, {
   },
 };
 
-function MetallicFrame({ metal, texture, children }: { metal: string; texture: FrameTexture; children: React.ReactNode }) {
+function MetallicFrame({ metal, children }: { metal: string; children: React.ReactNode }) {
   const g = metallicGradients[metal];
   if (!g) return <>{children}</>;
-  const texOverlay = getTextureOverlay(texture);
 
   return (
     <div
@@ -126,7 +93,6 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
         borderLeft: g.borderLeft,
         borderRight: g.borderRight,
         borderBottom: g.borderBottom,
-        ...texOverlay,
       }}
     >
       <div
@@ -134,7 +100,6 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
         style={{
           background: g.inner,
           boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
-          ...texOverlay,
         }}
       >
         <div style={{ backgroundColor: g.matBg }} className="p-[clamp(6px,1.5%,12px)]">
@@ -145,18 +110,17 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
   );
 }
 
-function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture: FrameTexture; children: React.ReactNode }) {
+function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
   // Metallic frames
   if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
-    return <MetallicFrame metal={style} texture={texture}>{children}</MetallicFrame>;
+    return <MetallicFrame metal={style}>{children}</MetallicFrame>;
   }
 
-  const texOverlay = getTextureOverlay(texture);
 
   switch (style) {
     case 'minimal':
       return (
-        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]" style={texOverlay}>
+        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
           <div className="border border-[hsl(0,0%,20%)] border-opacity-80">
             <div className="bg-white p-[clamp(8px,2%,16px)]">
               {children}
@@ -166,7 +130,7 @@ function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture
       );
     case 'shadow-box':
       return (
-        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]" style={texOverlay}>
+        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]">
           <div className="border-2 border-[hsl(0,0%,30%)]">
             <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">
               {children}
@@ -181,7 +145,6 @@ function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture
           style={{
             background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)',
             backgroundSize: '200% 200%',
-            ...texOverlay,
           }}
         >
           <div className="bg-white p-[clamp(8px,2%,14px)]">
@@ -216,7 +179,7 @@ function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onFrameTextureChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(design.name);
@@ -259,7 +222,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
         onClick={() => onOpen(design.id)}
       >
-        <FrameWrapper style={design.frameStyle} texture={design.frameTexture || 'smooth'}>
+        <FrameWrapper style={design.frameStyle}>
           <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
             <img
               src={design.previewImage}
@@ -373,22 +336,6 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
-                    {/* Texture picker — shown for frames that support it */}
-                    {design.frameStyle !== 'none' && design.frameStyle !== 'polaroid' && design.frameStyle !== 'floating' && (
-                      <>
-                        <div className="border-t border-border my-1" />
-                        <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Texture</p>
-                        {frameTextureList.map(ft => (
-                          <button
-                            key={ft.value}
-                            onClick={(e) => { e.stopPropagation(); onFrameTextureChange(design.id, ft.value); setMenuOpen(false); }}
-                            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${(design.frameTexture || 'smooth') === ft.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                          >
-                            {ft.label}
-                          </button>
-                        ))}
-                      </>
-                    )}
                   </>
                 )}
               </div>

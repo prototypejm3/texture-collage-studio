@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { SavedDesign, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { AnimatePresence } from 'framer-motion';
 
@@ -20,14 +20,13 @@ interface FreeformWallProps {
   onToggleHide: (id: string) => void;
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
-  onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
 }
 
 export function FreeformWall({
   designs, isPremium, onOpen, onDuplicate, onDelete,
   onTogglePin, onToggleIRL, onToggleHide, onUpdate,
-  onFrameStyleChange, onFrameTextureChange, onSizeChange,
+  onFrameStyleChange, onSizeChange,
 }: FreeformWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
@@ -118,7 +117,7 @@ export function FreeformWall({
                 onToggleHide={onToggleHide}
                 onUpdate={onUpdate}
                 onFrameStyleChange={onFrameStyleChange}
-                onFrameTextureChange={onFrameTextureChange}
+                
                 onSizeChange={onSizeChange}
                 isPremium={isPremium}
                 size={d.displaySize === 'large' ? 'large' : 'normal'}

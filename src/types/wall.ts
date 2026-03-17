@@ -1,7 +1,7 @@
 export type WallLayout = 'freeform' | 'grid' | 'single';
 export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'clean-white' | 'dark-brick' | 'gray-brick' | 'black-stone' | 'speckled-white';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'none';
-export type FrameTexture = 'smooth' | 'brushed' | 'hammered' | 'antiqued' | 'matte';
+
 export type DesignSize = 'small' | 'medium' | 'large';
 export type DesignStatus = 'in-progress' | 'finished';
 export type UserTier = 'free' | 'premium';
@@ -19,7 +19,7 @@ export interface SavedDesign {
   pinned: boolean;
   hidden: boolean;
   frameStyle: FrameStyle;
-  frameTexture: FrameTexture;
+  
   displaySize: DesignSize;
   /** Position on wall in freeform mode (percentage-based) */
   wallX?: number;

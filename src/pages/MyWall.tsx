@@ -9,7 +9,7 @@ import { PaywallModal } from '@/components/wall/PaywallModal';
 import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
 import { NavBar } from '@/components/NavBar';
-import { DesignStatus, DesignSize, FrameStyle, FrameTexture, WallBackground } from '@/types/wall';
+import { DesignStatus, DesignSize, FrameStyle, WallBackground } from '@/types/wall';
 import { Expand, Download, MoreHorizontal } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
@@ -75,9 +75,6 @@ const MyWall = () => {
     wall.updateDesign(id, { displaySize: size });
   }, [wall]);
 
-  const handleFrameTexture = useCallback((id: string, texture: FrameTexture) => {
-    wall.updateDesign(id, { frameTexture: texture });
-  }, [wall]);
 
   const handleViewMode = useCallback((index?: number) => {
     setViewStartIndex(index ?? 0);
@@ -187,7 +184,7 @@ const MyWall = () => {
                 onToggleHide={wall.toggleHide}
                 onUpdate={wall.updateDesign}
                 onFrameStyleChange={handleFrameStyle}
-                onFrameTextureChange={handleFrameTexture}
+                
                 onSizeChange={handleSizeChange}
               />
             </motion.div>
