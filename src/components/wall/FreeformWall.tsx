@@ -26,7 +26,7 @@ interface FreeformWallProps {
 export function FreeformWall({
   designs, isPremium, onOpen, onDuplicate, onDelete,
   onTogglePin, onToggleIRL, onToggleHide, onUpdate,
-  onFrameStyleChange, onFrameTextureChange, onSizeChange,
+  onFrameStyleChange, onSizeChange,
 }: FreeformWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
