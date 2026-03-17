@@ -66,6 +66,7 @@ export function useWall() {
       pinned: false,
       hidden: false,
       frameStyle: settings.defaultFrameStyle,
+      displaySize: 'medium',
       studioState,
     };
     setDesigns([design]);
