@@ -113,16 +113,18 @@ export function Canvas({
           )}
 
           {/* Free-placed elements (always rendered, even in vibe mode) */}
-          {elements.map(el => (
-            <CanvasElementComponent
-              key={el.id}
-              element={el}
-              isSelected={el.id === selectedId}
-              onSelect={() => onSelect(el.id)}
-              onUpdate={(updates) => onUpdate(el.id, updates)}
-              customTextures={customTextures}
-            />
-          ))}
+          <div className="absolute inset-0" style={{ zIndex: 20, pointerEvents: 'none' }}>
+            {elements.map(el => (
+              <CanvasElementComponent
+                key={el.id}
+                element={el}
+                isSelected={el.id === selectedId}
+                onSelect={() => onSelect(el.id)}
+                onUpdate={(updates) => onUpdate(el.id, updates)}
+                customTextures={customTextures}
+              />
+            ))}
+          </div>
 
           {/* Vibe outline overlay */}
           {activeVibe && (
