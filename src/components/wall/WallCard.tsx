@@ -336,6 +336,14 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
       {/* Gallery label — name & description */}
       <div className="mt-3">
         {editing ? (
