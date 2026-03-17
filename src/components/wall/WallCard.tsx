@@ -216,10 +216,35 @@ function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onFrameTextureChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onFrameTextureChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editName, setEditName] = useState(design.name);
+  const [editDesc, setEditDesc] = useState(design.description || '');
+  const nameRef = useRef<HTMLInputElement>(null);
 
   const isMetallic = ['gold', 'chrome', 'copper', 'silver'].includes(design.frameStyle);
+
+  const handleStartEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setEditName(design.name);
+    setEditDesc(design.description || '');
+    setEditing(true);
+    setTimeout(() => nameRef.current?.focus(), 50);
+  };
+
+  const handleSaveEdit = () => {
+    const trimmedName = editName.trim();
+    if (trimmedName) {
+      onUpdate(design.id, { name: trimmedName, description: editDesc.trim() || undefined });
+    }
+    setEditing(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSaveEdit();
+    if (e.key === 'Escape') setEditing(false);
+  };
 
   return (
     <motion.div
