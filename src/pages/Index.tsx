@@ -157,6 +157,7 @@ const Index = () => {
           onDrop={handleDrop}
           onSelectSection={studio.selectSection}
           onDropInSection={studio.fillSection}
+          onDropAsSwatch={handleDrop}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
 

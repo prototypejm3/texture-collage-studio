@@ -20,6 +20,7 @@ interface Props {
   onDrop: (textureId: string, x: number, y: number) => void;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -44,7 +45,7 @@ export function Canvas({
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
-  onSelectSection, onDropInSection, canvasRef,
+  onSelectSection, onDropInSection, onDropAsSwatch, canvasRef,
   customTextures = [],
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -136,6 +137,7 @@ export function Canvas({
               canvasHeight={h}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
+              onDropAsSwatch={onDropAsSwatch}
               customTextures={customTextures}
             />
           )}
