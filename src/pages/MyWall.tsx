@@ -47,7 +47,7 @@ const MyWall = () => {
   const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
-    navigate('/');
+    navigate(`/create?edit=${id}`);
   }, [navigate]);
 
   const handleDuplicate = useCallback((id: string) => {

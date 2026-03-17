@@ -202,5 +202,8 @@ export function useStudio() {
     fillSection,
     selectSection,
     shuffleVibeFills,
+    // Serialization
+    getState,
+    loadState,
   };
 }
