@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 interface Props {
