@@ -2,10 +2,31 @@ import { useRef, useState, useCallback, useEffect } from 'react';
 import { CanvasElement as CanvasElementType, MaterialEffects } from '@/types/studio';
 import { textures } from '@/data/textures';
 
+/**
+ * Stencil clip-paths — organic, imperfect shapes that simulate
+ * hand-cut material swatches. All use polygon() or ellipse() so
+ * they are pure CSS (no external SVGs needed).
+ */
 function getClipPath(shape: CanvasElementType['shape']): string | undefined {
   switch (shape) {
-    case 'circle': return 'ellipse(50% 50% at 50% 50%)';
-    default: return undefined;
+    case 'soft-square':
+      // Slightly imperfect square with organic wobble
+      return 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)';
+    case 'circle':
+      // Slightly imperfect circle
+      return 'polygon(50% 1%, 68% 3%, 83% 10%, 93% 22%, 98% 38%, 99% 55%, 95% 72%, 86% 85%, 73% 94%, 55% 99%, 38% 98%, 22% 92%, 11% 82%, 4% 68%, 1% 52%, 2% 35%, 7% 20%, 16% 9%, 32% 3%)';
+    case 'torn-edge':
+      // Irregular torn edges
+      return 'polygon(2% 0%, 18% 3%, 35% 0%, 52% 4%, 68% 1%, 85% 3%, 98% 0%, 100% 15%, 97% 32%, 100% 48%, 98% 65%, 100% 82%, 97% 100%, 82% 97%, 65% 100%, 48% 96%, 32% 100%, 15% 98%, 0% 100%, 3% 85%, 0% 68%, 4% 52%, 0% 35%, 3% 18%)';
+    case 'blob':
+      // Organic curved blob shape
+      return 'polygon(35% 2%, 55% 0%, 75% 5%, 90% 15%, 97% 30%, 100% 50%, 96% 70%, 88% 85%, 72% 95%, 55% 100%, 38% 98%, 20% 92%, 8% 80%, 2% 65%, 0% 45%, 3% 28%, 10% 14%, 22% 5%)';
+    case 'strip':
+      return undefined; // strips just use dimensions
+    case 'rectangle':
+      return undefined;
+    default:
+      return undefined;
   }
 }
 

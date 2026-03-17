@@ -44,7 +44,7 @@ export function useStudio() {
       width: 100,
       height: 100,
       rotation: 0,
-      shape: 'square',
+      shape: 'soft-square',
       zIndex: nextId,
       effects: { ...defaultEffects },
     };
@@ -111,7 +111,7 @@ export function useStudio() {
 
   const generateRandom = useCallback(() => {
     const count = 4 + Math.floor(Math.random() * 5);
-    const shapes: ElementShape[] = ['square', 'rectangle', 'circle', 'strip'];
+    const shapes: ElementShape[] = ['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'];
     const newElements: CanvasElement[] = [];
     for (let i = 0; i < count; i++) {
       const tex = textures[Math.floor(Math.random() * textures.length)];

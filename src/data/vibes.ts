@@ -52,7 +52,7 @@ const frameInFrame: FrameTemplate = {
     { id: 'fif-left', x: 0, y: 18, width: 18, height: 64, shape: 'rectangle', tone: 'light' },
     { id: 'fif-right', x: 82, y: 18, width: 18, height: 64, shape: 'rectangle', tone: 'light' },
     // center focus
-    { id: 'fif-center', x: 18, y: 18, width: 64, height: 64, shape: 'square', tone: 'accent' },
+    { id: 'fif-center', x: 18, y: 18, width: 64, height: 64, shape: 'soft-square', tone: 'accent' },
   ],
 };
 
@@ -62,7 +62,7 @@ const patchwork: FrameTemplate = {
   sections: [
     { id: 'pw1', x: 0, y: 0, width: 45, height: 35, shape: 'rectangle', tone: 'dark' },
     { id: 'pw2', x: 45, y: 0, width: 55, height: 35, shape: 'rectangle', tone: 'medium' },
-    { id: 'pw3', x: 0, y: 35, width: 35, height: 32, shape: 'square', tone: 'light' },
+    { id: 'pw3', x: 0, y: 35, width: 35, height: 32, shape: 'soft-square', tone: 'light' },
     { id: 'pw4', x: 35, y: 35, width: 30, height: 32, shape: 'rectangle', tone: 'accent' },
     { id: 'pw5', x: 65, y: 35, width: 35, height: 32, shape: 'rectangle', tone: 'dark' },
     { id: 'pw6', x: 0, y: 67, width: 50, height: 33, shape: 'rectangle', tone: 'medium' },

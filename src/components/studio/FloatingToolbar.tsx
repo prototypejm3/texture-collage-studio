@@ -1,7 +1,7 @@
 import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, MaterialEffects } from '@/types/studio';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Copy, Trash2, RotateCw, Square, RectangleHorizontal, Circle, Minus, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,11 +13,52 @@ interface Props {
   onDelete: () => void;
 }
 
-const shapes: { value: ElementShape; icon: React.ReactNode; label: string }[] = [
-  { value: 'square', icon: <Square className="w-3.5 h-3.5" />, label: 'Square' },
-  { value: 'rectangle', icon: <RectangleHorizontal className="w-3.5 h-3.5" />, label: 'Rectangle' },
-  { value: 'circle', icon: <Circle className="w-3.5 h-3.5" />, label: 'Circle' },
-  { value: 'strip', icon: <Minus className="w-3.5 h-3.5" />, label: 'Strip' },
+// Stencil shape icons as tiny SVG previews
+function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }) {
+  const fill = active ? 'currentColor' : 'currentColor';
+  const size = 16;
+
+  switch (shape) {
+    case 'soft-square':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="1,0.5 10,0 19,0.5 19.5,10 19,19 10,19.5 1,19 0.5,10" fill={fill} opacity={0.8} />
+        </svg>
+      );
+    case 'torn-edge':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="0.5,0 4,1 7,0 10,1 13,0 16,1 19.5,0 20,4 19,7 20,10 19,13 20,16 19,20 16,19 13,20 10,19 7,20 4,19 0,20 1,16 0,13 1,10 0,7 1,4" fill={fill} opacity={0.8} />
+        </svg>
+      );
+    case 'circle':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="10,0.5 14,1 17,3 19,6 20,10 19,14 17,17 14,19 10,20 6,19 3,17 1,14 0,10 1,6 3,3 6,1" fill={fill} opacity={0.8} />
+        </svg>
+      );
+    case 'blob':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="7,0.5 12,0 16,1 19,4 20,8 20,13 18,17 14,19 10,20 6,19 3,17 1,13 0,9 1,5 3,2" fill={fill} opacity={0.8} />
+        </svg>
+      );
+    case 'strip':
+      return <Minus className="w-3.5 h-3.5" />;
+    case 'rectangle':
+      return <RectangleHorizontal className="w-3.5 h-3.5" />;
+    default:
+      return null;
+  }
+}
+
+const stencilShapes: { value: ElementShape; label: string }[] = [
+  { value: 'soft-square', label: 'Soft Square' },
+  { value: 'torn-edge', label: 'Torn Edge' },
+  { value: 'circle', label: 'Circle' },
+  { value: 'blob', label: 'Blob' },
+  { value: 'strip', label: 'Strip' },
+  { value: 'rectangle', label: 'Rectangle' },
 ];
 
 const edgeOptions: { value: EdgeStyle; label: string }[] = [
@@ -41,6 +82,7 @@ const shadowOptions: { value: ShadowDepth; label: string }[] = [
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(false);
+  const [showStencils, setShowStencils] = useState(true);
 
   return (
     <AnimatePresence>
@@ -50,31 +92,42 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         exit={{ opacity: 0, y: 8 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50"
       >
-        <div className="bg-popover border border-border rounded-xl shadow-xl p-2 min-w-[320px]">
-          {/* Top row: quick actions */}
-          <div className="flex items-center gap-1 mb-2">
-            {/* Shape switcher */}
-            {shapes.map(s => (
-              <Button
-                key={s.value}
-                size="sm"
-                variant={element.shape === s.value ? 'default' : 'ghost'}
-                onClick={() => {
-                  const updates: Partial<CanvasElement> = { shape: s.value };
-                  if (s.value === 'strip') { updates.width = 40; updates.height = 160; }
-                  else if (s.value === 'rectangle') { updates.width = 120; updates.height = 80; }
-                  else { updates.width = 100; updates.height = 100; }
-                  onUpdate(updates);
-                }}
-                className="h-8 w-8 p-0"
-                title={s.label}
-              >
-                {s.icon}
-              </Button>
-            ))}
+        <div className="bg-popover border border-border rounded-xl shadow-xl p-2 min-w-[360px]">
+          {/* Stencils section */}
+          <button
+            onClick={() => setShowStencils(!showStencils)}
+            className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1"
+          >
+            ✂️ Stencils
+            {showStencils ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+          </button>
 
-            <div className="w-px h-6 bg-border mx-1" />
+          {showStencils && (
+            <div className="flex items-center gap-1 mb-2 px-1">
+              {stencilShapes.map(s => (
+                <Button
+                  key={s.value}
+                  size="sm"
+                  variant={element.shape === s.value ? 'default' : 'ghost'}
+                  onClick={() => {
+                    const updates: Partial<CanvasElement> = { shape: s.value };
+                    if (s.value === 'strip') { updates.width = 40; updates.height = 160; }
+                    else if (s.value === 'rectangle') { updates.width = 120; updates.height = 80; }
+                    else { updates.width = element.width; updates.height = Math.min(element.width, element.height); }
+                    onUpdate(updates);
+                  }}
+                  className="h-8 px-2 gap-1"
+                  title={s.label}
+                >
+                  <StencilIcon shape={s.value} active={element.shape === s.value} />
+                  <span className="text-[9px] hidden sm:inline">{s.label}</span>
+                </Button>
+              ))}
+            </div>
+          )}
 
+          {/* Quick actions row */}
+          <div className="flex items-center gap-1 mb-2 px-1">
             {/* Resize */}
             <div className="flex items-center gap-1">
               <Maximize2 className="w-3 h-3 text-muted-foreground" />
