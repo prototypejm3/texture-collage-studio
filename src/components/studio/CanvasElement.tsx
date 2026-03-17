@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { CanvasElement as CanvasElementType, MaterialEffects } from '@/types/studio';
+import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
 /**
