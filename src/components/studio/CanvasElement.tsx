@@ -105,6 +105,10 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     <div
       ref={ref}
       onMouseDown={handleMouseDown}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
       className={`absolute cursor-move transition-shadow pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
       style={{
         left: element.x,
