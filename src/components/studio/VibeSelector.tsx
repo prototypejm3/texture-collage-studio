@@ -85,7 +85,7 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             {vibes.map(vibe => (
               <button
                 key={vibe.id}
