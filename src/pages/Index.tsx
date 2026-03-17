@@ -1,23 +1,33 @@
 import { useRef, useCallback, useState } from 'react';
 import { toPng } from 'html-to-image';
+import { useNavigate } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
 import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
+import { useWall } from '@/hooks/useWall';
+import { useUserTier } from '@/hooks/useUserTier';
 import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { VibeSelector } from '@/components/studio/VibeSelector';
+import { NavBar } from '@/components/NavBar';
+import { PaywallModal } from '@/components/wall/PaywallModal';
 import { Vibe } from '@/types/studio';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
+  const navigate = useNavigate();
   const studio = useStudio();
   const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
+  const wall = useWall();
+  const { isPremium, canSave, upgradeToPremium } = useUserTier();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [vibesOpen, setVibesOpen] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
 
   const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
@@ -29,7 +39,7 @@ const Index = () => {
     studio.selectVibe(vibe);
   }, [studio]);
 
-  const handleSave = useCallback(async () => {
+  const handleExport = useCallback(async () => {
     if (!canvasRef.current) return;
     try {
       const dataUrl = await toPng(canvasRef.current, { pixelRatio: 2 });
@@ -37,11 +47,51 @@ const Index = () => {
       link.download = 'shadow-box.png';
       link.href = dataUrl;
       link.click();
-      toast({ title: 'Saved!', description: 'Your shadow box has been exported as PNG.' });
+      toast({ title: 'Exported!', description: 'Your shadow box has been exported as PNG.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to export image.', variant: 'destructive' });
     }
   }, []);
+
+  const handleSaveToWall = useCallback(async () => {
+    if (!canvasRef.current) return;
+    try {
+      const dataUrl = await toPng(canvasRef.current, { pixelRatio: 2 });
+      const name = studio.activeVibe?.name || 'Untitled Design';
+      const vibeName = studio.activeVibe?.name;
+
+      if (!canSave(wall.designs.length)) {
+        setPendingSave({ preview: dataUrl, name, vibeName });
+        setShowPaywall(true);
+        return;
+      }
+
+      wall.addDesign(dataUrl, name, vibeName);
+      toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
+    } catch {
+      toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
+    }
+  }, [studio, wall, canSave]);
+
+  const handleReplace = useCallback(() => {
+    if (pendingSave) {
+      wall.replaceDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName);
+      toast({ title: 'Design replaced!', description: 'Your old design was replaced with the new one.' });
+    }
+    setPendingSave(null);
+    setShowPaywall(false);
+  }, [pendingSave, wall]);
+
+  const handleUnlock = useCallback(() => {
+    // TODO: real Stripe payment
+    upgradeToPremium();
+    if (pendingSave) {
+      wall.addDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName);
+    }
+    setPendingSave(null);
+    setShowPaywall(false);
+    toast({ title: 'Welcome to Premium!', description: 'Your wall is now fully unlocked.' });
+  }, [pendingSave, wall, upgradeToPremium]);
 
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.activeVibe && studio.selectedSectionId) {
@@ -61,6 +111,7 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
+      <NavBar />
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
@@ -69,7 +120,8 @@ const Index = () => {
         onGenerate={studio.generateRandom}
         onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}
-        onSave={handleSave}
+        onSave={handleExport}
+        onSaveToWall={handleSaveToWall}
         onToggleVibes={() => setVibesOpen(v => !v)}
         vibesActive={vibesOpen}
         customTemplate={customTemplate}
@@ -108,7 +160,6 @@ const Index = () => {
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
 
-        {/* Docked toolbar on right side */}
         <div className="w-[240px] flex-shrink-0 border-l border-border bg-popover overflow-y-auto">
           {studio.selectedElement ? (
             <FloatingToolbar
@@ -125,7 +176,6 @@ const Index = () => {
           )}
         </div>
 
-        {/* Vibe selector overlay */}
         <VibeSelector
           isOpen={vibesOpen}
           activeVibeId={studio.activeVibe?.id ?? null}
@@ -135,13 +185,18 @@ const Index = () => {
         />
       </div>
 
-      {/* Frame size at bottom */}
       <BottomBar
         frameSize={studio.frameSize}
         onFrameSizeChange={studio.setFrameSize}
       />
 
-      {/* SVG Filters for wrinkle effects */}
+      <PaywallModal
+        isOpen={showPaywall}
+        onClose={() => { setShowPaywall(false); setPendingSave(null); }}
+        onReplace={handleReplace}
+        onUnlock={handleUnlock}
+      />
+
       <svg className="svg-filters" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="wrinkle-light">

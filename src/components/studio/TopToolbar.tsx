@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
   onShuffle: () => void;
   onClear: () => void;
   onSave: () => void;
+  onSaveToWall?: () => void;
   onToggleVibes: () => void;
   vibesActive: boolean;
   // Template
@@ -36,7 +37,7 @@ const frameColors: { value: FrameColor; color: string; label: string }[] = [
 export function TopToolbar({
   frameColor,
   onFrameColorChange,
-  onGenerate, onShuffle, onClear, onSave,
+  onGenerate, onShuffle, onClear, onSave, onSaveToWall,
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
@@ -145,8 +146,13 @@ export function TopToolbar({
         <Button size="sm" variant="ghost" onClick={onClear} className="gap-1.5 text-xs text-destructive hover:text-destructive">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </Button>
+        {onSaveToWall && (
+          <Button size="sm" variant="ghost" onClick={onSaveToWall} className="gap-1.5 text-xs">
+            <Save className="w-3.5 h-3.5" /> Save to Wall
+          </Button>
+        )}
         <Button size="sm" onClick={onSave} className="gap-1.5 text-xs">
-          <Download className="w-3.5 h-3.5" /> Save PNG
+          <Download className="w-3.5 h-3.5" /> Export PNG
         </Button>
       </div>
     </div>
