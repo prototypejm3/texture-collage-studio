@@ -11,6 +11,7 @@ interface WallCardProps {
   onTogglePin: (id: string) => void;
   onToggleIRL: (id: string) => void;
   onToggleHide: (id: string) => void;
+  onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
