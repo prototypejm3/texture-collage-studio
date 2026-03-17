@@ -2,6 +2,7 @@ import { useRef, useCallback } from 'react';
 import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills } from '@/types/studio';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
+import { CustomTemplate } from '@/hooks/useCustomTemplate';
 
 interface Props {
   elements: CanvasElement[];
@@ -11,6 +12,8 @@ interface Props {
   activeVibe: Vibe | null;
   vibeFills: VibeFills;
   selectedSectionId: string | null;
+  customTemplate: CustomTemplate | null;
+  templateOpacity: number;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
@@ -38,6 +41,7 @@ const frameColorMap: Record<FrameColor, { bg: string; border: string; shadow: st
 export function Canvas({
   elements, selectedId, frameSize, frameColor,
   activeVibe, vibeFills, selectedSectionId,
+  customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, canvasRef,
 }: Props) {
@@ -94,6 +98,18 @@ export function Canvas({
             boxShadow: `inset 0 1px 4px ${fc.shadow}`,
           }}
         >
+          {/* Custom template background reference */}
+          {customTemplate && (
+            <div
+              className="absolute inset-0 pointer-events-none bg-center bg-contain bg-no-repeat"
+              style={{
+                backgroundImage: `url(${customTemplate.dataUrl})`,
+                opacity: templateOpacity,
+                zIndex: 1,
+              }}
+            />
+          )}
+
           {/* Free-placed elements (non-vibe mode) */}
           {!activeVibe && elements.map(el => (
             <CanvasElementComponent
