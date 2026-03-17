@@ -222,7 +222,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
         onClick={() => onOpen(design.id)}
       >
-        <FrameWrapper style={design.frameStyle} texture={design.frameTexture || 'smooth'}>
+        <FrameWrapper style={design.frameStyle}>
           <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
             <img
               src={design.previewImage}
