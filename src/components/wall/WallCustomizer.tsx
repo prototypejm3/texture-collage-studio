@@ -65,7 +65,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
           </div>
         ) : (
           <h1
-            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isCharcoal ? 'text-background/80' : 'text-foreground/70'}`}
+            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isDark ? 'text-background/80' : 'text-foreground/70'}`}
             onClick={() => { setTitleDraft(settings.title); setEditingTitle(true); }}
           >
             {settings.title}
