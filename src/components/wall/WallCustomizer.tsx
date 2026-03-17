@@ -18,7 +18,8 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'curated', label: 'Curated', icon: <Sparkles className="w-3.5 h-3.5" /> },
 ];
 
-const backgrounds: { value: WallBackground; label: string; preview: string }[] = [
+const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [
+  { value: 'clean-white', label: 'Clean White', previewColor: 'hsl(0 0% 98%)' },
   { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
   { value: 'brick', label: 'Brick', preview: '/walls/brick.png' },
   { value: 'concrete', label: 'Concrete', preview: '/walls/concrete.png' },
@@ -143,7 +144,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                 }`}
                 title={bg.label}
               >
-                <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+                {bg.preview ? (
+                  <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="block w-full h-full" style={{ backgroundColor: bg.previewColor }} />
+                )}
               </button>
             ))}
           </div>

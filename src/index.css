@@ -152,3 +152,8 @@
 .wall-bg-red-velvet {
   background: url('/walls/red-velvet.png') center/cover no-repeat;
 }
+
+.wall-bg-clean-white {
+  background-color: hsl(0 0% 98%);
+  background-image: none;
+}
