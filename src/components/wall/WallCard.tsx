@@ -15,7 +15,7 @@ interface WallCardProps {
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
-  size?: 'normal' | 'large';
+  size?: DesignSize;
 }
 
 const frameStyleList: { value: FrameStyle; label: string }[] = [

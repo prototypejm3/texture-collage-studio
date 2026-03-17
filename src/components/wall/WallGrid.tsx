@@ -21,7 +21,7 @@ interface WallGridProps {
 }
 
 export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange }: WallGridProps) {
-  const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
+  const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
     onOpen,
