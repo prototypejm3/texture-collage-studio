@@ -41,4 +41,10 @@ export const abstractTextures: TextureSwatch[] = [
     category: 'Abstract',
     cssBackground: `repeating-linear-gradient(0deg, hsl(210, 35%, 30%) 0px, hsl(210, 35%, 30%) 8px, hsl(40, 30%, 85%) 8px, hsl(40, 30%, 85%) 16px, hsl(350, 40%, 55%) 16px, hsl(350, 40%, 55%) 24px, hsl(40, 30%, 85%) 24px, hsl(40, 30%, 85%) 32px)`,
   },
+  {
+    id: 'abstract-maze',
+    name: 'Maze',
+    category: 'Abstract',
+    cssBackground: `url(/textures/maze.png)`,
+  },
 ];
