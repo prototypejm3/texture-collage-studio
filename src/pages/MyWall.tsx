@@ -75,9 +75,6 @@ const MyWall = () => {
     wall.updateDesign(id, { displaySize: size });
   }, [wall]);
 
-  const handleFrameTexture = useCallback((id: string, texture: FrameTexture) => {
-    wall.updateDesign(id, { frameTexture: texture });
-  }, [wall]);
 
   const handleViewMode = useCallback((index?: number) => {
     setViewStartIndex(index ?? 0);
