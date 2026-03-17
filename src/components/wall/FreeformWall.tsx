@@ -117,7 +117,7 @@ export function FreeformWall({
                 onToggleHide={onToggleHide}
                 onUpdate={onUpdate}
                 onFrameStyleChange={onFrameStyleChange}
-                onFrameTextureChange={onFrameTextureChange}
+                
                 onSizeChange={onSizeChange}
                 isPremium={isPremium}
                 size={d.displaySize === 'large' ? 'large' : 'normal'}
