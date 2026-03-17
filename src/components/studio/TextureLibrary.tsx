@@ -9,6 +9,7 @@ const categories: TextureCategory[] = [
   'Denim', 'Corduroy', 'Tweed', 'Felt', 'Yarn',
   'Marble', 'Wood', 'Terrazzo', 'Concrete', 'Sand', 'Stone', 'Cork',
   'Abstract', 'Stripe', 'Plaid', 'Grid', 'Speckle', 'Herringbone',
+  'Animal', 'Novelty',
 ];
 
 interface TextureLibraryProps {
