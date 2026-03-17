@@ -12,10 +12,7 @@ interface WallCustomizerProps {
 const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'freeform', label: 'Freeform', icon: <Move className="w-3.5 h-3.5" /> },
   { value: 'grid', label: 'Grid', icon: <LayoutGrid className="w-3.5 h-3.5" /> },
-  { value: 'masonry', label: 'Masonry', icon: <Columns className="w-3.5 h-3.5" /> },
-  { value: 'single', label: 'Gallery', icon: <AlignJustify className="w-3.5 h-3.5" /> },
-  { value: 'featured', label: 'Featured', icon: <Star className="w-3.5 h-3.5" /> },
-  { value: 'curated', label: 'Curated', icon: <Sparkles className="w-3.5 h-3.5" /> },
+  { value: 'single', label: 'List', icon: <AlignJustify className="w-3.5 h-3.5" /> },
 ];
 
 const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [

@@ -70,39 +70,6 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     );
   }
 
-  if (layout === 'featured' && designs.length > 0) {
-    const [featured, ...rest] = designs;
-    return (
-      <div className="flex flex-col gap-12">
-        <AnimatePresence>
-          <div className="max-w-2xl mx-auto w-full">
-            <WallCard {...cardProps(featured, 'large')} />
-          </div>
-          {rest.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
-              {rest.map(d => <WallCard {...cardProps(d)} />)}
-            </div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  }
-
-  if (layout === 'masonry') {
-    return (
-      <Masonry
-        breakpointCols={{ default: 3, 1024: 2, 768: 1 }}
-        className="flex gap-10 -ml-10"
-        columnClassName="pl-10 flex flex-col gap-10"
-      >
-        {designs.map(d => <WallCard {...cardProps(d)} />)}
-      </Masonry>
-    );
-  }
-
-  if (layout === 'curated') {
-    return <CuratedLayout designs={designs} cardProps={cardProps} />;
-  }
 
   // Default grid — respects per-design displaySize
   const hasMixedSizes = designs.some(d => (d.displaySize || 'medium') !== 'medium');
