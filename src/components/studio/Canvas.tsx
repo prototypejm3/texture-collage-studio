@@ -14,6 +14,7 @@ interface Props {
   selectedSectionId: string | null;
   customTemplate: CustomTemplate | null;
   templateOpacity: number;
+  customTextures?: TextureSwatch[];
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
