@@ -17,6 +17,7 @@ export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
   onSelectSection, onDropInSection,
+  customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
