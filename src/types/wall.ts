@@ -14,6 +14,7 @@ export interface SavedDesign {
   status: DesignStatus;
   builtIRL: boolean;
   pinned: boolean;
+  hidden: boolean;
   frameStyle: FrameStyle;
   /** Serialized studio state for re-editing */
   studioState?: string;

@@ -1,6 +1,6 @@
 import { SavedDesign, FrameStyle } from '@/types/wall';
 import { motion } from 'framer-motion';
-import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer } from 'lucide-react';
+import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCardProps {
@@ -10,6 +10,7 @@ interface WallCardProps {
   onDelete: (id: string) => void;
   onTogglePin: (id: string) => void;
   onToggleIRL: (id: string) => void;
+  onToggleHide: (id: string) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   isPremium: boolean;
   size?: 'normal' | 'large';
@@ -80,9 +81,8 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onFrameStyleChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showFramePicker, setShowFramePicker] = useState(false);
 
   return (
     <motion.div
@@ -91,7 +91,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="group relative"
+      className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
     >
       <div
         className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
@@ -109,7 +109,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         </FrameWrapper>
       </div>
 
-      {/* Pinned indicator - subtle */}
+      {/* Pinned indicator */}
       {design.pinned && (
         <div className="absolute -top-1 -left-1 w-5 h-5 bg-primary/80 rounded-full flex items-center justify-center shadow-sm z-10">
           <Pin className="w-2.5 h-2.5 text-primary-foreground" />
@@ -120,6 +120,13 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
       {design.builtIRL && (
         <div className="absolute -top-1 -right-1 bg-accent text-accent-foreground rounded-full px-1.5 py-0.5 text-[9px] font-medium flex items-center gap-0.5 shadow-sm z-10">
           <Hammer className="w-2.5 h-2.5" /> IRL
+        </div>
+      )}
+
+      {/* Hidden indicator */}
+      {design.hidden && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <EyeOff className="w-5 h-5 text-muted-foreground/60" />
         </div>
       )}
 
@@ -139,13 +146,6 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         >
           <Copy className="w-3 h-3" />
         </button>
-        <button
-          onClick={(e) => { e.stopPropagation(); onDelete(design.id); }}
-          className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-destructive/70 hover:text-destructive transition-colors shadow-sm"
-          title="Delete"
-        >
-          <Trash2 className="w-3 h-3" />
-        </button>
         <div className="relative">
           <button
             onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }}
@@ -156,7 +156,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
           {menuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
-              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[140px]">
+              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
                 <button
                   onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }}
                   className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
@@ -170,6 +170,21 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                 >
                   <Hammer className="w-3 h-3" />
                   {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleHide(design.id); setMenuOpen(false); }}
+                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
+                >
+                  {design.hidden ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                  {design.hidden ? 'Show' : 'Hide'}
+                </button>
+                <div className="border-t border-border my-1" />
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDelete(design.id); setMenuOpen(false); }}
+                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-destructive"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Delete
                 </button>
                 {isPremium && (
                   <>
