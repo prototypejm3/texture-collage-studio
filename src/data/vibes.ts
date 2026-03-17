@@ -181,8 +181,9 @@ const cat: Vibe = {
 };
 
 // ── DOG ──
-// Grounded, slightly angular dog — stable stance, thick base
-// More segmented than cat, still bold & scissor-cuttable
+// Chunky, rounded sitting dog — same plush style as cat
+// 3 simple sections: head (with ear bump), body, tail
+// No facial features, bold & easy to cut with scissors
 const dog: Vibe = {
   id: 'rugged-warm',
   name: 'Dog',
@@ -194,29 +195,22 @@ const dog: Vibe = {
       id: 'dog-head',
       label: 'Head',
       tone: 'medium',
-      // Chunky block head with rounded snout — no eyes/nose
-      path: 'M140,155 Q140,115 175,100 L295,100 Q330,115 330,155 L332,215 Q335,245 320,260 L160,260 Q145,245 148,215 Z',
-    },
-    {
-      id: 'dog-ear',
-      label: 'Ear',
-      tone: 'dark',
-      // Large floppy ear — thick rounded drop shape
-      path: 'M305,100 Q345,80 370,90 Q400,105 395,150 Q390,200 360,225 Q340,240 330,230 L330,155 Q330,125 305,100 Z',
+      // Big rounded head with one floppy ear bump on the right, no face
+      path: 'M170,200 Q165,160 180,130 Q195,105 220,95 L270,95 Q300,100 315,115 Q335,95 355,90 Q375,88 378,108 Q380,130 365,155 Q350,170 330,175 Q325,165 310,145 Q305,155 305,200 Q305,230 280,240 L200,240 Q170,230 170,200 Z',
     },
     {
       id: 'dog-body',
       label: 'Body',
-      tone: 'medium',
-      // Wide, grounded body — thick base, stable stance
-      path: 'M120,260 L360,260 Q405,285 415,345 Q425,410 390,445 L90,445 Q55,410 65,345 Q75,285 120,260 Z',
+      tone: 'light',
+      // Wide, chunky sitting body — pear shape, grounded
+      path: 'M170,240 L310,240 Q370,270 380,335 Q385,400 350,430 L130,430 Q95,400 100,335 Q110,270 170,240 Z',
     },
     {
       id: 'dog-tail',
       label: 'Tail',
       tone: 'accent',
-      // Thick upward-curving tail — chunky and bold
-      path: 'M390,330 Q415,295 435,270 Q450,255 460,265 Q470,280 455,310 Q438,345 415,375 Q400,395 390,380 Z',
+      // Thick curved tail sweeping right — chunky, matches cat tail style
+      path: 'M350,375 Q375,358 395,330 Q415,298 435,292 Q458,288 460,312 Q462,338 442,360 Q418,388 390,410 Q365,425 350,430 Z',
     },
   ],
   lightTextures: ['linen-natural', 'linen-white', 'wood-ash', 'boucle-cream'],
