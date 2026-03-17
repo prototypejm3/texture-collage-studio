@@ -8,6 +8,7 @@ import { marbleTextures } from './marble';
 import { woodTextures } from './wood';
 import { terrazzoTextures } from './terrazzo';
 import { abstractTextures } from './abstract';
+import { yarnTextures } from './yarn';
 
 export const textures: TextureSwatch[] = [
   ...boucleTextures,
@@ -19,4 +20,5 @@ export const textures: TextureSwatch[] = [
   ...woodTextures,
   ...terrazzoTextures,
   ...abstractTextures,
+  ...yarnTextures,
 ];
