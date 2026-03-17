@@ -56,7 +56,7 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 bg-popover border border-border rounded-2xl shadow-2xl p-5"
-          style={{ width: 680 }}
+          style={{ width: 780 }}
         >
           <div className="flex items-center justify-between mb-4">
             <div>
