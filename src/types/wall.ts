@@ -37,7 +37,7 @@ export interface WallSettings {
 
 export const defaultWallSettings: WallSettings = {
   title: 'My Wall',
-  layout: 'grid',
+  layout: 'freeform',
   background: 'white-brick',
   defaultFrameStyle: 'gold',
 };
