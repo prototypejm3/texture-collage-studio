@@ -181,9 +181,8 @@ const cat: Vibe = {
 };
 
 // ── DOG ──
-// Chunky, rounded sitting dog — same plush style as cat
-// 3 simple sections: head (with ear bump), body, tail
-// No facial features, bold & easy to cut with scissors
+// Chunky sitting dog — same plush style as cat
+// Clean round head, separate floppy ear, pear body, thick tail
 const dog: Vibe = {
   id: 'rugged-warm',
   name: 'Dog',
@@ -195,21 +194,28 @@ const dog: Vibe = {
       id: 'dog-head',
       label: 'Head',
       tone: 'medium',
-      // Big rounded head with one floppy ear bump on the right, no face
-      path: 'M170,200 Q165,160 180,130 Q195,105 220,95 L270,95 Q300,100 315,115 Q335,95 355,90 Q375,88 378,108 Q380,130 365,155 Q350,170 330,175 Q325,165 310,145 Q305,155 305,200 Q305,230 280,240 L200,240 Q170,230 170,200 Z',
+      // Simple round head — slightly wider than cat, no face
+      path: 'M165,195 Q160,150 180,120 Q200,95 240,90 Q280,95 300,120 Q320,150 315,195 Q315,225 290,238 L190,238 Q165,225 165,195 Z',
+    },
+    {
+      id: 'dog-ear',
+      label: 'Ear',
+      tone: 'dark',
+      // Chunky floppy ear hanging off right side
+      path: 'M300,120 Q325,105 345,110 Q365,118 368,145 Q370,175 358,205 Q348,228 330,235 L315,225 Q315,195 315,170 Q315,140 300,120 Z',
     },
     {
       id: 'dog-body',
       label: 'Body',
       tone: 'light',
-      // Wide, chunky sitting body — pear shape, grounded
-      path: 'M170,240 L310,240 Q370,270 380,335 Q385,400 350,430 L130,430 Q95,400 100,335 Q110,270 170,240 Z',
+      // Wide chunky sitting body — pear shape
+      path: 'M168,238 L312,238 Q370,268 380,335 Q385,400 350,430 L130,430 Q95,400 100,335 Q110,268 168,238 Z',
     },
     {
       id: 'dog-tail',
       label: 'Tail',
       tone: 'accent',
-      // Thick curved tail sweeping right — chunky, matches cat tail style
+      // Thick curved tail — matches cat tail style
       path: 'M350,375 Q375,358 395,330 Q415,298 435,292 Q458,288 460,312 Q462,338 442,360 Q418,388 390,410 Q365,425 350,430 Z',
     },
   ],
