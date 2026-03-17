@@ -336,30 +336,6 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                         {fs.label}
                       </button>
                     ))}
-                    {/* Texture picker — shown for frames that support it */}
-                    {design.frameStyle !== 'none' && design.frameStyle !== 'polaroid' && design.frameStyle !== 'floating' && (
-                      <>
-                        <div className="border-t border-border my-1" />
-                        <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Texture</p>
-                        {frameTextureList.map(ft => (
-                          <button
-                            key={ft.value}
-                            onClick={(e) => { e.stopPropagation(); onFrameTextureChange(design.id, ft.value); setMenuOpen(false); }}
-                            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${(design.frameTexture || 'smooth') === ft.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                          >
-                            {ft.label}
-                          </button>
-                        ))}
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-
       {/* Gallery label — name & description */}
       <div className="mt-3">
         {editing ? (
