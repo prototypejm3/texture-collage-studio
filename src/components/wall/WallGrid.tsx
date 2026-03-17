@@ -21,7 +21,7 @@ interface WallGridProps {
 }
 
 export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange }: WallGridProps) {
-  const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
+  const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
     onOpen,
@@ -61,9 +61,17 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
   // Gallery mode: 2-3 per row, generous spacing
   if (layout === 'single') {
     return (
-      <div className="max-w-lg mx-auto flex flex-col gap-16">
+      <div className="flex flex-col gap-16">
         <AnimatePresence>
-          {designs.map(d => <WallCard {...cardProps(d, 'large')} />)}
+          {designs.map(d => {
+            const sz = d.displaySize || 'medium';
+            const widthClass = sz === 'large' ? 'max-w-xl' : sz === 'small' ? 'max-w-sm' : 'max-w-lg';
+            return (
+              <div key={d.id} className={`w-full ${widthClass} mx-auto`}>
+                <WallCard {...cardProps(d, sz)} />
+              </div>
+            );
+          })}
         </AnimatePresence>
       </div>
     );
@@ -82,7 +90,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
             const spanClass = sz === 'large' ? 'col-span-4' : sz === 'small' ? 'col-span-2' : 'col-span-3';
             return (
               <div key={d.id} className={spanClass}>
-                <WallCard {...cardProps(d, sz === 'large' ? 'large' : 'normal')} />
+                <WallCard {...cardProps(d, sz)} />
               </div>
             );
           })}

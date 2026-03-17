@@ -15,7 +15,7 @@ interface WallCardProps {
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
-  size?: 'normal' | 'large';
+  size?: DesignSize;
 }
 
 const frameStyleList: { value: FrameStyle; label: string }[] = [
@@ -179,7 +179,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, isPremium, size = 'medium' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(design.name);
