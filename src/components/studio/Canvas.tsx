@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react';
-import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } from '@/types/studio';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
