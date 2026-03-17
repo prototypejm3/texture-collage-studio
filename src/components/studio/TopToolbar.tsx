@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
-import { Shuffle, Sparkles, Trash2, Download, Frame } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette } from 'lucide-react';
 
 interface Props {
   frameSize: FrameSize;
@@ -11,6 +11,8 @@ interface Props {
   onShuffle: () => void;
   onClear: () => void;
   onSave: () => void;
+  onToggleVibes: () => void;
+  vibesActive: boolean;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -27,6 +29,7 @@ export function TopToolbar({
   frameSize, frameColor,
   onFrameSizeChange, onFrameColorChange,
   onGenerate, onShuffle, onClear, onSave,
+  onToggleVibes, vibesActive,
 }: Props) {
   return (
     <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border">
@@ -79,6 +82,14 @@ export function TopToolbar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
+        <Button
+          size="sm"
+          variant={vibesActive ? 'default' : 'ghost'}
+          onClick={onToggleVibes}
+          className="gap-1.5 text-xs"
+        >
+          <Palette className="w-3.5 h-3.5" /> Vibes
+        </Button>
         <Button size="sm" variant="ghost" onClick={onGenerate} className="gap-1.5 text-xs">
           <Sparkles className="w-3.5 h-3.5" /> Generate
         </Button>
