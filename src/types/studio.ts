@@ -27,14 +27,14 @@ export interface CanvasElement {
   shape: ElementShape;
   zIndex: number;
   effects: MaterialEffects;
-  sectionId?: string; // links element to a template section
+  sectionId?: string;
 }
 
 export interface MaterialEffects {
-  bleachFade: number;       // 0-100
+  bleachFade: number;
   edgeStyle: EdgeStyle;
   wrinkle: WrinkleLevel;
-  grainBoost: number;       // 0-100
+  grainBoost: number;
   shadowDepth: ShadowDepth;
 }
 
@@ -46,24 +46,15 @@ export const defaultEffects: MaterialEffects = {
   shadowDepth: 'flat',
 };
 
-// ── Template & Vibe types ──
+// ── Vibe Outline System ──
 
-export interface TemplateSection {
+export interface VibeSection {
   id: string;
-  /** Position and size as percentages of canvas (0-100) */
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  shape: ElementShape;
-  /** Tone hint for auto-fill: light, medium, dark, accent */
+  label: string;
+  /** SVG path data (d attribute) — defines the section shape */
+  path: string;
+  /** Tone hint for auto-fill suggestions */
   tone: 'light' | 'medium' | 'dark' | 'accent';
-}
-
-export interface FrameTemplate {
-  id: string;
-  name: string;
-  sections: TemplateSection[];
 }
 
 export interface Vibe {
@@ -71,12 +62,16 @@ export interface Vibe {
   name: string;
   emoji: string;
   description: string;
-  template: FrameTemplate;
-  /** Texture IDs or categories that match this vibe */
-  texturePool: string[];
-  /** Ordered from light to dark for tone matching */
+  /** SVG viewBox dimensions */
+  viewBox: string;
+  /** All sections that make up this vibe outline */
+  sections: VibeSection[];
+  /** Suggested texture IDs per tone */
   lightTextures: string[];
   mediumTextures: string[];
   darkTextures: string[];
   accentTextures: string[];
 }
+
+/** Map of sectionId → textureId for filled sections */
+export type VibeFills = Record<string, string>;
