@@ -16,12 +16,12 @@ import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 
 const bgStyles: Record<WallBackground, string> = {
-  'warm-white': 'bg-background',
-  'cream': 'bg-[hsl(38,30%,92%)]',
-  'soft-gray': 'bg-[hsl(220,10%,92%)]',
-  'charcoal': 'bg-[hsl(220,15%,22%)]',
-  'paper': 'bg-[hsl(38,20%,88%)]',
-  'linen': 'bg-[hsl(35,15%,85%)]',
+  'brick': 'wall-bg-brick',
+  'concrete': 'wall-bg-concrete',
+  'limewash': 'wall-bg-limewash',
+  'black-brick': 'wall-bg-black-brick',
+  'black-concrete': 'wall-bg-black-concrete',
+  'white-brick': 'wall-bg-white-brick',
 };
 
 const MyWall = () => {
@@ -39,7 +39,7 @@ const MyWall = () => {
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
-  const isCharcoal = wall.settings.background === 'charcoal';
+  const isDark = ['black-brick', 'black-concrete'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate('/');
@@ -108,15 +108,15 @@ const MyWall = () => {
 
           {/* Tabs + controls — clean */}
           <div className="flex items-center gap-4 mt-8 mb-8">
-            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/40'}`}>
+            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/40'}`}>
               {([['all', 'All'], ['in-progress', 'In Progress'], ['finished', 'Finished']] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
                   className={`px-3 py-1 text-[11px] font-medium rounded-md transition-colors tracking-wide ${
                     activeTab === val
-                      ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
-                      : isCharcoal ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
+                      ? isDark ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
+                      : isDark ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
                   }`}
                 >
                   {label}
@@ -130,7 +130,7 @@ const MyWall = () => {
                 <>
                   <button
                     onClick={() => setShowControls(!showControls)}
-                    className={`p-2 rounded-lg transition-colors ${isCharcoal ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
+                    className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
                   >
                     <MoreHorizontal className="w-4 h-4" />
                   </button>

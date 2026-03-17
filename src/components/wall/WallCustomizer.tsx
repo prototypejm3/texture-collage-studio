@@ -18,12 +18,12 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
 ];
 
 const backgrounds: { value: WallBackground; label: string; color: string }[] = [
-  { value: 'warm-white', label: 'Warm White', color: 'hsl(40, 20%, 97%)' },
-  { value: 'cream', label: 'Cream', color: 'hsl(38, 30%, 92%)' },
-  { value: 'soft-gray', label: 'Soft Gray', color: 'hsl(220, 10%, 92%)' },
-  { value: 'charcoal', label: 'Charcoal', color: 'hsl(220, 15%, 22%)' },
-  { value: 'paper', label: 'Paper', color: 'hsl(38, 20%, 88%)' },
-  { value: 'linen', label: 'Linen', color: 'hsl(35, 15%, 85%)' },
+  { value: 'brick', label: 'Brick', color: 'hsl(10, 45%, 45%)' },
+  { value: 'concrete', label: 'Concrete', color: 'hsl(210, 5%, 70%)' },
+  { value: 'limewash', label: 'Limewash', color: 'hsl(38, 20%, 88%)' },
+  { value: 'black-brick', label: 'Black Brick', color: 'hsl(0, 0%, 18%)' },
+  { value: 'black-concrete', label: 'Black Concrete', color: 'hsl(210, 5%, 22%)' },
+  { value: 'white-brick', label: 'White Brick', color: 'hsl(40, 15%, 93%)' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
@@ -44,7 +44,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
 
-  const isCharcoal = settings.background === 'charcoal';
+  const isDark = ['black-brick', 'black-concrete'].includes(settings.background);
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">
@@ -57,7 +57,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
               value={titleDraft}
               onChange={e => setTitleDraft(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') { onUpdate({ title: titleDraft }); setEditingTitle(false); } }}
-              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isCharcoal ? 'text-background' : 'text-foreground'}`}
+              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isDark ? 'text-background' : 'text-foreground'}`}
             />
             <button onClick={() => { onUpdate({ title: titleDraft }); setEditingTitle(false); }} className="p-1 text-primary/60 hover:text-primary">
               <Check className="w-3.5 h-3.5" />
@@ -65,7 +65,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
           </div>
         ) : (
           <h1
-            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isCharcoal ? 'text-background/80' : 'text-foreground/70'}`}
+            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isDark ? 'text-background/80' : 'text-foreground/70'}`}
             onClick={() => { setTitleDraft(settings.title); setEditingTitle(true); }}
           >
             {settings.title}
@@ -76,7 +76,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
 
       <div className="flex items-center gap-3">
         {/* Layout picker */}
-        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/50'}`}>
+        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/50'}`}>
           {layouts.map(l => {
             const locked = l.value !== 'grid' && !isPremium;
             return (
@@ -85,10 +85,10 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                 onClick={() => !locked && onUpdate({ layout: l.value })}
                 className={`p-1.5 rounded-md transition-colors ${
                   settings.layout === l.value
-                    ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-primary shadow-sm'
+                    ? isDark ? 'bg-background/20 text-background' : 'bg-background text-primary shadow-sm'
                     : locked
                       ? 'text-muted-foreground/30 cursor-not-allowed'
-                      : isCharcoal ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
+                      : isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
                 }`}
                 title={locked ? 'Premium only' : l.label}
               >
@@ -103,7 +103,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
           <div className="relative">
             <button
               onClick={() => setShowFrameMenu(!showFrameMenu)}
-              className={`p-1.5 rounded-md transition-colors ${isCharcoal ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
+              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
               title="Apply frame to all"
             >
               <Frame className="w-3.5 h-3.5" />
