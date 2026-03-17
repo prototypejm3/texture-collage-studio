@@ -132,17 +132,18 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
 
         {/* Background picker */}
         {isPremium && (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             {backgrounds.map(bg => (
               <button
                 key={bg.value}
                 onClick={() => onUpdate({ background: bg.value })}
-                className={`w-5 h-5 rounded-full border transition-transform hover:scale-110 ${
-                  settings.background === bg.value ? 'border-primary scale-110 shadow-sm' : 'border-border/50'
+                className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden ${
+                  settings.background === bg.value ? 'border-primary scale-110 shadow-md' : 'border-border/40'
                 }`}
-                style={{ backgroundColor: bg.color }}
                 title={bg.label}
-              />
+              >
+                <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+              </button>
             ))}
           </div>
         )}

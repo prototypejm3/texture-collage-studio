@@ -41,7 +41,7 @@ const MyWall = () => {
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
-  const isDark = ['black-brick', 'black-concrete'].includes(wall.settings.background);
+  const isDark = ['black-brick', 'black-concrete', 'red-velvet'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate('/');
