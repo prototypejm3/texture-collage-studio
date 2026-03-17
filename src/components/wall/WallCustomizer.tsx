@@ -144,7 +144,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                 }`}
                 title={bg.label}
               >
-                <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+                {bg.preview ? (
+                  <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="block w-full h-full" style={{ backgroundColor: bg.previewColor }} />
+                )}
               </button>
             ))}
           </div>
