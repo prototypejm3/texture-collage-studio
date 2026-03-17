@@ -397,11 +397,40 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         </div>
       </div>
 
-      {/* Label below - minimal */}
-      <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <p className="text-xs text-muted-foreground tracking-wide truncate">{design.name}</p>
-        {design.vibeName && (
-          <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5">{design.vibeName}</p>
+      {/* Gallery label — name & description */}
+      <div className="mt-3">
+        {editing ? (
+          <div className="space-y-1" onClick={(e) => e.stopPropagation()}>
+            <input
+              ref={nameRef}
+              value={editName}
+              onChange={(e) => setEditName(e.target.value.slice(0, 100))}
+              onKeyDown={handleKeyDown}
+              onBlur={handleSaveEdit}
+              className="w-full bg-transparent text-xs font-medium text-foreground tracking-wide border-b border-muted-foreground/30 focus:border-primary outline-none pb-0.5 placeholder:text-muted-foreground/40"
+              placeholder="Title"
+            />
+            <input
+              value={editDesc}
+              onChange={(e) => setEditDesc(e.target.value.slice(0, 200))}
+              onKeyDown={handleKeyDown}
+              onBlur={handleSaveEdit}
+              className="w-full bg-transparent text-[10px] text-muted-foreground/70 tracking-wider border-b border-muted-foreground/20 focus:border-primary outline-none pb-0.5 italic placeholder:text-muted-foreground/30"
+              placeholder="Description"
+            />
+          </div>
+        ) : (
+          <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleStartEdit}>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-medium text-foreground/80 tracking-wide truncate">{design.name}</p>
+              {design.description ? (
+                <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5 italic line-clamp-2">{design.description}</p>
+              ) : design.vibeName ? (
+                <p className="text-[10px] text-muted-foreground/50 tracking-wider mt-0.5">{design.vibeName}</p>
+              ) : null}
+            </div>
+            <Pencil className="w-2.5 h-2.5 text-muted-foreground/30 group-hover/label:text-muted-foreground/60 transition-colors mt-0.5 shrink-0" />
+          </div>
         )}
       </div>
     </motion.div>
