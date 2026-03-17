@@ -44,7 +44,7 @@ export function useStudio() {
       width: 100,
       height: 100,
       rotation: 0,
-      shape: 'square',
+      shape: 'soft-square',
       zIndex: nextId,
       effects: { ...defaultEffects },
     };
