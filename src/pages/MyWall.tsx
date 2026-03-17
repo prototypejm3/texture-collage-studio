@@ -22,6 +22,8 @@ const bgStyles: Record<WallBackground, string> = {
   'black-brick': 'wall-bg-black-brick',
   'black-concrete': 'wall-bg-black-concrete',
   'white-brick': 'wall-bg-white-brick',
+  'cream': 'wall-bg-cream',
+  'red-velvet': 'wall-bg-red-velvet',
 };
 
 const MyWall = () => {
