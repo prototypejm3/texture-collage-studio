@@ -65,6 +65,10 @@ const edgeOptions: { value: EdgeStyle; label: string }[] = [
   { value: 'clean', label: 'Clean' },
   { value: 'soft-fray', label: 'Soft Fray' },
   { value: 'rough-torn', label: 'Rough Torn' },
+  { value: 'pinking', label: '✂ Pinking' },
+  { value: 'scallop', label: '✂ Scallop' },
+  { value: 'zigzag', label: '✂ Zigzag' },
+  { value: 'wave', label: '✂ Wave' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string }[] = [
