@@ -22,6 +22,8 @@ const bgStyles: Record<WallBackground, string> = {
   'black-brick': 'wall-bg-black-brick',
   'black-concrete': 'wall-bg-black-concrete',
   'white-brick': 'wall-bg-white-brick',
+  'cream': 'wall-bg-cream',
+  'red-velvet': 'wall-bg-red-velvet',
 };
 
 const MyWall = () => {
@@ -39,7 +41,7 @@ const MyWall = () => {
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
-  const isDark = ['black-brick', 'black-concrete'].includes(wall.settings.background);
+  const isDark = ['black-brick', 'black-concrete', 'red-velvet'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate('/');
