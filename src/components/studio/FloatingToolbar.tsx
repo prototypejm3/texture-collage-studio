@@ -85,14 +85,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
   const [showStencils, setShowStencils] = useState(true);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 8 }}
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-50"
-      >
-        <div className="bg-popover border border-border rounded-xl shadow-xl p-2 min-w-[360px]">
+    <div className="p-3 space-y-2">
           {/* Stencils section */}
           <button
             onClick={() => setShowStencils(!showStencils)}
