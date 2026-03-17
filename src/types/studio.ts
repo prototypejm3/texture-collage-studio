@@ -2,7 +2,7 @@ export type TextureCategory =
   | 'Boucle' | 'Linen' | 'Velvet' | 'Leather' | 'Suede' 
   | 'Marble' | 'Wood' | 'Terrazzo' | 'Abstract';
 
-export type ElementShape = 'square' | 'rectangle' | 'circle' | 'strip';
+export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn';
 export type WrinkleLevel = 'none' | 'light' | 'medium' | 'heavy';
 export type ShadowDepth = 'flat' | 'lifted' | 'floating';
