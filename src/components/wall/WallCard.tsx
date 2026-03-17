@@ -113,7 +113,7 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
   );
 }
 
-function FrameWrapper({ style, texture, children }: { style: FrameStyle; texture: FrameTexture; children: React.ReactNode }) {
+function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
   // Metallic frames
   if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
     return <MetallicFrame metal={style} texture={texture}>{children}</MetallicFrame>;
