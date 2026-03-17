@@ -55,4 +55,16 @@ export const noveltyTextures: TextureSwatch[] = [
       radial-gradient(circle 4px at 55% 78%, hsl(8, 58%, 35%) 0%, hsl(8, 58%, 35%) 80%, transparent 82%) no-repeat,
       linear-gradient(180deg, hsl(38, 65%, 62%) 0%, hsl(35, 60%, 55%) 50%, hsl(40, 62%, 58%) 100%)`,
   },
+  {
+    id: 'novelty-apples',
+    name: 'Apples',
+    category: 'Novelty',
+    cssBackground: `url(/textures/novelty-apples.png)`,
+  },
+  {
+    id: 'novelty-bananas',
+    name: 'Bananas',
+    category: 'Novelty',
+    cssBackground: `url(/textures/novelty-bananas.png)`,
+  },
 ];
