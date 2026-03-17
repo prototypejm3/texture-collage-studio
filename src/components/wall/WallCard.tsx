@@ -21,6 +21,8 @@ const frameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'shadow-box', label: 'Shadow Box' },
   { value: 'wood', label: 'Wood' },
   { value: 'floating', label: 'Floating' },
+  { value: 'polaroid', label: 'Polaroid' },
+  { value: 'gold', label: 'Gold' },
   { value: 'none', label: 'None' },
 ];
 
