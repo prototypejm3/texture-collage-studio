@@ -73,6 +73,14 @@ const Index = () => {
       const dataUrl = await toPng(canvasRef.current, { pixelRatio: 2 });
       const name = studio.activeVibe?.name || 'Untitled Design';
       const vibeName = studio.activeVibe?.name;
+      const studioState = studio.getState();
+
+      // If editing an existing design, update it
+      if (editingDesignId) {
+        wall.updateDesign(editingDesignId, { previewImage: dataUrl, name, vibeName, studioState });
+        toast({ title: 'Updated!', description: 'Your design has been updated on My Wall.' });
+        return;
+      }
 
       if (!canSave(wall.designs.length)) {
         setPendingSave({ preview: dataUrl, name, vibeName });
@@ -80,12 +88,12 @@ const Index = () => {
         return;
       }
 
-      wall.addDesign(dataUrl, name, vibeName);
+      wall.addDesign(dataUrl, name, vibeName, studioState);
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
     }
-  }, [studio, wall, canSave]);
+  }, [studio, wall, canSave, editingDesignId]);
 
   const handleReplace = useCallback(() => {
     if (pendingSave) {
