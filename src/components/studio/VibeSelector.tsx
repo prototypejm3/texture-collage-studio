@@ -36,7 +36,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
   const colors = vibeAccents[vibe.id] || toneColors;
 
   return (
-    <svg viewBox={vibe.viewBox} className="w-full aspect-square rounded-lg overflow-hidden border border-border/30">
+    <svg viewBox={vibe.viewBox} className="w-full aspect-square rounded-md overflow-hidden border border-border/30">
       <rect width="100%" height="100%" fill="hsl(40, 15%, 96%)" />
       {vibe.sections.map(section => (
         <path
@@ -44,7 +44,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
           d={section.path}
           fill={colors[section.tone]}
           stroke="hsl(220, 10%, 70%)"
-          strokeWidth="1.5"
+          strokeWidth="2"
           opacity={0.85}
         />
       ))}
@@ -57,56 +57,54 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 bg-popover border border-border rounded-2xl shadow-2xl p-5"
-          style={{ width: 780 }}
+          exit={{ opacity: 0, y: 16 }}
+          transition={{ duration: 0.18 }}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 bg-popover border border-border rounded-xl shadow-2xl px-4 py-3"
+          style={{ maxWidth: 'calc(100vw - 300px)', width: 'auto' }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-sm font-semibold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Choose a Vibe
-              </h3>
-              <p className="text-[11px] text-muted-foreground mt-0.5">
-                Pick an outline → fill with textures → distort & customize
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-2.5">
+            <h3 className="text-xs font-semibold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              Choose a Vibe
+            </h3>
+            <div className="flex items-center gap-1.5">
               {activeVibeId && (
                 <button
                   onClick={onShuffle}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
+                  className="flex items-center gap-1 px-2 py-1 text-[10px] rounded-md bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
                 >
-                  <Shuffle className="w-3 h-3" /> Shuffle Fills
+                  <Shuffle className="w-2.5 h-2.5" /> Shuffle
                 </button>
               )}
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg hover:bg-secondary transition-colors"
+                className="p-1 rounded-md hover:bg-secondary transition-colors"
               >
-                <X className="w-4 h-4 text-muted-foreground" />
+                <X className="w-3.5 h-3.5 text-muted-foreground" />
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-3">
+          {/* Horizontal scrollable strip of compact cards */}
+          <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'thin' }}>
             {vibes.map(vibe => (
               <button
                 key={vibe.id}
                 onClick={() => onSelectVibe(vibe)}
-                className={`group flex flex-col items-center text-center p-3 rounded-xl transition-all ${
+                className={`flex-shrink-0 flex flex-col items-center text-center p-1.5 rounded-lg transition-all ${
                   activeVibeId === vibe.id
                     ? 'bg-primary/10 ring-2 ring-primary'
                     : 'hover:bg-secondary'
                 }`}
+                style={{ width: 72 }}
               >
-                <VibePreviewSVG vibe={vibe} />
-                <span className="text-lg mt-2">{vibe.emoji}</span>
-                <span className="text-[11px] font-medium mt-1">{vibe.name}</span>
-                <span className="text-[9px] text-muted-foreground mt-0.5 leading-tight">
-                  {vibe.description}
+                <div style={{ width: 56, height: 56 }}>
+                  <VibePreviewSVG vibe={vibe} />
+                </div>
+                <span className="text-[10px] font-medium mt-1 leading-tight truncate w-full">
+                  {vibe.emoji} {vibe.name}
                 </span>
               </button>
             ))}
