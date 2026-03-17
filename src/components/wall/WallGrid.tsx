@@ -52,7 +52,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
         onToggleHide={onToggleHide}
         onUpdate={onUpdate}
         onFrameStyleChange={onFrameStyleChange}
-        onFrameTextureChange={onFrameTextureChange}
+        
         onSizeChange={onSizeChange}
       />
     );
