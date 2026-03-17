@@ -66,6 +66,10 @@ const MyWall = () => {
     wall.updateDesign(id, { frameStyle: style });
   }, [wall]);
 
+  const handleSizeChange = useCallback((id: string, size: DesignSize) => {
+    wall.updateDesign(id, { displaySize: size });
+  }, [wall]);
+
   const handleViewMode = useCallback((index?: number) => {
     setViewStartIndex(index ?? 0);
     setViewMode(true);
