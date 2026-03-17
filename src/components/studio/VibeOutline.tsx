@@ -37,7 +37,8 @@ export function VibeOutline({
       <defs>
         {/* Create pattern fills for each filled section */}
         {Object.entries(fills).map(([sectionId, textureId]) => {
-          const tex = textures.find(t => t.id === textureId);
+          const allTex = [...textures, ...customTextures];
+          const tex = allTex.find(t => t.id === textureId);
           if (!tex) return null;
           return (
             <pattern
