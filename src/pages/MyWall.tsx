@@ -16,12 +16,12 @@ import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 
 const bgStyles: Record<WallBackground, string> = {
-  'warm-white': 'bg-background',
-  'cream': 'bg-[hsl(38,30%,92%)]',
-  'soft-gray': 'bg-[hsl(220,10%,92%)]',
-  'charcoal': 'bg-[hsl(220,15%,22%)]',
-  'paper': 'bg-[hsl(38,20%,88%)]',
-  'linen': 'bg-[hsl(35,15%,85%)]',
+  'brick': 'wall-bg-brick',
+  'concrete': 'wall-bg-concrete',
+  'limewash': 'wall-bg-limewash',
+  'black-brick': 'wall-bg-black-brick',
+  'black-concrete': 'wall-bg-black-concrete',
+  'white-brick': 'wall-bg-white-brick',
 };
 
 const MyWall = () => {
