@@ -96,7 +96,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
           </button>
 
           {showStencils && (
-            <div className="flex items-center gap-1 mb-2 px-1">
+            <div className="flex flex-wrap items-center gap-1 mb-2 px-1">
               {stencilShapes.map(s => (
                 <Button
                   key={s.value}
