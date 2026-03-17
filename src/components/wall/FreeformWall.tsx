@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { SavedDesign, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { AnimatePresence } from 'framer-motion';
 
