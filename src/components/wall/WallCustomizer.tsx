@@ -76,7 +76,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
 
       <div className="flex items-center gap-3">
         {/* Layout picker */}
-        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/50'}`}>
+        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/50'}`}>
           {layouts.map(l => {
             const locked = l.value !== 'grid' && !isPremium;
             return (
