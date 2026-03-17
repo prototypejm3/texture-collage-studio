@@ -100,7 +100,6 @@ function MetallicFrame({ metal, children }: { metal: string; children: React.Rea
         style={{
           background: g.inner,
           boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
-          ...texOverlay,
         }}
       >
         <div style={{ backgroundColor: g.matBg }} className="p-[clamp(6px,1.5%,12px)]">
