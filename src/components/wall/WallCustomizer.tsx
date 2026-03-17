@@ -103,7 +103,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
           <div className="relative">
             <button
               onClick={() => setShowFrameMenu(!showFrameMenu)}
-              className={`p-1.5 rounded-md transition-colors ${isCharcoal ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
+              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
               title="Apply frame to all"
             >
               <Frame className="w-3.5 h-3.5" />
