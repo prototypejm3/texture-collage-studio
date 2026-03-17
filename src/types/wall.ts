@@ -1,6 +1,6 @@
-export type WallLayout = 'grid' | 'masonry' | 'single' | 'featured';
+export type WallLayout = 'grid' | 'masonry' | 'single' | 'featured' | 'curated';
 export type WallBackground = 'warm-white' | 'cream' | 'soft-gray' | 'charcoal' | 'paper' | 'linen';
-export type FrameStyle = 'none' | 'thin' | 'shadow-box' | 'polaroid';
+export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'none';
 export type DesignStatus = 'in-progress' | 'finished';
 export type UserTier = 'free' | 'premium';
 
@@ -30,7 +30,7 @@ export const defaultWallSettings: WallSettings = {
   title: 'My Wall',
   layout: 'grid',
   background: 'warm-white',
-  defaultFrameStyle: 'thin',
+  defaultFrameStyle: 'minimal',
 };
 
 export const FREE_DESIGN_LIMIT = 1;

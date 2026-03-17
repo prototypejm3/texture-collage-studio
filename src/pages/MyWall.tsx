@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
 import { useUserTier } from '@/hooks/useUserTier';
@@ -10,10 +10,10 @@ import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, FrameStyle, WallBackground } from '@/types/wall';
-import { Expand, Download } from 'lucide-react';
+import { Expand, Download, MoreHorizontal } from 'lucide-react';
 import { toPng } from 'html-to-image';
-import { useRef } from 'react';
 import { toast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 const bgStyles: Record<WallBackground, string> = {
   'warm-white': 'bg-background',
@@ -32,14 +32,16 @@ const MyWall = () => {
   const [viewMode, setViewMode] = useState(false);
   const [viewStartIndex, setViewStartIndex] = useState(0);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const wallRef = useRef<HTMLDivElement>(null);
 
   const filtered = activeTab === 'all'
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
+  const isCharcoal = wall.settings.background === 'charcoal';
+
   const handleOpen = useCallback((id: string) => {
-    // For now, navigate to create (future: load design state)
     navigate('/');
   }, [navigate]);
 
@@ -83,27 +85,30 @@ const MyWall = () => {
     }
   }, []);
 
-  const isCharcoal = wall.settings.background === 'charcoal';
-
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <NavBar />
-      <div className={`flex-1 overflow-y-auto ${bgStyles[wall.settings.background]} transition-colors`}>
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          {/* Customizer bar */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className={`flex-1 overflow-y-auto ${bgStyles[wall.settings.background]} transition-colors duration-500`}
+      >
+        <div className="max-w-5xl mx-auto px-8 py-10">
+          {/* Customizer — minimal top bar */}
           <WallCustomizer settings={wall.settings} onUpdate={wall.updateSettings} isPremium={isPremium} />
 
-          {/* Tabs */}
-          <div className="flex items-center gap-4 mt-5 mb-4">
-            <div className="flex items-center gap-1 bg-secondary/60 rounded-lg p-0.5">
+          {/* Tabs + controls — clean */}
+          <div className="flex items-center gap-4 mt-8 mb-8">
+            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/40'}`}>
               {([['all', 'All'], ['in-progress', 'In Progress'], ['finished', 'Finished']] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  className={`px-3 py-1 text-[11px] font-medium rounded-md transition-colors tracking-wide ${
                     activeTab === val
-                      ? 'bg-background text-foreground shadow-sm'
-                      : `${isCharcoal ? 'text-background/60 hover:text-background' : 'text-muted-foreground hover:text-foreground'}`
+                      ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
+                      : isCharcoal ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
                   }`}
                 >
                   {label}
@@ -111,24 +116,38 @@ const MyWall = () => {
               ))}
             </div>
 
-            <div className="ml-auto flex items-center gap-2">
+            {/* Grouped controls — single ••• toggle */}
+            <div className="ml-auto relative">
               {filtered.length > 0 && (
-                <button
-                  onClick={() => handleViewMode()}
-                  className={`p-2 rounded-lg transition-colors ${isCharcoal ? 'hover:bg-background/10 text-background/60' : 'hover:bg-secondary text-muted-foreground'}`}
-                  title="View mode"
-                >
-                  <Expand className="w-4 h-4" />
-                </button>
-              )}
-              {isPremium && filtered.length > 0 && (
-                <button
-                  onClick={handleExportWall}
-                  className={`p-2 rounded-lg transition-colors ${isCharcoal ? 'hover:bg-background/10 text-background/60' : 'hover:bg-secondary text-muted-foreground'}`}
-                  title="Export wall as image"
-                >
-                  <Download className="w-4 h-4" />
-                </button>
+                <>
+                  <button
+                    onClick={() => setShowControls(!showControls)}
+                    className={`p-2 rounded-lg transition-colors ${isCharcoal ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
+                  >
+                    <MoreHorizontal className="w-4 h-4" />
+                  </button>
+                  {showControls && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowControls(false)} />
+                      <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[140px]">
+                        <button
+                          onClick={() => { handleViewMode(); setShowControls(false); }}
+                          className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
+                        >
+                          <Expand className="w-3 h-3" /> View Mode
+                        </button>
+                        {isPremium && (
+                          <button
+                            onClick={() => { handleExportWall(); setShowControls(false); }}
+                            className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
+                          >
+                            <Download className="w-3 h-3" /> Export Wall
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -137,7 +156,12 @@ const MyWall = () => {
           {wall.designs.length === 0 ? (
             <EmptyWall />
           ) : (
-            <div ref={wallRef}>
+            <motion.div
+              ref={wallRef}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <WallGrid
                 designs={filtered}
                 layout={wall.settings.layout}
@@ -149,7 +173,7 @@ const MyWall = () => {
                 onToggleIRL={handleToggleIRL}
                 onFrameStyleChange={handleFrameStyle}
               />
-            </div>
+            </motion.div>
           )}
 
           {/* Preview wall for free users */}
@@ -161,18 +185,14 @@ const MyWall = () => {
             />
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Modals */}
       <PaywallModal
         isOpen={showPaywall}
         onClose={() => setShowPaywall(false)}
-        onReplace={() => {
-          // Will be called from save flow in editor
-          setShowPaywall(false);
-        }}
+        onReplace={() => setShowPaywall(false)}
         onUnlock={() => {
-          // TODO: Stripe payment
           upgradeToPremium();
           setShowPaywall(false);
           toast({ title: 'Welcome to Premium!', description: 'Your wall is now fully unlocked.' });
