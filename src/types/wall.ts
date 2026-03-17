@@ -1,6 +1,7 @@
 export type WallLayout = 'grid' | 'masonry' | 'single' | 'featured' | 'curated';
 export type WallBackground = 'warm-white' | 'cream' | 'soft-gray' | 'charcoal' | 'paper' | 'linen';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'none';
+export type DesignSize = 'small' | 'medium' | 'large';
 export type DesignStatus = 'in-progress' | 'finished';
 export type UserTier = 'free' | 'premium';
 
@@ -16,6 +17,7 @@ export interface SavedDesign {
   pinned: boolean;
   hidden: boolean;
   frameStyle: FrameStyle;
+  displaySize: DesignSize;
   /** Serialized studio state for re-editing */
   studioState?: string;
 }

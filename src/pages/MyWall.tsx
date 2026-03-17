@@ -9,7 +9,7 @@ import { PaywallModal } from '@/components/wall/PaywallModal';
 import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
 import { NavBar } from '@/components/NavBar';
-import { DesignStatus, FrameStyle, WallBackground } from '@/types/wall';
+import { DesignStatus, DesignSize, FrameStyle, WallBackground } from '@/types/wall';
 import { Expand, Download, MoreHorizontal } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
@@ -66,6 +66,10 @@ const MyWall = () => {
     wall.updateDesign(id, { frameStyle: style });
   }, [wall]);
 
+  const handleSizeChange = useCallback((id: string, size: DesignSize) => {
+    wall.updateDesign(id, { displaySize: size });
+  }, [wall]);
+
   const handleViewMode = useCallback((index?: number) => {
     setViewStartIndex(index ?? 0);
     setViewMode(true);
@@ -96,7 +100,7 @@ const MyWall = () => {
       >
         <div className="max-w-5xl mx-auto px-8 py-10">
           {/* Customizer — minimal top bar */}
-          <WallCustomizer settings={wall.settings} onUpdate={wall.updateSettings} isPremium={isPremium} />
+          <WallCustomizer settings={wall.settings} onUpdate={wall.updateSettings} onApplyFrameToAll={wall.applyFrameToAll} isPremium={isPremium} />
 
           {/* Tabs + controls — clean */}
           <div className="flex items-center gap-4 mt-8 mb-8">
@@ -173,6 +177,7 @@ const MyWall = () => {
                 onToggleIRL={handleToggleIRL}
                 onToggleHide={wall.toggleHide}
                 onFrameStyleChange={handleFrameStyle}
+                onSizeChange={handleSizeChange}
               />
             </motion.div>
           )}

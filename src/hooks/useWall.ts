@@ -46,6 +46,7 @@ export function useWall() {
       pinned: false,
       hidden: false,
       frameStyle: settings.defaultFrameStyle,
+      displaySize: 'medium',
       studioState,
     };
     setDesigns(prev => [design, ...prev]);
@@ -65,6 +66,7 @@ export function useWall() {
       pinned: false,
       hidden: false,
       frameStyle: settings.defaultFrameStyle,
+      displaySize: 'medium',
       studioState,
     };
     setDesigns([design]);
@@ -111,6 +113,10 @@ export function useWall() {
     setSettings(prev => ({ ...prev, ...updates }));
   }, []);
 
+  const applyFrameToAll = useCallback((style: FrameStyle) => {
+    setDesigns(prev => prev.map(d => ({ ...d, frameStyle: style })));
+  }, []);
+
   return {
     designs,
     settings,
@@ -123,5 +129,6 @@ export function useWall() {
     togglePin,
     toggleHide,
     updateSettings,
+    applyFrameToAll,
   };
 }

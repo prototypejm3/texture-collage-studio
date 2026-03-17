@@ -1,6 +1,6 @@
-import { SavedDesign, FrameStyle } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { motion } from 'framer-motion';
-import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye } from 'lucide-react';
+import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCardProps {
@@ -12,6 +12,7 @@ interface WallCardProps {
   onToggleIRL: (id: string) => void;
   onToggleHide: (id: string) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
+  onSizeChange: (id: string, size: DesignSize) => void;
   isPremium: boolean;
   size?: 'normal' | 'large';
 }
@@ -114,7 +115,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, isPremium, size = 'normal' }: WallCardProps) {
+export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onSizeChange, isPremium, size = 'normal' }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -221,6 +222,18 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
                 </button>
                 {isPremium && (
                   <>
+                    <div className="border-t border-border my-1" />
+                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
+                    {([['small', 'Small', Minimize2], ['medium', 'Medium', Square], ['large', 'Large', Maximize2]] as const).map(([val, label, Icon]) => (
+                      <button
+                        key={val}
+                        onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, val); setMenuOpen(false); }}
+                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${(design.displaySize || 'medium') === val ? 'text-primary font-medium' : 'text-foreground'}`}
+                      >
+                        <Icon className="w-3 h-3" />
+                        {label}
+                      </button>
+                    ))}
                     <div className="border-t border-border my-1" />
                     <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
                     {frameStyles.map(fs => (
