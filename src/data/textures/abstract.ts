@@ -47,4 +47,34 @@ export const abstractTextures: TextureSwatch[] = [
     category: 'Abstract',
     cssBackground: `url(/textures/maze.png)`,
   },
+  {
+    id: 'abstract-ripple-cream',
+    name: 'Ripple Cream',
+    category: 'Abstract',
+    cssBackground: `url(/textures/ripple-cream.png)`,
+  },
+  {
+    id: 'abstract-ripple-ink',
+    name: 'Ripple Ink',
+    category: 'Abstract',
+    cssBackground: `url(/textures/ripple-ink.png)`,
+  },
+  {
+    id: 'abstract-ripple-kraft',
+    name: 'Crumpled Kraft',
+    category: 'Abstract',
+    cssBackground: `url(/textures/ripple-kraft.png)`,
+  },
+  {
+    id: 'abstract-ripple-parchment',
+    name: 'Crumpled Parchment',
+    category: 'Abstract',
+    cssBackground: `url(/textures/ripple-parchment.png)`,
+  },
+  {
+    id: 'abstract-ripple-lattice',
+    name: 'Wood Lattice',
+    category: 'Abstract',
+    cssBackground: `url(/textures/ripple-lattice.png)`,
+  },
 ];
