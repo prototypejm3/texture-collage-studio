@@ -41,4 +41,18 @@ export const noveltyTextures: TextureSwatch[] = [
       repeating-linear-gradient(110deg, hsla(38, 42%, 62%, 0.3) 0px, transparent 2px, transparent 6px),
       linear-gradient(180deg, hsl(42, 50%, 72%) 0%, hsl(40, 45%, 68%) 50%, hsl(44, 48%, 70%) 100%)`,
   },
+  {
+    id: 'novelty-pepperoni-pizza',
+    name: 'Pepperoni Pizza',
+    category: 'Novelty',
+    cssBackground: `radial-gradient(circle 5px at 25% 25%, hsl(5, 65%, 38%) 0%, hsl(5, 65%, 38%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 4px at 60% 18%, hsl(8, 60%, 35%) 0%, hsl(8, 60%, 35%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 5px at 45% 50%, hsl(5, 62%, 36%) 0%, hsl(5, 62%, 36%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 4px at 15% 65%, hsl(8, 58%, 38%) 0%, hsl(8, 58%, 38%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 5px at 72% 55%, hsl(5, 64%, 34%) 0%, hsl(5, 64%, 34%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 4px at 80% 80%, hsl(8, 60%, 37%) 0%, hsl(8, 60%, 37%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 5px at 35% 82%, hsl(5, 62%, 36%) 0%, hsl(5, 62%, 36%) 80%, transparent 82%) no-repeat,
+      radial-gradient(circle 4px at 55% 78%, hsl(8, 58%, 35%) 0%, hsl(8, 58%, 35%) 80%, transparent 82%) no-repeat,
+      linear-gradient(180deg, hsl(38, 65%, 62%) 0%, hsl(35, 60%, 55%) 50%, hsl(40, 62%, 58%) 100%)`,
+  },
 ];
