@@ -116,7 +116,7 @@ function MetallicFrame({ metal, texture, children }: { metal: string; texture: F
 function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
   // Metallic frames
   if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
-    return <MetallicFrame metal={style} texture={texture}>{children}</MetallicFrame>;
+    return <MetallicFrame metal={style}>{children}</MetallicFrame>;
   }
 
   const texOverlay = getTextureOverlay(texture);
