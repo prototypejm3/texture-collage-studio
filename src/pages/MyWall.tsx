@@ -108,7 +108,7 @@ const MyWall = () => {
 
           {/* Tabs + controls — clean */}
           <div className="flex items-center gap-4 mt-8 mb-8">
-            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isCharcoal ? 'bg-background/10' : 'bg-secondary/40'}`}>
+            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/40'}`}>
               {([['all', 'All'], ['in-progress', 'In Progress'], ['finished', 'Finished']] as const).map(([val, label]) => (
                 <button
                   key={val}
