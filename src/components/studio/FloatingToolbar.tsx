@@ -269,8 +269,5 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
               </div>
             </motion.div>
           )}
-        </div>
-      </motion.div>
-    </AnimatePresence>
+    </div>
   );
-}
