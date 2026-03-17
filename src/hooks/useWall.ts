@@ -103,6 +103,10 @@ export function useWall() {
     });
   }, []);
 
+  const toggleHide = useCallback((id: string) => {
+    setDesigns(prev => prev.map(d => d.id === id ? { ...d, hidden: !d.hidden } : d));
+  }, []);
+
   const updateSettings = useCallback((updates: Partial<WallSettings>) => {
     setSettings(prev => ({ ...prev, ...updates }));
   }, []);
