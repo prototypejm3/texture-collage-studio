@@ -14,6 +14,7 @@ interface Props {
   onShuffle: () => void;
   onClear: () => void;
   onSave: () => void;
+  onSaveToWall?: () => void;
   onToggleVibes: () => void;
   vibesActive: boolean;
   // Template
