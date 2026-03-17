@@ -57,7 +57,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
               value={titleDraft}
               onChange={e => setTitleDraft(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') { onUpdate({ title: titleDraft }); setEditingTitle(false); } }}
-              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isCharcoal ? 'text-background' : 'text-foreground'}`}
+              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isDark ? 'text-background' : 'text-foreground'}`}
             />
             <button onClick={() => { onUpdate({ title: titleDraft }); setEditingTitle(false); }} className="p-1 text-primary/60 hover:text-primary">
               <Check className="w-3.5 h-3.5" />
