@@ -39,6 +39,26 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     size,
   });
 
+  // Freeform — drag anywhere on the wall
+  if (layout === 'freeform') {
+    return (
+      <FreeformWall
+        designs={designs}
+        isPremium={isPremium}
+        onOpen={onOpen}
+        onDuplicate={onDuplicate}
+        onDelete={onDelete}
+        onTogglePin={onTogglePin}
+        onToggleIRL={onToggleIRL}
+        onToggleHide={onToggleHide}
+        onUpdate={onUpdate}
+        onFrameStyleChange={onFrameStyleChange}
+        onFrameTextureChange={onFrameTextureChange}
+        onSizeChange={onSizeChange}
+      />
+    );
+  }
+
   // Gallery mode: 2-3 per row, generous spacing
   if (layout === 'single') {
     return (
