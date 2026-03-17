@@ -171,6 +171,7 @@ const MyWall = () => {
                 onDelete={handleDelete}
                 onTogglePin={wall.togglePin}
                 onToggleIRL={handleToggleIRL}
+                onToggleHide={wall.toggleHide}
                 onFrameStyleChange={handleFrameStyle}
               />
             </motion.div>
