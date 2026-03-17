@@ -224,4 +224,143 @@ function circlePath(cx: number, cy: number, r: number): string {
   return `M${cx - r},${cy} A${r},${r} 0 1,1 ${cx + r},${cy} A${r},${r} 0 1,1 ${cx - r},${cy} Z`;
 }
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog];
+// ── FRUIT BOWL ──
+// Simple bowl with circular fruits — warm, playful
+const fruitBowl: Vibe = {
+  id: 'fruit-bowl',
+  name: 'Fruit Bowl',
+  emoji: '🍑',
+  description: 'Warm chunky fruits in a bold bowl',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'fruit-1',
+      label: 'Fruit Left',
+      tone: 'accent',
+      // Slightly imperfect circle — left fruit peeking from bowl
+      path: 'M120,175 Q115,130 140,110 Q165,90 195,95 Q225,100 235,130 Q245,160 235,190 Q225,210 200,215 Q160,220 135,205 Q115,195 120,175 Z',
+    },
+    {
+      id: 'fruit-2',
+      label: 'Fruit Center',
+      tone: 'medium',
+      // Larger center fruit
+      path: 'M200,155 Q195,110 220,88 Q245,70 275,75 Q305,82 315,110 Q325,140 318,170 Q310,195 285,205 Q255,215 230,205 Q205,192 200,155 Z',
+    },
+    {
+      id: 'fruit-3',
+      label: 'Fruit Right',
+      tone: 'accent',
+      // Right fruit
+      path: 'M295,180 Q290,140 310,118 Q330,100 355,105 Q380,112 388,140 Q395,170 385,198 Q375,218 350,222 Q320,225 305,210 Q292,200 295,180 Z',
+    },
+    {
+      id: 'bowl-rim',
+      label: 'Bowl Rim',
+      tone: 'dark',
+      // Thick curved rim strip
+      path: 'M80,225 Q85,210 140,200 Q240,185 340,200 Q400,210 405,225 L410,255 Q400,245 340,235 Q240,220 140,235 Q90,245 80,255 Z',
+    },
+    {
+      id: 'bowl-base',
+      label: 'Bowl',
+      tone: 'medium',
+      // Large rounded bowl body
+      path: 'M80,255 Q90,245 140,235 Q240,220 340,235 Q400,245 410,255 Q420,320 390,380 Q360,420 240,425 Q120,420 90,380 Q60,320 80,255 Z',
+    },
+  ],
+  lightTextures: ['linen-white', 'linen-natural', 'boucle-cream', 'boucle-ivory'],
+  mediumTextures: ['suede-camel', 'leather-tan', 'linen-mustard', 'boucle-taupe', 'leather-caramel'],
+  darkTextures: ['suede-terracotta', 'leather-cognac', 'velvet-rust', 'wood-walnut'],
+  accentTextures: ['boucle-blush', 'linen-dusty-rose', 'suede-terracotta', 'linen-mustard'],
+};
+
+// ── MUSHROOM ──
+// Wide cap, chunky stem — playful & earthy
+const mushroom: Vibe = {
+  id: 'mushroom',
+  name: 'Mushroom',
+  emoji: '🍄',
+  description: 'Playful earthy silhouette — soft & chunky',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'mush-cap-top',
+      label: 'Cap Top',
+      tone: 'accent',
+      // Wide rounded dome — the main cap
+      path: 'M95,210 Q90,140 130,95 Q175,55 240,50 Q305,55 350,95 Q390,140 385,210 Q380,230 350,235 L130,235 Q100,230 95,210 Z',
+    },
+    {
+      id: 'mush-cap-under',
+      label: 'Cap Underside',
+      tone: 'medium',
+      // Thin curved strip under the cap — gills
+      path: 'M130,235 L350,235 Q355,260 340,272 L140,272 Q125,260 130,235 Z',
+    },
+    {
+      id: 'mush-stem',
+      label: 'Stem',
+      tone: 'light',
+      // Thick chunky stem
+      path: 'M185,272 L295,272 Q310,290 315,340 Q320,390 310,410 L170,410 Q160,390 165,340 Q170,290 185,272 Z',
+    },
+    {
+      id: 'mush-base',
+      label: 'Base',
+      tone: 'dark',
+      // Ground base — wide, flat
+      path: 'M130,410 L350,410 Q370,420 375,440 Q370,458 340,462 L140,462 Q110,458 105,440 Q110,420 130,410 Z',
+    },
+  ],
+  lightTextures: ['linen-white', 'linen-natural', 'boucle-cream', 'boucle-ivory'],
+  mediumTextures: ['boucle-taupe', 'suede-camel', 'linen-sage', 'boucle-oat'],
+  darkTextures: ['suede-charcoal', 'wood-walnut', 'leather-cognac', 'suede-slate'],
+  accentTextures: ['suede-terracotta', 'velvet-rust', 'leather-caramel', 'boucle-blush'],
+};
+
+// ── BEEHIVE ──
+// Stacked arches — thick, evenly spaced
+const beehive: Vibe = {
+  id: 'beehive',
+  name: 'Beehive',
+  emoji: '🐝',
+  description: 'Stacked arches — warm & structured',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'hive-outer',
+      label: 'Outer Arch',
+      tone: 'light',
+      // Widest outer arch
+      path: 'M100,380 Q95,280 120,200 Q155,120 240,90 Q325,120 360,200 Q385,280 380,380 L345,380 Q348,290 330,220 Q305,150 240,128 Q175,150 150,220 Q132,290 135,380 Z',
+    },
+    {
+      id: 'hive-middle',
+      label: 'Middle Arch',
+      tone: 'medium',
+      // Middle arch
+      path: 'M135,380 Q132,290 150,220 Q175,150 240,128 Q305,150 330,220 Q348,290 345,380 L310,380 Q315,300 300,245 Q280,185 240,168 Q200,185 180,245 Q165,300 170,380 Z',
+    },
+    {
+      id: 'hive-inner',
+      label: 'Inner Arch',
+      tone: 'accent',
+      // Innermost arch
+      path: 'M170,380 Q165,300 180,245 Q200,185 240,168 Q280,185 300,245 Q315,300 310,380 Z',
+    },
+    {
+      id: 'hive-base',
+      label: 'Base',
+      tone: 'dark',
+      // Flat base strip
+      path: 'M80,380 L400,380 Q415,395 418,415 Q415,438 395,445 L85,445 Q65,438 62,415 Q65,395 80,380 Z',
+    },
+  ],
+  lightTextures: ['linen-mustard', 'linen-natural', 'boucle-cream', 'boucle-ivory'],
+  mediumTextures: ['suede-camel', 'leather-tan', 'boucle-oat', 'leather-caramel'],
+  darkTextures: ['wood-walnut', 'leather-cognac', 'suede-charcoal', 'wood-ebony'],
+  accentTextures: ['linen-mustard', 'suede-terracotta', 'boucle-blush', 'leather-caramel'],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive];

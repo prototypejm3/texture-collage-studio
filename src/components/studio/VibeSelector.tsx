@@ -25,6 +25,9 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
     ocean: { light: 'hsl(42, 25%, 88%)', medium: 'hsl(170, 20%, 55%)', dark: 'hsl(220, 45%, 25%)', accent: 'hsl(38, 40%, 65%)' },
     'cozy-soft': { light: 'hsl(40, 30%, 92%)', medium: 'hsl(30, 20%, 68%)', dark: 'hsl(220, 8%, 38%)', accent: 'hsl(8, 30%, 78%)' },
     'rugged-warm': { light: 'hsl(38, 20%, 82%)', medium: 'hsl(28, 40%, 52%)', dark: 'hsl(20, 30%, 22%)', accent: 'hsl(10, 38%, 38%)' },
+    'fruit-bowl': { light: 'hsl(40, 30%, 90%)', medium: 'hsl(30, 40%, 62%)', dark: 'hsl(15, 35%, 30%)', accent: 'hsl(15, 55%, 58%)' },
+    mushroom: { light: 'hsl(40, 25%, 88%)', medium: 'hsl(30, 18%, 65%)', dark: 'hsl(20, 15%, 28%)', accent: 'hsl(12, 50%, 48%)' },
+    beehive: { light: 'hsl(45, 50%, 78%)', medium: 'hsl(35, 45%, 58%)', dark: 'hsl(25, 30%, 25%)', accent: 'hsl(42, 60%, 55%)' },
   };
 
   const colors = vibeAccents[vibe.id] || toneColors;
@@ -56,7 +59,7 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 bg-popover border border-border rounded-2xl shadow-2xl p-5"
-          style={{ width: 680 }}
+          style={{ width: 780 }}
         >
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -85,7 +88,7 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             {vibes.map(vibe => (
               <button
                 key={vibe.id}
