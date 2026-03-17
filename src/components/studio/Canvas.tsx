@@ -1,15 +1,18 @@
 import { useRef, useCallback } from 'react';
-import { CanvasElement, FrameSize, FrameColor } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, TemplateSection } from '@/types/studio';
 import { CanvasElementComponent } from './CanvasElement';
+import { TemplateSections } from './TemplateSections';
 
 interface Props {
   elements: CanvasElement[];
   selectedId: string | null;
   frameSize: FrameSize;
   frameColor: FrameColor;
+  templateSections: TemplateSection[] | null;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
+  onDropInSection: (sectionId: string, textureId: string) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -29,10 +32,12 @@ const frameColorMap: Record<FrameColor, { bg: string; border: string; shadow: st
   mahogany: { bg: 'hsl(0, 40%, 25%)', border: 'hsl(0, 35%, 18%)', shadow: 'hsla(0, 30%, 10%, 0.25)' },
 };
 
-export function Canvas({ elements, selectedId, frameSize, frameColor, onSelect, onUpdate, onDrop, canvasRef }: Props) {
+export function Canvas({ elements, selectedId, frameSize, frameColor, templateSections, onSelect, onUpdate, onDrop, onDropInSection, canvasRef }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { w, h } = frameSizeMap[frameSize];
   const fc = frameColorMap[frameColor];
+
+  const filledSectionIds = new Set(elements.filter(el => el.sectionId).map(el => el.sectionId!));
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -83,6 +88,17 @@ export function Canvas({ elements, selectedId, frameSize, frameColor, onSelect, 
             boxShadow: `inset 0 1px 4px ${fc.shadow}`,
           }}
         >
+          {/* Template section outlines */}
+          {templateSections && (
+            <TemplateSections
+              sections={templateSections}
+              canvasWidth={w}
+              canvasHeight={h}
+              filledSectionIds={filledSectionIds}
+              onDropInSection={onDropInSection}
+            />
+          )}
+
           {elements.map(el => (
             <CanvasElementComponent
               key={el.id}

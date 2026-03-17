@@ -1,16 +1,19 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { useStudio } from '@/hooks/useStudio';
 import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
+import { VibeSelector } from '@/components/studio/VibeSelector';
+import { Vibe } from '@/types/studio';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
   const studio = useStudio();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const dragTextureRef = useRef<string | null>(null);
+  const [vibesOpen, setVibesOpen] = useState(false);
 
   const handleDragStart = useCallback((textureId: string) => {
     dragTextureRef.current = textureId;
@@ -18,6 +21,19 @@ const Index = () => {
 
   const handleDrop = useCallback((textureId: string, x: number, y: number) => {
     studio.addElement(textureId, x, y);
+  }, [studio]);
+
+  const handleDropInSection = useCallback((sectionId: string, textureId: string) => {
+    if (!studio.activeVibe) return;
+    const section = studio.activeVibe.template.sections.find(s => s.id === sectionId);
+    if (!section || !canvasRef.current) return;
+    const rect = canvasRef.current;
+    studio.addElementToSection(sectionId, textureId, section, rect.offsetWidth, rect.offsetHeight);
+  }, [studio]);
+
+  const handleSelectVibe = useCallback((vibe: Vibe) => {
+    if (!canvasRef.current) return;
+    studio.applyVibe(vibe, canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
   }, [studio]);
 
   const handleSave = useCallback(async () => {
@@ -34,12 +50,6 @@ const Index = () => {
     }
   }, []);
 
-  // Wire drag data transfer
-  const handleDragStartLib = useCallback((textureId: string) => {
-    dragTextureRef.current = textureId;
-    // We use the native drag event's dataTransfer in TextureLibrary
-  }, []);
-
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <TopToolbar
@@ -51,19 +61,23 @@ const Index = () => {
         onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}
         onSave={handleSave}
+        onToggleVibes={() => setVibesOpen(v => !v)}
+        vibesActive={vibesOpen}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
-          <TextureLibrary onDragStart={handleDragStartLib} />
+          <TextureLibrary onDragStart={handleDragStart} />
         </div>
         <Canvas
           elements={studio.elements}
           selectedId={studio.selectedId}
           frameSize={studio.frameSize}
           frameColor={studio.frameColor}
+          templateSections={studio.activeVibe?.template.sections ?? null}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
+          onDropInSection={handleDropInSection}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
         {studio.selectedElement && (
@@ -75,6 +89,15 @@ const Index = () => {
             onDelete={() => studio.deleteElement(studio.selectedId!)}
           />
         )}
+
+        {/* Vibe selector overlay */}
+        <VibeSelector
+          isOpen={vibesOpen}
+          activeVibeId={studio.activeVibe?.id ?? null}
+          onClose={() => setVibesOpen(false)}
+          onSelectVibe={handleSelectVibe}
+          onShuffle={studio.shuffleVibe}
+        />
       </div>
 
       {/* SVG Filters for wrinkle effects */}

@@ -1,14 +1,36 @@
 import { useState, useCallback } from 'react';
-import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, TemplateSection } from '@/types/studio';
 import { textures } from '@/data/textures';
 
 let nextId = 1;
+
+function pickRandom<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getTexturesByIds(ids: string[]) {
+  return textures.filter(t => ids.includes(t.id));
+}
+
+function pickTextureForTone(vibe: Vibe, tone: TemplateSection['tone']): string {
+  const pool = {
+    light: vibe.lightTextures,
+    medium: vibe.mediumTextures,
+    dark: vibe.darkTextures,
+    accent: vibe.accentTextures,
+  }[tone];
+  // Filter to only textures that actually exist
+  const valid = pool.filter(id => textures.some(t => t.id === id));
+  if (valid.length === 0) return textures[0].id;
+  return pickRandom(valid);
+}
 
 export function useStudio() {
   const [elements, setElements] = useState<CanvasElement[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
+  const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -27,6 +49,33 @@ export function useStudio() {
       effects: { ...defaultEffects },
     };
     setElements(prev => [...prev, newEl]);
+    setSelectedId(id);
+    return id;
+  }, []);
+
+  const addElementToSection = useCallback((sectionId: string, textureId: string, section: TemplateSection, canvasWidth: number, canvasHeight: number) => {
+    const id = `el-${nextId++}`;
+    const x = (section.x / 100) * canvasWidth;
+    const y = (section.y / 100) * canvasHeight;
+    const w = (section.width / 100) * canvasWidth;
+    const h = (section.height / 100) * canvasHeight;
+
+    const newEl: CanvasElement = {
+      id,
+      textureId,
+      x,
+      y,
+      width: w,
+      height: h,
+      rotation: 0,
+      shape: section.shape,
+      zIndex: nextId,
+      effects: { ...defaultEffects },
+      sectionId,
+    };
+
+    // Remove any existing element in this section
+    setElements(prev => [...prev.filter(el => el.sectionId !== sectionId), newEl]);
     setSelectedId(id);
     return id;
   }, []);
@@ -50,13 +99,14 @@ export function useStudio() {
     const el = elements.find(e => e.id === id);
     if (!el) return;
     const newId = `el-${nextId++}`;
-    setElements(prev => [...prev, { ...el, id: newId, x: el.x + 20, y: el.y + 20, zIndex: nextId }]);
+    setElements(prev => [...prev, { ...el, id: newId, x: el.x + 20, y: el.y + 20, zIndex: nextId, sectionId: undefined }]);
     setSelectedId(newId);
   }, [elements]);
 
   const clearCanvas = useCallback(() => {
     setElements([]);
     setSelectedId(null);
+    setActiveVibe(null);
   }, []);
 
   const generateRandom = useCallback(() => {
@@ -83,9 +133,15 @@ export function useStudio() {
     }
     setElements(newElements);
     setSelectedId(null);
+    setActiveVibe(null);
   }, []);
 
   const shuffleElements = useCallback(() => {
+    if (activeVibe) {
+      // Keep same template, re-randomize textures within palette
+      applyVibe(activeVibe);
+      return;
+    }
     setElements(prev => prev.map(el => ({
       ...el,
       x: 30 + Math.random() * 250,
@@ -94,16 +150,51 @@ export function useStudio() {
     })));
   }, []);
 
+  const applyVibe = useCallback((vibe: Vibe, canvasW = 480, canvasH = 480) => {
+    setActiveVibe(vibe);
+    const newElements: CanvasElement[] = vibe.template.sections.map(section => {
+      const textureId = pickTextureForTone(vibe, section.tone);
+      const x = (section.x / 100) * canvasW;
+      const y = (section.y / 100) * canvasH;
+      const w = (section.width / 100) * canvasW;
+      const h = (section.height / 100) * canvasH;
+
+      return {
+        id: `el-${nextId++}`,
+        textureId,
+        x,
+        y,
+        width: w,
+        height: h,
+        rotation: 0,
+        shape: section.shape,
+        zIndex: nextId,
+        effects: { ...defaultEffects },
+        sectionId: section.id,
+      };
+    });
+    setElements(newElements);
+    setSelectedId(null);
+  }, []);
+
+  const shuffleVibe = useCallback(() => {
+    if (activeVibe) {
+      applyVibe(activeVibe);
+    }
+  }, [activeVibe, applyVibe]);
+
   return {
     elements,
     selectedId,
     selectedElement,
     frameSize,
     frameColor,
+    activeVibe,
     setSelectedId,
     setFrameSize,
     setFrameColor,
     addElement,
+    addElementToSection,
     updateElement,
     updateEffects,
     deleteElement,
@@ -111,5 +202,7 @@ export function useStudio() {
     clearCanvas,
     generateRandom,
     shuffleElements,
+    applyVibe,
+    shuffleVibe,
   };
 }

@@ -27,6 +27,7 @@ export interface CanvasElement {
   shape: ElementShape;
   zIndex: number;
   effects: MaterialEffects;
+  sectionId?: string; // links element to a template section
 }
 
 export interface MaterialEffects {
@@ -44,3 +45,38 @@ export const defaultEffects: MaterialEffects = {
   grainBoost: 0,
   shadowDepth: 'flat',
 };
+
+// ── Template & Vibe types ──
+
+export interface TemplateSection {
+  id: string;
+  /** Position and size as percentages of canvas (0-100) */
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  shape: ElementShape;
+  /** Tone hint for auto-fill: light, medium, dark, accent */
+  tone: 'light' | 'medium' | 'dark' | 'accent';
+}
+
+export interface FrameTemplate {
+  id: string;
+  name: string;
+  sections: TemplateSection[];
+}
+
+export interface Vibe {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+  template: FrameTemplate;
+  /** Texture IDs or categories that match this vibe */
+  texturePool: string[];
+  /** Ordered from light to dark for tone matching */
+  lightTextures: string[];
+  mediumTextures: string[];
+  darkTextures: string[];
+  accentTextures: string[];
+}
