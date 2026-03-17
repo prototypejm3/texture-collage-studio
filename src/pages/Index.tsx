@@ -108,8 +108,8 @@ const Index = () => {
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
 
-        {/* Floating toolbar — now at TOP of canvas */}
-        {studio.selectedElement && !studio.activeVibe && (
+        {/* Floating toolbar — works in both free and vibe mode */}
+        {studio.selectedElement && (
           <FloatingToolbar
             element={studio.selectedElement}
             onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
