@@ -1,4 +1,4 @@
-import { SavedDesign, WallLayout, FrameStyle } from '@/types/wall';
+import { SavedDesign, WallLayout, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import Masonry from 'react-masonry-css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -15,9 +15,10 @@ interface WallGridProps {
   onToggleIRL: (id: string) => void;
   onToggleHide: (id: string) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
+  onSizeChange: (id: string, size: DesignSize) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onSizeChange }: WallGridProps) {
   const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
     key: d.id,
     design: d,
@@ -28,6 +29,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     onToggleIRL,
     onToggleHide,
     onFrameStyleChange,
+    onSizeChange,
     isPremium,
     size,
   });
