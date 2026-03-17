@@ -31,37 +31,6 @@ const frameStyleList: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-const frameTextureList: { value: FrameTexture; label: string }[] = [
-  { value: 'smooth', label: 'Smooth' },
-  { value: 'brushed', label: 'Brushed' },
-  { value: 'hammered', label: 'Hammered' },
-  { value: 'antiqued', label: 'Antiqued' },
-  { value: 'matte', label: 'Matte' },
-];
-
-/* ─── Texture overlay CSS ─── */
-function getTextureOverlay(texture: FrameTexture): React.CSSProperties {
-  switch (texture) {
-    case 'brushed':
-      return {
-        backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255,255,255,0.04) 1px, rgba(255,255,255,0.04) 2px)',
-      };
-    case 'hammered':
-      return {
-        backgroundImage: 'radial-gradient(circle 3px at 30% 40%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle 2px at 70% 60%, rgba(0,0,0,0.06) 0%, transparent 50%), radial-gradient(circle 4px at 50% 20%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle 3px at 20% 80%, rgba(0,0,0,0.04) 0%, transparent 50%)',
-      };
-    case 'antiqued':
-      return {
-        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.08) 0%, transparent 30%, rgba(0,0,0,0.05) 60%, transparent 80%, rgba(0,0,0,0.1) 100%)',
-      };
-    case 'matte':
-      return {
-        filter: 'saturate(0.7) brightness(0.95)',
-      };
-    default: // smooth
-      return {};
-  }
-}
 
 /* ─── Metallic gradient configs ─── */
 const metallicGradients: Record<string, {
