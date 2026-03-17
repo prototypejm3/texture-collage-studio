@@ -11,8 +11,7 @@ export const animalTextures: TextureSwatch[] = [
     id: 'animal-zebra',
     name: 'Zebra Print',
     category: 'Animal',
-    cssBackground: `repeating-linear-gradient(80deg, hsl(0, 0%, 8%) 0px, hsl(0, 0%, 8%) 3px, hsl(0, 0%, 96%) 3px, hsl(0, 0%, 96%) 7px, hsl(0, 0%, 8%) 7px, hsl(0, 0%, 8%) 9px, hsl(0, 0%, 96%) 9px, hsl(0, 0%, 96%) 14px),
-      repeating-linear-gradient(100deg, hsla(0, 0%, 10%, 0.15) 0px, transparent 2px, transparent 8px)`,
+    cssBackground: `url(/textures/zebra-print.png)`,
   },
   {
     id: 'animal-cheetah',
