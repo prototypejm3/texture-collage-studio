@@ -146,8 +146,13 @@ export function TopToolbar({
         <Button size="sm" variant="ghost" onClick={onClear} className="gap-1.5 text-xs text-destructive hover:text-destructive">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </Button>
+        {onSaveToWall && (
+          <Button size="sm" variant="ghost" onClick={onSaveToWall} className="gap-1.5 text-xs">
+            <Save className="w-3.5 h-3.5" /> Save to Wall
+          </Button>
+        )}
         <Button size="sm" onClick={onSave} className="gap-1.5 text-xs">
-          <Download className="w-3.5 h-3.5" /> Save PNG
+          <Download className="w-3.5 h-3.5" /> Export PNG
         </Button>
       </div>
     </div>
