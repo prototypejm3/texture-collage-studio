@@ -45,7 +45,7 @@ export function Canvas({
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
-  onSelectSection, onDropInSection, canvasRef,
+  onSelectSection, onDropInSection, onDropAsSwatch, canvasRef,
   customTextures = [],
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
