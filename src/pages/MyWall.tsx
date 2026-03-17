@@ -115,8 +115,8 @@ const MyWall = () => {
                   onClick={() => setActiveTab(val)}
                   className={`px-3 py-1 text-[11px] font-medium rounded-md transition-colors tracking-wide ${
                     activeTab === val
-                      ? isCharcoal ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
-                      : isCharcoal ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
+                      ? isDark ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
+                      : isDark ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
                   }`}
                 >
                   {label}
