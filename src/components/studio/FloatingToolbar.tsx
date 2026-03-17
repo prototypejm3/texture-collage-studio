@@ -199,13 +199,13 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
                 {/* Edge Style */}
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style</label>
-                  <div className="flex gap-1">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style (✂ = Scissor Cuts)</label>
+                  <div className="flex flex-wrap gap-1">
                     {edgeOptions.map(o => (
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ edgeStyle: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`text-[10px] py-1.5 px-2 rounded-md transition-colors ${
                           element.effects.edgeStyle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'

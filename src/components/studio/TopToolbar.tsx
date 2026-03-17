@@ -134,7 +134,7 @@ export function TopToolbar({
           onClick={onToggleVibes}
           className="gap-1.5 text-xs"
         >
-          <Palette className="w-3.5 h-3.5" /> Vibes
+          <Palette className="w-3.5 h-3.5" /> Stencils
         </Button>
         <Button size="sm" variant="ghost" onClick={onGenerate} className="gap-1.5 text-xs">
           <Sparkles className="w-3.5 h-3.5" /> Generate

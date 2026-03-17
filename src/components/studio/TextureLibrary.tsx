@@ -115,7 +115,7 @@ export function TextureLibrary({
         </div>
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-3">
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-3 gap-2">
           {filtered.map(tex => {
             const isCustom = tex.id.startsWith('custom-');
             return (
