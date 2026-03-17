@@ -181,6 +181,7 @@ const MyWall = () => {
                 onToggleIRL={handleToggleIRL}
                 onToggleHide={wall.toggleHide}
                 onFrameStyleChange={handleFrameStyle}
+                onFrameTextureChange={handleFrameTexture}
                 onSizeChange={handleSizeChange}
               />
             </motion.div>
