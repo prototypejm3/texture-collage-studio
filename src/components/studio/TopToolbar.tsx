@@ -37,7 +37,7 @@ const frameColors: { value: FrameColor; color: string; label: string }[] = [
 export function TopToolbar({
   frameColor,
   onFrameColorChange,
-  onGenerate, onShuffle, onClear, onSave,
+  onGenerate, onShuffle, onClear, onSave, onSaveToWall,
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
