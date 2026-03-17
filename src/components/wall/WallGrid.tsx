@@ -1,4 +1,4 @@
-import { SavedDesign, WallLayout, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
+import { SavedDesign, WallLayout, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { FreeformWall } from './FreeformWall';
 import Masonry from 'react-masonry-css';
