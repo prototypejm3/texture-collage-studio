@@ -46,7 +46,6 @@ export function useWall() {
       pinned: false,
       hidden: false,
       frameStyle: settings.defaultFrameStyle,
-      frameTexture: 'smooth',
       displaySize: 'medium',
       studioState,
     };
