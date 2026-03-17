@@ -157,6 +157,23 @@ export function useStudio() {
     setVibeFills(fills);
   }, [activeVibe]);
 
+  const getState = useCallback(() => {
+    return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId });
+  }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId]);
+
+  const loadState = useCallback((serialized: string) => {
+    try {
+      const state = JSON.parse(serialized);
+      if (state.elements) setElements(state.elements);
+      if (state.frameSize) setFrameSize(state.frameSize);
+      if (state.frameColor) setFrameColor(state.frameColor);
+      if (state.activeVibe) setActiveVibe(state.activeVibe);
+      if (state.vibeFills) setVibeFills(state.vibeFills);
+      if (state.selectedSectionId !== undefined) setSelectedSectionId(state.selectedSectionId);
+      setSelectedId(null);
+    } catch { /* ignore corrupt state */ }
+  }, []);
+
   return {
     // State
     elements,
@@ -185,5 +202,8 @@ export function useStudio() {
     fillSection,
     selectSection,
     shuffleVibeFills,
+    // Serialization
+    getState,
+    loadState,
   };
 }

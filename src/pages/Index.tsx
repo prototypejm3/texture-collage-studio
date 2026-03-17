@@ -1,6 +1,6 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { toPng } from 'html-to-image';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
 import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
@@ -19,6 +19,7 @@ import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const studio = useStudio();
   const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
@@ -28,6 +29,19 @@ const Index = () => {
   const [vibesOpen, setVibesOpen] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
+  const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
+
+  // Load design state when editing from wall
+  useEffect(() => {
+    const editId = searchParams.get('edit');
+    if (editId) {
+      const design = wall.designs.find(d => d.id === editId);
+      if (design?.studioState) {
+        studio.loadState(design.studioState);
+        setEditingDesignId(editId);
+      }
+    }
+  }, []); // Run once on mount
 
   const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
@@ -59,6 +73,14 @@ const Index = () => {
       const dataUrl = await toPng(canvasRef.current, { pixelRatio: 2 });
       const name = studio.activeVibe?.name || 'Untitled Design';
       const vibeName = studio.activeVibe?.name;
+      const studioState = studio.getState();
+
+      // If editing an existing design, update it
+      if (editingDesignId) {
+        wall.updateDesign(editingDesignId, { previewImage: dataUrl, name, vibeName, studioState });
+        toast({ title: 'Updated!', description: 'Your design has been updated on My Wall.' });
+        return;
+      }
 
       if (!canSave(wall.designs.length)) {
         setPendingSave({ preview: dataUrl, name, vibeName });
@@ -66,12 +88,12 @@ const Index = () => {
         return;
       }
 
-      wall.addDesign(dataUrl, name, vibeName);
+      wall.addDesign(dataUrl, name, vibeName, studioState);
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
     }
-  }, [studio, wall, canSave]);
+  }, [studio, wall, canSave, editingDesignId]);
 
   const handleReplace = useCallback(() => {
     if (pendingSave) {
