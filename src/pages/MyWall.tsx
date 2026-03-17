@@ -39,7 +39,7 @@ const MyWall = () => {
     ? wall.designs
     : wall.designs.filter(d => d.status === activeTab);
 
-  const isCharcoal = wall.settings.background === 'charcoal';
+  const isDark = ['black-brick', 'black-concrete'].includes(wall.settings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate('/');
