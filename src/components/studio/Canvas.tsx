@@ -120,6 +120,7 @@ export function Canvas({
               isSelected={el.id === selectedId}
               onSelect={() => onSelect(el.id)}
               onUpdate={(updates) => onUpdate(el.id, updates)}
+              customTextures={customTextures}
             />
           ))}
 
