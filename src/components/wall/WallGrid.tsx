@@ -13,10 +13,11 @@ interface WallGridProps {
   onDelete: (id: string) => void;
   onTogglePin: (id: string) => void;
   onToggleIRL: (id: string) => void;
+  onToggleHide: (id: string) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onFrameStyleChange }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange }: WallGridProps) {
   const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
     key: d.id,
     design: d,
@@ -25,6 +26,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     onDelete,
     onTogglePin,
     onToggleIRL,
+    onToggleHide,
     onFrameStyleChange,
     isPremium,
     size,

@@ -44,6 +44,7 @@ export function useWall() {
       status: 'in-progress',
       builtIRL: false,
       pinned: false,
+      hidden: false,
       frameStyle: settings.defaultFrameStyle,
       studioState,
     };
@@ -62,6 +63,7 @@ export function useWall() {
       status: 'in-progress',
       builtIRL: false,
       pinned: false,
+      hidden: false,
       frameStyle: settings.defaultFrameStyle,
       studioState,
     };
@@ -101,6 +103,10 @@ export function useWall() {
     });
   }, []);
 
+  const toggleHide = useCallback((id: string) => {
+    setDesigns(prev => prev.map(d => d.id === id ? { ...d, hidden: !d.hidden } : d));
+  }, []);
+
   const updateSettings = useCallback((updates: Partial<WallSettings>) => {
     setSettings(prev => ({ ...prev, ...updates }));
   }, []);
@@ -115,6 +121,7 @@ export function useWall() {
     duplicateDesign,
     reorderDesigns,
     togglePin,
+    toggleHide,
     updateSettings,
   };
 }
