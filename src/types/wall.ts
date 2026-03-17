@@ -1,6 +1,6 @@
 export type WallLayout = 'grid' | 'masonry' | 'single' | 'featured' | 'curated';
 export type WallBackground = 'warm-white' | 'cream' | 'soft-gray' | 'charcoal' | 'paper' | 'linen';
-export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'none';
+export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'none';
 export type DesignStatus = 'in-progress' | 'finished';
 export type UserTier = 'free' | 'premium';
 
