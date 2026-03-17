@@ -52,7 +52,7 @@ function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }
   }
 }
 
-const stencilShapes: { value: ElementShape; label: string }[] = [
+const shapeOptions: { value: ElementShape; label: string }[] = [
   { value: 'soft-square', label: 'Soft Square' },
   { value: 'torn-edge', label: 'Torn Edge' },
   { value: 'circle', label: 'Circle' },
