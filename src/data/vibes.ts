@@ -143,7 +143,8 @@ const solarSystem: Vibe = {
 };
 
 // ── CAT ──
-// Simple cat silhouette split into head, body, tail
+// Chunky, rounded sitting cat — soft plush shape
+// No facial features, bold & easy to cut with scissors
 const cat: Vibe = {
   id: 'cozy-soft',
   name: 'Cat',
@@ -155,22 +156,22 @@ const cat: Vibe = {
       id: 'cat-head',
       label: 'Head',
       tone: 'light',
-      // Round head with two ears
-      path: 'M160,180 L180,110 Q185,100 195,105 Q210,130 240,130 Q270,130 285,105 Q295,100 300,110 L320,180 Q320,220 280,240 L200,240 Q160,220 160,180 Z',
+      // Big round head with chunky triangular ears, no face details
+      path: 'M175,195 Q170,155 185,130 L200,90 Q205,80 215,88 Q220,110 240,115 Q260,110 265,88 Q275,80 280,90 L295,130 Q310,155 305,195 Q305,225 280,235 L200,235 Q175,225 175,195 Z',
     },
     {
       id: 'cat-body',
       label: 'Body',
       tone: 'medium',
-      // Rounded sitting body
-      path: 'M160,240 L320,240 Q360,260 370,320 Q375,380 340,420 L140,420 Q105,380 110,320 Q120,260 160,240 Z',
+      // Wide, chunky sitting body — pear/egg shape
+      path: 'M175,235 L305,235 Q365,265 375,330 Q380,395 345,425 L135,425 Q100,395 105,330 Q115,265 175,235 Z',
     },
     {
       id: 'cat-tail',
       label: 'Tail',
       tone: 'accent',
-      // Curved tail sweeping right
-      path: 'M340,380 Q360,370 380,340 Q400,310 420,310 Q440,310 440,330 Q440,350 420,360 Q400,370 370,400 Q350,410 340,420 Z',
+      // Thick curved tail sweeping right — chunky, easy to cut
+      path: 'M345,370 Q370,355 390,330 Q410,300 430,295 Q455,290 458,315 Q460,340 440,360 Q415,385 385,405 Q360,420 345,425 Z',
     },
   ],
   lightTextures: ['boucle-cream', 'boucle-ivory', 'linen-white', 'boucle-blush'],
