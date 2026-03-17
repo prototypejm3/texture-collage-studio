@@ -120,7 +120,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
   switch (style) {
     case 'minimal':
       return (
-        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]" style={texOverlay}>
+        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
           <div className="border border-[hsl(0,0%,20%)] border-opacity-80">
             <div className="bg-white p-[clamp(8px,2%,16px)]">
               {children}
