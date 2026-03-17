@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCustomizerProps {
@@ -10,6 +10,7 @@ interface WallCustomizerProps {
 }
 
 const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
+  { value: 'freeform', label: 'Freeform', icon: <Move className="w-3.5 h-3.5" /> },
   { value: 'grid', label: 'Grid', icon: <LayoutGrid className="w-3.5 h-3.5" /> },
   { value: 'masonry', label: 'Masonry', icon: <Columns className="w-3.5 h-3.5" /> },
   { value: 'single', label: 'Gallery', icon: <AlignJustify className="w-3.5 h-3.5" /> },

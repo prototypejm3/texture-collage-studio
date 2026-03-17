@@ -1,5 +1,6 @@
 import { SavedDesign, WallLayout, FrameStyle, FrameTexture, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
+import { FreeformWall } from './FreeformWall';
 import Masonry from 'react-masonry-css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMemo } from 'react';
@@ -37,6 +38,26 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     isPremium,
     size,
   });
+
+  // Freeform — drag anywhere on the wall
+  if (layout === 'freeform') {
+    return (
+      <FreeformWall
+        designs={designs}
+        isPremium={isPremium}
+        onOpen={onOpen}
+        onDuplicate={onDuplicate}
+        onDelete={onDelete}
+        onTogglePin={onTogglePin}
+        onToggleIRL={onToggleIRL}
+        onToggleHide={onToggleHide}
+        onUpdate={onUpdate}
+        onFrameStyleChange={onFrameStyleChange}
+        onFrameTextureChange={onFrameTextureChange}
+        onSizeChange={onSizeChange}
+      />
+    );
+  }
 
   // Gallery mode: 2-3 per row, generous spacing
   if (layout === 'single') {

@@ -1,4 +1,4 @@
-export type WallLayout = 'grid' | 'masonry' | 'single' | 'featured' | 'curated';
+export type WallLayout = 'freeform' | 'grid' | 'masonry' | 'single' | 'featured' | 'curated';
 export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'cream' | 'red-velvet';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'none';
 export type FrameTexture = 'smooth' | 'brushed' | 'hammered' | 'antiqued' | 'matte';
@@ -21,6 +21,9 @@ export interface SavedDesign {
   frameStyle: FrameStyle;
   frameTexture: FrameTexture;
   displaySize: DesignSize;
+  /** Position on wall in freeform mode (percentage-based) */
+  wallX?: number;
+  wallY?: number;
   /** Serialized studio state for re-editing */
   studioState?: string;
 }
@@ -34,7 +37,7 @@ export interface WallSettings {
 
 export const defaultWallSettings: WallSettings = {
   title: 'My Wall',
-  layout: 'grid',
+  layout: 'freeform',
   background: 'white-brick',
   defaultFrameStyle: 'gold',
 };
