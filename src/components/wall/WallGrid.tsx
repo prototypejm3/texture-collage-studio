@@ -14,12 +14,13 @@ interface WallGridProps {
   onTogglePin: (id: string) => void;
   onToggleIRL: (id: string) => void;
   onToggleHide: (id: string) => void;
+  onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onFrameTextureChange: (id: string, texture: FrameTexture) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onFrameStyleChange, onFrameTextureChange, onSizeChange }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onFrameTextureChange, onSizeChange }: WallGridProps) {
   const cardProps = (d: SavedDesign, size?: 'normal' | 'large') => ({
     key: d.id,
     design: d,
@@ -29,6 +30,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     onTogglePin,
     onToggleIRL,
     onToggleHide,
+    onUpdate,
     onFrameStyleChange,
     onFrameTextureChange,
     onSizeChange,
