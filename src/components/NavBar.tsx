@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Palette, LayoutGrid, LogIn, LogOut, User } from 'lucide-react';
+import { Palette, LayoutGrid, LogIn, LogOut, User, Ghost } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 export function NavBar() {
@@ -7,6 +7,7 @@ export function NavBar() {
   const { user, signOut } = useAuth();
   const isCreate = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
+  const isGallery = location.pathname === '/gallery';
 
   return (
     <nav className="h-12 border-b border-border bg-card flex items-center px-4 gap-6 flex-shrink-0">
