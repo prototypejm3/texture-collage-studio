@@ -211,7 +211,7 @@ export function VibeOutline({
   );
 }
 
-function VibeLabel({ section, isHovered }: { section: { id: string; label: string; path: string }; isHovered: boolean }) {
+function VibeLabel({ section, isHovered, isSelected }: { section: { id: string; label: string; path: string }; isHovered: boolean; isSelected: boolean }) {
   const center = getPathCenter(section.path);
   if (!center) return null;
 
@@ -222,10 +222,10 @@ function VibeLabel({ section, isHovered }: { section: { id: string; label: strin
       textAnchor="middle"
       dominantBaseline="middle"
       className="pointer-events-none select-none"
-      fill={isHovered ? 'hsl(24, 80%, 45%)' : 'hsl(220, 10%, 55%)'}
-      fontSize="12"
+      fill={isSelected ? 'hsl(24, 80%, 40%)' : isHovered ? 'hsl(24, 80%, 45%)' : 'hsl(220, 10%, 55%)'}
+      fontSize={isSelected ? '13' : '12'}
       fontFamily="'DM Sans', sans-serif"
-      fontWeight="500"
+      fontWeight={isSelected ? '700' : '500'}
     >
       {section.label}
     </text>
