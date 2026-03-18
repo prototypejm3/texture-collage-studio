@@ -394,7 +394,7 @@ const MyWall = () => {
       </motion.div>
 
       {/* Ambient sound */}
-      <AmbientSoundPlayer sound={currentSettings.ambientSound || 'none'} />
+      <AmbientSoundPlayer sound={currentSettings.ambientSound || 'none'} showControl={currentSettings.ambientSound !== 'none'} />
 
       {/* Step Back Mode */}
       <StepBackMode
