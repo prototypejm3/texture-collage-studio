@@ -34,12 +34,13 @@ export function useWall() {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string): string => {
+  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
     const design: SavedDesign = {
       id, name,
       vibeName,
+      stencilCreator,
       previewImage: preview,
       createdAt: now,
       updatedAt: now,
