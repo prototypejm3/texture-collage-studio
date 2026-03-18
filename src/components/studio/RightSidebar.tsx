@@ -187,6 +187,9 @@ export function RightSidebar({
           >
             <tab.icon className="w-3.5 h-3.5" />
             {tab.label}
+            {tab.count !== undefined && tab.count > 0 && (
+              <span className="ml-0.5 px-1 py-0 text-[9px] rounded-full bg-muted text-muted-foreground">{tab.count}</span>
+            )}
           </button>
         ))}
       </div>
