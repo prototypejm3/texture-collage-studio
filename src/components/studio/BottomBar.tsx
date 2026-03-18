@@ -14,6 +14,8 @@ interface Props {
   onSaveToWall?: () => void;
   isPremium?: boolean;
   onRequestUpgrade?: () => void;
+  onOpenToolKit?: () => void;
+  toolKitOpen?: boolean;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
