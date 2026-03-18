@@ -59,7 +59,11 @@ export const textures: TextureSwatch[] = [
 
   // ── Novelty ──
   { id: 'novelty-alix-rose', name: 'Alix Rose', category: 'Novelty', cssBackground: img('novelty-alix-rose.png') },
+  { id: 'novelty-alix-blush', name: 'Alix Blush', category: 'Novelty', cssBackground: img('novelty-alix-blush.png') },
+  { id: 'novelty-alix-fuchsia', name: 'Alix Fuchsia', category: 'Novelty', cssBackground: img('novelty-alix-fuchsia.png') },
   { id: 'novelty-corinne-mulberry', name: 'Corinne Mulberry', category: 'Novelty', cssBackground: img('novelty-corinne-mulberry.png') },
+  { id: 'novelty-corinne-plum', name: 'Corinne Plum', category: 'Novelty', cssBackground: img('novelty-corinne-plum.png') },
+  { id: 'novelty-corinne-lavender', name: 'Corinne Lavender', category: 'Novelty', cssBackground: img('novelty-corinne-lavender.png') },
   { id: 'novelty-shayshari-terra', name: 'ShayShari Terra', category: 'Novelty', cssBackground: img('novelty-shayshari-terra.png') },
   { id: 'novelty-shayshari-sage', name: 'ShayShari Sage', category: 'Novelty', cssBackground: img('novelty-shayshari-sage.png') },
   { id: 'novelty-shayshari-sand', name: 'ShayShari Sand', category: 'Novelty', cssBackground: img('novelty-shayshari-sand.png') },
@@ -67,7 +71,8 @@ export const textures: TextureSwatch[] = [
   { id: 'novelty-suede-forest', name: 'Suede Ace Forest', category: 'Novelty', cssBackground: img('novelty-suede-forest.png') },
   { id: 'novelty-suede-oxblood', name: 'Suede Ace Oxblood', category: 'Novelty', cssBackground: img('novelty-suede-oxblood.png') },
   { id: 'novelty-riviera', name: 'Riviera', category: 'Novelty', cssBackground: img('novelty-riviera.png') },
-  { id: 'novelty-jayme', name: 'Jayme', category: 'Novelty', cssBackground: img('novelty-jayme.png') },
+  { id: 'novelty-jayme-gogh', name: 'Jayme Gogh', category: 'Novelty', cssBackground: img('novelty-jayme-gogh.png') },
+  { id: 'novelty-skott-camo', name: 'Skott Camo', category: 'Novelty', cssBackground: img('novelty-skott-camo.png') },
   { id: 'novelty-apples', name: 'Apples', category: 'Novelty', cssBackground: img('novelty-apples.png') },
   { id: 'novelty-bananas', name: 'Bananas', category: 'Novelty', cssBackground: img('novelty-bananas.png') },
 ];
