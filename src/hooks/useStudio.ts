@@ -221,8 +221,8 @@ export function useStudio() {
   // Combine vibe sections + custom drawn sections
   const allSections = useMemo(() => {
     const vibeSections = activeVibe?.sections || [];
-    return [...vibeSections, ...customSections];
-  }, [activeVibe, customSections]);
+    return [...vibeSections, ...customSections].filter(s => !deletedSections.has(s.id));
+  }, [activeVibe, customSections, deletedSections]);
 
   // Detach a filled section into a free canvas element
   const detachSection = useCallback((sectionId: string) => {
