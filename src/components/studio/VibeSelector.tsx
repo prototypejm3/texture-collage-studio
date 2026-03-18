@@ -95,6 +95,8 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   };
 
   const allVibes = [...vibes, ...aiGeneratedVibes];
+  const mainVibes = allVibes.filter(v => !v.category);
+  const communityVibes = allVibes.filter(v => v.category === 'Community');
 
   return (
     <AnimatePresence>
