@@ -228,7 +228,7 @@ export const textures: TextureSwatch[] = [
   // ── Alix ──
   { id: 'alix-rose', name: 'Alix Rosé', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
   { id: 'alix-blush', name: 'Alix Blush', category: 'Alix', cssBackground: img('novelty-alix-blush.png') },
-  { id: 'alix-fuchsia', name: 'Fuchsia', category: 'Alix', cssBackground: img('novelty-alix-fuchsia.png') },
+  { id: 'alix-fuchsia', name: 'Alix Neon', category: 'Alix', cssBackground: img('novelty-alix-fuchsia.png') },
 
   // ── Corinne ──
   { id: 'corinne-mulberry', name: 'Corinne Crush', category: 'Corinne', cssBackground: img('novelty-corinne-mulberry.png') },
