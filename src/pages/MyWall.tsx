@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
 import { useMultiWall } from '@/hooks/useMultiWall';
 import { useUserTier } from '@/hooks/useUserTier';
+import { useGallery } from '@/hooks/useGallery';
 import { WallGrid } from '@/components/wall/WallGrid';
 import { WallCustomizer } from '@/components/wall/WallCustomizer';
 import { EmptyWall } from '@/components/wall/EmptyWall';
