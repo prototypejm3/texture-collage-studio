@@ -8,8 +8,17 @@ interface Props {
 }
 
 function smoothToSvgPath(points: { x: number; y: number }[]): string {
-  if (points.length < 3) return '';
-  // Use catmull-rom → cubic bezier for smooth curves
+  if (points.length < 2) return '';
+  if (points.length === 2) {
+    const [a, b] = points;
+    // Make a small ellipse between two points
+    const cx = (a.x + b.x) / 2;
+    const cy = (a.y + b.y) / 2;
+    const rx = Math.max(Math.abs(b.x - a.x) / 2, 8);
+    const ry = Math.max(Math.abs(b.y - a.y) / 2, 8);
+    return `M${cx - rx},${cy} A${rx},${ry} 0 1,0 ${cx + rx},${cy} A${rx},${ry} 0 1,0 ${cx - rx},${cy} Z`;
+  }
+
   const pts = points;
   let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
 
@@ -37,6 +46,7 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
   const livePathRef = useRef<SVGPathElement>(null);
   const smudgePathRef = useRef<SVGPathElement>(null);
 
+  // Allow drawing beyond canvas bounds — no clamping
   const getPoint = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!svgRef.current) return null;
     const rect = svgRef.current.getBoundingClientRect();
@@ -50,13 +60,10 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
     };
   }, [canvasWidth, canvasHeight]);
 
-  // Directly mutate refs + DOM for zero-lag drawing
   const updatePath = useCallback(() => {
     const pts = pointsRef.current;
     if (pts.length < 2) return;
-    // Downsample for perf: keep every 2nd point
-    const sampled = pts.filter((_, i) => i % 2 === 0 || i === pts.length - 1);
-    const d = sampled.length >= 3 ? smoothToSvgPath(sampled) : '';
+    const d = smoothToSvgPath(pts);
     if (livePathRef.current) livePathRef.current.setAttribute('d', d);
     if (smudgePathRef.current) smudgePathRef.current.setAttribute('d', d);
   }, []);
@@ -76,17 +83,22 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
     e.preventDefault();
     const pt = getPoint(e);
     if (!pt) return;
-    pointsRef.current.push(pt);
-    updatePath();
+    // Only add point if moved enough (3px in canvas coords) to avoid clutter
+    const last = pointsRef.current[pointsRef.current.length - 1];
+    const dx = pt.x - last.x;
+    const dy = pt.y - last.y;
+    if (dx * dx + dy * dy > 9) {
+      pointsRef.current.push(pt);
+      updatePath();
+    }
   }, [getPoint, updatePath]);
 
   const handleEnd = useCallback(() => {
     if (!isDrawingRef.current) return;
     isDrawingRef.current = false;
     const pts = pointsRef.current;
-    if (pts.length >= 5) {
-      const sampled = pts.filter((_, i) => i % 2 === 0 || i === pts.length - 1);
-      const pathD = smoothToSvgPath(sampled);
+    if (pts.length >= 2) {
+      const pathD = smoothToSvgPath(pts);
       if (pathD) onFinishDraw(pathD);
     }
     pointsRef.current = [];
@@ -97,11 +109,11 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
   return (
     <div
       className="absolute inset-0"
-      style={{ zIndex: 50, cursor: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M3 21l1.65-3.8a.85.85 0 01.25-.34L17.64 4.12a2.1 2.1 0 012.97 2.97L7.87 19.83a.85.85 0 01-.34.25L3 21z\' fill=\'%23555\' stroke=\'%23333\' stroke-width=\'0.5\'/%3E%3Cpath d=\'M3 21l.6-1.4\' stroke=\'%23888\' stroke-width=\'1.5\' stroke-linecap=\'round\'/%3E%3C/svg%3E") 2 22, crosshair' }}
+      style={{ zIndex: 50, cursor: 'crosshair' }}
     >
       {/* Instructions */}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[51] px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium shadow-lg flex items-center gap-2">
-        ✏️ Draw a shape — release to finish
+        ✏️ Draw a shape — any size
         <button
           onClick={(e) => { e.stopPropagation(); onCancel(); }}
           className="ml-1 px-1.5 py-0.5 rounded bg-primary-foreground/20 hover:bg-primary-foreground/30 text-[10px] transition-colors"
@@ -116,6 +128,7 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
         width="100%"
         height="100%"
         className="absolute inset-0"
+        style={{ overflow: 'visible' }}
         onMouseDown={handleStart}
         onMouseMove={handleMove}
         onMouseUp={handleEnd}
@@ -126,35 +139,27 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
       >
         <rect width="100%" height="100%" fill="hsla(40, 20%, 95%, 0.06)" />
 
-        <defs>
-          <filter id="pencil-rough" x="-2%" y="-2%" width="104%" height="104%">
-            <feTurbulence type="turbulence" baseFrequency="0.65" numOctaves="3" result="noise" seed="2" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-
-        {/* Graphite smudge shadow */}
+        {/* Soft shadow */}
         <path
           ref={smudgePathRef}
           d=""
           fill="none"
-          stroke="hsla(0, 0%, 30%, 0.06)"
-          strokeWidth={3}
+          stroke="hsla(0, 0%, 30%, 0.08)"
+          strokeWidth={4}
           strokeLinejoin="round"
           strokeLinecap="round"
-          filter="url(#pencil-rough)"
         />
-        {/* Main pencil line */}
+        {/* Main line */}
         <path
           ref={livePathRef}
           d=""
-          fill="hsla(0, 0%, 40%, 0.04)"
-          stroke="hsl(0, 0%, 25%)"
-          strokeWidth={1.2}
+          fill="hsla(220, 60%, 50%, 0.06)"
+          stroke="hsl(220, 60%, 45%)"
+          strokeWidth={2}
           strokeLinejoin="round"
           strokeLinecap="round"
-          filter="url(#pencil-rough)"
-          opacity={0.85}
+          strokeDasharray="6 3"
+          opacity={0.8}
         />
       </svg>
     </div>
