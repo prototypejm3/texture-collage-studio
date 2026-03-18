@@ -1,5 +1,11 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Lock, Replace, Sparkles } from 'lucide-react';
+import { X, Lock, Replace, Sparkles, Tag } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+
+const VALID_PROMO_CODES: Record<string, string> = {
+  'BYPASS': 'premium',
+};
 
 interface PaywallModalProps {
   isOpen: boolean;
@@ -9,7 +15,22 @@ interface PaywallModalProps {
 }
 
 export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallModalProps) {
+  const [promoCode, setPromoCode] = useState('');
+  const [showPromo, setShowPromo] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleApplyPromo = () => {
+    const code = promoCode.trim().toUpperCase();
+    if (VALID_PROMO_CODES[code]) {
+      toast({ title: '🎉 Code accepted!', description: 'Welcome to premium — enjoy all features!' });
+      onUnlock();
+      setPromoCode('');
+      setShowPromo(false);
+    } else {
+      toast({ title: 'Invalid code', description: 'That promo code doesn\'t exist. Double-check and try again.', variant: 'destructive' });
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -78,6 +99,38 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
                   <Replace className="w-4 h-4" />
                   Replace Current Design
                 </button>
+              </div>
+
+              {/* Promo Code */}
+              <div className="mt-4 pt-4 border-t border-border">
+                {!showPromo ? (
+                  <button
+                    onClick={() => setShowPromo(true)}
+                    className="w-full text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <Tag className="w-3 h-3" />
+                    Have a promo code?
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={promoCode}
+                      onChange={e => setPromoCode(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleApplyPromo()}
+                      placeholder="Enter code"
+                      className="flex-1 px-3 py-1.5 text-sm rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleApplyPromo}
+                      disabled={!promoCode.trim()}
+                      className="px-3 py-1.5 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-opacity"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
