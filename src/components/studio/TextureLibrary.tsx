@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
 import { textures } from '@/data/textures';
-import { TextureCategory, TextureSwatch } from '@/types/studio';
+import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock } from 'lucide-react';
+import { Upload, X, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import { FloatingToolbar } from './FloatingToolbar';
 
 interface TextureGroup {
   label: string;
@@ -34,14 +35,22 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
+  // Element editing props
+  selectedElement?: CanvasElement | null;
+  onUpdateElement?: (updates: Partial<CanvasElement>) => void;
+  onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
+  onDuplicate?: () => void;
+  onDelete?: () => void;
 }
 
 export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
+  selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
+  const [showElementTools, setShowElementTools] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const allTextures = [...textures, ...customTextures];
@@ -69,6 +78,28 @@ export function TextureLibrary({
 
   return (
     <div className="h-full flex flex-col bg-card border-r border-border">
+      {/* Element editing panel — shown when an element is selected */}
+      {selectedElement && onUpdateElement && onUpdateEffects && onDuplicate && onDelete && (
+        <div className="border-b border-border">
+          <button
+            onClick={() => setShowElementTools(!showElementTools)}
+            className="flex items-center gap-1.5 w-full px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ✂️ Element
+            {showElementTools ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+          </button>
+          {showElementTools && (
+            <FloatingToolbar
+              element={selectedElement}
+              onUpdate={onUpdateElement}
+              onUpdateEffects={onUpdateEffects}
+              onDuplicate={onDuplicate}
+              onDelete={onDelete}
+            />
+          )}
+        </div>
+      )}
+
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
