@@ -65,7 +65,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-pro",
+        model: "openai/gpt-5-mini",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: `Create a bold, recognizable stencil of: ${prompt}. Make it chunky and large, filling most of the 480x480 canvas. Use 4-8 sections with smooth curves.` },
