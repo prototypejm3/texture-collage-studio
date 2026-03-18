@@ -162,6 +162,16 @@ export function Canvas({
               customTextures={customTextures}
             />
           )}
+
+          {/* Freehand draw overlay */}
+          {drawMode && onFinishDraw && onCancelDraw && (
+            <DrawOverlay
+              canvasWidth={w}
+              canvasHeight={h}
+              onFinishDraw={onFinishDraw}
+              onCancel={onCancelDraw}
+            />
+          )}
         </div>
       </div>
     </div>
