@@ -184,6 +184,8 @@ export function useStudio() {
     selectedElement,
     frameSize,
     frameColor,
+    displaySize,
+    wallFrameStyle,
     activeVibe,
     vibeFills,
     selectedSectionId,
