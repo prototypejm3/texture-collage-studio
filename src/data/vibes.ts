@@ -2308,6 +2308,7 @@ const sunshinePony: Vibe = {
   name: 'Sunshine Pony',
   emoji: '🐴',
   category: 'Community',
+  baseLikes: 19, likesStartDate: '2026-03-08',
   description: 'Galloping horse silhouette with flowing mane & tail',
   viewBox: '0 0 480 480',
   sections: [
