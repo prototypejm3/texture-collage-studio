@@ -35,6 +35,7 @@ export interface WallSettings {
   layout: WallLayout;
   background: WallBackground;
   defaultFrameStyle: FrameStyle;
+  customWallImage?: string; // data URL for custom wall photo
 }
 
 export const defaultWallSettings: WallSettings = {
