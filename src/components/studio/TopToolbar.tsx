@@ -86,20 +86,8 @@ export function TopToolbar({
       {/* Center spacer */}
       <div />
 
-      {/* Right: Actions + Auth */}
+      {/* Right: Auth */}
       <div className="flex items-center gap-1.5">
-        <Button size="sm" variant="ghost" onClick={onClear} className="gap-1.5 text-xs text-destructive hover:text-destructive">
-          <Trash2 className="w-3.5 h-3.5" /> Clear
-        </Button>
-        {onSaveToWall && (
-          <Button size="sm" variant="ghost" onClick={onSaveToWall} className="gap-1.5 text-xs">
-            <Save className="w-3.5 h-3.5" /> Save to Wall
-          </Button>
-        )}
-        <Button size="sm" onClick={onSave} className="gap-1.5 text-xs">
-          <Download className="w-3.5 h-3.5" /> Export PNG
-        </Button>
-        <div className="w-px h-5 bg-border mx-1" />
         {user ? (
           <>
             <span className="text-xs text-muted-foreground flex items-center gap-1">
