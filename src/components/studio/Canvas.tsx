@@ -3,6 +3,7 @@ import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } 
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
+import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 
