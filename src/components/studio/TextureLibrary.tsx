@@ -85,7 +85,7 @@ export function TextureLibrary({
       <div className="border-b border-border">
         <button
           onClick={() => setShowElementTools(!showElementTools)}
-          className="flex items-center gap-1.5 w-full px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+          className="flex items-center gap-1.5 w-full px-4 py-2.5 text-sm font-semibold tracking-wide uppercase text-muted-foreground hover:text-foreground transition-colors"
         >
           ✂️ Elements
           {showElementTools ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
