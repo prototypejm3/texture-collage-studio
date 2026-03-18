@@ -14,6 +14,8 @@ export const textures: TextureSwatch[] = [
   { id: 'royale-ash', name: 'Ash', category: 'Royale', cssBackground: img('royale-ash.png') },
   { id: 'royale-forest', name: 'Forest', category: 'Royale', cssBackground: img('royale-forest.png') },
   { id: 'royale-berry', name: 'Berry', category: 'Royale', cssBackground: img('royale-berry.png') },
+  { id: 'royale-sand', name: 'Sand', category: 'Royale', cssBackground: img('royale-sand.png') },
+  { id: 'royale-sage', name: 'Sage', category: 'Royale', cssBackground: img('royale-sage.png') },
 
   // ── Banks (Smooth Velvet) ──
   { id: 'banks-nutmeg', name: 'Nutmeg', category: 'Banks', cssBackground: img('banks-nutmeg.png') },
@@ -33,10 +35,11 @@ export const textures: TextureSwatch[] = [
 
   // ── Sunbrella (Performance) ──
   { id: 'sunbrella-fog', name: 'Fog', category: 'Sunbrella', cssBackground: img('sunbrella-fog.png') },
-  { id: 'sunbrella-sea', name: 'Sea', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
-  { id: 'sunbrella-wisteria', name: 'Wisteria', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
-  { id: 'sunbrella-lagoon', name: 'Lagoon', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
+  { id: 'sunbrella-sea', name: 'Premier Sea', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
+  { id: 'sunbrella-wisteria', name: 'Premier Wisteria', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
+  { id: 'sunbrella-lagoon', name: 'Premier Lagoon', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
   { id: 'sunbrella-white', name: 'White', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
+  { id: 'sunbrella-loft-white', name: 'Loft White', category: 'Sunbrella', cssBackground: img('sunbrella-loft-white.png') },
 
   // ── Bubbly (Textured Weave) ──
   { id: 'bubbly-cucumber', name: 'Cucumber', category: 'Bubbly', cssBackground: img('bubbly-cucumber.png') },
@@ -50,6 +53,12 @@ export const textures: TextureSwatch[] = [
   // ── Crave (Ribbed Chenille) ──
   { id: 'crave-rose', name: 'Rose', category: 'Crave', cssBackground: img('crave-rose.png') },
   { id: 'crave-mocha', name: 'Mocha', category: 'Crave', cssBackground: img('crave-mocha.png') },
+  { id: 'crave-mocha-latte', name: 'Mocha Latte', category: 'Crave', cssBackground: img('crave-mocha-latte.png') },
+  { id: 'crave-ginger-tea', name: 'Ginger Tea', category: 'Crave', cssBackground: img('crave-ginger-tea.png') },
+  { id: 'crave-berry-hibiscus', name: 'Berry Hibiscus', category: 'Crave', cssBackground: img('crave-berry-hibiscus.png') },
+  { id: 'crave-greenery', name: 'Greenery', category: 'Crave', cssBackground: img('crave-greenery.png') },
+  { id: 'crave-lava-rock', name: 'Lava Rock', category: 'Crave', cssBackground: img('crave-lava-rock.png') },
+  { id: 'crave-irish-cream', name: 'Irish Cream', category: 'Crave', cssBackground: img('crave-irish-cream.png') },
 
   // ── Caspiar (Silk) ──
   { id: 'caspiar-chiffon', name: 'Chiffon', category: 'Caspiar', cssBackground: img('caspiar-chiffon.png') },
@@ -67,6 +76,62 @@ export const textures: TextureSwatch[] = [
 
   // ── Sorrento ──
   { id: 'sorrento-teal', name: 'Teal', category: 'Sorrento', cssBackground: img('sorrento-teal.png') },
+
+  // ── Kenley ──
+  { id: 'kenley-spruce', name: 'Spruce', category: 'Kenley', cssBackground: img('kenley-spruce.png') },
+  { id: 'kenley-mauve', name: 'Mauve', category: 'Kenley', cssBackground: img('kenley-mauve.png') },
+
+  // ── Villa ──
+  { id: 'villa-sand', name: 'Sand', category: 'Villa', cssBackground: img('villa-sand.png') },
+
+  // ── Leuven ──
+  { id: 'leuven-olive', name: 'Olive', category: 'Leuven', cssBackground: img('leuven-olive.png') },
+  { id: 'leuven-snow', name: 'Snow', category: 'Leuven', cssBackground: img('leuven-snow.png') },
+
+  // ── Key Largo ──
+  { id: 'keylargo-zenith-teal', name: 'Zenith Teal', category: 'Key Largo', cssBackground: img('keylargo-zenith-teal.png') },
+
+  // ── Essence ──
+  { id: 'essence-ash', name: 'Ash', category: 'Essence', cssBackground: img('essence-ash.png') },
+
+  // ── Synergy ──
+  { id: 'synergy-pewter', name: 'Pewter', category: 'Synergy', cssBackground: img('synergy-pewter.png') },
+
+  // ── Milo ──
+  { id: 'milo-dove', name: 'Dove', category: 'Milo', cssBackground: img('milo-dove.png') },
+  { id: 'milo-french-blue', name: 'French Blue', category: 'Milo', cssBackground: img('milo-french-blue.png') },
+
+  // ── Faithful ──
+  { id: 'faithful-olive', name: 'Olive', category: 'Faithful', cssBackground: img('faithful-olive.png') },
+  { id: 'faithful-indigo', name: 'Indigo', category: 'Faithful', cssBackground: img('faithful-indigo.png') },
+  { id: 'faithful-sand', name: 'Sand', category: 'Faithful', cssBackground: img('faithful-sand.png') },
+  { id: 'faithful-mocha', name: 'Mocha', category: 'Faithful', cssBackground: img('faithful-mocha.png') },
+
+  // ── Nico ──
+  { id: 'nico-oyster', name: 'Oyster', category: 'Nico', cssBackground: img('nico-oyster.png') },
+
+  // ── Taylor Felt ──
+  { id: 'taylor-felt-gray', name: 'Gray', category: 'Taylor Felt', cssBackground: img('taylor-felt-gray.png') },
+
+  // ── Borough ──
+  { id: 'borough-cotton', name: 'Cotton', category: 'Borough', cssBackground: img('borough-cotton.png') },
+
+  // ── Lucky ──
+  { id: 'lucky-turquoise', name: 'Turquoise', category: 'Lucky', cssBackground: img('lucky-turquoise.png') },
+  { id: 'lucky-divine', name: 'Divine', category: 'Lucky', cssBackground: img('lucky-divine.png') },
+
+  // ── Merit ──
+  { id: 'merit-dove', name: 'Dove', category: 'Merit', cssBackground: img('merit-dove.png') },
+
+  // ── Prime ──
+  { id: 'prime-stone', name: 'Stone', category: 'Prime', cssBackground: img('prime-stone.png') },
+  { id: 'prime-peacock', name: 'Peacock', category: 'Prime', cssBackground: img('prime-peacock.png') },
+
+  // ── Tussah ──
+  { id: 'tussah-silk', name: 'Silk', category: 'Tussah', cssBackground: img('tussah-silk.png') },
+
+  // ── Bloke ──
+  { id: 'bloke-cotton', name: 'Cotton', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
 
   // ── Leather ──
   { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
