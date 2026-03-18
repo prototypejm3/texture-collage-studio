@@ -35,7 +35,7 @@ const Index = () => {
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
-  const [showToolKit, setShowToolKit] = useState(false);
+  const [showToolKit, setShowToolKit] = useState(true);
   const [toolKitMinimized, setToolKitMinimized] = useState(false);
   const toolKitOpen = showToolKit && !toolKitMinimized;
   const [showStencils, setShowStencils] = useState(true);
