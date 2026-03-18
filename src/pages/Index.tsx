@@ -13,6 +13,8 @@ import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
 import { NavBar } from '@/components/NavBar';
 import { PaywallModal } from '@/components/wall/PaywallModal';
+import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
+import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
 import { toast } from '@/hooks/use-toast';
 
@@ -24,8 +26,10 @@ const Index = () => {
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
   const wall = useWall();
   const { isPremium, canSave, upgradeToPremium } = useUserTier();
+  const vibeGen = useGenerateVibe();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showVibeModal, setShowVibeModal] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
 
@@ -135,7 +139,7 @@ const Index = () => {
         frameColor={studio.frameColor}
         onFrameSizeChange={studio.setFrameSize}
         onFrameColorChange={studio.setFrameColor}
-        onGenerate={studio.generateRandom}
+        onGenerate={() => setShowVibeModal(true)}
         onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}
         onSave={handleExport}
@@ -200,6 +204,25 @@ const Index = () => {
       <BottomBar
         frameSize={studio.frameSize}
         onFrameSizeChange={studio.setFrameSize}
+      />
+
+      <GenerateVibeModal
+        isOpen={showVibeModal}
+        isGenerating={vibeGen.isGenerating}
+        generatedVibe={vibeGen.generatedVibe}
+        onClose={() => { setShowVibeModal(false); vibeGen.setGeneratedVibe(null); }}
+        onGenerate={(prompt) => vibeGen.generateVibe(prompt)}
+        onApply={() => {
+          if (vibeGen.generatedVibe) {
+            const vibe = vibeGen.toVibe(vibeGen.generatedVibe);
+            studio.selectVibe(vibe);
+            if (vibeGen.generatedVibe.frameChoice) {
+              studio.setFrameColor(vibeGen.generatedVibe.frameChoice);
+            }
+          }
+          setShowVibeModal(false);
+          vibeGen.setGeneratedVibe(null);
+        }}
       />
 
       <PaywallModal

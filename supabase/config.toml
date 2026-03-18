@@ -2,3 +2,6 @@ project_id = "sjtmihqtmnhbbtfepyyo"
 
 [functions.generate-stencil]
 verify_jwt = false
+
+[functions.generate-vibe]
+verify_jwt = false
