@@ -18,16 +18,16 @@ interface Props {
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
-// Color frames shown as circles (excluding shadow-box, which is now a pill)
-const colorFrames: { id: FrameStyle; color: string; label: string }[] = [
+// Color frames for Shadow menu
+const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
   { id: 'gold', color: 'linear-gradient(145deg, hsl(43,74%,60%), hsl(43,74%,45%))', label: 'Gold' },
   { id: 'chrome', color: 'linear-gradient(145deg, hsl(0,0%,85%), hsl(0,0%,70%))', label: 'Chrome' },
   { id: 'copper', color: 'linear-gradient(145deg, hsl(20,60%,55%), hsl(20,50%,40%))', label: 'Copper' },
   { id: 'silver', color: 'linear-gradient(145deg, hsl(220,8%,72%), hsl(220,10%,58%))', label: 'Silver' },
-  { id: 'black', color: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))', label: 'Black' },
-  { id: 'minimal', color: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))', label: 'Minimal' },
+  { id: 'black', color: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))', label: 'Black', free: true },
+  { id: 'minimal', color: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))', label: 'White', free: true },
   { id: 'wood', color: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(25,35%,38%))', label: 'Wood' },
-  { id: 'none', color: 'transparent', label: 'None' },
+  { id: 'none', color: 'transparent', label: 'None', free: true },
 ];
 
 // Special styles as pill buttons
