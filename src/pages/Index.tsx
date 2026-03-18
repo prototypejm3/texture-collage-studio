@@ -287,7 +287,11 @@ const Index = () => {
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
+        ambientSound={ambientSound}
+        onAmbientSoundChange={setAmbientSound}
       />
+
+      <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
 
       <GenerateVibeModal
         isOpen={showVibeModal}
