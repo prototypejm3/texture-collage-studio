@@ -155,8 +155,8 @@ const Index = () => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     } else if (!studio.selectedId && !studio.activeVibe) {
-      // No section or element selected — set as background
-      studio.setBackgroundTextureId(textureId);
+      // Toggle background: click same texture to clear
+      studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     }
   }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
 
