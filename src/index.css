@@ -134,7 +134,7 @@
 }
 
 .wall-bg-black-brick {
-  background: url('/walls/black-brick.png') center/cover no-repeat;
+  background: url('/walls/black-brick.png') center/50% repeat;
 }
 
 .wall-bg-black-concrete {
