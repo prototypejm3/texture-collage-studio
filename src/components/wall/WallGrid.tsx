@@ -50,6 +50,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
         designs={designs}
         isPremium={isPremium}
         isDark={isDark}
+        showTitleCards={showTitleCards}
         onOpen={onOpen}
         onDuplicate={onDuplicate}
         onDelete={onDelete}
@@ -58,8 +59,8 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
         onToggleHide={onToggleHide}
         onUpdate={onUpdate}
         onFrameStyleChange={onFrameStyleChange}
-        
         onSizeChange={onSizeChange}
+        onSubmitToGallery={onSubmitToGallery}
       />
     );
   }
