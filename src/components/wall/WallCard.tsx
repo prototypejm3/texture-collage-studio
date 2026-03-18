@@ -195,6 +195,9 @@ export function WallCard({
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
   const [editArtist, setEditArtist] = useState(design.artist || '');
+  const [editCuratorNote, setEditCuratorNote] = useState(design.curatorNote || '');
+  const [editEdition, setEditEdition] = useState(design.edition || '');
+  const [editMaterials, setEditMaterials] = useState(design.materials || '');
   const nameRef = useRef<HTMLInputElement>(null);
 
   const handleOpenEditPanel = (e: React.MouseEvent) => {
@@ -202,6 +205,9 @@ export function WallCard({
     setEditName(design.name);
     setEditDesc(design.description || '');
     setEditArtist(design.artist || '');
+    setEditCuratorNote(design.curatorNote || '');
+    setEditEdition(design.edition || '');
+    setEditMaterials(design.materials || '');
     setEditPanelOpen(true);
   };
 
@@ -212,6 +218,9 @@ export function WallCard({
         name: trimmedName,
         description: editDesc.trim() || undefined,
         artist: editArtist.trim() || undefined,
+        curatorNote: editCuratorNote.trim() || undefined,
+        edition: editEdition.trim() || undefined,
+        materials: editMaterials.trim() || undefined,
       });
     }
     setEditPanelOpen(false);
