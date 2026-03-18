@@ -115,9 +115,10 @@ export function RightSidebar({
     }
   };
 
-  // Filter out hidden stencils from built-in vibes
-  const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id));
+  // Filter out hidden stencils and community stencils from built-in vibes
+  const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && !v.category);
   const allVibes = [...filteredVibes, ...aiGeneratedVibes];
+  const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Community stencils: built-in featured + public from DB
   const builtInCommunityVibes: (Vibe & { creator: string })[] = [
