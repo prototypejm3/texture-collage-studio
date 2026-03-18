@@ -4,6 +4,8 @@ import { SavedDesign, WallSettings, defaultWallSettings, FrameStyle, DesignStatu
 const DESIGNS_KEY = 'wall-designs';
 const SETTINGS_KEY = 'wall-settings';
 
+// Designs are stored globally, each design has a wallId
+
 function loadDesigns(): SavedDesign[] {
   try {
     const raw = localStorage.getItem(DESIGNS_KEY);
@@ -41,7 +43,7 @@ export function useWall() {
       previewImage: preview,
       createdAt: now,
       updatedAt: now,
-      status: 'in-progress',
+      status: 'display',
       builtIRL: false,
       pinned: false,
       hidden: false,
@@ -61,7 +63,7 @@ export function useWall() {
       previewImage: preview,
       createdAt: now,
       updatedAt: now,
-      status: 'in-progress',
+      status: 'display',
       builtIRL: false,
       pinned: false,
       hidden: false,
