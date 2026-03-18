@@ -95,6 +95,74 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   };
 
   const allVibes = [...vibes, ...aiGeneratedVibes];
+  const mainVibes = allVibes.filter(v => !v.category);
+  const communityVibes = allVibes.filter(v => v.category === 'Community');
+
+  const renderVibeCard = (vibe: Vibe) => {
+    const isActive = activeVibeId === vibe.id;
+    const isAiGenerated = vibe.id.startsWith('ai-');
+    const isCommunity = !!vibe.category;
+
+    return (
+      <motion.button
+        key={vibe.id}
+        onClick={() => {
+          onSelectVibe(vibe);
+          onClose();
+        }}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.97 }}
+        className={`group relative flex flex-col items-center text-center rounded-xl p-2.5 transition-all border ${
+          isActive
+            ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
+            : 'border-border/50 hover:border-border hover:bg-secondary/50'
+        }`}
+      >
+        {/* Preview */}
+        <div className="w-full aspect-square rounded-lg overflow-hidden mb-2 relative">
+          <VibePreviewSVG vibe={vibe} />
+          {isActive && (
+            <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+              <Check className="w-3 h-3 text-primary-foreground" />
+            </div>
+          )}
+          {isAiGenerated && (
+            <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold uppercase tracking-wider">
+              AI
+            </div>
+          )}
+
+          {/* Delete & Report buttons for AI stencils */}
+          {isAiGenerated && (
+            <div className="absolute bottom-1.5 right-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                onClick={(e) => handleReport(e, vibe)}
+                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
+                title="Report as bad"
+              >
+                <Flag className="w-3 h-3" />
+              </button>
+              <button
+                onClick={(e) => handleDelete(e, vibe)}
+                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
+                title="Delete"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Label */}
+        <span className="text-[11px] font-medium leading-tight truncate w-full">
+          {vibe.emoji} {vibe.name}
+        </span>
+        <span className="text-[9px] text-muted-foreground mt-0.5">
+          {vibe.sections.length} sections
+        </span>
+      </motion.button>
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -194,71 +262,21 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
               {/* Stencil Grid */}
               <div className="flex-1 overflow-y-auto px-6 py-4">
                 <div className="grid grid-cols-4 gap-3">
-                  {allVibes.map(vibe => {
-                    const isActive = activeVibeId === vibe.id;
-                    const isAiGenerated = vibe.id.startsWith('ai-');
-
-                    return (
-                      <motion.button
-                        key={vibe.id}
-                        onClick={() => {
-                          onSelectVibe(vibe);
-                          onClose();
-                        }}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        className={`group relative flex flex-col items-center text-center rounded-xl p-2.5 transition-all border ${
-                          isActive
-                            ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
-                            : 'border-border/50 hover:border-border hover:bg-secondary/50'
-                        }`}
-                      >
-                        {/* Preview */}
-                        <div className="w-full aspect-square rounded-lg overflow-hidden mb-2 relative">
-                          <VibePreviewSVG vibe={vibe} />
-                          {isActive && (
-                            <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                              <Check className="w-3 h-3 text-primary-foreground" />
-                            </div>
-                          )}
-                          {isAiGenerated && (
-                            <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold uppercase tracking-wider">
-                              AI
-                            </div>
-                          )}
-
-                          {/* Delete & Report buttons for AI stencils */}
-                          {isAiGenerated && (
-                            <div className="absolute bottom-1.5 right-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button
-                                onClick={(e) => handleReport(e, vibe)}
-                                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
-                                title="Report as bad"
-                              >
-                                <Flag className="w-3 h-3" />
-                              </button>
-                              <button
-                                onClick={(e) => handleDelete(e, vibe)}
-                                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
-                                title="Delete"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Label */}
-                        <span className="text-[11px] font-medium leading-tight truncate w-full">
-                          {vibe.emoji} {vibe.name}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground mt-0.5">
-                          {vibe.sections.length} sections
-                        </span>
-                      </motion.button>
-                    );
-                  })}
+                  {mainVibes.map(vibe => renderVibeCard(vibe))}
                 </div>
+
+                {communityVibes.length > 0 && (
+                  <>
+                    <div className="flex items-center gap-3 mt-6 mb-3">
+                      <div className="h-px flex-1 bg-border" />
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Community</span>
+                      <div className="h-px flex-1 bg-border" />
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      {communityVibes.map(vibe => renderVibeCard(vibe))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
