@@ -103,8 +103,31 @@ export function TextureLibrary({
             ) : (
               <div className="px-4 py-3">
                 <p className="text-[10px] text-muted-foreground/60 italic mb-2">
-                  Drag a texture onto the canvas to create an element, then click it to edit shapes, effects & more.
+                  Select an element on the canvas to edit shapes, size, rotation & material effects.
                 </p>
+                {/* Show a disabled preview of the toolbar sections */}
+                <div className="space-y-2 opacity-40 pointer-events-none select-none">
+                  <div className="flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                    ✂️ Shapes
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1 px-1">
+                    {['Soft Sq', 'Torn', 'Circle', 'Blob', 'Strip', 'Rect'].map(s => (
+                      <span key={s} className="h-8 px-2 flex items-center text-[9px] bg-secondary rounded-md">{s}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-1 px-1">
+                    <span className="text-[10px] text-muted-foreground">W</span>
+                    <span className="w-12 h-7 bg-secondary rounded-md" />
+                    <span className="text-xs text-muted-foreground">×</span>
+                    <span className="w-12 h-7 bg-secondary rounded-md" />
+                    <span className="w-px h-6 bg-border mx-1" />
+                    <span className="text-[10px] text-muted-foreground">Rot</span>
+                    <span className="w-12 h-7 bg-secondary rounded-md" />
+                  </div>
+                  <div className="flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                    Material Effects
+                  </div>
+                </div>
               </div>
             )}
             {/* Draw freehand — inside elements under shapes */}
