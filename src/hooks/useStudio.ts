@@ -143,8 +143,8 @@ export function useStudio() {
     setElements([]);
     setSelectedId(null);
     setSelectedSectionId(null);
-    // Start with empty fills — user picks textures for each section
     setVibeFills({});
+    setSectionTransforms({});
   }, []);
 
   const fillSection = useCallback((sectionId: string, textureId: string) => {
