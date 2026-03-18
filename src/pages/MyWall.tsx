@@ -122,6 +122,22 @@ const MyWall = () => {
     toast({ title: 'New wall created!' });
   }, [isPremium, multiWall]);
 
+  const handleSubmitToGallery = useCallback(async (designId: string) => {
+    const design = wall.designs.find(d => d.id === designId);
+    if (!design) return;
+    const submissionId = await gallery.submitToGallery({
+      name: design.name,
+      description: design.description,
+      artist_name: design.artist || 'Anonymous',
+      preview_image: design.previewImage,
+      frame_style: design.frameStyle,
+      display_size: design.displaySize || 'medium',
+    });
+    if (submissionId) {
+      wall.updateDesign(designId, { gallerySubmissionId: submissionId });
+    }
+  }, [wall, gallery]);
+
   const handleDeleteWall = useCallback((wallId: string) => {
     if (multiWall.walls.length <= 1) return;
     // Delete all designs on this wall
