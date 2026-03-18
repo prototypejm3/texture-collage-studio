@@ -49,6 +49,7 @@ const MyWall = () => {
   const [editingWallId, setEditingWallId] = useState<string | null>(null);
   const [wallTitleDraft, setWallTitleDraft] = useState('');
   const [stepBackMode, setStepBackMode] = useState(false);
+  const [gallerySubmitId, setGallerySubmitId] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
   const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
