@@ -141,6 +141,26 @@ serve(async (req) => {
       );
     }
 
+    const curated = getCuratedStencil(prompt);
+    if (curated) {
+      const vibe = {
+        id: `ai-${Date.now()}`,
+        name: curated.name,
+        emoji: curated.emoji,
+        description: curated.description,
+        viewBox: "0 0 480 480",
+        sections: curated.sections,
+        lightTextures: ["linen-white", "linen-natural", "boucle-cream", "boucle-ivory"],
+        mediumTextures: ["suede-camel", "leather-tan", "linen-mustard", "boucle-taupe"],
+        darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
+        accentTextures: ["boucle-blush", "linen-dusty-rose", "velvet-emerald"],
+      };
+
+      return new Response(JSON.stringify(vibe), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       return new Response(
