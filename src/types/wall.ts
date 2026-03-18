@@ -11,6 +11,7 @@ export interface SavedDesign {
   wallId?: string; // which wall this belongs to
   name: string;
   description?: string;
+  artist?: string;
   vibeName?: string;
   previewImage: string; // data URL
   createdAt: string;
@@ -29,6 +30,8 @@ export interface SavedDesign {
   rotation?: number;
   /** Serialized studio state for re-editing */
   studioState?: string;
+  /** Gallery submission ID if submitted */
+  gallerySubmissionId?: string;
 }
 
 export interface WallSettings {
