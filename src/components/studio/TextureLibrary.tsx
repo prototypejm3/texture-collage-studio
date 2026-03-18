@@ -98,22 +98,6 @@ export function TextureLibrary({
 
   return (
     <div className="h-full flex flex-col bg-card border-r border-border">
-      {/* Draw Freehand button */}
-      {onToggleDraw && (
-        <div className="px-4 py-2.5 border-b border-border">
-          <button
-            onClick={onToggleDraw}
-            className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-              drawMode
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            <PenTool className="w-3.5 h-3.5" />
-            Draw Freehand
-          </button>
-        </div>
-      )}
 
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
