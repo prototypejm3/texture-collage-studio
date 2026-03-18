@@ -11,6 +11,8 @@ import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
+import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
