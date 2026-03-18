@@ -1,0 +1,4 @@
+project_id = "sjtmihqtmnhbbtfepyyo"
+
+[functions.generate-stencil]
+verify_jwt = false
