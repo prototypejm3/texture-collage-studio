@@ -17,6 +17,7 @@ interface WallCardProps {
   onSizeChange: (id: string, size: DesignSize) => void;
   onSubmitToGallery?: (id: string) => void;
   isPremium: boolean;
+  isDark?: boolean;
   size?: DesignSize;
 }
 
@@ -188,7 +189,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
 
 export function WallCard({
   design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide,
-  onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, size = 'medium',
+  onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, isDark, size = 'medium',
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
@@ -240,7 +241,7 @@ export function WallCard({
         style={{ transform: `rotate(${design.rotation || 0}deg)` }}
         onClick={() => onOpen(design.id)}
       >
-        <HangingWrapper style={design.hangingStyle || 'floating'}>
+        <HangingWrapper style={design.hangingStyle || 'floating'} isDark={isDark}>
           <FrameWrapper style={design.frameStyle}>
             <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
               <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />

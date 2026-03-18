@@ -12,6 +12,7 @@ const sizeWidths: Record<DesignSize, number> = {
 interface FreeformWallProps {
   designs: SavedDesign[];
   isPremium: boolean;
+  isDark?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -24,7 +25,7 @@ interface FreeformWallProps {
 }
 
 export function FreeformWall({
-  designs, isPremium, onOpen, onDuplicate, onDelete,
+  designs, isPremium, isDark, onOpen, onDuplicate, onDelete,
   onTogglePin, onToggleIRL, onToggleHide, onUpdate,
   onFrameStyleChange, onSizeChange,
 }: FreeformWallProps) {
@@ -120,6 +121,7 @@ export function FreeformWall({
                 
                 onSizeChange={onSizeChange}
                 isPremium={isPremium}
+                isDark={isDark}
                 size={d.displaySize || 'medium'}
               />
             </div>
