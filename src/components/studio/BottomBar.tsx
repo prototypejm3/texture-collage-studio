@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
-import { Trash2, Save, Download, Lock, Scissors } from 'lucide-react';
+import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
@@ -16,6 +16,8 @@ interface Props {
   onRequestUpgrade?: () => void;
   onOpenToolKit?: () => void;
   toolKitOpen?: boolean;
+  onOpenStencils?: () => void;
+  stencilsOpen?: boolean;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -45,6 +47,7 @@ export function BottomBar({
   onClear, onSave, onSaveToWall,
   isPremium = false, onRequestUpgrade,
   onOpenToolKit, toolKitOpen = false,
+  onOpenStencils, stencilsOpen = false,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
@@ -160,6 +163,16 @@ export function BottomBar({
           }`}
         >
           <Scissors className="w-3.5 h-3.5" /> Tool-Kit
+        </button>
+        <button
+          onClick={onOpenStencils}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors ${
+            stencilsOpen
+              ? 'bg-primary/10 text-primary font-medium'
+              : 'text-foreground hover:bg-secondary'
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5" /> Stencils
         </button>
         <div className="w-px h-4 bg-border" />
         <button onClick={onClear} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
