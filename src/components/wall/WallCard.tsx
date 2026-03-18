@@ -456,6 +456,44 @@ export function WallCard({
                 />
               </div>
 
+              {/* Museum Label Fields */}
+              <div className="border-t border-border pt-3 mt-1">
+                <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Museum Label</p>
+                
+                {/* Materials */}
+                <div className="mb-2">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Materials</label>
+                  <input
+                    value={editMaterials}
+                    onChange={(e) => setEditMaterials(e.target.value.slice(0, 100))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Denim, Leather, Silk"
+                  />
+                </div>
+
+                {/* Curator Note */}
+                <div className="mb-2">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Curator Note</label>
+                  <input
+                    value={editCuratorNote}
+                    onChange={(e) => setEditCuratorNote(e.target.value.slice(0, 200))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Exploring texture through contrast…"
+                  />
+                </div>
+
+                {/* Edition */}
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edition</label>
+                  <input
+                    value={editEdition}
+                    onChange={(e) => setEditEdition(e.target.value.slice(0, 50))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Edition 1 of 10"
+                  />
+                </div>
+              </div>
+
               {/* Size */}
               <div>
                 <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Size</label>
