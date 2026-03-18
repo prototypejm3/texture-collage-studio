@@ -134,6 +134,27 @@ export function VibeOutline({
                 onMouseLeave={() => setHoveredId(null)}
               />
 
+              {/* Selected section pulsing highlight */}
+              {isSelected && (
+                <path
+                  d={section.path}
+                  fill="hsl(24, 80%, 50%)"
+                  opacity={0.12}
+                  className="pointer-events-none animate-pulse"
+                />
+              )}
+
+              {/* Hover highlight */}
+              {isHovered && !isSelected && !isFilled && (
+                <path
+                  d={section.path}
+                  fill="hsl(24, 80%, 50%)"
+                  opacity={0.06}
+                  className="pointer-events-none"
+                />
+              )}
+
+              {/* Stroke */}
               <path
                 d={section.path}
                 fill="none"
@@ -142,20 +163,12 @@ export function VibeOutline({
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 className="pointer-events-none transition-colors"
-                style={{ opacity: isFilled ? 0.5 : 0.9 }}
+                style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
 
-              {!isFilled && (
-                <VibeLabel section={section} isHovered={isHovered} />
-              )}
-
-              {isHovered && !isFilled && (
-                <path
-                  d={section.path}
-                  fill="hsl(24, 80%, 50%)"
-                  opacity={0.06}
-                  className="pointer-events-none"
-                />
+              {/* Label: show when unfilled, or when selected (so user knows which section) */}
+              {(!isFilled || isSelected) && (
+                <VibeLabel section={section} isHovered={isHovered} isSelected={isSelected} />
               )}
             </g>
           );
@@ -198,7 +211,7 @@ export function VibeOutline({
   );
 }
 
-function VibeLabel({ section, isHovered }: { section: { id: string; label: string; path: string }; isHovered: boolean }) {
+function VibeLabel({ section, isHovered, isSelected }: { section: { id: string; label: string; path: string }; isHovered: boolean; isSelected: boolean }) {
   const center = getPathCenter(section.path);
   if (!center) return null;
 
@@ -209,10 +222,10 @@ function VibeLabel({ section, isHovered }: { section: { id: string; label: strin
       textAnchor="middle"
       dominantBaseline="middle"
       className="pointer-events-none select-none"
-      fill={isHovered ? 'hsl(24, 80%, 45%)' : 'hsl(220, 10%, 55%)'}
-      fontSize="12"
+      fill={isSelected ? 'hsl(24, 80%, 40%)' : isHovered ? 'hsl(24, 80%, 45%)' : 'hsl(220, 10%, 55%)'}
+      fontSize={isSelected ? '13' : '12'}
       fontFamily="'DM Sans', sans-serif"
-      fontWeight="500"
+      fontWeight={isSelected ? '700' : '500'}
     >
       {section.label}
     </text>
