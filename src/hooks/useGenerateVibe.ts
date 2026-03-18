@@ -50,6 +50,7 @@ export function useGenerateVibe() {
         return null;
       }
 
+      recordGeneration();
       setGeneratedVibe(data as GeneratedVibe);
       toast({ title: `${data.emoji} ${data.name}`, description: data.description });
       return data as GeneratedVibe;

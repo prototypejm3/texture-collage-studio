@@ -36,6 +36,7 @@ export function useGenerateStencil() {
         return null;
       }
 
+      recordGeneration();
       toast({ title: `${data.emoji} ${data.name}`, description: 'AI stencil generated!' });
       return data as Vibe;
     } catch (e) {
