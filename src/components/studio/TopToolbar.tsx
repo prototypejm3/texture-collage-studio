@@ -24,6 +24,9 @@ interface Props {
   onUploadTemplate: (file: File) => void;
   onClearTemplate: () => void;
   onTemplateOpacityChange: (val: number) => void;
+  // Premium
+  isPremium: boolean;
+  onRequestUpgrade: () => void;
 }
 
 const solidOptions: { id: string; label: string; bg: string }[] = [
