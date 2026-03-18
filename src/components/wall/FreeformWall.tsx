@@ -12,6 +12,7 @@ const sizeWidths: Record<DesignSize, number> = {
 interface FreeformWallProps {
   designs: SavedDesign[];
   isPremium: boolean;
+  isDark?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
