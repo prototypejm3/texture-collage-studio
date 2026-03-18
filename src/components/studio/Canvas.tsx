@@ -58,6 +58,7 @@ export function Canvas({
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
+  backgroundTextureId,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection, canvasRef,
   customTextures = [],
