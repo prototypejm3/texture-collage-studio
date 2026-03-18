@@ -189,6 +189,32 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  const updateSectionTransform = useCallback((sectionId: string, updates: Partial<SectionTransform>) => {
+    setSectionTransforms(prev => ({
+      ...prev,
+      [sectionId]: { ...(prev[sectionId] || defaultSectionTransform), ...updates },
+    }));
+  }, []);
+
+  const deleteSection = useCallback((sectionId: string) => {
+    // Remove from vibe sections if it's a custom section
+    setCustomSections(prev => prev.filter(s => s.id !== sectionId));
+    // If it's a vibe section, we track deletion separately
+    setVibeFills(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    setSectionTransforms(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    // Track deleted vibe sections
+    setDeletedSections(prev => new Set([...prev, sectionId]));
+    if (selectedSectionId === sectionId) setSelectedSectionId(null);
+  }, [selectedSectionId]);
+
   // Combine vibe sections + custom drawn sections
   const allSections = useMemo(() => {
     const vibeSections = activeVibe?.sections || [];
