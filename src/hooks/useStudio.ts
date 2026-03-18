@@ -139,12 +139,8 @@ export function useStudio() {
     setElements([]);
     setSelectedId(null);
     setSelectedSectionId(null);
-    // Auto-fill all sections
-    const fills: VibeFills = {};
-    vibe.sections.forEach(section => {
-      fills[section.id] = pickTextureForTone(vibe, section.tone);
-    });
-    setVibeFills(fills);
+    // Start with empty fills — user picks textures for each section
+    setVibeFills({});
   }, []);
 
   const fillSection = useCallback((sectionId: string, textureId: string) => {
