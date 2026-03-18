@@ -106,6 +106,14 @@ export function TextureLibrary({
             Textures
           </h2>
           <div className="flex items-center gap-1.5">
+            {/* Kid mode toggle */}
+            <button
+              onClick={() => setKidMode(!kidMode)}
+              className={`p-1 rounded transition-colors ${kidMode ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-secondary/60 text-muted-foreground/50 hover:text-muted-foreground'}`}
+              title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
+            >
+              <Baby className="w-3 h-3" />
+            </button>
             {/* Swatch / Tiled toggle */}
             <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
               <button
