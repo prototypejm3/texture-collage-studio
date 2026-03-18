@@ -297,6 +297,7 @@ const MyWall = () => {
             onApplyHangingToAll={handleApplyHangingToAll}
             onAutoCurate={handleAutoCurate}
             onStepBack={() => setStepBackMode(true)}
+            onRequestUpgrade={() => setShowPaywall(true)}
             isPremium={isPremium}
           />
 

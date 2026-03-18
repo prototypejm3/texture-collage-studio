@@ -1,10 +1,27 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Palette, LayoutGrid, LogIn, LogOut, User, Ghost } from 'lucide-react';
+import { Palette, LayoutGrid, LogIn, LogOut, User, Ghost, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useEffect, useState } from 'react';
+
+function useTheme() {
+  const [dark, setDark] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return { dark, toggle: () => setDark(d => !d) };
+}
 
 export function NavBar() {
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { dark, toggle } = useTheme();
   const isCreate = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
@@ -43,6 +60,15 @@ export function NavBar() {
       </Link>
 
       <div className="ml-auto flex items-center gap-2">
+        {/* Dark mode toggle */}
+        <button
+          onClick={toggle}
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
+
         {user ? (
           <>
             <span className="text-xs text-muted-foreground flex items-center gap-1">
