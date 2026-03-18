@@ -92,14 +92,24 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
             </h3>
             <div className="flex items-center gap-1.5">
               <button
-                onClick={() => setShowAiInput(v => !v)}
+                onClick={() => {
+                  if (!isPremium) {
+                    onRequestUpgrade();
+                    return;
+                  }
+                  setShowAiInput(v => !v);
+                }}
                 className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-md transition-colors ${
-                  showAiInput
+                  showAiInput && isPremium
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                <Sparkles className="w-2.5 h-2.5" /> AI Generate
+                {isPremium ? (
+                  <><Sparkles className="w-2.5 h-2.5" /> AI Generate</>
+                ) : (
+                  <><Lock className="w-2.5 h-2.5" /> AI Generate ✨</>
+                )}
               </button>
               {activeVibeId && (
                 <button
