@@ -13,6 +13,7 @@ import { PreviewWall } from '@/components/wall/PreviewWall';
 import { StepBackMode } from '@/components/wall/StepBackMode';
 import { LightingOverlay } from '@/components/wall/LightingOverlay';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
+import { ArtistNoteModal } from '@/components/wall/ArtistNoteModal';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
 import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown, Pencil, Check } from 'lucide-react';
@@ -48,6 +49,7 @@ const MyWall = () => {
   const [editingWallId, setEditingWallId] = useState<string | null>(null);
   const [wallTitleDraft, setWallTitleDraft] = useState('');
   const [stepBackMode, setStepBackMode] = useState(false);
+  const [gallerySubmitId, setGallerySubmitId] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
   const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
@@ -287,21 +289,27 @@ const MyWall = () => {
     toast({ title: 'New wall created!' });
   }, [isPremium, multiWall]);
 
-  const handleSubmitToGallery = useCallback(async (designId: string) => {
-    const design = wall.designs.find(d => d.id === designId);
+  const handleSubmitToGallery = useCallback((designId: string) => {
+    setGallerySubmitId(designId);
+  }, []);
+
+  const handleConfirmGallerySubmit = useCallback(async (artistNote: string) => {
+    if (!gallerySubmitId) return;
+    const design = wall.designs.find(d => d.id === gallerySubmitId);
     if (!design) return;
     const submissionId = await gallery.submitToGallery({
       name: design.name,
-      description: design.description,
+      description: artistNote || design.description,
       artist_name: design.artist || 'Anonymous',
       preview_image: design.previewImage,
       frame_style: design.frameStyle,
       display_size: design.displaySize || 'medium',
     });
     if (submissionId) {
-      wall.updateDesign(designId, { gallerySubmissionId: submissionId });
+      wall.updateDesign(gallerySubmitId, { gallerySubmissionId: submissionId });
     }
-  }, [wall, gallery]);
+    setGallerySubmitId(null);
+  }, [gallerySubmitId, wall, gallery]);
 
   const handleDeleteWall = useCallback((wallId: string) => {
     if (multiWall.walls.length <= 1) return;
@@ -568,6 +576,13 @@ const MyWall = () => {
         isOpen={viewMode}
         startIndex={viewStartIndex}
         onClose={() => setViewMode(false)}
+      />
+
+      <ArtistNoteModal
+        isOpen={!!gallerySubmitId}
+        designName={wall.designs.find(d => d.id === gallerySubmitId)?.name || ''}
+        onSubmit={handleConfirmGallerySubmit}
+        onClose={() => setGallerySubmitId(null)}
       />
     </div>
   );
