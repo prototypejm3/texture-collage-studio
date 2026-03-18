@@ -90,11 +90,12 @@ export function useWall() {
     setDesigns(prev => prev.map(d => d.id === draftKey ? { ...d, status: 'display' as DesignStatus, updatedAt: new Date().toISOString() } : d));
   }, []);
 
-  const replaceDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string) => {
+  const replaceDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string) => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
     const design: SavedDesign = {
       id, name, vibeName,
+      stencilCreator,
       previewImage: preview,
       createdAt: now,
       updatedAt: now,

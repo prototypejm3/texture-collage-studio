@@ -32,7 +32,7 @@ export interface SavedDesign {
   curatorNote?: string;
   edition?: string;
   materials?: string;
-  
+  stencilCreator?: string;
   displaySize: DesignSize;
   wallX?: number;
   wallY?: number;
