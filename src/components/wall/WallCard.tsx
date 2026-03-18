@@ -214,11 +214,13 @@ export function WallCard({
         style={{ transform: `rotate(${design.rotation || 0}deg)` }}
         onClick={() => onOpen(design.id)}
       >
-        <FrameWrapper style={design.frameStyle}>
-          <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
-            <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />
-          </div>
-        </FrameWrapper>
+        <HangingWrapper style={design.hangingStyle || 'floating'}>
+          <FrameWrapper style={design.frameStyle}>
+            <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
+              <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </FrameWrapper>
+        </HangingWrapper>
       </div>
 
       {/* Pinned indicator */}
