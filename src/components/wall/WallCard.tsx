@@ -303,6 +303,19 @@ export function WallCard({
                   ⭐ {design.isHero ? 'Remove Hero' : 'Make Hero Piece'}
                 </button>
                 <div className="border-t border-border my-1" />
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Status</p>
+                <div className="flex items-center gap-1 px-3 py-1.5">
+                  {statusOptions.map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { status: opt.value }); }}
+                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.status === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="border-t border-border my-1" />
                 <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
                 <div className="flex items-center gap-1 px-3 py-1.5">
                   {sizeOptions.map(opt => (
