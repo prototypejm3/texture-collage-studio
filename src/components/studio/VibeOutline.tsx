@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Vibe, VibeFills, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 import { Paintbrush, Scissors } from 'lucide-react';
@@ -36,7 +36,7 @@ export function VibeOutline({
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
-  const allTextures = [...textures, ...customTextures];
+  const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
     e.preventDefault();
@@ -71,12 +71,33 @@ export function VibeOutline({
     setDropChoice(null);
   }, [dropChoice, onDropAsSwatch]);
 
+  // Parse viewBox to get SVG coordinate dimensions
+  const [vbX, vbY, vbW, vbH] = useMemo(() => {
+    const parts = vibe.viewBox.split(/\s+/).map(Number);
+    return parts.length === 4 ? parts : [0, 0, 480, 480];
+  }, [vibe.viewBox]);
+
   return (
     <>
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 8, width: canvasWidth, height: canvasHeight }}
+      {/* Single SVG handles both texture fills and strokes — guaranteed alignment */}
+      <svg
+        data-vibe-svg
+        viewBox={vibe.viewBox}
+        width={canvasWidth}
+        height={canvasHeight}
+        className="absolute inset-0"
+        style={{ zIndex: 10 }}
+        preserveAspectRatio="xMidYMid meet"
       >
+        <defs>
+          {vibe.sections.map(section => (
+            <clipPath key={`clip-${section.id}`} id={`clip-${section.id}`}>
+              <path d={section.path} />
+            </clipPath>
+          ))}
+        </defs>
+
+        {/* Texture fills using foreignObject inside clipPath */}
         {vibe.sections.map(section => {
           const textureId = fills[section.id];
           if (!textureId) return null;
@@ -85,29 +106,29 @@ export function VibeOutline({
           if (!texture) return null;
 
           return (
-            <div
-              key={`${section.id}-${textureId}`}
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: texture.cssBackground,
-                backgroundSize: getTextureBackgroundSize(texture),
-                backgroundPosition: 'center',
-                clipPath: `path('${section.path}')`,
-                WebkitClipPath: `path('${section.path}')`,
-              }}
-            />
+            <foreignObject
+              key={`fill-${section.id}-${textureId}`}
+              x={vbX}
+              y={vbY}
+              width={vbW}
+              height={vbH}
+              clipPath={`url(#clip-${section.id})`}
+              className="pointer-events-none"
+            >
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: texture.cssBackground,
+                  backgroundSize: getTextureBackgroundSize(texture),
+                  backgroundPosition: 'center',
+                }}
+              />
+            </foreignObject>
           );
         })}
-      </div>
 
-      <svg
-        data-vibe-svg
-        viewBox={vibe.viewBox}
-        width={canvasWidth}
-        height={canvasHeight}
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 10 }}
-      >
+        {/* Interactive paths and strokes */}
         {vibe.sections.map(section => {
           const isFilled = !!fills[section.id];
           const isHovered = hoveredId === section.id;
@@ -115,6 +136,7 @@ export function VibeOutline({
 
           return (
             <g key={section.id}>
+              {/* Hit area */}
               <path
                 d={section.path}
                 fill="transparent"
@@ -134,7 +156,7 @@ export function VibeOutline({
                 onMouseLeave={() => setHoveredId(null)}
               />
 
-              {/* Selected section pulsing highlight */}
+              {/* Selected highlight */}
               {isSelected && (
                 <path
                   d={section.path}
@@ -165,7 +187,6 @@ export function VibeOutline({
                 className="pointer-events-none transition-colors"
                 style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
-
             </g>
           );
         })}
@@ -205,38 +226,4 @@ export function VibeOutline({
       )}
     </>
   );
-}
-
-function VibeLabel({ section, isHovered, isSelected }: { section: { id: string; label: string; path: string }; isHovered: boolean; isSelected: boolean }) {
-  const center = getPathCenter(section.path);
-  if (!center) return null;
-
-  return (
-    <text
-      x={center.x}
-      y={center.y}
-      textAnchor="middle"
-      dominantBaseline="middle"
-      className="pointer-events-none select-none"
-      fill={isSelected ? 'hsl(24, 80%, 40%)' : isHovered ? 'hsl(24, 80%, 45%)' : 'hsl(220, 10%, 55%)'}
-      fontSize={isSelected ? '13' : '12'}
-      fontFamily="'DM Sans', sans-serif"
-      fontWeight={isSelected ? '700' : '500'}
-    >
-      {section.label}
-    </text>
-  );
-}
-
-function getPathCenter(path: string): { x: number; y: number } | null {
-  const nums = path.match(/[\d.]+/g);
-  if (!nums || nums.length < 4) return null;
-  const coords: number[] = nums.map(Number);
-  let sumX = 0, sumY = 0, count = 0;
-  for (let i = 0; i < coords.length - 1; i += 2) {
-    sumX += coords[i];
-    sumY += coords[i + 1];
-    count++;
-  }
-  return count > 0 ? { x: sumX / count, y: sumY / count } : null;
 }
