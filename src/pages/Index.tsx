@@ -224,6 +224,11 @@ const Index = () => {
           onRequestUpgrade={() => setShowPaywall(true)}
           onGenerateMood={handleGenerateMood}
           isGeneratingMood={vibeGen.isGenerating}
+          customTemplate={customTemplate}
+          templateOpacity={templateOpacity}
+          onUploadTemplate={handleUploadTemplate}
+          onClearTemplate={clearTemplate}
+          onTemplateOpacityChange={setTemplateOpacity}
         />
       </div>
 
