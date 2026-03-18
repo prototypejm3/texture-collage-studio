@@ -389,7 +389,7 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
   );
 }
 
-function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedIn, onSelect, onToggleFav }: {
+function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedIn, onSelect, onToggleFav, creator }: {
   vibe: Vibe;
   isActive: boolean;
   favCount: number;
@@ -397,6 +397,7 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
   isLoggedIn: boolean;
   onSelect: () => void;
   onToggleFav: () => void;
+  creator?: string;
 }) {
   return (
     <motion.div
@@ -419,6 +420,11 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
         <span className="text-[10px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
+        {creator && (
+          <span className="text-[9px] text-muted-foreground mt-0.5 block">
+            by {creator}
+          </span>
+        )}
       </button>
 
       {/* Fav count + toggle */}
