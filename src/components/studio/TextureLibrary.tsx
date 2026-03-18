@@ -39,6 +39,7 @@ interface TextureLibraryProps {
 export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
+  isPremium, onRequestUpgrade,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const fileInputRef = useRef<HTMLInputElement>(null);
