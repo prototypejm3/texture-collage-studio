@@ -26,6 +26,8 @@ export function useStudio() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
+  const [displaySize, setDisplaySize] = useState<DesignSize>('medium');
+  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('gold');
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
