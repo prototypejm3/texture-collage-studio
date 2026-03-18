@@ -295,6 +295,7 @@ const Index = () => {
           )}
         </AnimatePresence>
 
+        <RightSidebar
           activeVibeId={studio.activeVibe?.id ?? null}
           isPremium={isPremium}
           onSelectVibe={handleSelectVibe}
