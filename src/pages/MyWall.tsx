@@ -289,21 +289,27 @@ const MyWall = () => {
     toast({ title: 'New wall created!' });
   }, [isPremium, multiWall]);
 
-  const handleSubmitToGallery = useCallback(async (designId: string) => {
-    const design = wall.designs.find(d => d.id === designId);
+  const handleSubmitToGallery = useCallback((designId: string) => {
+    setGallerySubmitId(designId);
+  }, []);
+
+  const handleConfirmGallerySubmit = useCallback(async (artistNote: string) => {
+    if (!gallerySubmitId) return;
+    const design = wall.designs.find(d => d.id === gallerySubmitId);
     if (!design) return;
     const submissionId = await gallery.submitToGallery({
       name: design.name,
-      description: design.description,
+      description: artistNote || design.description,
       artist_name: design.artist || 'Anonymous',
       preview_image: design.previewImage,
       frame_style: design.frameStyle,
       display_size: design.displaySize || 'medium',
     });
     if (submissionId) {
-      wall.updateDesign(designId, { gallerySubmissionId: submissionId });
+      wall.updateDesign(gallerySubmitId, { gallerySubmissionId: submissionId });
     }
-  }, [wall, gallery]);
+    setGallerySubmitId(null);
+  }, [gallerySubmitId, wall, gallery]);
 
   const handleDeleteWall = useCallback((wallId: string) => {
     if (multiWall.walls.length <= 1) return;
