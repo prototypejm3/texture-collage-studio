@@ -26,7 +26,6 @@ const Index = () => {
   const { isPremium, canSave, upgradeToPremium } = useUserTier();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
 
@@ -74,7 +73,6 @@ const Index = () => {
       const vibeName = studio.activeVibe?.name;
       const studioState = studio.getState();
 
-      // If editing an existing design, update it
       if (editingDesignId) {
         wall.updateDesign(editingDesignId, { previewImage: dataUrl, name, vibeName, studioState });
         toast({ title: 'Updated!', description: 'Your design has been updated on My Wall.' });
@@ -104,7 +102,6 @@ const Index = () => {
   }, [pendingSave, wall]);
 
   const handleUnlock = useCallback(() => {
-    // TODO: real Stripe payment
     upgradeToPremium();
     if (pendingSave) {
       wall.addDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName);
@@ -143,8 +140,8 @@ const Index = () => {
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
-        onToggleVibes={() => setVibesOpen(v => !v)}
-        vibesActive={vibesOpen}
+        onToggleVibes={() => {}}
+        vibesActive={false}
         customTemplate={customTemplate}
         templateOpacity={templateOpacity}
         onUploadTemplate={handleUploadTemplate}
@@ -186,30 +183,17 @@ const Index = () => {
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
         />
 
-        <div className="w-[240px] flex-shrink-0 border-l border-border bg-popover overflow-y-auto">
-          {studio.selectedElement ? (
-            <FloatingToolbar
-              element={studio.selectedElement}
-              onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-              onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-              onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-              onDelete={() => studio.deleteElement(studio.selectedId!)}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full p-4">
-              <p className="text-xs text-muted-foreground text-center">Click an element to edit its shape, size, and effects</p>
-            </div>
-          )}
-        </div>
-
-        <VibeSelector
-          isOpen={vibesOpen}
+        <RightSidebar
           activeVibeId={studio.activeVibe?.id ?? null}
           isPremium={isPremium}
-          onClose={() => setVibesOpen(false)}
           onSelectVibe={handleSelectVibe}
-          onShuffle={studio.shuffleVibeFills}
+          onShuffleVibeFills={studio.shuffleVibeFills}
           onRequestUpgrade={() => setShowPaywall(true)}
+          selectedElement={studio.selectedElement ?? null}
+          onUpdateElement={(updates) => studio.updateElement(studio.selectedId!, updates)}
+          onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+          onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+          onDelete={() => studio.deleteElement(studio.selectedId!)}
         />
       </div>
 
