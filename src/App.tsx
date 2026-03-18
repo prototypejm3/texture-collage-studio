@@ -26,6 +26,7 @@ const App = () => (
             <Route path="/wall" element={<MyWall />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
