@@ -334,6 +334,8 @@ export function useStudio() {
     setWallFrameStyle,
     setDrawMode,
     setBackgroundTextureId,
+    nextShape,
+    setNextShape,
     // Free-mode
     addElement,
     updateElement,
