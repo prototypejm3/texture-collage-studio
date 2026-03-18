@@ -3,7 +3,7 @@ import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, Star, Grid3X3, Maximize, Baby } from 'lucide-react';
+import { Upload, X, Lock, Star, Grid3X3, Maximize } from 'lucide-react';
 
 interface TextureGroup {
   label: string;
@@ -109,10 +109,10 @@ export function TextureLibrary({
             {/* Kid mode toggle */}
             <button
               onClick={() => setKidMode(!kidMode)}
-              className={`p-1 rounded transition-colors ${kidMode ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-secondary/60 text-muted-foreground/50 hover:text-muted-foreground'}`}
+              className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-colors ${kidMode ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-secondary/60 text-muted-foreground/60 hover:text-muted-foreground'}`}
               title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
             >
-              <Baby className="w-3 h-3" />
+              Kids
             </button>
             {/* Swatch / Tiled toggle */}
             <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
