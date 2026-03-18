@@ -181,17 +181,36 @@ export function TextureLibrary({
           <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
             Textures
           </h2>
-          <button
-            onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
-            className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
-              isPremium
-                ? 'bg-secondary text-secondary-foreground hover:bg-accent'
-                : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
-            }`}
-            title={isPremium ? 'Upload your own texture' : 'Premium feature'}
-          >
-            {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
-          </button>
+          <div className="flex items-center gap-1.5">
+            {/* Swatch / Tiled toggle */}
+            <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
+              <button
+                onClick={() => setSwatchView('swatch')}
+                className={`p-1 rounded transition-colors ${swatchView === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                title="Swatch view"
+              >
+                <Maximize className="w-3 h-3" />
+              </button>
+              <button
+                onClick={() => setSwatchView('tiled')}
+                className={`p-1 rounded transition-colors ${swatchView === 'tiled' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                title="Tiled view"
+              >
+                <Grid3X3 className="w-3 h-3" />
+              </button>
+            </div>
+            <button
+              onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
+              className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
+                isPremium
+                  ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                  : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
+              }`}
+              title={isPremium ? 'Upload your own texture' : 'Premium feature'}
+            >
+              {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
+            </button>
+          </div>
           <input
             ref={fileInputRef}
             type="file"
