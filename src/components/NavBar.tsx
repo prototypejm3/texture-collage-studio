@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Palette, LayoutGrid, LogIn, LogOut, User, Ghost, Moon, Sun } from 'lucide-react';
+import { Brush, Grid2x2, LogIn, LogOut, User, Landmark, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 
@@ -37,7 +37,7 @@ export function NavBar() {
           isCreate ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
-        <Palette className="w-4 h-4" />
+        <Brush className="w-4 h-4" />
         Create
       </Link>
       <Link
@@ -46,7 +46,7 @@ export function NavBar() {
           isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
-        <LayoutGrid className="w-4 h-4" />
+        <Grid2x2 className="w-4 h-4" />
         My Wall
       </Link>
       <Link
@@ -55,7 +55,7 @@ export function NavBar() {
           isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
-        <Ghost className="w-4 h-4" />
+        <Landmark className="w-4 h-4" />
         Gallery
       </Link>
 
