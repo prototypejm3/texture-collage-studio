@@ -400,6 +400,7 @@ export function useStudio() {
     addCustomSection,
     deleteCustomSection,
     deleteSection,
+    duplicateSection,
     updateSectionTransform,
     detachSection,
     // Serialization
