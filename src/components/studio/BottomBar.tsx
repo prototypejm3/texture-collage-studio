@@ -13,12 +13,12 @@ interface Props {
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
 const frameStyles: { id: FrameStyle; label: string }[] = [
+  { id: 'shadow-box', label: 'OG Shadow Box' },
   { id: 'gold', label: 'Gold' },
   { id: 'chrome', label: 'Chrome' },
   { id: 'copper', label: 'Copper' },
   { id: 'silver', label: 'Silver' },
   { id: 'minimal', label: 'Minimal' },
-  { id: 'shadow-box', label: 'Shadow Box' },
   { id: 'wood', label: 'Wood' },
   { id: 'floating', label: 'Floating' },
   { id: 'polaroid', label: 'Polaroid' },
