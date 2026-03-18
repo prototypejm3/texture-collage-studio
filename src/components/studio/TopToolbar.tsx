@@ -1,10 +1,24 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+
+function useTheme() {
+  const [dark, setDark] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return document.documentElement.classList.contains('dark');
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return { dark, toggle: () => setDark(d => !d) };
+}
 
 interface Props {
   frameSize: FrameSize;
