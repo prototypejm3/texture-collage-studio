@@ -36,6 +36,7 @@ const Index = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [showToolKit, setShowToolKit] = useState(false);
+  const [toolKitMinimized, setToolKitMinimized] = useState(false);
   const [toolKitPos, setToolKitPos] = useState({ x: 16, y: 12 });
   const [toolKitSize, setToolKitSize] = useState({ w: 300, h: 500 });
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
@@ -301,7 +302,7 @@ const Index = () => {
                 width: toolKitSize.w,
               }}
             >
-              <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden flex flex-col" style={{ height: toolKitSize.h }}>
+              <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden flex flex-col" style={{ height: toolKitMinimized ? 'auto' : toolKitSize.h }}>
                 {/* Drag handle header */}
                 <div
                   className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30 cursor-grab active:cursor-grabbing select-none shrink-0"
@@ -309,15 +310,24 @@ const Index = () => {
                 >
                   <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                     <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
-                    <span className="text-[9px] text-muted-foreground font-normal ml-0.5 italic">— Drag Textile to the Canvas</span>
+                    {toolKitMinimized && <span className="text-[9px] text-muted-foreground font-normal italic">— minimized</span>}
                   </span>
-                  <button
-                    onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                  >
-                    Close
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setToolKitMinimized(prev => !prev)}
+                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    >
+                      {toolKitMinimized ? '▢' : '—'}
+                    </button>
+                    <button
+                      onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
+                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
+                {!toolKitMinimized && (
                 <div className="overflow-y-auto flex-1">
                   {/* Draw Freehand at top */}
                   <div className="px-3 py-2 border-b border-border">
@@ -376,6 +386,7 @@ const Index = () => {
                     onRequestUpgrade={() => setShowPaywall(true)}
                   />
                 </div>
+                )}
                 {/* Resize handle */}
                 <div
                   className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
