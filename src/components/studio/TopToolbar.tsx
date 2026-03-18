@@ -53,6 +53,7 @@ export function TopToolbar({
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { dark, toggle } = useTheme();
 
   const isCreate = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
