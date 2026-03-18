@@ -261,11 +261,11 @@ const Index = () => {
           onCancelDraw={() => studio.setDrawMode(false)}
         />
 
-        {/* Floating element toolbar — appears over canvas when element selected */}
+        {/* Floating Tool-Kit — appears over canvas when element selected OR draw mode */}
         <AnimatePresence>
-          {studio.selectedElement && studio.selectedId && (
+          {(showToolKit || studio.drawMode) && (
             <motion.div
-              key="element-toolbar"
+              key="tool-kit"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
@@ -274,21 +274,37 @@ const Index = () => {
             >
               <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden max-h-[70vh] overflow-y-auto">
                 <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30">
-                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Scissors className="w-3.5 h-3.5 text-destructive" /> Elements</span>
+                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit</span>
                   <button
-                    onClick={() => studio.setSelectedId(null)}
+                    onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
                     className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
                   >
                     Close
                   </button>
                 </div>
-                <FloatingToolbar
-                  element={studio.selectedElement}
-                  onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                  onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                  onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                  onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-                />
+                {/* Draw Freehand at top */}
+                <div className="px-3 py-2 border-b border-border">
+                  <button
+                    onClick={() => studio.setDrawMode(!studio.drawMode)}
+                    className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                      studio.drawMode
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    }`}
+                  >
+                    <PenTool className="w-3.5 h-3.5" />
+                    Draw Freehand
+                  </button>
+                </div>
+                {studio.selectedElement && studio.selectedId && (
+                  <FloatingToolbar
+                    element={studio.selectedElement}
+                    onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                    onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                    onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                    onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                  />
+                )}
               </div>
             </motion.div>
           )}
