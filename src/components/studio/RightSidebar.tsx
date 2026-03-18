@@ -347,7 +347,6 @@ export function RightSidebar({
                     />
                     <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                   </div>
-                  />
                   <div className="flex gap-2">
                     <button
                       onClick={handleGenerateMood}
