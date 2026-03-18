@@ -25,7 +25,7 @@ export function HangingWrapper({ style, children }: HangingWrapperProps) {
           <div
             className="w-2 h-2 rounded-full mx-auto"
             style={{
-              background: 'radial-gradient(circle at 35% 35%, hsl(0,0%,80%), hsl(0,0%,45%))',
+              background: 'radial-gradient(circle at 35% 35%, hsl(0,0%,30%), hsl(0,0%,10%))',
               boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
             }}
           />
