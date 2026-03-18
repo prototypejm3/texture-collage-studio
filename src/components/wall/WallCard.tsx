@@ -607,8 +607,7 @@ export function WallCard({
                   >
                     <Send className="w-3.5 h-3.5" /> Submit to Gallery
                   </button>
-                )}
-                )}
+                )
 
                 {design.gallerySubmissionId && (
                   <span className="text-[10px] text-primary ml-auto flex items-center gap-1">
