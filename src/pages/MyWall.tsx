@@ -15,7 +15,7 @@ import { LightingOverlay } from '@/components/wall/LightingOverlay';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
-import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown } from 'lucide-react';
+import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown, Pencil, Check } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
