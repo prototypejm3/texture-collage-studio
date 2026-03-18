@@ -166,5 +166,7 @@ export function useWall() {
     toggleHide,
     updateSettings,
     applyFrameToAll,
+    saveDraft,
+    promoteDraft,
   };
 }
