@@ -171,17 +171,39 @@ export function useStudio() {
   // ── Custom drawn sections ──
 
   const addCustomSection = useCallback((pathD: string) => {
-    const id = `custom-section-${Date.now()}`;
-    const section: VibeSection = {
+    // Parse path to compute bounding box
+    const nums = pathD.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (let i = 0; i < nums.length - 1; i += 2) {
+      minX = Math.min(minX, nums[i]);
+      maxX = Math.max(maxX, nums[i]);
+      minY = Math.min(minY, nums[i + 1]);
+      maxY = Math.max(maxY, nums[i + 1]);
+    }
+    const w = Math.max(maxX - minX, 20);
+    const h = Math.max(maxY - minY, 20);
+
+    // Use a random texture as default fill
+    const textureId = textures[Math.floor(Math.random() * Math.min(textures.length, 20))].id;
+
+    const id = `el-${nextId++}`;
+    const newEl: CanvasElement = {
       id,
-      label: `Section ${customSections.length + 1}`,
-      path: pathD,
-      tone: 'medium',
+      textureId,
+      x: minX,
+      y: minY,
+      width: w,
+      height: h,
+      rotation: 0,
+      shape: nextShape,
+      zIndex: nextId,
+      effects: { ...defaultEffects },
+      clipPathD: pathD,
     };
-    setCustomSections(prev => [...prev, section]);
-    setSelectedSectionId(id);
+    setElements(prev => [...prev, newEl]);
+    setSelectedId(id);
     setDrawMode(false);
-  }, [customSections.length]);
+  }, [nextShape]);
 
   const deleteCustomSection = useCallback((sectionId: string) => {
     setCustomSections(prev => prev.filter(s => s.id !== sectionId));
