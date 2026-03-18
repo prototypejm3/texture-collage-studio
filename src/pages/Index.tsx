@@ -14,8 +14,10 @@ import { RightSidebar } from '@/components/studio/RightSidebar';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
+import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
+import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
