@@ -262,20 +262,32 @@ const Index = () => {
           onCancelDraw={() => studio.setDrawMode(false)}
         />
 
-        {/* Floating Tool-Kit — appears over canvas when element selected OR draw mode */}
+        {/* Floating Tool-Kit — draggable & resizable */}
         <AnimatePresence>
           {(showToolKit || studio.drawMode || (studio.selectedElement && studio.selectedId)) && (
             <motion.div
               key="tool-kit"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.15 }}
-              className="absolute z-30 left-[280px] right-[220px] top-3 mx-auto max-w-[340px]"
+              className="absolute z-30"
+              style={{
+                left: toolKitPos.x,
+                top: toolKitPos.y,
+                width: toolKitSize.w,
+              }}
             >
-              <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden max-h-[70vh] overflow-y-auto">
-                <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30">
-                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit</span>
+              <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden flex flex-col" style={{ height: toolKitSize.h }}>
+                {/* Drag handle header */}
+                <div
+                  className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30 cursor-grab active:cursor-grabbing select-none shrink-0"
+                  onMouseDown={handleToolKitDragStart}
+                >
+                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
+                    <span className="text-[9px] text-muted-foreground font-normal ml-1">⋮⋮ drag</span>
+                  </span>
                   <button
                     onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
                     className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
@@ -283,29 +295,41 @@ const Index = () => {
                     Close
                   </button>
                 </div>
-                {/* Draw Freehand at top */}
-                <div className="px-3 py-2 border-b border-border">
-                  <button
-                    onClick={() => studio.setDrawMode(!studio.drawMode)}
-                    className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                      studio.drawMode
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                    }`}
-                  >
-                    <PenTool className="w-3.5 h-3.5" />
-                    Draw Freehand
-                  </button>
+                <div className="overflow-y-auto flex-1">
+                  {/* Draw Freehand at top */}
+                  <div className="px-3 py-2 border-b border-border">
+                    <button
+                      onClick={() => studio.setDrawMode(!studio.drawMode)}
+                      className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                        studio.drawMode
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                      }`}
+                    >
+                      <PenTool className="w-3.5 h-3.5" />
+                      Draw Freehand
+                    </button>
+                  </div>
+                  {studio.selectedElement && studio.selectedId && (
+                    <FloatingToolbar
+                      element={studio.selectedElement}
+                      onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                      onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                      onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                      onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                    />
+                  )}
                 </div>
-                {studio.selectedElement && studio.selectedId && (
-                  <FloatingToolbar
-                    element={studio.selectedElement}
-                    onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                    onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                    onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                    onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-                  />
-                )}
+                {/* Resize handle */}
+                <div
+                  className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
+                  onMouseDown={handleToolKitResizeStart}
+                  style={{ touchAction: 'none' }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" className="text-muted-foreground/50">
+                    <path d="M14 14L8 14M14 14L14 8M14 14L11 11M11 14L14 11" stroke="currentColor" strokeWidth="1" fill="none" />
+                  </svg>
+                </div>
               </div>
             </motion.div>
           )}
