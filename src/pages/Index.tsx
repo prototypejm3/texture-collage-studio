@@ -190,6 +190,9 @@ const Index = () => {
           onDropInSection={studio.fillSection}
           onDropAsSwatch={handleDrop}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+          drawMode={studio.drawMode}
+          onFinishDraw={studio.addCustomSection}
+          onCancelDraw={() => studio.setDrawMode(false)}
         />
 
         <RightSidebar
