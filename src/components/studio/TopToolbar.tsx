@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, Images, Landmark, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function useTheme() {
@@ -59,7 +59,7 @@ export function TopToolbar({
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
 
-  const isCreate = location.pathname === '/' || location.pathname === '/create';
+  const isStudio = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
 
@@ -76,11 +76,11 @@ export function TopToolbar({
         <Link
           to="/"
           className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-            isCreate ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+            isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <Palette className="w-4 h-4" />
-          Create
+          <Brush className="w-4 h-4" />
+          Studio
         </Link>
         <Link
           to="/wall"
@@ -88,7 +88,7 @@ export function TopToolbar({
             isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <Images className="w-4 h-4" />
+          <Grid2x2 className="w-4 h-4" />
           My Wall
         </Link>
         <Link
