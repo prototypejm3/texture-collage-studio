@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
-import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Save, Download, Volume2 } from 'lucide-react';
+import { FrameStyle } from '@/types/wall';
+import { Trash2, Save, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
