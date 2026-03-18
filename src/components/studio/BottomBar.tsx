@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { DesignSize, FrameStyle } from '@/types/wall';
-import { Maximize2, Square, Minimize2 } from 'lucide-react';
+import { Maximize2, Square, Minimize2, ChevronDown } from 'lucide-react';
 
 interface Props {
   frameSize: FrameSize;
@@ -37,8 +38,11 @@ export function BottomBar({
   displaySize, onDisplaySizeChange,
   wallFrameStyle, onWallFrameStyleChange,
 }: Props) {
+  const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
+  const currentFrame = frameStyles.find(f => f.id === wallFrameStyle);
+
   return (
-    <div className="flex items-center justify-center gap-6 px-5 py-2 bg-popover border-t border-border">
+    <div className="flex items-center justify-center gap-6 px-5 py-2 bg-popover border-t border-border relative">
       {/* Canvas size */}
       <div className="flex items-center gap-1">
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-2">Canvas</span>
@@ -83,24 +87,38 @@ export function BottomBar({
 
       <div className="w-px h-5 bg-border" />
 
-      {/* Frame style */}
-      <div className="flex items-center gap-1">
-        <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-2">Frame</span>
-        <div className="flex gap-0.5 flex-wrap max-w-[400px]">
-          {frameStyles.map(f => (
-            <button
-              key={f.id}
-              onClick={() => onWallFrameStyleChange(f.id)}
-              className={`px-2 py-1.5 text-[11px] rounded-md transition-colors ${
-                wallFrameStyle === f.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
+      {/* Frame style dropdown */}
+      <div className="relative">
+        <button
+          onClick={() => setFrameDropdownOpen(v => !v)}
+          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-border hover:border-muted-foreground transition-colors"
+        >
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
+          <span className="text-xs text-foreground">{currentFrame?.label || 'Gold'}</span>
+          <ChevronDown className="w-3 h-3 text-muted-foreground" />
+        </button>
+
+        {frameDropdownOpen && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setFrameDropdownOpen(false)} />
+            <div className="absolute bottom-full left-0 mb-1 z-50 w-44 rounded-xl border border-border bg-popover shadow-xl py-1.5 overflow-hidden">
+              <p className="px-4 pt-2 pb-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">Frame</p>
+              {frameStyles.map(f => (
+                <button
+                  key={f.id}
+                  onClick={() => { onWallFrameStyleChange(f.id); setFrameDropdownOpen(false); }}
+                  className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                    wallFrameStyle === f.id
+                      ? 'text-primary font-medium'
+                      : 'text-foreground hover:bg-accent'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
