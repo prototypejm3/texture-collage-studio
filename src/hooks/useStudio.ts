@@ -35,6 +35,7 @@ export function useStudio() {
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
   const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
+  const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
