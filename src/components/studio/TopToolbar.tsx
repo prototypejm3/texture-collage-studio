@@ -177,9 +177,6 @@ export function TopToolbar({
             <PenTool className="w-3.5 h-3.5" /> Draw
           </Button>
         )}
-        <Button size="sm" variant="default" onClick={onGenerate} className="gap-1.5 text-xs">
-          <Sparkles className="w-3.5 h-3.5" /> Generate Vibe
-        </Button>
         <Button size="sm" variant="ghost" onClick={onShuffle} className="gap-1.5 text-xs">
           <Shuffle className="w-3.5 h-3.5" /> Shuffle
         </Button>
