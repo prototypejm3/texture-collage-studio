@@ -275,4 +275,10 @@ export const textures: TextureSwatch[] = [
 
   // ── Chat ──
   { id: 'chat', name: 'Chat', category: 'Chat', cssBackground: img('novelty-chat.png') },
+
+  // ── Bisous ──
+  { id: 'bisous-blues', name: 'Bisous Blues', category: 'Bisous', cssBackground: img('novelty-bisous-blues.png') },
+
+  // ── Sunny Pup ──
+  { id: 'sunny-pup', name: 'Sunny Pup', category: 'Sunny Pup', cssBackground: img('novelty-sunny-pup.png') },
 ];
