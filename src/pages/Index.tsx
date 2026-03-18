@@ -119,7 +119,13 @@ const Index = () => {
         return;
       }
 
-      wall.addDesign(dataUrl, name, vibeName, studioState);
+      // If there's an existing draft, promote it instead of creating new
+      const draftExists = wall.designs.find(d => d.id === draftKeyRef.current);
+      if (draftExists) {
+        wall.updateDesign(draftKeyRef.current, { previewImage: dataUrl, name, vibeName, studioState, status: 'display' as any });
+      } else {
+        wall.addDesign(dataUrl, name, vibeName, studioState);
+      }
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
