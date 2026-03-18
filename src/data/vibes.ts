@@ -2265,4 +2265,96 @@ const bancroft: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, scubaSkiba, bancroft];
+// ── ASTRONAUT ──
+const astronaut: Vibe = {
+  id: 'astronaut', name: 'Astronaut', emoji: '🧑‍🚀',
+  description: 'Cute astronaut with helmet & suit',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ast-helmet', label: 'Helmet', tone: 'light',
+      path: 'M240,32 Q285,32 318,55 Q345,82 350,118 Q352,155 342,185 Q328,210 305,225 Q278,235 248,238 Q218,235 192,225 Q168,210 155,185 Q145,155 148,118 Q152,82 178,55 Q208,32 240,32 Z' },
+    { id: 'ast-visor', label: 'Visor', tone: 'dark',
+      path: 'M240,68 Q272,68 298,85 Q318,105 322,132 Q322,158 308,178 Q288,195 262,200 Q235,200 212,192 Q192,178 182,155 Q178,132 188,108 Q205,85 232,72 Z' },
+    { id: 'ast-visor-glare', label: 'Visor Glare', tone: 'medium',
+      path: 'M205,98 Q215,88 228,85 Q238,88 242,98 Q240,108 230,115 Q218,115 210,108 Z' },
+    { id: 'ast-torso', label: 'Torso', tone: 'light',
+      path: 'M185,238 Q168,252 155,275 Q145,302 142,332 Q142,358 148,378 L338,378 Q345,358 345,332 Q342,302 332,275 Q320,252 305,238 Q288,232 262,228 Q235,228 215,232 Z' },
+    { id: 'ast-chest-panel', label: 'Chest Panel', tone: 'accent',
+      path: 'M212,268 Q218,255 240,250 Q262,255 268,268 L272,338 Q268,348 240,352 Q212,348 208,338 Z' },
+    { id: 'ast-belt', label: 'Belt', tone: 'dark',
+      path: 'M148,368 Q155,362 240,358 Q325,362 338,368 L340,388 Q330,382 240,378 Q150,382 145,388 Z' },
+    { id: 'ast-arm-l', label: 'Left Arm', tone: 'light',
+      path: 'M155,275 Q135,288 118,308 Q105,328 98,348 Q95,365 100,378 Q108,385 118,378 Q128,365 138,342 Q148,318 155,298 Z' },
+    { id: 'ast-glove-l', label: 'Left Glove', tone: 'accent',
+      path: 'M98,348 Q88,362 78,372 Q72,378 68,375 Q65,368 72,355 Q82,342 92,335 Q98,338 100,345 Z' },
+    { id: 'ast-arm-r', label: 'Right Arm', tone: 'light',
+      path: 'M332,275 Q352,288 368,308 Q382,328 388,348 Q392,365 388,378 Q378,385 368,378 Q358,365 348,342 Q338,318 332,298 Z' },
+    { id: 'ast-glove-r', label: 'Right Glove', tone: 'accent',
+      path: 'M388,348 Q398,362 408,372 Q415,378 418,375 Q422,368 415,355 Q405,342 395,335 Q390,338 388,345 Z' },
+    { id: 'ast-leg-l', label: 'Left Leg', tone: 'light',
+      path: 'M185,388 Q178,408 172,432 Q168,452 165,465 L205,465 Q208,448 210,428 Q215,408 218,392 Z' },
+    { id: 'ast-boot-l', label: 'Left Boot', tone: 'dark',
+      path: 'M160,465 Q152,468 145,472 Q138,478 140,482 Q148,485 162,482 Q178,478 195,475 Q208,472 210,468 L205,465 Z' },
+    { id: 'ast-leg-r', label: 'Right Leg', tone: 'light',
+      path: 'M298,388 Q305,408 312,432 Q315,452 318,465 L278,465 Q275,448 272,428 Q268,408 265,392 Z' },
+    { id: 'ast-boot-r', label: 'Right Boot', tone: 'dark',
+      path: 'M322,465 Q332,468 342,472 Q348,478 345,482 Q338,485 322,482 Q305,478 290,475 Q278,472 275,468 L278,465 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── EARTH ──
+const earth: Vibe = {
+  id: 'earth', name: 'Earth', emoji: '🌍',
+  description: 'Planet Earth with continents',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ea-ocean', label: 'Ocean', tone: 'medium',
+      path: circlePath(240, 240, 210) },
+    { id: 'ea-continent-africa', label: 'Africa', tone: 'accent',
+      path: 'M262,145 Q275,148 285,158 Q292,172 295,192 Q298,215 295,242 Q290,272 282,298 Q275,322 268,342 Q262,358 258,368 Q252,375 248,372 Q245,362 242,345 Q238,322 235,298 Q232,272 232,248 Q235,222 238,200 Q242,178 248,162 Q255,150 262,145 Z' },
+    { id: 'ea-continent-europe', label: 'Europe', tone: 'accent',
+      path: 'M248,92 Q262,88 278,92 Q292,100 302,115 Q308,132 305,148 Q298,142 288,138 Q275,135 262,138 Q252,142 245,148 Q240,135 238,118 Q240,102 248,92 Z' },
+    { id: 'ea-continent-americas', label: 'Americas', tone: 'accent',
+      path: 'M148,128 Q162,118 178,115 Q192,118 200,128 Q205,142 202,162 Q198,182 192,200 Q185,218 178,232 Q172,248 168,268 Q165,288 165,308 Q168,328 175,345 Q165,348 158,342 Q148,328 142,308 Q135,285 132,262 Q130,238 132,215 Q135,192 140,172 Q145,152 148,138 Z' },
+    { id: 'ea-continent-asia', label: 'Asia', tone: 'accent',
+      path: 'M312,135 Q328,128 345,128 Q362,132 372,145 Q380,162 382,182 Q378,205 370,225 Q358,242 342,252 Q325,258 310,252 Q298,242 292,228 Q288,212 290,195 Q295,175 302,158 Q308,145 312,138 Z' },
+    { id: 'ea-island1', label: 'Island 1', tone: 'accent',
+      path: 'M355,275 Q365,268 378,272 Q385,282 382,295 Q375,305 362,305 Q352,298 352,285 Z' },
+    { id: 'ea-island2', label: 'Island 2', tone: 'accent',
+      path: 'M175,348 Q185,342 198,345 Q205,355 202,368 Q195,378 182,378 Q172,372 170,358 Z' },
+    { id: 'ea-polar-n', label: 'North Pole', tone: 'light',
+      path: 'M200,42 Q220,32 240,30 Q262,32 282,42 Q268,48 252,52 Q238,55 222,52 Q210,48 202,45 Z' },
+    { id: 'ea-polar-s', label: 'South Pole', tone: 'light',
+      path: 'M205,432 Q222,442 240,445 Q258,442 278,432 Q268,438 255,442 Q240,445 225,442 Q212,438 208,435 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── ALIEN ──
+const alien: Vibe = {
+  id: 'alien', name: 'Alien', emoji: '👽',
+  description: 'Classic alien head with big eyes',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'al-head', label: 'Head', tone: 'medium',
+      path: 'M240,28 Q295,28 342,52 Q382,80 405,122 Q422,168 425,218 Q425,268 412,308 Q395,345 368,372 Q338,395 302,408 Q268,415 240,415 Q212,415 178,408 Q142,395 112,372 Q85,345 68,308 Q55,268 55,218 Q58,168 75,122 Q98,80 138,52 Q185,28 240,28 Z' },
+    { id: 'al-eye-l', label: 'Left Eye', tone: 'dark',
+      path: 'M145,188 Q148,158 168,140 Q192,128 218,132 Q240,142 245,168 Q248,195 238,218 Q222,235 200,238 Q175,235 158,218 Q145,202 145,188 Z' },
+    { id: 'al-eye-r', label: 'Right Eye', tone: 'dark',
+      path: 'M335,188 Q332,158 312,140 Q288,128 262,132 Q240,142 235,168 Q232,195 242,218 Q258,235 280,238 Q305,235 322,218 Q335,202 335,188 Z' },
+    { id: 'al-eye-shine-l', label: 'Left Eye Shine', tone: 'light',
+      path: 'M175,165 Q182,155 195,152 Q205,155 210,165 Q208,178 198,185 Q185,185 178,178 Z' },
+    { id: 'al-eye-shine-r', label: 'Right Eye Shine', tone: 'light',
+      path: 'M305,165 Q298,155 285,152 Q275,155 270,165 Q272,178 282,185 Q295,185 302,178 Z' },
+    { id: 'al-nose', label: 'Nose', tone: 'dark',
+      path: 'M232,272 Q238,262 240,258 Q242,262 248,272 Q245,278 240,282 Q235,278 232,275 Z' },
+    { id: 'al-mouth', label: 'Mouth', tone: 'dark',
+      path: 'M208,318 Q218,310 232,305 Q240,302 248,305 Q262,310 272,318 Q262,325 248,328 Q240,330 232,328 Q218,325 210,320 Z' },
+    { id: 'al-chin', label: 'Chin', tone: 'light',
+      path: 'M212,372 Q225,382 240,385 Q255,382 268,372 Q258,395 240,402 Q222,395 215,378 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, astronaut, earth, alien, scubaSkiba, bancroft];
