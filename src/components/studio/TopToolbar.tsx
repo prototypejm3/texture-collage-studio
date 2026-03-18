@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { FrameSize, FrameColor } from '@/types/studio';
+import { FrameSize, FrameColor, TextureSwatch } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save, ChevronDown } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
+import { textures } from '@/data/textures';
 
 interface Props {
   frameSize: FrameSize;
@@ -25,13 +26,9 @@ interface Props {
   onTemplateOpacityChange: (val: number) => void;
 }
 
-const frameColors: { value: FrameColor; color: string; label: string }[] = [
-  { value: 'white', color: 'hsl(0, 0%, 95%)', label: 'White' },
-  { value: 'cream', color: 'hsl(40, 30%, 90%)', label: 'Cream' },
-  { value: 'black', color: 'hsl(0, 0%, 10%)', label: 'Black' },
-  { value: 'walnut', color: 'hsl(20, 35%, 28%)', label: 'Walnut' },
-  { value: 'oak', color: 'hsl(35, 40%, 60%)', label: 'Oak' },
-  { value: 'mahogany', color: 'hsl(0, 40%, 25%)', label: 'Mahogany' },
+const solidOptions: { id: string; label: string; bg: string }[] = [
+  { id: 'white', label: 'White', bg: 'hsl(0, 0%, 95%)' },
+  { id: 'black', label: 'Black', bg: 'hsl(0, 0%, 10%)' },
 ];
 
 export function TopToolbar({
@@ -43,6 +40,7 @@ export function TopToolbar({
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
 }: Props) {
   const templateInputRef = useRef<HTMLInputElement>(null);
+  const [framePanelOpen, setFramePanelOpen] = useState(false);
 
   const handleTemplateFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -50,8 +48,17 @@ export function TopToolbar({
     e.target.value = '';
   };
 
+  // Get current frame display
+  const currentFrameDisplay = useMemo(() => {
+    const solid = solidOptions.find(s => s.id === frameColor);
+    if (solid) return { label: solid.label, bg: solid.bg, isImage: false };
+    const tex = textures.find(t => t.id === frameColor);
+    if (tex) return { label: tex.name, bg: tex.cssBackground, isImage: true };
+    return { label: 'White', bg: 'hsl(0, 0%, 95%)', isImage: false };
+  }, [frameColor]);
+
   return (
-    <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border">
+    <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border relative">
       {/* Left: Logo */}
       <div className="flex items-center gap-2">
         <Frame className="w-5 h-5 text-primary" />
@@ -60,22 +67,68 @@ export function TopToolbar({
         </h1>
       </div>
 
-      {/* Center: Frame color + reference */}
+      {/* Center: Frame picker + reference */}
       <div className="flex items-center gap-4">
-        {/* Frame color */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-1">Frame</span>
-          {frameColors.map(c => (
-            <button
-              key={c.value}
-              onClick={() => onFrameColorChange(c.value)}
-              title={c.label}
-              className={`w-5 h-5 rounded-full border-2 transition-all ${
-                frameColor === c.value ? 'border-primary scale-110' : 'border-border hover:border-muted-foreground'
-              }`}
-              style={{ backgroundColor: c.color }}
+        {/* Frame material picker */}
+        <div className="relative">
+          <button
+            onClick={() => setFramePanelOpen(v => !v)}
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-border hover:border-muted-foreground transition-colors"
+          >
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
+            <div
+              className="w-5 h-5 rounded border border-border/50"
+              style={{
+                background: currentFrameDisplay.bg,
+                backgroundSize: currentFrameDisplay.isImage ? 'cover' : undefined,
+              }}
             />
-          ))}
+            <span className="text-xs text-foreground">{currentFrameDisplay.label}</span>
+            <ChevronDown className="w-3 h-3 text-muted-foreground" />
+          </button>
+
+          {/* Dropdown panel */}
+          {framePanelOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setFramePanelOpen(false)} />
+              <div className="absolute top-full left-0 mt-1 z-50 w-[320px] max-h-[400px] overflow-y-auto rounded-xl border border-border bg-popover shadow-xl p-3">
+                {/* Solid colors */}
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Solid</p>
+                <div className="flex gap-2 mb-3">
+                  {solidOptions.map(s => (
+                    <button
+                      key={s.id}
+                      onClick={() => { onFrameColorChange(s.id); setFramePanelOpen(false); }}
+                      className={`w-10 h-10 rounded-lg border-2 transition-all ${
+                        frameColor === s.id ? 'border-primary scale-105' : 'border-border hover:border-muted-foreground'
+                      }`}
+                      style={{ backgroundColor: s.bg }}
+                      title={s.label}
+                    />
+                  ))}
+                </div>
+
+                {/* All textures as frame options */}
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Textures</p>
+                <div className="grid grid-cols-6 gap-1.5">
+                  {textures.map(tex => (
+                    <button
+                      key={tex.id}
+                      onClick={() => { onFrameColorChange(tex.id); setFramePanelOpen(false); }}
+                      title={tex.name}
+                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${
+                        frameColor === tex.id ? 'border-primary scale-105' : 'border-border/30 hover:border-muted-foreground'
+                      }`}
+                      style={{
+                        background: tex.cssBackground,
+                        backgroundSize: 'cover',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="w-px h-5 bg-border" />
