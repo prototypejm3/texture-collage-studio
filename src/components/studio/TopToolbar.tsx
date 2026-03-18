@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock, PenTool } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 interface Props {
