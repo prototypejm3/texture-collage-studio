@@ -144,11 +144,11 @@ export function TopToolbar({
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => templateInputRef.current?.click()}
-                className="gap-1.5 text-xs"
-                title="Upload a reference image as canvas background"
+                onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                className={`gap-1.5 text-xs ${!isPremium ? 'opacity-60' : ''}`}
+                title={isPremium ? 'Upload a reference image as canvas background' : 'Premium feature'}
               >
-                <ImagePlus className="w-3.5 h-3.5" /> Reference
+                {isPremium ? <ImagePlus className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />} Reference
               </Button>
               <input
                 ref={templateInputRef}
