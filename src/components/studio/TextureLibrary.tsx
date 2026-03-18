@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { Upload, X } from 'lucide-react';
 
 const categories: TextureCategory[] = [
+  'Royale', 'Banks', 'Bentley', 'Cody', 'Sunbrella',
+  'Bubbly', 'Karina', 'Crave', 'Caspiar', 'Checker',
+  'Soul', 'Nepal', 'Sorrento',
   'Leather', 'Wood', 'Concrete', 'Stripe', 'Grid',
   'Animal', 'Ripple', 'Speckle', 'Tie-dye', 'Maze',
   'Novelty',

@@ -3,6 +3,71 @@ import { TextureSwatch } from '@/types/studio';
 const img = (path: string) => `url(/textures/${path})`;
 
 export const textures: TextureSwatch[] = [
+  // ── Royale (Velvet) ──
+  { id: 'royale-blush', name: 'Blush', category: 'Royale', cssBackground: img('royale-blush.png') },
+  { id: 'royale-gunmetal', name: 'Gunmetal', category: 'Royale', cssBackground: img('royale-gunmetal.png') },
+  { id: 'royale-evergreen', name: 'Evergreen', category: 'Royale', cssBackground: img('royale-evergreen.png') },
+  { id: 'royale-apple', name: 'Apple', category: 'Royale', cssBackground: img('royale-apple.png') },
+  { id: 'royale-hacienda', name: 'Hacienda', category: 'Royale', cssBackground: img('royale-hacienda.png') },
+  { id: 'royale-peacock', name: 'Peacock', category: 'Royale', cssBackground: img('royale-peacock.png') },
+  { id: 'royale-cobalt', name: 'Cobalt', category: 'Royale', cssBackground: img('royale-cobalt.png') },
+  { id: 'royale-ash', name: 'Ash', category: 'Royale', cssBackground: img('royale-ash.png') },
+  { id: 'royale-forest', name: 'Forest', category: 'Royale', cssBackground: img('royale-forest.png') },
+  { id: 'royale-berry', name: 'Berry', category: 'Royale', cssBackground: img('royale-berry.png') },
+
+  // ── Banks (Smooth Velvet) ──
+  { id: 'banks-nutmeg', name: 'Nutmeg', category: 'Banks', cssBackground: img('banks-nutmeg.png') },
+  { id: 'banks-currant', name: 'Currant', category: 'Banks', cssBackground: img('banks-currant.png') },
+  { id: 'banks-oatmeal', name: 'Oatmeal', category: 'Banks', cssBackground: img('banks-oatmeal.png') },
+  { id: 'banks-zinnia', name: 'Zinnia', category: 'Banks', cssBackground: img('banks-zinnia.png') },
+
+  // ── Bentley (Striated Chenille) ──
+  { id: 'bentley-daisey', name: 'Daisey', category: 'Bentley', cssBackground: img('bentley-daisey.png') },
+  { id: 'bentley-indigo', name: 'Indigo', category: 'Bentley', cssBackground: img('bentley-indigo.png') },
+  { id: 'bentley-pewter', name: 'Pewter', category: 'Bentley', cssBackground: img('bentley-pewter.png') },
+
+  // ── Cody (Tweed Weave) ──
+  { id: 'cody-slate', name: 'Slate', category: 'Cody', cssBackground: img('cody-slate.png') },
+  { id: 'cody-sandstone', name: 'Sandstone', category: 'Cody', cssBackground: img('cody-sandstone.png') },
+  { id: 'cody-pacific', name: 'Pacific', category: 'Cody', cssBackground: img('cody-pacific.png') },
+
+  // ── Sunbrella (Performance) ──
+  { id: 'sunbrella-fog', name: 'Fog', category: 'Sunbrella', cssBackground: img('sunbrella-fog.png') },
+  { id: 'sunbrella-sea', name: 'Sea', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
+  { id: 'sunbrella-wisteria', name: 'Wisteria', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
+  { id: 'sunbrella-lagoon', name: 'Lagoon', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
+  { id: 'sunbrella-white', name: 'White', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
+
+  // ── Bubbly (Textured Weave) ──
+  { id: 'bubbly-cucumber', name: 'Cucumber', category: 'Bubbly', cssBackground: img('bubbly-cucumber.png') },
+  { id: 'bubbly-moscow-mule', name: 'Moscow Mule', category: 'Bubbly', cssBackground: img('bubbly-moscow-mule.png') },
+  { id: 'bubbly-cream-soda', name: 'Cream Soda', category: 'Bubbly', cssBackground: img('bubbly-cream-soda.png') },
+
+  // ── Karina (Bouclé) ──
+  { id: 'karina-cloud', name: 'Cloud', category: 'Karina', cssBackground: img('karina-cloud.png') },
+  { id: 'karina-teal', name: 'Teal', category: 'Karina', cssBackground: img('karina-teal.png') },
+
+  // ── Crave (Ribbed Chenille) ──
+  { id: 'crave-rose', name: 'Rose', category: 'Crave', cssBackground: img('crave-rose.png') },
+  { id: 'crave-mocha', name: 'Mocha', category: 'Crave', cssBackground: img('crave-mocha.png') },
+
+  // ── Caspiar (Silk) ──
+  { id: 'caspiar-chiffon', name: 'Chiffon', category: 'Caspiar', cssBackground: img('caspiar-chiffon.png') },
+  { id: 'caspiar-ivory', name: 'Ivory', category: 'Caspiar', cssBackground: img('caspiar-ivory.png') },
+
+  // ── Checker ──
+  { id: 'checker-mocha', name: 'Mocha', category: 'Checker', cssBackground: img('checker-mocha.png') },
+  { id: 'checker-tapestry', name: 'Tapestry', category: 'Checker', cssBackground: img('checker-tapestry.png') },
+
+  // ── Soul ──
+  { id: 'soul-cloud', name: 'Cloud', category: 'Soul', cssBackground: img('soul-cloud.png') },
+
+  // ── Nepal ──
+  { id: 'nepal-teal', name: 'Teal', category: 'Nepal', cssBackground: img('nepal-teal.png') },
+
+  // ── Sorrento ──
+  { id: 'sorrento-teal', name: 'Teal', category: 'Sorrento', cssBackground: img('sorrento-teal.png') },
+
   // ── Leather ──
   { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
   { id: 'leather-espresso', name: 'Espresso', category: 'Leather', cssBackground: img('leather-espresso.png') },
