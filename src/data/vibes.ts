@@ -1529,27 +1529,7 @@ const tomato: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── BELL PEPPER ──
-const bellPepper: Vibe = {
-  id: 'bell-pepper', name: 'Bell Pepper', emoji: '🫑',
-  description: 'Chunky bell pepper with lobes',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'bp-stem', label: 'Stem', tone: 'dark',
-      path: 'M228,88 Q225,65 230,48 Q238,35 248,35 Q258,40 262,58 Q265,78 260,95 Q252,105 242,102 Q235,98 230,92 Z' },
-    { id: 'bp-body', label: 'Body', tone: 'accent',
-      path: 'M240,108 Q195,112 160,135 Q128,165 112,208 Q100,255 102,305 Q108,355 128,395 Q155,428 192,448 Q225,458 248,458 Q272,458 305,448 Q342,428 368,395 Q388,355 395,305 Q398,255 385,208 Q370,165 338,135 Q305,112 260,108 Z' },
-    { id: 'bp-lobe-line', label: 'Center Crease', tone: 'medium',
-      path: 'M240,115 Q235,195 232,285 Q230,365 235,445 L245,445 Q248,365 248,285 Q248,195 245,115 Z' },
-    { id: 'bp-left-crease', label: 'Left Crease', tone: 'medium',
-      path: 'M165,165 Q178,225 185,295 Q188,355 182,412 L175,410 Q172,348 175,288 Q172,222 160,162 Z' },
-    { id: 'bp-right-crease', label: 'Right Crease', tone: 'medium',
-      path: 'M332,165 Q318,225 312,295 Q308,355 315,412 L322,410 Q325,348 322,288 Q325,222 335,162 Z' },
-    { id: 'bp-highlight', label: 'Highlight', tone: 'light',
-      path: 'M155,228 Q148,272 150,318 Q155,362 168,398 Q172,375 175,338 Q175,295 172,255 Q168,228 162,215 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── BROCCOLI ──
 const broccoli: Vibe = {
