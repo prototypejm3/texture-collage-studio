@@ -19,6 +19,12 @@ interface RightSidebarProps {
   // Mood generator
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
+  // Reference image
+  customTemplate: { name: string; dataUrl: string } | null;
+  templateOpacity: number;
+  onUploadTemplate: (file: File) => void;
+  onClearTemplate: () => void;
+  onTemplateOpacityChange: (val: number) => void;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
