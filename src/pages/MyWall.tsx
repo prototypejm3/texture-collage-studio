@@ -577,6 +577,13 @@ const MyWall = () => {
         startIndex={viewStartIndex}
         onClose={() => setViewMode(false)}
       />
+
+      <ArtistNoteModal
+        isOpen={!!gallerySubmitId}
+        designName={wall.designs.find(d => d.id === gallerySubmitId)?.name || ''}
+        onSubmit={handleConfirmGallerySubmit}
+        onClose={() => setGallerySubmitId(null)}
+      />
     </div>
   );
 };
