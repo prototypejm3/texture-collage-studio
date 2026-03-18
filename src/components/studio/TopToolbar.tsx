@@ -103,6 +103,14 @@ export function TopToolbar({
 
       {/* Right: Auth */}
       <div className="flex items-center gap-1.5">
+        {/* Dark mode toggle */}
+        <button
+          onClick={toggle}
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
         {user ? (
           <>
             <span className="text-xs text-muted-foreground flex items-center gap-1">
