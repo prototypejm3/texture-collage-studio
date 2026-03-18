@@ -2070,6 +2070,7 @@ const scubaSkiba: Vibe = {
   id: 'scuba-skiba', name: 'Scuba Skiba', emoji: '🤿',
   description: 'Scuba diver with tank, mask & flippers',
   category: 'Community',
+  baseLikes: 28, likesStartDate: '2026-03-01',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ss-beanie', label: 'Beanie', tone: 'accent',
