@@ -279,6 +279,7 @@ export function useStudio() {
   }, []);
 
   return {
+    // State
     elements,
     selectedId,
     selectedElement,
@@ -292,14 +293,6 @@ export function useStudio() {
     drawMode,
     customSections,
     backgroundTextureId,
-    frameColor,
-    displaySize,
-    wallFrameStyle,
-    activeVibe: effectiveVibe,
-    vibeFills,
-    selectedSectionId,
-    drawMode,
-    customSections,
     // Setters
     setSelectedId,
     setFrameSize,
