@@ -126,64 +126,157 @@ const MyWall = () => {
     handleUpdateSettings({ defaultHangingStyle: style });
   }, [wallDesigns, wall, handleUpdateSettings]);
 
-  // ── Auto-Curate: smart arrangement ──
+  // ── Auto-Curate: gallery-like curated arrangement ──
   const handleAutoCurate = useCallback(() => {
     if (filtered.length === 0) return;
-    
+
     const count = filtered.length;
-    
-    // Find hero piece or use first pinned, or largest
-    const hero = filtered.find(d => d.isHero) || filtered.find(d => d.pinned) || filtered[0];
+
+    // ── 1. Identify Hero piece ──
+    const hero = filtered.find(d => d.isHero)
+      || filtered.find(d => d.pinned)
+      || [...filtered].sort((a, b) => {
+        const sizeOrder: Record<string, number> = { large: 3, medium: 2, small: 1 };
+        return (sizeOrder[b.displaySize] || 2) - (sizeOrder[a.displaySize] || 2);
+      })[0];
     const others = filtered.filter(d => d.id !== hero.id);
-    
-    // Place hero prominently
+
+    // ── 2. Size tiers: hero=large, assign small/medium to others ──
+    const sizedOthers = others.map((d, i) => ({
+      ...d,
+      _tier: (count <= 3 ? 'medium' : (i % 3 === 0 ? 'small' : 'medium')) as DesignSize,
+    }));
+
+    // ── 3. Enforce single hanging style ──
+    const wallHanging = currentSettings.defaultHangingStyle || 'floating';
+
+    // ── 4. Depth layers — hero=front, alternate mid/back ──
+    type DepthLayer = 'front' | 'mid' | 'back';
+    const depthShadow: Record<DepthLayer, number> = { back: 0, mid: 1, front: 2 };
+    const heroDepth: DepthLayer = 'front';
+    const otherDepths: DepthLayer[] = sizedOthers.map((_, i) => i % 2 === 0 ? 'mid' : 'back');
+
+    // ── 5. Gallery layout constants ──
+    const MIN_SPACING = 4;   // % units (≈24px at 600px wide)
+    const MAX_SPACING = 10;  // % units (≈64px)
+
+    // ── 6. Place Hero — slight offset from center ──
+    const heroOffsetX = count <= 2 ? 0 : (Math.random() > 0.5 ? 4 : -4);
+    const heroX = 50 + heroOffsetX;
+    const heroY = count <= 3 ? 42 : 32;
+
     wall.updateDesign(hero.id, {
-      wallX: 50,
-      wallY: count <= 3 ? 45 : 35,
+      wallX: heroX,
+      wallY: heroY,
       displaySize: 'large',
       rotation: 0,
+      hangingStyle: wallHanging,
     });
-    
-    if (others.length === 0) return;
-    
-    // Arrange others in balanced positions around hero
-    const arrangements: { x: number; y: number }[][] = [
-      // 1 other
-      [{ x: 50, y: 75 }],
-      // 2 others
-      [{ x: 25, y: 65 }, { x: 75, y: 65 }],
-      // 3 others
-      [{ x: 22, y: 55 }, { x: 78, y: 55 }, { x: 50, y: 78 }],
-      // 4 others
-      [{ x: 20, y: 45 }, { x: 80, y: 45 }, { x: 30, y: 78 }, { x: 70, y: 78 }],
-      // 5 others
-      [{ x: 18, y: 40 }, { x: 82, y: 40 }, { x: 25, y: 72 }, { x: 50, y: 80 }, { x: 75, y: 72 }],
-      // 6+ others
-      [{ x: 15, y: 35 }, { x: 85, y: 35 }, { x: 20, y: 65 }, { x: 50, y: 75 }, { x: 80, y: 65 }, { x: 50, y: 55 }],
-    ];
-    
-    const pattern = arrangements[Math.min(others.length - 1, arrangements.length - 1)];
-    
-    others.forEach((d, i) => {
-      const pos = pattern[i % pattern.length];
-      // Add slight randomness for natural feel
-      const jitterX = (Math.random() - 0.5) * 4;
-      const jitterY = (Math.random() - 0.5) * 3;
+
+    if (others.length === 0) {
+      toast({ title: '✨ Arranged!', description: 'Your gallery is curated.' });
+      return;
+    }
+
+    // ── 7. Generate non-overlapping positions ──
+    // Define alignment lines (invisible grid for organic-but-ordered feel)
+    const vLines = [18, 30, 42, 50, 58, 70, 82]; // vertical snap lines
+    const hLines = [22, 38, 52, 65, 78];          // horizontal baselines
+
+    // Size widths in % for collision detection
+    const tierWidth: Record<DesignSize, number> = { small: 14, medium: 20, large: 26 };
+    const tierHeight: Record<DesignSize, number> = { small: 16, medium: 22, large: 28 };
+
+    interface Placed { x: number; y: number; w: number; h: number }
+    const placed: Placed[] = [{
+      x: heroX, y: heroY,
+      w: tierWidth.large, h: tierHeight.large,
+    }];
+
+    const overlaps = (x: number, y: number, w: number, h: number): boolean => {
+      return placed.some(p => {
+        const dx = Math.abs(x - p.x);
+        const dy = Math.abs(y - p.y);
+        const minDx = (w + p.w) / 2 + MIN_SPACING;
+        const minDy = (h + p.h) / 2 + MIN_SPACING;
+        return dx < minDx && dy < minDy;
+      });
+    };
+
+    // Curated layout templates for common counts
+    const templatePositions: Record<number, { x: number; y: number }[]> = {
+      1: [{ x: 50, y: 72 }],
+      2: [{ x: 28, y: 65 }, { x: 72, y: 65 }],
+      3: [{ x: 24, y: 58 }, { x: 76, y: 58 }, { x: 50, y: 78 }],
+      4: [{ x: 22, y: 52 }, { x: 78, y: 52 }, { x: 32, y: 76 }, { x: 68, y: 76 }],
+      5: [{ x: 20, y: 48 }, { x: 80, y: 48 }, { x: 28, y: 72 }, { x: 50, y: 80 }, { x: 72, y: 72 }],
+    };
+
+    // Snap to nearest alignment line for organic-but-ordered feel
+    const snapToLine = (val: number, lines: number[]): number => {
+      let best = lines[0];
+      let bestDist = Math.abs(val - lines[0]);
+      for (const l of lines) {
+        const dist = Math.abs(val - l);
+        if (dist < bestDist) { best = l; bestDist = dist; }
+      }
+      return best;
+    };
+
+    sizedOthers.forEach((d, i) => {
+      const tier = d._tier;
+      const w = tierWidth[tier];
+      const h = tierHeight[tier];
+      let x: number, y: number;
+
+      if (templatePositions[others.length] && i < templatePositions[others.length].length) {
+        // Use curated template
+        const tp = templatePositions[others.length][i];
+        x = snapToLine(tp.x, vLines);
+        y = snapToLine(tp.y, hLines);
+      } else {
+        // For 6+ items, distribute in rows
+        const cols = Math.min(others.length, 4);
+        const row = Math.floor(i / cols);
+        const col = i % cols;
+        const spacing = 80 / (cols + 1);
+        x = snapToLine(10 + spacing * (col + 1), vLines);
+        y = snapToLine(55 + row * 22, hLines);
+      }
+
+      // Nudge to avoid overlaps
+      let attempts = 0;
+      while (overlaps(x, y, w, h) && attempts < 20) {
+        x += (attempts % 2 === 0 ? 1 : -1) * (MIN_SPACING + attempts);
+        if (x < 10 || x > 90) { x = 50; y += MAX_SPACING; }
+        attempts++;
+      }
+
+      // Clamp
+      x = Math.max(10, Math.min(90, x));
+      y = Math.max(15, Math.min(85, y));
+
+      // ── 8. Slight tilt (max ±2°), most items straight ──
+      const rotation = Math.random() > 0.6 ? Math.round((Math.random() - 0.5) * 4) : 0;
+
+      placed.push({ x, y, w, h });
+
       wall.updateDesign(d.id, {
-        wallX: Math.max(10, Math.min(90, pos.x + jitterX)),
-        wallY: Math.max(15, Math.min(85, pos.y + jitterY)),
-        displaySize: 'medium',
-        rotation: Math.round((Math.random() - 0.5) * 2),
+        wallX: x,
+        wallY: y,
+        displaySize: tier,
+        rotation,
+        hangingStyle: wallHanging,
       });
     });
-    
+
     // Switch to freeform if not already
     if (currentSettings.layout !== 'freeform') {
       handleUpdateSettings({ layout: 'freeform' });
     }
-    
-    toast({ title: '✨ Curated!', description: 'Your wall has been arranged.' });
-  }, [filtered, wall, currentSettings.layout, handleUpdateSettings]);
+
+    toast({ title: '✨ Arranged!', description: 'Gallery curated with balanced spacing and hierarchy.' });
+  }, [filtered, wall, currentSettings.layout, currentSettings.defaultHangingStyle, handleUpdateSettings]);
 
   const handleAddWall = useCallback(() => {
     if (!isPremium) {
