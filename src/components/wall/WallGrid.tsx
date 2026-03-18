@@ -24,7 +24,7 @@ interface WallGridProps {
   onSubmitToGallery?: (id: string) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
   const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
