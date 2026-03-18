@@ -144,14 +144,16 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const texture = allTex.find(t => t.id === element.textureId);
   if (!texture) return null;
 
-  const clipPath = getClipPath(element.shape);
+  const clipPath = element.clipPathD ? `path('${element.clipPathD}')` : getClipPath(element.shape);
   const filter = getFilterStyles(element.effects);
   const shadow = getShadowStyle(element.effects.shadowDepth);
   const { maskImage, borderRadius, edgeClipPath } = getEdgeMask(element.effects.edgeStyle);
   const hasScissorEdge = !!maskImage;
 
-  // Determine final clip-path: edge clip-path overrides shape clip-path when set
-  const finalClipPath = hasScissorEdge ? undefined : (edgeClipPath || clipPath);
+  // For detached sections with clipPathD, always use the SVG path clip
+  const finalClipPath = element.clipPathD 
+    ? clipPath 
+    : hasScissorEdge ? undefined : (edgeClipPath || clipPath);
 
   return (
     // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
@@ -164,10 +166,10 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       }}
       className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
       style={{
-        left: element.x,
-        top: element.y,
-        width: element.width,
-        height: element.height,
+        left: element.clipPathD ? 0 : element.x,
+        top: element.clipPathD ? 0 : element.y,
+        width: element.clipPathD ? '100%' : element.width,
+        height: element.clipPathD ? '100%' : element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
         filter: element.effects.shadowDepth === 'lifted'

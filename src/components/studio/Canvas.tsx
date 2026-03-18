@@ -25,6 +25,7 @@ interface Props {
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
+  onDetachSection: (sectionId: string) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   drawMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
@@ -57,7 +58,7 @@ export function Canvas({
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
-  onSelectSection, onDropInSection, onDropAsSwatch, canvasRef,
+  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection, canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
@@ -159,6 +160,7 @@ export function Canvas({
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
               onDropAsSwatch={onDropAsSwatch}
+              onDetachSection={onDetachSection}
               customTextures={customTextures}
             />
           )}

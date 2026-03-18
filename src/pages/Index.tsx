@@ -210,6 +210,7 @@ const Index = () => {
           onSelectSection={studio.selectSection}
           onDropInSection={studio.fillSection}
           onDropAsSwatch={handleDrop}
+          onDetachSection={studio.detachSection}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
           drawMode={studio.drawMode}
           onFinishDraw={studio.addCustomSection}

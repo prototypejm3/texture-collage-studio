@@ -12,6 +12,7 @@ interface Props {
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
+  onDetachSection: (sectionId: string) => void;
   customTextures?: TextureSwatch[];
 }
 
@@ -31,7 +32,7 @@ function getTextureBackgroundSize(texture: TextureSwatch) {
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
-  onSelectSection, onDropInSection, onDropAsSwatch,
+  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -143,7 +144,11 @@ export function VibeOutline({
                 className="pointer-events-auto cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onSelectSection(section.id);
+                  if (isFilled) {
+                    onDetachSection(section.id);
+                  } else {
+                    onSelectSection(section.id);
+                  }
                 }}
                 onDragOver={(e) => {
                   e.preventDefault();

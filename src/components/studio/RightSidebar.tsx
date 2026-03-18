@@ -8,7 +8,7 @@ import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
 
-type Tab = 'stencils' | 'community';
+type Tab = 'stencils' | 'community' | 'hidden';
 
 interface RightSidebarProps {
   activeVibeId: string | null;
@@ -162,9 +162,13 @@ export function RightSidebar({
   const dbCommunityVibes = social.publicStencils.map(social.recordToVibe);
   const communityVibes = [...builtInCommunityVibes, ...dbCommunityVibes];
 
-  const tabs: { id: Tab; label: string; icon: any }[] = [
+  // Hidden stencils: built-in vibes that are hidden
+  const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
+
+  const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
     { id: 'stencils', label: 'Stencils', icon: Palette },
     { id: 'community', label: 'Community', icon: Globe },
+    { id: 'hidden', label: 'Hidden', icon: EyeOff, count: hiddenVibes.length },
   ];
 
   return (
@@ -183,6 +187,9 @@ export function RightSidebar({
           >
             <tab.icon className="w-3.5 h-3.5" />
             {tab.label}
+            {tab.count !== undefined && tab.count > 0 && (
+              <span className="ml-0.5 px-1 py-0 text-[9px] rounded-full bg-muted text-muted-foreground">{tab.count}</span>
+            )}
           </button>
         ))}
       </div>
@@ -382,7 +389,7 @@ export function RightSidebar({
               </div>
             </div>
           </div>
-        ) : (
+        ) : activeTab === 'community' ? (
           <div className="flex flex-col h-full">
             <div className="px-3 py-3 border-b border-border">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -418,6 +425,52 @@ export function RightSidebar({
                       />
                     );
                   })}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          /* Hidden tab */
+          <div className="flex flex-col h-full">
+            <div className="px-3 py-3 border-b border-border">
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Hidden Stencils
+              </h3>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                Stencils you've hidden — unhide to bring them back
+              </p>
+            </div>
+            <div className="flex-1 overflow-y-auto p-3">
+              {hiddenVibes.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <EyeOff className="w-8 h-8 text-muted-foreground/40 mb-2" />
+                  <p className="text-xs text-muted-foreground">No hidden stencils</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  {hiddenVibes.map(vibe => (
+                    <motion.div
+                      key={vibe.id}
+                      whileHover={{ y: -2 }}
+                      className="group relative flex flex-col items-center text-center rounded-xl p-2 transition-all border border-border/50 hover:border-border hover:bg-secondary/50 opacity-60 hover:opacity-100"
+                    >
+                      <button onClick={() => onSelectVibe(vibe)} className="w-full">
+                        <div className="w-full aspect-square rounded-lg overflow-hidden mb-1.5">
+                          <VibePreviewSVG vibe={vibe} />
+                        </div>
+                        <span className="text-[10px] font-medium leading-tight truncate w-full block">
+                          {vibe.emoji} {vibe.name}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => social.toggleHidden(vibe.id)}
+                        className="mt-1 flex items-center gap-1 px-2 py-1 text-[10px] rounded-md bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
+                      >
+                        <Eye className="w-3 h-3" /> Unhide
+                      </button>
+                    </motion.div>
+                  ))}
                 </div>
               )}
             </div>
