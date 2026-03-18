@@ -88,7 +88,7 @@ export function TopToolbar({
             isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <LayoutGrid className="w-4 h-4" />
+          <Images className="w-4 h-4" />
           My Wall
         </Link>
         <Link
