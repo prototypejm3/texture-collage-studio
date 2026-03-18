@@ -71,12 +71,13 @@ const Index = () => {
         const dataUrl = await toPng(canvasRef.current, { pixelRatio: 1 });
         const name = studio.activeVibe?.name || 'Untitled Draft';
         const vibeName = studio.activeVibe?.name;
+        const stencilCreator = studio.activeVibe?.creator;
         const studioState = studio.getState();
         // Don't overwrite a design that's already saved (status = 'display')
         if (editingDesignId) {
-          wall.updateDesign(editingDesignId, { previewImage: dataUrl, studioState, updatedAt: new Date().toISOString() } as any);
+          wall.updateDesign(editingDesignId, { previewImage: dataUrl, studioState, stencilCreator, updatedAt: new Date().toISOString() } as any);
         } else {
-          wall.saveDraft(draftKeyRef.current, dataUrl, name, vibeName, studioState);
+          wall.saveDraft(draftKeyRef.current, dataUrl, name, vibeName, studioState, stencilCreator);
         }
       } catch { /* silent fail */ }
     }, 15000);
