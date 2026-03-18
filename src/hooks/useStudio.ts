@@ -147,6 +147,7 @@ export function useStudio() {
     setSelectedSectionId(null);
     setVibeFills({});
     setSectionTransforms({});
+    setDeletedSections(new Set());
   }, []);
 
   const fillSection = useCallback((sectionId: string, textureId: string) => {
