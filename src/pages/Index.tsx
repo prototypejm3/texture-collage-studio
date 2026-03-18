@@ -333,15 +333,29 @@ const Index = () => {
                       Draw Freehand
                     </button>
                   </div>
+                  {/* Element editing when selected */}
                   {studio.selectedElement && studio.selectedId && (
-                    <FloatingToolbar
-                      element={studio.selectedElement}
-                      onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                      onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                      onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                      onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-                    />
+                    <div className="border-b border-border">
+                      <FloatingToolbar
+                        element={studio.selectedElement}
+                        onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                        onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                        onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                        onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                      />
+                    </div>
                   )}
+                  {/* Full Texture Library */}
+                  <TextureLibrary
+                    onDragStart={handleDragStartLib}
+                    onTextureClick={handleTextureClick}
+                    activeSectionId={studio.selectedSectionId}
+                    customTextures={customTextures}
+                    onUploadTexture={handleUploadTexture}
+                    onRemoveCustomTexture={removeCustomTexture}
+                    isPremium={isPremium}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                  />
                 </div>
                 {/* Resize handle */}
                 <div
