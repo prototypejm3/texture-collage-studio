@@ -202,6 +202,8 @@ const Index = () => {
             onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
             onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
             onDelete={() => studio.deleteElement(studio.selectedId!)}
+            drawMode={studio.drawMode}
+            onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
           />
         </div>
         <Canvas

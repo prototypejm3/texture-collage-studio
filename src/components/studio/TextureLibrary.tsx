@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool } from 'lucide-react';
 import { FloatingToolbar } from './FloatingToolbar';
 
 interface TextureGroup {
@@ -41,6 +41,8 @@ interface TextureLibraryProps {
   onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
   onDuplicate?: () => void;
   onDelete?: () => void;
+  drawMode?: boolean;
+  onToggleDraw?: () => void;
 }
 
 export function TextureLibrary({
@@ -48,6 +50,7 @@ export function TextureLibrary({
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
   selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
+  drawMode, onToggleDraw,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [showElementTools, setShowElementTools] = useState(true);
@@ -97,6 +100,23 @@ export function TextureLibrary({
               onDelete={onDelete}
             />
           )}
+        </div>
+      )}
+
+      {/* Draw button — below element tools */}
+      {onToggleDraw && (
+        <div className="px-4 py-2 border-b border-border">
+          <button
+            onClick={onToggleDraw}
+            className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+              drawMode
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            <PenTool className="w-3.5 h-3.5" />
+            Draw Freehand Shape
+          </button>
         </div>
       )}
 
