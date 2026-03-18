@@ -390,7 +390,7 @@ export function RightSidebar({
             </div>
           </div>
         ) : activeTab === 'community' ? (
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             <div className="px-3 py-3 border-b border-border">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Community Stencils
