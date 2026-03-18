@@ -2255,4 +2255,48 @@ const saturn: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft];
+// ── FAIRY (butterbb) ──
+const fairy: Vibe = {
+  id: 'fairy', name: 'Fairy', emoji: '🧚',
+  description: 'Graceful fairy with wings and flowing dress',
+  category: 'Community',
+  creator: 'butterbb',
+  viewBox: '0 0 480 580',
+  sections: [
+    { id: 'fa-hair', label: 'Hair Bun', tone: 'dark',
+      path: 'M272,42 Q268,22 280,12 Q295,5 308,15 Q318,28 315,45 Q310,38 300,32 Q288,30 278,35 Z M268,48 Q262,30 270,18 Q258,12 248,20 Q240,32 245,48 Q250,42 260,42 Z' },
+    { id: 'fa-head', label: 'Head', tone: 'medium',
+      path: 'M258,42 Q248,45 242,55 Q238,68 242,82 Q248,95 260,102 Q272,108 285,105 Q298,98 305,85 Q310,72 308,58 Q305,48 295,42 Q282,38 268,40 Z' },
+    { id: 'fa-neck', label: 'Neck', tone: 'medium',
+      path: 'M262,102 Q258,108 255,118 Q254,128 258,132 Q268,135 280,135 Q290,132 292,128 Q295,118 292,108 Q288,102 280,105 Q270,108 262,102 Z' },
+    { id: 'fa-wing-top-l', label: 'Left Wing Top', tone: 'light',
+      path: 'M248,120 Q228,95 195,78 Q168,68 142,72 Q120,80 112,98 Q108,118 118,138 Q132,158 155,168 Q178,175 205,172 Q228,165 245,150 Q252,140 250,132 Z' },
+    { id: 'fa-wing-top-r', label: 'Right Wing Top', tone: 'light',
+      path: 'M298,120 Q318,95 348,78 Q375,68 400,72 Q422,80 430,98 Q435,118 425,138 Q412,158 388,168 Q365,175 338,172 Q315,165 300,150 Q292,140 295,132 Z' },
+    { id: 'fa-wing-bot-l', label: 'Left Wing Bottom', tone: 'accent',
+      path: 'M245,155 Q225,165 198,185 Q175,205 165,228 Q158,252 168,268 Q182,278 202,275 Q225,268 242,250 Q252,235 255,215 Q255,190 250,168 Z' },
+    { id: 'fa-wing-bot-r', label: 'Right Wing Bottom', tone: 'accent',
+      path: 'M300,155 Q320,165 348,185 Q372,205 382,228 Q388,252 378,268 Q365,278 345,275 Q322,268 305,250 Q295,235 292,215 Q292,190 295,168 Z' },
+    { id: 'fa-bodice', label: 'Bodice', tone: 'dark',
+      path: 'M255,132 Q248,145 242,165 Q238,185 240,200 Q245,210 260,215 Q272,218 285,215 Q300,210 305,200 Q308,185 305,165 Q298,145 292,132 Q280,135 268,135 Z' },
+    { id: 'fa-arm-l', label: 'Left Arm', tone: 'medium',
+      path: 'M242,155 Q232,162 218,175 Q200,192 182,205 Q168,215 155,222 Q148,228 150,235 Q155,240 162,238 Q178,232 198,218 Q218,202 232,188 Q240,178 242,168 Z' },
+    { id: 'fa-hand-l', label: 'Left Hand', tone: 'medium',
+      path: 'M150,235 Q145,238 140,245 Q138,252 142,255 Q148,258 155,255 Q162,248 162,240 Q162,238 155,238 Z M142,245 Q136,248 132,252 Q130,258 135,260 Q140,258 142,252 Z M140,252 Q135,258 132,265 Q132,270 138,270 Q142,266 142,260 Z' },
+    { id: 'fa-arm-r', label: 'Right Arm', tone: 'medium',
+      path: 'M305,155 Q310,168 312,185 Q315,200 318,215 Q322,228 325,238 Q328,245 330,250 Z' },
+    { id: 'fa-skirt', label: 'Skirt', tone: 'dark',
+      path: 'M240,200 Q232,218 225,242 Q218,268 212,292 Q208,310 215,325 Q222,335 218,348 Q212,362 205,375 Q200,385 208,390 Q220,388 235,378 Q248,368 258,355 Q265,345 272,355 Q282,368 295,378 Q308,388 320,390 Q328,385 325,375 Q318,362 312,348 Q308,335 315,325 Q322,310 318,292 Q312,268 305,242 Q298,218 305,200 Q295,215 272,218 Q255,215 240,200 Z' },
+    { id: 'fa-leg-l', label: 'Left Leg', tone: 'medium',
+      path: 'M235,378 Q238,398 242,425 Q245,452 248,478 Q250,498 252,518 Q254,535 255,548 Q252,555 248,558 Q242,555 240,548 Q238,528 235,505 Q232,478 228,452 Q225,425 225,398 Q228,388 235,378 Z' },
+    { id: 'fa-leg-r', label: 'Right Leg', tone: 'medium',
+      path: 'M295,378 Q298,395 302,415 Q308,438 315,458 Q320,475 322,492 Q322,508 318,522 Q315,532 310,538 Q305,535 302,528 Q298,515 295,498 Q292,478 290,455 Q288,432 288,408 Q290,392 295,378 Z' },
+    { id: 'fa-foot-l', label: 'Left Foot', tone: 'dark',
+      path: 'M248,558 Q245,562 240,568 Q236,572 235,575 Q238,578 245,578 Q252,575 255,570 Q256,565 255,558 Q252,555 248,558 Z' },
+    { id: 'fa-foot-r', label: 'Right Foot', tone: 'dark',
+      path: 'M310,538 Q305,545 302,550 Q298,555 298,558 Q302,562 308,562 Q315,558 318,552 Q320,545 318,538 Q315,535 310,538 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy];
