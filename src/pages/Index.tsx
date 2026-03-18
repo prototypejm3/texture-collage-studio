@@ -157,7 +157,7 @@ const Index = () => {
   const handleUnlock = useCallback(() => {
     upgradeToPremium();
     if (pendingSave) {
-      wall.addDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName);
+      wall.addDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName, undefined, pendingSave.stencilCreator);
     }
     setPendingSave(null);
     setShowPaywall(false);
