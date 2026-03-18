@@ -28,6 +28,7 @@ export function useStudio() {
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
   const [displaySize, setDisplaySize] = useState<DesignSize>('medium');
   const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('shadow-box');
+  const [nextShape, setNextShape] = useState<ElementShape>('soft-square');
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
@@ -51,14 +52,14 @@ export function useStudio() {
       width: 100,
       height: 100,
       rotation: 0,
-      shape: 'soft-square',
+      shape: nextShape,
       zIndex: nextId,
       effects: { ...defaultEffects },
     };
     setElements(prev => [...prev, newEl]);
     setSelectedId(id);
     return id;
-  }, []);
+  }, [nextShape]);
 
   const updateElement = useCallback((id: string, updates: Partial<CanvasElement>) => {
     setElements(prev => prev.map(el => el.id === id ? { ...el, ...updates } : el));
@@ -333,6 +334,8 @@ export function useStudio() {
     setWallFrameStyle,
     setDrawMode,
     setBackgroundTextureId,
+    nextShape,
+    setNextShape,
     // Free-mode
     addElement,
     updateElement,
