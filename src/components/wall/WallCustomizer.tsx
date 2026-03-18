@@ -43,10 +43,19 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremium }: WallCustomizerProps) {
+const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨' },
+  { value: 'string', label: 'String', emoji: '🧵' },
+  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
+  { value: 'hook', label: 'Hook', emoji: '🪝' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
+];
+
+export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, isPremium }: WallCustomizerProps) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
+  const [showHangingMenu, setShowHangingMenu] = useState(false);
   const wallPhotoRef = useRef<HTMLInputElement>(null);
 
   const handleWallPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
