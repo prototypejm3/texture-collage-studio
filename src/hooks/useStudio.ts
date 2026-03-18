@@ -185,6 +185,51 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  // Detach a filled section into a free canvas element
+  const detachSection = useCallback((sectionId: string) => {
+    const section = allSections.find(s => s.id === sectionId) || activeVibe?.sections.find(s => s.id === sectionId);
+    const textureId = vibeFills[sectionId];
+    if (!section || !textureId) return;
+
+    // Parse path to compute bounding box
+    const nums = section.path.match(/-?\d+/g)?.map(Number) || [];
+    let minX = 480, minY = 480, maxX = 0, maxY = 0;
+    for (let i = 0; i < nums.length - 1; i += 2) {
+      minX = Math.min(minX, nums[i]);
+      maxX = Math.max(maxX, nums[i]);
+      minY = Math.min(minY, nums[i + 1]);
+      maxY = Math.max(maxY, nums[i + 1]);
+    }
+    const w = maxX - minX;
+    const h = maxY - minY;
+
+    const id = `el-${nextId++}`;
+    const newEl: CanvasElement = {
+      id,
+      textureId,
+      x: minX,
+      y: minY,
+      width: w,
+      height: h,
+      rotation: 0,
+      shape: 'soft-square',
+      zIndex: nextId,
+      effects: { ...defaultEffects },
+      sectionId,
+      clipPathD: section.path,
+    };
+    setElements(prev => [...prev, newEl]);
+    setSelectedId(id);
+
+    // Remove from vibe fills
+    setVibeFills(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    setSelectedSectionId(null);
+  }, [vibeFills, activeVibe, allSections]);
+
   // Combine vibe sections + custom drawn sections
   const allSections = useMemo(() => {
     const vibeSections = activeVibe?.sections || [];
