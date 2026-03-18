@@ -41,6 +41,8 @@ interface TextureLibraryProps {
   onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
   onDuplicate?: () => void;
   onDelete?: () => void;
+  drawMode?: boolean;
+  onToggleDraw?: () => void;
 }
 
 export function TextureLibrary({
