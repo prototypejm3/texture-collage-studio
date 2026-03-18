@@ -50,6 +50,7 @@ export function TextureLibrary({
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
   selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
+  drawMode, onToggleDraw,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [showElementTools, setShowElementTools] = useState(true);
