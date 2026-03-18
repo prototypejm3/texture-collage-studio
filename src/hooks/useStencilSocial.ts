@@ -139,8 +139,13 @@ export function useStencilSocial() {
     id: record.id,
     name: record.name,
     emoji: record.emoji,
+    description: '',
     viewBox: record.view_box,
     sections: record.sections as any,
+    lightTextures: [],
+    mediumTextures: [],
+    darkTextures: [],
+    accentTextures: [],
   });
 
   return {
