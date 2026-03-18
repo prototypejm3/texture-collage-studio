@@ -15,7 +15,7 @@ import { LightingOverlay } from '@/components/wall/LightingOverlay';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
-import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown } from 'lucide-react';
+import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown, Pencil, Check } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
@@ -47,6 +47,8 @@ const MyWall = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [showWallPicker, setShowWallPicker] = useState(false);
+  const [editingWallId, setEditingWallId] = useState<string | null>(null);
+  const [wallTitleDraft, setWallTitleDraft] = useState('');
   const [stepBackMode, setStepBackMode] = useState(false);
   const wallRef = useRef<HTMLDivElement>(null);
 
@@ -343,30 +345,67 @@ const MyWall = () => {
               </button>
               {showWallPicker && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowWallPicker(false)} />
-                  <div className="absolute left-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[180px]">
+                  <div className="fixed inset-0 z-40" onClick={() => { setShowWallPicker(false); setEditingWallId(null); }} />
+                  <div className="absolute left-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[200px]">
                     {multiWall.walls.map(w => (
                       <div key={w.id} className="flex items-center">
-                        <button
-                          onClick={() => { multiWall.setActiveWallId(w.id); setShowWallPicker(false); }}
-                          className={`flex-1 text-left px-3 py-1.5 text-xs hover:bg-secondary ${
-                            w.id === multiWall.activeWallId ? 'text-primary font-medium' : 'text-foreground'
-                          }`}
-                        >
-                          {w.settings.title}
-                        </button>
-                        {multiWall.walls.length > 1 && isPremium && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteWall(w.id);
-                              setShowWallPicker(false);
-                            }}
-                            className="p-1 mr-1 text-muted-foreground hover:text-destructive rounded"
-                            title="Delete wall"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
+                        {editingWallId === w.id ? (
+                          <div className="flex items-center gap-1 flex-1 px-2 py-1">
+                            <input
+                              autoFocus
+                              value={wallTitleDraft}
+                              onChange={e => setWallTitleDraft(e.target.value)}
+                              onKeyDown={e => {
+                                if (e.key === 'Enter') {
+                                  multiWall.updateWallSettings(w.id, { title: wallTitleDraft });
+                                  setEditingWallId(null);
+                                }
+                                if (e.key === 'Escape') setEditingWallId(null);
+                              }}
+                              className="flex-1 text-xs bg-transparent border-b border-primary/40 outline-none text-foreground"
+                            />
+                            <button
+                              onClick={() => { multiWall.updateWallSettings(w.id, { title: wallTitleDraft }); setEditingWallId(null); }}
+                              className="p-0.5 text-primary/60 hover:text-primary"
+                            >
+                              <Check className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => { multiWall.setActiveWallId(w.id); setShowWallPicker(false); }}
+                              className={`flex-1 text-left px-3 py-1.5 text-xs hover:bg-secondary ${
+                                w.id === multiWall.activeWallId ? 'text-primary font-medium' : 'text-foreground'
+                              }`}
+                            >
+                              {w.settings.title}
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setWallTitleDraft(w.settings.title);
+                                setEditingWallId(w.id);
+                              }}
+                              className="p-1 mr-0.5 text-muted-foreground/40 hover:text-muted-foreground rounded"
+                              title="Rename"
+                            >
+                              <Pencil className="w-2.5 h-2.5" />
+                            </button>
+                            {multiWall.walls.length > 1 && isPremium && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteWall(w.id);
+                                  setShowWallPicker(false);
+                                }}
+                                className="p-1 mr-1 text-muted-foreground hover:text-destructive rounded"
+                                title="Delete wall"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            )}
+                          </>
                         )}
                       </div>
                     ))}
