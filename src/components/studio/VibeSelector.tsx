@@ -8,9 +8,11 @@ import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 interface VibeSelectorProps {
   isOpen: boolean;
   activeVibeId: string | null;
+  isPremium: boolean;
   onClose: () => void;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffle: () => void;
+  onRequestUpgrade: () => void;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
