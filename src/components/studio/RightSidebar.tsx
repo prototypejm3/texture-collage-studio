@@ -225,7 +225,7 @@ export function RightSidebar({
       {/* Tab content */}
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'stencils' ? (
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             {/* Reference image — on top */}
             <div className="px-3 py-3 border-b border-border">
               <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
@@ -363,7 +363,7 @@ export function RightSidebar({
             )}
 
             {/* Stencil Grid */}
-            <div className="flex-1 overflow-y-auto p-3">
+            <div className="p-3">
               <div className="grid grid-cols-2 gap-2">
                 {allVibes.map(vibe => (
                   <StencilCard
@@ -390,7 +390,7 @@ export function RightSidebar({
             </div>
           </div>
         ) : activeTab === 'community' ? (
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             <div className="px-3 py-3 border-b border-border">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Community Stencils
