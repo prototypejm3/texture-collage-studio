@@ -414,47 +414,89 @@ const cactus: Vibe = {
 };
 
 // ── NEW YORK BUILDINGS ──
-// 3 rectangular building blocks + base — bold skyline
+// Detailed skyline with recognizable landmarks
 const nyBuildings: Vibe = {
   id: 'ny-buildings',
   name: 'New York',
   emoji: '🏙️',
-  description: 'Bold skyline blocks — urban & graphic',
+  description: 'Iconic skyline — towers, spires & skyscrapers',
   viewBox: '0 0 480 480',
   sections: [
     {
-      id: 'ny-tall',
-      label: 'Tall Tower',
+      id: 'ny-1wtc',
+      label: 'One World Trade',
       tone: 'dark',
-      // Tallest building left-center
-      path: 'M120,80 Q118,72 130,68 L195,68 Q207,72 205,80 L205,380 L120,380 Z',
+      // Tall tapered tower with antenna spire — leftish
+      path: 'M52,380 L52,105 L58,60 L62,38 L64,25 L66,38 L70,60 L76,105 L76,380 Z',
     },
     {
-      id: 'ny-mid',
-      label: 'Mid Building',
+      id: 'ny-brownstone-1',
+      label: 'Brownstone Left',
       tone: 'medium',
-      // Medium building center
-      path: 'M215,155 Q213,148 225,145 L305,145 Q317,148 315,155 L315,380 L215,380 Z',
+      // Short wide brownstone
+      path: 'M82,380 L82,305 Q82,298 89,298 L115,298 Q122,298 122,305 L122,380 Z',
     },
     {
-      id: 'ny-short',
-      label: 'Short Building',
+      id: 'ny-empire',
+      label: 'Empire State',
+      tone: 'dark',
+      // Stepped art-deco tower with antenna
+      path: 'M128,380 L128,175 L135,175 L135,145 L142,145 L142,120 L148,120 L148,100 L153,100 L153,70 L156,55 L158,42 L160,55 L163,70 L163,100 L168,100 L168,120 L174,120 L174,145 L181,145 L181,175 L188,175 L188,380 Z',
+    },
+    {
+      id: 'ny-glass-tower',
+      label: 'Glass Tower',
+      tone: 'light',
+      // Modern glass slab
+      path: 'M194,380 L194,140 Q194,132 202,132 L228,132 Q236,132 236,140 L236,380 Z',
+    },
+    {
+      id: 'ny-chrysler',
+      label: 'Chrysler Building',
       tone: 'accent',
-      // Shorter wide building right
-      path: 'M325,220 Q323,212 335,208 L395,208 Q407,212 405,220 L405,380 L325,380 Z',
+      // Art-deco crown with triangular arches stepping up to spire
+      path: 'M242,380 L242,155 L248,155 L248,130 L252,130 L252,115 L255,115 L255,100 L258,100 L258,88 L260,78 L262,68 L264,55 L266,42 L268,55 L270,68 L272,78 L274,88 L274,100 L277,100 L277,115 L280,115 L280,130 L284,130 L284,155 L290,155 L290,380 Z',
+    },
+    {
+      id: 'ny-midrise',
+      label: 'Midrise',
+      tone: 'medium',
+      // Typical midrise with flat top
+      path: 'M296,380 L296,230 Q296,222 304,222 L330,222 Q338,222 338,230 L338,380 Z',
+    },
+    {
+      id: 'ny-steinway',
+      label: 'Steinway Tower',
+      tone: 'light',
+      // Ultra-thin supertall — pencil tower
+      path: 'M346,380 L346,72 Q346,65 352,65 L360,65 Q366,65 366,72 L366,380 Z',
+    },
+    {
+      id: 'ny-hudson-yards',
+      label: 'Hudson Yards',
+      tone: 'medium',
+      // Angled modern tower
+      path: 'M372,380 L375,150 Q375,142 382,140 L404,135 Q412,134 412,142 L412,380 Z',
+    },
+    {
+      id: 'ny-brownstone-2',
+      label: 'Brownstone Right',
+      tone: 'accent',
+      // Short brownstone far right
+      path: 'M418,380 L418,280 Q418,272 425,272 L448,272 Q455,272 455,280 L455,380 Z',
     },
     {
       id: 'ny-base',
       label: 'Ground',
       tone: 'dark',
       // Wide ground strip
-      path: 'M60,380 L420,380 Q438,392 440,415 Q438,438 420,445 L60,445 Q42,438 40,415 Q42,392 60,380 Z',
+      path: 'M30,380 L460,380 Q472,392 474,415 Q472,438 460,445 L30,445 Q18,438 16,415 Q18,392 30,380 Z',
     },
   ],
-  lightTextures: ['marble-carrara', 'linen-white', 'marble-calacatta'],
-  mediumTextures: ['suede-slate', 'linen-slate', 'marble-verde', 'suede-charcoal'],
+  lightTextures: ['marble-carrara', 'linen-white', 'concrete-polished'],
+  mediumTextures: ['suede-slate', 'linen-slate', 'concrete-raw', 'suede-charcoal'],
   darkTextures: ['leather-black', 'velvet-navy', 'marble-nero', 'wood-ebony'],
-  accentTextures: ['suede-camel', 'leather-cognac', 'wood-teak', 'marble-rose'],
+  accentTextures: ['suede-camel', 'leather-cognac', 'wood-teak', 'marble-rosa'],
 };
 
 // ── RAINBOW ──
