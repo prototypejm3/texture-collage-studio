@@ -59,7 +59,7 @@ export function useStudio() {
     setElements(prev => [...prev, newEl]);
     setSelectedId(id);
     return id;
-  }, []);
+  }, [nextShape]);
 
   const updateElement = useCallback((id: string, updates: Partial<CanvasElement>) => {
     setElements(prev => prev.map(el => el.id === id ? { ...el, ...updates } : el));
