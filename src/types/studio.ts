@@ -90,6 +90,7 @@ export interface Vibe {
   mediumTextures: string[];
   darkTextures: string[];
   accentTextures: string[];
+  category?: string;
 }
 
 export type VibeFills = Record<string, string>;
