@@ -26,8 +26,10 @@ const Index = () => {
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
   const wall = useWall();
   const { isPremium, canSave, upgradeToPremium } = useUserTier();
+  const vibeGen = useGenerateVibe();
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [showVibeModal, setShowVibeModal] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
 
