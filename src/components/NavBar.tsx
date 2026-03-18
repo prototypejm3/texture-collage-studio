@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Palette, LayoutGrid, LogIn, LogOut, User, Ghost, Moon, Sun } from 'lucide-react';
+import { Brush, Grid2x2, LogIn, LogOut, User, Landmark, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 
