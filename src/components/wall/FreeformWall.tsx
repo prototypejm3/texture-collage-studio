@@ -95,16 +95,24 @@ export function FreeformWall({
       <AnimatePresence>
         {positionedDesigns.map(d => {
           const w = sizeWidths[d.displaySize || 'medium'];
+          // Depth-based shadow: larger items = more shadow depth
+          const depthShadow = d.displaySize === 'large'
+            ? '0 12px 32px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.08)'
+            : d.displaySize === 'small'
+            ? '0 2px 8px rgba(0,0,0,0.08)'
+            : '0 6px 20px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)';
+          const rotation = d.rotation || 0;
           return (
             <div
               key={d.id}
-              className={`absolute transition-shadow ${draggingId === d.id ? 'z-50 cursor-grabbing' : 'z-10 cursor-grab'}`}
+              className={`absolute ${draggingId === d.id ? 'z-50 cursor-grabbing' : 'z-10 cursor-grab'}`}
               style={{
                 left: `${d.wallX ?? 50}%`,
                 top: `${d.wallY ?? 50}%`,
-                transform: 'translate(-50%, -50%)',
+                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
                 width: w,
-                transition: draggingId === d.id ? 'none' : 'left 0.3s ease, top 0.3s ease',
+                boxShadow: depthShadow,
+                transition: draggingId === d.id ? 'none' : 'left 0.3s ease, top 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
               }}
               onMouseDown={(e) => handleMouseDown(e, d)}
             >
