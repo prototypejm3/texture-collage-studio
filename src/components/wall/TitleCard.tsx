@@ -16,7 +16,7 @@ export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProp
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className={`${placement === 'right' ? 'pl-5' : 'mt-4 px-0.5'} select-none`}
+      className={`${placement === 'right' ? 'pl-4' : 'mt-2 px-0.5'} select-none`}
     >
       <div className="space-y-[3px] text-left max-w-[220px]">
         {/* Title — slightly stronger */}

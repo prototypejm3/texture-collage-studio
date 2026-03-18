@@ -384,32 +384,6 @@ export function WallCard({
         </div>
       </div>
 
-      {/* Museum-style label */}
-      <div className="mt-4">
-        <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleOpenEditPanel}>
-          <div className="min-w-0 flex-1 space-y-[2px] text-left">
-            <p className={`text-[11px] font-normal tracking-[0.04em] truncate ${isDark ? 'text-white/70' : 'text-foreground/60'}`}>{design.name}</p>
-            {design.artist && (
-              <p className={`text-[10px] tracking-[0.05em] ${isDark ? 'text-white/50' : 'text-foreground/40'}`}>{design.artist}</p>
-            )}
-            <p className={`text-[9px] tracking-[0.06em] ${isDark ? 'text-white/35' : 'text-foreground/30'}`}>
-              {[
-                new Date(design.createdAt).getFullYear(),
-                design.materials,
-                design.vibeName,
-              ].filter(Boolean).join(' · ')}
-            </p>
-            {design.curatorNote && (
-              <p className={`text-[9px] tracking-[0.04em] italic mt-1 ${isDark ? 'text-white/30' : 'text-foreground/25'}`}>{design.curatorNote}</p>
-            )}
-            {design.edition && (
-              <p className={`text-[8px] tracking-[0.08em] uppercase mt-0.5 ${isDark ? 'text-white/25' : 'text-foreground/20'}`}>{design.edition}</p>
-            )}
-          </div>
-          <Pencil className={`w-2.5 h-2.5 transition-colors mt-0.5 shrink-0 ${isDark ? 'text-white/20 group-hover/label:text-white/50' : 'text-muted-foreground/20 group-hover/label:text-muted-foreground/50'}`} />
-        </div>
-      </div>
-
       {/* ── Edit Panel (opens on pencil click) ── */}
       <AnimatePresence>
         {editPanelOpen && (
