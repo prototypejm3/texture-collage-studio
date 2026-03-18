@@ -78,7 +78,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                     type="text"
                     value={prompt}
                     onChange={e => setPrompt(e.target.value)}
-                    placeholder="e.g. warm sunset bohemian, moody forest cabin, coastal minimalist…"
+                    placeholder="e.g. cozy cabin vibes, beach sunset, dark academia…"
                     className="flex-1 px-3 py-2 text-sm rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                     disabled={isGenerating}
                     autoFocus
