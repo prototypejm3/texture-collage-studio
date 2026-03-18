@@ -153,6 +153,36 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </div>
         )}
 
+        {/* Hanging style picker */}
+        {isPremium && onApplyHangingToAll && (
+          <div className="relative">
+            <button
+              onClick={() => setShowHangingMenu(!showHangingMenu)}
+              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
+              title="Display style"
+            >
+              <Lamp className="w-3.5 h-3.5" />
+            </button>
+            {showHangingMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowHangingMenu(false)} />
+                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
+                  {hangingStyles.map(hs => (
+                    <button
+                      key={hs.value}
+                      onClick={() => { onApplyHangingToAll(hs.value); setShowHangingMenu(false); }}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+                    >
+                      <span>{hs.emoji}</span> {hs.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
         {/* Background picker */}
         {isPremium && (
           <div className="flex items-center gap-1.5">
