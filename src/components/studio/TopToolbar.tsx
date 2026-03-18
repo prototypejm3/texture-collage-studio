@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
-import { FrameStyle } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun } from 'lucide-react';
+import { FrameStyle, AmbientSound } from '@/types/wall';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function useTheme() {
