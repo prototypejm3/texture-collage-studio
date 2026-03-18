@@ -13,6 +13,8 @@ import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
 import { NavBar } from '@/components/NavBar';
 import { PaywallModal } from '@/components/wall/PaywallModal';
+import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
+import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
 import { toast } from '@/hooks/use-toast';
 
