@@ -382,21 +382,29 @@ export function WallCard({
         </div>
       </div>
 
-      {/* Gallery label */}
-      <div className="mt-3">
+      {/* Museum-style label */}
+      <div className="mt-4">
         <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleOpenEditPanel}>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-foreground/80 tracking-wide truncate">{design.name}</p>
+          <div className="min-w-0 flex-1 space-y-[2px] text-left">
+            <p className="text-[11px] font-normal tracking-[0.04em] text-foreground/60 truncate">{design.name}</p>
             {design.artist && (
-              <p className="text-[10px] text-muted-foreground/50 tracking-wider">by {design.artist}</p>
+              <p className="text-[10px] tracking-[0.05em] text-foreground/40">{design.artist}</p>
             )}
-            {design.description ? (
-              <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5 italic line-clamp-2">{design.description}</p>
-            ) : design.vibeName ? (
-              <p className="text-[10px] text-muted-foreground/50 tracking-wider mt-0.5">{design.vibeName}</p>
-            ) : null}
+            <p className="text-[9px] tracking-[0.06em] text-foreground/30">
+              {[
+                new Date(design.createdAt).getFullYear(),
+                design.materials,
+                design.vibeName,
+              ].filter(Boolean).join(' · ')}
+            </p>
+            {design.curatorNote && (
+              <p className="text-[9px] tracking-[0.04em] italic text-foreground/25 mt-1">{design.curatorNote}</p>
+            )}
+            {design.edition && (
+              <p className="text-[8px] tracking-[0.08em] uppercase text-foreground/20 mt-0.5">{design.edition}</p>
+            )}
           </div>
-          <Pencil className="w-2.5 h-2.5 text-muted-foreground/30 group-hover/label:text-muted-foreground/60 transition-colors mt-0.5 shrink-0" />
+          <Pencil className="w-2.5 h-2.5 text-muted-foreground/20 group-hover/label:text-muted-foreground/50 transition-colors mt-0.5 shrink-0" />
         </div>
       </div>
 
