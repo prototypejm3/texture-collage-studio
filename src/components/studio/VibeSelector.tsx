@@ -56,7 +56,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
   );
 }
 
-export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onShuffle }: VibeSelectorProps) {
+export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelectVibe, onShuffle, onRequestUpgrade }: VibeSelectorProps) {
   const [aiPrompt, setAiPrompt] = useState('');
   const [showAiInput, setShowAiInput] = useState(false);
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);

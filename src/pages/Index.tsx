@@ -202,9 +202,11 @@ const Index = () => {
         <VibeSelector
           isOpen={vibesOpen}
           activeVibeId={studio.activeVibe?.id ?? null}
+          isPremium={isPremium}
           onClose={() => setVibesOpen(false)}
           onSelectVibe={handleSelectVibe}
           onShuffle={studio.shuffleVibeFills}
+          onRequestUpgrade={() => setShowPaywall(true)}
         />
       </div>
 
