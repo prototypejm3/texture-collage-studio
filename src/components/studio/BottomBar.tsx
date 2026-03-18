@@ -153,46 +153,8 @@ export function BottomBar({
         </div>
       </div>
 
-      {/* Ambient sound */}
-      {onAmbientSoundChange && (
-        <div className="relative ml-auto mr-2">
-          <button
-            onClick={() => setShowSoundMenu(!showSoundMenu)}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${
-              ambientSound && ambientSound !== 'none'
-                ? 'bg-primary/10 text-primary'
-                : 'text-muted-foreground hover:bg-secondary'
-            }`}
-          >
-            <Volume2 className="w-3.5 h-3.5" />
-            {ambientSound && ambientSound !== 'none'
-              ? ambientOptions.find(a => a.value === ambientSound)?.label
-              : 'Listen'}
-          </button>
-          {showSoundMenu && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
-              <div className="absolute bottom-full right-0 z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[130px]">
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-                {ambientOptions.map(opt => (
-                  <button
-                    key={opt.value}
-                    onClick={() => { onAmbientSoundChange(opt.value); setShowSoundMenu(false); }}
-                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${
-                      ambientSound === opt.value ? 'text-primary font-medium' : 'text-foreground'
-                    }`}
-                  >
-                    <span>{opt.emoji}</span> {opt.label}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      )}
-
       {/* Right: Actions */}
-      <div className={`flex items-center gap-1.5 ${!onAmbientSoundChange ? 'ml-auto' : ''}`}>
+      <div className="flex items-center gap-1.5 ml-auto">
         <button onClick={onClear} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </button>
