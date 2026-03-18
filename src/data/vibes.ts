@@ -2262,6 +2262,7 @@ const fairy: Vibe = {
   id: 'fairy', name: 'Fairy', emoji: '🧚',
   description: 'Graceful fairy with wings and flowing dress',
   category: 'Community',
+  baseLikes: 34, likesStartDate: '2026-03-02',
   creator: 'butterbb',
   viewBox: '0 0 480 580',
   sections: [
