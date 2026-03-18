@@ -217,7 +217,7 @@ export const kidTextureNames: Record<string, string> = {
   'cord-fine-olive': 'Pickle Stripe',
   'cord-fine-navy': 'Navy Cord',
   'cord-wide-sand': 'Gingerbread',
-  'cord-wide-brown': 'S'more',
+  'cord-wide-brown': "S'more",
   'cord-wide-olive': 'Leaf Pile',
   'cord-wide-navy': 'Nighttime',
   'cord-washed-sand': 'Sand Dollar',
