@@ -22,6 +22,12 @@ interface DropChoice {
   screenY: number;
 }
 
+function getTextureBackgroundSize(texture: TextureSwatch) {
+  return texture.id.startsWith('custom-') || texture.cssBackground.startsWith('url(')
+    ? 'cover'
+    : '40px 40px';
+}
+
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
@@ -30,8 +36,7 @@ export function VibeOutline({
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
-
-  const patternIdFor = (sectionId: string, textureId: string) => `fill-${sectionId}-${textureId}`;
+  const allTextures = [...textures, ...customTextures];
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
     e.preventDefault();
@@ -40,7 +45,6 @@ export function VibeOutline({
     const textureId = e.dataTransfer.getData('textureId');
     if (!textureId) return;
 
-    // Show choice popup at drop position
     setDropChoice({
       sectionId,
       textureId,
@@ -57,7 +61,6 @@ export function VibeOutline({
 
   const handleChooseSwatch = useCallback(() => {
     if (!dropChoice) return;
-    // Convert screen coords to approximate canvas-relative position
     const svgEl = document.querySelector('[data-vibe-svg]') as SVGSVGElement | null;
     if (svgEl) {
       const rect = svgEl.getBoundingClientRect();
@@ -70,6 +73,33 @@ export function VibeOutline({
 
   return (
     <>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 8, width: canvasWidth, height: canvasHeight }}
+      >
+        {vibe.sections.map(section => {
+          const textureId = fills[section.id];
+          if (!textureId) return null;
+
+          const texture = allTextures.find(t => t.id === textureId);
+          if (!texture) return null;
+
+          return (
+            <div
+              key={`${section.id}-${textureId}`}
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: texture.cssBackground,
+                backgroundSize: getTextureBackgroundSize(texture),
+                backgroundPosition: 'center',
+                clipPath: `path('${section.path}')`,
+                WebkitClipPath: `path('${section.path}')`,
+              }}
+            />
+          );
+        })}
+      </div>
+
       <svg
         data-vibe-svg
         viewBox={vibe.viewBox}
@@ -78,36 +108,6 @@ export function VibeOutline({
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 10 }}
       >
-        <defs>
-          {/* Create pattern fills for each filled section */}
-          {Object.entries(fills).map(([sectionId, textureId]) => {
-            const allTex = [...textures, ...customTextures];
-            const tex = allTex.find(t => t.id === textureId);
-            if (!tex) return null;
-            return (
-              <pattern
-                key={`${sectionId}-${textureId}`}
-                id={patternIdFor(sectionId, textureId)}
-                patternUnits="userSpaceOnUse"
-                width="40"
-                height="40"
-              >
-                <rect width="40" height="40" fill="transparent" />
-                <foreignObject width="40" height="40">
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      background: tex.cssBackground,
-                      backgroundSize: '40px 40px',
-                    }}
-                  />
-                </foreignObject>
-              </pattern>
-            );
-          })}
-        </defs>
-
         {vibe.sections.map(section => {
           const isFilled = !!fills[section.id];
           const isHovered = hoveredId === section.id;
@@ -115,10 +115,9 @@ export function VibeOutline({
 
           return (
             <g key={section.id}>
-              {/* Fill layer */}
               <path
                 d={section.path}
-                fill={isFilled ? `url(#${patternIdFor(section.id, fills[section.id] as string)})` : 'transparent'}
+                fill="transparent"
                 className="pointer-events-auto cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -135,7 +134,6 @@ export function VibeOutline({
                 onMouseLeave={() => setHoveredId(null)}
               />
 
-              {/* Outline stroke */}
               <path
                 d={section.path}
                 fill="none"
@@ -147,12 +145,10 @@ export function VibeOutline({
                 style={{ opacity: isFilled ? 0.5 : 0.9 }}
               />
 
-              {/* Empty state label */}
               {!isFilled && (
                 <VibeLabel section={section} isHovered={isHovered} />
               )}
 
-              {/* Hover highlight */}
               {isHovered && !isFilled && (
                 <path
                   d={section.path}
@@ -166,7 +162,6 @@ export function VibeOutline({
         })}
       </svg>
 
-      {/* Drop choice popup */}
       {dropChoice && (
         <>
           <div
@@ -203,7 +198,6 @@ export function VibeOutline({
   );
 }
 
-/** Renders a centered label inside the section path bounding box */
 function VibeLabel({ section, isHovered }: { section: { id: string; label: string; path: string }; isHovered: boolean }) {
   const center = getPathCenter(section.path);
   if (!center) return null;
@@ -225,7 +219,6 @@ function VibeLabel({ section, isHovered }: { section: { id: string; label: strin
   );
 }
 
-/** Rough center of SVG path by parsing coordinates */
 function getPathCenter(path: string): { x: number; y: number } | null {
   const nums = path.match(/[\d.]+/g);
   if (!nums || nums.length < 4) return null;
