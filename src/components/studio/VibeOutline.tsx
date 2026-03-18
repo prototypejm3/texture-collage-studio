@@ -144,7 +144,11 @@ export function VibeOutline({
                 className="pointer-events-auto cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onSelectSection(section.id);
+                  if (isFilled) {
+                    onDetachSection(section.id);
+                  } else {
+                    onSelectSection(section.id);
+                  }
                 }}
                 onDragOver={(e) => {
                   e.preventDefault();
