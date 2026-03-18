@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool } from 'lucide-react';
+import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool, Star } from 'lucide-react';
 import { FloatingToolbar } from './FloatingToolbar';
 
 interface TextureGroup {
@@ -26,6 +26,19 @@ const groups: TextureGroup[] = [
   { label: 'Signature Naturals', categories: ['ShayShari', 'Suede Ace', 'Jayme', 'Skott', 'Kaplan', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat'] },
 ];
 
+const FAV_KEY = 'texture-favorites';
+
+function loadFavs(): Set<string> {
+  try {
+    const raw = localStorage.getItem(FAV_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch { return new Set(); }
+}
+
+function saveFavs(favs: Set<string>) {
+  localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+}
+
 interface TextureLibraryProps {
   onDragStart: (textureId: string) => void;
   onTextureClick?: (textureId: string) => void;
@@ -35,7 +48,6 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
-  // Element editing props
   selectedElement?: CanvasElement | null;
   onUpdateElement?: (updates: Partial<CanvasElement>) => void;
   onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
@@ -54,7 +66,18 @@ export function TextureLibrary({
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [showElementTools, setShowElementTools] = useState(true);
+  const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const toggleFav = useCallback((id: string) => {
+    setFavIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      saveFavs(next);
+      return next;
+    });
+  }, []);
 
   const allTextures = [...textures, ...customTextures];
 
@@ -62,11 +85,15 @@ export function TextureLibrary({
     ? null
     : activeGroup === 'Custom'
       ? ['Custom' as TextureCategory]
-      : groups.find(g => g.label === activeGroup)?.categories ?? null;
+      : activeGroup === 'Favorites'
+        ? null
+        : groups.find(g => g.label === activeGroup)?.categories ?? null;
 
-  const filtered = activeCategories
+  let filtered = activeCategories
     ? allTextures.filter(t => activeCategories.includes(t.category))
-    : allTextures;
+    : activeGroup === 'Favorites'
+      ? allTextures.filter(t => favIds.has(t.id))
+      : allTextures;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -81,7 +108,7 @@ export function TextureLibrary({
 
   return (
     <div className="h-full flex flex-col bg-card border-r border-border">
-      {/* Elements section — always visible */}
+      {/* Elements section */}
       <div className="border-b border-border">
         <button
           onClick={() => setShowElementTools(!showElementTools)}
@@ -105,7 +132,6 @@ export function TextureLibrary({
                 <p className="text-[10px] text-muted-foreground/60 italic mb-2">
                   Select an element on the canvas to edit shapes, size, rotation & material effects.
                 </p>
-                {/* Show a disabled preview of the toolbar sections */}
                 <div className="space-y-2 opacity-40 pointer-events-none select-none">
                   <div className="flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-muted-foreground">
                     ✂️ Shapes
@@ -130,7 +156,6 @@ export function TextureLibrary({
                 </div>
               </div>
             )}
-            {/* Draw freehand — inside elements under shapes */}
             {onToggleDraw && (
               <div className="px-4 py-2">
                 <button
@@ -176,7 +201,6 @@ export function TextureLibrary({
           />
         </div>
 
-        {/* Section fill hint */}
         {activeSectionId && (
           <div className="mb-3 px-2 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
             <p className="text-[10px] text-primary font-medium">
@@ -195,6 +219,19 @@ export function TextureLibrary({
             }`}
           >
             All
+          </button>
+          <button
+            onClick={() => setActiveGroup('Favorites')}
+            className={`px-2.5 py-1 text-xs rounded-full transition-colors flex items-center gap-1 ${
+              activeGroup === 'Favorites'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            <Star className="w-3 h-3" /> Favorites
+            {favIds.size > 0 && (
+              <span className="text-[9px] ml-0.5 opacity-70">{favIds.size}</span>
+            )}
           </button>
           {showCustomTab && (
             <button
@@ -226,11 +263,26 @@ export function TextureLibrary({
       <div className="flex-1 overflow-y-auto texture-panel p-3">
         <div className="grid grid-cols-3 gap-2">
           {filtered.map(tex => (
-            <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
+            <SwatchItem
+              key={tex.id}
+              tex={tex}
+              isFav={favIds.has(tex.id)}
+              onToggleFav={() => toggleFav(tex.id)}
+              onDragStart={onDragStart}
+              onTextureClick={onTextureClick}
+              onRemoveCustomTexture={onRemoveCustomTexture}
+            />
           ))}
         </div>
 
-        {/* Empty state for custom tab */}
+        {activeGroup === 'Favorites' && favIds.size === 0 && (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <Star className="w-8 h-8 text-muted-foreground/40 mb-2" />
+            <p className="text-xs text-muted-foreground">No favorites yet</p>
+            <p className="text-[10px] text-muted-foreground mt-1">Hover a texture and click ★ to favorite</p>
+          </div>
+        )}
+
         {activeGroup === 'Custom' && customTextures.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Upload className="w-8 h-8 text-muted-foreground/40 mb-2" />
@@ -248,8 +300,10 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, onDragStart, onTextureClick, onRemoveCustomTexture }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture }: {
   tex: TextureSwatch;
+  isFav: boolean;
+  onToggleFav: () => void;
   onDragStart: (id: string) => void;
   onTextureClick?: (id: string) => void;
   onRemoveCustomTexture: (id: string) => void;
@@ -277,6 +331,18 @@ function SwatchItem({ tex, onDragStart, onTextureClick, onRemoveCustomTexture }:
       <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
         {tex.name}
       </p>
+      {/* Favorite star */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
+        className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all ${
+          isFav
+            ? 'bg-primary/90 text-primary-foreground opacity-100'
+            : 'bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100'
+        }`}
+        title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        <Star className={`w-2.5 h-2.5 ${isFav ? 'fill-current' : ''}`} />
+      </button>
       {isCustom && (
         <button
           onClick={(e) => {
