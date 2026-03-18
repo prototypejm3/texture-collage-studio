@@ -225,7 +225,7 @@ export function RightSidebar({
       {/* Tab content */}
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'stencils' ? (
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             {/* Reference image — on top */}
             <div className="px-3 py-3 border-b border-border">
               <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
