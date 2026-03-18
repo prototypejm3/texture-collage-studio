@@ -286,7 +286,7 @@ export function RightSidebar({
             <div className="px-3 py-3 border-b border-border bg-muted/30">
               <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                AI Generate Stencil
+                AI Generate Stencil <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
               </div>
               {isPremium ? (
                 <div className="flex flex-col gap-2">
@@ -326,7 +326,7 @@ export function RightSidebar({
               <div className="px-3 py-3 border-b border-border bg-accent/10">
                 <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
                   <Sparkles className="w-3.5 h-3.5 text-accent-foreground" />
-                  AI Mood — auto-fill textures
+                  AI Mood — auto-fill textures <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                 </div>
                 <div className="flex flex-col gap-2">
                   <input
