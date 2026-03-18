@@ -92,8 +92,7 @@ export function TextureLibrary({
         </button>
         {showElementTools && (
           <div>
-            {/* Shape/effect editing when element selected */}
-            {selectedElement && onUpdateElement && onUpdateEffects && onDuplicate && onDelete && (
+            {selectedElement && onUpdateElement && onUpdateEffects && onDuplicate && onDelete ? (
               <FloatingToolbar
                 element={selectedElement}
                 onUpdate={onUpdateElement}
@@ -101,6 +100,12 @@ export function TextureLibrary({
                 onDuplicate={onDuplicate}
                 onDelete={onDelete}
               />
+            ) : (
+              <div className="px-4 py-3">
+                <p className="text-[10px] text-muted-foreground/60 italic mb-2">
+                  Drag a texture onto the canvas to create an element, then click it to edit shapes, effects & more.
+                </p>
+              </div>
             )}
             {/* Draw freehand — inside elements under shapes */}
             {onToggleDraw && (
