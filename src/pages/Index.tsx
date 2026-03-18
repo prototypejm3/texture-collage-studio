@@ -333,6 +333,25 @@ const Index = () => {
                       Draw Freehand
                     </button>
                   </div>
+                  {/* Shape pre-selector */}
+                  <div className="px-3 py-2 border-b border-border">
+                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1.5">Shape</p>
+                    <div className="flex flex-wrap gap-1">
+                      {(['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'] as const).map(shape => (
+                        <button
+                          key={shape}
+                          onClick={() => studio.setNextShape(shape)}
+                          className={`px-2 py-1 text-[10px] rounded-md transition-colors capitalize ${
+                            studio.nextShape === shape
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                          }`}
+                        >
+                          {shape.replace('-', ' ')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   {/* Element editing when selected */}
                   {studio.selectedElement && studio.selectedId && (
                     <div className="border-b border-border">
