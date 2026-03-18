@@ -13,7 +13,8 @@ const categories: TextureCategory[] = [
   'Borough', 'Lucky', 'Merit', 'Prime', 'Tussah', 'Bloke',
   'Leather', 'Wood', 'Concrete', 'Stripe', 'Grid',
   'Animal', 'Ripple', 'Speckle', 'Tie-dye', 'Maze',
-  'Novelty',
+  'Alix', 'Corinne', 'ShayShari', 'Suede Ace', 'Jayme',
+  'Skott', 'Kaplan', 'Riviera',
 ];
 
 interface TextureLibraryProps {
