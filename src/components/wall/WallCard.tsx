@@ -247,6 +247,13 @@ export function WallCard({
         </div>
       )}
 
+      {/* Hero indicator */}
+      {design.isHero && (
+        <div className="absolute -top-1 left-6 w-5 h-5 bg-primary/90 rounded-full flex items-center justify-center shadow-sm z-10 text-[10px]">
+          ⭐
+        </div>
+      )}
+
       {/* Built IRL badge */}
       {design.builtIRL && (
         <div className="absolute -top-1 -right-1 bg-accent text-accent-foreground rounded-full px-1.5 py-0.5 text-[9px] font-medium flex items-center gap-0.5 shadow-sm z-10">
