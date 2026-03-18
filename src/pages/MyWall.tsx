@@ -305,6 +305,7 @@ const MyWall = () => {
                 onUpdate={wall.updateDesign}
                 onFrameStyleChange={handleFrameStyle}
                 onSizeChange={handleSizeChange}
+                onSubmitToGallery={handleSubmitToGallery}
               />
             </motion.div>
           )}
