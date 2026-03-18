@@ -32,6 +32,8 @@ const Index = () => {
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
+  const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load design state when editing from wall
   useEffect(() => {
