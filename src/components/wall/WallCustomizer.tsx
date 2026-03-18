@@ -200,29 +200,6 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                 )}
               </button>
             ))}
-            {/* Custom wall photo */}
-            <button
-              onClick={() => wallPhotoRef.current?.click()}
-              className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden flex items-center justify-center ${
-                settings.background === 'custom' ? 'border-primary scale-110 shadow-md' : 'border-border/40'
-              }`}
-              title="Upload your own wall photo"
-              style={settings.background === 'custom' && settings.customWallImage ? {
-                backgroundImage: `url(${settings.customWallImage})`,
-                backgroundSize: 'cover',
-              } : { backgroundColor: 'hsl(var(--secondary))' }}
-            >
-              {!(settings.background === 'custom' && settings.customWallImage) && (
-                <Camera className="w-3 h-3 text-muted-foreground" />
-              )}
-            </button>
-            <input
-              ref={wallPhotoRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleWallPhoto}
-            />
           </div>
         )}
       </div>
