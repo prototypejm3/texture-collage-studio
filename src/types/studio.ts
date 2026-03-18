@@ -3,6 +3,7 @@ export type TextureCategory =
   | 'Alix' | 'Corinne' | 'Shayshari' | 'Jayme'
   | 'Marble' | 'Nuts' | 'Fruit'
   | 'Animal' | 'Novelty' | 'Stripe' | 'Grid' | 'Wood' | 'Concrete' | 'Leather'
+  | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
   | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
