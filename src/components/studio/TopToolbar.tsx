@@ -30,6 +30,8 @@ interface Props {
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
+  ambientSound?: AmbientSound;
+  onAmbientSoundChange?: (sound: AmbientSound) => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
