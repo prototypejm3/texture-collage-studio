@@ -219,46 +219,7 @@ export function RightSidebar({
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col h-full">
-            {/* AI Generate Stencil */}
-            <div className="px-3 py-3 border-b border-border bg-muted/30">
-              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
-                AI Generate Stencil
-              </div>
-              {isPremium ? (
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="text"
-                    value={aiPrompt}
-                    onChange={e => setAiPrompt(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
-                    placeholder="flower, castle, dinosaur…"
-                    className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    disabled={isGenerating}
-                  />
-                  <button
-                    onClick={handleGenerate}
-                    disabled={isGenerating || !aiPrompt.trim()}
-                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {isGenerating ? (
-                      <><Loader2 className="w-3 h-3 animate-spin" /> Generating…</>
-                    ) : (
-                      <><Sparkles className="w-3 h-3" /> Create</>
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={onRequestUpgrade}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
-                >
-                  <Lock className="w-3 h-3" /> Unlock with Premium
-                </button>
-              )}
-            </div>
-
-            {/* Reference image */}
+            {/* Reference image — on top */}
             <div className="px-3 py-3 border-b border-border">
               <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
                 <ImagePlus className="w-3.5 h-3.5" />
@@ -311,6 +272,45 @@ export function RightSidebar({
                     <X className="w-3 h-3 text-muted-foreground" />
                   </button>
                 </div>
+              )}
+            </div>
+
+            {/* AI Generate Stencil */}
+            <div className="px-3 py-3 border-b border-border bg-muted/30">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                AI Generate Stencil
+              </div>
+              {isPremium ? (
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    value={aiPrompt}
+                    onChange={e => setAiPrompt(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
+                    placeholder="flower, castle, dinosaur…"
+                    className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    disabled={isGenerating}
+                  />
+                  <button
+                    onClick={handleGenerate}
+                    disabled={isGenerating || !aiPrompt.trim()}
+                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isGenerating ? (
+                      <><Loader2 className="w-3 h-3 animate-spin" /> Generating…</>
+                    ) : (
+                      <><Sparkles className="w-3 h-3" /> Create</>
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={onRequestUpgrade}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
+                >
+                  <Lock className="w-3 h-3" /> Unlock with Premium
+                </button>
               )}
             </div>
 
