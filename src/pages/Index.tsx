@@ -352,10 +352,10 @@ const Index = () => {
         />
 
 
-        {/* Stencils right sidebar */}
+        {/* Stencils right sidebar — mirrors Tool-Kit pattern */}
         <div
           className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
-            showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[220px]') : 'w-0'
+            showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
           } overflow-hidden`}
         >
           {showStencils && (
@@ -385,7 +385,7 @@ const Index = () => {
                 </div>
               </div>
               {!stencilsMinimized && (
-                <div className="overflow-y-auto flex-1">
+                <div className="overflow-y-auto flex-1 min-w-[280px]">
                   <RightSidebar
                     activeVibeId={studio.activeVibe?.id ?? null}
                     isPremium={isPremium}

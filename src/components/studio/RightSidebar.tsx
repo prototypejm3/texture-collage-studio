@@ -172,7 +172,7 @@ export function RightSidebar({
   ];
 
   return (
-    <div className="w-[280px] flex-shrink-0 border-l border-border bg-popover flex flex-col h-full">
+    <div className="flex flex-col h-full bg-popover">
       {/* Tab switcher */}
       <div className="flex border-b border-border">
         {tabs.map(tab => (
