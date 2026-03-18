@@ -3,6 +3,7 @@ import { Vibe } from '@/types/studio';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { checkGenerationLimit, recordGeneration } from '@/hooks/useGenerationLimit';
+import { checkContentFilter } from '@/lib/contentFilter';
 
 export interface GeneratedVibe {
   id: string;
@@ -24,6 +25,12 @@ export function useGenerateVibe() {
   const generateVibe = async (prompt: string): Promise<GeneratedVibe | null> => {
     if (!prompt.trim()) {
       toast({ title: 'Enter a vibe', description: 'Describe the mood or aesthetic you want.', variant: 'destructive' });
+      return null;
+    }
+
+    const filter = checkContentFilter(prompt);
+    if (!filter.allowed) {
+      toast({ title: '🚫 Nope!', description: filter.message, variant: 'destructive' });
       return null;
     }
 
