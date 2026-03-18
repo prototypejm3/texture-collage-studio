@@ -296,6 +296,7 @@ export function RightSidebar({
                 <div className="grid grid-cols-2 gap-2">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
+                    const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
                     return (
                       <CommunityStencilCard
                         key={vibe.id}
@@ -306,6 +307,7 @@ export function RightSidebar({
                         isLoggedIn={!!user}
                         onSelect={() => onSelectVibe(vibe)}
                         onToggleFav={() => social.toggleFavorite(vibe.id)}
+                        creator={creator}
                       />
                     );
                   })}
