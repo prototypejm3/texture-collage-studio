@@ -32,7 +32,7 @@ function getTextureBackgroundSize(texture: TextureSwatch) {
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
-  onSelectSection, onDropInSection, onDropAsSwatch,
+  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
