@@ -185,9 +185,15 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  // Combine vibe sections + custom drawn sections
+  const allSections = useMemo(() => {
+    const vibeSections = activeVibe?.sections || [];
+    return [...vibeSections, ...customSections];
+  }, [activeVibe, customSections]);
+
   // Detach a filled section into a free canvas element
   const detachSection = useCallback((sectionId: string) => {
-    const section = allSections.find(s => s.id === sectionId) || activeVibe?.sections.find(s => s.id === sectionId);
+    const section = allSections.find(s => s.id === sectionId);
     const textureId = vibeFills[sectionId];
     if (!section || !textureId) return;
 
@@ -228,13 +234,7 @@ export function useStudio() {
       return next;
     });
     setSelectedSectionId(null);
-  }, [vibeFills, activeVibe, allSections]);
-
-  // Combine vibe sections + custom drawn sections
-  const allSections = useMemo(() => {
-    const vibeSections = activeVibe?.sections || [];
-    return [...vibeSections, ...customSections];
-  }, [activeVibe, customSections]);
+  }, [vibeFills, allSections]);
 
   // A virtual vibe that includes custom sections
   const effectiveVibe = useMemo((): Vibe | null => {
