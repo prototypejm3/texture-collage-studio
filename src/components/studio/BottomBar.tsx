@@ -151,6 +151,17 @@ export function BottomBar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5 ml-auto">
+        <button
+          onClick={onOpenToolKit}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors ${
+            toolKitOpen
+              ? 'bg-primary/10 text-primary font-medium'
+              : 'text-foreground hover:bg-secondary'
+          }`}
+        >
+          <Scissors className="w-3.5 h-3.5" /> Tool-Kit
+        </button>
+        <div className="w-px h-4 bg-border" />
         <button onClick={onClear} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </button>
