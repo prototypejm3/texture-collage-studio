@@ -1,9 +1,7 @@
 export type TextureCategory = 
-  | 'Ocean' | 'Sky' | 'Space'
-  | 'Alix' | 'Corinne' | 'Shayshari' | 'Jayme'
-  | 'Marble' | 'Nuts' | 'Fruit'
-  | 'Animal' | 'Novelty' | 'Stripe' | 'Grid' | 'Wood' | 'Concrete' | 'Leather'
-  | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
+  | 'Leather' | 'Wood' | 'Concrete' | 'Stripe' | 'Grid'
+  | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
+  | 'Novelty'
   | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';

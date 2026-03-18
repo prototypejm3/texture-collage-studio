@@ -5,11 +5,9 @@ import { motion } from 'framer-motion';
 import { Upload, X } from 'lucide-react';
 
 const categories: TextureCategory[] = [
-  'Ocean', 'Sky', 'Space',
-  'Alix', 'Corinne', 'Shayshari', 'Jayme',
-  'Marble', 'Nuts', 'Fruit',
-  'Animal', 'Novelty', 'Stripe', 'Grid', 'Wood', 'Concrete', 'Leather',
-  'Ripple', 'Speckle', 'Tie-dye', 'Maze',
+  'Leather', 'Wood', 'Concrete', 'Stripe', 'Grid',
+  'Animal', 'Ripple', 'Speckle', 'Tie-dye', 'Maze',
+  'Novelty',
 ];
 
 interface TextureLibraryProps {
