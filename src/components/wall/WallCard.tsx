@@ -479,6 +479,26 @@ export function WallCard({
                 </div>
               </div>
 
+              {/* Hanging Style */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Display</label>
+                <div className="flex gap-1 flex-wrap">
+                  {hangingOptions.map(h => (
+                    <button
+                      key={h.value}
+                      onClick={() => onUpdate(design.id, { hangingStyle: h.value })}
+                      className={`px-2 py-1.5 text-[11px] rounded-md transition-colors flex items-center gap-1 ${
+                        (design.hangingStyle || 'floating') === h.value
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                      }`}
+                    >
+                      <span className="text-[10px]">{h.emoji}</span> {h.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Actions */}
               <div className="flex items-center gap-2 pt-1 border-t border-border">
                 <button
