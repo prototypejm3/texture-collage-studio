@@ -157,9 +157,25 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
         <span className="text-[11px] font-medium leading-tight truncate w-full">
           {vibe.emoji} {vibe.name}
         </span>
-        <span className="text-[9px] text-muted-foreground mt-0.5">
-          {vibe.sections.length} sections
-        </span>
+        <div className="flex items-center gap-2 mt-0.5">
+          <span className="text-[9px] text-muted-foreground">
+            {vibe.sections.length} sections
+          </span>
+          {vibe.baseLikes != null && (
+            <span className="text-[9px] text-muted-foreground flex items-center gap-0.5">
+              <Heart className="w-2.5 h-2.5 fill-rose-400 text-rose-400" />
+              {(() => {
+                const start = new Date(vibe.likesStartDate || '2026-03-01');
+                const now = new Date();
+                const days = Math.max(0, Math.floor((now.getTime() - start.getTime()) / 86400000));
+                return vibe.baseLikes + days * 3;
+              })()}
+            </span>
+          )}
+        </div>
+        {vibe.creator && (
+          <span className="text-[8px] text-muted-foreground/70 mt-0.5">by {vibe.creator}</span>
+        )}
       </motion.button>
     );
   };
