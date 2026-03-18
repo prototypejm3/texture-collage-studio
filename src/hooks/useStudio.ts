@@ -93,6 +93,7 @@ export function useStudio() {
     setDrawMode(false);
     setBackgroundTextureId(null);
     setSectionTransforms({});
+    setDeletedSections(new Set());
   }, []);
 
   const generateRandom = useCallback(() => {
