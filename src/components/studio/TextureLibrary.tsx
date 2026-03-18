@@ -122,18 +122,15 @@ export function TextureLibrary({
             return (
               <motion.div
                 key={tex.id}
-                draggable={!activeSectionId}
+                draggable
                 onDragStart={(e) => {
-                  if (activeSectionId) return;
                   (e as any).dataTransfer?.setData('textureId', tex.id);
                   onDragStart(tex.id);
                 }}
                 onClick={() => onTextureClick?.(tex.id)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                className={`group relative ${
-                  activeSectionId ? 'cursor-pointer' : 'cursor-grab active:cursor-grabbing'
-                }`}
+                className={`cursor-grab active:cursor-grabbing group relative`}
               >
                 <div
                   className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
