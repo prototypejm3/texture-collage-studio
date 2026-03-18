@@ -41,7 +41,7 @@ export function useWall() {
       previewImage: preview,
       createdAt: now,
       updatedAt: now,
-      status: 'in-progress',
+      status: 'display',
       builtIRL: false,
       pinned: false,
       hidden: false,
