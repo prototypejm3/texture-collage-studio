@@ -47,6 +47,7 @@ export function BottomBar({
   onClear, onSave, onSaveToWall,
   isPremium = false, onRequestUpgrade,
   onOpenToolKit, toolKitOpen = false,
+  onOpenStencils, stencilsOpen = false,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
