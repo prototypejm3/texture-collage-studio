@@ -1,4 +1,7 @@
 export type TextureCategory = 
+  | 'Royale' | 'Banks' | 'Bentley' | 'Cody' | 'Sunbrella'
+  | 'Bubbly' | 'Karina' | 'Crave' | 'Caspiar' | 'Checker'
+  | 'Soul' | 'Nepal' | 'Sorrento'
   | 'Leather' | 'Wood' | 'Concrete' | 'Stripe' | 'Grid'
   | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
   | 'Novelty'
