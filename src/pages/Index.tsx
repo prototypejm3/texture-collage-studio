@@ -275,7 +275,7 @@ const Index = () => {
             >
               <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden max-h-[70vh] overflow-y-auto">
                 <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30">
-                  <span className="text-xs font-semibold text-foreground">✂️ Elements</span>
+                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Scissors className="w-3.5 h-3.5 text-destructive" /> Elements</span>
                   <button
                     onClick={() => studio.setSelectedId(null)}
                     className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
