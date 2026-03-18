@@ -1,11 +1,12 @@
-import { WallSettings, WallLayout, WallBackground, FrameStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X } from 'lucide-react';
+import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle } from '@/types/wall';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X, Lamp } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
   onUpdate: (updates: Partial<WallSettings>) => void;
   onApplyFrameToAll?: (style: FrameStyle) => void;
+  onApplyHangingToAll?: (style: HangingStyle) => void;
   isPremium: boolean;
 }
 
