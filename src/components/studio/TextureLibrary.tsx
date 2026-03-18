@@ -5,11 +5,9 @@ import { motion } from 'framer-motion';
 import { Upload, X } from 'lucide-react';
 
 const categories: TextureCategory[] = [
-  'Boucle', 'Linen', 'Velvet', 'Leather', 'Suede', 'Silk',
-  'Denim', 'Corduroy', 'Tweed', 'Felt', 'Yarn',
-  'Marble', 'Wood', 'Terrazzo', 'Concrete', 'Sand', 'Stone', 'Cork',
-  'Abstract', 'Stripe', 'Plaid', 'Grid', 'Speckle', 'Herringbone',
-  'Animal', 'Novelty',
+  'Ocean', 'Sky', 'Space',
+  'Alix', 'Corinne', 'Shayshari', 'Jayme',
+  'Marble', 'Nuts', 'Fruit',
 ];
 
 interface TextureLibraryProps {

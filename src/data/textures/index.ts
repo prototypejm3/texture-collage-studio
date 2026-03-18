@@ -1,60 +1,64 @@
 import { TextureSwatch } from '@/types/studio';
-import { boucleTextures } from './boucle';
-import { linenTextures } from './linen';
-import { velvetTextures } from './velvet';
-import { leatherTextures } from './leather';
-import { suedeTextures } from './suede';
-import { silkTextures } from './silk';
-import { denimTextures } from './denim';
-import { corduroyTextures } from './corduroy';
-import { tweedTextures } from './tweed';
-import { feltTextures } from './felt';
-import { yarnTextures } from './yarn';
-import { marbleTextures } from './marble';
-import { woodTextures } from './wood';
-import { terrazzoTextures } from './terrazzo';
-import { concreteTextures } from './concrete';
-import { sandTextures } from './sand';
-import { stoneTextures } from './stone';
-import { corkTextures } from './cork';
-import { abstractTextures } from './abstract';
-import { stripeTextures } from './stripe';
-import { plaidTextures } from './plaid';
-import { gridTextures } from './grid';
-import { speckleTextures } from './speckle';
-import { herringboneTextures } from './herringbone';
-import { animalTextures } from './animal';
-import { noveltyTextures } from './novelty';
+
+const img = (path: string) => `url(/textures/${path})`;
 
 export const textures: TextureSwatch[] = [
-  // Fabrics
-  ...boucleTextures,
-  ...linenTextures,
-  ...velvetTextures,
-  ...leatherTextures,
-  ...suedeTextures,
-  ...silkTextures,
-  ...denimTextures,
-  ...corduroyTextures,
-  ...tweedTextures,
-  ...feltTextures,
-  ...yarnTextures,
-  // Surfaces
-  ...marbleTextures,
-  ...woodTextures,
-  ...terrazzoTextures,
-  ...concreteTextures,
-  ...sandTextures,
-  ...stoneTextures,
-  ...corkTextures,
-  // Patterns
-  ...abstractTextures,
-  ...stripeTextures,
-  ...plaidTextures,
-  ...gridTextures,
-  ...speckleTextures,
-  ...herringboneTextures,
-  // Animal & Fun
-  ...animalTextures,
-  ...noveltyTextures,
+  // ── Ocean ──
+  { id: 'ocean-reef', name: 'Ocean Reef', category: 'Ocean', cssBackground: img('ocean-reef.png') },
+  { id: 'ocean-deep', name: 'Ocean Deep', category: 'Ocean', cssBackground: img('ocean-deep.png') },
+  { id: 'ocean-foam', name: 'Ocean Foam', category: 'Ocean', cssBackground: img('ocean-foam.png') },
+  { id: 'ocean-tide', name: 'Ocean Tide', category: 'Ocean', cssBackground: img('ocean-tide.png') },
+
+  // ── Sky ──
+  { id: 'sky-dawn', name: 'Sky Dawn', category: 'Sky', cssBackground: img('sky-dawn.png') },
+  { id: 'sky-cloud', name: 'Sky Cloud', category: 'Sky', cssBackground: img('sky-cloud.png') },
+  { id: 'sky-dusk', name: 'Sky Dusk', category: 'Sky', cssBackground: img('sky-dusk.png') },
+  { id: 'sky-azure', name: 'Sky Azure', category: 'Sky', cssBackground: img('sky-azure.png') },
+
+  // ── Space ──
+  { id: 'space-nebula', name: 'Space Nebula', category: 'Space', cssBackground: img('space-nebula.png') },
+  { id: 'space-stardust', name: 'Space Stardust', category: 'Space', cssBackground: img('space-stardust.png') },
+  { id: 'space-eclipse', name: 'Space Eclipse', category: 'Space', cssBackground: img('space-eclipse.png') },
+  { id: 'space-cosmos', name: 'Space Cosmos', category: 'Space', cssBackground: img('space-cosmos.png') },
+
+  // ── Alix ──
+  { id: 'alix-slate', name: 'Alix Slate', category: 'Alix', cssBackground: img('alix-slate.png') },
+  { id: 'alix-sand', name: 'Alix Sand', category: 'Alix', cssBackground: img('alix-sand.png') },
+  { id: 'alix-oat', name: 'Alix Oat', category: 'Alix', cssBackground: img('alix-oat.png') },
+
+  // ── Corinne ──
+  { id: 'corinne-rose', name: 'Corinne Rose', category: 'Corinne', cssBackground: img('corinne-rose.png') },
+  { id: 'corinne-mocha', name: 'Corinne Mocha', category: 'Corinne', cssBackground: img('corinne-mocha.png') },
+  { id: 'corinne-sage', name: 'Corinne Sage', category: 'Corinne', cssBackground: img('corinne-sage.png') },
+  { id: 'corinne-pearl', name: 'Corinne Pearl', category: 'Corinne', cssBackground: img('corinne-pearl.png') },
+
+  // ── Shayshari ──
+  { id: 'shayshari-peacock', name: 'Shayshari Peacock', category: 'Shayshari', cssBackground: img('shayshari-peacock.png') },
+  { id: 'shayshari-cobalt', name: 'Shayshari Cobalt', category: 'Shayshari', cssBackground: img('shayshari-cobalt.png') },
+  { id: 'shayshari-berry', name: 'Shayshari Berry', category: 'Shayshari', cssBackground: img('shayshari-berry.png') },
+  { id: 'shayshari-gold', name: 'Shayshari Gold', category: 'Shayshari', cssBackground: img('shayshari-gold.png') },
+
+  // ── Jayme ──
+  { id: 'jayme-rust', name: 'Jayme Rust', category: 'Jayme', cssBackground: img('jayme-rust.png') },
+  { id: 'jayme-olive', name: 'Jayme Olive', category: 'Jayme', cssBackground: img('jayme-olive.png') },
+  { id: 'jayme-cream', name: 'Jayme Cream', category: 'Jayme', cssBackground: img('jayme-cream.png') },
+  { id: 'jayme-nutmeg', name: 'Jayme Nutmeg', category: 'Jayme', cssBackground: img('jayme-nutmeg.png') },
+
+  // ── Marble ──
+  { id: 'marble-carrara', name: 'Marble Carrara', category: 'Marble', cssBackground: img('marble-carrara.png') },
+  { id: 'marble-nero', name: 'Marble Nero', category: 'Marble', cssBackground: img('marble-nero.png') },
+  { id: 'marble-verde', name: 'Marble Verde', category: 'Marble', cssBackground: img('marble-verde.png') },
+  { id: 'marble-rosa', name: 'Marble Rosa', category: 'Marble', cssBackground: img('marble-rosa.png') },
+
+  // ── Nuts ──
+  { id: 'nuts-walnut', name: 'Nuts Walnut', category: 'Nuts', cssBackground: img('nuts-walnut.png') },
+  { id: 'nuts-cashew', name: 'Nuts Cashew', category: 'Nuts', cssBackground: img('nuts-cashew.png') },
+  { id: 'nuts-pecan', name: 'Nuts Pecan', category: 'Nuts', cssBackground: img('nuts-pecan.png') },
+  { id: 'nuts-almond', name: 'Nuts Almond', category: 'Nuts', cssBackground: img('nuts-almond.png') },
+
+  // ── Fruit ──
+  { id: 'fruit-berry', name: 'Fruit Berry', category: 'Fruit', cssBackground: img('fruit-berry.png') },
+  { id: 'fruit-citrus', name: 'Fruit Citrus', category: 'Fruit', cssBackground: img('fruit-citrus.png') },
+  { id: 'fruit-apple', name: 'Fruit Apple', category: 'Fruit', cssBackground: img('fruit-apple.png') },
+  { id: 'fruit-plum', name: 'Fruit Plum', category: 'Fruit', cssBackground: img('fruit-plum.png') },
 ];
