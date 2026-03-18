@@ -94,7 +94,7 @@ export function useGallery() {
         preview_image: params.preview_image,
         frame_style: params.frame_style,
         display_size: params.display_size,
-        status: 'approved', // auto-approve for now
+        status: 'pending',
       } as any)
       .select()
       .single();
@@ -105,7 +105,7 @@ export function useGallery() {
       return null;
     }
 
-    toast({ title: '🎨 Submitted to Gallery!', description: 'Your art is now visible in the public gallery.' });
+    toast({ title: '🎨 Submitted!', description: 'Your art has been submitted for review. You\'ll see it in the gallery once approved!' });
     loadGallery();
     return (data as any).id;
   }, [user, loadGallery]);
