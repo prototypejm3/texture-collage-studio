@@ -14,6 +14,80 @@ export type Database = {
   }
   public: {
     Tables: {
+      gallery_shadows: {
+        Row: {
+          created_at: string
+          id: string
+          submission_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          submission_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          submission_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_shadows_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "gallery_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gallery_submissions: {
+        Row: {
+          artist_name: string
+          created_at: string
+          description: string | null
+          display_size: string
+          frame_style: string
+          id: string
+          name: string
+          preview_image: string
+          shadow_count: number
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          artist_name?: string
+          created_at?: string
+          description?: string | null
+          display_size?: string
+          frame_style?: string
+          id?: string
+          name: string
+          preview_image: string
+          shadow_count?: number
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          artist_name?: string
+          created_at?: string
+          description?: string | null
+          display_size?: string
+          frame_style?: string
+          id?: string
+          name?: string
+          preview_image?: string
+          shadow_count?: number
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
