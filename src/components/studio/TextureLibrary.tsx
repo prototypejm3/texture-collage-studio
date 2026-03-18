@@ -21,7 +21,7 @@ const groups: TextureGroup[] = [
   { label: 'Leather', categories: ['Leather'] },
   { label: 'Hard Surfaces', categories: ['Wood', 'Marble', 'Concrete'] },
   { label: 'Prints & Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat'] },
+  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
