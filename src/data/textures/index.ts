@@ -77,6 +77,12 @@ export const textures: TextureSwatch[] = [
   { id: 'stripe-pinstripe', name: 'Pinstripe', category: 'Stripe', cssBackground: img('stripe-pinstripe.png') },
   { id: 'stripe-woven', name: 'Woven Stripe', category: 'Stripe', cssBackground: img('stripe-woven.png') },
 
+  // ── Grid ──
+  { id: 'grid-checker-blue', name: 'Blue Check', category: 'Grid', cssBackground: img('grid-checker-blue.png') },
+  { id: 'grid-cream', name: 'Cream Grid', category: 'Grid', cssBackground: img('grid-cream.png') },
+  { id: 'grid-crosshatch', name: 'Crosshatch', category: 'Grid', cssBackground: img('grid-crosshatch.png') },
+  { id: 'grid-windowpane', name: 'Windowpane', category: 'Grid', cssBackground: img('grid-windowpane.png') },
+
   // ── Wood ──
   { id: 'wood-oak', name: 'Oak', category: 'Wood', cssBackground: img('wood-oak.png') },
   { id: 'wood-walnut', name: 'Walnut', category: 'Wood', cssBackground: img('wood-walnut.png') },
