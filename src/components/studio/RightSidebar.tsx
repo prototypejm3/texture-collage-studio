@@ -258,6 +258,62 @@ export function RightSidebar({
               )}
             </div>
 
+            {/* Reference image */}
+            <div className="px-3 py-3 border-b border-border">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
+                <ImagePlus className="w-3.5 h-3.5" />
+                Reference Image
+              </div>
+              {!customTemplate ? (
+                <>
+                  <button
+                    onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                    className={`flex items-center justify-center gap-1.5 w-full px-3 py-1.5 text-xs rounded-lg transition-colors ${
+                      isPremium
+                        ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                        : 'bg-secondary/50 text-muted-foreground/60'
+                    }`}
+                  >
+                    {isPremium ? <ImagePlus className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                    {isPremium ? 'Upload Reference' : 'Premium Feature'}
+                  </button>
+                  <input
+                    ref={templateInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+                      e.target.value = '';
+                    }}
+                  />
+                </>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-muted-foreground truncate flex-1" title={customTemplate.name}>
+                    📷 {customTemplate.name}
+                  </span>
+                  <input
+                    type="range"
+                    min={5}
+                    max={80}
+                    step={5}
+                    value={templateOpacity * 100}
+                    onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
+                    className="w-16 h-1 accent-primary"
+                  />
+                  <button
+                    onClick={onClearTemplate}
+                    className="p-0.5 rounded hover:bg-secondary transition-colors"
+                    title="Remove reference"
+                  >
+                    <X className="w-3 h-3 text-muted-foreground" />
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
               <div className="px-3 py-3 border-b border-border bg-accent/10">
