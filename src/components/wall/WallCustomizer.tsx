@@ -67,17 +67,6 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const [showLightingMenu, setShowLightingMenu] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
 
-  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(settings.background);
-
-  // Higher contrast icons with backdrop for readability
-  const iconClass = (active?: boolean, locked?: boolean) => `relative p-1.5 rounded-md transition-colors ${
-    locked
-      ? isDark ? 'text-background/25 cursor-not-allowed' : 'text-muted-foreground/30 cursor-not-allowed'
-      : active
-        ? isDark ? 'bg-background/25 text-background shadow-sm' : 'bg-primary/15 text-primary shadow-sm'
-        : isDark ? 'text-background/70 hover:text-background hover:bg-background/15' : 'text-foreground/50 hover:text-foreground/80 hover:bg-secondary/80'
-  }`;
-
   const handlePremiumClick = (action: () => void) => {
     if (!isPremium) {
       onRequestUpgrade?.();
@@ -86,25 +75,33 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
     action();
   };
 
+  const iconClass = (active?: boolean, locked?: boolean) => `relative p-2 rounded-full border shadow-sm transition-colors ${
+    locked
+      ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
+      : active
+        ? 'bg-primary text-primary-foreground border-primary'
+        : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+  }`;
+
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">
       <div className="mr-auto" />
 
       <div className="flex items-center gap-2.5">
         {/* Layout picker — grid is free, others are premium */}
-        <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/15' : 'bg-secondary/60'}`}>
+        <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
           {layouts.map(l => {
             const locked = l.value !== 'grid' && !isPremium;
             return (
               <button
                 key={l.value}
                 onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
-                className={`relative p-1.5 rounded-md transition-colors ${
+                className={`relative p-2 rounded-full border shadow-sm transition-colors ${
                   settings.layout === l.value
-                    ? isDark ? 'bg-background/25 text-background shadow-sm' : 'bg-background text-primary shadow-sm'
+                    ? 'bg-primary text-primary-foreground border-primary'
                     : locked
-                      ? isDark ? 'text-background/25 cursor-not-allowed' : 'text-muted-foreground/30 cursor-not-allowed'
-                      : isDark ? 'text-background/70 hover:text-background' : 'text-foreground/50 hover:text-foreground/80'
+                      ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
+                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
                 }`}
                 title={locked ? 'Premium — unlock to use' : l.label}
               >
