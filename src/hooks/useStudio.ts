@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills } from '@/types/studio';
+import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
 let nextId = 1;
