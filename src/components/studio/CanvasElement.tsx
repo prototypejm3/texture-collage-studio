@@ -50,43 +50,57 @@ function getShadowStyle(depth: MaterialEffects['shadowDepth']): string {
   return 'none';
 }
 
-function getEdgeMask(edgeStyle: MaterialEffects['edgeStyle']): { maskImage?: string; borderRadius: string } {
+function getEdgeMask(edgeStyle: MaterialEffects['edgeStyle']): { maskImage?: string; borderRadius: string; edgeClipPath?: string } {
   let borderRadius = '4px';
   let maskImage: string | undefined;
+  let edgeClipPath: string | undefined;
 
-  if (edgeStyle === 'soft-fray') borderRadius = '8px 2px 12px 4px';
-  else if (edgeStyle === 'rough-torn') borderRadius = '12px 2px 16px 6px / 4px 14px 6px 10px';
-  else if (edgeStyle === 'pinking') {
-    maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/8px 6px repeat-x,
-      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/8px 6px repeat-x,
-      conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/6px 8px repeat-y,
-      conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/6px 8px repeat-y,
-      linear-gradient(#000 0 0) center/calc(100% - 6px) calc(100% - 6px) no-repeat`;
+  if (edgeStyle === 'soft-fray') {
+    // Irregular soft frayed edge using clip-path polygon
+    edgeClipPath = 'polygon(2% 0%, 12% 1%, 25% 0%, 38% 2%, 50% 0%, 62% 1%, 75% 0%, 88% 2%, 98% 0%, 100% 8%, 99% 20%, 100% 32%, 98% 45%, 100% 58%, 99% 70%, 100% 82%, 98% 92%, 100% 100%, 90% 99%, 78% 100%, 65% 98%, 52% 100%, 40% 99%, 28% 100%, 15% 98%, 5% 100%, 0% 92%, 1% 80%, 0% 68%, 2% 55%, 0% 42%, 1% 30%, 0% 18%, 2% 8%)';
+  } else if (edgeStyle === 'rough-torn') {
+    // More dramatic torn edges
+    edgeClipPath = 'polygon(4% 0%, 15% 4%, 22% 0%, 32% 5%, 42% 1%, 55% 6%, 65% 0%, 78% 4%, 88% 1%, 96% 0%, 100% 6%, 97% 18%, 100% 28%, 96% 40%, 100% 52%, 98% 62%, 100% 74%, 96% 85%, 100% 95%, 95% 100%, 85% 96%, 75% 100%, 65% 95%, 55% 100%, 45% 97%, 35% 100%, 25% 96%, 12% 100%, 4% 98%, 0% 94%, 3% 82%, 0% 72%, 4% 60%, 0% 48%, 3% 38%, 0% 26%, 5% 15%, 0% 6%)';
+  } else if (edgeStyle === 'pinking') {
+    // Pinking shears — triangular zigzag on all edges
+    const size = 8;
+    const depth = 6;
+    maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/${size}px ${depth}px repeat-x,
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/${size}px ${depth}px repeat-x,
+      conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/${depth}px ${size}px repeat-y,
+      conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/${depth}px ${size}px repeat-y,
+      linear-gradient(#000 0 0) center/calc(100% - ${depth}px) calc(100% - ${depth}px) no-repeat`;
     borderRadius = '0';
   } else if (edgeStyle === 'scallop') {
-    maskImage = `radial-gradient(circle 5px at top, #000 98%, #0000) top/10px 6px repeat-x,
-      radial-gradient(circle 5px at bottom, #000 98%, #0000) bottom/10px 6px repeat-x,
-      radial-gradient(circle 5px at left, #000 98%, #0000) left/6px 10px repeat-y,
-      radial-gradient(circle 5px at right, #000 98%, #0000) right/6px 10px repeat-y,
-      linear-gradient(#000 0 0) center/calc(100% - 6px) calc(100% - 6px) no-repeat`;
+    const r = 6;
+    const d = r * 2;
+    maskImage = `radial-gradient(circle ${r}px at top, #000 98%, #0000) top/${d}px ${r}px repeat-x,
+      radial-gradient(circle ${r}px at bottom, #000 98%, #0000) bottom/${d}px ${r}px repeat-x,
+      radial-gradient(circle ${r}px at left, #000 98%, #0000) left/${r}px ${d}px repeat-y,
+      radial-gradient(circle ${r}px at right, #000 98%, #0000) right/${r}px ${d}px repeat-y,
+      linear-gradient(#000 0 0) center/calc(100% - ${r}px) calc(100% - ${r}px) no-repeat`;
     borderRadius = '0';
   } else if (edgeStyle === 'zigzag') {
-    maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/12px 8px repeat-x,
-      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/12px 8px repeat-x,
-      conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/8px 12px repeat-y,
-      conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/8px 12px repeat-y,
-      linear-gradient(#000 0 0) center/calc(100% - 8px) calc(100% - 8px) no-repeat`;
+    const size = 12;
+    const depth = 8;
+    maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/${size}px ${depth}px repeat-x,
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/${size}px ${depth}px repeat-x,
+      conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/${depth}px ${size}px repeat-y,
+      conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/${depth}px ${size}px repeat-y,
+      linear-gradient(#000 0 0) center/calc(100% - ${depth}px) calc(100% - ${depth}px) no-repeat`;
     borderRadius = '0';
   } else if (edgeStyle === 'wave') {
-    maskImage = `radial-gradient(circle 6px at 50% 0, #0000 98%, #000) top/14px 7px repeat-x,
-      radial-gradient(circle 6px at 50% 100%, #0000 98%, #000) bottom/14px 7px repeat-x,
-      radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left/7px 14px repeat-y,
-      radial-gradient(circle 6px at 100% 50%, #0000 98%, #000) right/7px 14px repeat-y,
-      linear-gradient(#000 0 0) center/calc(100% - 7px) calc(100% - 7px) no-repeat`;
+    const r = 7;
+    const d = r * 2;
+    maskImage = `radial-gradient(circle ${r}px at 50% 0, #0000 98%, #000) top/${d}px ${r}px repeat-x,
+      radial-gradient(circle ${r}px at 50% 100%, #0000 98%, #000) bottom/${d}px ${r}px repeat-x,
+      radial-gradient(circle ${r}px at 0 50%, #0000 98%, #000) left/${r}px ${d}px repeat-y,
+      radial-gradient(circle ${r}px at 100% 50%, #0000 98%, #000) right/${r}px ${d}px repeat-y,
+      linear-gradient(#000 0 0) center/calc(100% - ${r}px) calc(100% - ${r}px) no-repeat`;
     borderRadius = '0';
   }
 
-  return { maskImage, borderRadius };
+  return { maskImage, borderRadius, edgeClipPath };
 }
 
 interface Props {
