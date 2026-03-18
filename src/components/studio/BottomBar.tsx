@@ -41,6 +41,7 @@ export function BottomBar({
   frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  isPremium = false, onRequestUpgrade,
 }: Props) {
   // Whether color circles are expanded
   const isColorFrame = colorFrames.some(f => f.id === wallFrameStyle);
