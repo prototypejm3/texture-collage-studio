@@ -1453,4 +1453,295 @@ const beeSimple: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple];
+// ── STRAWBERRY FRUIT ──
+const strawberryFruit: Vibe = {
+  id: 'strawberry-fruit', name: 'Strawberry', emoji: '🍓',
+  description: 'Plump strawberry with leaf cap',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'sf-leaf-l', label: 'Left Leaf', tone: 'dark',
+      path: 'M195,148 Q172,122 150,108 Q132,100 120,108 Q115,120 128,135 Q145,150 168,158 Q185,162 198,155 Z' },
+    { id: 'sf-leaf-c', label: 'Center Leaf', tone: 'dark',
+      path: 'M222,138 Q228,108 238,82 Q245,65 252,62 Q258,65 265,82 Q272,108 275,138 Q262,145 248,148 Q235,145 222,138 Z' },
+    { id: 'sf-leaf-r', label: 'Right Leaf', tone: 'dark',
+      path: 'M302,148 Q325,122 348,108 Q365,100 378,108 Q382,120 368,135 Q352,150 328,158 Q312,162 298,155 Z' },
+    { id: 'sf-body', label: 'Berry', tone: 'accent',
+      path: 'M170,158 Q162,175 155,208 Q148,252 150,298 Q155,345 175,382 Q198,415 228,432 Q248,440 268,432 Q298,415 322,382 Q342,345 348,298 Q350,252 342,208 Q335,175 328,158 Q298,148 268,145 Q238,142 208,145 Q188,148 170,158 Z' },
+    { id: 'sf-seed1', label: 'Seed 1', tone: 'light', path: circlePath(215, 225, 7) },
+    { id: 'sf-seed2', label: 'Seed 2', tone: 'light', path: circlePath(282, 225, 7) },
+    { id: 'sf-seed3', label: 'Seed 3', tone: 'light', path: circlePath(248, 275, 7) },
+    { id: 'sf-seed4', label: 'Seed 4', tone: 'light', path: circlePath(205, 298, 7) },
+    { id: 'sf-seed5', label: 'Seed 5', tone: 'light', path: circlePath(292, 298, 7) },
+    { id: 'sf-seed6', label: 'Seed 6', tone: 'light', path: circlePath(230, 352, 6) },
+    { id: 'sf-seed7', label: 'Seed 7', tone: 'light', path: circlePath(268, 352, 6) },
+    { id: 'sf-seed8', label: 'Seed 8', tone: 'light', path: circlePath(248, 400, 5) },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── GRAPES ──
+const grapes: Vibe = {
+  id: 'grapes', name: 'Grapes', emoji: '🍇',
+  description: 'Cluster of round grapes with stem',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'gr-stem', label: 'Stem', tone: 'dark',
+      path: 'M238,60 Q235,80 238,100 Q240,115 242,100 Q245,80 242,60 Z' },
+    { id: 'gr-leaf', label: 'Leaf', tone: 'dark',
+      path: 'M242,95 Q262,82 282,78 Q298,78 305,88 Q308,100 298,110 Q282,118 262,115 Q248,112 242,105 Z' },
+    { id: 'gr-g1', label: 'Grape 1', tone: 'accent', path: circlePath(210, 155, 32) },
+    { id: 'gr-g2', label: 'Grape 2', tone: 'medium', path: circlePath(270, 155, 32) },
+    { id: 'gr-g3', label: 'Grape 3', tone: 'accent', path: circlePath(240, 148, 32) },
+    { id: 'gr-g4', label: 'Grape 4', tone: 'medium', path: circlePath(188, 210, 32) },
+    { id: 'gr-g5', label: 'Grape 5', tone: 'accent', path: circlePath(248, 210, 32) },
+    { id: 'gr-g6', label: 'Grape 6', tone: 'medium', path: circlePath(292, 210, 32) },
+    { id: 'gr-g7', label: 'Grape 7', tone: 'accent', path: circlePath(218, 265, 32) },
+    { id: 'gr-g8', label: 'Grape 8', tone: 'medium', path: circlePath(268, 265, 32) },
+    { id: 'gr-g9', label: 'Grape 9', tone: 'accent', path: circlePath(205, 318, 30) },
+    { id: 'gr-g10', label: 'Grape 10', tone: 'medium', path: circlePath(258, 318, 30) },
+    { id: 'gr-g11', label: 'Grape 11', tone: 'accent', path: circlePath(232, 368, 28) },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── EGGPLANT ──
+const eggplant: Vibe = {
+  id: 'eggplant', name: 'Eggplant', emoji: '🍆',
+  description: 'Plump eggplant with leafy cap',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'eg-stem', label: 'Stem', tone: 'dark',
+      path: 'M235,75 Q232,55 238,42 Q242,35 248,42 Q252,55 248,75 Q245,82 240,85 Q238,82 235,75 Z' },
+    { id: 'eg-cap-l', label: 'Left Cap', tone: 'dark',
+      path: 'M240,95 Q218,85 198,82 Q178,82 168,92 Q165,105 178,115 Q198,122 220,120 Q235,115 240,108 Z' },
+    { id: 'eg-cap-r', label: 'Right Cap', tone: 'dark',
+      path: 'M240,95 Q262,85 282,82 Q302,82 312,92 Q315,105 302,115 Q282,122 260,120 Q245,115 240,108 Z' },
+    { id: 'eg-body', label: 'Body', tone: 'accent',
+      path: 'M195,120 Q172,148 158,188 Q148,232 148,278 Q150,328 162,368 Q178,405 205,428 Q232,445 255,445 Q278,442 298,425 Q322,402 338,368 Q352,328 355,278 Q355,232 345,188 Q332,148 310,120 Q288,110 262,108 Q235,108 212,112 Z' },
+    { id: 'eg-highlight', label: 'Highlight', tone: 'light',
+      path: 'M195,200 Q192,238 195,278 Q198,318 208,352 Q212,335 215,298 Q215,258 212,222 Q208,198 200,188 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── TOMATO ──
+const tomato: Vibe = {
+  id: 'tomato', name: 'Tomato', emoji: '🍅',
+  description: 'Ripe tomato with star-shaped leaf cap',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'tom-body', label: 'Body', tone: 'accent',
+      path: 'M240,130 Q185,132 148,155 Q115,182 100,218 Q88,258 92,298 Q100,338 120,368 Q148,398 185,415 Q222,425 258,425 Q295,418 328,398 Q358,368 378,338 Q392,298 395,258 Q388,218 372,182 Q348,155 312,135 Q278,128 240,130 Z' },
+    { id: 'tom-segment1', label: 'Segment Line 1', tone: 'dark',
+      path: 'M240,130 Q235,195 232,275 Q230,345 232,415 L238,415 Q238,345 238,275 Q240,195 242,130 Z' },
+    { id: 'tom-segment2', label: 'Segment Line 2', tone: 'dark',
+      path: 'M148,180 Q185,225 218,280 Q238,325 248,390 L242,392 Q232,328 212,278 Q182,225 145,182 Z' },
+    { id: 'tom-segment3', label: 'Segment Line 3', tone: 'dark',
+      path: 'M332,180 Q295,225 262,280 Q242,325 232,390 L238,392 Q248,328 268,278 Q298,225 335,182 Z' },
+    { id: 'tom-leaf1', label: 'Leaf 1', tone: 'dark',
+      path: 'M240,130 Q248,105 260,85 Q270,72 275,75 Q275,85 268,100 Q258,118 248,132 Z' },
+    { id: 'tom-leaf2', label: 'Leaf 2', tone: 'dark',
+      path: 'M240,130 Q225,108 215,88 Q208,75 205,78 Q205,88 212,102 Q222,118 232,132 Z' },
+    { id: 'tom-leaf3', label: 'Leaf 3', tone: 'dark',
+      path: 'M240,130 Q262,118 282,112 Q298,110 302,115 Q298,122 285,128 Q268,132 252,135 Z' },
+    { id: 'tom-leaf4', label: 'Leaf 4', tone: 'dark',
+      path: 'M240,130 Q218,118 198,112 Q182,110 178,115 Q182,122 195,128 Q212,132 228,135 Z' },
+    { id: 'tom-leaf5', label: 'Leaf 5', tone: 'dark',
+      path: 'M240,130 Q240,108 242,88 Q245,72 248,68 Q252,72 252,88 Q250,108 248,130 Z' },
+    { id: 'tom-highlight', label: 'Highlight', tone: 'light', path: circlePath(290, 220, 28) },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── BELL PEPPER ──
+const bellPepper: Vibe = {
+  id: 'bell-pepper', name: 'Bell Pepper', emoji: '🫑',
+  description: 'Chunky bell pepper with lobes',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'bp-stem', label: 'Stem', tone: 'dark',
+      path: 'M232,78 Q228,58 232,42 Q238,32 245,32 Q252,38 255,58 Q255,78 248,92 Q242,98 238,92 Z' },
+    { id: 'bp-body', label: 'Body', tone: 'accent',
+      path: 'M168,148 Q148,182 138,228 Q132,278 138,328 Q148,372 168,402 Q192,428 222,440 Q248,445 275,440 Q305,428 328,402 Q348,372 358,328 Q365,278 358,228 Q348,182 328,148 Q308,125 282,112 Q258,105 235,108 Q208,112 188,125 Q175,135 168,148 Z' },
+    { id: 'bp-lobe-l', label: 'Left Lobe', tone: 'medium',
+      path: 'M168,148 Q158,168 152,198 Q148,232 152,268 Q158,195 172,155 Z' },
+    { id: 'bp-lobe-r', label: 'Right Lobe', tone: 'medium',
+      path: 'M328,148 Q338,168 345,198 Q348,232 345,268 Q338,195 325,155 Z' },
+    { id: 'bp-crease', label: 'Center Crease', tone: 'dark',
+      path: 'M245,115 Q242,168 240,232 Q238,305 240,378 Q242,415 245,438 L248,438 Q248,415 248,378 Q250,305 248,232 Q248,168 248,115 Z' },
+    { id: 'bp-highlight', label: 'Highlight', tone: 'light',
+      path: 'M195,195 Q192,228 195,268 Q198,302 205,328 Q208,305 210,268 Q210,232 208,198 Q202,185 198,188 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── BROCCOLI ──
+const broccoli: Vibe = {
+  id: 'broccoli', name: 'Broccoli', emoji: '🥦',
+  description: 'Fluffy broccoli floret tree',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'br-crown1', label: 'Crown Left', tone: 'dark',
+      path: 'M148,185 Q128,158 135,128 Q148,102 175,95 Q198,95 215,108 Q228,125 225,148 Q222,168 210,182 Q195,195 175,198 Q158,195 148,185 Z' },
+    { id: 'br-crown2', label: 'Crown Center', tone: 'accent',
+      path: 'M210,172 Q198,142 205,112 Q218,85 248,78 Q275,82 290,108 Q298,138 288,168 Q278,192 258,205 Q238,210 222,202 Q210,192 210,172 Z' },
+    { id: 'br-crown3', label: 'Crown Right', tone: 'dark',
+      path: 'M288,185 Q302,158 328,148 Q352,145 368,158 Q378,175 372,198 Q362,218 342,228 Q318,232 298,222 Q282,208 282,192 Z' },
+    { id: 'br-crown4', label: 'Crown Top', tone: 'medium',
+      path: 'M185,148 Q182,118 195,95 Q215,78 240,75 Q265,78 282,95 Q295,118 292,148 Q282,172 262,185 Q240,192 218,185 Q198,172 185,148 Z' },
+    { id: 'br-crown5', label: 'Crown Front', tone: 'accent',
+      path: 'M175,198 Q168,218 172,242 Q182,262 205,272 Q232,278 258,272 Q282,262 295,242 Q302,218 298,198 Q282,212 258,218 Q232,222 208,218 Q188,210 175,198 Z' },
+    { id: 'br-stem', label: 'Stem', tone: 'medium',
+      path: 'M215,272 Q210,298 208,328 Q205,362 208,395 Q212,425 218,445 Q228,452 240,455 Q252,452 262,445 Q268,425 272,395 Q275,362 272,328 Q270,298 265,272 Q252,278 240,280 Q228,278 215,272 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── ORANGE SLICE ──
+const orangeSlice: Vibe = {
+  id: 'orange-slice', name: 'Orange Slice', emoji: '🍊',
+  description: 'Juicy half-cut citrus slice',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'os-rind', label: 'Rind', tone: 'accent',
+      path: 'M240,100 Q310,100 365,135 Q415,172 440,228 Q455,278 440,332 Q415,385 365,422 Q310,455 240,458 Q170,455 115,422 Q65,385 40,332 Q25,278 40,228 Q65,172 115,135 Q170,100 240,100 Z' },
+    { id: 'os-flesh', label: 'Flesh', tone: 'light',
+      path: 'M240,130 Q300,130 348,160 Q392,192 412,240 Q425,285 412,332 Q392,378 348,408 Q300,435 240,438 Q180,435 132,408 Q88,378 68,332 Q55,285 68,240 Q88,192 132,160 Q180,130 240,130 Z' },
+    { id: 'os-seg1', label: 'Segment 1', tone: 'accent',
+      path: 'M240,280 L240,135 Q262,135 282,142 L240,280 Z' },
+    { id: 'os-seg2', label: 'Segment 2', tone: 'accent',
+      path: 'M240,280 L290,145 Q322,158 348,178 L240,280 Z' },
+    { id: 'os-seg3', label: 'Segment 3', tone: 'accent',
+      path: 'M240,280 L358,192 Q382,218 398,248 L240,280 Z' },
+    { id: 'os-seg4', label: 'Segment 4', tone: 'accent',
+      path: 'M240,280 L405,262 Q412,295 405,328 L240,280 Z' },
+    { id: 'os-seg5', label: 'Segment 5', tone: 'accent',
+      path: 'M240,280 L398,342 Q382,372 358,395 L240,280 Z' },
+    { id: 'os-seg6', label: 'Segment 6', tone: 'accent',
+      path: 'M240,280 L342,405 Q315,422 282,432 L240,280 Z' },
+    { id: 'os-seg7', label: 'Segment 7', tone: 'accent',
+      path: 'M240,280 L268,435 Q252,438 240,438 Q228,438 212,435 L240,280 Z' },
+    { id: 'os-seg8', label: 'Segment 8', tone: 'accent',
+      path: 'M240,280 L198,432 Q168,422 142,405 L240,280 Z' },
+    { id: 'os-center', label: 'Center', tone: 'medium', path: circlePath(240, 280, 28) },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── BANANA ──
+const banana: Vibe = {
+  id: 'banana', name: 'Banana', emoji: '🍌',
+  description: 'Curved banana with peeled tip',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ban-body', label: 'Body', tone: 'accent',
+      path: 'M145,342 Q128,308 118,268 Q112,228 115,188 Q122,148 142,118 Q168,92 198,78 Q228,68 258,72 Q282,78 295,95 Q305,115 302,142 Q298,172 285,205 Q268,242 248,278 Q225,312 200,342 Q178,365 160,375 Q148,375 145,365 Z' },
+    { id: 'ban-inner', label: 'Inner Curve', tone: 'light',
+      path: 'M158,332 Q145,302 138,265 Q132,228 135,192 Q142,158 158,132 Q178,108 205,95 Q228,88 248,92 Q262,98 268,112 Q272,132 268,158 Q260,192 248,228 Q232,265 215,298 Q195,328 178,350 Q165,358 158,348 Z' },
+    { id: 'ban-tip-top', label: 'Top Tip', tone: 'dark',
+      path: 'M258,72 Q268,65 278,62 Q288,62 295,68 Q298,78 295,88 Q288,82 278,78 Q268,75 260,75 Z' },
+    { id: 'ban-tip-bottom', label: 'Bottom Tip', tone: 'dark',
+      path: 'M145,365 Q140,372 132,378 Q125,382 120,378 Q118,372 122,365 Q128,358 138,355 Q142,358 145,362 Z' },
+    { id: 'ban-stripe1', label: 'Ridge 1', tone: 'medium',
+      path: 'M172,105 Q180,128 182,158 Q182,192 178,228 Q172,268 162,302 Q155,328 150,348 L155,350 Q162,328 170,298 Q178,262 185,225 Q190,188 188,152 Q185,122 178,100 Z' },
+    { id: 'ban-stripe2', label: 'Ridge 2', tone: 'medium',
+      path: 'M225,82 Q232,105 235,138 Q235,175 230,215 Q222,255 210,292 Q198,325 188,348 L192,350 Q205,322 218,288 Q230,248 238,210 Q245,170 242,132 Q238,100 230,78 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── APPLE ──
+const apple: Vibe = {
+  id: 'apple', name: 'Apple', emoji: '🍎',
+  description: 'Classic apple with stem and leaf',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ap-stem', label: 'Stem', tone: 'dark',
+      path: 'M235,80 Q232,58 235,42 Q238,32 242,32 Q248,38 248,58 Q248,78 245,92 Q242,98 238,95 Z' },
+    { id: 'ap-leaf', label: 'Leaf', tone: 'dark',
+      path: 'M245,82 Q265,72 285,68 Q302,68 308,78 Q310,88 302,98 Q288,105 268,105 Q252,102 245,95 Z' },
+    { id: 'ap-body', label: 'Body', tone: 'accent',
+      path: 'M155,162 Q135,192 125,232 Q118,278 122,322 Q130,365 152,398 Q178,425 212,440 Q240,448 268,440 Q302,425 328,398 Q352,365 360,322 Q365,278 358,232 Q348,192 328,162 Q310,142 288,130 Q268,122 248,118 Q228,118 208,122 Q188,130 172,142 Q162,152 155,162 Z' },
+    { id: 'ap-indent', label: 'Top Indent', tone: 'dark',
+      path: 'M208,122 Q218,112 232,108 Q242,105 252,108 Q265,112 275,122 Q262,118 248,115 Q235,115 222,118 Z' },
+    { id: 'ap-highlight', label: 'Highlight', tone: 'light',
+      path: 'M185,198 Q178,228 178,265 Q180,302 188,332 Q192,312 195,278 Q195,242 192,208 Q190,192 188,188 Z' },
+    { id: 'ap-bottom', label: 'Bottom', tone: 'medium',
+      path: 'M222,438 Q232,442 242,445 Q252,442 262,438 Q255,445 248,448 Q240,448 232,445 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── PEAR ──
+const pear: Vibe = {
+  id: 'pear', name: 'Pear', emoji: '🍐',
+  description: 'Elegant pear shape with stem',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'pe-stem', label: 'Stem', tone: 'dark',
+      path: 'M235,65 Q232,45 235,30 Q238,22 242,22 Q248,28 248,48 Q248,68 245,82 Q242,88 238,85 Z' },
+    { id: 'pe-leaf', label: 'Leaf', tone: 'dark',
+      path: 'M245,72 Q265,62 285,58 Q302,58 308,68 Q310,78 302,88 Q288,95 268,95 Q252,92 245,85 Z' },
+    { id: 'pe-body-top', label: 'Neck', tone: 'medium',
+      path: 'M215,98 Q202,108 192,125 Q185,148 182,175 Q180,205 185,235 Q195,218 208,205 Q222,195 238,192 Q255,195 268,205 Q282,218 292,235 Q298,205 298,175 Q295,148 288,125 Q278,108 265,98 Q252,92 240,90 Q228,92 215,98 Z' },
+    { id: 'pe-body-bottom', label: 'Body', tone: 'accent',
+      path: 'M185,235 Q162,258 148,292 Q138,328 142,365 Q148,398 168,422 Q195,442 228,450 Q248,452 268,448 Q302,438 325,418 Q345,392 352,358 Q358,322 348,288 Q335,258 312,235 Q298,225 282,218 Q268,212 248,210 Q228,212 215,218 Q200,225 190,232 Z' },
+    { id: 'pe-highlight', label: 'Highlight', tone: 'light',
+      path: 'M195,278 Q188,312 190,348 Q195,382 205,408 Q208,378 210,345 Q210,310 208,278 Q202,268 198,272 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── CORN ──
+const corn: Vibe = {
+  id: 'corn', name: 'Corn', emoji: '🌽',
+  description: 'Corn cob with husk leaves',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'co-husk-l', label: 'Left Husk', tone: 'dark',
+      path: 'M195,148 Q172,142 155,148 Q140,158 135,178 Q132,202 138,228 Q148,258 162,282 Q178,305 195,318 Q205,308 210,295 Q202,268 195,238 Q188,205 185,175 Q185,158 190,150 Z' },
+    { id: 'co-husk-r', label: 'Right Husk', tone: 'dark',
+      path: 'M285,148 Q308,142 325,148 Q340,158 345,178 Q348,202 342,228 Q332,258 318,282 Q302,305 285,318 Q275,308 270,295 Q278,268 285,238 Q292,205 295,175 Q295,158 290,150 Z' },
+    { id: 'co-husk-back', label: 'Back Husk', tone: 'medium',
+      path: 'M210,135 Q220,118 240,112 Q260,118 270,135 Q275,148 275,168 Q272,145 260,128 Q248,122 240,122 Q232,122 220,128 Q208,145 205,168 Q205,148 210,135 Z' },
+    { id: 'co-cob', label: 'Cob', tone: 'accent',
+      path: 'M205,155 Q198,185 195,225 Q192,272 198,318 Q205,358 218,392 Q232,418 245,428 Q258,418 272,392 Q285,358 292,318 Q298,272 295,225 Q292,185 285,155 Q272,142 255,135 Q240,132 225,135 Q212,142 205,155 Z' },
+    { id: 'co-row1', label: 'Kernel Row 1', tone: 'medium',
+      path: 'M225,168 L228,172 L228,192 L225,195 L222,192 L222,172 Z M225,205 L228,208 L228,228 L225,232 L222,228 L222,208 Z M225,242 L228,245 L228,268 L225,272 L222,268 L222,245 Z M225,282 L228,285 L228,308 L225,312 L222,308 L222,285 Z M225,322 L228,325 L228,348 L225,352 L222,348 L222,325 Z M225,362 L228,365 L228,385 L225,388 L222,385 L222,365 Z' },
+    { id: 'co-row2', label: 'Kernel Row 2', tone: 'medium',
+      path: 'M248,165 L252,168 L252,188 L248,192 L245,188 L245,168 Z M248,202 L252,205 L252,225 L248,228 L245,225 L245,205 Z M248,238 L252,242 L252,262 L248,265 L245,262 L245,242 Z M248,278 L252,282 L252,302 L248,305 L245,302 L245,282 Z M248,318 L252,322 L252,342 L248,345 L245,342 L245,322 Z M248,358 L252,362 L252,382 L248,385 L245,382 L245,362 Z' },
+    { id: 'co-row3', label: 'Kernel Row 3', tone: 'medium',
+      path: 'M268,170 L272,172 L272,192 L268,195 L265,192 L265,172 Z M268,208 L272,212 L272,232 L268,235 L265,232 L265,212 Z M268,248 L272,252 L272,272 L268,275 L265,272 L265,252 Z M268,288 L272,292 L272,312 L268,315 L265,312 L265,292 Z M268,328 L272,332 L272,352 L268,355 L265,352 L265,332 Z' },
+    { id: 'co-silk', label: 'Silk', tone: 'light',
+      path: 'M232,428 Q228,438 222,448 Q218,455 215,458 Q212,455 215,448 Q220,438 228,428 Z M248,428 Q252,438 258,448 Q262,455 265,458 Q268,455 265,448 Q260,438 252,428 Z M240,430 Q240,442 242,452 Q242,458 240,460 Q238,458 238,452 Q238,442 240,430 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── CARROT ──
+const carrot: Vibe = {
+  id: 'carrot', name: 'Carrot', emoji: '🥕',
+  description: 'Bright carrot with leafy greens',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ca-leaf1', label: 'Leaf 1', tone: 'dark',
+      path: 'M248,142 Q255,118 268,98 Q282,82 295,72 Q305,68 308,75 Q305,88 295,102 Q278,122 262,138 Z' },
+    { id: 'ca-leaf2', label: 'Leaf 2', tone: 'dark',
+      path: 'M240,135 Q232,108 228,82 Q225,62 228,48 Q232,42 238,45 Q242,58 245,82 Q248,108 248,132 Z' },
+    { id: 'ca-leaf3', label: 'Leaf 3', tone: 'dark',
+      path: 'M235,142 Q222,118 205,98 Q192,82 178,75 Q168,72 168,78 Q172,88 185,102 Q202,122 220,138 Z' },
+    { id: 'ca-body', label: 'Body', tone: 'accent',
+      path: 'M205,148 Q195,172 188,208 Q182,248 180,292 Q178,338 182,378 Q188,412 198,438 Q212,458 228,465 Q242,468 255,462 Q268,452 278,432 Q292,402 298,368 Q305,328 305,288 Q302,245 295,208 Q288,175 278,152 Q268,142 252,138 Q238,135 225,138 Q212,142 205,148 Z' },
+    { id: 'ca-stripe1', label: 'Stripe 1', tone: 'medium',
+      path: 'M200,218 Q218,212 242,210 Q268,212 288,218 L290,225 Q268,218 242,215 Q218,218 198,225 Z' },
+    { id: 'ca-stripe2', label: 'Stripe 2', tone: 'medium',
+      path: 'M192,288 Q212,282 240,280 Q268,282 290,288 L292,295 Q270,288 242,285 Q215,288 195,295 Z' },
+    { id: 'ca-stripe3', label: 'Stripe 3', tone: 'medium',
+      path: 'M188,358 Q208,352 238,350 Q265,352 285,358 L288,365 Q268,358 240,355 Q212,358 192,365 Z' },
+    { id: 'ca-tip', label: 'Tip', tone: 'medium',
+      path: 'M228,465 Q235,472 240,475 Q245,472 252,465 Q248,475 242,478 Q238,478 232,475 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot];
