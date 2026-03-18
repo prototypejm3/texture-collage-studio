@@ -52,7 +52,7 @@ export function useStudio() {
       width: 100,
       height: 100,
       rotation: 0,
-      shape: 'soft-square',
+      shape: nextShape,
       zIndex: nextId,
       effects: { ...defaultEffects },
     };
