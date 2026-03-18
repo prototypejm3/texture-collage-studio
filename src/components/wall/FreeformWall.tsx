@@ -25,7 +25,7 @@ interface FreeformWallProps {
 }
 
 export function FreeformWall({
-  designs, isPremium, onOpen, onDuplicate, onDelete,
+  designs, isPremium, isDark, onOpen, onDuplicate, onDelete,
   onTogglePin, onToggleIRL, onToggleHide, onUpdate,
   onFrameStyleChange, onSizeChange,
 }: FreeformWallProps) {
