@@ -238,7 +238,7 @@ export const textures: TextureSwatch[] = [
   // ── ShayShari ──
   { id: 'shayshari-terra', name: 'ShayShari', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
   { id: 'shayshari-sage', name: 'ShayShari Seltzer', category: 'ShayShari', cssBackground: img('novelty-shayshari-sage.png') },
-  { id: 'shayshari-sand', name: 'Sand', category: 'ShayShari', cssBackground: img('novelty-shayshari-sand.png') },
+  { id: 'shayshari-sand', name: 'Sand', category: 'Villa', cssBackground: img('novelty-shayshari-sand.png') },
 
   // ── Suede Ace ──
   { id: 'suede-ace-navy', name: 'Suede Ace', category: 'Suede Ace', cssBackground: img('novelty-suede-navy.png') },
