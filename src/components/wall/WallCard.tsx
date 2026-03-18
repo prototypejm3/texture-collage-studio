@@ -189,7 +189,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
 
 export function WallCard({
   design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide,
-  onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, size = 'medium',
+  onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, isDark, size = 'medium',
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
