@@ -86,6 +86,8 @@ export function useStudio() {
     setActiveVibe(null);
     setVibeFills({});
     setSelectedSectionId(null);
+    setCustomSections([]);
+    setDrawMode(false);
   }, []);
 
   const generateRandom = useCallback(() => {
