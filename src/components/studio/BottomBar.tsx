@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
-import { FrameStyle } from '@/types/wall';
-import { Trash2, Save, Download } from 'lucide-react';
+import { FrameStyle, AmbientSound } from '@/types/wall';
+import { Trash2, Save, Download, Volume2 } from 'lucide-react';
 
 interface Props {
   frameSize: FrameSize;
@@ -11,6 +11,8 @@ interface Props {
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
+  ambientSound?: AmbientSound;
+  onAmbientSoundChange?: (sound: AmbientSound) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
