@@ -147,7 +147,7 @@ const Index = () => {
 
   const handleReplace = useCallback(() => {
     if (pendingSave) {
-      wall.replaceDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName);
+      wall.replaceDesign(pendingSave.preview, pendingSave.name, pendingSave.vibeName, undefined, pendingSave.stencilCreator);
       toast({ title: 'Design replaced!', description: 'Your old design was replaced with the new one.' });
     }
     setPendingSave(null);
