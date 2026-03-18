@@ -131,6 +131,34 @@ const Index = () => {
     toast({ title: 'Reference set!', description: 'Image is shown as a canvas background guide.' });
   }, [uploadTemplate]);
 
+  const handleGenerateMood = useCallback(async (prompt: string) => {
+    const result = await vibeGen.generateVibe(prompt);
+    if (result) {
+      const vibe = vibeGen.toVibe(result);
+      // Apply the mood's texture fills to current stencil sections
+      if (studio.activeVibe) {
+        studio.activeVibe.sections.forEach(section => {
+          const toneTextures = section.tone === 'light' ? result.lightTextures
+            : section.tone === 'medium' ? result.mediumTextures
+            : section.tone === 'dark' ? result.darkTextures
+            : result.accentTextures;
+          if (toneTextures.length > 0) {
+            const randomTex = toneTextures[Math.floor(Math.random() * toneTextures.length)];
+            studio.fillSection(section.id, randomTex);
+          }
+        });
+      }
+      // Apply frame style if suggested
+      if (result.frameChoice) {
+        const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
+        if (validFrameStyles.includes(result.frameChoice)) {
+          studio.setWallFrameStyle(result.frameChoice as any);
+        }
+      }
+      toast({ title: `${result.emoji} ${result.name}`, description: 'Mood applied — textures auto-filled!' });
+    }
+  }, [vibeGen, studio]);
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <NavBar />
@@ -169,6 +197,11 @@ const Index = () => {
             onRemoveCustomTexture={removeCustomTexture}
             isPremium={isPremium}
             onRequestUpgrade={() => setShowPaywall(true)}
+            selectedElement={studio.selectedElement ?? null}
+            onUpdateElement={(updates) => studio.updateElement(studio.selectedId!, updates)}
+            onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+            onDelete={() => studio.deleteElement(studio.selectedId!)}
           />
         </div>
         <Canvas
@@ -201,11 +234,8 @@ const Index = () => {
           onSelectVibe={handleSelectVibe}
           onShuffleVibeFills={studio.shuffleVibeFills}
           onRequestUpgrade={() => setShowPaywall(true)}
-          selectedElement={studio.selectedElement ?? null}
-          onUpdateElement={(updates) => studio.updateElement(studio.selectedId!, updates)}
-          onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-          onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-          onDelete={() => studio.deleteElement(studio.selectedId!)}
+          onGenerateMood={handleGenerateMood}
+          isGeneratingMood={vibeGen.isGenerating}
         />
       </div>
 
@@ -228,7 +258,6 @@ const Index = () => {
             studio.selectVibe(vibe);
             if (vibeGen.generatedVibe.frameChoice) {
               const fc = vibeGen.generatedVibe.frameChoice as any;
-              // Apply as wallFrameStyle if it's a valid frame style
               const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
               if (validFrameStyles.includes(fc)) {
                 studio.setWallFrameStyle(fc);

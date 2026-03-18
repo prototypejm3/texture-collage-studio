@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { vibes } from '@/data/vibes';
-import { Vibe, CanvasElement, MaterialEffects } from '@/types/studio';
+import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Scissors, Heart, EyeOff, Eye, Globe, Save } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
-import { FloatingToolbar } from './FloatingToolbar';
 import { toast } from '@/hooks/use-toast';
 
-type Tab = 'stencils' | 'community' | 'element';
+type Tab = 'stencils' | 'community';
 
 interface RightSidebarProps {
   activeVibeId: string | null;
@@ -17,11 +16,9 @@ interface RightSidebarProps {
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
   onRequestUpgrade: () => void;
-  selectedElement: CanvasElement | null;
-  onUpdateElement: (updates: Partial<CanvasElement>) => void;
-  onUpdateEffects: (effects: Partial<MaterialEffects>) => void;
-  onDuplicate: () => void;
-  onDelete: () => void;
+  // Mood generator
+  onGenerateMood: (prompt: string) => void;
+  isGeneratingMood: boolean;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
@@ -67,10 +64,11 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 
 export function RightSidebar({
   activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
-  selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
+  onGenerateMood, isGeneratingMood,
 }: RightSidebarProps) {
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
   const [aiPrompt, setAiPrompt] = useState('');
+  const [moodPrompt, setMoodPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const { generateStencil, isGenerating } = useGenerateStencil();
   const { user } = useAuth();
@@ -86,7 +84,6 @@ export function RightSidebar({
     if (vibe) {
       setAiGeneratedVibes(prev => [...prev, vibe]);
       onSelectVibe(vibe);
-      // Open save dialog
       if (user) {
         setSaveDialogVibe(vibe);
         setSaveName(aiPrompt);
@@ -101,6 +98,13 @@ export function RightSidebar({
     await social.saveStencil(saveDialogVibe, saveName, savePublic);
     toast({ title: savePublic ? 'Published!' : 'Saved!', description: savePublic ? 'Your stencil is now visible to everyone.' : 'Stencil saved to your collection.' });
     setSaveDialogVibe(null);
+  };
+
+  const handleGenerateMood = () => {
+    if (moodPrompt.trim()) {
+      onGenerateMood(moodPrompt.trim());
+      setMoodPrompt('');
+    }
   };
 
   // Filter out hidden stencils from built-in vibes
@@ -153,7 +157,6 @@ export function RightSidebar({
   const tabs: { id: Tab; label: string; icon: any }[] = [
     { id: 'stencils', label: 'Stencils', icon: Palette },
     { id: 'community', label: 'Community', icon: Globe },
-    { id: 'element', label: 'Element', icon: Scissors },
   ];
 
   return (
@@ -208,11 +211,11 @@ export function RightSidebar({
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col h-full">
-            {/* AI Generate */}
+            {/* AI Generate Stencil */}
             <div className="px-3 py-3 border-b border-border bg-muted/30">
               <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                AI Generate
+                AI Generate Stencil
               </div>
               {isPremium ? (
                 <div className="flex flex-col gap-2">
@@ -247,14 +250,44 @@ export function RightSidebar({
               )}
             </div>
 
+            {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
-              <div className="px-3 py-2 border-b border-border">
-                <button
-                  onClick={onShuffleVibeFills}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
-                >
-                  <Shuffle className="w-3 h-3" /> Shuffle Fills
-                </button>
+              <div className="px-3 py-3 border-b border-border bg-accent/10">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
+                  <Sparkles className="w-3.5 h-3.5 text-accent-foreground" />
+                  AI Mood — auto-fill textures
+                </div>
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    value={moodPrompt}
+                    onChange={e => setMoodPrompt(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
+                    placeholder="cozy cabin, dark academia, tropical…"
+                    className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    disabled={isGeneratingMood}
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleGenerateMood}
+                      disabled={isGeneratingMood || !moodPrompt.trim()}
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {isGeneratingMood ? (
+                        <><Loader2 className="w-3 h-3 animate-spin" /> Generating…</>
+                      ) : (
+                        <><Sparkles className="w-3 h-3" /> Generate Mood</>
+                      )}
+                    </button>
+                    <button
+                      onClick={onShuffleVibeFills}
+                      className="flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
+                      title="Shuffle fills"
+                    >
+                      <Shuffle className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -275,7 +308,7 @@ export function RightSidebar({
               </div>
             </div>
           </div>
-        ) : activeTab === 'community' ? (
+        ) : (
           <div className="flex flex-col h-full">
             <div className="px-3 py-3 border-b border-border">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -315,22 +348,6 @@ export function RightSidebar({
               )}
             </div>
           </div>
-        ) : (
-          selectedElement ? (
-            <FloatingToolbar
-              element={selectedElement}
-              onUpdate={onUpdateElement}
-              onUpdateEffects={onUpdateEffects}
-              onDuplicate={onDuplicate}
-              onDelete={onDelete}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full p-4">
-              <p className="text-xs text-muted-foreground text-center">
-                Click an element to edit its shape, size, and effects
-              </p>
-            </div>
-          )
         )}
       </div>
     </div>
@@ -364,19 +381,14 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
               <Check className="w-2.5 h-2.5 text-primary-foreground" />
             </div>
           )}
-          {isAiGenerated && (
-            <div className="absolute top-1 left-1 px-1 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[7px] font-bold uppercase tracking-wider">
-              AI
-            </div>
-          )}
         </div>
         <span className="text-[10px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
       </button>
 
-      {/* Hide button */}
-      {isLoggedIn && (
+      {/* Hide toggle */}
+      {(isLoggedIn || isAiGenerated) && (
         <button
           onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
           className="absolute top-1.5 right-1.5 p-1 rounded-full bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-secondary"
