@@ -16,7 +16,7 @@ const groups: TextureGroup[] = [
   { label: 'Performance', categories: ['Sunbrella', 'Key Largo'] },
   { label: 'Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
   { label: 'Bouclé', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Silk & Sheer', categories: ['Caspiar', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Silk & Sheer', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
   { label: 'Felt & Cotton', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
   { label: 'Leather', categories: ['Leather'] },
   { label: 'Hard Surfaces', categories: ['Wood', 'Concrete'] },

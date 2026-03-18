@@ -60,9 +60,12 @@ export const textures: TextureSwatch[] = [
   { id: 'crave-lava-rock', name: 'Lava Rock', category: 'Crave', cssBackground: img('crave-lava-rock.png') },
   { id: 'crave-irish-cream', name: 'Irish Cream', category: 'Crave', cssBackground: img('crave-irish-cream.png') },
 
-  // ── Caspiar (Silk) ──
-  { id: 'caspiar-chiffon', name: 'Chiffon', category: 'Caspiar', cssBackground: img('caspiar-chiffon.png') },
-  { id: 'caspiar-ivory', name: 'Ivory', category: 'Caspiar', cssBackground: img('caspiar-ivory.png') },
+  // ── Flat Silk ──
+  { id: 'flat-silk-cream', name: 'Cream', category: 'Flat Silk', cssBackground: img('flat-silk-cream.png') },
+  { id: 'flat-silk-champagne', name: 'Champagne', category: 'Flat Silk', cssBackground: img('flat-silk-champagne.png') },
+  { id: 'flat-silk-taupe', name: 'Taupe', category: 'Flat Silk', cssBackground: img('flat-silk-taupe.png') },
+  { id: 'flat-silk-dusty-rose', name: 'Dusty Rose', category: 'Flat Silk', cssBackground: img('flat-silk-dusty-rose.png') },
+  { id: 'flat-silk-navy', name: 'Deep Navy', category: 'Flat Silk', cssBackground: img('flat-silk-navy.png') },
 
   // ── Checker ──
   { id: 'checker-mocha', name: 'Mocha', category: 'Checker', cssBackground: img('checker-mocha.png') },
