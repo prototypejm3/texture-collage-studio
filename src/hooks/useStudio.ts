@@ -261,8 +261,8 @@ export function useStudio() {
   }, [activeVibe, customSections, allSections]);
 
   const getState = useCallback(() => {
-    return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId });
-  }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId]);
+    return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId, backgroundTextureId });
+  }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId, backgroundTextureId]);
 
   const loadState = useCallback((serialized: string) => {
     try {
