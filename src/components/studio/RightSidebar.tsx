@@ -107,8 +107,48 @@ export function RightSidebar({
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id));
   const allVibes = [...filteredVibes, ...aiGeneratedVibes];
 
-  // Community stencils (public from DB)
-  const communityVibes = social.publicStencils.map(social.recordToVibe);
+  // Community stencils: built-in featured + public from DB
+  const builtInCommunityVibes: (Vibe & { creator: string })[] = [
+    {
+      id: 'ny-buildings',
+      name: 'New York',
+      emoji: '🏙️',
+      description: 'Iconic skyline — towers, spires & skyscrapers',
+      viewBox: '0 0 480 480',
+      sections: [
+        { id: 'ny-1wtc', label: 'One World Trade', tone: 'dark' as const, path: 'M52,380 L52,105 L58,60 L62,38 L64,25 L66,38 L70,60 L76,105 L76,380 Z' },
+        { id: 'ny-brownstone-1', label: 'Brownstone Left', tone: 'medium' as const, path: 'M82,380 L82,305 Q82,298 89,298 L115,298 Q122,298 122,305 L122,380 Z' },
+        { id: 'ny-empire', label: 'Empire State', tone: 'dark' as const, path: 'M128,380 L128,175 L135,175 L135,145 L142,145 L142,120 L148,120 L148,100 L153,100 L153,70 L156,55 L158,42 L160,55 L163,70 L163,100 L168,100 L168,120 L174,120 L174,145 L181,145 L181,175 L188,175 L188,380 Z' },
+        { id: 'ny-glass-tower', label: 'Glass Tower', tone: 'light' as const, path: 'M194,380 L194,140 Q194,132 202,132 L228,132 Q236,132 236,140 L236,380 Z' },
+        { id: 'ny-chrysler', label: 'Chrysler Building', tone: 'accent' as const, path: 'M242,380 L242,155 L248,155 L248,130 L252,130 L252,115 L255,115 L255,100 L258,100 L258,88 L260,78 L262,68 L264,55 L266,42 L268,55 L270,68 L272,78 L274,88 L274,100 L277,100 L277,115 L280,115 L280,130 L284,130 L284,155 L290,155 L290,380 Z' },
+        { id: 'ny-midrise', label: 'Midrise', tone: 'medium' as const, path: 'M296,380 L296,230 Q296,222 304,222 L330,222 Q338,222 338,230 L338,380 Z' },
+        { id: 'ny-steinway', label: 'Steinway Tower', tone: 'light' as const, path: 'M346,380 L346,72 Q346,65 352,65 L360,65 Q366,65 366,72 L366,380 Z' },
+        { id: 'ny-hudson-yards', label: 'Hudson Yards', tone: 'medium' as const, path: 'M372,380 L375,150 Q375,142 382,140 L404,135 Q412,134 412,142 L412,380 Z' },
+        { id: 'ny-brownstone-2', label: 'Brownstone Right', tone: 'accent' as const, path: 'M418,380 L418,280 Q418,272 425,272 L448,272 Q455,272 455,280 L455,380 Z' },
+        { id: 'ny-base', label: 'Ground', tone: 'dark' as const, path: 'M30,380 L460,380 Q472,392 474,415 Q472,438 460,445 L30,445 Q18,438 16,415 Q18,392 30,380 Z' },
+      ],
+      lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+      creator: 'JK',
+    },
+    {
+      id: 'cactus',
+      name: 'Cactus',
+      emoji: '🌵',
+      description: 'Desert silhouette — bold & playful',
+      viewBox: '0 0 480 480',
+      sections: [
+        { id: 'cactus-body', label: 'Body', tone: 'medium' as const, path: 'M200,120 Q195,90 215,75 Q235,65 255,68 Q275,72 282,90 L285,340 Q288,370 270,380 L210,380 Q192,370 195,340 Z' },
+        { id: 'cactus-arm-left', label: 'Left Arm', tone: 'accent' as const, path: 'M200,220 Q170,225 148,215 Q125,200 120,175 Q118,150 130,138 Q145,128 158,135 Q170,145 172,168 Q175,190 178,200 L200,195 Z' },
+        { id: 'cactus-arm-right', label: 'Right Arm', tone: 'accent' as const, path: 'M282,180 Q310,175 330,165 Q352,150 358,128 Q362,108 350,98 Q335,90 322,100 Q312,112 310,135 Q308,158 305,170 L282,168 Z' },
+        { id: 'cactus-base', label: 'Base', tone: 'dark' as const, path: 'M130,380 L350,380 Q370,392 375,412 Q372,435 348,442 L132,442 Q108,435 105,412 Q110,392 130,380 Z' },
+      ],
+      lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+      creator: 'JK',
+    },
+  ];
+
+  const dbCommunityVibes = social.publicStencils.map(social.recordToVibe);
+  const communityVibes = [...builtInCommunityVibes, ...dbCommunityVibes];
 
   const tabs: { id: Tab; label: string; icon: any }[] = [
     { id: 'stencils', label: 'Stencils', icon: Palette },
@@ -256,6 +296,7 @@ export function RightSidebar({
                 <div className="grid grid-cols-2 gap-2">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
+                    const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
                     return (
                       <CommunityStencilCard
                         key={vibe.id}
@@ -266,6 +307,7 @@ export function RightSidebar({
                         isLoggedIn={!!user}
                         onSelect={() => onSelectVibe(vibe)}
                         onToggleFav={() => social.toggleFavorite(vibe.id)}
+                        creator={creator}
                       />
                     );
                   })}
@@ -347,7 +389,7 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
   );
 }
 
-function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedIn, onSelect, onToggleFav }: {
+function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedIn, onSelect, onToggleFav, creator }: {
   vibe: Vibe;
   isActive: boolean;
   favCount: number;
@@ -355,6 +397,7 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
   isLoggedIn: boolean;
   onSelect: () => void;
   onToggleFav: () => void;
+  creator?: string;
 }) {
   return (
     <motion.div
@@ -377,6 +420,11 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
         <span className="text-[10px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
+        {creator && (
+          <span className="text-[9px] text-muted-foreground mt-0.5 block">
+            by {creator}
+          </span>
+        )}
       </button>
 
       {/* Fav count + toggle */}
