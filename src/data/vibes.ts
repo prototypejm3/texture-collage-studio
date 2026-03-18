@@ -1974,34 +1974,7 @@ const seahorse: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── WHALE ──
-const whale: Vibe = {
-  id: 'whale', name: 'Whale', emoji: '🐋',
-  description: 'Gentle whale with spout',
-  viewBox: '0 0 480 420',
-  sections: [
-    { id: 'wh-spout-l', label: 'Spout Left', tone: 'light',
-      path: 'M145,88 Q138,62 135,38 Q135,18 142,12 Q148,15 152,35 Q155,58 155,82 Q152,92 148,95 Z' },
-    { id: 'wh-spout-r', label: 'Spout Right', tone: 'light',
-      path: 'M168,78 Q165,52 168,28 Q172,12 178,15 Q182,28 182,52 Q180,72 175,85 Q172,92 168,88 Z' },
-    { id: 'wh-head', label: 'Head', tone: 'dark',
-      path: 'M55,225 Q42,188 48,148 Q58,115 82,95 Q115,78 155,75 Q195,78 228,98 Q255,122 268,158 Q278,195 272,235 Q265,262 248,282 Q228,298 205,305 Q175,308 148,300 Q118,288 95,268 Q72,248 60,235 Z' },
-    { id: 'wh-eye', label: 'Eye', tone: 'light', path: circlePath(165, 178, 16) },
-    { id: 'wh-mouth', label: 'Mouth', tone: 'medium',
-      path: 'M75,258 Q105,278 145,292 Q182,300 215,298 Q242,290 262,275 Q252,292 232,305 Q208,315 178,315 Q148,312 118,302 Q92,288 72,272 Z' },
-    { id: 'wh-body', label: 'Body', tone: 'dark',
-      path: 'M272,235 Q292,248 322,260 Q358,272 395,278 Q428,278 452,268 Q468,252 475,232 Q478,212 472,192 Q462,175 445,165 Q425,158 402,162 Q375,170 348,185 Q318,205 292,228 Q280,238 275,242 Z' },
-    { id: 'wh-belly', label: 'Belly', tone: 'light',
-      path: 'M78,272 Q112,295 158,310 Q208,318 262,312 Q312,300 355,282 Q392,265 418,252 Q428,248 432,245 Q422,268 402,285 Q375,302 342,312 Q305,322 265,328 Q225,328 185,322 Q148,312 115,298 Q85,280 72,268 Z' },
-    { id: 'wh-flipper', label: 'Flipper', tone: 'medium',
-      path: 'M195,305 Q182,325 168,348 Q158,370 155,385 Q158,395 168,398 Q178,392 192,375 Q208,352 218,332 Q225,315 222,305 Z' },
-    { id: 'wh-tail-upper', label: 'Upper Tail', tone: 'dark',
-      path: 'M475,232 Q478,218 475,198 Q468,178 458,162 Q448,148 438,142 Q430,142 428,152 Q432,168 438,188 Q445,208 452,225 Z' },
-    { id: 'wh-tail-lower', label: 'Lower Tail', tone: 'dark',
-      path: 'M475,232 Q478,248 478,268 Q475,288 468,305 Q458,318 448,325 Q438,325 435,315 Q438,298 445,278 Q452,258 458,242 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── LOBSTER ──
 const lobster: Vibe = {
