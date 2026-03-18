@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, Images, Landmark, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function useTheme() {
@@ -88,7 +88,7 @@ export function TopToolbar({
             isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <LayoutGrid className="w-4 h-4" />
+          <Images className="w-4 h-4" />
           My Wall
         </Link>
         <Link
@@ -97,7 +97,7 @@ export function TopToolbar({
             isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <Ghost className="w-4 h-4" />
+          <Landmark className="w-4 h-4" />
           Gallery
         </Link>
       </div>
