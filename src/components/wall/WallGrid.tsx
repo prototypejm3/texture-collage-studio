@@ -1,5 +1,6 @@
 import { SavedDesign, WallLayout, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
+import { TitleCard } from './TitleCard';
 import { FreeformWall } from './FreeformWall';
 import Masonry from 'react-masonry-css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -9,6 +10,8 @@ interface WallGridProps {
   designs: SavedDesign[];
   layout: WallLayout;
   isPremium: boolean;
+  showTitleCards?: boolean;
+  isDark?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
