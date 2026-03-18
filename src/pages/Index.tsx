@@ -322,37 +322,37 @@ const Index = () => {
           )}
         </div>
         <div className="flex-1 relative overflow-hidden">
-        <Canvas
-          elements={studio.elements}
-          selectedId={studio.selectedId}
-          frameSize={studio.frameSize}
-          frameColor={studio.frameColor}
-          wallFrameStyle={studio.wallFrameStyle}
-          activeVibe={studio.activeVibe}
-          vibeFills={studio.vibeFills}
-          selectedSectionId={studio.selectedSectionId}
-          customTemplate={customTemplate}
-          templateOpacity={templateOpacity}
-          customTextures={customTextures}
-          backgroundTextureId={studio.backgroundTextureId}
-          sectionTransforms={studio.sectionTransforms}
-          onSelect={studio.setSelectedId}
-          onUpdate={studio.updateElement}
-          onDrop={handleDrop}
-          onSelectSection={studio.selectSection}
-          onDropInSection={studio.fillSection}
-          onDropAsSwatch={handleDrop}
-          onDetachSection={studio.detachSection}
-          onDeleteSection={studio.deleteSection}
-          onUpdateSectionTransform={studio.updateSectionTransform}
-          canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
-          drawMode={studio.drawMode}
-          onFinishDraw={studio.addCustomSection}
-          onCancelDraw={() => studio.setDrawMode(false)}
-        />
+          <Canvas
+            elements={studio.elements}
+            selectedId={studio.selectedId}
+            frameSize={studio.frameSize}
+            frameColor={studio.frameColor}
+            wallFrameStyle={studio.wallFrameStyle}
+            activeVibe={studio.activeVibe}
+            vibeFills={studio.vibeFills}
+            selectedSectionId={studio.selectedSectionId}
+            customTemplate={customTemplate}
+            templateOpacity={templateOpacity}
+            customTextures={customTextures}
+            backgroundTextureId={studio.backgroundTextureId}
+            sectionTransforms={studio.sectionTransforms}
+            onSelect={studio.setSelectedId}
+            onUpdate={studio.updateElement}
+            onDrop={handleDrop}
+            onSelectSection={studio.selectSection}
+            onDropInSection={studio.fillSection}
+            onDropAsSwatch={handleDrop}
+            onDetachSection={studio.detachSection}
+            onDeleteSection={studio.deleteSection}
+            onUpdateSectionTransform={studio.updateSectionTransform}
+            canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+            drawMode={studio.drawMode}
+            onFinishDraw={studio.addCustomSection}
+            onCancelDraw={() => studio.setDrawMode(false)}
+          />
+        </div>
 
-
-        {/* Stencils right sidebar — mirrors Tool-Kit pattern */}
+        {/* Stencils right sidebar */}
         <div
           className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
             showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
@@ -404,7 +404,6 @@ const Index = () => {
               )}
             </>
           )}
-        </div>
         </div>
       </div>
 
