@@ -220,27 +220,27 @@ export const textures: TextureSwatch[] = [
   { id: 'cord-washed-navy', name: 'Nightfall', category: 'Corduroy', cssBackground: img('cord-washed-navy.png') },
 
   // ── Alix ──
-  { id: 'alix-rose', name: 'Rose', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
-  { id: 'alix-blush', name: 'Blush', category: 'Alix', cssBackground: img('novelty-alix-blush.png') },
+  { id: 'alix-rose', name: 'Alix Rosé', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
+  { id: 'alix-blush', name: 'Alix Blush', category: 'Alix', cssBackground: img('novelty-alix-blush.png') },
   { id: 'alix-fuchsia', name: 'Fuchsia', category: 'Alix', cssBackground: img('novelty-alix-fuchsia.png') },
 
   // ── Corinne ──
-  { id: 'corinne-mulberry', name: 'Mulberry', category: 'Corinne', cssBackground: img('novelty-corinne-mulberry.png') },
-  { id: 'corinne-plum', name: 'Plum', category: 'Corinne', cssBackground: img('novelty-corinne-plum.png') },
+  { id: 'corinne-mulberry', name: 'Corinne Crush', category: 'Corinne', cssBackground: img('novelty-corinne-mulberry.png') },
+  { id: 'corinne-plum', name: 'Corinne Plum', category: 'Corinne', cssBackground: img('novelty-corinne-plum.png') },
   { id: 'corinne-lavender', name: 'Lavender', category: 'Corinne', cssBackground: img('novelty-corinne-lavender.png') },
 
   // ── ShayShari ──
-  { id: 'shayshari-terra', name: 'Terra', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
-  { id: 'shayshari-sage', name: 'Sage', category: 'ShayShari', cssBackground: img('novelty-shayshari-sage.png') },
+  { id: 'shayshari-terra', name: 'ShayShari', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
+  { id: 'shayshari-sage', name: 'ShayShari Seltzer', category: 'ShayShari', cssBackground: img('novelty-shayshari-sage.png') },
   { id: 'shayshari-sand', name: 'Sand', category: 'ShayShari', cssBackground: img('novelty-shayshari-sand.png') },
 
   // ── Suede Ace ──
-  { id: 'suede-ace-navy', name: 'Navy', category: 'Suede Ace', cssBackground: img('novelty-suede-navy.png') },
-  { id: 'suede-ace-forest', name: 'Forest', category: 'Suede Ace', cssBackground: img('novelty-suede-forest.png') },
+  { id: 'suede-ace-navy', name: 'Suede Ace', category: 'Suede Ace', cssBackground: img('novelty-suede-navy.png') },
+  { id: 'suede-ace-forest', name: 'Woodruff', category: 'Suede Ace', cssBackground: img('novelty-suede-forest.png') },
   { id: 'suede-ace-oxblood', name: 'Oxblood', category: 'Suede Ace', cssBackground: img('novelty-suede-oxblood.png') },
 
   // ── Jayme ──
-  { id: 'jayme-gogh', name: 'Gogh', category: 'Jayme', cssBackground: img('novelty-jayme-gogh.png') },
+  { id: 'jayme-gogh', name: 'Jayme Gogh', category: 'Jayme', cssBackground: img('novelty-jayme-gogh.png') },
 
   // ── Skott ──
   { id: 'skott-camo', name: 'Camo', category: 'Skott', cssBackground: img('novelty-skott-camo.png') },
