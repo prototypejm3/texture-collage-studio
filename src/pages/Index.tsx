@@ -116,10 +116,10 @@ const Index = () => {
   }, [pendingSave, wall, upgradeToPremium]);
 
   const handleTextureClick = useCallback((textureId: string) => {
-    if (studio.activeVibe && studio.selectedSectionId) {
+    if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
-  }, [studio.activeVibe, studio.selectedSectionId, studio.fillSection]);
+  }, [studio.selectedSectionId, studio.fillSection]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
