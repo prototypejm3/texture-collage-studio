@@ -243,15 +243,18 @@ export function useStudio() {
     frameColor,
     displaySize,
     wallFrameStyle,
-    activeVibe,
+    activeVibe: effectiveVibe,
     vibeFills,
     selectedSectionId,
+    drawMode,
+    customSections,
     // Setters
     setSelectedId,
     setFrameSize,
     setFrameColor,
     setDisplaySize,
     setWallFrameStyle,
+    setDrawMode,
     // Free-mode
     addElement,
     updateElement,
@@ -266,6 +269,9 @@ export function useStudio() {
     fillSection,
     selectSection,
     shuffleVibeFills,
+    // Custom sections
+    addCustomSection,
+    deleteCustomSection,
     // Serialization
     getState,
     loadState,
