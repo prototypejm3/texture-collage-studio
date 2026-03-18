@@ -2070,6 +2070,7 @@ const scubaSkiba: Vibe = {
   id: 'scuba-skiba', name: 'Scuba Skiba', emoji: '🤿',
   description: 'Scuba diver with tank, mask & flippers',
   category: 'Community',
+  baseLikes: 28, likesStartDate: '2026-03-01',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ss-beanie', label: 'Beanie', tone: 'accent',
@@ -2118,6 +2119,7 @@ const bancroft: Vibe = {
   id: 'bancroft', name: 'Bancroft', emoji: '🏍️',
   description: 'Classic cruiser motorcycle silhouette',
   category: 'Community',
+  baseLikes: 22, likesStartDate: '2026-03-05',
   viewBox: '0 0 480 320',
   sections: [
     { id: 'bc-rear-wheel', label: 'Rear Wheel', tone: 'dark',
@@ -2260,6 +2262,7 @@ const fairy: Vibe = {
   id: 'fairy', name: 'Fairy', emoji: '🧚',
   description: 'Graceful fairy with wings and flowing dress',
   category: 'Community',
+  baseLikes: 34, likesStartDate: '2026-03-02',
   creator: 'butterbb',
   viewBox: '0 0 480 580',
   sections: [
@@ -2305,6 +2308,7 @@ const sunshinePony: Vibe = {
   name: 'Sunshine Pony',
   emoji: '🐴',
   category: 'Community',
+  baseLikes: 19, likesStartDate: '2026-03-08',
   description: 'Galloping horse silhouette with flowing mane & tail',
   viewBox: '0 0 480 480',
   sections: [
@@ -2360,6 +2364,7 @@ const neiceBeats: Vibe = {
   name: 'Neice Beats',
   emoji: '🥁',
   category: 'Community',
+  baseLikes: 17, likesStartDate: '2026-03-15',
   creator: 'butterbb',
   description: 'Pair of bongo drums ready to jam',
   viewBox: '0 0 480 480',
@@ -2407,6 +2412,7 @@ const fairyHeadband: Vibe = {
   name: 'Fairy Headband',
   emoji: '👑',
   category: 'Community',
+  baseLikes: 15, likesStartDate: '2026-03-16',
   creator: 'Alix',
   description: 'Whimsical fairy headband with flowers and butterfly wings',
   viewBox: '0 0 480 360',

@@ -93,6 +93,8 @@ export interface Vibe {
   accentTextures: string[];
   category?: string;
   creator?: string;
+  baseLikes?: number;
+  likesStartDate?: string; // ISO date string — likes grow by 3/day from this date
 }
 
 export type VibeFills = Record<string, string>;
