@@ -81,23 +81,9 @@ export function TextureLibrary({
 
   return (
     <div className="h-full flex flex-col bg-card border-r border-border">
-      {/* Element editing panel — always visible header, expands when element selected */}
-      <div className="border-b border-border">
-        <button
-          onClick={() => selectedElement && setShowElementTools(!showElementTools)}
-          className={`flex items-center gap-1.5 w-full px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-            selectedElement ? 'text-muted-foreground hover:text-foreground cursor-pointer' : 'text-muted-foreground/50 cursor-default'
-          }`}
-        >
-          ✂️ Shapes
-          {selectedElement && (
-            showElementTools ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />
-          )}
-          {!selectedElement && (
-            <span className="ml-auto text-[9px] font-normal normal-case tracking-normal text-muted-foreground/40">Select an element</span>
-          )}
-        </button>
-        {selectedElement && showElementTools && onUpdateElement && onUpdateEffects && onDuplicate && onDelete && (
+      {/* Element editing — shown when element selected */}
+      {selectedElement && onUpdateElement && onUpdateEffects && onDuplicate && onDelete && (
+        <div className="border-b border-border">
           <FloatingToolbar
             element={selectedElement}
             onUpdate={onUpdateElement}
@@ -105,24 +91,25 @@ export function TextureLibrary({
             onDuplicate={onDuplicate}
             onDelete={onDelete}
           />
-        )}
-        {/* Draw button — inside shapes section */}
-        {onToggleDraw && (
-          <div className="px-4 py-2">
-            <button
-              onClick={onToggleDraw}
-              className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                drawMode
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              <PenTool className="w-3.5 h-3.5" />
-              Draw Freehand Shape
-            </button>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Draw button */}
+      {onToggleDraw && (
+        <div className="px-4 py-2 border-b border-border">
+          <button
+            onClick={onToggleDraw}
+            className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+              drawMode
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            <PenTool className="w-3.5 h-3.5" />
+            Draw Freehand Shape
+          </button>
+        </div>
+      )}
 
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
