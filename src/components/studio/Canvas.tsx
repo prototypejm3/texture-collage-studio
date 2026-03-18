@@ -49,7 +49,7 @@ const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: 
 };
 
 export function Canvas({
-  elements, selectedId, frameSize, frameColor,
+  elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
