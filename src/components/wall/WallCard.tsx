@@ -597,7 +597,7 @@ export function WallCard({
                   <Check className="w-3.5 h-3.5" /> Save
                 </button>
 
-                {isPremium && onSubmitToGallery && !design.gallerySubmissionId && (
+                {onSubmitToGallery && !design.gallerySubmissionId && (
                   <button
                     onClick={() => {
                       handleSaveEdit();
@@ -608,11 +608,6 @@ export function WallCard({
                     <Send className="w-3.5 h-3.5" /> Submit to Gallery
                   </button>
                 )}
-
-                {!isPremium && !design.gallerySubmissionId && (
-                  <span className="text-[10px] text-muted-foreground/50 ml-auto flex items-center gap-1">
-                    🔒 Premium to submit
-                  </span>
                 )}
 
                 {design.gallerySubmissionId && (
