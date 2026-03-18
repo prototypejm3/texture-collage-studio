@@ -166,17 +166,6 @@ export function TopToolbar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
-        {onToggleDraw && (
-          <Button
-            size="sm"
-            variant={drawMode ? 'default' : 'ghost'}
-            onClick={onToggleDraw}
-            className="gap-1.5 text-xs"
-            title="Draw a freehand section to fill with texture"
-          >
-            <PenTool className="w-3.5 h-3.5" /> Draw
-          </Button>
-        )}
         <Button size="sm" variant="ghost" onClick={onClear} className="gap-1.5 text-xs text-destructive hover:text-destructive">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </Button>
