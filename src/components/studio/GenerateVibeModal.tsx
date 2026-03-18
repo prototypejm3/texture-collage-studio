@@ -71,7 +71,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
               {/* Prompt input */}
               <form onSubmit={handleSubmit} className="px-6 py-4 border-b border-border bg-muted/30">
                 <label className="text-xs font-medium text-muted-foreground mb-2 block">
-                  Describe your vibe — mood, aesthetic, colors, feeling…
+                  Describe the mood — cozy, moody, tropical, minimal, luxe…
                 </label>
                 <div className="flex gap-2">
                   <input
