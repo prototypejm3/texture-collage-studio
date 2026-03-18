@@ -62,8 +62,6 @@ const ambientSounds: { value: AmbientSound; label: string; emoji: string }[] = [
 ];
 
 export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, onRequestUpgrade, isPremium }: WallCustomizerProps) {
-  const [editingTitle, setEditingTitle] = useState(false);
-  const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
   const [showHangingMenu, setShowHangingMenu] = useState(false);
   const [showLightingMenu, setShowLightingMenu] = useState(false);
