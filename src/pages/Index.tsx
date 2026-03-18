@@ -117,16 +117,17 @@ const Index = () => {
       const dataUrl = await toPng(canvasRef.current, { pixelRatio: 2 });
       const name = studio.activeVibe?.name || 'Untitled Design';
       const vibeName = studio.activeVibe?.name;
+      const stencilCreator = studio.activeVibe?.creator;
       const studioState = studio.getState();
 
       if (editingDesignId) {
-        wall.updateDesign(editingDesignId, { previewImage: dataUrl, name, vibeName, studioState });
+        wall.updateDesign(editingDesignId, { previewImage: dataUrl, name, vibeName, stencilCreator, studioState });
         toast({ title: 'Updated!', description: 'Your design has been updated on My Wall.' });
         return;
       }
 
       if (!canSave(wall.designs.length)) {
-        setPendingSave({ preview: dataUrl, name, vibeName });
+        setPendingSave({ preview: dataUrl, name, vibeName, stencilCreator });
         setShowPaywall(true);
         return;
       }
@@ -134,9 +135,9 @@ const Index = () => {
       // If there's an existing draft, promote it instead of creating new
       const draftExists = wall.designs.find(d => d.id === draftKeyRef.current);
       if (draftExists) {
-        wall.updateDesign(draftKeyRef.current, { previewImage: dataUrl, name, vibeName, studioState, status: 'display' as any });
+        wall.updateDesign(draftKeyRef.current, { previewImage: dataUrl, name, vibeName, stencilCreator, studioState, status: 'display' as any });
       } else {
-        wall.addDesign(dataUrl, name, vibeName, studioState);
+        wall.addDesign(dataUrl, name, vibeName, studioState, stencilCreator);
       }
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
