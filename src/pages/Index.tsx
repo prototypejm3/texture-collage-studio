@@ -36,8 +36,8 @@ const Index = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [showToolKit, setShowToolKit] = useState(false);
-  const [toolKitPos, setToolKitPos] = useState({ x: 300, y: 12 });
-  const [toolKitSize, setToolKitSize] = useState({ w: 320, h: 400 });
+  const [toolKitPos, setToolKitPos] = useState({ x: 16, y: 12 });
+  const [toolKitSize, setToolKitSize] = useState({ w: 300, h: 500 });
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(null);
 
