@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
-import { DesignSize, FrameStyle } from '@/types/wall';
-import { Maximize2, Square, Minimize2, ChevronDown } from 'lucide-react';
+import { FrameStyle } from '@/types/wall';
+import { ChevronDown } from 'lucide-react';
 
 interface Props {
   frameSize: FrameSize;
   onFrameSizeChange: (size: FrameSize) => void;
-  displaySize: DesignSize;
-  onDisplaySizeChange: (size: DesignSize) => void;
   wallFrameStyle: FrameStyle;
   onWallFrameStyleChange: (style: FrameStyle) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
-
-const displaySizes: { id: DesignSize; label: string; icon: typeof Square }[] = [
-  { id: 'small', label: 'Small', icon: Minimize2 },
-  { id: 'medium', label: 'Medium', icon: Square },
-  { id: 'large', label: 'Large', icon: Maximize2 },
-];
 
 const frameStyles: { id: FrameStyle; label: string }[] = [
   { id: 'gold', label: 'Gold' },
@@ -35,7 +27,6 @@ const frameStyles: { id: FrameStyle; label: string }[] = [
 
 export function BottomBar({
   frameSize, onFrameSizeChange,
-  displaySize, onDisplaySizeChange,
   wallFrameStyle, onWallFrameStyleChange,
 }: Props) {
   const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
@@ -59,30 +50,6 @@ export function BottomBar({
             {s}
           </button>
         ))}
-      </div>
-
-      <div className="w-px h-5 bg-border" />
-
-      {/* Display size */}
-      <div className="flex items-center gap-1">
-        <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-2">Size</span>
-        {displaySizes.map(s => {
-          const Icon = s.icon;
-          return (
-            <button
-              key={s.id}
-              onClick={() => onDisplaySizeChange(s.id)}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] rounded-md transition-colors ${
-                displaySize === s.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              <Icon className="w-3 h-3" />
-              {s.label}
-            </button>
-          );
-        })}
       </div>
 
       <div className="w-px h-5 bg-border" />
