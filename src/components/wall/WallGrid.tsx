@@ -108,7 +108,12 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
       <AnimatePresence>
-        {designs.map(d => <WallCard {...cardProps(d)} />)}
+        {designs.map(d => (
+          <div key={d.id}>
+            <WallCard {...cardProps(d)} />
+            {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+          </div>
+        ))}
       </AnimatePresence>
     </div>
   );
