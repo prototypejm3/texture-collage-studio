@@ -60,7 +60,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary" />
                   <h2 className="text-base font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Generate Vibe
+                    What's the Mood?
                   </h2>
                 </div>
                 <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-secondary transition-colors">
