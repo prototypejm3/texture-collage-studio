@@ -83,41 +83,8 @@ export function TopToolbar({
         </Link>
       </div>
 
-      {/* Center: Frame picker */}
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <button
-            onClick={() => setFramePanelOpen(v => !v)}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-border hover:border-muted-foreground transition-colors"
-          >
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
-            <span className="text-xs text-foreground">{currentFrameLabel}</span>
-            <ChevronDown className="w-3 h-3 text-muted-foreground" />
-          </button>
-
-          {framePanelOpen && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setFramePanelOpen(false)} />
-              <div className="absolute top-full left-0 mt-1 z-50 w-44 rounded-xl border border-border bg-popover shadow-xl py-1.5 overflow-hidden">
-                <p className="px-4 pt-2 pb-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">Frame</p>
-                {frameStyleList.map(f => (
-                  <button
-                    key={f.id}
-                    onClick={() => { onWallFrameStyleChange(f.id); setFramePanelOpen(false); }}
-                    className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                      wallFrameStyle === f.id
-                        ? 'text-primary font-medium'
-                        : 'text-foreground hover:bg-accent'
-                    }`}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+      {/* Center spacer */}
+      <div />
 
       {/* Right: Actions + Auth */}
       <div className="flex items-center gap-1.5">
