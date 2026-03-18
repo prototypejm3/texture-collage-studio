@@ -1,5 +1,5 @@
 import { useRef, useCallback, useMemo } from 'react';
-import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
@@ -20,6 +20,7 @@ interface Props {
   templateOpacity: number;
   customTextures?: TextureSwatch[];
   backgroundTextureId: string | null;
+  sectionTransforms: SectionTransforms;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
@@ -27,6 +28,8 @@ interface Props {
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
+  onDeleteSection: (sectionId: string) => void;
+  onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   drawMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
@@ -59,9 +62,11 @@ export function Canvas({
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
-  backgroundTextureId,
+  backgroundTextureId, sectionTransforms,
   onSelect, onUpdate, onDrop,
-  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection, canvasRef,
+  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
+  onDeleteSection, onUpdateSectionTransform,
+  canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
@@ -168,10 +173,13 @@ export function Canvas({
               selectedSectionId={selectedSectionId}
               canvasWidth={w}
               canvasHeight={h}
+              sectionTransforms={sectionTransforms}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
+              onDeleteSection={onDeleteSection}
+              onUpdateSectionTransform={onUpdateSectionTransform}
               customTextures={customTextures}
             />
           )}

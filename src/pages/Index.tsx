@@ -244,6 +244,7 @@ const Index = () => {
           templateOpacity={templateOpacity}
           customTextures={customTextures}
           backgroundTextureId={studio.backgroundTextureId}
+          sectionTransforms={studio.sectionTransforms}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
@@ -251,6 +252,8 @@ const Index = () => {
           onDropInSection={studio.fillSection}
           onDropAsSwatch={handleDrop}
           onDetachSection={studio.detachSection}
+          onDeleteSection={studio.deleteSection}
+          onUpdateSectionTransform={studio.updateSectionTransform}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
           drawMode={studio.drawMode}
           onFinishDraw={studio.addCustomSection}

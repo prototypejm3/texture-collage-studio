@@ -61,6 +61,17 @@ export const defaultEffects: MaterialEffects = {
 
 // ── Vibe Outline System ──
 
+export interface SectionTransform {
+  x: number;   // translate X in SVG units
+  y: number;   // translate Y in SVG units
+  scale: number; // uniform scale factor
+  rotation: number; // degrees
+}
+
+export const defaultSectionTransform: SectionTransform = {
+  x: 0, y: 0, scale: 1, rotation: 0,
+};
+
 export interface VibeSection {
   id: string;
   label: string;
@@ -82,3 +93,4 @@ export interface Vibe {
 }
 
 export type VibeFills = Record<string, string>;
+export type SectionTransforms = Record<string, SectionTransform>;

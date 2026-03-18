@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection, SectionTransform, SectionTransforms, defaultSectionTransform } from '@/types/studio';
 import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
@@ -34,6 +34,8 @@ export function useStudio() {
   const [drawMode, setDrawMode] = useState(false);
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
+  const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
+  const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -90,6 +92,8 @@ export function useStudio() {
     setCustomSections([]);
     setDrawMode(false);
     setBackgroundTextureId(null);
+    setSectionTransforms({});
+    setDeletedSections(new Set());
   }, []);
 
   const generateRandom = useCallback(() => {
@@ -141,8 +145,9 @@ export function useStudio() {
     setElements([]);
     setSelectedId(null);
     setSelectedSectionId(null);
-    // Start with empty fills — user picks textures for each section
     setVibeFills({});
+    setSectionTransforms({});
+    setDeletedSections(new Set());
   }, []);
 
   const fillSection = useCallback((sectionId: string, textureId: string) => {
@@ -187,11 +192,37 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  const updateSectionTransform = useCallback((sectionId: string, updates: Partial<SectionTransform>) => {
+    setSectionTransforms(prev => ({
+      ...prev,
+      [sectionId]: { ...(prev[sectionId] || defaultSectionTransform), ...updates },
+    }));
+  }, []);
+
+  const deleteSection = useCallback((sectionId: string) => {
+    // Remove from vibe sections if it's a custom section
+    setCustomSections(prev => prev.filter(s => s.id !== sectionId));
+    // If it's a vibe section, we track deletion separately
+    setVibeFills(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    setSectionTransforms(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    // Track deleted vibe sections
+    setDeletedSections(prev => new Set([...prev, sectionId]));
+    if (selectedSectionId === sectionId) setSelectedSectionId(null);
+  }, [selectedSectionId]);
+
   // Combine vibe sections + custom drawn sections
   const allSections = useMemo(() => {
     const vibeSections = activeVibe?.sections || [];
-    return [...vibeSections, ...customSections];
-  }, [activeVibe, customSections]);
+    return [...vibeSections, ...customSections].filter(s => !deletedSections.has(s.id));
+  }, [activeVibe, customSections, deletedSections]);
 
   // Detach a filled section into a free canvas element
   const detachSection = useCallback((sectionId: string) => {
@@ -293,6 +324,7 @@ export function useStudio() {
     drawMode,
     customSections,
     backgroundTextureId,
+    sectionTransforms,
     // Setters
     setSelectedId,
     setFrameSize,
@@ -318,6 +350,8 @@ export function useStudio() {
     // Custom sections
     addCustomSection,
     deleteCustomSection,
+    deleteSection,
+    updateSectionTransform,
     detachSection,
     // Serialization
     getState,
