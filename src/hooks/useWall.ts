@@ -34,12 +34,13 @@ export function useWall() {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string): string => {
+  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
     const design: SavedDesign = {
       id, name,
       vibeName,
+      stencilCreator,
       previewImage: preview,
       createdAt: now,
       updatedAt: now,
@@ -56,17 +57,18 @@ export function useWall() {
   }, [settings.defaultFrameStyle]);
 
   // Draft: upsert a draft by draftKey (returns the draft id)
-  const saveDraft = useCallback((draftKey: string, preview: string, name: string, vibeName?: string, studioState?: string): string => {
+  const saveDraft = useCallback((draftKey: string, preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
     const now = new Date().toISOString();
     setDesigns(prev => {
       const existing = prev.find(d => d.id === draftKey);
       if (existing) {
-        return prev.map(d => d.id === draftKey ? { ...d, previewImage: preview, name, vibeName, studioState, updatedAt: now } : d);
+        return prev.map(d => d.id === draftKey ? { ...d, previewImage: preview, name, vibeName, stencilCreator, studioState, updatedAt: now } : d);
       }
       const design: SavedDesign = {
         id: draftKey,
         name,
         vibeName,
+        stencilCreator,
         previewImage: preview,
         createdAt: now,
         updatedAt: now,
@@ -88,11 +90,12 @@ export function useWall() {
     setDesigns(prev => prev.map(d => d.id === draftKey ? { ...d, status: 'display' as DesignStatus, updatedAt: new Date().toISOString() } : d));
   }, []);
 
-  const replaceDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string) => {
+  const replaceDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string) => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
     const design: SavedDesign = {
       id, name, vibeName,
+      stencilCreator,
       previewImage: preview,
       createdAt: now,
       updatedAt: now,

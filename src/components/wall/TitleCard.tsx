@@ -43,6 +43,13 @@ export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProp
           ].filter(Boolean).join(' · ')}
         </p>
 
+        {/* Stencil creator credit */}
+        {design.stencilCreator && (
+          <p className={`text-[8px] tracking-[0.06em] leading-snug ${textBase} opacity-60 flex items-center gap-1`}>
+            ✦ Stencil by {design.stencilCreator}
+          </p>
+        )}
+
         {/* Curator note */}
         {design.curatorNote && (
           <p
