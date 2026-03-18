@@ -14,7 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      stencil_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          stencil_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          stencil_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          stencil_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stencil_favorites_stencil_id_fkey"
+            columns: ["stencil_id"]
+            isOneToOne: false
+            referencedRelation: "stencils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stencil_hidden: {
+        Row: {
+          created_at: string
+          id: string
+          stencil_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          stencil_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          stencil_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      stencils: {
+        Row: {
+          created_at: string
+          emoji: string
+          fav_count: number
+          id: string
+          is_public: boolean
+          name: string
+          sections: Json
+          user_id: string
+          view_box: string
+        }
+        Insert: {
+          created_at?: string
+          emoji?: string
+          fav_count?: number
+          id?: string
+          is_public?: boolean
+          name: string
+          sections?: Json
+          user_id: string
+          view_box?: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          fav_count?: number
+          id?: string
+          is_public?: boolean
+          name?: string
+          sections?: Json
+          user_id?: string
+          view_box?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
