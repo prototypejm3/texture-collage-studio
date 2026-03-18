@@ -4,220 +4,220 @@ const img = (path: string) => `url(/textures/${path})`;
 
 export const textures: TextureSwatch[] = [
   // ── Royale (Velvet) ──
-  { id: 'royale-blush', name: 'Blush', category: 'Royale', cssBackground: img('royale-blush.png') },
-  { id: 'royale-gunmetal', name: 'Gunmetal', category: 'Royale', cssBackground: img('royale-gunmetal.png') },
-  { id: 'royale-evergreen', name: 'Evergreen', category: 'Royale', cssBackground: img('royale-evergreen.png') },
-  { id: 'royale-apple', name: 'Apple', category: 'Royale', cssBackground: img('royale-apple.png') },
-  { id: 'royale-hacienda', name: 'Hacienda', category: 'Royale', cssBackground: img('royale-hacienda.png') },
-  { id: 'royale-peacock', name: 'Peacock', category: 'Royale', cssBackground: img('royale-peacock.png') },
-  { id: 'royale-cobalt', name: 'Cobalt', category: 'Royale', cssBackground: img('royale-cobalt.png') },
-  { id: 'royale-ash', name: 'Ash', category: 'Royale', cssBackground: img('royale-ash.png') },
-  { id: 'royale-forest', name: 'Forest', category: 'Royale', cssBackground: img('royale-forest.png') },
-  { id: 'royale-berry', name: 'Berry', category: 'Royale', cssBackground: img('royale-berry.png') },
-  { id: 'royale-sand', name: 'Sand', category: 'Royale', cssBackground: img('royale-sand.png') },
-  { id: 'royale-sage', name: 'Sage', category: 'Royale', cssBackground: img('royale-sage.png') },
+  { id: 'royale-blush', name: 'Rosé', category: 'Royale', cssBackground: img('royale-blush.png') },
+  { id: 'royale-gunmetal', name: 'Smoky Martini', category: 'Royale', cssBackground: img('royale-gunmetal.png') },
+  { id: 'royale-evergreen', name: 'Absinthe', category: 'Royale', cssBackground: img('royale-evergreen.png') },
+  { id: 'royale-apple', name: 'Appletini', category: 'Royale', cssBackground: img('royale-apple.png') },
+  { id: 'royale-hacienda', name: 'Sangria', category: 'Royale', cssBackground: img('royale-hacienda.png') },
+  { id: 'royale-peacock', name: 'Blue Lagoon', category: 'Royale', cssBackground: img('royale-peacock.png') },
+  { id: 'royale-cobalt', name: 'Blue Curaçao', category: 'Royale', cssBackground: img('royale-cobalt.png') },
+  { id: 'royale-ash', name: 'Dirty Martini', category: 'Royale', cssBackground: img('royale-ash.png') },
+  { id: 'royale-forest', name: 'Chartreuse', category: 'Royale', cssBackground: img('royale-forest.png') },
+  { id: 'royale-berry', name: 'Merlot', category: 'Royale', cssBackground: img('royale-berry.png') },
+  { id: 'royale-sand', name: 'Prosecco', category: 'Royale', cssBackground: img('royale-sand.png') },
+  { id: 'royale-sage', name: 'Gimlet', category: 'Royale', cssBackground: img('royale-sage.png') },
 
   // ── Banks (Smooth Velvet) ──
-  { id: 'banks-nutmeg', name: 'Nutmeg', category: 'Banks', cssBackground: img('banks-nutmeg.png') },
-  { id: 'banks-currant', name: 'Currant', category: 'Banks', cssBackground: img('banks-currant.png') },
-  { id: 'banks-oatmeal', name: 'Oatmeal', category: 'Banks', cssBackground: img('banks-oatmeal.png') },
-  { id: 'banks-zinnia', name: 'Zinnia', category: 'Banks', cssBackground: img('banks-zinnia.png') },
+  { id: 'banks-nutmeg', name: 'Amaretto', category: 'Banks', cssBackground: img('banks-nutmeg.png') },
+  { id: 'banks-currant', name: 'Cassis', category: 'Banks', cssBackground: img('banks-currant.png') },
+  { id: 'banks-oatmeal', name: 'Baileys', category: 'Banks', cssBackground: img('banks-oatmeal.png') },
+  { id: 'banks-zinnia', name: 'Aperol', category: 'Banks', cssBackground: img('banks-zinnia.png') },
 
   // ── Bentley (Striated Chenille) ──
-  { id: 'bentley-daisey', name: 'Daisey', category: 'Bentley', cssBackground: img('bentley-daisey.png') },
-  { id: 'bentley-indigo', name: 'Indigo', category: 'Bentley', cssBackground: img('bentley-indigo.png') },
-  { id: 'bentley-pewter', name: 'Pewter', category: 'Bentley', cssBackground: img('bentley-pewter.png') },
+  { id: 'bentley-daisey', name: 'Limoncello', category: 'Bentley', cssBackground: img('bentley-daisey.png') },
+  { id: 'bentley-indigo', name: 'Midnight Pour', category: 'Bentley', cssBackground: img('bentley-indigo.png') },
+  { id: 'bentley-pewter', name: 'Silver Fizz', category: 'Bentley', cssBackground: img('bentley-pewter.png') },
 
   // ── Cody (Tweed Weave) ──
-  { id: 'cody-slate', name: 'Slate', category: 'Cody', cssBackground: img('cody-slate.png') },
-  { id: 'cody-sandstone', name: 'Sandstone', category: 'Cody', cssBackground: img('cody-sandstone.png') },
-  { id: 'cody-pacific', name: 'Pacific', category: 'Cody', cssBackground: img('cody-pacific.png') },
+  { id: 'cody-slate', name: 'Slate Sour', category: 'Cody', cssBackground: img('cody-slate.png') },
+  { id: 'cody-sandstone', name: 'Bourbon Smash', category: 'Cody', cssBackground: img('cody-sandstone.png') },
+  { id: 'cody-pacific', name: 'Pacific Cooler', category: 'Cody', cssBackground: img('cody-pacific.png') },
 
   // ── Sunbrella (Performance) ──
-  { id: 'sunbrella-fog', name: 'Fog', category: 'Sunbrella', cssBackground: img('sunbrella-fog.png') },
-  { id: 'sunbrella-sea', name: 'Premier Sea', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
-  { id: 'sunbrella-wisteria', name: 'Premier Wisteria', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
-  { id: 'sunbrella-lagoon', name: 'Premier Lagoon', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
-  { id: 'sunbrella-white', name: 'White', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
-  { id: 'sunbrella-loft-white', name: 'Loft White', category: 'Sunbrella', cssBackground: img('sunbrella-loft-white.png') },
+  { id: 'sunbrella-fog', name: 'London Fog', category: 'Sunbrella', cssBackground: img('sunbrella-fog.png') },
+  { id: 'sunbrella-sea', name: 'Sea Breeze', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
+  { id: 'sunbrella-wisteria', name: 'Lavender Spritz', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
+  { id: 'sunbrella-lagoon', name: 'Lagoon Punch', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
+  { id: 'sunbrella-white', name: 'Blanc de Blanc', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
+  { id: 'sunbrella-loft-white', name: 'Elderflower', category: 'Sunbrella', cssBackground: img('sunbrella-loft-white.png') },
 
   // ── Bubbly (Textured Weave) ──
-  { id: 'bubbly-cucumber', name: 'Cucumber', category: 'Bubbly', cssBackground: img('bubbly-cucumber.png') },
+  { id: 'bubbly-cucumber', name: 'Cucumber Collins', category: 'Bubbly', cssBackground: img('bubbly-cucumber.png') },
   { id: 'bubbly-moscow-mule', name: 'Moscow Mule', category: 'Bubbly', cssBackground: img('bubbly-moscow-mule.png') },
   { id: 'bubbly-cream-soda', name: 'Cream Soda', category: 'Bubbly', cssBackground: img('bubbly-cream-soda.png') },
 
   // ── Karina (Bouclé) ──
-  { id: 'karina-cloud', name: 'Cloud', category: 'Karina', cssBackground: img('karina-cloud.png') },
-  { id: 'karina-teal', name: 'Teal', category: 'Karina', cssBackground: img('karina-teal.png') },
+  { id: 'karina-cloud', name: 'White Russian', category: 'Karina', cssBackground: img('karina-cloud.png') },
+  { id: 'karina-teal', name: 'Tequila Sunrise', category: 'Karina', cssBackground: img('karina-teal.png') },
 
   // ── Crave (Ribbed Chenille) ──
-  { id: 'crave-rose', name: 'Rose', category: 'Crave', cssBackground: img('crave-rose.png') },
-  { id: 'crave-mocha', name: 'Mocha', category: 'Crave', cssBackground: img('crave-mocha.png') },
+  { id: 'crave-rose', name: 'Rosé Spritz', category: 'Crave', cssBackground: img('crave-rose.png') },
+  { id: 'crave-mocha', name: 'Espresso Martini', category: 'Crave', cssBackground: img('crave-mocha.png') },
   { id: 'crave-mocha-latte', name: 'Mocha Latte', category: 'Crave', cssBackground: img('crave-mocha-latte.png') },
-  { id: 'crave-ginger-tea', name: 'Ginger Tea', category: 'Crave', cssBackground: img('crave-ginger-tea.png') },
-  { id: 'crave-berry-hibiscus', name: 'Berry Hibiscus', category: 'Crave', cssBackground: img('crave-berry-hibiscus.png') },
-  { id: 'crave-greenery', name: 'Greenery', category: 'Crave', cssBackground: img('crave-greenery.png') },
-  { id: 'crave-lava-rock', name: 'Lava Rock', category: 'Crave', cssBackground: img('crave-lava-rock.png') },
+  { id: 'crave-ginger-tea', name: 'Ginger Mule', category: 'Crave', cssBackground: img('crave-ginger-tea.png') },
+  { id: 'crave-berry-hibiscus', name: 'Hibiscus Sour', category: 'Crave', cssBackground: img('crave-berry-hibiscus.png') },
+  { id: 'crave-greenery', name: 'Mojito', category: 'Crave', cssBackground: img('crave-greenery.png') },
+  { id: 'crave-lava-rock', name: 'Dark & Stormy', category: 'Crave', cssBackground: img('crave-lava-rock.png') },
   { id: 'crave-irish-cream', name: 'Irish Cream', category: 'Crave', cssBackground: img('crave-irish-cream.png') },
 
   // ── Flat Silk ──
-  { id: 'flat-silk-cream', name: 'Cream', category: 'Flat Silk', cssBackground: img('flat-silk-cream.png') },
+  { id: 'flat-silk-cream', name: 'Chardonnay', category: 'Flat Silk', cssBackground: img('flat-silk-cream.png') },
   { id: 'flat-silk-champagne', name: 'Champagne', category: 'Flat Silk', cssBackground: img('flat-silk-champagne.png') },
-  { id: 'flat-silk-taupe', name: 'Taupe', category: 'Flat Silk', cssBackground: img('flat-silk-taupe.png') },
-  { id: 'flat-silk-dusty-rose', name: 'Dusty Rose', category: 'Flat Silk', cssBackground: img('flat-silk-dusty-rose.png') },
-  { id: 'flat-silk-navy', name: 'Deep Navy', category: 'Flat Silk', cssBackground: img('flat-silk-navy.png') },
+  { id: 'flat-silk-taupe', name: 'Sherry', category: 'Flat Silk', cssBackground: img('flat-silk-taupe.png') },
+  { id: 'flat-silk-dusty-rose', name: 'Cosmopolitan', category: 'Flat Silk', cssBackground: img('flat-silk-dusty-rose.png') },
+  { id: 'flat-silk-navy', name: 'Nightcap', category: 'Flat Silk', cssBackground: img('flat-silk-navy.png') },
 
   // ── Checker ──
-  { id: 'checker-mocha', name: 'Mocha', category: 'Checker', cssBackground: img('checker-mocha.png') },
-  { id: 'checker-tapestry', name: 'Tapestry', category: 'Checker', cssBackground: img('checker-tapestry.png') },
+  { id: 'checker-mocha', name: 'Café Corretto', category: 'Checker', cssBackground: img('checker-mocha.png') },
+  { id: 'checker-tapestry', name: 'Mulled Wine', category: 'Checker', cssBackground: img('checker-tapestry.png') },
 
   // ── Soul ──
-  { id: 'soul-cloud', name: 'Cloud', category: 'Soul', cssBackground: img('soul-cloud.png') },
+  { id: 'soul-cloud', name: 'Piña Colada', category: 'Soul', cssBackground: img('soul-cloud.png') },
 
   // ── Nepal ──
-  { id: 'nepal-teal', name: 'Teal', category: 'Nepal', cssBackground: img('nepal-teal.png') },
+  { id: 'nepal-teal', name: 'Mai Tai', category: 'Nepal', cssBackground: img('nepal-teal.png') },
 
   // ── Sorrento ──
-  { id: 'sorrento-teal', name: 'Teal', category: 'Sorrento', cssBackground: img('sorrento-teal.png') },
+  { id: 'sorrento-teal', name: 'Limoncello Spritz', category: 'Sorrento', cssBackground: img('sorrento-teal.png') },
 
   // ── Kenley ──
-  { id: 'kenley-spruce', name: 'Spruce', category: 'Kenley', cssBackground: img('kenley-spruce.png') },
-  { id: 'kenley-mauve', name: 'Mauve', category: 'Kenley', cssBackground: img('kenley-mauve.png') },
+  { id: 'kenley-spruce', name: 'Fernet', category: 'Kenley', cssBackground: img('kenley-spruce.png') },
+  { id: 'kenley-mauve', name: 'Kir Royale', category: 'Kenley', cssBackground: img('kenley-mauve.png') },
 
   // ── Villa ──
-  { id: 'villa-sand', name: 'Sand', category: 'Villa', cssBackground: img('villa-sand.png') },
+  { id: 'villa-sand', name: 'Paloma', category: 'Villa', cssBackground: img('villa-sand.png') },
 
   // ── Leuven ──
-  { id: 'leuven-olive', name: 'Olive', category: 'Leuven', cssBackground: img('leuven-olive.png') },
-  { id: 'leuven-snow', name: 'Snow', category: 'Leuven', cssBackground: img('leuven-snow.png') },
+  { id: 'leuven-olive', name: 'Vesper', category: 'Leuven', cssBackground: img('leuven-olive.png') },
+  { id: 'leuven-snow', name: 'Snowball', category: 'Leuven', cssBackground: img('leuven-snow.png') },
 
   // ── Key Largo ──
-  { id: 'keylargo-zenith-teal', name: 'Zenith Teal', category: 'Key Largo', cssBackground: img('keylargo-zenith-teal.png') },
+  { id: 'keylargo-zenith-teal', name: 'Daiquiri', category: 'Key Largo', cssBackground: img('keylargo-zenith-teal.png') },
 
   // ── Essence ──
-  { id: 'essence-ash', name: 'Ash', category: 'Essence', cssBackground: img('essence-ash.png') },
+  { id: 'essence-ash', name: 'Dry Vermouth', category: 'Essence', cssBackground: img('essence-ash.png') },
 
   // ── Synergy ──
-  { id: 'synergy-pewter', name: 'Pewter', category: 'Synergy', cssBackground: img('synergy-pewter.png') },
+  { id: 'synergy-pewter', name: 'Pewter Fizz', category: 'Synergy', cssBackground: img('synergy-pewter.png') },
 
   // ── Milo ──
-  { id: 'milo-dove', name: 'Dove', category: 'Milo', cssBackground: img('milo-dove.png') },
-  { id: 'milo-french-blue', name: 'French Blue', category: 'Milo', cssBackground: img('milo-french-blue.png') },
+  { id: 'milo-dove', name: 'French 75', category: 'Milo', cssBackground: img('milo-dove.png') },
+  { id: 'milo-french-blue', name: 'Aviation', category: 'Milo', cssBackground: img('milo-french-blue.png') },
 
   // ── Faithful ──
-  { id: 'faithful-olive', name: 'Olive', category: 'Faithful', cssBackground: img('faithful-olive.png') },
-  { id: 'faithful-indigo', name: 'Indigo', category: 'Faithful', cssBackground: img('faithful-indigo.png') },
-  { id: 'faithful-sand', name: 'Sand', category: 'Faithful', cssBackground: img('faithful-sand.png') },
-  { id: 'faithful-mocha', name: 'Mocha', category: 'Faithful', cssBackground: img('faithful-mocha.png') },
+  { id: 'faithful-olive', name: 'Olive Drop', category: 'Faithful', cssBackground: img('faithful-olive.png') },
+  { id: 'faithful-indigo', name: 'Ink & Tonic', category: 'Faithful', cssBackground: img('faithful-indigo.png') },
+  { id: 'faithful-sand', name: 'Sidecar', category: 'Faithful', cssBackground: img('faithful-sand.png') },
+  { id: 'faithful-mocha', name: 'Mudslide', category: 'Faithful', cssBackground: img('faithful-mocha.png') },
 
   // ── Nico ──
-  { id: 'nico-oyster', name: 'Oyster', category: 'Nico', cssBackground: img('nico-oyster.png') },
+  { id: 'nico-oyster', name: 'Oyster Shooter', category: 'Nico', cssBackground: img('nico-oyster.png') },
 
   // ── Taylor Felt ──
-  { id: 'taylor-felt-gray', name: 'Gray', category: 'Taylor Felt', cssBackground: img('taylor-felt-gray.png') },
+  { id: 'taylor-felt-gray', name: 'Grey Goose', category: 'Taylor Felt', cssBackground: img('taylor-felt-gray.png') },
 
   // ── Borough ──
-  { id: 'borough-cotton', name: 'Cotton', category: 'Borough', cssBackground: img('borough-cotton.png') },
+  { id: 'borough-cotton', name: 'Tom Collins', category: 'Borough', cssBackground: img('borough-cotton.png') },
 
   // ── Lucky ──
-  { id: 'lucky-turquoise', name: 'Turquoise', category: 'Lucky', cssBackground: img('lucky-turquoise.png') },
-  { id: 'lucky-divine', name: 'Divine', category: 'Lucky', cssBackground: img('lucky-divine.png') },
+  { id: 'lucky-turquoise', name: 'Blue Hawaii', category: 'Lucky', cssBackground: img('lucky-turquoise.png') },
+  { id: 'lucky-divine', name: 'Bellini', category: 'Lucky', cssBackground: img('lucky-divine.png') },
 
   // ── Merit ──
-  { id: 'merit-dove', name: 'Dove', category: 'Merit', cssBackground: img('merit-dove.png') },
+  { id: 'merit-dove', name: 'Sauvignon', category: 'Merit', cssBackground: img('merit-dove.png') },
 
   // ── Prime ──
-  { id: 'prime-stone', name: 'Stone', category: 'Prime', cssBackground: img('prime-stone.png') },
-  { id: 'prime-peacock', name: 'Peacock', category: 'Prime', cssBackground: img('prime-peacock.png') },
+  { id: 'prime-stone', name: 'Old Fashioned', category: 'Prime', cssBackground: img('prime-stone.png') },
+  { id: 'prime-peacock', name: 'Peacock Punch', category: 'Prime', cssBackground: img('prime-peacock.png') },
 
   // ── Tussah ──
-  { id: 'tussah-silk', name: 'Silk', category: 'Tussah', cssBackground: img('tussah-silk.png') },
+  { id: 'tussah-silk', name: 'Silk Sling', category: 'Tussah', cssBackground: img('tussah-silk.png') },
 
   // ── Bloke ──
-  { id: 'bloke-cotton', name: 'Cotton', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
+  { id: 'bloke-cotton', name: 'Gin Rickey', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
 
   // ── Leather ──
   { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
   { id: 'leather-espresso', name: 'Espresso', category: 'Leather', cssBackground: img('leather-espresso.png') },
-  { id: 'leather-chai', name: 'Chai', category: 'Leather', cssBackground: img('leather-chai.png') },
+  { id: 'leather-chai', name: 'Chai Toddy', category: 'Leather', cssBackground: img('leather-chai.png') },
   { id: 'leather-cognac', name: 'Cognac', category: 'Leather', cssBackground: img('leather-cognac.png') },
-  { id: 'leather-mocha', name: 'Mocha', category: 'Leather', cssBackground: img('leather-mocha.png') },
-  { id: 'leather-rye', name: 'Rye', category: 'Leather', cssBackground: img('leather-rye.png') },
+  { id: 'leather-mocha', name: 'Kahlúa', category: 'Leather', cssBackground: img('leather-mocha.png') },
+  { id: 'leather-rye', name: 'Rye Whiskey', category: 'Leather', cssBackground: img('leather-rye.png') },
 
   // ── Wood ──
-  { id: 'wood-oak', name: 'Oak', category: 'Wood', cssBackground: img('wood-oak.png') },
-  { id: 'wood-walnut', name: 'Walnut', category: 'Wood', cssBackground: img('wood-walnut.png') },
-  { id: 'wood-birch', name: 'Birch', category: 'Wood', cssBackground: img('wood-birch.png') },
+  { id: 'wood-oak', name: 'Oak Barrel', category: 'Wood', cssBackground: img('wood-oak.png') },
+  { id: 'wood-walnut', name: 'Walnut Stout', category: 'Wood', cssBackground: img('wood-walnut.png') },
+  { id: 'wood-birch', name: 'Birch Sap', category: 'Wood', cssBackground: img('wood-birch.png') },
 
   // ── Concrete ──
-  { id: 'concrete-raw', name: 'Raw', category: 'Concrete', cssBackground: img('concrete-raw.png') },
-  { id: 'concrete-polished', name: 'Polished', category: 'Concrete', cssBackground: img('concrete-polished.png') },
-  { id: 'concrete-weathered', name: 'Weathered', category: 'Concrete', cssBackground: img('concrete-weathered.png') },
+  { id: 'concrete-raw', name: 'Concrete Jungle', category: 'Concrete', cssBackground: img('concrete-raw.png') },
+  { id: 'concrete-polished', name: 'Neat Pour', category: 'Concrete', cssBackground: img('concrete-polished.png') },
+  { id: 'concrete-weathered', name: 'Aged Cask', category: 'Concrete', cssBackground: img('concrete-weathered.png') },
 
   // ── Stripe ──
-  { id: 'stripe-ink', name: 'Ink Stripe', category: 'Stripe', cssBackground: img('stripe-ink.png') },
-  { id: 'stripe-pinstripe', name: 'Pinstripe', category: 'Stripe', cssBackground: img('stripe-pinstripe.png') },
-  { id: 'stripe-woven', name: 'Woven Stripe', category: 'Stripe', cssBackground: img('stripe-woven.png') },
+  { id: 'stripe-ink', name: 'Ink Negroni', category: 'Stripe', cssBackground: img('stripe-ink.png') },
+  { id: 'stripe-pinstripe', name: 'Pinstripe Fizz', category: 'Stripe', cssBackground: img('stripe-pinstripe.png') },
+  { id: 'stripe-woven', name: 'Woven Julep', category: 'Stripe', cssBackground: img('stripe-woven.png') },
 
   // ── Grid ──
-  { id: 'grid-checker-blue', name: 'Blue Check', category: 'Grid', cssBackground: img('grid-checker-blue.png') },
-  { id: 'grid-cream', name: 'Cream Grid', category: 'Grid', cssBackground: img('grid-cream.png') },
-  { id: 'grid-crosshatch', name: 'Crosshatch', category: 'Grid', cssBackground: img('grid-crosshatch.png') },
-  { id: 'grid-windowpane', name: 'Windowpane', category: 'Grid', cssBackground: img('grid-windowpane.png') },
+  { id: 'grid-checker-blue', name: 'Blueberry Mule', category: 'Grid', cssBackground: img('grid-checker-blue.png') },
+  { id: 'grid-cream', name: 'Vanilla Cream', category: 'Grid', cssBackground: img('grid-cream.png') },
+  { id: 'grid-crosshatch', name: 'Crosshatch Cider', category: 'Grid', cssBackground: img('grid-crosshatch.png') },
+  { id: 'grid-windowpane', name: 'Windowpane Spritz', category: 'Grid', cssBackground: img('grid-windowpane.png') },
 
   // ── Animal ──
-  { id: 'animal-cheetah', name: 'Cheetah', category: 'Animal', cssBackground: img('cheetah-print.png') },
-  { id: 'animal-cheetah-white', name: 'White Cheetah', category: 'Animal', cssBackground: img('cheetah-white.png') },
-  { id: 'animal-cow', name: 'Cow Print', category: 'Animal', cssBackground: img('cow-print.png') },
-  { id: 'animal-zebra', name: 'Zebra', category: 'Animal', cssBackground: img('zebra-print.png') },
+  { id: 'animal-cheetah', name: 'Jungle Bird', category: 'Animal', cssBackground: img('cheetah-print.png') },
+  { id: 'animal-cheetah-white', name: 'Snow Leopard', category: 'Animal', cssBackground: img('cheetah-white.png') },
+  { id: 'animal-cow', name: 'Black Velvet', category: 'Animal', cssBackground: img('cow-print.png') },
+  { id: 'animal-zebra', name: 'Zebra Stripe', category: 'Animal', cssBackground: img('zebra-print.png') },
 
   // ── Ripple ──
-  { id: 'ripple-cream', name: 'Cream', category: 'Ripple', cssBackground: img('ripple-cream.png') },
-  { id: 'ripple-ink', name: 'Ink', category: 'Ripple', cssBackground: img('ripple-ink.png') },
-  { id: 'ripple-kraft', name: 'Kraft', category: 'Ripple', cssBackground: img('ripple-kraft.png') },
-  { id: 'ripple-lattice', name: 'Lattice', category: 'Ripple', cssBackground: img('ripple-lattice.png') },
-  { id: 'ripple-parchment', name: 'Parchment', category: 'Ripple', cssBackground: img('ripple-parchment.png') },
+  { id: 'ripple-cream', name: 'Crème Brûlée', category: 'Ripple', cssBackground: img('ripple-cream.png') },
+  { id: 'ripple-ink', name: 'Blackberry Wine', category: 'Ripple', cssBackground: img('ripple-ink.png') },
+  { id: 'ripple-kraft', name: 'Craft Brew', category: 'Ripple', cssBackground: img('ripple-kraft.png') },
+  { id: 'ripple-lattice', name: 'Lattice Lager', category: 'Ripple', cssBackground: img('ripple-lattice.png') },
+  { id: 'ripple-parchment', name: 'Parchment Port', category: 'Ripple', cssBackground: img('ripple-parchment.png') },
 
   // ── Speckle ──
-  { id: 'speckle-blue', name: 'Blue', category: 'Speckle', cssBackground: img('speckle-blue.png') },
-  { id: 'speckle-ink', name: 'Ink', category: 'Speckle', cssBackground: img('speckle-ink.png') },
+  { id: 'speckle-blue', name: 'Blue Moon', category: 'Speckle', cssBackground: img('speckle-blue.png') },
+  { id: 'speckle-ink', name: 'Dark Rum', category: 'Speckle', cssBackground: img('speckle-ink.png') },
 
   // ── Tie-dye ──
-  { id: 'tiedye-blush', name: 'Blush', category: 'Tie-dye', cssBackground: img('tiedye-blush.png') },
-  { id: 'tiedye-neutral', name: 'Neutral', category: 'Tie-dye', cssBackground: img('tiedye-neutral.png') },
-  { id: 'tiedye-rainbow', name: 'Rainbow', category: 'Tie-dye', cssBackground: img('tiedye-rainbow.png') },
+  { id: 'tiedye-blush', name: 'Frosé', category: 'Tie-dye', cssBackground: img('tiedye-blush.png') },
+  { id: 'tiedye-neutral', name: 'Kombucha', category: 'Tie-dye', cssBackground: img('tiedye-neutral.png') },
+  { id: 'tiedye-rainbow', name: 'Rainbow Punch', category: 'Tie-dye', cssBackground: img('tiedye-rainbow.png') },
 
   // ── Maze ──
-  { id: 'maze', name: 'Maze', category: 'Maze', cssBackground: img('maze.png') },
+  { id: 'maze', name: 'Labyrinth Lager', category: 'Maze', cssBackground: img('maze.png') },
 
   // ── Felt ──
-  { id: 'felt-sand', name: 'Sand', category: 'Felt', cssBackground: img('felt-sand.png') },
-  { id: 'felt-brown', name: 'Brown', category: 'Felt', cssBackground: img('felt-brown.png') },
-  { id: 'felt-olive', name: 'Olive', category: 'Felt', cssBackground: img('felt-olive.png') },
-  { id: 'felt-navy', name: 'Navy', category: 'Felt', cssBackground: img('felt-navy.png') },
+  { id: 'felt-sand', name: 'Amaretto Sour', category: 'Felt', cssBackground: img('felt-sand.png') },
+  { id: 'felt-brown', name: 'Irish Coffee', category: 'Felt', cssBackground: img('felt-brown.png') },
+  { id: 'felt-olive', name: 'Olive Martini', category: 'Felt', cssBackground: img('felt-olive.png') },
+  { id: 'felt-navy', name: 'Navy Grog', category: 'Felt', cssBackground: img('felt-navy.png') },
 
   // ── Cotton ──
-  { id: 'cotton-natural', name: 'Natural', category: 'Cotton', cssBackground: img('cotton-natural.png') },
-  { id: 'cotton-oatmeal', name: 'Oatmeal', category: 'Cotton', cssBackground: img('cotton-oatmeal.png') },
+  { id: 'cotton-natural', name: 'Coconut Water', category: 'Cotton', cssBackground: img('cotton-natural.png') },
+  { id: 'cotton-oatmeal', name: 'Oat Milk Latte', category: 'Cotton', cssBackground: img('cotton-oatmeal.png') },
 
   // ── Yarn ──
-  { id: 'yarn-cream', name: 'Cream', category: 'Yarn', cssBackground: img('yarn-cream.png') },
-  { id: 'yarn-oatmeal', name: 'Oatmeal', category: 'Yarn', cssBackground: img('yarn-oatmeal.png') },
-  { id: 'yarn-charcoal', name: 'Charcoal', category: 'Yarn', cssBackground: img('yarn-charcoal.png') },
+  { id: 'yarn-cream', name: 'Vanilla Bean', category: 'Yarn', cssBackground: img('yarn-cream.png') },
+  { id: 'yarn-oatmeal', name: 'Chai Spice', category: 'Yarn', cssBackground: img('yarn-oatmeal.png') },
+  { id: 'yarn-charcoal', name: 'Charcoal Stout', category: 'Yarn', cssBackground: img('yarn-charcoal.png') },
 
   // ── Corduroy ──
-  { id: 'cord-fine-sand', name: 'Fine Sand', category: 'Corduroy', cssBackground: img('cord-fine-sand.png') },
-  { id: 'cord-fine-brown', name: 'Fine Brown', category: 'Corduroy', cssBackground: img('cord-fine-brown.png') },
-  { id: 'cord-fine-olive', name: 'Fine Olive', category: 'Corduroy', cssBackground: img('cord-fine-olive.png') },
-  { id: 'cord-fine-navy', name: 'Fine Navy', category: 'Corduroy', cssBackground: img('cord-fine-navy.png') },
-  { id: 'cord-wide-sand', name: 'Wide Sand', category: 'Corduroy', cssBackground: img('cord-wide-sand.png') },
-  { id: 'cord-wide-brown', name: 'Wide Brown', category: 'Corduroy', cssBackground: img('cord-wide-brown.png') },
-  { id: 'cord-wide-olive', name: 'Wide Olive', category: 'Corduroy', cssBackground: img('cord-wide-olive.png') },
-  { id: 'cord-wide-navy', name: 'Wide Navy', category: 'Corduroy', cssBackground: img('cord-wide-navy.png') },
-  { id: 'cord-washed-sand', name: 'Washed Sand', category: 'Corduroy', cssBackground: img('cord-washed-sand.png') },
-  { id: 'cord-washed-brown', name: 'Washed Brown', category: 'Corduroy', cssBackground: img('cord-washed-brown.png') },
-  { id: 'cord-washed-olive', name: 'Washed Olive', category: 'Corduroy', cssBackground: img('cord-washed-olive.png') },
-  { id: 'cord-washed-navy', name: 'Washed Navy', category: 'Corduroy', cssBackground: img('cord-washed-navy.png') },
+  { id: 'cord-fine-sand', name: 'Sandy Collins', category: 'Corduroy', cssBackground: img('cord-fine-sand.png') },
+  { id: 'cord-fine-brown', name: 'Brown Derby', category: 'Corduroy', cssBackground: img('cord-fine-brown.png') },
+  { id: 'cord-fine-olive', name: 'Olive Brine', category: 'Corduroy', cssBackground: img('cord-fine-olive.png') },
+  { id: 'cord-fine-navy', name: 'Navy Negroni', category: 'Corduroy', cssBackground: img('cord-fine-navy.png') },
+  { id: 'cord-wide-sand', name: 'Sahara Sling', category: 'Corduroy', cssBackground: img('cord-wide-sand.png') },
+  { id: 'cord-wide-brown', name: 'Manhattan', category: 'Corduroy', cssBackground: img('cord-wide-brown.png') },
+  { id: 'cord-wide-olive', name: 'Last Word', category: 'Corduroy', cssBackground: img('cord-wide-olive.png') },
+  { id: 'cord-wide-navy', name: 'Midnight Mule', category: 'Corduroy', cssBackground: img('cord-wide-navy.png') },
+  { id: 'cord-washed-sand', name: 'Paloma Fade', category: 'Corduroy', cssBackground: img('cord-washed-sand.png') },
+  { id: 'cord-washed-brown', name: 'Rusty Nail', category: 'Corduroy', cssBackground: img('cord-washed-brown.png') },
+  { id: 'cord-washed-olive', name: 'Herb Garden', category: 'Corduroy', cssBackground: img('cord-washed-olive.png') },
+  { id: 'cord-washed-navy', name: 'Nightfall', category: 'Corduroy', cssBackground: img('cord-washed-navy.png') },
 
   // ── Alix ──
   { id: 'alix-rose', name: 'Rose', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
