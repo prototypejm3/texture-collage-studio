@@ -344,6 +344,7 @@ const Index = () => {
             onDropAsSwatch={handleDrop}
             onDetachSection={studio.detachSection}
             onDeleteSection={studio.deleteSection}
+            onDuplicateSection={studio.duplicateSection}
             onUpdateSectionTransform={studio.updateSectionTransform}
             canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
             drawMode={studio.drawMode}
