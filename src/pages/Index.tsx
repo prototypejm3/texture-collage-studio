@@ -365,6 +365,7 @@ const Index = () => {
           onClearTemplate={clearTemplate}
           onTemplateOpacityChange={setTemplateOpacity}
         />
+        </div>
       </div>
 
       <BottomBar
