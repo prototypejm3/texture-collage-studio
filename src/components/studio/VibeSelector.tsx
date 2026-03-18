@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Shuffle } from 'lucide-react';
+import { X, Shuffle, Sparkles, Loader2 } from 'lucide-react';
+import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 
 interface VibeSelectorProps {
   isOpen: boolean;
@@ -53,6 +55,23 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 }
 
 export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onShuffle }: VibeSelectorProps) {
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [showAiInput, setShowAiInput] = useState(false);
+  const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
+  const { generateStencil, isGenerating } = useGenerateStencil();
+
+  const handleGenerate = async () => {
+    const vibe = await generateStencil(aiPrompt);
+    if (vibe) {
+      setAiGeneratedVibes(prev => [...prev, vibe]);
+      onSelectVibe(vibe);
+      setAiPrompt('');
+      setShowAiInput(false);
+    }
+  };
+
+  const allVibes = [...vibes, ...aiGeneratedVibes];
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -70,6 +89,16 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
               Choose a Stencil
             </h3>
             <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => setShowAiInput(v => !v)}
+                className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-md transition-colors ${
+                  showAiInput
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                }`}
+              >
+                <Sparkles className="w-2.5 h-2.5" /> AI Generate
+              </button>
               {activeVibeId && (
                 <button
                   onClick={onShuffle}
@@ -87,9 +116,50 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
             </div>
           </div>
 
-          {/* Horizontal scrollable strip of compact cards */}
+          {/* AI Generate input */}
+          <AnimatePresence>
+            {showAiInput && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="overflow-hidden"
+              >
+                <div className="flex gap-2 mb-2.5">
+                  <input
+                    type="text"
+                    value={aiPrompt}
+                    onChange={e => setAiPrompt(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
+                    placeholder="Describe a stencil… e.g. flower, castle, dinosaur"
+                    className="flex-1 px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    disabled={isGenerating}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleGenerate}
+                    disabled={isGenerating || !aiPrompt.trim()}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="w-3 h-3 animate-spin" /> Generating…
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-3 h-3" /> Generate
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Horizontal scrollable strip */}
           <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'thin' }}>
-            {vibes.map(vibe => (
+            {allVibes.map(vibe => (
               <button
                 key={vibe.id}
                 onClick={() => onSelectVibe(vibe)}
