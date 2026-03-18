@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Pencil, Check, Frame, Move, Lamp, Sun, Volume2, Tag, Wand2, Eye, Lock } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Sun, Volume2, Tag, Wand2, Eye, Lock } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCustomizerProps {
