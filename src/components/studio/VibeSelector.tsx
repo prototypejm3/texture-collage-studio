@@ -309,15 +309,35 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
 
               {/* Stencil Grid */}
               <div className="flex-1 overflow-y-auto px-6 py-4">
-                <div className="grid grid-cols-4 gap-3">
-                  {mainVibes.map(vibe => renderVibeCard(vibe))}
-                </div>
+                {/* Uncategorized */}
+                {uncategorized.length > 0 && (
+                  <div className="grid grid-cols-4 gap-3">
+                    {uncategorized.map(vibe => renderVibeCard(vibe))}
+                  </div>
+                )}
 
+                {/* Theme sections */}
+                {sections.map(section => (
+                  <div key={section.label}>
+                    <div className="flex items-center gap-3 mt-6 mb-3">
+                      <div className="h-px flex-1 bg-border" />
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                        {section.emoji} {section.label}
+                      </span>
+                      <div className="h-px flex-1 bg-border" />
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      {section.vibes.map(vibe => renderVibeCard(vibe))}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Community */}
                 {communityVibes.length > 0 && (
                   <>
                     <div className="flex items-center gap-3 mt-6 mb-3">
                       <div className="h-px flex-1 bg-border" />
-                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Community</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">🤝 Community</span>
                       <div className="h-px flex-1 bg-border" />
                     </div>
                     <div className="grid grid-cols-4 gap-3">
