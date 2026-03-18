@@ -8,7 +8,7 @@ const categories: TextureCategory[] = [
   'Ocean', 'Sky', 'Space',
   'Alix', 'Corinne', 'Shayshari', 'Jayme',
   'Marble', 'Nuts', 'Fruit',
-  'Animal', 'Novelty', 'Stripe', 'Wood', 'Concrete',
+  'Animal', 'Novelty', 'Stripe', 'Grid', 'Wood', 'Concrete',
 ];
 
 interface TextureLibraryProps {
