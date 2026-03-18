@@ -57,7 +57,7 @@ const MyWall = () => {
     : wallDesigns.filter(d => d.status === activeTab);
 
   const currentSettings = multiWall.activeWall.settings;
-  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(currentSettings.background);
+  const isDark = false;
   const wallBgClass = currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : '';
   const wallBgStyle = currentSettings.background === 'custom' && currentSettings.customWallImage ? {
     backgroundImage: `url(${currentSettings.customWallImage})`,

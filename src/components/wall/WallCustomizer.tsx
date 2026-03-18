@@ -21,7 +21,6 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
 
 const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [
   { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
-  { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
   { value: 'wood-birch-wall', label: 'Birch', preview: '/walls/wood-birch-wall.png' },
   { value: 'wood-oak-wall', label: 'Oak', preview: '/walls/wood-oak-wall.png' },
   { value: 'wood-walnut-wall', label: 'Walnut', preview: '/walls/wood-walnut-wall.png' },
