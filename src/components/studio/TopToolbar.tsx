@@ -56,6 +56,7 @@ export function TopToolbar({
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   isPremium, onRequestUpgrade,
+  drawMode, onToggleDraw,
 }: Props) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [framePanelOpen, setFramePanelOpen] = useState(false);
