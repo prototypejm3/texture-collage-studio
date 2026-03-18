@@ -367,6 +367,16 @@ export function RightSidebar({
                     isLoggedIn={!!user}
                     onSelect={() => onSelectVibe(vibe)}
                     onToggleHidden={() => social.toggleHidden(vibe.id)}
+                    onDelete={async () => {
+                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                      await social.deleteStencil(vibe.id);
+                      toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                    }}
+                    onReport={async () => {
+                      await social.reportStencil(vibe.id);
+                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                      toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                    }}
                   />
                 ))}
               </div>
