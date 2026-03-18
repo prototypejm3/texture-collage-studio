@@ -36,6 +36,41 @@ const Index = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [showToolKit, setShowToolKit] = useState(false);
+  const [toolKitPos, setToolKitPos] = useState({ x: 300, y: 12 });
+  const [toolKitSize, setToolKitSize] = useState({ w: 320, h: 400 });
+  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
+  const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(null);
+
+  const handleToolKitDragStart = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    dragRef.current = { startX: e.clientX, startY: e.clientY, origX: toolKitPos.x, origY: toolKitPos.y };
+    const onMove = (ev: MouseEvent) => {
+      if (!dragRef.current) return;
+      setToolKitPos({
+        x: dragRef.current.origX + (ev.clientX - dragRef.current.startX),
+        y: dragRef.current.origY + (ev.clientY - dragRef.current.startY),
+      });
+    };
+    const onUp = () => { dragRef.current = null; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }, [toolKitPos]);
+
+  const handleToolKitResizeStart = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    resizeRef.current = { startX: e.clientX, startY: e.clientY, origW: toolKitSize.w, origH: toolKitSize.h };
+    const onMove = (ev: MouseEvent) => {
+      if (!resizeRef.current) return;
+      setToolKitSize({
+        w: Math.max(240, resizeRef.current.origW + (ev.clientX - resizeRef.current.startX)),
+        h: Math.max(200, resizeRef.current.origH + (ev.clientY - resizeRef.current.startY)),
+      });
+    };
+    const onUp = () => { resizeRef.current = null; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }, [toolKitSize]);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
