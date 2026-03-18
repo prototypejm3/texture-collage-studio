@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
@@ -568,6 +568,9 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
   onToggleFav: () => void;
   creator?: string;
 }) {
+  const shadowIcons = Math.floor(favCount / 25);
+  const remainder = favCount % 25;
+
   return (
     <motion.div
       whileHover={{ y: -2 }}
@@ -596,17 +599,26 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
         )}
       </button>
 
-      {/* Fav count + toggle */}
+      {/* Shadow count + toggle */}
       <div className="flex items-center gap-1 mt-1">
         <button
           onClick={(e) => { e.stopPropagation(); if (isLoggedIn) onToggleFav(); }}
           className={`flex items-center gap-0.5 text-[10px] transition-colors ${
-            isFavorited ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'
+            isFavorited ? 'text-primary' : 'text-muted-foreground hover:text-primary'
           } ${!isLoggedIn ? 'cursor-default' : ''}`}
-          title={isLoggedIn ? (isFavorited ? 'Unfavorite' : 'Favorite') : 'Sign in to favorite'}
+          title={isLoggedIn ? (isFavorited ? 'Remove shadow' : 'Cast a shadow') : 'Sign in to cast shadows'}
         >
-          <Heart className={`w-3 h-3 ${isFavorited ? 'fill-current' : ''}`} />
-          {favCount}
+          {shadowIcons > 0 ? (
+            <span className="flex items-center gap-px">
+              {Array.from({ length: Math.min(shadowIcons, 5) }).map((_, i) => (
+                <span key={i} className="text-[10px]">👤</span>
+              ))}
+              {shadowIcons > 5 && <span className="text-[9px] text-muted-foreground ml-0.5">+{shadowIcons - 5}</span>}
+            </span>
+          ) : (
+            <span className="text-[10px]">👤</span>
+          )}
+          <span className="ml-0.5">{favCount}</span>
         </button>
       </div>
     </motion.div>
