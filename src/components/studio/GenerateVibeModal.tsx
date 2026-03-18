@@ -60,7 +60,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary" />
                   <h2 className="text-base font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Generate Vibe
+                    What's the Mood?
                   </h2>
                 </div>
                 <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-secondary transition-colors">
@@ -71,14 +71,14 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
               {/* Prompt input */}
               <form onSubmit={handleSubmit} className="px-6 py-4 border-b border-border bg-muted/30">
                 <label className="text-xs font-medium text-muted-foreground mb-2 block">
-                  Describe your vibe — mood, aesthetic, colors, feeling…
+                  Describe the mood — cozy, moody, tropical, minimal, luxe…
                 </label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={prompt}
                     onChange={e => setPrompt(e.target.value)}
-                    placeholder="e.g. warm sunset bohemian, moody forest cabin, coastal minimalist…"
+                    placeholder="e.g. cozy cabin vibes, beach sunset, dark academia…"
                     className="flex-1 px-3 py-2 text-sm rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                     disabled={isGenerating}
                     autoFocus
@@ -103,7 +103,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                   <div className="flex flex-col items-center justify-center py-12">
                     <Loader2 className="w-8 h-8 text-primary animate-spin mb-3" />
                     <p className="text-sm text-muted-foreground">AI is crafting your vibe…</p>
-                    <p className="text-xs text-muted-foreground/60 mt-1">Picking colors, textures, and shapes</p>
+                    <p className="text-xs text-muted-foreground/60 mt-1">Picking colors, textures, and frame style</p>
                   </div>
                 )}
 
@@ -164,44 +164,15 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                       ))}
                     </div>
 
-                    {/* Stencil preview */}
-                    <div>
-                      <h4 className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
-                        Layout Stencil
-                      </h4>
-                      <div className="w-32 h-32 mx-auto">
-                        <svg viewBox={generatedVibe.viewBox} className="w-full h-full">
-                          <rect width="100%" height="100%" fill="hsl(40, 15%, 96%)" rx="8" />
-                          {generatedVibe.sections.map(section => {
-                            const toneColors: Record<string, string> = {
-                              light: generatedVibe.palette[0]?.color || 'hsl(40, 20%, 88%)',
-                              medium: generatedVibe.palette[1]?.color || 'hsl(25, 25%, 60%)',
-                              dark: generatedVibe.palette[2]?.color || 'hsl(20, 20%, 30%)',
-                              accent: generatedVibe.palette[3]?.color || 'hsl(24, 60%, 50%)',
-                            };
-                            return (
-                              <path
-                                key={section.id}
-                                d={section.path}
-                                fill={toneColors[section.tone]}
-                                stroke="hsl(220, 10%, 75%)"
-                                strokeWidth={1.5}
-                                opacity={0.85}
-                              />
-                            );
-                          })}
-                        </svg>
-                      </div>
-                    </div>
                   </motion.div>
                 )}
 
                 {!isGenerating && !generatedVibe && (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <Sparkles className="w-8 h-8 text-muted-foreground/30 mb-3" />
-                    <p className="text-sm text-muted-foreground">Enter a vibe to get started</p>
+                    <p className="text-sm text-muted-foreground">What's the mood?</p>
                     <p className="text-xs text-muted-foreground/60 mt-1">
-                      AI will generate colors, pick matching textures, and create a layout
+                      AI will pick colors, textures, and a frame style to match
                     </p>
                   </div>
                 )}

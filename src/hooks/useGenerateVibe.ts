@@ -14,8 +14,6 @@ export interface GeneratedVibe {
   darkTextures: string[];
   accentTextures: string[];
   frameChoice: string;
-  viewBox: string;
-  sections: { id: string; label: string; tone: 'light' | 'medium' | 'dark' | 'accent'; path: string }[];
 }
 
 export function useGenerateVibe() {
@@ -62,8 +60,8 @@ export function useGenerateVibe() {
     name: gv.name,
     emoji: gv.emoji,
     description: gv.description,
-    viewBox: gv.viewBox,
-    sections: gv.sections,
+    viewBox: '0 0 480 480',
+    sections: [],
     lightTextures: gv.lightTextures,
     mediumTextures: gv.mediumTextures,
     darkTextures: gv.darkTextures,

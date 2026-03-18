@@ -224,7 +224,12 @@ const Index = () => {
             const vibe = vibeGen.toVibe(vibeGen.generatedVibe);
             studio.selectVibe(vibe);
             if (vibeGen.generatedVibe.frameChoice) {
-              studio.setFrameColor(vibeGen.generatedVibe.frameChoice);
+              const fc = vibeGen.generatedVibe.frameChoice as any;
+              // Apply as wallFrameStyle if it's a valid frame style
+              const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
+              if (validFrameStyles.includes(fc)) {
+                studio.setWallFrameStyle(fc);
+              }
             }
           }
           setShowVibeModal(false);

@@ -50,27 +50,20 @@ const TEXTURE_IDS = [
   "tussah-silk",
 ];
 
-const SYSTEM_PROMPT = `You are a color/texture curator for a shadow-box art app. Given a vibe description, you create a cohesive design palette.
+const SYSTEM_PROMPT = `You are a color/texture curator for a shadow-box art app. Given a mood description, you create a cohesive material palette — colors and textures only, NO layout.
 
 You have access to these texture IDs from the app's library:
 ${TEXTURE_IDS.join(", ")}
 
 Your job:
-1. Create a COLOR PALETTE of 4-5 HSL colors that capture the vibe
+1. Create a COLOR PALETTE of 4-5 HSL colors that capture the mood
 2. Pick 3-5 LIGHT textures, 3-5 MEDIUM textures, 3-5 DARK textures, and 2-3 ACCENT textures from the available IDs
-3. Suggest a FRAME texture or color ("white", "black", or a texture ID)
-4. Create a simple SVG STENCIL (4-6 sections) that matches the vibe — abstract shapes are fine, they represent layout zones
+3. Suggest a FRAME style: one of "gold", "chrome", "copper", "silver", "minimal", "shadow-box", "wood", "floating", "polaroid", "none"
 
 TEXTURE SELECTION TIPS:
 - Match textures by their visual feel: velvets for luxury, linens for natural, leather for rugged, marble for elegant
 - Use the naming hints: "royale" = velvet, "crave" = ribbed chenille, "faithful" = linen, "leather" = leather, etc.
 - Group similar tones together — lights should be light-colored textures, darks should be darker ones
-
-SVG STENCIL RULES:
-- Canvas is 480×480
-- Use 4-6 sections with closed paths (Z) and smooth curves (Q/C)
-- Sections should tile together as abstract compositional zones
-- Think mood boards, not literal objects — organic shapes, overlapping zones
 
 You MUST respond using the generate_vibe tool.`;
 
@@ -103,17 +96,17 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "openai/gpt-5-mini",
+        model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a complete vibe palette for: "${prompt}". Pick textures that visually match this mood. Create an abstract stencil layout.` },
+          { role: "user", content: `Create a material palette for this mood: "${prompt}". Pick textures that visually match this feeling.` },
         ],
         tools: [
           {
             type: "function",
             function: {
               name: "generate_vibe",
-              description: "Generate a complete vibe with palette, textures, frame, and stencil",
+              description: "Generate a vibe with palette, textures, and frame style",
               parameters: {
                 type: "object",
                 properties: {
@@ -156,26 +149,10 @@ serve(async (req) => {
                   },
                   frameChoice: {
                     type: "string",
-                    description: "Frame texture ID or 'white'/'black'",
-                  },
-                  sections: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        id: { type: "string" },
-                        label: { type: "string" },
-                        tone: { type: "string", enum: ["light", "medium", "dark", "accent"] },
-                        path: { type: "string", description: "SVG path d attribute — closed (Z), smooth curves" },
-                      },
-                      required: ["id", "label", "tone", "path"],
-                      additionalProperties: false,
-                    },
-                    minItems: 4,
-                    maxItems: 6,
+                    description: "Frame style: gold, chrome, copper, silver, minimal, shadow-box, wood, floating, polaroid, or none",
                   },
                 },
-                required: ["name", "emoji", "description", "palette", "lightTextures", "mediumTextures", "darkTextures", "accentTextures", "frameChoice", "sections"],
+                required: ["name", "emoji", "description", "palette", "lightTextures", "mediumTextures", "darkTextures", "accentTextures", "frameChoice"],
                 additionalProperties: false,
               },
             },
@@ -226,8 +203,6 @@ serve(async (req) => {
       darkTextures: filterValid(vibe.darkTextures),
       accentTextures: filterValid(vibe.accentTextures),
       frameChoice: vibe.frameChoice,
-      viewBox: "0 0 480 480",
-      sections: vibe.sections,
     };
 
     return new Response(JSON.stringify(result), {
