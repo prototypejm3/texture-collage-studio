@@ -36,6 +36,7 @@ const Index = () => {
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
 
   // Load design state when editing from wall
   useEffect(() => {
