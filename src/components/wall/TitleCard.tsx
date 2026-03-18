@@ -1,30 +1,64 @@
 import { SavedDesign } from '@/types/wall';
+import { motion } from 'framer-motion';
 
 interface TitleCardProps {
   design: SavedDesign;
   isDark?: boolean;
+  placement?: 'below' | 'right';
 }
 
-export function TitleCard({ design, isDark }: TitleCardProps) {
+export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProps) {
+  const textBase = isDark ? 'text-background/50' : 'text-foreground/40';
+  const textTitle = isDark ? 'text-background/70' : 'text-foreground/60';
+
   return (
-    <div className={`mt-2 px-1 ${isDark ? 'text-background/60' : 'text-foreground/50'}`}>
-      <div className="flex items-baseline gap-2">
-        <p className="text-[10px] font-medium tracking-wide truncate">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      className={`${placement === 'right' ? 'pl-5' : 'mt-4 px-0.5'} select-none`}
+    >
+      <div className="space-y-[3px] text-left max-w-[220px]">
+        {/* Title — slightly stronger */}
+        <p
+          className={`text-[11px] font-normal tracking-[0.04em] leading-snug ${textTitle}`}
+          style={{ fontStyle: 'normal' }}
+        >
           {design.name}
         </p>
-        {design.isHero && (
-          <span className="text-[8px] tracking-widest uppercase text-primary/60">★ Hero</span>
+
+        {/* Artist */}
+        {design.artist && (
+          <p className={`text-[10px] tracking-[0.05em] leading-snug ${textBase}`}>
+            {design.artist}
+          </p>
+        )}
+
+        {/* Year + vibeName as material/medium line */}
+        <p className={`text-[9px] tracking-[0.06em] leading-snug ${textBase} opacity-80`}>
+          {[
+            new Date(design.createdAt).getFullYear(),
+            design.materials,
+            design.vibeName,
+          ].filter(Boolean).join(' · ')}
+        </p>
+
+        {/* Curator note */}
+        {design.curatorNote && (
+          <p
+            className={`text-[9px] tracking-[0.04em] leading-relaxed italic mt-1.5 ${textBase} opacity-70`}
+          >
+            {design.curatorNote}
+          </p>
+        )}
+
+        {/* Edition */}
+        {design.edition && (
+          <p className={`text-[8px] tracking-[0.08em] uppercase mt-1 ${textBase} opacity-60`}>
+            {design.edition}
+          </p>
         )}
       </div>
-      {design.artist && (
-        <p className="text-[9px] tracking-wider opacity-60">{design.artist}</p>
-      )}
-      {design.vibeName && (
-        <p className="text-[8px] tracking-wider opacity-40 italic mt-0.5">{design.vibeName}</p>
-      )}
-      <p className="text-[8px] tracking-wider opacity-30 mt-0.5">
-        {new Date(design.createdAt).getFullYear()}
-      </p>
-    </div>
+    </motion.div>
   );
 }

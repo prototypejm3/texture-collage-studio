@@ -195,6 +195,9 @@ export function WallCard({
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
   const [editArtist, setEditArtist] = useState(design.artist || '');
+  const [editCuratorNote, setEditCuratorNote] = useState(design.curatorNote || '');
+  const [editEdition, setEditEdition] = useState(design.edition || '');
+  const [editMaterials, setEditMaterials] = useState(design.materials || '');
   const nameRef = useRef<HTMLInputElement>(null);
 
   const handleOpenEditPanel = (e: React.MouseEvent) => {
@@ -202,6 +205,9 @@ export function WallCard({
     setEditName(design.name);
     setEditDesc(design.description || '');
     setEditArtist(design.artist || '');
+    setEditCuratorNote(design.curatorNote || '');
+    setEditEdition(design.edition || '');
+    setEditMaterials(design.materials || '');
     setEditPanelOpen(true);
   };
 
@@ -212,6 +218,9 @@ export function WallCard({
         name: trimmedName,
         description: editDesc.trim() || undefined,
         artist: editArtist.trim() || undefined,
+        curatorNote: editCuratorNote.trim() || undefined,
+        edition: editEdition.trim() || undefined,
+        materials: editMaterials.trim() || undefined,
       });
     }
     setEditPanelOpen(false);
@@ -373,21 +382,29 @@ export function WallCard({
         </div>
       </div>
 
-      {/* Gallery label */}
-      <div className="mt-3">
+      {/* Museum-style label */}
+      <div className="mt-4">
         <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleOpenEditPanel}>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-foreground/80 tracking-wide truncate">{design.name}</p>
+          <div className="min-w-0 flex-1 space-y-[2px] text-left">
+            <p className="text-[11px] font-normal tracking-[0.04em] text-foreground/60 truncate">{design.name}</p>
             {design.artist && (
-              <p className="text-[10px] text-muted-foreground/50 tracking-wider">by {design.artist}</p>
+              <p className="text-[10px] tracking-[0.05em] text-foreground/40">{design.artist}</p>
             )}
-            {design.description ? (
-              <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5 italic line-clamp-2">{design.description}</p>
-            ) : design.vibeName ? (
-              <p className="text-[10px] text-muted-foreground/50 tracking-wider mt-0.5">{design.vibeName}</p>
-            ) : null}
+            <p className="text-[9px] tracking-[0.06em] text-foreground/30">
+              {[
+                new Date(design.createdAt).getFullYear(),
+                design.materials,
+                design.vibeName,
+              ].filter(Boolean).join(' · ')}
+            </p>
+            {design.curatorNote && (
+              <p className="text-[9px] tracking-[0.04em] italic text-foreground/25 mt-1">{design.curatorNote}</p>
+            )}
+            {design.edition && (
+              <p className="text-[8px] tracking-[0.08em] uppercase text-foreground/20 mt-0.5">{design.edition}</p>
+            )}
           </div>
-          <Pencil className="w-2.5 h-2.5 text-muted-foreground/30 group-hover/label:text-muted-foreground/60 transition-colors mt-0.5 shrink-0" />
+          <Pencil className="w-2.5 h-2.5 text-muted-foreground/20 group-hover/label:text-muted-foreground/50 transition-colors mt-0.5 shrink-0" />
         </div>
       </div>
 
@@ -445,6 +462,44 @@ export function WallCard({
                   className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
                   placeholder="Your name"
                 />
+              </div>
+
+              {/* Museum Label Fields */}
+              <div className="border-t border-border pt-3 mt-1">
+                <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Museum Label</p>
+                
+                {/* Materials */}
+                <div className="mb-2">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Materials</label>
+                  <input
+                    value={editMaterials}
+                    onChange={(e) => setEditMaterials(e.target.value.slice(0, 100))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Denim, Leather, Silk"
+                  />
+                </div>
+
+                {/* Curator Note */}
+                <div className="mb-2">
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Curator Note</label>
+                  <input
+                    value={editCuratorNote}
+                    onChange={(e) => setEditCuratorNote(e.target.value.slice(0, 200))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Exploring texture through contrast…"
+                  />
+                </div>
+
+                {/* Edition */}
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edition</label>
+                  <input
+                    value={editEdition}
+                    onChange={(e) => setEditEdition(e.target.value.slice(0, 50))}
+                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    placeholder="Edition 1 of 10"
+                  />
+                </div>
               </div>
 
               {/* Size */}
