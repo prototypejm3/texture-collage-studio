@@ -1039,4 +1039,69 @@ const giraffe: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, elephant, owl, turtle, lion, rabbit, dinosaur, giraffe];
+// ── HUMMINGBIRD ──
+const hummingbird: Vibe = {
+  id: 'hummingbird', name: 'Hummingbird', emoji: '🐦',
+  description: 'Elegant hummingbird in flight with spread wings',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'hbird-head', label: 'Head', tone: 'dark',
+      path: 'M280,140 Q295,118 315,110 Q338,105 348,118 Q355,132 342,148 Q328,160 310,162 Q292,160 282,152 Z' },
+    { id: 'hbird-beak', label: 'Beak', tone: 'dark',
+      path: 'M348,125 Q370,118 400,112 Q420,108 430,112 Q435,118 425,122 Q405,128 380,135 Q360,140 348,138 Z' },
+    { id: 'hbird-eye', label: 'Eye', tone: 'light', path: circlePath(318, 130, 6) },
+    { id: 'hbird-throat', label: 'Throat', tone: 'accent',
+      path: 'M282,152 Q278,170 275,188 Q290,195 310,190 Q325,182 328,165 Q330,155 310,162 Q292,160 282,152 Z' },
+    { id: 'hbird-body', label: 'Body', tone: 'medium',
+      path: 'M275,188 Q260,210 245,245 Q232,280 228,310 Q225,340 235,365 Q248,385 268,390 Q290,388 305,370 Q318,348 322,318 Q325,285 318,252 Q312,220 300,198 Q295,192 280,190 Z' },
+    { id: 'hbird-belly', label: 'Belly', tone: 'light',
+      path: 'M260,250 Q255,275 252,305 Q250,335 258,358 Q268,372 280,368 Q292,358 295,330 Q298,300 295,270 Q290,245 275,238 Z' },
+    { id: 'hbird-wing-upper', label: 'Upper Wing', tone: 'accent',
+      path: 'M270,200 Q235,175 195,155 Q155,138 120,135 Q88,135 75,148 Q68,165 82,182 Q100,198 130,208 Q165,218 205,222 Q240,225 265,218 Z' },
+    { id: 'hbird-wing-lower', label: 'Lower Wing', tone: 'medium',
+      path: 'M265,218 Q230,235 190,250 Q150,268 118,278 Q90,285 78,278 Q68,268 78,252 Q92,238 118,228 Q150,218 190,212 Q225,210 260,212 Z' },
+    { id: 'hbird-tail-upper', label: 'Upper Tail', tone: 'dark',
+      path: 'M235,365 Q215,380 185,395 Q155,408 130,412 Q112,412 110,402 Q112,390 128,382 Q152,372 180,365 Q210,358 232,358 Z' },
+    { id: 'hbird-tail-lower', label: 'Lower Tail', tone: 'dark',
+      path: 'M240,375 Q222,392 195,410 Q168,425 142,432 Q125,435 120,425 Q122,415 138,405 Q162,395 190,385 Q218,378 238,372 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── BEE ──
+const bee: Vibe = {
+  id: 'bee', name: 'Bee', emoji: '🐝',
+  description: 'Detailed honeybee with striped body & transparent wings',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'bee-head', label: 'Head', tone: 'dark',
+      path: 'M200,215 Q195,188 210,170 Q228,155 248,155 Q268,155 285,170 Q298,188 295,215 Q292,235 278,248 Q262,258 248,260 Q232,258 218,248 Q202,235 200,215 Z' },
+    { id: 'bee-eye-l', label: 'Left Eye', tone: 'light', path: circlePath(228, 200, 14) },
+    { id: 'bee-eye-r', label: 'Right Eye', tone: 'light', path: circlePath(268, 200, 14) },
+    { id: 'bee-antenna-l', label: 'Left Antenna', tone: 'dark',
+      path: 'M225,170 Q215,140 195,118 Q182,105 175,95 Q170,88 175,85 Q182,85 192,95 Q208,115 220,145 Z' },
+    { id: 'bee-antenna-r', label: 'Right Antenna', tone: 'dark',
+      path: 'M270,170 Q280,140 300,118 Q312,105 320,95 Q325,88 320,85 Q312,85 302,95 Q285,115 275,145 Z' },
+    { id: 'bee-stripe-1', label: 'Stripe 1 (Yellow)', tone: 'accent',
+      path: 'M195,260 Q190,258 248,255 Q305,258 300,260 L305,290 Q305,292 248,290 Q190,292 190,290 Z' },
+    { id: 'bee-stripe-2', label: 'Stripe 2 (Dark)', tone: 'dark',
+      path: 'M190,290 Q190,292 248,290 Q305,292 305,290 L308,318 Q308,320 248,318 Q188,320 188,318 Z' },
+    { id: 'bee-stripe-3', label: 'Stripe 3 (Yellow)', tone: 'accent',
+      path: 'M188,318 Q188,320 248,318 Q308,320 308,318 L310,345 Q310,348 248,345 Q185,348 185,345 Z' },
+    { id: 'bee-stripe-4', label: 'Stripe 4 (Dark)', tone: 'dark',
+      path: 'M185,345 Q185,348 248,345 Q310,348 310,345 L305,372 Q300,388 248,385 Q195,388 190,372 Z' },
+    { id: 'bee-stinger', label: 'Stinger', tone: 'dark',
+      path: 'M240,385 Q242,395 245,410 Q248,425 248,435 Q248,440 245,438 Q242,435 240,420 Q238,405 238,395 Z' },
+    { id: 'bee-wing-l', label: 'Left Wing', tone: 'light',
+      path: 'M200,260 Q165,235 130,218 Q100,205 78,208 Q62,215 65,232 Q72,252 98,268 Q128,282 162,288 Q185,290 195,282 Z' },
+    { id: 'bee-wing-r', label: 'Right Wing', tone: 'light',
+      path: 'M295,260 Q330,235 365,218 Q395,205 418,208 Q432,215 430,232 Q422,252 398,268 Q368,282 332,288 Q310,290 300,282 Z' },
+    { id: 'bee-leg-l', label: 'Left Legs', tone: 'dark',
+      path: 'M205,310 Q185,320 172,335 Q165,345 170,350 Q178,348 188,338 Q198,325 205,318 Z M200,345 Q180,355 168,368 Q162,378 168,382 Q175,380 185,370 Q195,358 200,350 Z' },
+    { id: 'bee-leg-r', label: 'Right Legs', tone: 'dark',
+      path: 'M290,310 Q310,320 322,335 Q328,345 325,350 Q318,348 308,338 Q298,325 290,318 Z M295,345 Q315,355 328,368 Q332,378 328,382 Q320,380 310,370 Q300,358 295,350 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, elephant, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee];
