@@ -6,7 +6,7 @@ export type TextureCategory =
   | 'Synergy' | 'Milo' | 'Faithful' | 'Nico' | 'Taylor Felt'
   | 'Borough' | 'Lucky' | 'Merit' | 'Prime' | 'Tussah' | 'Bloke'
   | 'Felt' | 'Cotton' | 'Yarn' | 'Corduroy' | 'Flat Silk'
-  | 'Leather' | 'Wood' | 'Concrete' | 'Stripe' | 'Grid'
+  | 'Leather' | 'Wood' | 'Concrete' | 'Marble' | 'Stripe' | 'Grid'
   | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
   | 'Alix' | 'Corinne' | 'ShayShari' | 'Suede Ace' | 'Jayme'
   | 'Skott' | 'Kaplan' | 'Riviera'
@@ -18,7 +18,7 @@ export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scal
 export type WrinkleLevel = 'none' | 'light' | 'medium' | 'heavy';
 export type ShadowDepth = 'flat' | 'lifted' | 'floating';
 export type FrameSize = '8x8' | '12x12' | '16x16' | 'gallery';
-export type FrameColor = 'white' | 'cream' | 'black' | 'walnut' | 'oak' | 'mahogany';
+export type FrameColor = string; // texture ID or 'white'/'black' for solid
 
 export interface TextureSwatch {
   id: string;
