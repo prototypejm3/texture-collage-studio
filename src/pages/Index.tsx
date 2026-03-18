@@ -420,6 +420,8 @@ const Index = () => {
         onRequestUpgrade={() => setShowPaywall(true)}
         onOpenToolKit={() => { setShowToolKit(prev => !prev); setToolKitMinimized(false); }}
         toolKitOpen={showToolKit}
+        onOpenStencils={() => { setShowStencils(prev => !prev); setStencilsMinimized(false); }}
+        stencilsOpen={showStencils}
       />
 
       <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
