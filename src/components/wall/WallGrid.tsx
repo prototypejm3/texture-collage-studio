@@ -1,5 +1,6 @@
 import { SavedDesign, WallLayout, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
+import { TitleCard } from './TitleCard';
 import { FreeformWall } from './FreeformWall';
 import Masonry from 'react-masonry-css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -9,6 +10,8 @@ interface WallGridProps {
   designs: SavedDesign[];
   layout: WallLayout;
   isPremium: boolean;
+  showTitleCards?: boolean;
+  isDark?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -21,7 +24,7 @@ interface WallGridProps {
   onSubmitToGallery?: (id: string) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
   const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
@@ -70,6 +73,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
             return (
               <div key={d.id} className={`w-full ${widthClass} mx-auto`}>
                 <WallCard {...cardProps(d, sz)} />
+                {showTitleCards && <TitleCard design={d} isDark={isDark} />}
               </div>
             );
           })}
@@ -92,6 +96,7 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
             return (
               <div key={d.id} className={spanClass}>
                 <WallCard {...cardProps(d, sz)} />
+                {showTitleCards && <TitleCard design={d} isDark={isDark} />}
               </div>
             );
           })}
@@ -103,7 +108,12 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
       <AnimatePresence>
-        {designs.map(d => <WallCard {...cardProps(d)} />)}
+        {designs.map(d => (
+          <div key={d.id}>
+            <WallCard {...cardProps(d)} />
+            {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+          </div>
+        ))}
       </AnimatePresence>
     </div>
   );

@@ -10,6 +10,9 @@ import { EmptyWall } from '@/components/wall/EmptyWall';
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
+import { StepBackMode } from '@/components/wall/StepBackMode';
+import { LightingOverlay } from '@/components/wall/LightingOverlay';
+import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
 import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown } from 'lucide-react';
@@ -44,9 +47,9 @@ const MyWall = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [showWallPicker, setShowWallPicker] = useState(false);
+  const [stepBackMode, setStepBackMode] = useState(false);
   const wallRef = useRef<HTMLDivElement>(null);
 
-  // Filter designs by active wall
   const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
 
   const filtered = activeTab === 'all'
@@ -55,6 +58,12 @@ const MyWall = () => {
 
   const currentSettings = multiWall.activeWall.settings;
   const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(currentSettings.background);
+  const wallBgClass = currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : '';
+  const wallBgStyle = currentSettings.background === 'custom' && currentSettings.customWallImage ? {
+    backgroundImage: `url(${currentSettings.customWallImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  } : undefined;
 
   const handleOpen = useCallback((id: string) => {
     navigate(`/create?edit=${id}`);
@@ -117,6 +126,65 @@ const MyWall = () => {
     handleUpdateSettings({ defaultHangingStyle: style });
   }, [wallDesigns, wall, handleUpdateSettings]);
 
+  // ── Auto-Curate: smart arrangement ──
+  const handleAutoCurate = useCallback(() => {
+    if (filtered.length === 0) return;
+    
+    const count = filtered.length;
+    
+    // Find hero piece or use first pinned, or largest
+    const hero = filtered.find(d => d.isHero) || filtered.find(d => d.pinned) || filtered[0];
+    const others = filtered.filter(d => d.id !== hero.id);
+    
+    // Place hero prominently
+    wall.updateDesign(hero.id, {
+      wallX: 50,
+      wallY: count <= 3 ? 45 : 35,
+      displaySize: 'large',
+      rotation: 0,
+    });
+    
+    if (others.length === 0) return;
+    
+    // Arrange others in balanced positions around hero
+    const arrangements: { x: number; y: number }[][] = [
+      // 1 other
+      [{ x: 50, y: 75 }],
+      // 2 others
+      [{ x: 25, y: 65 }, { x: 75, y: 65 }],
+      // 3 others
+      [{ x: 22, y: 55 }, { x: 78, y: 55 }, { x: 50, y: 78 }],
+      // 4 others
+      [{ x: 20, y: 45 }, { x: 80, y: 45 }, { x: 30, y: 78 }, { x: 70, y: 78 }],
+      // 5 others
+      [{ x: 18, y: 40 }, { x: 82, y: 40 }, { x: 25, y: 72 }, { x: 50, y: 80 }, { x: 75, y: 72 }],
+      // 6+ others
+      [{ x: 15, y: 35 }, { x: 85, y: 35 }, { x: 20, y: 65 }, { x: 50, y: 75 }, { x: 80, y: 65 }, { x: 50, y: 55 }],
+    ];
+    
+    const pattern = arrangements[Math.min(others.length - 1, arrangements.length - 1)];
+    
+    others.forEach((d, i) => {
+      const pos = pattern[i % pattern.length];
+      // Add slight randomness for natural feel
+      const jitterX = (Math.random() - 0.5) * 4;
+      const jitterY = (Math.random() - 0.5) * 3;
+      wall.updateDesign(d.id, {
+        wallX: Math.max(10, Math.min(90, pos.x + jitterX)),
+        wallY: Math.max(15, Math.min(85, pos.y + jitterY)),
+        displaySize: 'medium',
+        rotation: Math.round((Math.random() - 0.5) * 2),
+      });
+    });
+    
+    // Switch to freeform if not already
+    if (currentSettings.layout !== 'freeform') {
+      handleUpdateSettings({ layout: 'freeform' });
+    }
+    
+    toast({ title: '✨ Curated!', description: 'Your wall has been arranged.' });
+  }, [filtered, wall, currentSettings.layout, handleUpdateSettings]);
+
   const handleAddWall = useCallback(() => {
     if (!isPremium) {
       setShowPaywall(true);
@@ -144,7 +212,6 @@ const MyWall = () => {
 
   const handleDeleteWall = useCallback((wallId: string) => {
     if (multiWall.walls.length <= 1) return;
-    // Delete all designs on this wall
     wallDesigns.forEach(d => wall.deleteDesign(d.id));
     multiWall.deleteWall(wallId);
     toast({ title: 'Wall deleted' });
@@ -157,17 +224,15 @@ const MyWall = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`flex-1 overflow-y-auto ${currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : ''} transition-colors duration-500`}
-        style={currentSettings.background === 'custom' && currentSettings.customWallImage ? {
-          backgroundImage: `url(${currentSettings.customWallImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : undefined}
+        className={`flex-1 overflow-y-auto ${wallBgClass} transition-colors duration-500 relative`}
+        style={wallBgStyle}
       >
-        <div className="max-w-5xl mx-auto px-8 py-10">
+        {/* Lighting overlay */}
+        <LightingOverlay preset={currentSettings.lightingPreset || 'none'} />
+
+        <div className="max-w-5xl mx-auto px-8 py-10 relative z-[6]">
           {/* Wall picker + customizer */}
           <div className="flex items-center gap-3 mb-2">
-            {/* Wall switcher */}
             <div className="relative">
               <button
                 onClick={() => setShowWallPicker(v => !v)}
@@ -230,6 +295,8 @@ const MyWall = () => {
             onUpdate={handleUpdateSettings}
             onApplyFrameToAll={handleApplyFrameToAll}
             onApplyHangingToAll={handleApplyHangingToAll}
+            onAutoCurate={handleAutoCurate}
+            onStepBack={() => setStepBackMode(true)}
             isPremium={isPremium}
           />
 
@@ -251,7 +318,6 @@ const MyWall = () => {
               ))}
             </div>
 
-            {/* Grouped controls */}
             <div className="ml-auto relative">
               {filtered.length > 0 && (
                 <>
@@ -301,6 +367,8 @@ const MyWall = () => {
                 designs={filtered}
                 layout={currentSettings.layout}
                 isPremium={isPremium}
+                showTitleCards={currentSettings.showTitleCards}
+                isDark={isDark}
                 onOpen={handleOpen}
                 onDuplicate={handleDuplicate}
                 onDelete={handleDelete}
@@ -315,7 +383,6 @@ const MyWall = () => {
             </motion.div>
           )}
 
-          {/* Preview wall for free users */}
           {!isPremium && wallDesigns.length > 0 && (
             <PreviewWall
               designs={wallDesigns}
@@ -325,6 +392,35 @@ const MyWall = () => {
           )}
         </div>
       </motion.div>
+
+      {/* Ambient sound */}
+      <AmbientSoundPlayer sound={currentSettings.ambientSound || 'none'} />
+
+      {/* Step Back Mode */}
+      <StepBackMode
+        isOpen={stepBackMode}
+        onClose={() => setStepBackMode(false)}
+        wallClassName={wallBgClass}
+        wallStyle={wallBgStyle}
+      >
+        <LightingOverlay preset={currentSettings.lightingPreset || 'none'} />
+        <WallGrid
+          designs={filtered}
+          layout={currentSettings.layout}
+          isPremium={isPremium}
+          showTitleCards={currentSettings.showTitleCards}
+          isDark={isDark}
+          onOpen={() => {}}
+          onDuplicate={() => {}}
+          onDelete={() => {}}
+          onTogglePin={() => {}}
+          onToggleIRL={() => {}}
+          onToggleHide={() => {}}
+          onUpdate={() => {}}
+          onFrameStyleChange={() => {}}
+          onSizeChange={() => {}}
+        />
+      </StepBackMode>
 
       {/* Modals */}
       <PaywallModal

@@ -1,12 +1,14 @@
-import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X, Lamp } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
+import { LayoutGrid, AlignJustify, Pencil, Check, Frame, Move, Lamp, Sun, Volume2, Tag, Wand2, Eye } from 'lucide-react';
+import { useState } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
   onUpdate: (updates: Partial<WallSettings>) => void;
   onApplyFrameToAll?: (style: FrameStyle) => void;
   onApplyHangingToAll?: (style: HangingStyle) => void;
+  onAutoCurate?: () => void;
+  onStepBack?: () => void;
   isPremium: boolean;
 }
 
@@ -43,25 +45,35 @@ const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
   { value: 'shelf', label: 'Shelf', emoji: '🪵' },
 ];
 
-export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, isPremium }: WallCustomizerProps) {
+const lightingPresets: { value: LightingPreset; label: string; emoji: string }[] = [
+  { value: 'none', label: 'Off', emoji: '○' },
+  { value: 'gallery', label: 'Gallery', emoji: '🖼' },
+  { value: 'golden-hour', label: 'Golden Hour', emoji: '🌅' },
+  { value: 'dramatic', label: 'Dramatic', emoji: '🎭' },
+  { value: 'soft-diffused', label: 'Soft', emoji: '☁️' },
+];
+
+const ambientSounds: { value: AmbientSound; label: string; emoji: string }[] = [
+  { value: 'none', label: 'Off', emoji: '🔇' },
+  { value: 'gallery', label: 'Gallery', emoji: '🏛' },
+  { value: 'loft', label: 'Loft', emoji: '🏙' },
+  { value: 'home', label: 'Home', emoji: '🏠' },
+];
+
+export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, isPremium }: WallCustomizerProps) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
   const [showHangingMenu, setShowHangingMenu] = useState(false);
-  const wallPhotoRef = useRef<HTMLInputElement>(null);
-
-  const handleWallPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      onUpdate({ background: 'custom', customWallImage: reader.result as string });
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
-  };
+  const [showLightingMenu, setShowLightingMenu] = useState(false);
+  const [showSoundMenu, setShowSoundMenu] = useState(false);
 
   const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(settings.background);
+  const iconClass = (active?: boolean) => `p-1.5 rounded-md transition-colors ${
+    active
+      ? isDark ? 'bg-background/20 text-background' : 'bg-secondary text-primary'
+      : isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'
+  }`;
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">
@@ -117,62 +129,119 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Apply frame to all */}
         {isPremium && onApplyFrameToAll && (
-          <div className="relative">
-            <button
-              onClick={() => setShowFrameMenu(!showFrameMenu)}
-              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
-              title="Apply frame to all"
-            >
-              <Frame className="w-3.5 h-3.5" />
-            </button>
-            {showFrameMenu && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowFrameMenu(false)} />
-                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[140px]">
-                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
-                  {allFrameStyles.map(fs => (
-                    <button
-                      key={fs.value}
-                      onClick={() => { onApplyFrameToAll(fs.value); setShowFrameMenu(false); }}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                    >
-                      {fs.label}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          <DropdownButton
+            icon={<Frame className="w-3.5 h-3.5" />}
+            isOpen={showFrameMenu}
+            onToggle={() => setShowFrameMenu(!showFrameMenu)}
+            onClose={() => setShowFrameMenu(false)}
+            iconClass={iconClass()}
+            title="Apply frame to all"
+          >
+            <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
+            {allFrameStyles.map(fs => (
+              <button
+                key={fs.value}
+                onClick={() => { onApplyFrameToAll(fs.value); setShowFrameMenu(false); }}
+                className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+              >
+                {fs.label}
+              </button>
+            ))}
+          </DropdownButton>
         )}
 
-        {/* Hanging style picker */}
+        {/* Hanging style */}
         {isPremium && onApplyHangingToAll && (
-          <div className="relative">
-            <button
-              onClick={() => setShowHangingMenu(!showHangingMenu)}
-              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
-              title="Display style"
-            >
-              <Lamp className="w-3.5 h-3.5" />
-            </button>
-            {showHangingMenu && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowHangingMenu(false)} />
-                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
-                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
-                  {hangingStyles.map(hs => (
-                    <button
-                      key={hs.value}
-                      onClick={() => { onApplyHangingToAll(hs.value); setShowHangingMenu(false); }}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                    >
-                      <span>{hs.emoji}</span> {hs.label}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          <DropdownButton
+            icon={<Lamp className="w-3.5 h-3.5" />}
+            isOpen={showHangingMenu}
+            onToggle={() => setShowHangingMenu(!showHangingMenu)}
+            onClose={() => setShowHangingMenu(false)}
+            iconClass={iconClass()}
+            title="Display style"
+          >
+            <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
+            {hangingStyles.map(hs => (
+              <button
+                key={hs.value}
+                onClick={() => { onApplyHangingToAll(hs.value); setShowHangingMenu(false); }}
+                className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+              >
+                <span>{hs.emoji}</span> {hs.label}
+              </button>
+            ))}
+          </DropdownButton>
+        )}
+
+        {/* Lighting presets */}
+        {isPremium && (
+          <DropdownButton
+            icon={<Sun className="w-3.5 h-3.5" />}
+            isOpen={showLightingMenu}
+            onToggle={() => setShowLightingMenu(!showLightingMenu)}
+            onClose={() => setShowLightingMenu(false)}
+            iconClass={iconClass(settings.lightingPreset !== 'none')}
+            title="Lighting"
+          >
+            <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
+            {lightingPresets.map(lp => (
+              <button
+                key={lp.value}
+                onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
+                className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.lightingPreset === lp.value ? 'text-primary font-medium' : 'text-foreground'}`}
+              >
+                <span>{lp.emoji}</span> {lp.label}
+              </button>
+            ))}
+          </DropdownButton>
+        )}
+
+        {/* Ambient sound */}
+        {isPremium && (
+          <DropdownButton
+            icon={<Volume2 className="w-3.5 h-3.5" />}
+            isOpen={showSoundMenu}
+            onToggle={() => setShowSoundMenu(!showSoundMenu)}
+            onClose={() => setShowSoundMenu(false)}
+            iconClass={iconClass(settings.ambientSound !== 'none')}
+            title="Ambient sound"
+          >
+            <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+            {ambientSounds.map(as => (
+              <button
+                key={as.value}
+                onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
+                className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.ambientSound === as.value ? 'text-primary font-medium' : 'text-foreground'}`}
+              >
+                <span>{as.emoji}</span> {as.label}
+              </button>
+            ))}
+          </DropdownButton>
+        )}
+
+        {/* Title cards toggle */}
+        {isPremium && (
+          <button
+            onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
+            className={iconClass(settings.showTitleCards)}
+            title="Museum labels"
+          >
+            <Tag className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {/* Auto-curate */}
+        {isPremium && onAutoCurate && (
+          <button onClick={onAutoCurate} className={iconClass()} title="Arrange for me">
+            <Wand2 className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {/* Step back */}
+        {onStepBack && (
+          <button onClick={onStepBack} className={iconClass()} title="Step back">
+            <Eye className="w-3.5 h-3.5" />
+          </button>
         )}
 
         {/* Background picker */}
@@ -197,6 +266,33 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/* ─── Reusable dropdown button ─── */
+function DropdownButton({ icon, isOpen, onToggle, onClose, iconClass, title, children }: {
+  icon: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+  iconClass: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="relative">
+      <button onClick={onToggle} className={iconClass} title={title}>
+        {icon}
+      </button>
+      {isOpen && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={onClose} />
+          <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+            {children}
+          </div>
+        </>
+      )}
     </div>
   );
 }

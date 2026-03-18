@@ -247,6 +247,13 @@ export function WallCard({
         </div>
       )}
 
+      {/* Hero indicator */}
+      {design.isHero && (
+        <div className="absolute -top-1 left-6 w-5 h-5 bg-primary/90 rounded-full flex items-center justify-center shadow-sm z-10 text-[10px]">
+          ⭐
+        </div>
+      )}
+
       {/* Built IRL badge */}
       {design.builtIRL && (
         <div className="absolute -top-1 -right-1 bg-accent text-accent-foreground rounded-full px-1.5 py-0.5 text-[9px] font-medium flex items-center gap-0.5 shadow-sm z-10">
@@ -291,6 +298,9 @@ export function WallCard({
                 <button onClick={(e) => { e.stopPropagation(); onToggleIRL(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
                   <Hammer className="w-3 h-3" />
                   {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { isHero: !design.isHero }); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                  ⭐ {design.isHero ? 'Remove Hero' : 'Make Hero Piece'}
                 </button>
                 <div className="border-t border-border my-1" />
                 <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
