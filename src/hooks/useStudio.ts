@@ -193,6 +193,8 @@ export function useStudio() {
     setSelectedId,
     setFrameSize,
     setFrameColor,
+    setDisplaySize,
+    setWallFrameStyle,
     // Free-mode
     addElement,
     updateElement,
