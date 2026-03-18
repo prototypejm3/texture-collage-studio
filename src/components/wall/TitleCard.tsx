@@ -29,7 +29,7 @@ export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProp
 
         {/* Artist */}
         {design.artist && (
-          <p className={`text-[10px] tracking-[0.05em] leading-snug ${textBase}`}>
+          <p className={`text-[10px] font-semibold tracking-[0.05em] leading-snug ${textBase}`}>
             {design.artist}
           </p>
         )}
