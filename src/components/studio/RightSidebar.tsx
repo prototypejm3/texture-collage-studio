@@ -115,10 +115,31 @@ export function RightSidebar({
     }
   };
 
-  // Filter out hidden stencils and community stencils from built-in vibes
-  const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && !v.category);
+  // Include all non-hidden vibes (including categorized ones like Music)
+  const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
   const allVibes = [...filteredVibes, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
+
+  // Theme groupings for organized display
+  const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
+    { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
+    { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
+    { label: 'Sea Life', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish']) },
+    { label: 'Food & Fruit', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
+    { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
+    { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
+    { label: 'Music', emoji: '🎵', ids: new Set([]) },
+  ];
+
+  const themedIds = new Set<string>();
+  const themeSections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
+  for (const group of themeGroups) {
+    const items = allVibes.filter(v => group.ids.has(v.id) || v.category === group.label);
+    if (items.length > 0) themeSections.push({ label: group.label, emoji: group.emoji, vibes: items });
+    items.forEach(v => themedIds.add(v.id));
+  }
+  const uncategorizedVibes = allVibes.filter(v => !themedIds.has(v.id));
 
   // Community stencils: built-in featured + public from DB
   const builtInCommunityVibes: (Vibe & { creator: string })[] = [
@@ -371,31 +392,70 @@ export function RightSidebar({
               </div>
             )}
 
-            {/* Stencil Grid */}
+            {/* Stencil Grid — grouped by theme */}
             <div className="p-3">
-              <div className="grid grid-cols-2 gap-2">
-                {allVibes.map(vibe => (
-                  <StencilCard
-                    key={vibe.id}
-                    vibe={vibe}
-                    isActive={activeVibeId === vibe.id}
-                    isHidden={social.hiddenIds.has(vibe.id)}
-                    isLoggedIn={!!user}
-                    onSelect={() => onSelectVibe(vibe)}
-                    onToggleHidden={() => social.toggleHidden(vibe.id)}
-                    onDelete={async () => {
-                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                      await social.deleteStencil(vibe.id);
-                      toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
-                    }}
-                    onReport={async () => {
-                      await social.reportStencil(vibe.id);
-                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                      toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
-                    }}
-                  />
-                ))}
-              </div>
+              {/* Uncategorized stencils first */}
+              {uncategorizedVibes.length > 0 && (
+                <div className="grid grid-cols-2 gap-2">
+                  {uncategorizedVibes.map(vibe => (
+                    <StencilCard
+                      key={vibe.id}
+                      vibe={vibe}
+                      isActive={activeVibeId === vibe.id}
+                      isHidden={social.hiddenIds.has(vibe.id)}
+                      isLoggedIn={!!user}
+                      onSelect={() => onSelectVibe(vibe)}
+                      onToggleHidden={() => social.toggleHidden(vibe.id)}
+                      onDelete={async () => {
+                        setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                        await social.deleteStencil(vibe.id);
+                        toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                      }}
+                      onReport={async () => {
+                        await social.reportStencil(vibe.id);
+                        setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                        toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Theme sections */}
+              {themeSections.map(section => (
+                <div key={section.label}>
+                  <div className="flex items-center gap-2 mt-4 mb-2">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+                      {section.emoji} {section.label}
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {section.vibes.map(vibe => (
+                      <StencilCard
+                        key={vibe.id}
+                        vibe={vibe}
+                        isActive={activeVibeId === vibe.id}
+                        isHidden={social.hiddenIds.has(vibe.id)}
+                        isLoggedIn={!!user}
+                        onSelect={() => onSelectVibe(vibe)}
+                        onToggleHidden={() => social.toggleHidden(vibe.id)}
+                        onDelete={async () => {
+                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                          await social.deleteStencil(vibe.id);
+                          toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                        }}
+                        onReport={async () => {
+                          await social.reportStencil(vibe.id);
+                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                          toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         ) : activeTab === 'community' ? (
