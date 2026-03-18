@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock, PenTool } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 
 interface Props {
@@ -29,6 +29,8 @@ interface Props {
   // Premium
   isPremium: boolean;
   onRequestUpgrade: () => void;
+  drawMode?: boolean;
+  onToggleDraw?: () => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -54,6 +56,7 @@ export function TopToolbar({
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   isPremium, onRequestUpgrade,
+  drawMode, onToggleDraw,
 }: Props) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [framePanelOpen, setFramePanelOpen] = useState(false);
@@ -163,6 +166,17 @@ export function TopToolbar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
+        {onToggleDraw && (
+          <Button
+            size="sm"
+            variant={drawMode ? 'default' : 'ghost'}
+            onClick={onToggleDraw}
+            className="gap-1.5 text-xs"
+            title="Draw a freehand section to fill with texture"
+          >
+            <PenTool className="w-3.5 h-3.5" /> Draw
+          </Button>
+        )}
         <Button size="sm" variant="default" onClick={onGenerate} className="gap-1.5 text-xs">
           <Sparkles className="w-3.5 h-3.5" /> Generate Vibe
         </Button>

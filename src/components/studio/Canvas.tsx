@@ -3,6 +3,7 @@ import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } 
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
+import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 
@@ -25,6 +26,9 @@ interface Props {
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
+  drawMode?: boolean;
+  onFinishDraw?: (pathD: string) => void;
+  onCancelDraw?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -55,6 +59,7 @@ export function Canvas({
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, canvasRef,
   customTextures = [],
+  drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { w, h } = frameSizeMap[frameSize];
@@ -155,6 +160,16 @@ export function Canvas({
               onDropInSection={onDropInSection}
               onDropAsSwatch={onDropAsSwatch}
               customTextures={customTextures}
+            />
+          )}
+
+          {/* Freehand draw overlay */}
+          {drawMode && onFinishDraw && onCancelDraw && (
+            <DrawOverlay
+              canvasWidth={w}
+              canvasHeight={h}
+              onFinishDraw={onFinishDraw}
+              onCancel={onCancelDraw}
             />
           )}
         </div>

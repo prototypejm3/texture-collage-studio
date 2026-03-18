@@ -116,10 +116,10 @@ const Index = () => {
   }, [pendingSave, wall, upgradeToPremium]);
 
   const handleTextureClick = useCallback((textureId: string) => {
-    if (studio.activeVibe && studio.selectedSectionId) {
+    if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
-  }, [studio.activeVibe, studio.selectedSectionId, studio.fillSection]);
+  }, [studio.selectedSectionId, studio.fillSection]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
@@ -155,13 +155,15 @@ const Index = () => {
         onTemplateOpacityChange={setTemplateOpacity}
         isPremium={isPremium}
         onRequestUpgrade={() => setShowPaywall(true)}
+        drawMode={studio.drawMode}
+        onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
           <TextureLibrary
             onDragStart={handleDragStartLib}
             onTextureClick={handleTextureClick}
-            activeSectionId={studio.activeVibe ? studio.selectedSectionId : null}
+            activeSectionId={studio.selectedSectionId}
             customTextures={customTextures}
             onUploadTexture={handleUploadTexture}
             onRemoveCustomTexture={removeCustomTexture}
@@ -188,6 +190,9 @@ const Index = () => {
           onDropInSection={studio.fillSection}
           onDropAsSwatch={handleDrop}
           canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+          drawMode={studio.drawMode}
+          onFinishDraw={studio.addCustomSection}
+          onCancelDraw={() => studio.setDrawMode(false)}
         />
 
         <RightSidebar

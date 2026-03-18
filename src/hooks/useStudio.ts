@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills } from '@/types/studio';
+import { useState, useCallback, useMemo } from 'react';
+import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection } from '@/types/studio';
 import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
@@ -31,6 +31,8 @@ export function useStudio() {
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
+  const [drawMode, setDrawMode] = useState(false);
+  const [customSections, setCustomSections] = useState<VibeSection[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -84,6 +86,8 @@ export function useStudio() {
     setActiveVibe(null);
     setVibeFills({});
     setSelectedSectionId(null);
+    setCustomSections([]);
+    setDrawMode(false);
   }, []);
 
   const generateRandom = useCallback(() => {
@@ -160,6 +164,59 @@ export function useStudio() {
     setVibeFills(fills);
   }, [activeVibe]);
 
+  // ── Custom drawn sections ──
+
+  const addCustomSection = useCallback((pathD: string) => {
+    const id = `custom-section-${Date.now()}`;
+    const section: VibeSection = {
+      id,
+      label: `Section ${customSections.length + 1}`,
+      path: pathD,
+      tone: 'medium',
+    };
+    setCustomSections(prev => [...prev, section]);
+    setSelectedSectionId(id);
+    setDrawMode(false);
+  }, [customSections.length]);
+
+  const deleteCustomSection = useCallback((sectionId: string) => {
+    setCustomSections(prev => prev.filter(s => s.id !== sectionId));
+    setVibeFills(prev => {
+      const next = { ...prev };
+      delete next[sectionId];
+      return next;
+    });
+    if (selectedSectionId === sectionId) setSelectedSectionId(null);
+  }, [selectedSectionId]);
+
+  // Combine vibe sections + custom drawn sections
+  const allSections = useMemo(() => {
+    const vibeSections = activeVibe?.sections || [];
+    return [...vibeSections, ...customSections];
+  }, [activeVibe, customSections]);
+
+  // A virtual vibe that includes custom sections
+  const effectiveVibe = useMemo((): Vibe | null => {
+    if (activeVibe) {
+      return { ...activeVibe, sections: allSections };
+    }
+    if (customSections.length > 0) {
+      return {
+        id: 'custom-draw',
+        name: 'Custom',
+        emoji: '✏️',
+        description: 'Freehand drawn sections',
+        viewBox: '0 0 480 480',
+        sections: customSections,
+        lightTextures: [],
+        mediumTextures: [],
+        darkTextures: [],
+        accentTextures: [],
+      };
+    }
+    return null;
+  }, [activeVibe, customSections, allSections]);
+
   const getState = useCallback(() => {
     return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId });
   }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId]);
@@ -186,15 +243,18 @@ export function useStudio() {
     frameColor,
     displaySize,
     wallFrameStyle,
-    activeVibe,
+    activeVibe: effectiveVibe,
     vibeFills,
     selectedSectionId,
+    drawMode,
+    customSections,
     // Setters
     setSelectedId,
     setFrameSize,
     setFrameColor,
     setDisplaySize,
     setWallFrameStyle,
+    setDrawMode,
     // Free-mode
     addElement,
     updateElement,
@@ -209,6 +269,9 @@ export function useStudio() {
     fillSection,
     selectSection,
     shuffleVibeFills,
+    // Custom sections
+    addCustomSection,
+    deleteCustomSection,
     // Serialization
     getState,
     loadState,
