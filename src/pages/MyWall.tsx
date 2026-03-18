@@ -331,14 +331,12 @@ const MyWall = () => {
             <div className="relative">
               <button
                 onClick={() => setShowWallPicker(v => !v)}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors text-xs ${
-                  isDark ? 'text-background/70 hover:bg-background/10' : 'text-muted-foreground hover:bg-secondary/60'
-                }`}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-popover text-popover-foreground shadow-sm transition-colors text-xs hover:bg-secondary"
               >
                 {multiWall.activeWall.settings.title}
                 <ChevronDown className="w-3 h-3" />
                 {multiWall.walls.length > 1 && (
-                  <span className={`ml-1 text-[9px] px-1.5 py-0.5 rounded-full ${isDark ? 'bg-background/15 text-background/50' : 'bg-secondary text-muted-foreground'}`}>
+                  <span className="ml-1 text-[9px] px-1.5 py-0.5 rounded-full border border-border bg-secondary text-secondary-foreground">
                     {multiWall.walls.length}
                   </span>
                 )}
@@ -440,12 +438,10 @@ const MyWall = () => {
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all ${
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border shadow-sm transition-all ${
                     activeTab === val
-                      ? 'bg-primary text-primary-foreground border-primary shadow-sm'
-                      : isDark
-                        ? 'bg-transparent text-white/70 border-white/20 hover:bg-white/10 hover:text-white'
-                        : 'bg-transparent text-foreground/60 border-border hover:bg-secondary hover:text-foreground'
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
                   }`}
                 >
                   {label}
@@ -458,7 +454,7 @@ const MyWall = () => {
                 <>
                   <button
                     onClick={() => setShowControls(!showControls)}
-                    className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-background/10 text-background/40' : 'hover:bg-secondary/60 text-muted-foreground/50'}`}
+                    className="p-2 rounded-full border border-border bg-popover text-muted-foreground shadow-sm transition-colors hover:bg-secondary hover:text-foreground"
                   >
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
