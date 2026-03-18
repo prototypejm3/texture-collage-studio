@@ -36,11 +36,20 @@ const specialFrames: { id: FrameStyle; label: string }[] = [
   { id: 'polaroid', label: 'Polaroid' },
 ];
 
+const ambientOptions: { value: AmbientSound; label: string; emoji: string }[] = [
+  { value: 'none', label: 'Off', emoji: '🔇' },
+  { value: 'gallery', label: 'Gallery', emoji: '🏛' },
+  { value: 'loft', label: 'Lofi Beats', emoji: '🎵' },
+  { value: 'home', label: 'Chill', emoji: '🏠' },
+];
+
 export function BottomBar({
   frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  ambientSound, onAmbientSoundChange,
 }: Props) {
+  const [showSoundMenu, setShowSoundMenu] = useState(false);
   return (
     <div className="flex items-center px-5 py-2 bg-popover border-t border-border relative">
       {/* Left: Canvas size */}
