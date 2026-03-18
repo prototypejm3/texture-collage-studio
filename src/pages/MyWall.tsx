@@ -47,6 +47,8 @@ const MyWall = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [showWallPicker, setShowWallPicker] = useState(false);
+  const [editingWallId, setEditingWallId] = useState<string | null>(null);
+  const [wallTitleDraft, setWallTitleDraft] = useState('');
   const [stepBackMode, setStepBackMode] = useState(false);
   const wallRef = useRef<HTMLDivElement>(null);
 
