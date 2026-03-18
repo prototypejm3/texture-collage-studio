@@ -802,4 +802,241 @@ const mandalaFlower: Vibe = {
   accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower];
+// ── BUTTERFLY ──
+const butterfly: Vibe = {
+  id: 'butterfly',
+  name: 'Butterfly',
+  emoji: '🦋',
+  description: 'Graceful butterfly with detailed wing sections',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'butterfly-upper-left', label: 'Upper Left Wing', tone: 'accent',
+      path: 'M240,180 Q200,140 160,100 Q120,65 80,70 Q45,78 40,120 Q38,165 65,200 Q95,235 140,250 Q180,258 215,245 Q235,235 240,220 Z' },
+    { id: 'butterfly-upper-right', label: 'Upper Right Wing', tone: 'accent',
+      path: 'M240,180 Q280,140 320,100 Q360,65 400,70 Q435,78 440,120 Q442,165 415,200 Q385,235 340,250 Q300,258 265,245 Q245,235 240,220 Z' },
+    { id: 'butterfly-lower-left', label: 'Lower Left Wing', tone: 'medium',
+      path: 'M240,260 Q210,270 170,290 Q130,310 105,340 Q85,370 95,400 Q108,425 140,430 Q175,432 210,410 Q235,390 240,360 Z' },
+    { id: 'butterfly-lower-right', label: 'Lower Right Wing', tone: 'medium',
+      path: 'M240,260 Q270,270 310,290 Q350,310 375,340 Q395,370 385,400 Q372,425 340,430 Q305,432 270,410 Q245,390 240,360 Z' },
+    { id: 'butterfly-body', label: 'Body', tone: 'dark',
+      path: 'M232,130 Q236,120 240,110 Q244,120 248,130 L250,360 Q248,390 240,400 Q232,390 230,360 Z' },
+    { id: 'butterfly-antenna-l', label: 'Left Antenna', tone: 'dark',
+      path: 'M240,130 Q220,95 195,70 Q185,60 180,55 Q175,50 178,48 Q185,48 195,58 Q215,78 235,115 Z' },
+    { id: 'butterfly-antenna-r', label: 'Right Antenna', tone: 'dark',
+      path: 'M240,130 Q260,95 285,70 Q295,60 300,55 Q305,50 302,48 Q295,48 285,58 Q265,78 245,115 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── BEAR ──
+const bear: Vibe = {
+  id: 'bear', name: 'Bear', emoji: '🐻',
+  description: 'Strong bear silhouette — bold & grounded',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'bear-ear-l', label: 'Left Ear', tone: 'dark',
+      path: 'M155,120 Q145,85 160,65 Q178,50 200,60 Q215,72 210,100 Q205,120 195,135 Z' },
+    { id: 'bear-ear-r', label: 'Right Ear', tone: 'dark',
+      path: 'M325,120 Q335,85 320,65 Q302,50 280,60 Q265,72 270,100 Q275,120 285,135 Z' },
+    { id: 'bear-head', label: 'Head', tone: 'medium',
+      path: 'M160,155 Q155,120 180,100 Q210,82 240,80 Q270,82 300,100 Q325,120 320,155 Q318,190 295,210 Q270,225 240,228 Q210,225 185,210 Q162,190 160,155 Z' },
+    { id: 'bear-snout', label: 'Snout', tone: 'light',
+      path: 'M210,175 Q215,160 240,155 Q265,160 270,175 Q272,190 260,200 Q250,208 240,210 Q230,208 220,200 Q208,190 210,175 Z' },
+    { id: 'bear-body', label: 'Body', tone: 'medium',
+      path: 'M140,228 Q135,260 130,300 Q125,360 140,400 Q160,435 200,445 L280,445 Q320,435 340,400 Q355,360 350,300 Q345,260 340,228 Q300,245 240,248 Q180,245 140,228 Z' },
+    { id: 'bear-belly', label: 'Belly', tone: 'light',
+      path: 'M190,300 Q195,270 240,265 Q285,270 290,300 Q292,340 280,375 Q260,400 240,405 Q220,400 200,375 Q188,340 190,300 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── ELEPHANT ──
+const elephant: Vibe = {
+  id: 'elephant', name: 'Elephant', emoji: '🐘',
+  description: 'Majestic elephant with big ears & trunk',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'elephant-ear-l', label: 'Left Ear', tone: 'medium',
+      path: 'M155,160 Q110,130 75,145 Q40,165 35,210 Q32,260 55,295 Q80,320 115,315 Q145,308 160,280 Q170,255 165,220 Z' },
+    { id: 'elephant-ear-r', label: 'Right Ear', tone: 'medium',
+      path: 'M325,160 Q370,130 405,145 Q440,165 445,210 Q448,260 425,295 Q400,320 365,315 Q335,308 320,280 Q310,255 315,220 Z' },
+    { id: 'elephant-head', label: 'Head', tone: 'dark',
+      path: 'M165,140 Q170,100 200,80 Q225,68 240,65 Q255,68 280,80 Q310,100 315,140 Q320,180 310,220 Q300,250 280,270 L200,270 Q180,250 170,220 Q160,180 165,140 Z' },
+    { id: 'elephant-trunk', label: 'Trunk', tone: 'dark',
+      path: 'M220,270 Q225,300 230,330 Q232,360 225,385 Q218,405 200,415 Q185,420 180,410 Q178,398 188,385 Q200,370 205,350 Q208,330 205,300 Q202,280 200,270 Z' },
+    { id: 'elephant-tusk', label: 'Tusk', tone: 'light',
+      path: 'M265,260 Q272,280 278,310 Q282,340 275,360 Q270,372 262,365 Q258,350 260,325 Q260,300 255,275 Z' },
+    { id: 'elephant-body', label: 'Body', tone: 'dark',
+      path: 'M145,300 Q140,270 165,255 Q200,240 240,238 Q280,240 315,255 Q340,270 335,300 Q332,350 330,390 Q328,420 320,440 L160,440 Q152,420 150,390 Q148,350 145,300 Z' },
+    { id: 'elephant-belly', label: 'Belly', tone: 'medium',
+      path: 'M185,320 Q190,295 240,290 Q290,295 295,320 Q298,360 290,400 L190,400 Q182,360 185,320 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── OWL ──
+const owl: Vibe = {
+  id: 'owl', name: 'Owl', emoji: '🦉',
+  description: 'Wise owl with big eyes & feathered wings',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'owl-ear-l', label: 'Left Tuft', tone: 'dark',
+      path: 'M170,110 Q155,70 165,50 Q178,35 195,55 Q205,75 200,110 Z' },
+    { id: 'owl-ear-r', label: 'Right Tuft', tone: 'dark',
+      path: 'M310,110 Q325,70 315,50 Q302,35 285,55 Q275,75 280,110 Z' },
+    { id: 'owl-head', label: 'Head', tone: 'medium',
+      path: 'M155,150 Q150,110 175,90 Q205,72 240,70 Q275,72 305,90 Q330,110 325,150 Q322,190 300,210 Q275,225 240,228 Q205,225 180,210 Q158,190 155,150 Z' },
+    { id: 'owl-eye-l', label: 'Left Eye', tone: 'light', path: circlePath(210, 155, 28) },
+    { id: 'owl-eye-r', label: 'Right Eye', tone: 'light', path: circlePath(270, 155, 28) },
+    { id: 'owl-pupil-l', label: 'Left Pupil', tone: 'dark', path: circlePath(210, 155, 12) },
+    { id: 'owl-pupil-r', label: 'Right Pupil', tone: 'dark', path: circlePath(270, 155, 12) },
+    { id: 'owl-beak', label: 'Beak', tone: 'accent',
+      path: 'M232,185 L240,205 L248,185 Q242,178 240,175 Q238,178 232,185 Z' },
+    { id: 'owl-body', label: 'Body', tone: 'medium',
+      path: 'M165,228 Q155,270 150,320 Q148,380 165,420 Q185,445 215,450 L265,450 Q295,445 315,420 Q332,380 330,320 Q325,270 315,228 Q280,245 240,248 Q200,245 165,228 Z' },
+    { id: 'owl-chest', label: 'Chest', tone: 'light',
+      path: 'M200,280 Q205,260 240,255 Q275,260 280,280 Q285,320 278,360 Q265,390 240,395 Q215,390 202,360 Q195,320 200,280 Z' },
+    { id: 'owl-wing-l', label: 'Left Wing', tone: 'dark',
+      path: 'M155,270 Q120,290 95,330 Q75,370 80,400 Q88,425 110,420 Q135,412 155,385 Q168,355 165,320 Z' },
+    { id: 'owl-wing-r', label: 'Right Wing', tone: 'dark',
+      path: 'M325,270 Q360,290 385,330 Q405,370 400,400 Q392,425 370,420 Q345,412 325,385 Q312,355 315,320 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── TURTLE ──
+const turtle: Vibe = {
+  id: 'turtle', name: 'Turtle', emoji: '🐢',
+  description: 'Friendly turtle with patterned shell',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'turtle-head', label: 'Head', tone: 'medium',
+      path: 'M130,260 Q110,240 95,220 Q82,200 85,185 Q90,168 108,165 Q128,165 142,180 Q152,195 150,215 Q148,235 140,250 Z' },
+    { id: 'turtle-shell-top', label: 'Shell Top', tone: 'dark',
+      path: 'M165,195 Q175,140 220,110 Q265,90 310,105 Q350,125 360,175 Q365,210 355,250 L165,250 Q158,225 165,195 Z' },
+    { id: 'turtle-shell-center', label: 'Shell Center', tone: 'accent',
+      path: 'M200,155 Q215,130 260,120 Q305,130 320,155 Q330,180 325,210 L195,210 Q190,180 200,155 Z' },
+    { id: 'turtle-shell-bottom', label: 'Shell Bottom', tone: 'medium',
+      path: 'M155,250 L365,250 Q375,290 370,325 Q360,360 335,380 Q300,400 260,405 Q220,400 185,380 Q160,360 150,325 Q145,290 155,250 Z' },
+    { id: 'turtle-belly', label: 'Undershell', tone: 'light',
+      path: 'M185,310 Q195,285 260,280 Q325,285 335,310 Q340,340 325,365 Q300,385 260,388 Q220,385 195,365 Q180,340 185,310 Z' },
+    { id: 'turtle-leg-fl', label: 'Front Left Leg', tone: 'medium',
+      path: 'M155,280 Q135,290 120,310 Q112,328 118,340 Q128,345 140,335 Q155,318 160,300 Z' },
+    { id: 'turtle-leg-fr', label: 'Front Right Leg', tone: 'medium',
+      path: 'M365,280 Q385,290 400,310 Q408,328 402,340 Q392,345 380,335 Q365,318 360,300 Z' },
+    { id: 'turtle-tail', label: 'Tail', tone: 'dark',
+      path: 'M370,360 Q385,368 400,365 Q410,360 408,352 Q402,345 390,350 Q378,355 370,355 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── LION ──
+const lion: Vibe = {
+  id: 'lion', name: 'Lion', emoji: '🦁',
+  description: 'Majestic lion with flowing mane',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'lion-mane', label: 'Mane', tone: 'accent',
+      path: 'M120,130 Q105,90 130,60 Q160,35 200,30 Q240,28 280,30 Q320,35 350,60 Q375,90 360,130 Q370,170 365,210 Q358,250 340,275 Q280,310 240,312 Q200,310 140,275 Q122,250 115,210 Q110,170 120,130 Z' },
+    { id: 'lion-face', label: 'Face', tone: 'medium',
+      path: 'M170,140 Q168,105 195,85 Q220,72 240,70 Q260,72 285,85 Q312,105 310,140 Q310,180 295,210 Q275,235 240,240 Q205,235 185,210 Q170,180 170,140 Z' },
+    { id: 'lion-snout', label: 'Snout', tone: 'light',
+      path: 'M210,185 Q215,172 240,168 Q265,172 270,185 Q272,198 262,208 Q252,215 240,218 Q228,215 218,208 Q208,198 210,185 Z' },
+    { id: 'lion-nose', label: 'Nose', tone: 'dark',
+      path: 'M230,182 Q235,175 240,173 Q245,175 250,182 Q252,188 245,192 Q240,195 235,192 Q228,188 230,182 Z' },
+    { id: 'lion-body', label: 'Body', tone: 'medium',
+      path: 'M155,290 Q150,320 148,360 Q145,400 158,430 Q175,450 210,455 L270,455 Q305,450 322,430 Q335,400 332,360 Q330,320 325,290 Q290,310 240,312 Q190,310 155,290 Z' },
+    { id: 'lion-tail', label: 'Tail', tone: 'accent',
+      path: 'M330,380 Q355,365 378,345 Q400,325 418,318 Q435,315 440,328 Q442,345 428,362 Q410,382 388,400 Q368,415 348,425 Q335,430 332,420 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── RABBIT ──
+const rabbit: Vibe = {
+  id: 'rabbit', name: 'Rabbit', emoji: '🐰',
+  description: 'Cute bunny with long ears & fluffy tail',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'rabbit-ear-l', label: 'Left Ear', tone: 'medium',
+      path: 'M195,145 Q185,90 190,45 Q195,15 210,10 Q225,8 228,35 Q232,70 225,120 Q222,140 215,155 Z' },
+    { id: 'rabbit-ear-l-inner', label: 'Left Ear Inner', tone: 'accent',
+      path: 'M200,130 Q195,90 198,55 Q202,30 212,28 Q220,28 222,50 Q225,80 220,120 Z' },
+    { id: 'rabbit-ear-r', label: 'Right Ear', tone: 'medium',
+      path: 'M285,145 Q295,90 290,45 Q285,15 270,10 Q255,8 252,35 Q248,70 255,120 Q258,140 265,155 Z' },
+    { id: 'rabbit-ear-r-inner', label: 'Right Ear Inner', tone: 'accent',
+      path: 'M280,130 Q285,90 282,55 Q278,30 268,28 Q260,28 258,50 Q255,80 260,120 Z' },
+    { id: 'rabbit-head', label: 'Head', tone: 'light',
+      path: 'M170,200 Q165,160 185,140 Q210,120 240,118 Q270,120 295,140 Q315,160 310,200 Q308,235 288,255 Q265,270 240,272 Q215,270 192,255 Q172,235 170,200 Z' },
+    { id: 'rabbit-nose', label: 'Nose', tone: 'accent',
+      path: 'M232,225 Q236,218 240,216 Q244,218 248,225 Q250,232 240,236 Q230,232 232,225 Z' },
+    { id: 'rabbit-body', label: 'Body', tone: 'light',
+      path: 'M170,272 Q158,310 155,355 Q152,400 168,430 Q188,452 220,458 L260,458 Q292,452 312,430 Q328,400 325,355 Q322,310 310,272 Q280,288 240,290 Q200,288 170,272 Z' },
+    { id: 'rabbit-belly', label: 'Belly', tone: 'medium',
+      path: 'M200,340 Q205,315 240,310 Q275,315 280,340 Q282,375 272,405 Q258,425 240,428 Q222,425 208,405 Q198,375 200,340 Z' },
+    { id: 'rabbit-tail', label: 'Tail', tone: 'light',
+      path: 'M320,395 Q340,385 355,388 Q368,395 365,412 Q358,425 342,428 Q328,425 322,415 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── DINOSAUR ──
+const dinosaur: Vibe = {
+  id: 'dinosaur', name: 'Dinosaur', emoji: '🦕',
+  description: 'Friendly long-neck dino with spiky back',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'dino-head', label: 'Head', tone: 'medium',
+      path: 'M95,130 Q85,100 95,78 Q110,58 135,55 Q160,58 170,78 Q178,100 170,130 Q165,150 150,160 Q130,165 115,155 Q98,145 95,130 Z' },
+    { id: 'dino-eye', label: 'Eye', tone: 'light', path: circlePath(140, 100, 12) },
+    { id: 'dino-neck', label: 'Neck', tone: 'medium',
+      path: 'M120,160 Q125,200 135,240 Q148,280 170,310 Q190,295 210,288 L195,240 Q180,200 170,165 Q160,158 145,162 Z' },
+    { id: 'dino-body', label: 'Body', tone: 'dark',
+      path: 'M170,310 Q175,280 210,265 Q260,250 315,255 Q365,265 390,290 Q408,315 405,350 Q400,385 375,405 Q345,420 300,425 L185,425 Q160,420 148,400 Q138,378 140,350 Q145,325 170,310 Z' },
+    { id: 'dino-belly', label: 'Belly', tone: 'light',
+      path: 'M195,340 Q205,315 270,308 Q340,315 355,340 Q362,370 350,395 Q330,415 280,418 Q215,415 198,395 Q188,370 195,340 Z' },
+    { id: 'dino-spike-1', label: 'Spike 1', tone: 'accent', path: 'M200,265 L210,235 L225,262 Z' },
+    { id: 'dino-spike-2', label: 'Spike 2', tone: 'accent', path: 'M245,255 L258,222 L275,252 Z' },
+    { id: 'dino-spike-3', label: 'Spike 3', tone: 'accent', path: 'M295,258 L310,228 L328,258 Z' },
+    { id: 'dino-spike-4', label: 'Spike 4', tone: 'accent', path: 'M345,268 L358,240 L372,272 Z' },
+    { id: 'dino-tail', label: 'Tail', tone: 'medium',
+      path: 'M390,350 Q410,345 430,335 Q448,322 458,312 Q465,305 468,310 Q470,320 458,338 Q442,358 420,375 Q400,388 385,395 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── GIRAFFE ──
+const giraffe: Vibe = {
+  id: 'giraffe', name: 'Giraffe', emoji: '🦒',
+  description: 'Tall giraffe with spotted neck & long legs',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'giraffe-horns', label: 'Horns', tone: 'dark',
+      path: 'M200,55 Q198,35 205,25 Q212,20 215,30 Q218,42 215,60 Z M250,55 Q248,35 255,25 Q262,20 265,30 Q268,42 265,60 Z' },
+    { id: 'giraffe-head', label: 'Head', tone: 'medium',
+      path: 'M185,95 Q182,68 200,55 Q218,48 235,48 Q252,48 268,55 Q285,68 282,95 Q280,115 268,128 Q252,138 235,140 Q218,138 202,128 Q188,115 185,95 Z' },
+    { id: 'giraffe-neck', label: 'Neck', tone: 'accent',
+      path: 'M205,135 Q200,180 198,230 Q195,280 200,320 Q250,325 280,320 Q275,280 272,230 Q270,180 265,135 Q252,142 235,145 Q218,142 205,135 Z' },
+    { id: 'giraffe-spot-1', label: 'Neck Spot 1', tone: 'dark',
+      path: 'M215,170 Q220,158 238,155 Q255,158 258,170 Q260,182 250,188 Q235,192 222,188 Q212,182 215,170 Z' },
+    { id: 'giraffe-spot-2', label: 'Neck Spot 2', tone: 'dark',
+      path: 'M218,220 Q222,208 238,205 Q254,208 258,220 Q260,232 250,238 Q235,242 222,238 Q215,232 218,220 Z' },
+    { id: 'giraffe-spot-3', label: 'Neck Spot 3', tone: 'dark',
+      path: 'M215,270 Q220,258 238,255 Q255,258 258,270 Q260,282 250,288 Q235,292 222,288 Q212,282 215,270 Z' },
+    { id: 'giraffe-body', label: 'Body', tone: 'medium',
+      path: 'M160,330 Q155,320 200,312 Q240,308 280,312 Q325,320 320,330 Q325,365 318,395 L162,395 Q155,365 160,330 Z' },
+    { id: 'giraffe-leg-fl', label: 'Front Left', tone: 'dark',
+      path: 'M172,395 L168,455 Q170,462 180,462 Q188,460 186,450 L185,395 Z' },
+    { id: 'giraffe-leg-fr', label: 'Front Right', tone: 'dark',
+      path: 'M205,395 L202,455 Q204,462 214,462 Q222,460 220,450 L218,395 Z' },
+    { id: 'giraffe-leg-bl', label: 'Back Left', tone: 'dark',
+      path: 'M262,395 L258,455 Q260,462 270,462 Q278,460 276,450 L275,395 Z' },
+    { id: 'giraffe-leg-br', label: 'Back Right', tone: 'dark',
+      path: 'M298,395 L295,455 Q297,462 307,462 Q315,460 312,450 L310,395 Z' },
+    { id: 'giraffe-tail', label: 'Tail', tone: 'accent',
+      path: 'M318,335 Q335,330 345,335 Q352,342 348,355 Q340,365 328,362 Q318,358 318,348 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, elephant, owl, turtle, lion, rabbit, dinosaur, giraffe];
