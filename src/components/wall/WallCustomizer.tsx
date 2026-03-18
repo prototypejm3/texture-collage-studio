@@ -1,6 +1,6 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move } from 'lucide-react';
-import { useState } from 'react';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X } from 'lucide-react';
+import { useState, useRef } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
