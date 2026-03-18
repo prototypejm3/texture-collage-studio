@@ -92,4 +92,12 @@ export const textures: TextureSwatch[] = [
   { id: 'concrete-raw', name: 'Raw', category: 'Concrete', cssBackground: img('concrete-raw.png') },
   { id: 'concrete-polished', name: 'Polished', category: 'Concrete', cssBackground: img('concrete-polished.png') },
   { id: 'concrete-weathered', name: 'Weathered', category: 'Concrete', cssBackground: img('concrete-weathered.png') },
+
+  // ── Leather ──
+  { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
+  { id: 'leather-espresso', name: 'Espresso', category: 'Leather', cssBackground: img('leather-espresso.png') },
+  { id: 'leather-chai', name: 'Chai', category: 'Leather', cssBackground: img('leather-chai.png') },
+  { id: 'leather-cognac', name: 'Cognac', category: 'Leather', cssBackground: img('leather-cognac.png') },
+  { id: 'leather-mocha', name: 'Mocha', category: 'Leather', cssBackground: img('leather-mocha.png') },
+  { id: 'leather-rye', name: 'Rye', category: 'Leather', cssBackground: img('leather-rye.png') },
 ];
