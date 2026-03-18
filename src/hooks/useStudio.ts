@@ -27,12 +27,13 @@ export function useStudio() {
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
   const [displaySize, setDisplaySize] = useState<DesignSize>('medium');
-  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('gold');
+  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('shadow-box');
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [drawMode, setDrawMode] = useState(false);
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
+  const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -88,6 +89,7 @@ export function useStudio() {
     setSelectedSectionId(null);
     setCustomSections([]);
     setDrawMode(false);
+    setBackgroundTextureId(null);
   }, []);
 
   const generateRandom = useCallback(() => {
@@ -259,8 +261,8 @@ export function useStudio() {
   }, [activeVibe, customSections, allSections]);
 
   const getState = useCallback(() => {
-    return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId });
-  }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId]);
+    return JSON.stringify({ elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId, backgroundTextureId });
+  }, [elements, frameSize, frameColor, activeVibe, vibeFills, selectedSectionId, backgroundTextureId]);
 
   const loadState = useCallback((serialized: string) => {
     try {
@@ -271,6 +273,7 @@ export function useStudio() {
       if (state.activeVibe) setActiveVibe(state.activeVibe);
       if (state.vibeFills) setVibeFills(state.vibeFills);
       if (state.selectedSectionId !== undefined) setSelectedSectionId(state.selectedSectionId);
+      if (state.backgroundTextureId !== undefined) setBackgroundTextureId(state.backgroundTextureId);
       setSelectedId(null);
     } catch { /* ignore corrupt state */ }
   }, []);
@@ -289,6 +292,7 @@ export function useStudio() {
     selectedSectionId,
     drawMode,
     customSections,
+    backgroundTextureId,
     // Setters
     setSelectedId,
     setFrameSize,
@@ -296,6 +300,7 @@ export function useStudio() {
     setDisplaySize,
     setWallFrameStyle,
     setDrawMode,
+    setBackgroundTextureId,
     // Free-mode
     addElement,
     updateElement,

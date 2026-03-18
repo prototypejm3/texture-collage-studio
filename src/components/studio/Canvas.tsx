@@ -19,6 +19,7 @@ interface Props {
   customTemplate: CustomTemplate | null;
   templateOpacity: number;
   customTextures?: TextureSwatch[];
+  backgroundTextureId: string | null;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
@@ -57,6 +58,7 @@ export function Canvas({
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
+  backgroundTextureId,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection, canvasRef,
   customTextures = [],
@@ -66,6 +68,13 @@ export function Canvas({
   const { w, h } = frameSizeMap[frameSize];
 
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
+
+  // Resolve background texture image
+  const bgTextureUrl = useMemo(() => {
+    if (!backgroundTextureId) return null;
+    const tex = allTextures.find(t => t.id === backgroundTextureId);
+    return tex?.cssBackground || null;
+  }, [backgroundTextureId, allTextures]);
 
   // Resolve frame styling from wallFrameStyle
   const frameStyle = useMemo(() => {
@@ -119,7 +128,8 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: frameStyle.innerBg,
+            background: bgTextureUrl || frameStyle.innerBg,
+            backgroundSize: bgTextureUrl ? 'cover' : undefined,
             boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}
         >

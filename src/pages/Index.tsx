@@ -154,8 +154,11 @@ const Index = () => {
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
+    } else if (!studio.selectedId && !studio.activeVibe) {
+      // Toggle background: click same texture to clear
+      studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     }
-  }, [studio.selectedSectionId, studio.fillSection]);
+  }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
@@ -240,6 +243,7 @@ const Index = () => {
           customTemplate={customTemplate}
           templateOpacity={templateOpacity}
           customTextures={customTextures}
+          backgroundTextureId={studio.backgroundTextureId}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
