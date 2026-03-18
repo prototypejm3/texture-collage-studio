@@ -91,6 +91,7 @@ export interface Vibe {
   darkTextures: string[];
   accentTextures: string[];
   category?: string;
+  creator?: string;
 }
 
 export type VibeFills = Record<string, string>;
