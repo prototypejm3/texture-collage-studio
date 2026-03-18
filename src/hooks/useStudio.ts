@@ -313,6 +313,7 @@ export function useStudio() {
     // Custom sections
     addCustomSection,
     deleteCustomSection,
+    detachSection,
     // Serialization
     getState,
     loadState,
