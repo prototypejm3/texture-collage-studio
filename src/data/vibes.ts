@@ -2364,6 +2364,7 @@ const neiceBeats: Vibe = {
   name: 'Neice Beats',
   emoji: '🥁',
   category: 'Community',
+  baseLikes: 17, likesStartDate: '2026-03-15',
   creator: 'butterbb',
   description: 'Pair of bongo drums ready to jam',
   viewBox: '0 0 480 480',
