@@ -2221,6 +2221,7 @@ const scubaSkiba: Vibe = {
 const bancroft: Vibe = {
   id: 'bancroft', name: 'Bancroft', emoji: '🏍️',
   description: 'Classic cruiser motorcycle silhouette',
+  category: 'Community',
   viewBox: '0 0 480 320',
   sections: [
     { id: 'bc-rear-wheel', label: 'Rear Wheel', tone: 'dark',
