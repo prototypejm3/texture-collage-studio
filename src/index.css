@@ -133,6 +133,14 @@
   background: url('/walls/limewash.png') center/cover no-repeat;
 }
 
+.wall-bg-white-brick {
+  background: url('/walls/white-brick.png') center/cover no-repeat;
+}
+
+.wall-bg-clean-white {
+  background-color: hsl(0 0% 98%);
+  background-image: none;
+}
 
 .wall-bg-emerald-velvet {
   background: url('/walls/emerald-velvet.png') center/cover no-repeat;
