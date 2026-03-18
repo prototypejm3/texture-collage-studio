@@ -40,7 +40,7 @@ const Index = () => {
   const toolKitOpen = showToolKit && !toolKitMinimized;
   const [showStencils, setShowStencils] = useState(true);
   const [stencilsMinimized, setStencilsMinimized] = useState(false);
-  const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
+  const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string; stencilCreator?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
