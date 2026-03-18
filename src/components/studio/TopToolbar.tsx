@@ -51,6 +51,10 @@ export function TopToolbar({
   wallFrameStyle,
   onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  ambientSound, onAmbientSoundChange,
+}: Props) {
+  const [framePanelOpen, setFramePanelOpen] = useState(false);
+  const [showSoundMenu, setShowSoundMenu] = useState(false);
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const location = useLocation();
