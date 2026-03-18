@@ -31,6 +31,8 @@ export function useStudio() {
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
+  const [drawMode, setDrawMode] = useState(false);
+  const [customSections, setCustomSections] = useState<VibeSection[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
