@@ -1,4 +1,5 @@
-import { SavedDesign, FrameStyle, DesignSize, DesignStatus } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize, DesignStatus, HangingStyle } from '@/types/wall';
+import { HangingWrapper } from './HangingWrapper';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw, X, Send, Check } from 'lucide-react';
 import { useState, useRef } from 'react';
