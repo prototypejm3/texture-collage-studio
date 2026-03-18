@@ -1,6 +1,7 @@
 export type WallLayout = 'freeform' | 'grid' | 'single';
 export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'clean-white' | 'dark-brick' | 'gray-brick' | 'black-stone' | 'speckled-white' | 'custom';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'none';
+export type HangingStyle = 'floating' | 'string' | 'spotlight' | 'hook' | 'shelf';
 
 export type DesignSize = 'small' | 'medium' | 'large';
 export type DesignStatus = 'display' | 'hidden' | 'draft';
@@ -21,6 +22,7 @@ export interface SavedDesign {
   pinned: boolean;
   hidden: boolean;
   frameStyle: FrameStyle;
+  hangingStyle?: HangingStyle;
   
   displaySize: DesignSize;
   /** Position on wall in freeform mode (percentage-based) */
@@ -39,6 +41,7 @@ export interface WallSettings {
   layout: WallLayout;
   background: WallBackground;
   defaultFrameStyle: FrameStyle;
+  defaultHangingStyle: HangingStyle;
   customWallImage?: string; // data URL for custom wall photo
 }
 
@@ -47,6 +50,7 @@ export const defaultWallSettings: WallSettings = {
   layout: 'freeform',
   background: 'white-brick',
   defaultFrameStyle: 'gold',
+  defaultHangingStyle: 'floating',
 };
 
 export const FREE_DESIGN_LIMIT = 1;

@@ -1,4 +1,5 @@
-import { SavedDesign, FrameStyle, DesignSize, DesignStatus } from '@/types/wall';
+import { SavedDesign, FrameStyle, DesignSize, DesignStatus, HangingStyle } from '@/types/wall';
+import { HangingWrapper } from './HangingWrapper';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw, X, Send, Check } from 'lucide-react';
 import { useState, useRef } from 'react';
@@ -42,6 +43,14 @@ const statusOptions: { value: DesignStatus; label: string }[] = [
   { value: 'display', label: 'Display' },
   { value: 'hidden', label: 'Hidden' },
   { value: 'draft', label: 'Draft' },
+];
+
+const hangingOptions: { value: HangingStyle; label: string; emoji: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨' },
+  { value: 'string', label: 'String', emoji: '🧵' },
+  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
+  { value: 'hook', label: 'Hook', emoji: '🪝' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
 ];
 
 /* ─── Shadow box configs per frame style ─── */
@@ -213,11 +222,13 @@ export function WallCard({
         style={{ transform: `rotate(${design.rotation || 0}deg)` }}
         onClick={() => onOpen(design.id)}
       >
-        <FrameWrapper style={design.frameStyle}>
-          <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
-            <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />
-          </div>
-        </FrameWrapper>
+        <HangingWrapper style={design.hangingStyle || 'floating'}>
+          <FrameWrapper style={design.frameStyle}>
+            <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
+              <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </FrameWrapper>
+        </HangingWrapper>
       </div>
 
       {/* Pinned indicator */}
@@ -463,6 +474,26 @@ export function WallCard({
                       }`}
                     >
                       {f.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Hanging Style */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Display</label>
+                <div className="flex gap-1 flex-wrap">
+                  {hangingOptions.map(h => (
+                    <button
+                      key={h.value}
+                      onClick={() => onUpdate(design.id, { hangingStyle: h.value })}
+                      className={`px-2 py-1.5 text-[11px] rounded-md transition-colors flex items-center gap-1 ${
+                        (design.hangingStyle || 'floating') === h.value
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                      }`}
+                    >
+                      <span className="text-[10px]">{h.emoji}</span> {h.label}
                     </button>
                   ))}
                 </div>

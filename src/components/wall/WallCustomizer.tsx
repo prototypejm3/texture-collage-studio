@@ -1,11 +1,12 @@
-import { WallSettings, WallLayout, WallBackground, FrameStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X } from 'lucide-react';
+import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle } from '@/types/wall';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X, Lamp } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
   onUpdate: (updates: Partial<WallSettings>) => void;
   onApplyFrameToAll?: (style: FrameStyle) => void;
+  onApplyHangingToAll?: (style: HangingStyle) => void;
   isPremium: boolean;
 }
 
@@ -42,10 +43,19 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremium }: WallCustomizerProps) {
+const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨' },
+  { value: 'string', label: 'String', emoji: '🧵' },
+  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
+  { value: 'hook', label: 'Hook', emoji: '🪝' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
+];
+
+export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, isPremium }: WallCustomizerProps) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
+  const [showHangingMenu, setShowHangingMenu] = useState(false);
   const wallPhotoRef = useRef<HTMLInputElement>(null);
 
   const handleWallPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +145,36 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                       className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'text-primary font-medium' : 'text-foreground'}`}
                     >
                       {fs.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Hanging style picker */}
+        {isPremium && onApplyHangingToAll && (
+          <div className="relative">
+            <button
+              onClick={() => setShowHangingMenu(!showHangingMenu)}
+              className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-background/40 hover:text-background/70' : 'text-muted-foreground/60 hover:text-foreground/60'}`}
+              title="Display style"
+            >
+              <Lamp className="w-3.5 h-3.5" />
+            </button>
+            {showHangingMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowHangingMenu(false)} />
+                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
+                  {hangingStyles.map(hs => (
+                    <button
+                      key={hs.value}
+                      onClick={() => { onApplyHangingToAll(hs.value); setShowHangingMenu(false); }}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+                    >
+                      <span>{hs.emoji}</span> {hs.label}
                     </button>
                   ))}
                 </div>

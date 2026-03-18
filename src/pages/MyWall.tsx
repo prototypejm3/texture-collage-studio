@@ -11,7 +11,7 @@ import { PaywallModal } from '@/components/wall/PaywallModal';
 import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
 import { NavBar } from '@/components/NavBar';
-import { DesignStatus, DesignSize, FrameStyle, WallBackground } from '@/types/wall';
+import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
 import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
@@ -109,9 +109,13 @@ const MyWall = () => {
   }, [multiWall]);
 
   const handleApplyFrameToAll = useCallback((style: FrameStyle) => {
-    // Only apply to designs on this wall
     wallDesigns.forEach(d => wall.updateDesign(d.id, { frameStyle: style }));
   }, [wallDesigns, wall]);
+
+  const handleApplyHangingToAll = useCallback((style: HangingStyle) => {
+    wallDesigns.forEach(d => wall.updateDesign(d.id, { hangingStyle: style }));
+    handleUpdateSettings({ defaultHangingStyle: style });
+  }, [wallDesigns, wall, handleUpdateSettings]);
 
   const handleAddWall = useCallback(() => {
     if (!isPremium) {
@@ -225,6 +229,7 @@ const MyWall = () => {
             settings={currentSettings}
             onUpdate={handleUpdateSettings}
             onApplyFrameToAll={handleApplyFrameToAll}
+            onApplyHangingToAll={handleApplyHangingToAll}
             isPremium={isPremium}
           />
 
