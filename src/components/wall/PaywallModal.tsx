@@ -47,10 +47,12 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
               <p className="text-sm text-foreground font-medium mb-2">Unlock your Wall to:</p>
               <ul className="space-y-2 mb-6">
                 {[
-                  'Save unlimited designs',
-                  'Build your collection',
-                  'Customize your wall',
-                  'Come back anytime',
+                  'Unlimited designs on your wall',
+                  'Upload custom textures',
+                  'Upload reference images',
+                  'AI-generate custom stencils',
+                  'Upload your own wall photo',
+                  'All wall layouts & backgrounds',
                 ].map(item => (
                   <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Sparkles className="w-3.5 h-3.5 text-primary flex-shrink-0" />
