@@ -279,11 +279,19 @@ export function useStudio() {
   }, []);
 
   return {
-    // State
     elements,
     selectedId,
     selectedElement,
     frameSize,
+    frameColor,
+    displaySize,
+    wallFrameStyle,
+    activeVibe: effectiveVibe,
+    vibeFills,
+    selectedSectionId,
+    drawMode,
+    customSections,
+    backgroundTextureId,
     frameColor,
     displaySize,
     wallFrameStyle,
