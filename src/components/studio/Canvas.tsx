@@ -66,7 +66,7 @@ export function Canvas({
   backgroundTextureId, sectionTransforms,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
-  onDeleteSection, onUpdateSectionTransform,
+  onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
