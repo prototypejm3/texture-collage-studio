@@ -30,7 +30,7 @@ function getClipPath(shape: CanvasElementType['shape']): string | undefined {
   }
 }
 
-function getEffectStyles(effects: MaterialEffects): React.CSSProperties {
+function getFilterStyles(effects: MaterialEffects): string | undefined {
   const filters: string[] = [];
   if (effects.bleachFade > 0) {
     filters.push(`saturate(${100 - effects.bleachFade * 0.8}%) brightness(${100 + effects.bleachFade * 0.4}%)`);
@@ -41,41 +41,43 @@ function getEffectStyles(effects: MaterialEffects): React.CSSProperties {
   if (effects.wrinkle !== 'none') {
     filters.push(`url(#wrinkle-${effects.wrinkle})`);
   }
+  return filters.length > 0 ? filters.join(' ') : undefined;
+}
 
-  let boxShadow = 'none';
-  if (effects.shadowDepth === 'lifted') boxShadow = '0 4px 12px -2px hsla(220, 20%, 12%, 0.25)';
-  else if (effects.shadowDepth === 'floating') boxShadow = '0 12px 32px -4px hsla(220, 20%, 12%, 0.35), 0 4px 8px -2px hsla(220, 20%, 12%, 0.15)';
+function getShadowStyle(depth: MaterialEffects['shadowDepth']): string {
+  if (depth === 'lifted') return '0 4px 12px -2px hsla(220, 20%, 12%, 0.25)';
+  if (depth === 'floating') return '0 12px 32px -4px hsla(220, 20%, 12%, 0.35), 0 4px 8px -2px hsla(220, 20%, 12%, 0.15)';
+  return 'none';
+}
 
+function getEdgeMask(edgeStyle: MaterialEffects['edgeStyle']): { maskImage?: string; borderRadius: string } {
   let borderRadius = '4px';
   let maskImage: string | undefined;
-  if (effects.edgeStyle === 'soft-fray') borderRadius = '8px 2px 12px 4px';
-  else if (effects.edgeStyle === 'rough-torn') borderRadius = '12px 2px 16px 6px / 4px 14px 6px 10px';
-  else if (effects.edgeStyle === 'pinking') {
-    // Pinking shears zigzag — tight triangular cuts
+
+  if (edgeStyle === 'soft-fray') borderRadius = '8px 2px 12px 4px';
+  else if (edgeStyle === 'rough-torn') borderRadius = '12px 2px 16px 6px / 4px 14px 6px 10px';
+  else if (edgeStyle === 'pinking') {
     maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/8px 6px repeat-x,
       conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/8px 6px repeat-x,
       conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/6px 8px repeat-y,
       conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/6px 8px repeat-y,
       linear-gradient(#000 0 0) center/calc(100% - 6px) calc(100% - 6px) no-repeat`;
     borderRadius = '0';
-  } else if (effects.edgeStyle === 'scallop') {
-    // Scalloped edges — rounded bumps
+  } else if (edgeStyle === 'scallop') {
     maskImage = `radial-gradient(circle 5px at top, #000 98%, #0000) top/10px 6px repeat-x,
       radial-gradient(circle 5px at bottom, #000 98%, #0000) bottom/10px 6px repeat-x,
       radial-gradient(circle 5px at left, #000 98%, #0000) left/6px 10px repeat-y,
       radial-gradient(circle 5px at right, #000 98%, #0000) right/6px 10px repeat-y,
       linear-gradient(#000 0 0) center/calc(100% - 6px) calc(100% - 6px) no-repeat`;
     borderRadius = '0';
-  } else if (effects.edgeStyle === 'zigzag') {
-    // Zigzag edges
+  } else if (edgeStyle === 'zigzag') {
     maskImage = `conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top/12px 8px repeat-x,
       conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom/12px 8px repeat-x,
       conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) left/8px 12px repeat-y,
       conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) right/8px 12px repeat-y,
       linear-gradient(#000 0 0) center/calc(100% - 8px) calc(100% - 8px) no-repeat`;
     borderRadius = '0';
-  } else if (effects.edgeStyle === 'wave') {
-    // Wavy edges
+  } else if (edgeStyle === 'wave') {
     maskImage = `radial-gradient(circle 6px at 50% 0, #0000 98%, #000) top/14px 7px repeat-x,
       radial-gradient(circle 6px at 50% 100%, #0000 98%, #000) bottom/14px 7px repeat-x,
       radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left/7px 14px repeat-y,
@@ -84,15 +86,7 @@ function getEffectStyles(effects: MaterialEffects): React.CSSProperties {
     borderRadius = '0';
   }
 
-  return {
-    filter: filters.length > 0 ? filters.join(' ') : undefined,
-    boxShadow,
-    borderRadius,
-    WebkitMaskImage: maskImage,
-    WebkitMaskComposite: maskImage ? 'destination-in' as any : undefined,
-    maskImage,
-    maskComposite: maskImage ? 'intersect' as any : undefined,
-  };
+  return { maskImage, borderRadius };
 }
 
 interface Props {
@@ -136,10 +130,14 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const texture = allTex.find(t => t.id === element.textureId);
   if (!texture) return null;
 
-  const effectStyles = getEffectStyles(element.effects);
   const clipPath = getClipPath(element.shape);
+  const filter = getFilterStyles(element.effects);
+  const shadow = getShadowStyle(element.effects.shadowDepth);
+  const { maskImage, borderRadius } = getEdgeMask(element.effects.edgeStyle);
+  const hasScissorEdge = !!maskImage;
 
   return (
+    // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
     <div
       ref={ref}
       onMouseDown={handleMouseDown}
@@ -147,7 +145,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         e.stopPropagation();
         onSelect();
       }}
-      className={`absolute cursor-move transition-shadow pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
       style={{
         left: element.x,
         top: element.y,
@@ -155,11 +153,28 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         height: element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
-        background: texture.cssBackground,
-        backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
-        clipPath,
-        ...effectStyles,
+        filter: element.effects.shadowDepth === 'lifted'
+          ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
+          : element.effects.shadowDepth === 'floating'
+            ? 'drop-shadow(0 12px 16px hsla(220, 20%, 12%, 0.3)) drop-shadow(0 4px 4px hsla(220, 20%, 12%, 0.15))'
+            : undefined,
       }}
-    />
+    >
+      {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
+      <div
+        className="w-full h-full"
+        style={{
+          background: texture.cssBackground,
+          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+          clipPath: hasScissorEdge ? undefined : clipPath,
+          borderRadius,
+          filter,
+          WebkitMaskImage: maskImage,
+          WebkitMaskComposite: maskImage ? 'destination-in' as any : undefined,
+          maskImage,
+          maskComposite: maskImage ? 'intersect' as any : undefined,
+        }}
+      />
+    </div>
   );
 }
