@@ -25,7 +25,7 @@ const Index = () => {
   const wall = useWall();
   const { isPremium, canSave, upgradeToPremium } = useUserTier();
   const canvasRef = useRef<HTMLDivElement>(null!);
-  const [vibesOpen, setVibesOpen] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
