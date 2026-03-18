@@ -356,6 +356,15 @@ export function VibeOutline({
               </button>
             </div>
 
+            {/* Duplicate */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onDuplicateSection(selectedSectionId); }}
+              className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Duplicate section"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
+
             {/* Detach if filled */}
             {isFilled && (
               <button
