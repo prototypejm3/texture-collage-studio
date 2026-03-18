@@ -204,12 +204,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Title cards toggle */}
         <button
-          onClick={() => handlePremiumClick(() => onUpdate({ showTitleCards: !settings.showTitleCards }))}
-          className={iconClass(settings.showTitleCards, !isPremium)}
-          title={isPremium ? 'Museum labels' : 'Premium — unlock to use'}
+          onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
+          className={iconClass(settings.showTitleCards, false)}
+          title="Museum labels"
         >
           <Tag className="w-3.5 h-3.5" />
-          {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
         </button>
 
         {/* Auto-curate */}
