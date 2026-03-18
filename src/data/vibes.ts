@@ -851,25 +851,32 @@ const bear: Vibe = {
 };
 
 // ── ELEPHANT ──
+// Side-profile elephant with large draped ear, curving trunk, and sturdy legs
 const elephant: Vibe = {
   id: 'elephant', name: 'Elephant', emoji: '🐘',
-  description: 'Majestic elephant with big ears & trunk',
+  description: 'Side-profile elephant with sweeping ear & curled trunk',
   viewBox: '0 0 480 480',
   sections: [
-    { id: 'elephant-ear-l', label: 'Left Ear', tone: 'medium',
-      path: 'M155,160 Q110,130 75,145 Q40,165 35,210 Q32,260 55,295 Q80,320 115,315 Q145,308 160,280 Q170,255 165,220 Z' },
-    { id: 'elephant-ear-r', label: 'Right Ear', tone: 'medium',
-      path: 'M325,160 Q370,130 405,145 Q440,165 445,210 Q448,260 425,295 Q400,320 365,315 Q335,308 320,280 Q310,255 315,220 Z' },
+    { id: 'elephant-ear', label: 'Ear', tone: 'medium',
+      path: 'M165,130 Q130,110 100,120 Q65,138 50,175 Q38,218 48,260 Q60,298 90,315 Q120,328 148,318 Q168,305 175,278 Q180,248 178,215 Q176,175 165,130 Z' },
     { id: 'elephant-head', label: 'Head', tone: 'dark',
-      path: 'M165,140 Q170,100 200,80 Q225,68 240,65 Q255,68 280,80 Q310,100 315,140 Q320,180 310,220 Q300,250 280,270 L200,270 Q180,250 170,220 Q160,180 165,140 Z' },
+      path: 'M175,105 Q185,72 215,55 Q245,45 275,52 Q302,62 315,88 Q325,115 322,148 Q318,180 305,208 Q292,230 275,248 L195,248 Q178,228 172,205 Q165,175 168,145 Z' },
+    { id: 'elephant-eye', label: 'Eye', tone: 'light',
+      path: 'M235,115 Q242,108 252,108 Q262,112 264,122 Q262,132 252,135 Q242,132 238,125 Z' },
     { id: 'elephant-trunk', label: 'Trunk', tone: 'dark',
-      path: 'M220,270 Q225,300 230,330 Q232,360 225,385 Q218,405 200,415 Q185,420 180,410 Q178,398 188,385 Q200,370 205,350 Q208,330 205,300 Q202,280 200,270 Z' },
+      path: 'M275,248 Q282,275 288,305 Q292,335 290,358 Q285,382 272,398 Q258,412 242,418 Q228,420 222,408 Q220,395 232,382 Q248,368 258,348 Q265,325 262,298 Q258,272 252,248 Z' },
     { id: 'elephant-tusk', label: 'Tusk', tone: 'light',
-      path: 'M265,260 Q272,280 278,310 Q282,340 275,360 Q270,372 262,365 Q258,350 260,325 Q260,300 255,275 Z' },
+      path: 'M252,248 Q248,268 240,288 Q235,305 238,318 Q242,328 250,325 Q258,318 260,302 Q260,282 258,260 Z' },
     { id: 'elephant-body', label: 'Body', tone: 'dark',
-      path: 'M145,300 Q140,270 165,255 Q200,240 240,238 Q280,240 315,255 Q340,270 335,300 Q332,350 330,390 Q328,420 320,440 L160,440 Q152,420 150,390 Q148,350 145,300 Z' },
+      path: 'M148,248 Q135,255 125,275 Q115,302 118,338 Q122,372 130,398 L135,430 L175,430 L172,395 Q185,410 200,420 L205,430 L245,430 L240,405 Q265,398 288,382 Q310,365 325,338 Q335,308 332,275 Q328,252 318,240 L195,248 Z' },
     { id: 'elephant-belly', label: 'Belly', tone: 'medium',
-      path: 'M185,320 Q190,295 240,290 Q290,295 295,320 Q298,360 290,400 L190,400 Q182,360 185,320 Z' },
+      path: 'M165,310 Q175,288 225,282 Q278,288 290,310 Q298,340 290,375 Q275,395 235,400 Q195,395 178,375 Q165,345 165,310 Z' },
+    { id: 'elephant-front-leg', label: 'Front Leg', tone: 'dark',
+      path: 'M135,398 Q132,412 130,428 Q128,442 132,452 Q138,458 148,458 Q158,455 160,442 Q162,428 165,412 L175,430 L135,430 Z' },
+    { id: 'elephant-back-leg', label: 'Back Leg', tone: 'dark',
+      path: 'M240,405 Q238,418 235,432 Q232,445 236,455 Q242,460 252,458 Q260,452 258,438 Q255,422 250,408 L245,430 L205,430 Z' },
+    { id: 'elephant-tail', label: 'Tail', tone: 'accent',
+      path: 'M332,275 Q348,268 362,262 Q375,258 382,262 Q386,270 380,280 Q370,290 355,298 Q342,302 332,298 Z' },
   ],
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
