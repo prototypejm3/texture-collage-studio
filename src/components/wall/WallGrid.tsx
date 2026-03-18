@@ -39,6 +39,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
     onSizeChange,
     onSubmitToGallery,
     isPremium,
+    isDark,
     size,
   });
 
