@@ -18,7 +18,6 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
 
 const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [
   { value: 'clean-white', label: 'Clean White', previewColor: 'hsl(0 0% 98%)' },
-  { value: 'speckled-white', label: 'Speckled White', preview: '/walls/speckled-white.png' },
   { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
   { value: 'brick', label: 'Brick', preview: '/walls/brick.png' },
   { value: 'dark-brick', label: 'Dark Brick', preview: '/walls/dark-brick.png' },
@@ -26,8 +25,6 @@ const backgrounds: { value: WallBackground; label: string; preview?: string; pre
   { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
   { value: 'black-stone', label: 'Black Stone', preview: '/walls/black-stone.png' },
   { value: 'concrete', label: 'Concrete', preview: '/walls/concrete.png' },
-  { value: 'black-concrete', label: 'Black Concrete', preview: '/walls/black-concrete.png' },
-  { value: 'limewash', label: 'Limewash', preview: '/walls/limewash.png' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
