@@ -90,31 +90,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
   return (
     <div className="flex flex-wrap items-center gap-4 px-1">
-      {/* Title */}
-      <div className="flex items-center gap-2 mr-auto">
-        {editingTitle ? (
-          <div className="flex items-center gap-1">
-            <input
-              autoFocus
-              value={titleDraft}
-              onChange={e => setTitleDraft(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter') { onUpdate({ title: titleDraft }); setEditingTitle(false); } }}
-              className={`text-lg font-light tracking-wide bg-transparent border-b border-primary/40 outline-none w-48 ${isDark ? 'text-background' : 'text-foreground'}`}
-            />
-            <button onClick={() => { onUpdate({ title: titleDraft }); setEditingTitle(false); }} className="p-1 text-primary/60 hover:text-primary">
-              <Check className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        ) : (
-          <h1
-            className={`text-lg font-light tracking-wide cursor-pointer flex items-center gap-2 group ${isDark ? 'text-background/90' : 'text-foreground/80'}`}
-            onClick={() => { setTitleDraft(settings.title); setEditingTitle(true); }}
-          >
-            {settings.title}
-            <Pencil className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
-          </h1>
-        )}
-      </div>
+      <div className="mr-auto" />
 
       <div className="flex items-center gap-2.5">
         {/* Layout picker — grid is free, others are premium */}
