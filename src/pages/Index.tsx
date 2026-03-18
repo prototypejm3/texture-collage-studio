@@ -35,6 +35,7 @@ const Index = () => {
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
+  const [showToolKit, setShowToolKit] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
