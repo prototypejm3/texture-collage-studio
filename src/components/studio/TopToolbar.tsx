@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
-import { FrameStyle } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun } from 'lucide-react';
+import { FrameStyle, AmbientSound } from '@/types/wall';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function useTheme() {
@@ -30,6 +30,8 @@ interface Props {
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
+  ambientSound?: AmbientSound;
+  onAmbientSoundChange?: (sound: AmbientSound) => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -49,8 +51,10 @@ export function TopToolbar({
   wallFrameStyle,
   onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  ambientSound, onAmbientSoundChange,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
+  const [showSoundMenu, setShowSoundMenu] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
@@ -101,8 +105,48 @@ export function TopToolbar({
       {/* Center spacer */}
       <div />
 
-      {/* Right: Auth */}
+      {/* Right: Listen + Auth */}
       <div className="flex items-center gap-1.5">
+        {/* Listen */}
+        {onAmbientSoundChange && (
+          <div className="relative">
+            <button
+              onClick={() => setShowSoundMenu(!showSoundMenu)}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${
+                ambientSound && ambientSound !== 'none'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-secondary'
+              }`}
+            >
+              <Volume2 className="w-3.5 h-3.5" />
+              {ambientSound && ambientSound !== 'none'
+                ? { gallery: 'Gallery', loft: 'Lofi Beats', home: 'Chill' }[ambientSound] ?? 'Listen'
+                : 'Listen'}
+            </button>
+            {showSoundMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[130px]">
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+                  {([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi Beats', '🎵'], ['home', 'Chill', '🏠']] as const).map(([value, label, emoji]) => (
+                    <button
+                      key={value}
+                      onClick={() => { onAmbientSoundChange(value as AmbientSound); setShowSoundMenu(false); }}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${
+                        ambientSound === value ? 'text-primary font-medium' : 'text-foreground'
+                      }`}
+                    >
+                      <span>{emoji}</span> {label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        <div className="w-px h-4 bg-border" />
+
         {/* Dark mode toggle */}
         <button
           onClick={toggle}
