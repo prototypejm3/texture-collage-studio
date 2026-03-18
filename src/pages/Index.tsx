@@ -161,7 +161,6 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <NavBar />
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
@@ -169,22 +168,9 @@ const Index = () => {
         onFrameColorChange={studio.setFrameColor}
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
-        onGenerate={() => setShowVibeModal(true)}
-        onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
-        onToggleVibes={() => {}}
-        vibesActive={false}
-        customTemplate={customTemplate}
-        templateOpacity={templateOpacity}
-        onUploadTemplate={handleUploadTemplate}
-        onClearTemplate={clearTemplate}
-        onTemplateOpacityChange={setTemplateOpacity}
-        isPremium={isPremium}
-        onRequestUpgrade={() => setShowPaywall(true)}
-        drawMode={studio.drawMode}
-        onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
