@@ -37,6 +37,7 @@ const MyWall = () => {
   const wall = useWall();
   const multiWall = useMultiWall();
   const { isPremium, upgradeToPremium } = useUserTier();
+  const gallery = useGallery();
   const [activeTab, setActiveTab] = useState<'all' | DesignStatus>('all');
   const [viewMode, setViewMode] = useState(false);
   const [viewStartIndex, setViewStartIndex] = useState(0);
