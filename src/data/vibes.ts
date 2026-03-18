@@ -1272,31 +1272,7 @@ const worm: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── STRAWBERRY ──
-const strawberry: Vibe = {
-  id: 'strawberry', name: 'Strawberry', emoji: '🍓',
-  description: 'Juicy strawberry with leaf crown',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'straw-leaf-l', label: 'Left Leaf', tone: 'dark',
-      path: 'M200,128 Q170,105 142,95 Q118,92 108,102 Q105,118 118,132 Q138,148 165,155 Q188,158 202,148 Z' },
-    { id: 'straw-leaf-c', label: 'Center Leaf', tone: 'dark',
-      path: 'M222,118 Q228,85 240,58 Q248,42 255,42 Q262,48 268,68 Q275,95 278,122 Q265,132 250,135 Q235,132 225,125 Z' },
-    { id: 'straw-leaf-r', label: 'Right Leaf', tone: 'dark',
-      path: 'M278,128 Q308,105 335,95 Q358,92 368,102 Q372,118 358,132 Q338,148 312,155 Q290,158 275,148 Z' },
-    { id: 'straw-body', label: 'Berry', tone: 'accent',
-      path: 'M160,152 Q148,178 138,218 Q128,268 128,322 Q132,375 148,418 Q172,452 205,468 Q232,478 248,478 Q265,478 292,468 Q325,452 348,418 Q365,375 368,322 Q368,268 358,218 Q348,178 335,152 Q308,142 278,138 Q248,135 218,138 Q188,142 165,150 Z' },
-    { id: 'straw-seed1', label: 'Seed 1', tone: 'light', path: circlePath(208, 232, 8) },
-    { id: 'straw-seed2', label: 'Seed 2', tone: 'light', path: circlePath(288, 232, 8) },
-    { id: 'straw-seed3', label: 'Seed 3', tone: 'light', path: circlePath(248, 285, 8) },
-    { id: 'straw-seed4', label: 'Seed 4', tone: 'light', path: circlePath(198, 308, 8) },
-    { id: 'straw-seed5', label: 'Seed 5', tone: 'light', path: circlePath(298, 308, 8) },
-    { id: 'straw-seed6', label: 'Seed 6', tone: 'light', path: circlePath(228, 368, 7) },
-    { id: 'straw-seed7', label: 'Seed 7', tone: 'light', path: circlePath(268, 368, 7) },
-    { id: 'straw-seed8', label: 'Seed 8', tone: 'light', path: circlePath(248, 425, 6) },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── CATERPILLAR ──
 const caterpillar: Vibe = {
