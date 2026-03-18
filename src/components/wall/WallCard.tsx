@@ -287,14 +287,14 @@ export function WallCard({
 
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-        <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm" title="Open">
+        <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border" title="Open">
           <FolderOpen className="w-3 h-3" />
         </button>
-        <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm" title="Duplicate">
+        <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border" title="Duplicate">
           <Copy className="w-3 h-3" />
         </button>
         <div className="relative">
-          <button onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm">
+          <button onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
           </button>
           {menuOpen && (
