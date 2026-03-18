@@ -44,6 +44,7 @@ export function BottomBar({
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
   isPremium = false, onRequestUpgrade,
+  onOpenToolKit, toolKitOpen = false,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
