@@ -26,6 +26,9 @@ interface Props {
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
+  drawMode?: boolean;
+  onFinishDraw?: (pathD: string) => void;
+  onCancelDraw?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
