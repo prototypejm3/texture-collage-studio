@@ -560,4 +560,246 @@ const rainbow: Vibe = {
   accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow];
+// ── MANDALA ──
+// Symmetric mandala with concentric rings, petal layers, and geometric accents
+const mandala: Vibe = {
+  id: 'mandala',
+  name: 'Mandala',
+  emoji: '🕉️',
+  description: 'Intricate mandala with petal rings & geometric symmetry',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'mandala-bg',
+      label: 'Background',
+      tone: 'light',
+      path: 'M0,0 L480,0 L480,480 L0,480 Z',
+    },
+    {
+      id: 'mandala-outer-ring',
+      label: 'Outer Ring',
+      tone: 'dark',
+      path: `M240,20 A220,220 0 1,1 240,460 A220,220 0 1,1 240,20 Z M240,45 A195,195 0 1,0 240,435 A195,195 0 1,0 240,45 Z`,
+    },
+    {
+      id: 'mandala-petal-n',
+      label: 'North Petal',
+      tone: 'accent',
+      path: 'M240,45 Q210,100 200,140 Q220,120 240,115 Q260,120 280,140 Q270,100 240,45 Z',
+    },
+    {
+      id: 'mandala-petal-ne',
+      label: 'NE Petal',
+      tone: 'accent',
+      path: 'M378,102 Q340,140 330,175 Q340,155 358,148 Q375,148 390,165 Q395,130 378,102 Z',
+    },
+    {
+      id: 'mandala-petal-e',
+      label: 'East Petal',
+      tone: 'accent',
+      path: 'M435,240 Q380,210 340,200 Q360,220 365,240 Q360,260 340,280 Q380,270 435,240 Z',
+    },
+    {
+      id: 'mandala-petal-se',
+      label: 'SE Petal',
+      tone: 'accent',
+      path: 'M378,378 Q340,340 330,305 Q340,325 358,332 Q375,332 390,315 Q395,350 378,378 Z',
+    },
+    {
+      id: 'mandala-petal-s',
+      label: 'South Petal',
+      tone: 'accent',
+      path: 'M240,435 Q210,380 200,340 Q220,360 240,365 Q260,360 280,340 Q270,380 240,435 Z',
+    },
+    {
+      id: 'mandala-petal-sw',
+      label: 'SW Petal',
+      tone: 'accent',
+      path: 'M102,378 Q140,340 150,305 Q140,325 122,332 Q105,332 90,315 Q85,350 102,378 Z',
+    },
+    {
+      id: 'mandala-petal-w',
+      label: 'West Petal',
+      tone: 'accent',
+      path: 'M45,240 Q100,210 140,200 Q120,220 115,240 Q120,260 140,280 Q100,270 45,240 Z',
+    },
+    {
+      id: 'mandala-petal-nw',
+      label: 'NW Petal',
+      tone: 'accent',
+      path: 'M102,102 Q140,140 150,175 Q140,155 122,148 Q105,148 90,165 Q85,130 102,102 Z',
+    },
+    {
+      id: 'mandala-mid-ring',
+      label: 'Middle Ring',
+      tone: 'medium',
+      path: `M240,100 A140,140 0 1,1 240,380 A140,140 0 1,1 240,100 Z M240,130 A110,110 0 1,0 240,350 A110,110 0 1,0 240,130 Z`,
+    },
+    {
+      id: 'mandala-inner-petal-n',
+      label: 'Inner N Petal',
+      tone: 'medium',
+      path: 'M240,130 Q225,165 218,190 Q230,178 240,175 Q250,178 262,190 Q255,165 240,130 Z',
+    },
+    {
+      id: 'mandala-inner-petal-e',
+      label: 'Inner E Petal',
+      tone: 'medium',
+      path: 'M350,240 Q315,225 290,218 Q302,230 305,240 Q302,250 290,262 Q315,255 350,240 Z',
+    },
+    {
+      id: 'mandala-inner-petal-s',
+      label: 'Inner S Petal',
+      tone: 'medium',
+      path: 'M240,350 Q225,315 218,290 Q230,302 240,305 Q250,302 262,290 Q255,315 240,350 Z',
+    },
+    {
+      id: 'mandala-inner-petal-w',
+      label: 'Inner W Petal',
+      tone: 'medium',
+      path: 'M130,240 Q165,225 190,218 Q178,230 175,240 Q178,250 190,262 Q165,255 130,240 Z',
+    },
+    {
+      id: 'mandala-inner-ring',
+      label: 'Inner Ring',
+      tone: 'dark',
+      path: `M240,170 A70,70 0 1,1 240,310 A70,70 0 1,1 240,170 Z M240,190 A50,50 0 1,0 240,290 A50,50 0 1,0 240,190 Z`,
+    },
+    {
+      id: 'mandala-center',
+      label: 'Center',
+      tone: 'accent',
+      path: circlePath(240, 240, 50),
+    },
+    {
+      id: 'mandala-core',
+      label: 'Core',
+      tone: 'light',
+      path: circlePath(240, 240, 22),
+    },
+  ],
+  lightTextures: [],
+  mediumTextures: [],
+  darkTextures: [],
+  accentTextures: [],
+};
+
+// ── MANDALA FLOWER ──
+// Floral mandala with layered petal rosette
+const mandalaFlower: Vibe = {
+  id: 'mandala-flower',
+  name: 'Mandala Flower',
+  emoji: '🌸',
+  description: 'Floral mandala with layered petal rosette & decorative border',
+  viewBox: '0 0 480 480',
+  sections: [
+    {
+      id: 'mf-bg',
+      label: 'Background',
+      tone: 'light',
+      path: 'M0,0 L480,0 L480,480 L0,480 Z',
+    },
+    {
+      id: 'mf-corner-tl',
+      label: 'Corner TL',
+      tone: 'dark',
+      path: 'M0,0 L80,0 Q60,20 50,50 Q40,80 0,80 Z',
+    },
+    {
+      id: 'mf-corner-tr',
+      label: 'Corner TR',
+      tone: 'dark',
+      path: 'M400,0 L480,0 L480,80 Q440,80 430,50 Q420,20 400,0 Z',
+    },
+    {
+      id: 'mf-corner-bl',
+      label: 'Corner BL',
+      tone: 'dark',
+      path: 'M0,400 Q40,400 50,430 Q60,460 80,480 L0,480 Z',
+    },
+    {
+      id: 'mf-corner-br',
+      label: 'Corner BR',
+      tone: 'dark',
+      path: 'M480,400 L480,480 L400,480 Q420,460 430,430 Q440,400 480,400 Z',
+    },
+    {
+      id: 'mf-outer-circle',
+      label: 'Outer Circle',
+      tone: 'medium',
+      path: `M240,30 A210,210 0 1,1 240,450 A210,210 0 1,1 240,30 Z M240,60 A180,180 0 1,0 240,420 A180,180 0 1,0 240,60 Z`,
+    },
+    {
+      id: 'mf-lg-petal-1',
+      label: 'Large Petal 1',
+      tone: 'accent',
+      path: 'M240,60 Q200,130 190,170 Q215,145 240,140 Q265,145 290,170 Q280,130 240,60 Z',
+    },
+    {
+      id: 'mf-lg-petal-2',
+      label: 'Large Petal 2',
+      tone: 'accent',
+      path: 'M395,135 Q340,170 320,200 Q340,185 358,185 Q378,190 388,210 Q400,175 395,135 Z',
+    },
+    {
+      id: 'mf-lg-petal-3',
+      label: 'Large Petal 3',
+      tone: 'accent',
+      path: 'M420,240 Q370,215 340,210 Q355,228 358,240 Q355,252 340,270 Q370,265 420,240 Z',
+    },
+    {
+      id: 'mf-lg-petal-4',
+      label: 'Large Petal 4',
+      tone: 'accent',
+      path: 'M395,345 Q340,310 320,280 Q340,295 358,295 Q378,290 388,270 Q400,305 395,345 Z',
+    },
+    {
+      id: 'mf-lg-petal-5',
+      label: 'Large Petal 5',
+      tone: 'accent',
+      path: 'M240,420 Q200,350 190,310 Q215,335 240,340 Q265,335 290,310 Q280,350 240,420 Z',
+    },
+    {
+      id: 'mf-lg-petal-6',
+      label: 'Large Petal 6',
+      tone: 'accent',
+      path: 'M85,345 Q140,310 160,280 Q140,295 122,295 Q102,290 92,270 Q80,305 85,345 Z',
+    },
+    {
+      id: 'mf-lg-petal-7',
+      label: 'Large Petal 7',
+      tone: 'accent',
+      path: 'M60,240 Q110,215 140,210 Q125,228 122,240 Q125,252 140,270 Q110,265 60,240 Z',
+    },
+    {
+      id: 'mf-lg-petal-8',
+      label: 'Large Petal 8',
+      tone: 'accent',
+      path: 'M85,135 Q140,170 160,200 Q140,185 122,185 Q102,190 92,210 Q80,175 85,135 Z',
+    },
+    {
+      id: 'mf-inner-circle',
+      label: 'Inner Circle',
+      tone: 'medium',
+      path: `M240,150 A90,90 0 1,1 240,330 A90,90 0 1,1 240,150 Z M240,175 A65,65 0 1,0 240,305 A65,65 0 1,0 240,175 Z`,
+    },
+    {
+      id: 'mf-center-flower',
+      label: 'Center Bloom',
+      tone: 'accent',
+      path: circlePath(240, 240, 65),
+    },
+    {
+      id: 'mf-center-dot',
+      label: 'Center Dot',
+      tone: 'dark',
+      path: circlePath(240, 240, 25),
+    },
+  ],
+  lightTextures: [],
+  mediumTextures: [],
+  darkTextures: [],
+  accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower];
