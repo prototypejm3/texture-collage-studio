@@ -173,10 +173,13 @@ export function Canvas({
               selectedSectionId={selectedSectionId}
               canvasWidth={w}
               canvasHeight={h}
+              sectionTransforms={sectionTransforms}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
+              onDeleteSection={onDeleteSection}
+              onUpdateSectionTransform={onUpdateSectionTransform}
               customTextures={customTextures}
             />
           )}
