@@ -1,5 +1,5 @@
 export type WallLayout = 'freeform' | 'grid' | 'single';
-export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'clean-white' | 'dark-brick' | 'gray-brick' | 'black-stone' | 'speckled-white' | 'custom';
+export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'clean-white' | 'dark-brick' | 'gray-brick' | 'black-stone' | 'speckled-white' | 'wood-birch-wall' | 'wood-oak-wall' | 'wood-walnut-wall' | 'custom';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'black' | 'none';
 export type HangingStyle = 'floating' | 'string' | 'spotlight' | 'hook' | 'shelf';
 export type LightingPreset = 'none' | 'gallery' | 'golden-hour' | 'dramatic' | 'soft-diffused';

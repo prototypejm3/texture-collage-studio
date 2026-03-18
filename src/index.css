@@ -193,3 +193,15 @@
 .wall-bg-soft-white {
   background: url('/walls/soft-white.png') center/cover no-repeat;
 }
+
+.wall-bg-wood-birch-wall {
+  background: url('/walls/wood-birch-wall.png') center/cover no-repeat;
+}
+
+.wall-bg-wood-oak-wall {
+  background: url('/walls/wood-oak-wall.png') center/cover no-repeat;
+}
+
+.wall-bg-wood-walnut-wall {
+  background: url('/walls/wood-walnut-wall.png') center/cover no-repeat;
+}
