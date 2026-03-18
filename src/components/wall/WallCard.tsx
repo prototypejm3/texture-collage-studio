@@ -292,6 +292,9 @@ export function WallCard({
                   <Hammer className="w-3 h-3" />
                   {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
                 </button>
+                <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { isHero: !design.isHero }); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                  ⭐ {design.isHero ? 'Remove Hero' : 'Make Hero Piece'}
+                </button>
                 <div className="border-t border-border my-1" />
                 <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
                 <div className="flex items-center gap-1 px-3 py-1.5">
