@@ -324,6 +324,7 @@ export function useStudio() {
     drawMode,
     customSections,
     backgroundTextureId,
+    sectionTransforms,
     // Setters
     setSelectedId,
     setFrameSize,
@@ -349,6 +350,8 @@ export function useStudio() {
     // Custom sections
     addCustomSection,
     deleteCustomSection,
+    deleteSection,
+    updateSectionTransform,
     detachSection,
     // Serialization
     getState,
