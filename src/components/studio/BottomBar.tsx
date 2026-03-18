@@ -166,8 +166,17 @@ export function BottomBar({
             <Save className="w-3.5 h-3.5" /> Save to Wall
           </button>
         )}
-        <button onClick={onSave} className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+        <button
+          onClick={() => isPremium ? onSave() : onRequestUpgrade?.()}
+          className={`relative flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+            isPremium
+              ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+              : 'bg-muted text-muted-foreground cursor-not-allowed'
+          }`}
+          title={isPremium ? 'Export as PNG' : 'Premium — unlock to use'}
+        >
           <Download className="w-3.5 h-3.5" /> Export PNG
+          {!isPremium && <Lock className="w-2.5 h-2.5 ml-0.5" />}
         </button>
       </div>
     </div>
