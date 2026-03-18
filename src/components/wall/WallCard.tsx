@@ -1,6 +1,6 @@
-import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
-import { motion } from 'framer-motion';
-import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw } from 'lucide-react';
+import { SavedDesign, FrameStyle, DesignSize, DesignStatus } from '@/types/wall';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw, X, Send, Check } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface WallCardProps {
@@ -14,6 +14,7 @@ interface WallCardProps {
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
+  onSubmitToGallery?: (id: string) => void;
   isPremium: boolean;
   size?: DesignSize;
 }
@@ -31,6 +32,17 @@ const frameStyleList: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
+const sizeOptions: { value: DesignSize; label: string; icon: typeof Square }[] = [
+  { value: 'small', label: 'Small', icon: Minimize2 },
+  { value: 'medium', label: 'Medium', icon: Square },
+  { value: 'large', label: 'Large', icon: Maximize2 },
+];
+
+const statusOptions: { value: DesignStatus; label: string }[] = [
+  { value: 'display', label: 'Display' },
+  { value: 'hidden', label: 'Hidden' },
+  { value: 'draft', label: 'Draft' },
+];
 
 /* ─── Metallic gradient configs ─── */
 const metallicGradients: Record<string, {
@@ -111,20 +123,16 @@ function MetallicFrame({ metal, children }: { metal: string; children: React.Rea
 }
 
 function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
-  // Metallic frames
   if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
     return <MetallicFrame metal={style}>{children}</MetallicFrame>;
   }
-
 
   switch (style) {
     case 'minimal':
       return (
         <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
           <div className="border border-[hsl(0,0%,20%)] border-opacity-80">
-            <div className="bg-white p-[clamp(8px,2%,16px)]">
-              {children}
-            </div>
+            <div className="bg-white p-[clamp(8px,2%,16px)]">{children}</div>
           </div>
         </div>
       );
@@ -132,24 +140,14 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
       return (
         <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]">
           <div className="border-2 border-[hsl(0,0%,30%)]">
-            <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">
-              {children}
-            </div>
+            <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">{children}</div>
           </div>
         </div>
       );
     case 'wood':
       return (
-        <div
-          className="p-[clamp(8px,2%,14px)] shadow-[0_6px_24px_rgba(0,0,0,0.1)]"
-          style={{
-            background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)',
-            backgroundSize: '200% 200%',
-          }}
-        >
-          <div className="bg-white p-[clamp(8px,2%,14px)]">
-            {children}
-          </div>
+        <div className="p-[clamp(8px,2%,14px)] shadow-[0_6px_24px_rgba(0,0,0,0.1)]" style={{ background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)' }}>
+          <div className="bg-white p-[clamp(8px,2%,14px)]">{children}</div>
         </div>
       );
     case 'floating':
@@ -157,9 +155,7 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
         <div className="relative">
           <div className="absolute inset-[6%] bg-[hsl(0,0%,85%)] rounded-sm shadow-[0_8px_32px_rgba(0,0,0,0.12)]" />
           <div className="relative bg-white p-[clamp(4px,1%,8px)] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-            <div className="border border-[hsl(0,0%,90%)]">
-              {children}
-            </div>
+            <div className="border border-[hsl(0,0%,90%)]">{children}</div>
           </div>
         </div>
       );
@@ -171,42 +167,39 @@ function FrameWrapper({ style, children }: { style: FrameStyle; children: React.
       );
     case 'none':
     default:
-      return (
-        <div className="shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-          {children}
-        </div>
-      );
+      return <div className="shadow-[0_4px_16px_rgba(0,0,0,0.06)]">{children}</div>;
   }
 }
 
-export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, isPremium, size = 'medium' }: WallCardProps) {
+export function WallCard({
+  design, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide,
+  onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, size = 'medium',
+}: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [editPanelOpen, setEditPanelOpen] = useState(false);
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
+  const [editArtist, setEditArtist] = useState(design.artist || '');
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const isMetallic = ['gold', 'chrome', 'copper', 'silver'].includes(design.frameStyle);
-
-  const handleStartEdit = (e: React.MouseEvent) => {
+  const handleOpenEditPanel = (e: React.MouseEvent) => {
     e.stopPropagation();
     setEditName(design.name);
     setEditDesc(design.description || '');
-    setEditing(true);
-    setTimeout(() => nameRef.current?.focus(), 50);
+    setEditArtist(design.artist || '');
+    setEditPanelOpen(true);
   };
 
   const handleSaveEdit = () => {
     const trimmedName = editName.trim();
     if (trimmedName) {
-      onUpdate(design.id, { name: trimmedName, description: editDesc.trim() || undefined });
+      onUpdate(design.id, {
+        name: trimmedName,
+        description: editDesc.trim() || undefined,
+        artist: editArtist.trim() || undefined,
+      });
     }
-    setEditing(false);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSaveEdit();
-    if (e.key === 'Escape') setEditing(false);
+    setEditPanelOpen(false);
   };
 
   return (
@@ -225,12 +218,7 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
       >
         <FrameWrapper style={design.frameStyle}>
           <div className={`${size === 'large' ? 'aspect-[4/3]' : 'aspect-square'} relative overflow-hidden`}>
-            <img
-              src={design.previewImage}
-              alt={design.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
+            <img src={design.previewImage} alt={design.name} className="w-full h-full object-cover" loading="lazy" />
           </div>
         </FrameWrapper>
       </div>
@@ -256,158 +244,230 @@ export function WallCard({ design, onOpen, onDuplicate, onDelete, onTogglePin, o
         </div>
       )}
 
+      {/* Submitted badge */}
+      {design.gallerySubmissionId && (
+        <div className="absolute top-1 left-1 bg-primary/80 text-primary-foreground rounded-full px-1.5 py-0.5 text-[9px] font-medium flex items-center gap-0.5 shadow-sm z-10">
+          🎨 Gallery
+        </div>
+      )}
+
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-        <button
-          onClick={(e) => { e.stopPropagation(); onOpen(design.id); }}
-          className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm"
-          title="Open"
-        >
+        <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm" title="Open">
           <FolderOpen className="w-3 h-3" />
         </button>
-        <button
-          onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); }}
-          className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm"
-          title="Duplicate"
-        >
+        <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm" title="Duplicate">
           <Copy className="w-3 h-3" />
         </button>
         <div className="relative">
-          <button
-            onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }}
-            className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm"
-          >
+          <button onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-background/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors shadow-sm">
             <MoreHorizontal className="w-3 h-3" />
           </button>
           {menuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
-              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[70vh] overflow-y-auto">
-                <button
-                  onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
-                >
+              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+                <button onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
                   {design.pinned ? <PinOff className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
                   {design.pinned ? 'Unpin' : 'Pin to top'}
                 </button>
-                <button
-                  onClick={(e) => { e.stopPropagation(); onToggleIRL(design.id); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
-                >
+                <button onClick={(e) => { e.stopPropagation(); onToggleIRL(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
                   <Hammer className="w-3 h-3" />
                   {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
                 </button>
-                <button
-                  onClick={(e) => { e.stopPropagation(); onToggleHide(design.id); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
-                >
-                  {design.hidden ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                  {design.hidden ? 'Show' : 'Hide'}
-                </button>
                 <div className="border-t border-border my-1" />
-                <button
-                  onClick={(e) => { e.stopPropagation(); onDelete(design.id); setMenuOpen(false); }}
-                  className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-destructive"
-                >
-                  <Trash2 className="w-3 h-3" />
-                  Delete
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
+                <div className="flex items-center gap-1 px-3 py-1.5">
+                  <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate left">
+                    <RotateCcw className="w-3 h-3" />
+                  </button>
+                  <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
+                  <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate right">
+                    <RotateCw className="w-3 h-3" />
+                  </button>
+                  {(design.rotation || 0) !== 0 && (
+                    <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }} className="ml-1 text-[10px] text-muted-foreground hover:text-foreground">Reset</button>
+                  )}
+                </div>
+                <div className="border-t border-border my-1" />
+                <button onClick={(e) => { e.stopPropagation(); onDelete(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-destructive">
+                  <Trash2 className="w-3 h-3" /> Delete
                 </button>
-                {isPremium && (
-                  <>
-                    <div className="border-t border-border my-1" />
-                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
-                    {([['small', 'Small', Minimize2], ['medium', 'Medium', Square], ['large', 'Large', Maximize2]] as const).map(([val, label, Icon]) => (
-                      <button
-                        key={val}
-                        onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, val); setMenuOpen(false); }}
-                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${(design.displaySize || 'medium') === val ? 'text-primary font-medium' : 'text-foreground'}`}
-                      >
-                        <Icon className="w-3 h-3" />
-                        {label}
-                      </button>
-                    ))}
-                    <div className="border-t border-border my-1" />
-                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
-                    {frameStyleList.map(fs => (
-                      <button
-                        key={fs.value}
-                        onClick={(e) => { e.stopPropagation(); onFrameStyleChange(design.id, fs.value); setMenuOpen(false); }}
-                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${design.frameStyle === fs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                      >
-                        {fs.label}
-                      </button>
-                    ))}
-                    <div className="border-t border-border my-1" />
-                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
-                    <div className="flex items-center gap-1 px-3 py-1.5">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }}
-                        className="p-1 rounded hover:bg-secondary text-foreground"
-                        title="Rotate left"
-                      >
-                        <RotateCcw className="w-3 h-3" />
-                      </button>
-                      <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }}
-                        className="p-1 rounded hover:bg-secondary text-foreground"
-                        title="Rotate right"
-                      >
-                        <RotateCw className="w-3 h-3" />
-                      </button>
-                      {(design.rotation || 0) !== 0 && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }}
-                          className="ml-1 text-[10px] text-muted-foreground hover:text-foreground"
-                        >
-                          Reset
-                        </button>
-                      )}
-                    </div>
-                  </>
-                )}
               </div>
             </>
           )}
         </div>
       </div>
 
-      {/* Gallery label — name & description */}
+      {/* Gallery label */}
       <div className="mt-3">
-        {editing ? (
-          <div className="space-y-1" onClick={(e) => e.stopPropagation()}>
-            <input
-              ref={nameRef}
-              value={editName}
-              onChange={(e) => setEditName(e.target.value.slice(0, 100))}
-              onKeyDown={handleKeyDown}
-              onBlur={handleSaveEdit}
-              className="w-full bg-transparent text-xs font-medium text-foreground tracking-wide border-b border-muted-foreground/30 focus:border-primary outline-none pb-0.5 placeholder:text-muted-foreground/40"
-              placeholder="Title"
-            />
-            <input
-              value={editDesc}
-              onChange={(e) => setEditDesc(e.target.value.slice(0, 200))}
-              onKeyDown={handleKeyDown}
-              onBlur={handleSaveEdit}
-              className="w-full bg-transparent text-[10px] text-muted-foreground/70 tracking-wider border-b border-muted-foreground/20 focus:border-primary outline-none pb-0.5 italic placeholder:text-muted-foreground/30"
-              placeholder="Description"
-            />
+        <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleOpenEditPanel}>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-foreground/80 tracking-wide truncate">{design.name}</p>
+            {design.artist && (
+              <p className="text-[10px] text-muted-foreground/50 tracking-wider">by {design.artist}</p>
+            )}
+            {design.description ? (
+              <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5 italic line-clamp-2">{design.description}</p>
+            ) : design.vibeName ? (
+              <p className="text-[10px] text-muted-foreground/50 tracking-wider mt-0.5">{design.vibeName}</p>
+            ) : null}
           </div>
-        ) : (
-          <div className="flex items-start gap-1 group/label cursor-pointer" onClick={handleStartEdit}>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-foreground/80 tracking-wide truncate">{design.name}</p>
-              {design.description ? (
-                <p className="text-[10px] text-muted-foreground/60 tracking-wider mt-0.5 italic line-clamp-2">{design.description}</p>
-              ) : design.vibeName ? (
-                <p className="text-[10px] text-muted-foreground/50 tracking-wider mt-0.5">{design.vibeName}</p>
-              ) : null}
-            </div>
-            <Pencil className="w-2.5 h-2.5 text-muted-foreground/30 group-hover/label:text-muted-foreground/60 transition-colors mt-0.5 shrink-0" />
-          </div>
-        )}
+          <Pencil className="w-2.5 h-2.5 text-muted-foreground/30 group-hover/label:text-muted-foreground/60 transition-colors mt-0.5 shrink-0" />
+        </div>
       </div>
+
+      {/* ── Edit Panel (opens on pencil click) ── */}
+      <AnimatePresence>
+        {editPanelOpen && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setEditPanelOpen(false); }} />
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.97 }}
+              transition={{ duration: 0.18 }}
+              className="absolute left-0 right-0 top-full mt-2 z-50 bg-popover border border-border rounded-xl shadow-xl p-4 space-y-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-foreground">Edit Design</span>
+                <button onClick={() => setEditPanelOpen(false)} className="p-1 rounded-lg hover:bg-secondary">
+                  <X className="w-3.5 h-3.5 text-muted-foreground" />
+                </button>
+              </div>
+
+              {/* Name */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Name</label>
+                <input
+                  ref={nameRef}
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value.slice(0, 100))}
+                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  placeholder="Title"
+                  autoFocus
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Description</label>
+                <input
+                  value={editDesc}
+                  onChange={(e) => setEditDesc(e.target.value.slice(0, 200))}
+                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  placeholder="Add a description…"
+                />
+              </div>
+
+              {/* Artist */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Artist</label>
+                <input
+                  value={editArtist}
+                  onChange={(e) => setEditArtist(e.target.value.slice(0, 100))}
+                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  placeholder="Your name"
+                />
+              </div>
+
+              {/* Size */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Size</label>
+                <div className="flex gap-1">
+                  {sizeOptions.map(s => {
+                    const Icon = s.icon;
+                    return (
+                      <button
+                        key={s.value}
+                        onClick={() => onSizeChange(design.id, s.value)}
+                        className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] rounded-md transition-colors ${
+                          (design.displaySize || 'medium') === s.value
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                        }`}
+                      >
+                        <Icon className="w-3 h-3" />
+                        {s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Status</label>
+                <div className="flex gap-1">
+                  {statusOptions.map(s => (
+                    <button
+                      key={s.value}
+                      onClick={() => onUpdate(design.id, { status: s.value, hidden: s.value === 'hidden' })}
+                      className={`px-2.5 py-1.5 text-[11px] rounded-md transition-colors ${
+                        design.status === s.value
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Frame */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Frame</label>
+                <div className="flex gap-1 flex-wrap">
+                  {frameStyleList.map(f => (
+                    <button
+                      key={f.value}
+                      onClick={() => onFrameStyleChange(design.id, f.value)}
+                      className={`px-2 py-1.5 text-[11px] rounded-md transition-colors ${
+                        design.frameStyle === f.value
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-2 pt-1 border-t border-border">
+                <button
+                  onClick={handleSaveEdit}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  <Check className="w-3.5 h-3.5" /> Save
+                </button>
+
+                {onSubmitToGallery && !design.gallerySubmissionId && (
+                  <button
+                    onClick={() => {
+                      handleSaveEdit();
+                      onSubmitToGallery(design.id);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors ml-auto"
+                  >
+                    <Send className="w-3.5 h-3.5" /> Submit to Gallery
+                  </button>
+                )}
+
+                {design.gallerySubmissionId && (
+                  <span className="text-[10px] text-primary ml-auto flex items-center gap-1">
+                    🎨 In Gallery
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

@@ -18,9 +18,10 @@ interface WallGridProps {
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
+  onSubmitToGallery?: (id: string) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
   const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
@@ -32,8 +33,8 @@ export function WallGrid({ designs, layout, isPremium, onOpen, onDuplicate, onDe
     onToggleHide,
     onUpdate,
     onFrameStyleChange,
-    
     onSizeChange,
+    onSubmitToGallery,
     isPremium,
     size,
   });

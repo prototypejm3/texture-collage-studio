@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
 import { useMultiWall } from '@/hooks/useMultiWall';
 import { useUserTier } from '@/hooks/useUserTier';
+import { useGallery } from '@/hooks/useGallery';
 import { WallGrid } from '@/components/wall/WallGrid';
 import { WallCustomizer } from '@/components/wall/WallCustomizer';
 import { EmptyWall } from '@/components/wall/EmptyWall';
@@ -36,6 +37,7 @@ const MyWall = () => {
   const wall = useWall();
   const multiWall = useMultiWall();
   const { isPremium, upgradeToPremium } = useUserTier();
+  const gallery = useGallery();
   const [activeTab, setActiveTab] = useState<'all' | DesignStatus>('all');
   const [viewMode, setViewMode] = useState(false);
   const [viewStartIndex, setViewStartIndex] = useState(0);
@@ -119,6 +121,22 @@ const MyWall = () => {
     multiWall.addWall();
     toast({ title: 'New wall created!' });
   }, [isPremium, multiWall]);
+
+  const handleSubmitToGallery = useCallback(async (designId: string) => {
+    const design = wall.designs.find(d => d.id === designId);
+    if (!design) return;
+    const submissionId = await gallery.submitToGallery({
+      name: design.name,
+      description: design.description,
+      artist_name: design.artist || 'Anonymous',
+      preview_image: design.previewImage,
+      frame_style: design.frameStyle,
+      display_size: design.displaySize || 'medium',
+    });
+    if (submissionId) {
+      wall.updateDesign(designId, { gallerySubmissionId: submissionId });
+    }
+  }, [wall, gallery]);
 
   const handleDeleteWall = useCallback((wallId: string) => {
     if (multiWall.walls.length <= 1) return;
@@ -287,6 +305,7 @@ const MyWall = () => {
                 onUpdate={wall.updateDesign}
                 onFrameStyleChange={handleFrameStyle}
                 onSizeChange={handleSizeChange}
+                onSubmitToGallery={handleSubmitToGallery}
               />
             </motion.div>
           )}
