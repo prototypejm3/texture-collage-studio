@@ -205,4 +205,5 @@ export const textures: TextureSwatch[] = [
   { id: 'novelty-skott-camo', name: 'Skott Camo', category: 'Novelty', cssBackground: img('novelty-skott-camo.png') },
   { id: 'novelty-apples', name: 'Apples', category: 'Novelty', cssBackground: img('novelty-apples.png') },
   { id: 'novelty-bananas', name: 'Bananas', category: 'Novelty', cssBackground: img('novelty-bananas.png') },
+  { id: 'novelty-kaplan-tigerish', name: 'Kaplan Tigerish', category: 'Novelty', cssBackground: img('novelty-kaplan-tigerish.png') },
 ];
