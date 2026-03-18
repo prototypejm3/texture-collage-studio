@@ -241,6 +241,30 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  const duplicateSection = useCallback((sectionId: string) => {
+    const section = allSections.find(s => s.id === sectionId);
+    if (!section) return;
+    const newId = `section-dup-${nextId++}`;
+    const newSection: VibeSection = {
+      ...section,
+      id: newId,
+      label: `${section.label} Copy`,
+    };
+    setCustomSections(prev => [...prev, newSection]);
+    // Copy fill if present
+    const existingFill = vibeFills[sectionId];
+    if (existingFill) {
+      setVibeFills(prev => ({ ...prev, [newId]: existingFill }));
+    }
+    // Copy transform with slight offset
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    setSectionTransforms(prev => ({
+      ...prev,
+      [newId]: { ...t, x: t.x + 15, y: t.y + 15 },
+    }));
+    setSelectedSectionId(newId);
+  }, [allSections, vibeFills, sectionTransforms]);
+
   // Combine vibe sections + custom drawn sections
   const allSections = useMemo(() => {
     const vibeSections = activeVibe?.sections || [];
