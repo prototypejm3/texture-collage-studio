@@ -1,8 +1,9 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useMemo } from 'react';
 import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } from '@/types/studio';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
+import { textures } from '@/data/textures';
 
 interface Props {
   elements: CanvasElement[];
@@ -31,13 +32,10 @@ const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
   'gallery': { w: 600, h: 420 },
 };
 
-const frameColorMap: Record<FrameColor, { bg: string; border: string; shadow: string }> = {
-  white: { bg: 'hsl(0, 0%, 98%)', border: 'hsl(0, 0%, 88%)', shadow: 'hsla(0, 0%, 0%, 0.1)' },
-  cream: { bg: 'hsl(40, 30%, 95%)', border: 'hsl(38, 25%, 85%)', shadow: 'hsla(30, 20%, 20%, 0.1)' },
-  black: { bg: 'hsl(0, 0%, 8%)', border: 'hsl(0, 0%, 4%)', shadow: 'hsla(0, 0%, 0%, 0.3)' },
-  walnut: { bg: 'hsl(20, 35%, 28%)', border: 'hsl(18, 30%, 22%)', shadow: 'hsla(20, 30%, 10%, 0.2)' },
-  oak: { bg: 'hsl(35, 40%, 60%)', border: 'hsl(33, 35%, 50%)', shadow: 'hsla(35, 30%, 20%, 0.15)' },
-  mahogany: { bg: 'hsl(0, 40%, 25%)', border: 'hsl(0, 35%, 18%)', shadow: 'hsla(0, 30%, 10%, 0.25)' },
+// Solid color fallbacks for basic frame options
+const solidFrames: Record<string, { bg: string; border: string; shadow: string; innerBg: string }> = {
+  white: { bg: 'hsl(0, 0%, 98%)', border: 'hsl(0, 0%, 88%)', shadow: 'hsla(0, 0%, 0%, 0.1)', innerBg: 'hsl(40, 20%, 97%)' },
+  black: { bg: 'hsl(0, 0%, 8%)', border: 'hsl(0, 0%, 4%)', shadow: 'hsla(0, 0%, 0%, 0.3)', innerBg: 'hsl(0, 0%, 12%)' },
 };
 
 export function Canvas({
@@ -50,7 +48,34 @@ export function Canvas({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { w, h } = frameSizeMap[frameSize];
-  const fc = frameColorMap[frameColor];
+
+  const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
+
+  // Resolve frame styling
+  const frameStyle = useMemo(() => {
+    const solid = solidFrames[frameColor];
+    if (solid) {
+      return {
+        background: solid.bg,
+        border: `3px solid ${solid.border}`,
+        shadow: solid.shadow,
+        innerBg: solid.innerBg,
+      };
+    }
+    // Texture-based frame
+    const tex = allTextures.find(t => t.id === frameColor);
+    if (tex) {
+      return {
+        background: tex.cssBackground,
+        backgroundSize: 'cover',
+        border: '3px solid hsla(0, 0%, 50%, 0.2)',
+        shadow: 'hsla(0, 0%, 0%, 0.15)',
+        innerBg: 'hsl(40, 20%, 97%)',
+      };
+    }
+    // Fallback
+    return solidFrames.white;
+  }, [frameColor, allTextures]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -67,6 +92,8 @@ export function Canvas({
     onDrop(textureId, x, y);
   }, [onDrop, canvasRef]);
 
+  const isTextureFrame = !solidFrames[frameColor];
+
   return (
     <div
       ref={containerRef}
@@ -78,13 +105,14 @@ export function Canvas({
       <div
         style={{
           padding: '16px',
-          background: fc.bg,
+          background: 'background' in frameStyle ? (frameStyle as any).background : frameStyle.background,
+          backgroundSize: isTextureFrame ? 'cover' : undefined,
           borderRadius: '4px',
-          border: `3px solid ${fc.border}`,
+          border: frameStyle.border,
           boxShadow: `
-            inset 0 2px 8px ${fc.shadow},
-            0 8px 32px -8px ${fc.shadow},
-            0 2px 8px ${fc.shadow}
+            inset 0 2px 8px ${frameStyle.shadow},
+            0 8px 32px -8px ${frameStyle.shadow},
+            0 2px 8px ${frameStyle.shadow}
           `,
         }}
       >
@@ -97,8 +125,8 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: frameColor === 'black' ? 'hsl(0, 0%, 12%)' : 'hsl(40, 20%, 97%)',
-            boxShadow: `inset 0 1px 4px ${fc.shadow}`,
+            background: frameStyle.innerBg,
+            boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}
         >
           {/* Custom template background reference */}
