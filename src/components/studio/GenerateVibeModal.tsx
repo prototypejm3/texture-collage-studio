@@ -170,9 +170,9 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                 {!isGenerating && !generatedVibe && (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <Sparkles className="w-8 h-8 text-muted-foreground/30 mb-3" />
-                    <p className="text-sm text-muted-foreground">Enter a vibe to get started</p>
+                    <p className="text-sm text-muted-foreground">What's the mood?</p>
                     <p className="text-xs text-muted-foreground/60 mt-1">
-                      AI will generate colors, pick matching textures, and create a layout
+                      AI will pick colors, textures, and a frame style to match
                     </p>
                   </div>
                 )}
