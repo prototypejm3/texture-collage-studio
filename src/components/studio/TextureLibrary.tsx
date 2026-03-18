@@ -32,6 +32,8 @@ interface TextureLibraryProps {
   customTextures: TextureSwatch[];
   onUploadTexture: (file: File) => void;
   onRemoveCustomTexture: (id: string) => void;
+  isPremium: boolean;
+  onRequestUpgrade: () => void;
 }
 
 export function TextureLibrary({
