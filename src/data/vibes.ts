@@ -2401,4 +2401,51 @@ const neiceBeats: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony, neiceBeats];
+// ── FAIRY HEADBAND (Alix) ──
+const fairyHeadband: Vibe = {
+  id: 'fairy-headband',
+  name: 'Fairy Headband',
+  emoji: '👑',
+  category: 'Community',
+  creator: 'Alix',
+  description: 'Whimsical fairy headband with flowers and butterfly wings',
+  viewBox: '0 0 480 360',
+  sections: [
+    // Headband arc
+    { id: 'fh-band', label: 'Headband', tone: 'medium',
+      path: 'M60,240 Q65,220 80,195 Q100,165 130,140 Q165,118 200,105 Q240,95 280,105 Q315,118 350,140 Q380,165 400,195 Q415,220 420,240 Q418,248 410,245 Q405,225 392,200 Q375,172 348,148 Q318,128 285,115 Q248,105 215,110 Q178,118 148,138 Q120,158 100,185 Q85,208 78,235 Q75,245 68,245 Q62,245 60,240 Z' },
+    // Left flower
+    { id: 'fh-flower-left', label: 'Left Flower', tone: 'accent',
+      path: 'M115,148 Q108,135 112,122 Q118,112 128,115 Q138,120 140,132 Q140,142 135,150 Q142,142 152,138 Q162,136 165,145 Q166,155 158,162 Q148,168 138,165 Q128,168 118,165 Q110,160 115,148 Z' },
+    // Center flower (big)
+    { id: 'fh-flower-center', label: 'Center Flower', tone: 'accent',
+      path: 'M225,95 Q218,78 222,62 Q230,48 242,52 Q254,58 255,72 Q254,85 248,95 Q258,82 270,76 Q282,74 286,85 Q288,98 278,108 Q266,115 254,112 Q262,120 264,132 Q262,144 250,146 Q238,144 236,132 Q234,120 238,110 Q228,118 216,120 Q204,118 202,108 Q204,96 215,90 Q222,88 225,95 Z' },
+    // Center flower pistil
+    { id: 'fh-pistil', label: 'Pistil', tone: 'dark',
+      path: 'M235,98 Q238,90 245,88 Q252,90 255,98 Q256,106 252,112 Q248,116 242,115 Q236,112 234,106 Q234,100 235,98 Z' },
+    // Right flower
+    { id: 'fh-flower-right', label: 'Right Flower', tone: 'accent',
+      path: 'M345,148 Q338,135 342,122 Q348,112 358,115 Q368,120 370,132 Q370,142 365,150 Q372,142 382,138 Q392,136 395,145 Q396,155 388,162 Q378,168 368,165 Q358,168 348,165 Q340,160 345,148 Z' },
+    // Left butterfly wing
+    { id: 'fh-wing-left', label: 'Left Wing', tone: 'light',
+      path: 'M170,108 Q158,88 148,65 Q142,45 150,32 Q162,22 175,30 Q188,42 192,62 Q195,80 190,98 Q185,108 178,112 Q172,112 170,108 Z' },
+    // Right butterfly wing
+    { id: 'fh-wing-right', label: 'Right Wing', tone: 'light',
+      path: 'M310,108 Q322,88 332,65 Q338,45 330,32 Q318,22 305,30 Q292,42 288,62 Q285,80 290,98 Q295,108 302,112 Q308,112 310,108 Z' },
+    // Left leaf
+    { id: 'fh-leaf-left', label: 'Left Leaf', tone: 'medium',
+      path: 'M90,185 Q82,172 78,158 Q76,145 82,140 Q90,138 96,148 Q102,160 104,175 Q104,182 98,188 Q92,190 90,185 Z' },
+    // Right leaf
+    { id: 'fh-leaf-right', label: 'Right Leaf', tone: 'medium',
+      path: 'M390,185 Q398,172 402,158 Q404,145 398,140 Q390,138 384,148 Q378,160 376,175 Q376,182 382,188 Q388,190 390,185 Z' },
+    // Small bud left
+    { id: 'fh-bud-left', label: 'Left Bud', tone: 'accent',
+      path: 'M140,130 Q136,120 140,112 Q146,108 150,115 Q152,124 148,132 Q144,135 140,130 Z' },
+    // Small bud right
+    { id: 'fh-bud-right', label: 'Right Bud', tone: 'accent',
+      path: 'M340,130 Q336,120 340,112 Q346,108 350,115 Q352,124 348,132 Q344,135 340,130 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony, neiceBeats, fairyHeadband];
