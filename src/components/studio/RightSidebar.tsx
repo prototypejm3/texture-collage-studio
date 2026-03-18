@@ -8,7 +8,7 @@ import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
 
-type Tab = 'stencils' | 'community';
+type Tab = 'stencils' | 'community' | 'hidden';
 
 interface RightSidebarProps {
   activeVibeId: string | null;
