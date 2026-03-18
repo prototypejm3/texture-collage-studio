@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Vibe } from '@/types/studio';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { checkGenerationLimit, recordGeneration } from '@/hooks/useGenerationLimit';
 
 export function useGenerateStencil() {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -9,6 +10,12 @@ export function useGenerateStencil() {
   const generateStencil = async (prompt: string): Promise<Vibe | null> => {
     if (!prompt.trim()) {
       toast({ title: 'Enter a prompt', description: 'Describe what you want the stencil to look like.', variant: 'destructive' });
+      return null;
+    }
+
+    const limit = checkGenerationLimit();
+    if (!limit.allowed) {
+      toast({ title: 'Rate limit reached', description: `You can generate 5 per hour. Try again in ${limit.resetIn} min.`, variant: 'destructive' });
       return null;
     }
 
@@ -29,6 +36,7 @@ export function useGenerateStencil() {
         return null;
       }
 
+      recordGeneration();
       toast({ title: `${data.emoji} ${data.name}`, description: 'AI stencil generated!' });
       return data as Vibe;
     } catch (e) {

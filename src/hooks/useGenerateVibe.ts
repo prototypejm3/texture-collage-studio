@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Vibe } from '@/types/studio';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { checkGenerationLimit, recordGeneration } from '@/hooks/useGenerationLimit';
 
 export interface GeneratedVibe {
   id: string;
@@ -26,6 +27,12 @@ export function useGenerateVibe() {
       return null;
     }
 
+    const limit = checkGenerationLimit();
+    if (!limit.allowed) {
+      toast({ title: 'Rate limit reached', description: `You can generate 5 per hour. Try again in ${limit.resetIn} min.`, variant: 'destructive' });
+      return null;
+    }
+
     setIsGenerating(true);
     try {
       const { data, error } = await supabase.functions.invoke('generate-vibe', {
@@ -43,6 +50,7 @@ export function useGenerateVibe() {
         return null;
       }
 
+      recordGeneration();
       setGeneratedVibe(data as GeneratedVibe);
       toast({ title: `${data.emoji} ${data.name}`, description: data.description });
       return data as GeneratedVibe;
