@@ -133,41 +133,13 @@
   background: url('/walls/limewash.png') center/cover no-repeat;
 }
 
-.wall-bg-black-brick {
-  background: url('/walls/black-brick.png') center/50% repeat;
-}
-
-.wall-bg-black-concrete {
-  background: url('/walls/black-concrete.png') center/cover no-repeat;
-}
-
 .wall-bg-white-brick {
   background: url('/walls/white-brick.png') center/cover no-repeat;
-}
-
-.wall-bg-cream {
-  background: url('/walls/cream.png') center/cover no-repeat;
-}
-
-.wall-bg-red-velvet {
-  background: url('/walls/red-velvet.png') center/cover no-repeat;
 }
 
 .wall-bg-clean-white {
   background-color: hsl(0 0% 98%);
   background-image: none;
-}
-
-.wall-bg-dark-brick {
-  background: url('/walls/dark-brick.png') center/cover no-repeat;
-}
-
-.wall-bg-gray-brick {
-  background: url('/walls/gray-brick.png') center/cover no-repeat;
-}
-
-.wall-bg-black-stone {
-  background: url('/walls/black-stone.png') center/cover no-repeat;
 }
 
 .wall-bg-emerald-velvet {

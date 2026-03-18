@@ -24,13 +24,8 @@ const bgStyles: Record<WallBackground, string> = {
   'brick': 'wall-bg-brick',
   'concrete': 'wall-bg-concrete',
   'limewash': 'wall-bg-limewash',
-  'black-brick': 'wall-bg-black-brick',
-  'black-concrete': 'wall-bg-black-concrete',
   'white-brick': 'wall-bg-white-brick',
   'clean-white': 'wall-bg-clean-white',
-  'dark-brick': 'wall-bg-dark-brick',
-  'gray-brick': 'wall-bg-gray-brick',
-  'black-stone': 'wall-bg-black-stone',
   'speckled-white': 'wall-bg-speckled-white',
   'wood-birch-wall': 'wall-bg-wood-birch-wall',
   'wood-oak-wall': 'wall-bg-wood-oak-wall',
@@ -62,7 +57,7 @@ const MyWall = () => {
     : wallDesigns.filter(d => d.status === activeTab);
 
   const currentSettings = multiWall.activeWall.settings;
-  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(currentSettings.background);
+  const isDark = false;
   const wallBgClass = currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : '';
   const wallBgStyle = currentSettings.background === 'custom' && currentSettings.customWallImage ? {
     backgroundImage: `url(${currentSettings.customWallImage})`,
