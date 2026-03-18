@@ -163,7 +163,7 @@ const Index = () => {
           <TextureLibrary
             onDragStart={handleDragStartLib}
             onTextureClick={handleTextureClick}
-            activeSectionId={studio.activeVibe ? studio.selectedSectionId : null}
+            activeSectionId={studio.selectedSectionId}
             customTextures={customTextures}
             onUploadTexture={handleUploadTexture}
             onRemoveCustomTexture={removeCustomTexture}
