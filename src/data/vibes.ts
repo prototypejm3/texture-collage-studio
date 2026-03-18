@@ -1841,42 +1841,7 @@ const butterflyBold: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── ELEPHANT ──
-const elephant: Vibe = {
-  id: 'elephant', name: 'Elephant', emoji: '🐘',
-  description: 'Big elephant side profile with trunk',
-  viewBox: '0 0 480 440',
-  sections: [
-    { id: 'el-ear', label: 'Ear', tone: 'medium',
-      path: 'M82,110 Q48,98 25,118 Q5,148 2,188 Q2,232 18,268 Q42,302 72,318 Q98,328 115,320 Q125,308 125,288 Q122,252 115,215 Q108,178 100,148 Z' },
-    { id: 'el-ear-inner', label: 'Inner Ear', tone: 'light',
-      path: 'M88,145 Q65,138 48,155 Q32,178 30,208 Q32,242 48,272 Q68,295 88,305 Q102,300 105,282 Q105,252 100,218 Q95,182 92,158 Z' },
-    { id: 'el-head', label: 'Head', tone: 'dark',
-      path: 'M118,85 Q132,48 165,28 Q205,10 245,15 Q285,22 312,48 Q335,82 338,122 Q338,165 322,200 Q305,230 282,252 Q262,265 248,268 L128,258 Q115,235 110,205 Q108,168 112,135 Z' },
-    { id: 'el-eye', label: 'Eye', tone: 'light', path: circlePath(278, 100, 16) },
-    { id: 'el-trunk', label: 'Trunk', tone: 'dark',
-      path: 'M248,268 Q262,298 272,335 Q280,375 278,408 Q275,432 265,448 Q252,458 240,455 Q228,445 222,425 Q218,400 222,372 Q230,338 242,308 Q248,285 250,275 Z' },
-    { id: 'el-trunk-tip', label: 'Trunk Tip', tone: 'medium',
-      path: 'M240,455 Q228,462 215,458 Q205,450 202,438 Q205,428 215,425 Q228,428 238,440 Q242,448 242,452 Z' },
-    { id: 'el-tusk', label: 'Tusk', tone: 'light',
-      path: 'M258,292 Q245,312 238,342 Q232,368 235,382 Q240,392 248,385 Q255,372 260,348 Q265,322 265,302 Z' },
-    { id: 'el-body', label: 'Body', tone: 'dark',
-      path: 'M128,258 Q105,278 92,312 Q82,348 88,385 Q98,412 125,432 Q158,448 200,455 Q248,458 302,452 Q348,442 385,422 Q412,398 425,365 Q432,328 425,290 Q408,258 385,240 Q355,225 322,222 Q295,240 272,258 Q218,268 168,262 Z' },
-    { id: 'el-belly', label: 'Belly', tone: 'light',
-      path: 'M178,342 Q195,318 242,308 Q292,315 315,342 Q328,375 322,408 Q305,435 265,445 Q228,442 208,422 Q192,392 188,362 Z' },
-    { id: 'el-leg-fl', label: 'Front Left Leg', tone: 'dark',
-      path: 'M142,432 Q138,445 135,460 Q132,470 135,478 Q142,482 148,478 Q152,470 152,458 Q155,445 158,435 Z' },
-    { id: 'el-leg-fr', label: 'Front Right Leg', tone: 'medium',
-      path: 'M205,452 Q202,462 200,472 Q198,480 202,485 Q208,488 215,482 Q218,475 218,465 Q218,458 215,452 Z' },
-    { id: 'el-leg-bl', label: 'Back Left Leg', tone: 'dark',
-      path: 'M328,448 Q325,458 322,468 Q320,475 322,482 Q328,485 335,480 Q338,472 338,462 Q338,455 335,448 Z' },
-    { id: 'el-leg-br', label: 'Back Right Leg', tone: 'medium',
-      path: 'M385,428 Q382,442 380,455 Q378,465 380,472 Q388,475 395,470 Q398,462 398,452 Q398,442 395,432 Z' },
-    { id: 'el-tail', label: 'Tail', tone: 'dark',
-      path: 'M425,290 Q438,275 450,265 Q460,260 465,268 Q465,278 455,292 Q445,302 435,300 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── FISH ──
 const fish: Vibe = {
