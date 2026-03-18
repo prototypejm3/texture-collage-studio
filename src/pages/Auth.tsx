@@ -34,7 +34,7 @@ export default function AuthPage() {
       if (error) {
         setError(error.message);
       } else {
-        setSuccess('Check your email for a verification link!');
+        navigate('/');
       }
     }
     setLoading(false);
