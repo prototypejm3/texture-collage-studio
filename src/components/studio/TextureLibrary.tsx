@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool } from 'lucide-react';
 import { FloatingToolbar } from './FloatingToolbar';
 
 interface TextureGroup {
