@@ -62,9 +62,11 @@ export function Canvas({
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
-  backgroundTextureId,
+  backgroundTextureId, sectionTransforms,
   onSelect, onUpdate, onDrop,
-  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection, canvasRef,
+  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
+  onDeleteSection, onUpdateSectionTransform,
+  canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
