@@ -103,7 +103,7 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                   <div className="flex flex-col items-center justify-center py-12">
                     <Loader2 className="w-8 h-8 text-primary animate-spin mb-3" />
                     <p className="text-sm text-muted-foreground">AI is crafting your vibe…</p>
-                    <p className="text-xs text-muted-foreground/60 mt-1">Picking colors, textures, and shapes</p>
+                    <p className="text-xs text-muted-foreground/60 mt-1">Picking colors, textures, and frame style</p>
                   </div>
                 )}
 
