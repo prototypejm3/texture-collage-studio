@@ -6,7 +6,7 @@ export type TextureCategory =
   | 'Synergy' | 'Milo' | 'Faithful' | 'Nico' | 'Taylor Felt'
   | 'Borough' | 'Lucky' | 'Merit' | 'Prime' | 'Tussah' | 'Bloke'
   | 'Felt' | 'Cotton' | 'Yarn' | 'Corduroy' | 'Flat Silk'
-  | 'Leather' | 'Wood' | 'Concrete' | 'Stripe' | 'Grid'
+  | 'Leather' | 'Wood' | 'Concrete' | 'Marble' | 'Stripe' | 'Grid'
   | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
   | 'Alix' | 'Corinne' | 'ShayShari' | 'Suede Ace' | 'Jayme'
   | 'Skott' | 'Kaplan' | 'Riviera'
