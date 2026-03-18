@@ -287,12 +287,6 @@ export function WallCard({
 
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-        <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border" title="Open">
-          <FolderOpen className="w-3 h-3" />
-        </button>
-        <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border" title="Duplicate">
-          <Copy className="w-3 h-3" />
-        </button>
         <div className="relative">
           <button onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
@@ -301,6 +295,13 @@ export function WallCard({
             <>
               <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
               <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
+                <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                  <FolderOpen className="w-3 h-3" /> Open in Create
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                  <Copy className="w-3 h-3" /> Duplicate
+                </button>
+                <div className="border-t border-border my-1" />
                 <button onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
                   {design.pinned ? <PinOff className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
                   {design.pinned ? 'Unpin' : 'Pin to top'}
