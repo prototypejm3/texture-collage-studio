@@ -134,6 +134,27 @@ export function VibeOutline({
                 onMouseLeave={() => setHoveredId(null)}
               />
 
+              {/* Selected section pulsing highlight */}
+              {isSelected && (
+                <path
+                  d={section.path}
+                  fill="hsl(24, 80%, 50%)"
+                  opacity={0.12}
+                  className="pointer-events-none animate-pulse"
+                />
+              )}
+
+              {/* Hover highlight */}
+              {isHovered && !isSelected && !isFilled && (
+                <path
+                  d={section.path}
+                  fill="hsl(24, 80%, 50%)"
+                  opacity={0.06}
+                  className="pointer-events-none"
+                />
+              )}
+
+              {/* Stroke */}
               <path
                 d={section.path}
                 fill="none"
@@ -142,20 +163,12 @@ export function VibeOutline({
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 className="pointer-events-none transition-colors"
-                style={{ opacity: isFilled ? 0.5 : 0.9 }}
+                style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
 
-              {!isFilled && (
-                <VibeLabel section={section} isHovered={isHovered} />
-              )}
-
-              {isHovered && !isFilled && (
-                <path
-                  d={section.path}
-                  fill="hsl(24, 80%, 50%)"
-                  opacity={0.06}
-                  className="pointer-events-none"
-                />
+              {/* Label: show when unfilled, or when selected (so user knows which section) */}
+              {(!isFilled || isSelected) && (
+                <VibeLabel section={section} isHovered={isHovered} isSelected={isSelected} />
               )}
             </g>
           );
