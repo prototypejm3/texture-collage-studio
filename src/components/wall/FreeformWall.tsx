@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
+import { TitleCard } from './TitleCard';
 import { AnimatePresence } from 'framer-motion';
 
 const sizeWidths: Record<DesignSize, number> = {
@@ -13,6 +14,7 @@ interface FreeformWallProps {
   designs: SavedDesign[];
   isPremium: boolean;
   isDark?: boolean;
+  showTitleCards?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -22,19 +24,30 @@ interface FreeformWallProps {
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onFrameStyleChange: (id: string, style: FrameStyle) => void;
   onSizeChange: (id: string, size: DesignSize) => void;
+  onSubmitToGallery?: (id: string) => void;
 }
 
 export function FreeformWall({
-  designs, isPremium, isDark, onOpen, onDuplicate, onDelete,
-  onTogglePin, onToggleIRL, onToggleHide, onUpdate,
-  onFrameStyleChange, onSizeChange,
+  designs,
+  isPremium,
+  isDark,
+  showTitleCards,
+  onOpen,
+  onDuplicate,
+  onDelete,
+  onTogglePin,
+  onToggleIRL,
+  onToggleHide,
+  onUpdate,
+  onFrameStyleChange,
+  onSizeChange,
+  onSubmitToGallery,
 }: FreeformWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const dragStart = useRef<{ x: number; y: number; startX: number; startY: number } | null>(null);
 
   const handleMouseDown = useCallback((e: React.MouseEvent, design: SavedDesign) => {
-    // Don't start drag on buttons/inputs
     const target = e.target as HTMLElement;
     if (target.closest('button') || target.closest('input') || target.closest('[data-no-drag]')) return;
 
@@ -71,10 +84,8 @@ export function FreeformWall({
     window.addEventListener('mouseup', handleMouseUp);
   }, [onUpdate]);
 
-  // Auto-position designs that don't have wallX/wallY
   const positionedDesigns = designs.map((d, i) => {
     if (d.wallX != null && d.wallY != null) return d;
-    // Spread them in a natural gallery arrangement
     const cols = Math.min(designs.length, 3);
     const row = Math.floor(i / cols);
     const col = i % cols;
@@ -95,43 +106,53 @@ export function FreeformWall({
       <AnimatePresence>
         {positionedDesigns.map(d => {
           const w = sizeWidths[d.displaySize || 'medium'];
-          // Depth-based shadow: larger items = more shadow depth
           const depthShadow = d.displaySize === 'large'
             ? '0 12px 32px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.08)'
             : d.displaySize === 'small'
-            ? '0 2px 8px rgba(0,0,0,0.08)'
-            : '0 6px 20px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)';
+              ? '0 2px 8px rgba(0,0,0,0.08)'
+              : '0 6px 20px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)';
           const rotation = d.rotation || 0;
+
           return (
             <div
               key={d.id}
-              className={`absolute ${draggingId === d.id ? 'z-50 cursor-grabbing' : 'z-10 cursor-grab'}`}
+              className={`absolute ${draggingId === d.id ? 'z-50' : 'z-10'}`}
               style={{
                 left: `${d.wallX ?? 50}%`,
                 top: `${d.wallY ?? 50}%`,
                 transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
                 width: w,
-                boxShadow: depthShadow,
-                transition: draggingId === d.id ? 'none' : 'left 0.3s ease, top 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                transition: draggingId === d.id ? 'none' : 'left 0.3s ease, top 0.3s ease, transform 0.3s ease',
               }}
-              onMouseDown={(e) => handleMouseDown(e, d)}
             >
-              <WallCard
-                design={d}
-                onOpen={onOpen}
-                onDuplicate={onDuplicate}
-                onDelete={onDelete}
-                onTogglePin={onTogglePin}
-                onToggleIRL={onToggleIRL}
-                onToggleHide={onToggleHide}
-                onUpdate={onUpdate}
-                onFrameStyleChange={onFrameStyleChange}
-                
-                onSizeChange={onSizeChange}
-                isPremium={isPremium}
-                isDark={isDark}
-                size={d.displaySize || 'medium'}
-              />
+              <div
+                className={draggingId === d.id ? 'cursor-grabbing' : 'cursor-grab'}
+                style={{ boxShadow: depthShadow }}
+                onMouseDown={(e) => handleMouseDown(e, d)}
+              >
+                <WallCard
+                  design={d}
+                  onOpen={onOpen}
+                  onDuplicate={onDuplicate}
+                  onDelete={onDelete}
+                  onTogglePin={onTogglePin}
+                  onToggleIRL={onToggleIRL}
+                  onToggleHide={onToggleHide}
+                  onUpdate={onUpdate}
+                  onFrameStyleChange={onFrameStyleChange}
+                  onSizeChange={onSizeChange}
+                  onSubmitToGallery={onSubmitToGallery}
+                  isPremium={isPremium}
+                  isDark={isDark}
+                  size={d.displaySize || 'medium'}
+                />
+              </div>
+
+              {showTitleCards && (
+                <div className="mt-4" data-no-drag>
+                  <TitleCard design={d} isDark={isDark} />
+                </div>
+              )}
             </div>
           );
         })}
