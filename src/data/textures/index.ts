@@ -256,4 +256,22 @@ export const textures: TextureSwatch[] = [
 
   // ── Riviera ──
   { id: 'riviera', name: 'Riviera', category: 'Riviera', cssBackground: img('novelty-riviera.png') },
+
+  // ── Nicole ──
+  { id: 'nicole', name: 'Nicole', category: 'Nicole', cssBackground: img('novelty-nicole.png') },
+
+  // ── Byrd ──
+  { id: 'byrd', name: 'Byrd', category: 'Byrd', cssBackground: img('novelty-byrd.png') },
+
+  // ── JaymeLyn ──
+  { id: 'jaymelyn', name: 'JaymeLyn', category: 'JaymeLyn', cssBackground: img('novelty-jaymelyn.png') },
+
+  // ── Claude ──
+  { id: 'claude', name: 'Claude', category: 'Claude', cssBackground: img('novelty-claude.png') },
+
+  // ── Gemini ──
+  { id: 'gemini', name: 'Gemini', category: 'Gemini', cssBackground: img('novelty-gemini.png') },
+
+  // ── Chat ──
+  { id: 'chat', name: 'Chat', category: 'Chat', cssBackground: img('novelty-chat.png') },
 ];

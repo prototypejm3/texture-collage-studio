@@ -10,6 +10,7 @@ export type TextureCategory =
   | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
   | 'Alix' | 'Corinne' | 'ShayShari' | 'Suede Ace' | 'Jayme'
   | 'Skott' | 'Kaplan' | 'Riviera'
+  | 'Nicole' | 'Byrd' | 'JaymeLyn' | 'Claude' | 'Gemini' | 'Chat'
   | 'Custom';
 
 export type ElementType = 'shape' | 'image' | 'text';
