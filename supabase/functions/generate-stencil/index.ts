@@ -6,17 +6,33 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `You are an SVG stencil designer for a creative shadow-box app. Given a subject (e.g. "flower", "castle", "dinosaur"), produce a stencil with 3-6 sections.
+const SYSTEM_PROMPT = `You are an expert SVG path designer creating stencils for a shadow-box art app. The canvas is 480×480.
 
-Rules:
-- The viewBox is always "0 0 480 480"
-- Each section is a closed SVG path (d attribute) that tiles together to cover the subject shape
-- Paths should be chunky, rounded, and "plush"-looking — like a coloring book for adults
-- Sections should NOT overlap but should share edges seamlessly
-- Each section needs a tone: "light", "medium", "dark", or "accent"
-- Give each section a short descriptive label
-- The overall shape should be recognizable and centered in the 480x480 viewBox
-- Make the design bold and simple — avoid tiny details
+CRITICAL RULES FOR GOOD PATHS:
+1. CENTER the subject in the 480×480 viewBox. Use the full space — the shape should be large and bold, filling at least 60-70% of the canvas.
+2. Use SIMPLE, CHUNKY shapes. Think bold silhouettes like you'd see in a coloring book — no fine details, no tiny features.
+3. Paths must be CLOSED (end with Z) and use smooth curves (Q, C commands). Avoid jagged lines.
+4. Sections must TILE together — shared edges should match exactly. No gaps, no overlaps.
+5. Each section should be substantial — minimum ~15% of the subject area. No tiny sliver sections.
+6. Use 4-8 sections for good complexity.
+7. Think about the shape as CUT PAPER PIECES that fit together like a puzzle.
+
+PATH QUALITY TIPS:
+- Use Quadratic Bézier curves (Q) for smooth organic shapes
+- Round numbers to integers — no decimals needed
+- Make curves BOLD and EXAGGERATED, not subtle
+- The overall silhouette should be instantly recognizable even at thumbnail size
+- Avoid paths that create thin lines or narrow spikes
+
+GOOD EXAMPLE — A simple flower:
+- Large circular center (accent): circlePath at 240,220 radius 70
+- 4 large petal sections (light/medium) radiating out, each a wide teardrop shape
+- Thick stem section (dark) below
+
+BAD EXAMPLE:
+- Tiny detailed petals with intricate curves
+- Sections that are just thin lines
+- Shape that's too small in the viewBox
 
 You MUST respond using the generate_stencil tool.`;
 
@@ -49,17 +65,17 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a stencil of: ${prompt}` },
+          { role: "user", content: `Create a bold, recognizable stencil of: ${prompt}. Make it chunky and large, filling most of the 480x480 canvas. Use 4-8 sections with smooth curves.` },
         ],
         tools: [
           {
             type: "function",
             function: {
               name: "generate_stencil",
-              description: "Generate an SVG stencil with labeled sections",
+              description: "Generate an SVG stencil with labeled sections that tile together",
               parameters: {
                 type: "object",
                 properties: {
@@ -74,13 +90,13 @@ serve(async (req) => {
                         id: { type: "string", description: "Unique kebab-case id like 'flower-petals'" },
                         label: { type: "string", description: "Short human label like 'Petals'" },
                         tone: { type: "string", enum: ["light", "medium", "dark", "accent"] },
-                        path: { type: "string", description: "SVG path d attribute for this section" },
+                        path: { type: "string", description: "SVG path d attribute — must be closed (Z), use curves (Q/C), be chunky and bold" },
                       },
                       required: ["id", "label", "tone", "path"],
                       additionalProperties: false,
                     },
-                    minItems: 3,
-                    maxItems: 6,
+                    minItems: 4,
+                    maxItems: 8,
                   },
                 },
                 required: ["name", "emoji", "description", "sections"],
@@ -127,7 +143,6 @@ serve(async (req) => {
 
     const stencil = JSON.parse(toolCall.function.arguments);
 
-    // Build the Vibe object
     const vibe = {
       id: `ai-${Date.now()}`,
       name: stencil.name,
@@ -135,7 +150,6 @@ serve(async (req) => {
       description: stencil.description,
       viewBox: "0 0 480 480",
       sections: stencil.sections,
-      // Default texture pools
       lightTextures: ["linen-white", "linen-natural", "boucle-cream", "boucle-ivory"],
       mediumTextures: ["suede-camel", "leather-tan", "linen-mustard", "boucle-taupe"],
       darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
