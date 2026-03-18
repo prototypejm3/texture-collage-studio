@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Vibe } from '@/types/studio';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { checkGenerationLimit, recordGeneration } from '@/hooks/useGenerationLimit';
 
 export interface GeneratedVibe {
   id: string;
