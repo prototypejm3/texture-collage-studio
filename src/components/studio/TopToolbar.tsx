@@ -41,6 +41,7 @@ export function TopToolbar({
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
+  isPremium, onRequestUpgrade,
 }: Props) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [framePanelOpen, setFramePanelOpen] = useState(false);
