@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool, Star } from 'lucide-react';
+import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool, Star, Grid3X3, Maximize } from 'lucide-react';
 import { FloatingToolbar } from './FloatingToolbar';
 
 interface TextureGroup {
@@ -67,6 +67,7 @@ export function TextureLibrary({
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [showElementTools, setShowElementTools] = useState(true);
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
+  const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleFav = useCallback((id: string) => {
@@ -180,17 +181,36 @@ export function TextureLibrary({
           <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
             Textures
           </h2>
-          <button
-            onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
-            className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
-              isPremium
-                ? 'bg-secondary text-secondary-foreground hover:bg-accent'
-                : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
-            }`}
-            title={isPremium ? 'Upload your own texture' : 'Premium feature'}
-          >
-            {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
-          </button>
+          <div className="flex items-center gap-1.5">
+            {/* Swatch / Tiled toggle */}
+            <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
+              <button
+                onClick={() => setSwatchView('swatch')}
+                className={`p-1 rounded transition-colors ${swatchView === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                title="Swatch view"
+              >
+                <Maximize className="w-3 h-3" />
+              </button>
+              <button
+                onClick={() => setSwatchView('tiled')}
+                className={`p-1 rounded transition-colors ${swatchView === 'tiled' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                title="Tiled view"
+              >
+                <Grid3X3 className="w-3 h-3" />
+              </button>
+            </div>
+            <button
+              onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
+              className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
+                isPremium
+                  ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                  : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
+              }`}
+              title={isPremium ? 'Upload your own texture' : 'Premium feature'}
+            >
+              {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
+            </button>
+          </div>
           <input
             ref={fileInputRef}
             type="file"
@@ -271,6 +291,7 @@ export function TextureLibrary({
               onDragStart={onDragStart}
               onTextureClick={onTextureClick}
               onRemoveCustomTexture={onRemoveCustomTexture}
+              viewMode={swatchView}
             />
           ))}
         </div>
@@ -300,15 +321,21 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch' }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
   onDragStart: (id: string) => void;
   onTextureClick?: (id: string) => void;
   onRemoveCustomTexture: (id: string) => void;
+  viewMode?: 'swatch' | 'tiled';
 }) {
   const isCustom = tex.id.startsWith('custom-');
+  const isImage = isCustom || tex.cssBackground.startsWith('url(');
+  const bgSize = viewMode === 'tiled'
+    ? (isImage ? '60px 60px' : '40px 40px')
+    : 'cover';
+
   return (
     <motion.div
       draggable
@@ -325,7 +352,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
         className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
         style={{
           background: tex.cssBackground,
-          backgroundSize: (isCustom || tex.cssBackground.startsWith('url(')) ? 'cover' : '40px 40px',
+          backgroundSize: bgSize,
         }}
       />
       <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
