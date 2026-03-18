@@ -35,20 +35,11 @@ const specialFrames: { id: FrameStyle; label: string }[] = [
   { id: 'polaroid', label: 'Polaroid' },
 ];
 
-const ambientOptions: { value: AmbientSound; label: string; emoji: string }[] = [
-  { value: 'none', label: 'Off', emoji: '🔇' },
-  { value: 'gallery', label: 'Gallery', emoji: '🏛' },
-  { value: 'loft', label: 'Lofi Beats', emoji: '🎵' },
-  { value: 'home', label: 'Chill', emoji: '🏠' },
-];
-
 export function BottomBar({
   frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
-  ambientSound, onAmbientSoundChange,
 }: Props) {
-  const [showSoundMenu, setShowSoundMenu] = useState(false);
   // Whether color circles are expanded
   const isColorFrame = colorFrames.some(f => f.id === wallFrameStyle);
   const [circlesExpanded, setCirclesExpanded] = useState(isColorFrame);
