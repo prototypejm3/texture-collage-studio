@@ -2,6 +2,8 @@ export type WallLayout = 'freeform' | 'grid' | 'single';
 export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' | 'black-concrete' | 'white-brick' | 'clean-white' | 'dark-brick' | 'gray-brick' | 'black-stone' | 'speckled-white' | 'custom';
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'black' | 'none';
 export type HangingStyle = 'floating' | 'string' | 'spotlight' | 'hook' | 'shelf';
+export type LightingPreset = 'none' | 'gallery' | 'golden-hour' | 'dramatic' | 'soft-diffused';
+export type AmbientSound = 'none' | 'gallery' | 'loft' | 'home';
 
 export type DesignSize = 'small' | 'medium' | 'large';
 export type DesignStatus = 'display' | 'hidden' | 'draft';
@@ -9,12 +11,12 @@ export type UserTier = 'free' | 'premium';
 
 export interface SavedDesign {
   id: string;
-  wallId?: string; // which wall this belongs to
+  wallId?: string;
   name: string;
   description?: string;
   artist?: string;
   vibeName?: string;
-  previewImage: string; // data URL
+  previewImage: string;
   createdAt: string;
   updatedAt: string;
   status: DesignStatus;
@@ -23,16 +25,14 @@ export interface SavedDesign {
   hidden: boolean;
   frameStyle: FrameStyle;
   hangingStyle?: HangingStyle;
+  isHero?: boolean;
+  showTitleCard?: boolean;
   
   displaySize: DesignSize;
-  /** Position on wall in freeform mode (percentage-based) */
   wallX?: number;
   wallY?: number;
-  /** Rotation in degrees */
   rotation?: number;
-  /** Serialized studio state for re-editing */
   studioState?: string;
-  /** Gallery submission ID if submitted */
   gallerySubmissionId?: string;
 }
 
@@ -42,7 +42,10 @@ export interface WallSettings {
   background: WallBackground;
   defaultFrameStyle: FrameStyle;
   defaultHangingStyle: HangingStyle;
-  customWallImage?: string; // data URL for custom wall photo
+  customWallImage?: string;
+  lightingPreset: LightingPreset;
+  ambientSound: AmbientSound;
+  showTitleCards: boolean;
 }
 
 export const defaultWallSettings: WallSettings = {
@@ -51,6 +54,9 @@ export const defaultWallSettings: WallSettings = {
   background: 'white-brick',
   defaultFrameStyle: 'gold',
   defaultHangingStyle: 'floating',
+  lightingPreset: 'none',
+  ambientSound: 'none',
+  showTitleCards: false,
 };
 
 export const FREE_DESIGN_LIMIT = 1;
