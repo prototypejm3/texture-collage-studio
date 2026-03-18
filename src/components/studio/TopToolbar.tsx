@@ -186,14 +186,6 @@ export function TopToolbar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
-        <Button
-          size="sm"
-          variant={vibesActive ? 'default' : 'ghost'}
-          onClick={onToggleVibes}
-          className="gap-1.5 text-xs"
-        >
-          <Palette className="w-3.5 h-3.5" /> Stencils
-        </Button>
         <Button size="sm" variant="ghost" onClick={onGenerate} className="gap-1.5 text-xs">
           <Sparkles className="w-3.5 h-3.5" /> Generate
         </Button>
