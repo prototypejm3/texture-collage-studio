@@ -18,18 +18,31 @@ export function HangingWrapper({ style, children }: HangingWrapperProps) {
 
   if (style === 'string') {
     return (
-      <div className="relative">
-        {/* String from top */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-[40px] z-0 pointer-events-none">
-          {/* Nail dot */}
-          <div className="w-1.5 h-1.5 rounded-full bg-foreground/30 mx-auto" />
-          {/* String lines going to frame corners */}
-          <svg width="80" height="40" viewBox="0 0 80 40" className="block" style={{ marginTop: '-1px' }}>
-            <line x1="40" y1="2" x2="12" y2="38" stroke="currentColor" strokeWidth="0.8" className="text-foreground/25" />
-            <line x1="40" y1="2" x2="68" y2="38" stroke="currentColor" strokeWidth="0.8" className="text-foreground/25" />
+      <div className="relative pt-[60px]">
+        {/* String from nail to frame corners */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 z-0 pointer-events-none">
+          {/* Nail dot — metallic */}
+          <div
+            className="w-2 h-2 rounded-full mx-auto"
+            style={{
+              background: 'radial-gradient(circle at 35% 35%, hsl(0,0%,80%), hsl(0,0%,45%))',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+            }}
+          />
+          {/* Wire lines — metallic gradient stroke */}
+          <svg width="100" height="58" viewBox="0 0 100 58" className="block" style={{ marginTop: '-1px' }}>
+            <defs>
+              <linearGradient id="wire-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="hsl(0,0%,72%)" />
+                <stop offset="50%" stopColor="hsl(0,0%,50%)" />
+                <stop offset="100%" stopColor="hsl(0,0%,65%)" />
+              </linearGradient>
+            </defs>
+            <line x1="50" y1="2" x2="10" y2="56" stroke="url(#wire-grad)" strokeWidth="1" />
+            <line x1="50" y1="2" x2="90" y2="56" stroke="url(#wire-grad)" strokeWidth="1" />
           </svg>
         </div>
-        <div className="relative" style={{ 
+        <div className="relative" style={{
           transform: 'rotate(-0.5deg)',
           filter: 'drop-shadow(0 6px 20px rgba(0,0,0,0.1)) drop-shadow(0 2px 6px rgba(0,0,0,0.06))',
         }}>
