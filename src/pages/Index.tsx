@@ -206,6 +206,25 @@ const Index = () => {
         onFrameSizeChange={studio.setFrameSize}
       />
 
+      <GenerateVibeModal
+        isOpen={showVibeModal}
+        isGenerating={vibeGen.isGenerating}
+        generatedVibe={vibeGen.generatedVibe}
+        onClose={() => { setShowVibeModal(false); vibeGen.setGeneratedVibe(null); }}
+        onGenerate={(prompt) => vibeGen.generateVibe(prompt)}
+        onApply={() => {
+          if (vibeGen.generatedVibe) {
+            const vibe = vibeGen.toVibe(vibeGen.generatedVibe);
+            studio.selectVibe(vibe);
+            if (vibeGen.generatedVibe.frameChoice) {
+              studio.setFrameColor(vibeGen.generatedVibe.frameChoice);
+            }
+          }
+          setShowVibeModal(false);
+          vibeGen.setGeneratedVibe(null);
+        }}
+      />
+
       <PaywallModal
         isOpen={showPaywall}
         onClose={() => { setShowPaywall(false); setPendingSave(null); }}
