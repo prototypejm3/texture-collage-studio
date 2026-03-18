@@ -335,14 +335,19 @@ export function RightSidebar({
                   AI Mood — auto-fill textures <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <input
-                    type="text"
-                    value={moodPrompt}
-                    onChange={e => setMoodPrompt(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
-                    placeholder="cozy cabin, dark academia, tropical…"
-                    className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    disabled={isGeneratingMood}
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={moodPrompt}
+                      onChange={e => setMoodPrompt(e.target.value.slice(0, 12))}
+                      onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
+                      placeholder="cozy cabin, tropical…"
+                      maxLength={12}
+                      className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-10"
+                      disabled={isGeneratingMood}
+                    />
+                    <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{moodPrompt.length}/12</span>
+                  </div>
                   />
                   <div className="flex gap-2">
                     <button
