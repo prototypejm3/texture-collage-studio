@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 interface Props {
   canvasWidth: number;
@@ -7,36 +7,35 @@ interface Props {
   onCancel: () => void;
 }
 
-function simplifyPoints(points: { x: number; y: number }[], tolerance = 3): { x: number; y: number }[] {
-  if (points.length < 3) return points;
-  const result = [points[0]];
-  for (let i = 1; i < points.length - 1; i++) {
-    const prev = result[result.length - 1];
-    const dx = points[i].x - prev.x;
-    const dy = points[i].y - prev.y;
-    if (Math.sqrt(dx * dx + dy * dy) >= tolerance) {
-      result.push(points[i]);
-    }
-  }
-  result.push(points[points.length - 1]);
-  return result;
-}
-
-function pointsToSvgPath(points: { x: number; y: number }[]): string {
+function smoothToSvgPath(points: { x: number; y: number }[]): string {
   if (points.length < 3) return '';
-  const simplified = simplifyPoints(points, 4);
-  let d = `M${simplified[0].x.toFixed(1)},${simplified[0].y.toFixed(1)}`;
-  for (let i = 1; i < simplified.length; i++) {
-    d += ` L${simplified[i].x.toFixed(1)},${simplified[i].y.toFixed(1)}`;
+  // Use catmull-rom → cubic bezier for smooth curves
+  const pts = points;
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(i - 1, 0)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(i + 2, pts.length - 1)];
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    d += ` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
   }
   d += ' Z';
   return d;
 }
 
 export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel }: Props) {
-  const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
-  const [isDrawing, setIsDrawing] = useState(false);
+  const pointsRef = useRef<{ x: number; y: number }[]>([]);
+  const isDrawingRef = useRef(false);
   const svgRef = useRef<SVGSVGElement>(null);
+  const livePathRef = useRef<SVGPathElement>(null);
+  const smudgePathRef = useRef<SVGPathElement>(null);
 
   const getPoint = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!svgRef.current) return null;
@@ -51,36 +50,49 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
     };
   }, [canvasWidth, canvasHeight]);
 
+  // Directly mutate refs + DOM for zero-lag drawing
+  const updatePath = useCallback(() => {
+    const pts = pointsRef.current;
+    if (pts.length < 2) return;
+    // Downsample for perf: keep every 2nd point
+    const sampled = pts.filter((_, i) => i % 2 === 0 || i === pts.length - 1);
+    const d = sampled.length >= 3 ? smoothToSvgPath(sampled) : '';
+    if (livePathRef.current) livePathRef.current.setAttribute('d', d);
+    if (smudgePathRef.current) smudgePathRef.current.setAttribute('d', d);
+  }, []);
+
   const handleStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const pt = getPoint(e);
     if (!pt) return;
-    setIsDrawing(true);
-    setPoints([pt]);
-  }, [getPoint]);
+    isDrawingRef.current = true;
+    pointsRef.current = [pt];
+    updatePath();
+  }, [getPoint, updatePath]);
 
   const handleMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDrawing) return;
+    if (!isDrawingRef.current) return;
     e.preventDefault();
     const pt = getPoint(e);
     if (!pt) return;
-    setPoints(prev => [...prev, pt]);
-  }, [isDrawing, getPoint]);
+    pointsRef.current.push(pt);
+    updatePath();
+  }, [getPoint, updatePath]);
 
   const handleEnd = useCallback(() => {
-    if (!isDrawing) return;
-    setIsDrawing(false);
-    if (points.length >= 10) {
-      const pathD = pointsToSvgPath(points);
-      if (pathD) {
-        onFinishDraw(pathD);
-      }
+    if (!isDrawingRef.current) return;
+    isDrawingRef.current = false;
+    const pts = pointsRef.current;
+    if (pts.length >= 5) {
+      const sampled = pts.filter((_, i) => i % 2 === 0 || i === pts.length - 1);
+      const pathD = smoothToSvgPath(sampled);
+      if (pathD) onFinishDraw(pathD);
     }
-    setPoints([]);
-  }, [isDrawing, points, onFinishDraw]);
-
-  const currentPath = points.length >= 2 ? pointsToSvgPath(points) : '';
+    pointsRef.current = [];
+    if (livePathRef.current) livePathRef.current.setAttribute('d', '');
+    if (smudgePathRef.current) smudgePathRef.current.setAttribute('d', '');
+  }, [onFinishDraw]);
 
   return (
     <div
@@ -112,70 +124,38 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
       >
-        {/* Subtle paper-like overlay */}
-        <rect width="100%" height="100%" fill="hsla(40, 20%, 95%, 0.08)" />
+        <rect width="100%" height="100%" fill="hsla(40, 20%, 95%, 0.06)" />
 
-        {/* SVG filter for pencil-sketch look */}
         <defs>
           <filter id="pencil-rough" x="-2%" y="-2%" width="104%" height="104%">
             <feTurbulence type="turbulence" baseFrequency="0.65" numOctaves="3" result="noise" seed="2" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
 
-        {/* Drawing preview — pencil stroke */}
-        {currentPath && (
-          <>
-            {/* Shadow / graphite smudge */}
-            <path
-              d={currentPath}
-              fill="none"
-              stroke="hsla(0, 0%, 30%, 0.08)"
-              strokeWidth={4}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              filter="url(#pencil-rough)"
-            />
-            {/* Main pencil line */}
-            <path
-              d={currentPath}
-              fill="hsla(0, 0%, 40%, 0.06)"
-              stroke="hsl(0, 0%, 25%)"
-              strokeWidth={1.5}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              filter="url(#pencil-rough)"
-              opacity={0.85}
-            />
-            {/* Lighter overlay pass for texture */}
-            <path
-              d={currentPath}
-              fill="none"
-              stroke="hsla(0, 0%, 45%, 0.4)"
-              strokeWidth={0.8}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeDasharray="2 1.5"
-              filter="url(#pencil-rough)"
-            />
-          </>
-        )}
-
-        {/* Hint text */}
-        {points.length > 0 && points.length < 10 && (
-          <text
-            x={canvasWidth / 2}
-            y={canvasHeight / 2}
-            textAnchor="middle"
-            fill="hsl(0, 0%, 50%)"
-            fontSize="13"
-            fontFamily="'DM Sans', sans-serif"
-            fontStyle="italic"
-            opacity={0.5}
-          >
-            Keep drawing...
-          </text>
-        )}
+        {/* Graphite smudge shadow */}
+        <path
+          ref={smudgePathRef}
+          d=""
+          fill="none"
+          stroke="hsla(0, 0%, 30%, 0.06)"
+          strokeWidth={3}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          filter="url(#pencil-rough)"
+        />
+        {/* Main pencil line */}
+        <path
+          ref={livePathRef}
+          d=""
+          fill="hsla(0, 0%, 40%, 0.04)"
+          stroke="hsl(0, 0%, 25%)"
+          strokeWidth={1.2}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          filter="url(#pencil-rough)"
+          opacity={0.85}
+        />
       </svg>
     </div>
   );
