@@ -276,6 +276,40 @@ export function WallCard({
                   {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
                 </button>
                 <div className="border-t border-border my-1" />
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
+                <div className="flex items-center gap-1 px-3 py-1.5">
+                  {sizeOptions.map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, opt.value); }}
+                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.displaySize === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="border-t border-border my-1" />
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
+                <div className="flex flex-wrap gap-1 px-3 py-1.5 max-h-[120px] overflow-y-auto">
+                  {frameStyleList.map(f => (
+                    <button
+                      key={f.value}
+                      onClick={(e) => { e.stopPropagation(); onFrameStyleChange(design.id, f.value); }}
+                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.frameStyle === f.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+                {onSubmitToGallery && !design.gallerySubmissionId && (
+                  <>
+                    <div className="border-t border-border my-1" />
+                    <button onClick={(e) => { e.stopPropagation(); onSubmitToGallery(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                      <Send className="w-3 h-3" /> Submit to Gallery
+                    </button>
+                  </>
+                )}
+                <div className="border-t border-border my-1" />
                 <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
                 <div className="flex items-center gap-1 px-3 py-1.5">
                   <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate left">
