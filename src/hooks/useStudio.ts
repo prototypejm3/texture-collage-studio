@@ -241,6 +241,12 @@ export function useStudio() {
     if (selectedSectionId === sectionId) setSelectedSectionId(null);
   }, [selectedSectionId]);
 
+  // Combine vibe sections + custom drawn sections
+  const allSections = useMemo(() => {
+    const vibeSections = activeVibe?.sections || [];
+    return [...vibeSections, ...customSections].filter(s => !deletedSections.has(s.id));
+  }, [activeVibe, customSections, deletedSections]);
+
   const duplicateSection = useCallback((sectionId: string) => {
     const section = allSections.find(s => s.id === sectionId);
     if (!section) return;
@@ -264,12 +270,6 @@ export function useStudio() {
     }));
     setSelectedSectionId(newId);
   }, [allSections, vibeFills, sectionTransforms]);
-
-  // Combine vibe sections + custom drawn sections
-  const allSections = useMemo(() => {
-    const vibeSections = activeVibe?.sections || [];
-    return [...vibeSections, ...customSections].filter(s => !deletedSections.has(s.id));
-  }, [activeVibe, customSections, deletedSections]);
 
   // Detach a filled section into a free canvas element
   const detachSection = useCallback((sectionId: string) => {
