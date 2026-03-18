@@ -136,31 +136,11 @@ export function TextureLibrary({
         </div>
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-3">
-        {activeGroup !== 'All' && activeGroup !== 'Custom' ? (
-          /* Show sub-grouped by category when a group is active */
-          <div className="space-y-4">
-            {(groups.find(g => g.label === activeGroup)?.categories ?? []).map(cat => {
-              const catTextures = filtered.filter(t => t.category === cat);
-              if (catTextures.length === 0) return null;
-              return (
-                <div key={cat}>
-                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">{cat}</p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {catTextures.map(tex => (
-                      <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-2">
-            {filtered.map(tex => (
-              <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-3 gap-2">
+          {filtered.map(tex => (
+            <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
+          ))}
+        </div>
 
         {/* Empty state for custom tab */}
         {activeGroup === 'Custom' && customTextures.length === 0 && (
