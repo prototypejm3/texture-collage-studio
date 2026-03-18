@@ -43,9 +43,37 @@ const Index = () => {
       if (design?.studioState) {
         studio.loadState(design.studioState);
         setEditingDesignId(editId);
+        draftKeyRef.current = editId; // reuse same id for draft saves
       }
     }
   }, []); // Run once on mount
+
+  // Auto-save as draft every 15 seconds when canvas has content
+  useEffect(() => {
+    const hasContent = studio.elements.length > 0 || Object.keys(studio.vibeFills).length > 0;
+    if (!hasContent) return;
+
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(async () => {
+      if (!canvasRef.current) return;
+      try {
+        const dataUrl = await toPng(canvasRef.current, { pixelRatio: 1 });
+        const name = studio.activeVibe?.name || 'Untitled Draft';
+        const vibeName = studio.activeVibe?.name;
+        const studioState = studio.getState();
+        // Don't overwrite a design that's already saved (status = 'display')
+        if (editingDesignId) {
+          wall.updateDesign(editingDesignId, { previewImage: dataUrl, studioState, updatedAt: new Date().toISOString() } as any);
+        } else {
+          wall.saveDraft(draftKeyRef.current, dataUrl, name, vibeName, studioState);
+        }
+      } catch { /* silent fail */ }
+    }, 15000);
+
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    };
+  }, [studio.elements, studio.vibeFills, studio.activeVibe, studio.frameSize, studio.frameColor]);
 
   const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
