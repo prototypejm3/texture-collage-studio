@@ -204,6 +204,10 @@ const Index = () => {
       <BottomBar
         frameSize={studio.frameSize}
         onFrameSizeChange={studio.setFrameSize}
+        displaySize={studio.displaySize}
+        onDisplaySizeChange={studio.setDisplaySize}
+        wallFrameStyle={studio.wallFrameStyle}
+        onWallFrameStyleChange={studio.setWallFrameStyle}
       />
 
       <GenerateVibeModal

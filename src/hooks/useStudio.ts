@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills } from '@/types/studio';
+import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
 let nextId = 1;
@@ -25,6 +26,8 @@ export function useStudio() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
+  const [displaySize, setDisplaySize] = useState<DesignSize>('medium');
+  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('gold');
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
@@ -181,6 +184,8 @@ export function useStudio() {
     selectedElement,
     frameSize,
     frameColor,
+    displaySize,
+    wallFrameStyle,
     activeVibe,
     vibeFills,
     selectedSectionId,
@@ -188,6 +193,8 @@ export function useStudio() {
     setSelectedId,
     setFrameSize,
     setFrameColor,
+    setDisplaySize,
+    setWallFrameStyle,
     // Free-mode
     addElement,
     updateElement,
