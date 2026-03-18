@@ -38,7 +38,7 @@ const Index = () => {
   const [showToolKit, setShowToolKit] = useState(false);
   const [toolKitMinimized, setToolKitMinimized] = useState(false);
   const toolKitOpen = showToolKit && !toolKitMinimized;
-  const [showStencils, setShowStencils] = useState(false);
+  const [showStencils, setShowStencils] = useState(true);
   const [stencilsMinimized, setStencilsMinimized] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
