@@ -2212,4 +2212,49 @@ const scubaSkiba: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, scubaSkiba];
+// ── BANCROFT (Cruiser Motorcycle) ──
+const bancroft: Vibe = {
+  id: 'bancroft', name: 'Bancroft', emoji: '🏍️',
+  description: 'Classic cruiser motorcycle silhouette',
+  viewBox: '0 0 480 320',
+  sections: [
+    { id: 'bc-rear-wheel', label: 'Rear Wheel', tone: 'dark',
+      path: 'M105,225 Q125,195 158,185 Q192,185 218,205 Q235,225 235,255 Q228,285 205,305 Q178,318 148,315 Q118,305 100,282 Q88,258 95,232 Z M105,255 Q112,235 132,222 Q155,215 178,222 Q198,235 205,255 Q200,278 182,292 Q158,300 138,292 Q118,278 112,258 Z' },
+    { id: 'bc-rear-hub', label: 'Rear Hub', tone: 'medium', path: circlePath(155, 255, 22) },
+    { id: 'bc-front-wheel', label: 'Front Wheel', tone: 'dark',
+      path: 'M338,215 Q358,188 388,178 Q418,178 442,195 Q462,218 465,248 Q460,278 440,300 Q415,315 388,312 Q358,305 342,282 Q330,258 335,232 Z M348,248 Q352,228 372,215 Q392,208 412,218 Q428,232 432,252 Q428,275 412,288 Q392,298 372,292 Q352,278 348,258 Z' },
+    { id: 'bc-front-hub', label: 'Front Hub', tone: 'medium', path: circlePath(390, 252, 20) },
+    { id: 'bc-fender-rear', label: 'Rear Fender', tone: 'medium',
+      path: 'M82,228 Q78,218 82,205 Q92,192 108,185 Q128,180 148,178 Q168,180 185,185 Q200,192 210,205 Q218,218 215,228 Q205,222 192,218 Q175,215 155,215 Q135,215 118,218 Q102,222 88,228 Z' },
+    { id: 'bc-seat', label: 'Seat', tone: 'dark',
+      path: 'M92,195 Q105,178 128,168 Q155,162 185,165 Q210,170 228,180 Q242,172 255,168 Q248,178 238,188 Q225,195 210,198 Q192,200 168,198 Q142,195 120,192 Q105,192 95,195 Z' },
+    { id: 'bc-tank', label: 'Gas Tank', tone: 'accent',
+      path: 'M228,168 Q242,158 262,150 Q282,145 302,148 Q318,155 325,168 Q328,180 322,190 Q312,198 298,200 Q278,200 260,195 Q242,188 232,178 Z' },
+    { id: 'bc-tank-stripe', label: 'Tank Stripe', tone: 'light',
+      path: 'M248,162 Q262,155 280,152 Q298,155 308,165 Q305,170 295,172 Q278,170 262,168 Q252,165 248,162 Z' },
+    { id: 'bc-engine', label: 'Engine Block', tone: 'medium',
+      path: 'M195,215 Q202,228 215,238 Q230,248 248,252 Q265,252 278,245 Q290,235 295,222 Q298,208 295,198 Q282,205 268,210 Q250,215 232,215 Q215,215 200,212 Z' },
+    { id: 'bc-engine-detail', label: 'Engine Detail', tone: 'dark',
+      path: 'M218,228 Q228,235 242,240 Q258,242 272,238 Q280,232 282,225 Q275,230 262,235 Q248,238 235,235 Q225,232 220,228 Z' },
+    { id: 'bc-exhaust', label: 'Exhaust Pipes', tone: 'light',
+      path: 'M195,258 Q175,262 152,268 Q128,275 108,280 Q92,285 82,288 Q78,285 82,280 Q95,275 118,268 Q142,262 165,258 Q182,255 195,255 Z M195,268 Q178,272 158,278 Q138,285 118,292 Q102,298 90,302 Q85,298 90,295 Q105,288 128,282 Q152,275 175,270 Q188,268 195,268 Z' },
+    { id: 'bc-frame', label: 'Frame', tone: 'dark',
+      path: 'M210,200 Q225,205 242,208 Q260,208 278,205 Q295,200 308,192 Q318,182 325,172 L332,175 Q342,188 348,202 Q352,215 348,228 Q342,218 332,210 Q318,202 305,198 Q292,205 280,210 Q265,212 248,212 Q232,212 218,208 Q208,205 205,202 Z' },
+    { id: 'bc-fork', label: 'Front Fork', tone: 'medium',
+      path: 'M332,175 Q338,162 345,148 Q352,135 358,125 Q362,118 365,122 Q368,132 365,148 Q360,168 355,188 Q350,208 348,225 Q345,215 342,205 Q338,192 335,182 Z' },
+    { id: 'bc-headlight', label: 'Headlight', tone: 'accent',
+      path: 'M358,125 Q365,115 375,108 Q388,105 398,112 Q405,122 402,135 Q395,145 382,148 Q368,148 360,140 Q355,132 358,125 Z' },
+    { id: 'bc-headlight-lens', label: 'Headlight Lens', tone: 'light', path: circlePath(382, 128, 10) },
+    { id: 'bc-handlebar', label: 'Handlebar', tone: 'dark',
+      path: 'M348,108 Q342,95 335,82 Q330,72 328,65 Q325,58 328,55 Q332,55 338,62 Q345,72 352,85 Q358,98 362,108 Q358,112 352,112 Z M362,108 Q368,95 378,82 Q385,72 392,65 Q398,62 400,65 Q398,72 392,82 Q385,95 378,108 Q375,112 370,112 Z' },
+    { id: 'bc-mirror-l', label: 'Left Mirror', tone: 'dark',
+      path: 'M325,55 Q318,48 312,42 Q308,38 305,42 Q305,48 310,55 Q318,60 325,58 Z' },
+    { id: 'bc-mirror-r', label: 'Right Mirror', tone: 'dark',
+      path: 'M400,65 Q405,58 412,52 Q418,48 420,52 Q420,58 415,65 Q408,70 402,68 Z' },
+    { id: 'bc-fender-front', label: 'Front Fender', tone: 'medium',
+      path: 'M355,218 Q350,205 352,192 Q358,180 372,172 Q388,168 405,172 Q422,180 432,195 Q438,210 435,225 Q425,218 412,212 Q398,208 385,208 Q372,210 362,215 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, scubaSkiba, bancroft];
