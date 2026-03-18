@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
+import { useMultiWall } from '@/hooks/useMultiWall';
 import { useUserTier } from '@/hooks/useUserTier';
 import { WallGrid } from '@/components/wall/WallGrid';
 import { WallCustomizer } from '@/components/wall/WallCustomizer';
@@ -10,7 +11,7 @@ import { ViewMode } from '@/components/wall/ViewMode';
 import { PreviewWall } from '@/components/wall/PreviewWall';
 import { NavBar } from '@/components/NavBar';
 import { DesignStatus, DesignSize, FrameStyle, WallBackground } from '@/types/wall';
-import { Expand, Download, MoreHorizontal } from 'lucide-react';
+import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
@@ -33,31 +34,37 @@ const bgStyles: Record<WallBackground, string> = {
 const MyWall = () => {
   const navigate = useNavigate();
   const wall = useWall();
+  const multiWall = useMultiWall();
   const { isPremium, upgradeToPremium } = useUserTier();
   const [activeTab, setActiveTab] = useState<'all' | DesignStatus>('all');
   const [viewMode, setViewMode] = useState(false);
   const [viewStartIndex, setViewStartIndex] = useState(0);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const [showWallPicker, setShowWallPicker] = useState(false);
   const wallRef = useRef<HTMLDivElement>(null);
 
-  const filtered = activeTab === 'all'
-    ? wall.designs
-    : wall.designs.filter(d => d.status === activeTab);
+  // Filter designs by active wall
+  const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
 
-  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(wall.settings.background);
+  const filtered = activeTab === 'all'
+    ? wallDesigns
+    : wallDesigns.filter(d => d.status === activeTab);
+
+  const currentSettings = multiWall.activeWall.settings;
+  const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(currentSettings.background);
 
   const handleOpen = useCallback((id: string) => {
     navigate(`/create?edit=${id}`);
   }, [navigate]);
 
   const handleDuplicate = useCallback((id: string) => {
-    if (!isPremium && wall.designs.length >= 1) {
+    if (!isPremium && wallDesigns.length >= 1) {
       setShowPaywall(true);
       return;
     }
     wall.duplicateDesign(id);
-  }, [isPremium, wall]);
+  }, [isPremium, wallDesigns.length, wall]);
 
   const handleDelete = useCallback((id: string) => {
     wall.deleteDesign(id);
@@ -75,7 +82,6 @@ const MyWall = () => {
   const handleSizeChange = useCallback((id: string, size: DesignSize) => {
     wall.updateDesign(id, { displaySize: size });
   }, [wall]);
-
 
   const handleViewMode = useCallback((index?: number) => {
     setViewStartIndex(index ?? 0);
@@ -96,6 +102,32 @@ const MyWall = () => {
     }
   }, []);
 
+  const handleUpdateSettings = useCallback((updates: Partial<typeof currentSettings>) => {
+    multiWall.updateWallSettings(multiWall.activeWallId, updates);
+  }, [multiWall]);
+
+  const handleApplyFrameToAll = useCallback((style: FrameStyle) => {
+    // Only apply to designs on this wall
+    wallDesigns.forEach(d => wall.updateDesign(d.id, { frameStyle: style }));
+  }, [wallDesigns, wall]);
+
+  const handleAddWall = useCallback(() => {
+    if (!isPremium) {
+      setShowPaywall(true);
+      return;
+    }
+    multiWall.addWall();
+    toast({ title: 'New wall created!' });
+  }, [isPremium, multiWall]);
+
+  const handleDeleteWall = useCallback((wallId: string) => {
+    if (multiWall.walls.length <= 1) return;
+    // Delete all designs on this wall
+    wallDesigns.forEach(d => wall.deleteDesign(d.id));
+    multiWall.deleteWall(wallId);
+    toast({ title: 'Wall deleted' });
+  }, [multiWall, wall, wallDesigns]);
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <NavBar />
@@ -103,21 +135,85 @@ const MyWall = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`flex-1 overflow-y-auto ${wall.settings.background !== 'custom' ? bgStyles[wall.settings.background] : ''} transition-colors duration-500`}
-        style={wall.settings.background === 'custom' && wall.settings.customWallImage ? {
-          backgroundImage: `url(${wall.settings.customWallImage})`,
+        className={`flex-1 overflow-y-auto ${currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : ''} transition-colors duration-500`}
+        style={currentSettings.background === 'custom' && currentSettings.customWallImage ? {
+          backgroundImage: `url(${currentSettings.customWallImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         } : undefined}
       >
         <div className="max-w-5xl mx-auto px-8 py-10">
-          {/* Customizer — minimal top bar */}
-          <WallCustomizer settings={wall.settings} onUpdate={wall.updateSettings} onApplyFrameToAll={wall.applyFrameToAll} isPremium={isPremium} />
+          {/* Wall picker + customizer */}
+          <div className="flex items-center gap-3 mb-2">
+            {/* Wall switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setShowWallPicker(v => !v)}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-colors text-xs ${
+                  isDark ? 'text-background/70 hover:bg-background/10' : 'text-muted-foreground hover:bg-secondary/60'
+                }`}
+              >
+                {multiWall.activeWall.settings.title}
+                <ChevronDown className="w-3 h-3" />
+                {multiWall.walls.length > 1 && (
+                  <span className={`ml-1 text-[9px] px-1.5 py-0.5 rounded-full ${isDark ? 'bg-background/15 text-background/50' : 'bg-secondary text-muted-foreground'}`}>
+                    {multiWall.walls.length}
+                  </span>
+                )}
+              </button>
+              {showWallPicker && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowWallPicker(false)} />
+                  <div className="absolute left-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[180px]">
+                    {multiWall.walls.map(w => (
+                      <div key={w.id} className="flex items-center">
+                        <button
+                          onClick={() => { multiWall.setActiveWallId(w.id); setShowWallPicker(false); }}
+                          className={`flex-1 text-left px-3 py-1.5 text-xs hover:bg-secondary ${
+                            w.id === multiWall.activeWallId ? 'text-primary font-medium' : 'text-foreground'
+                          }`}
+                        >
+                          {w.settings.title}
+                        </button>
+                        {multiWall.walls.length > 1 && isPremium && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteWall(w.id);
+                              setShowWallPicker(false);
+                            }}
+                            className="p-1 mr-1 text-muted-foreground hover:text-destructive rounded"
+                            title="Delete wall"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <div className="border-t border-border my-1" />
+                    <button
+                      onClick={() => { handleAddWall(); setShowWallPicker(false); }}
+                      className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-1.5 text-foreground"
+                    >
+                      <Plus className="w-3 h-3" /> New Wall {!isPremium && '🔒'}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
 
-          {/* Tabs + controls — clean */}
+          <WallCustomizer
+            settings={currentSettings}
+            onUpdate={handleUpdateSettings}
+            onApplyFrameToAll={handleApplyFrameToAll}
+            isPremium={isPremium}
+          />
+
+          {/* Tabs + controls */}
           <div className="flex items-center gap-4 mt-8 mb-8">
             <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/40'}`}>
-              {([['all', 'All'], ['in-progress', 'In Progress'], ['finished', 'Finished']] as const).map(([val, label]) => (
+              {([['all', 'All'], ['display', 'Display'], ['hidden', 'Hidden'], ['draft', 'Draft']] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
@@ -132,7 +228,7 @@ const MyWall = () => {
               ))}
             </div>
 
-            {/* Grouped controls — single ••• toggle */}
+            {/* Grouped controls */}
             <div className="ml-auto relative">
               {filtered.length > 0 && (
                 <>
@@ -169,7 +265,7 @@ const MyWall = () => {
           </div>
 
           {/* Wall content */}
-          {wall.designs.length === 0 ? (
+          {wallDesigns.length === 0 ? (
             <EmptyWall />
           ) : (
             <motion.div
@@ -180,7 +276,7 @@ const MyWall = () => {
             >
               <WallGrid
                 designs={filtered}
-                layout={wall.settings.layout}
+                layout={currentSettings.layout}
                 isPremium={isPremium}
                 onOpen={handleOpen}
                 onDuplicate={handleDuplicate}
@@ -190,16 +286,15 @@ const MyWall = () => {
                 onToggleHide={wall.toggleHide}
                 onUpdate={wall.updateDesign}
                 onFrameStyleChange={handleFrameStyle}
-                
                 onSizeChange={handleSizeChange}
               />
             </motion.div>
           )}
 
           {/* Preview wall for free users */}
-          {!isPremium && wall.designs.length > 0 && (
+          {!isPremium && wallDesigns.length > 0 && (
             <PreviewWall
-              designs={wall.designs}
+              designs={wallDesigns}
               isPremium={isPremium}
               onUnlock={() => setShowPaywall(true)}
             />
