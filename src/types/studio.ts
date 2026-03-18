@@ -7,9 +7,11 @@ export type TextureCategory =
   | 'Borough' | 'Lucky' | 'Merit' | 'Prime' | 'Tussah' | 'Bloke'
   | 'Leather' | 'Wood' | 'Concrete' | 'Stripe' | 'Grid'
   | 'Animal' | 'Ripple' | 'Speckle' | 'Tie-dye' | 'Maze'
-  | 'Novelty'
+  | 'Alix' | 'Corinne' | 'ShayShari' | 'Suede Ace' | 'Jayme'
+  | 'Skott' | 'Kaplan' | 'Riviera'
   | 'Custom';
 
+export type ElementType = 'shape' | 'image' | 'text';
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scallop' | 'zigzag' | 'wave';
 export type WrinkleLevel = 'none' | 'light' | 'medium' | 'heavy';
@@ -59,9 +61,7 @@ export const defaultEffects: MaterialEffects = {
 export interface VibeSection {
   id: string;
   label: string;
-  /** SVG path data (d attribute) — defines the section shape */
   path: string;
-  /** Tone hint for auto-fill suggestions */
   tone: 'light' | 'medium' | 'dark' | 'accent';
 }
 
@@ -70,16 +70,12 @@ export interface Vibe {
   name: string;
   emoji: string;
   description: string;
-  /** SVG viewBox dimensions */
   viewBox: string;
-  /** All sections that make up this vibe outline */
   sections: VibeSection[];
-  /** Suggested texture IDs per tone */
   lightTextures: string[];
   mediumTextures: string[];
   darkTextures: string[];
   accentTextures: string[];
 }
 
-/** Map of sectionId → textureId for filled sections */
 export type VibeFills = Record<string, string>;

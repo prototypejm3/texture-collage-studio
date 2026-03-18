@@ -187,23 +187,35 @@ export const textures: TextureSwatch[] = [
   // ── Maze ──
   { id: 'maze', name: 'Maze', category: 'Maze', cssBackground: img('maze.png') },
 
-  // ── Novelty ──
-  { id: 'novelty-alix-rose', name: 'Alix Rose', category: 'Novelty', cssBackground: img('novelty-alix-rose.png') },
-  { id: 'novelty-alix-blush', name: 'Alix Blush', category: 'Novelty', cssBackground: img('novelty-alix-blush.png') },
-  { id: 'novelty-alix-fuchsia', name: 'Alix Fuchsia', category: 'Novelty', cssBackground: img('novelty-alix-fuchsia.png') },
-  { id: 'novelty-corinne-mulberry', name: 'Corinne Mulberry', category: 'Novelty', cssBackground: img('novelty-corinne-mulberry.png') },
-  { id: 'novelty-corinne-plum', name: 'Corinne Plum', category: 'Novelty', cssBackground: img('novelty-corinne-plum.png') },
-  { id: 'novelty-corinne-lavender', name: 'Corinne Lavender', category: 'Novelty', cssBackground: img('novelty-corinne-lavender.png') },
-  { id: 'novelty-shayshari-terra', name: 'ShayShari Terra', category: 'Novelty', cssBackground: img('novelty-shayshari-terra.png') },
-  { id: 'novelty-shayshari-sage', name: 'ShayShari Sage', category: 'Novelty', cssBackground: img('novelty-shayshari-sage.png') },
-  { id: 'novelty-shayshari-sand', name: 'ShayShari Sand', category: 'Novelty', cssBackground: img('novelty-shayshari-sand.png') },
-  { id: 'novelty-suede-navy', name: 'Suede Ace Navy', category: 'Novelty', cssBackground: img('novelty-suede-navy.png') },
-  { id: 'novelty-suede-forest', name: 'Suede Ace Forest', category: 'Novelty', cssBackground: img('novelty-suede-forest.png') },
-  { id: 'novelty-suede-oxblood', name: 'Suede Ace Oxblood', category: 'Novelty', cssBackground: img('novelty-suede-oxblood.png') },
-  { id: 'novelty-riviera', name: 'Riviera', category: 'Novelty', cssBackground: img('novelty-riviera.png') },
-  { id: 'novelty-jayme-gogh', name: 'Jayme Gogh', category: 'Novelty', cssBackground: img('novelty-jayme-gogh.png') },
-  { id: 'novelty-skott-camo', name: 'Skott Camo', category: 'Novelty', cssBackground: img('novelty-skott-camo.png') },
-  { id: 'novelty-apples', name: 'Apples', category: 'Novelty', cssBackground: img('novelty-apples.png') },
-  { id: 'novelty-bananas', name: 'Bananas', category: 'Novelty', cssBackground: img('novelty-bananas.png') },
-  { id: 'novelty-kaplan-tigerish', name: 'Kaplan Tigerish', category: 'Novelty', cssBackground: img('novelty-kaplan-tigerish.png') },
+  // ── Alix ──
+  { id: 'alix-rose', name: 'Rose', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
+  { id: 'alix-blush', name: 'Blush', category: 'Alix', cssBackground: img('novelty-alix-blush.png') },
+  { id: 'alix-fuchsia', name: 'Fuchsia', category: 'Alix', cssBackground: img('novelty-alix-fuchsia.png') },
+
+  // ── Corinne ──
+  { id: 'corinne-mulberry', name: 'Mulberry', category: 'Corinne', cssBackground: img('novelty-corinne-mulberry.png') },
+  { id: 'corinne-plum', name: 'Plum', category: 'Corinne', cssBackground: img('novelty-corinne-plum.png') },
+  { id: 'corinne-lavender', name: 'Lavender', category: 'Corinne', cssBackground: img('novelty-corinne-lavender.png') },
+
+  // ── ShayShari ──
+  { id: 'shayshari-terra', name: 'Terra', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
+  { id: 'shayshari-sage', name: 'Sage', category: 'ShayShari', cssBackground: img('novelty-shayshari-sage.png') },
+  { id: 'shayshari-sand', name: 'Sand', category: 'ShayShari', cssBackground: img('novelty-shayshari-sand.png') },
+
+  // ── Suede Ace ──
+  { id: 'suede-ace-navy', name: 'Navy', category: 'Suede Ace', cssBackground: img('novelty-suede-navy.png') },
+  { id: 'suede-ace-forest', name: 'Forest', category: 'Suede Ace', cssBackground: img('novelty-suede-forest.png') },
+  { id: 'suede-ace-oxblood', name: 'Oxblood', category: 'Suede Ace', cssBackground: img('novelty-suede-oxblood.png') },
+
+  // ── Jayme ──
+  { id: 'jayme-gogh', name: 'Gogh', category: 'Jayme', cssBackground: img('novelty-jayme-gogh.png') },
+
+  // ── Skott ──
+  { id: 'skott-camo', name: 'Camo', category: 'Skott', cssBackground: img('novelty-skott-camo.png') },
+
+  // ── Kaplan ──
+  { id: 'kaplan-tigerish', name: 'Tigerish', category: 'Kaplan', cssBackground: img('novelty-kaplan-tigerish.png') },
+
+  // ── Riviera ──
+  { id: 'riviera', name: 'Riviera', category: 'Riviera', cssBackground: img('novelty-riviera.png') },
 ];
