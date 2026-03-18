@@ -378,8 +378,8 @@ const Index = () => {
         onSaveToWall={handleSaveToWall}
         isPremium={isPremium}
         onRequestUpgrade={() => setShowPaywall(true)}
-        onOpenToolKit={() => setShowToolKit(prev => !prev)}
-        toolKitOpen={showToolKit || !!studio.selectedElement}
+        onOpenToolKit={() => { setShowToolKit(prev => !prev); setToolKitMinimized(false); }}
+        toolKitOpen={showToolKit}
       />
 
       <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
