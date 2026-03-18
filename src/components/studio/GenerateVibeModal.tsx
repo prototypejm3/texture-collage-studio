@@ -164,35 +164,6 @@ export function GenerateVibeModal({ isOpen, isGenerating, generatedVibe, onClose
                       ))}
                     </div>
 
-                    {/* Stencil preview */}
-                    <div>
-                      <h4 className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">
-                        Layout Stencil
-                      </h4>
-                      <div className="w-32 h-32 mx-auto">
-                        <svg viewBox={generatedVibe.viewBox} className="w-full h-full">
-                          <rect width="100%" height="100%" fill="hsl(40, 15%, 96%)" rx="8" />
-                          {generatedVibe.sections.map(section => {
-                            const toneColors: Record<string, string> = {
-                              light: generatedVibe.palette[0]?.color || 'hsl(40, 20%, 88%)',
-                              medium: generatedVibe.palette[1]?.color || 'hsl(25, 25%, 60%)',
-                              dark: generatedVibe.palette[2]?.color || 'hsl(20, 20%, 30%)',
-                              accent: generatedVibe.palette[3]?.color || 'hsl(24, 60%, 50%)',
-                            };
-                            return (
-                              <path
-                                key={section.id}
-                                d={section.path}
-                                fill={toneColors[section.tone]}
-                                stroke="hsl(220, 10%, 75%)"
-                                strokeWidth={1.5}
-                                opacity={0.85}
-                              />
-                            );
-                          })}
-                        </svg>
-                      </div>
-                    </div>
                   </motion.div>
                 )}
 
