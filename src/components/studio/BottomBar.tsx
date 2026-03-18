@@ -16,6 +16,8 @@ interface Props {
   onRequestUpgrade?: () => void;
   onOpenToolKit?: () => void;
   toolKitOpen?: boolean;
+  onOpenStencils?: () => void;
+  stencilsOpen?: boolean;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
