@@ -27,12 +27,13 @@ export function useStudio() {
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
   const [displaySize, setDisplaySize] = useState<DesignSize>('medium');
-  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('gold');
+  const [wallFrameStyle, setWallFrameStyle] = useState<FrameStyle>('white');
   const [activeVibe, setActiveVibe] = useState<Vibe | null>(null);
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [drawMode, setDrawMode] = useState(false);
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
+  const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
