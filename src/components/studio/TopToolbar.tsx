@@ -97,7 +97,7 @@ export function TopToolbar({
             isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
-          <Ghost className="w-4 h-4" />
+          <Landmark className="w-4 h-4" />
           Gallery
         </Link>
       </div>
