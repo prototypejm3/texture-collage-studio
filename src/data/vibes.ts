@@ -2454,4 +2454,221 @@ const fairyHeadband: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony, neiceBeats, fairyHeadband];
+// ── GUITAR ──
+const guitar: Vibe = {
+  id: 'guitar',
+  name: 'Guitar',
+  emoji: '🎸',
+  category: 'Music',
+  baseLikes: 31, likesStartDate: '2026-03-04',
+  description: 'Acoustic guitar with strings and sound hole',
+  viewBox: '0 0 480 580',
+  sections: [
+    // Body
+    { id: 'guitar-body', label: 'Body', tone: 'medium',
+      path: 'M160,320 Q140,300 130,270 Q120,240 125,210 Q132,185 150,168 Q165,155 185,150 Q200,148 215,155 Q225,145 240,140 Q255,145 265,155 Q280,148 295,150 Q315,155 330,168 Q348,185 355,210 Q360,240 350,270 Q340,300 320,320 Q310,340 305,365 Q300,390 295,415 Q290,440 280,458 Q265,475 240,480 Q215,475 200,458 Q190,440 185,415 Q180,390 175,365 Q170,340 160,320 Z' },
+    // Sound hole
+    { id: 'guitar-hole', label: 'Sound Hole', tone: 'dark',
+      path: 'M210,260 Q212,240 225,228 Q240,220 255,228 Q268,240 270,260 Q268,280 255,292 Q240,300 225,292 Q212,280 210,260 Z' },
+    // Sound hole ring
+    { id: 'guitar-rosette', label: 'Rosette', tone: 'accent',
+      path: 'M200,260 Q202,232 220,216 Q240,205 260,216 Q278,232 280,260 Q278,288 260,304 Q240,315 220,304 Q202,288 200,260 Z M210,260 Q212,240 225,228 Q240,220 255,228 Q268,240 270,260 Q268,280 255,292 Q240,300 225,292 Q212,280 210,260 Z' },
+    // Neck
+    { id: 'guitar-neck', label: 'Neck', tone: 'dark',
+      path: 'M228,150 L252,150 L255,58 L225,58 Z' },
+    // Fretboard
+    { id: 'guitar-fretboard', label: 'Fretboard', tone: 'accent',
+      path: 'M230,148 L250,148 L253,60 L227,60 Z' },
+    // Headstock
+    { id: 'guitar-headstock', label: 'Headstock', tone: 'dark',
+      path: 'M222,58 Q218,45 215,30 Q214,18 220,10 Q230,4 240,4 Q250,4 260,10 Q266,18 265,30 Q262,45 258,58 Z' },
+    // Bridge
+    { id: 'guitar-bridge', label: 'Bridge', tone: 'dark',
+      path: 'M220,350 Q230,342 240,340 Q250,342 260,350 Q258,360 250,365 Q240,368 230,365 Q222,360 220,350 Z' },
+    // Strings
+    { id: 'guitar-strings', label: 'Strings', tone: 'light',
+      path: 'M233,58 L233,350 L235,350 L235,58 Z M238,58 L238,350 L240,350 L240,58 Z M243,58 L243,350 L245,350 L245,58 Z M248,58 L248,350 L250,350 L250,58 Z' },
+    // Tuning pegs left
+    { id: 'guitar-pegs-l', label: 'Left Pegs', tone: 'accent',
+      path: 'M210,22 Q206,22 206,18 Q206,14 210,14 Q214,14 214,18 Q214,22 210,22 Z M210,38 Q206,38 206,34 Q206,30 210,30 Q214,30 214,34 Q214,38 210,38 Z M210,52 Q206,52 206,48 Q206,44 210,44 Q214,44 214,48 Q214,52 210,52 Z' },
+    // Tuning pegs right
+    { id: 'guitar-pegs-r', label: 'Right Pegs', tone: 'accent',
+      path: 'M270,22 Q266,22 266,18 Q266,14 270,14 Q274,14 274,18 Q274,22 270,22 Z M270,38 Q266,38 266,34 Q266,30 270,30 Q274,30 274,34 Q274,38 270,38 Z M270,52 Q266,52 266,48 Q266,44 270,44 Q274,44 274,48 Q274,52 270,52 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── MUSIC NOTE ──
+const musicNote: Vibe = {
+  id: 'music-note',
+  name: 'Music Note',
+  emoji: '🎵',
+  category: 'Music',
+  baseLikes: 26, likesStartDate: '2026-03-06',
+  description: 'Double eighth notes connected by a beam',
+  viewBox: '0 0 480 480',
+  sections: [
+    // Left note head
+    { id: 'note-head-l', label: 'Left Note', tone: 'dark',
+      path: 'M120,380 Q100,370 90,350 Q85,330 95,315 Q110,300 135,300 Q158,302 170,318 Q180,335 175,355 Q168,372 148,382 Q132,388 120,380 Z' },
+    // Right note head
+    { id: 'note-head-r', label: 'Right Note', tone: 'dark',
+      path: 'M300,350 Q280,340 270,320 Q265,300 275,285 Q290,270 315,270 Q338,272 350,288 Q360,305 355,325 Q348,342 328,352 Q312,358 300,350 Z' },
+    // Left stem
+    { id: 'note-stem-l', label: 'Left Stem', tone: 'medium',
+      path: 'M170,320 L178,320 L178,120 L170,120 Z' },
+    // Right stem
+    { id: 'note-stem-r', label: 'Right Stem', tone: 'medium',
+      path: 'M350,290 L358,290 L358,90 L350,90 Z' },
+    // Beam
+    { id: 'note-beam', label: 'Beam', tone: 'accent',
+      path: 'M170,120 L358,90 L358,110 L170,140 Z' },
+    // Second beam
+    { id: 'note-beam-2', label: 'Lower Beam', tone: 'accent',
+      path: 'M170,155 L358,125 L358,145 L170,175 Z' },
+    // Flag decoration left
+    { id: 'note-flag-l', label: 'Left Flag', tone: 'light',
+      path: 'M170,130 Q185,125 195,118 Q205,110 210,100 Q208,108 200,118 Q190,128 178,135 Z' },
+    // Flag decoration right
+    { id: 'note-flag-r', label: 'Right Flag', tone: 'light',
+      path: 'M350,100 Q365,95 375,88 Q385,80 390,70 Q388,78 380,88 Q370,98 358,105 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── TAMBOURINE ──
+const tambourine: Vibe = {
+  id: 'tambourine',
+  name: 'Tambourine',
+  emoji: '🪘',
+  category: 'Music',
+  baseLikes: 20, likesStartDate: '2026-03-10',
+  description: 'Round tambourine with jingles',
+  viewBox: '0 0 480 480',
+  sections: [
+    // Outer ring
+    { id: 'tamb-ring', label: 'Frame', tone: 'medium',
+      path: 'M240,60 Q340,60 400,120 Q460,180 460,280 Q460,380 400,420 Q340,460 240,460 Q140,460 80,420 Q20,380 20,280 Q20,180 80,120 Q140,60 240,60 Z M240,100 Q160,100 115,145 Q70,195 70,280 Q70,365 115,400 Q160,435 240,435 Q320,435 365,400 Q410,365 410,280 Q410,195 365,145 Q320,100 240,100 Z' },
+    // Drum head
+    { id: 'tamb-head', label: 'Drum Head', tone: 'light',
+      path: 'M240,100 Q160,100 115,145 Q70,195 70,280 Q70,365 115,400 Q160,435 240,435 Q320,435 365,400 Q410,365 410,280 Q410,195 365,145 Q320,100 240,100 Z' },
+    // Jingle top
+    { id: 'tamb-jingle-1', label: 'Jingle Top', tone: 'accent',
+      path: 'M230,62 Q225,48 230,38 Q238,32 248,38 Q255,48 250,62 Q245,68 240,68 Q235,68 230,62 Z' },
+    // Jingle right
+    { id: 'tamb-jingle-2', label: 'Jingle Right', tone: 'accent',
+      path: 'M458,270 Q468,265 475,270 Q480,280 475,290 Q468,296 458,290 Q452,284 452,278 Q452,272 458,270 Z' },
+    // Jingle bottom
+    { id: 'tamb-jingle-3', label: 'Jingle Bottom', tone: 'accent',
+      path: 'M230,458 Q225,468 230,478 Q238,484 248,478 Q255,468 250,458 Q245,452 240,452 Q235,452 230,458 Z' },
+    // Jingle left
+    { id: 'tamb-jingle-4', label: 'Jingle Left', tone: 'accent',
+      path: 'M22,270 Q12,265 5,270 Q0,280 5,290 Q12,296 22,290 Q28,284 28,278 Q28,272 22,270 Z' },
+    // Jingle top-right
+    { id: 'tamb-jingle-5', label: 'Jingle TR', tone: 'dark',
+      path: 'M390,85 Q398,78 408,82 Q414,92 408,100 Q398,105 390,100 Q385,94 385,88 Q385,85 390,85 Z' },
+    // Jingle bottom-right
+    { id: 'tamb-jingle-6', label: 'Jingle BR', tone: 'dark',
+      path: 'M390,435 Q398,442 408,438 Q414,428 408,420 Q398,415 390,420 Q385,426 385,432 Q385,435 390,435 Z' },
+    // Jingle bottom-left
+    { id: 'tamb-jingle-7', label: 'Jingle BL', tone: 'dark',
+      path: 'M90,435 Q82,442 72,438 Q66,428 72,420 Q82,415 90,420 Q95,426 95,432 Q95,435 90,435 Z' },
+    // Jingle top-left
+    { id: 'tamb-jingle-8', label: 'Jingle TL', tone: 'dark',
+      path: 'M90,85 Q82,78 72,82 Q66,92 72,100 Q82,105 90,100 Q95,94 95,88 Q95,85 90,85 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── MARACAS ──
+const maracas: Vibe = {
+  id: 'maracas',
+  name: 'Maracas',
+  emoji: '🪇',
+  category: 'Music',
+  baseLikes: 18, likesStartDate: '2026-03-12',
+  description: 'Pair of maracas ready to shake',
+  viewBox: '0 0 480 520',
+  sections: [
+    // Left maraca head
+    { id: 'maraca-head-l', label: 'Left Head', tone: 'accent',
+      path: 'M120,180 Q95,165 80,140 Q70,112 78,85 Q88,60 110,48 Q135,38 160,45 Q185,55 198,78 Q208,105 200,135 Q190,162 168,180 Q148,192 128,190 Q118,188 120,180 Z' },
+    // Right maraca head
+    { id: 'maraca-head-r', label: 'Right Head', tone: 'accent',
+      path: 'M360,180 Q385,165 400,140 Q410,112 402,85 Q392,60 370,48 Q345,38 320,45 Q295,55 282,78 Q272,105 280,135 Q290,162 312,180 Q332,192 352,190 Q362,188 360,180 Z' },
+    // Left stripe
+    { id: 'maraca-stripe-l', label: 'Left Stripe', tone: 'dark',
+      path: 'M105,120 Q118,108 138,105 Q158,108 170,120 Q175,132 168,142 Q155,150 138,148 Q118,145 108,135 Q102,128 105,120 Z' },
+    // Right stripe
+    { id: 'maraca-stripe-r', label: 'Right Stripe', tone: 'dark',
+      path: 'M375,120 Q362,108 342,105 Q322,108 310,120 Q305,132 312,142 Q325,150 342,148 Q362,145 372,135 Q378,128 375,120 Z' },
+    // Left handle
+    { id: 'maraca-handle-l', label: 'Left Handle', tone: 'medium',
+      path: 'M130,188 Q125,195 120,210 Q112,240 108,275 Q105,310 108,345 Q110,380 118,410 Q122,430 130,445 Q136,455 142,450 Q146,440 142,420 Q135,390 130,355 Q125,318 128,280 Q130,245 138,215 Q142,200 140,192 Q136,186 130,188 Z' },
+    // Right handle
+    { id: 'maraca-handle-r', label: 'Right Handle', tone: 'medium',
+      path: 'M350,188 Q355,195 360,210 Q368,240 372,275 Q375,310 372,345 Q370,380 362,410 Q358,430 350,445 Q344,455 338,450 Q334,440 338,420 Q345,390 350,355 Q355,318 352,280 Q350,245 342,215 Q338,200 340,192 Q344,186 350,188 Z' },
+    // Left tip dots
+    { id: 'maraca-dots-l', label: 'Left Dots', tone: 'light',
+      path: 'M125,80 Q128,75 132,78 Q134,82 130,85 Q126,84 125,80 Z M145,65 Q148,60 152,63 Q154,68 150,70 Q146,68 145,65 Z M108,105 Q112,100 116,104 Q116,108 112,110 Q108,108 108,105 Z M155,90 Q158,86 162,90 Q162,94 158,96 Q154,94 155,90 Z' },
+    // Right tip dots
+    { id: 'maraca-dots-r', label: 'Right Dots', tone: 'light',
+      path: 'M355,80 Q352,75 348,78 Q346,82 350,85 Q354,84 355,80 Z M335,65 Q332,60 328,63 Q326,68 330,70 Q334,68 335,65 Z M372,105 Q368,100 364,104 Q364,108 368,110 Q372,108 372,105 Z M325,90 Q322,86 318,90 Q318,94 322,96 Q326,94 325,90 Z' },
+    // Left handle grip
+    { id: 'maraca-grip-l', label: 'Left Grip', tone: 'light',
+      path: 'M118,395 Q122,390 128,392 Q132,398 128,405 Q122,408 118,402 Q116,398 118,395 Z M115,420 Q120,416 126,418 Q128,425 124,430 Q118,432 114,426 Q114,422 115,420 Z' },
+    // Right handle grip
+    { id: 'maraca-grip-r', label: 'Right Grip', tone: 'light',
+      path: 'M362,395 Q358,390 352,392 Q348,398 352,405 Q358,408 362,402 Q364,398 362,395 Z M365,420 Q360,416 354,418 Q352,425 356,430 Q362,432 366,426 Q366,422 365,420 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── TRUMPET ──
+const trumpet: Vibe = {
+  id: 'trumpet',
+  name: 'Trumpet',
+  emoji: '🎺',
+  category: 'Music',
+  baseLikes: 24, likesStartDate: '2026-03-07',
+  description: 'Brass trumpet with valves and bell',
+  viewBox: '0 0 580 320',
+  sections: [
+    // Bell
+    { id: 'trumpet-bell', label: 'Bell', tone: 'accent',
+      path: 'M420,160 Q440,100 470,65 Q498,38 525,30 Q548,28 560,45 Q568,65 565,95 Q558,130 540,160 Q558,190 565,225 Q568,255 560,275 Q548,292 525,290 Q498,282 470,255 Q440,220 420,160 Z' },
+    // Bell rim
+    { id: 'trumpet-rim', label: 'Bell Rim', tone: 'dark',
+      path: 'M540,160 Q558,130 565,95 Q568,65 560,45 Q572,62 572,95 Q570,135 555,160 Q570,185 572,225 Q572,258 560,275 Q568,255 565,225 Q558,190 540,160 Z' },
+    // Main tube
+    { id: 'trumpet-tube', label: 'Tube', tone: 'medium',
+      path: 'M60,148 L420,148 L420,172 L60,172 Z' },
+    // Valve section
+    { id: 'trumpet-valves-bg', label: 'Valve Block', tone: 'medium',
+      path: 'M200,135 Q198,125 200,118 L340,118 Q342,125 340,135 L340,185 Q342,195 340,202 L200,202 Q198,195 200,185 Z' },
+    // Valve 1
+    { id: 'trumpet-valve-1', label: 'Valve 1', tone: 'dark',
+      path: 'M220,118 L240,118 L240,88 Q238,78 230,78 Q222,78 220,88 Z' },
+    // Valve 2
+    { id: 'trumpet-valve-2', label: 'Valve 2', tone: 'dark',
+      path: 'M262,118 L282,118 L282,82 Q280,72 272,72 Q264,72 262,82 Z' },
+    // Valve 3
+    { id: 'trumpet-valve-3', label: 'Valve 3', tone: 'dark',
+      path: 'M304,118 L324,118 L324,88 Q322,78 314,78 Q306,78 304,88 Z' },
+    // Valve caps
+    { id: 'trumpet-caps', label: 'Valve Caps', tone: 'accent',
+      path: 'M222,78 Q226,70 230,68 Q234,70 238,78 Z M264,72 Q268,64 272,62 Q276,64 280,72 Z M306,78 Q310,70 314,68 Q318,70 322,78 Z' },
+    // Mouthpiece
+    { id: 'trumpet-mouthpiece', label: 'Mouthpiece', tone: 'light',
+      path: 'M20,152 Q10,155 8,160 Q10,165 20,168 L60,168 L60,152 Z' },
+    // Mouthpiece cup
+    { id: 'trumpet-cup', label: 'Mouthpiece Cup', tone: 'dark',
+      path: 'M8,152 Q2,155 0,160 Q2,165 8,168 Q12,165 14,160 Q12,155 8,152 Z' },
+    // Slide tubes (bottom)
+    { id: 'trumpet-slide', label: 'Tuning Slide', tone: 'medium',
+      path: 'M220,202 L220,235 Q220,250 235,250 L285,250 Q300,250 300,235 L300,202 L290,202 L290,230 Q290,240 280,240 L240,240 Q230,240 230,230 L230,202 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];

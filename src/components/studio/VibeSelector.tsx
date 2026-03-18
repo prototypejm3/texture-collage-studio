@@ -94,9 +94,41 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
   };
 
+  // Theme groupings for organized display
+  const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
+    { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
+    { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
+    { label: 'Sea Life', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish']) },
+    { label: 'Food & Fruit', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
+    { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
+    { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
+    { label: 'Music', emoji: '🎵', ids: new Set([]) }, // category-based
+  ];
+
   const allVibes = [...vibes, ...aiGeneratedVibes];
-  const mainVibes = allVibes.filter(v => !v.category);
-  const communityVibes = allVibes.filter(v => v.category === 'Community');
+  
+  // Collect IDs used in theme groups
+  const themedIds = new Set<string>();
+  themeGroups.forEach(g => g.ids.forEach(id => themedIds.add(id)));
+  
+  // Build sections
+  const sections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
+  
+  for (const group of themeGroups) {
+    const items = allVibes.filter(v => 
+      group.ids.has(v.id) || (v.category === group.label)
+    );
+    if (items.length > 0) sections.push({ label: group.label, emoji: group.emoji, vibes: items });
+    // Track themed
+    items.forEach(v => themedIds.add(v.id));
+  }
+  
+  // Community section
+  const communityVibes = allVibes.filter(v => v.category === 'Community' && !themedIds.has(v.id));
+  
+  // Uncategorized goes first
+  const uncategorized = allVibes.filter(v => !themedIds.has(v.id) && v.category !== 'Community');
 
   const renderVibeCard = (vibe: Vibe) => {
     const isActive = activeVibeId === vibe.id;
@@ -277,15 +309,35 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
 
               {/* Stencil Grid */}
               <div className="flex-1 overflow-y-auto px-6 py-4">
-                <div className="grid grid-cols-4 gap-3">
-                  {mainVibes.map(vibe => renderVibeCard(vibe))}
-                </div>
+                {/* Uncategorized */}
+                {uncategorized.length > 0 && (
+                  <div className="grid grid-cols-4 gap-3">
+                    {uncategorized.map(vibe => renderVibeCard(vibe))}
+                  </div>
+                )}
 
+                {/* Theme sections */}
+                {sections.map(section => (
+                  <div key={section.label}>
+                    <div className="flex items-center gap-3 mt-6 mb-3">
+                      <div className="h-px flex-1 bg-border" />
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                        {section.emoji} {section.label}
+                      </span>
+                      <div className="h-px flex-1 bg-border" />
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      {section.vibes.map(vibe => renderVibeCard(vibe))}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Community */}
                 {communityVibes.length > 0 && (
                   <>
                     <div className="flex items-center gap-3 mt-6 mb-3">
                       <div className="h-px flex-1 bg-border" />
-                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Community</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">🤝 Community</span>
                       <div className="h-px flex-1 bg-border" />
                     </div>
                     <div className="grid grid-cols-4 gap-3">
