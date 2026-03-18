@@ -2165,4 +2165,51 @@ const schoolFish: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish];
+// ── SCUBA SKIBA ──
+const scubaSkiba: Vibe = {
+  id: 'scuba-skiba', name: 'Scuba Skiba', emoji: '🤿',
+  description: 'Scuba diver with tank, mask & flippers',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'ss-beanie', label: 'Beanie', tone: 'accent',
+      path: 'M218,52 Q222,35 238,25 Q255,22 268,30 Q278,42 278,58 Q275,72 268,82 Q255,88 240,88 Q225,85 218,75 Q215,65 218,52 Z' },
+    { id: 'ss-goggles', label: 'Goggles', tone: 'dark',
+      path: 'M208,82 Q205,92 208,102 Q215,112 228,115 Q242,118 258,115 Q272,112 278,102 Q282,92 278,82 Q268,88 255,92 Q240,92 228,90 Q215,88 208,82 Z' },
+    { id: 'ss-lens-l', label: 'Left Lens', tone: 'light', path: circlePath(225, 98, 10) },
+    { id: 'ss-lens-r', label: 'Right Lens', tone: 'light', path: circlePath(258, 98, 10) },
+    { id: 'ss-face', label: 'Face', tone: 'medium',
+      path: 'M218,112 Q215,125 218,138 Q225,152 240,158 Q255,152 262,138 Q268,125 265,112 Q258,115 248,118 Q235,118 225,115 Z' },
+    { id: 'ss-torso-upper', label: 'Upper Suit', tone: 'accent',
+      path: 'M212,158 Q198,168 188,185 Q180,205 178,225 Q205,228 240,230 Q275,228 302,225 Q300,205 292,185 Q282,168 268,158 Q258,155 248,155 Q232,155 218,158 Z' },
+    { id: 'ss-chest-v', label: 'Chest V', tone: 'dark',
+      path: 'M225,162 Q232,178 240,192 Q248,178 255,162 Q248,158 240,155 Q232,158 225,162 Z' },
+    { id: 'ss-torso-lower', label: 'Lower Suit', tone: 'dark',
+      path: 'M178,225 Q175,252 178,282 Q182,308 188,328 Q198,325 212,322 Q228,320 240,320 Q252,320 268,322 Q282,325 292,328 Q298,308 302,282 Q305,252 302,225 Q275,228 240,230 Q205,228 178,225 Z' },
+    { id: 'ss-belt', label: 'Belt', tone: 'dark',
+      path: 'M175,248 Q178,242 240,240 Q302,242 305,248 L305,258 Q302,262 240,260 Q178,262 175,258 Z' },
+    { id: 'ss-buckle', label: 'Buckle', tone: 'accent', path: circlePath(240, 252, 8) },
+    { id: 'ss-tank', label: 'Tank', tone: 'accent',
+      path: 'M290,148 Q302,145 315,148 Q325,158 328,178 Q330,205 328,235 Q325,262 318,278 Q310,288 298,285 Q288,278 285,262 Q282,235 282,205 Q282,178 285,158 Z' },
+    { id: 'ss-tank-valve', label: 'Tank Valve', tone: 'dark',
+      path: 'M298,142 Q302,132 308,128 Q315,128 318,135 Q320,142 318,148 Q312,148 305,148 Z' },
+    { id: 'ss-arm-l', label: 'Left Arm', tone: 'accent',
+      path: 'M188,185 Q172,195 158,212 Q148,228 142,248 Q138,265 142,278 Q148,285 155,282 Q162,272 168,255 Q175,238 185,222 Q192,208 198,198 Z' },
+    { id: 'ss-glove-l', label: 'Left Glove', tone: 'accent',
+      path: 'M142,278 Q135,292 130,305 Q128,315 132,322 Q138,325 145,318 Q152,305 155,292 Q155,285 152,280 Z' },
+    { id: 'ss-arm-r', label: 'Right Arm', tone: 'accent',
+      path: 'M292,185 Q305,198 315,215 Q325,235 330,258 Q332,275 328,288 Q322,295 315,288 Q310,275 305,255 Q298,238 290,222 Q285,208 282,198 Z' },
+    { id: 'ss-glove-r', label: 'Right Glove', tone: 'accent',
+      path: 'M328,288 Q335,302 340,315 Q342,325 338,332 Q332,335 325,328 Q318,315 315,302 Q315,295 318,290 Z' },
+    { id: 'ss-leg-l', label: 'Left Leg', tone: 'dark',
+      path: 'M195,328 Q188,352 182,378 Q178,405 175,428 Q172,445 170,455 Q195,452 198,442 Q200,418 202,392 Q205,365 208,342 Z' },
+    { id: 'ss-leg-r', label: 'Right Leg', tone: 'dark',
+      path: 'M275,328 Q280,352 285,378 Q288,405 290,428 Q292,445 295,455 Q268,452 265,442 Q262,418 260,392 Q258,365 258,342 Z' },
+    { id: 'ss-flipper-l', label: 'Left Flipper', tone: 'accent',
+      path: 'M170,455 Q158,458 142,462 Q125,468 112,475 Q105,480 108,485 Q118,488 135,485 Q155,478 170,468 Q178,462 182,458 Z' },
+    { id: 'ss-flipper-r', label: 'Right Flipper', tone: 'accent',
+      path: 'M295,455 Q308,458 325,462 Q342,468 358,475 Q365,480 362,485 Q352,488 335,485 Q315,478 298,468 Q290,462 288,458 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, scubaSkiba];
