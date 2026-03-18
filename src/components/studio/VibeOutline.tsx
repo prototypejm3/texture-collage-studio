@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, defaultSectionTransform } from '@/types/studio';
 import { textures } from '@/data/textures';
-import { Paintbrush, Scissors, Trash2, RotateCw } from 'lucide-react';
+import { Paintbrush, Scissors, Trash2, RotateCw, Copy } from 'lucide-react';
 
 interface Props {
   vibe: Vibe;
