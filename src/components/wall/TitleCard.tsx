@@ -35,7 +35,7 @@ export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProp
         )}
 
         {/* Year + vibeName as material/medium line */}
-        <p className={`text-[9px] tracking-[0.06em] leading-snug ${textBase} opacity-80`}>
+        <p className={`text-[9px] font-medium tracking-[0.06em] leading-snug ${textBase} opacity-80`}>
           {[
             new Date(design.createdAt).getFullYear(),
             design.materials,
