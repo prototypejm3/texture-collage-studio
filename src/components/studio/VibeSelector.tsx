@@ -127,7 +127,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   // Community section
   const communityVibes = allVibes.filter(v => v.category === 'Community' && !themedIds.has(v.id));
   
-  // Uncategorized goes first
+  // Any remaining stencils that don't belong to a theme
   const uncategorized = allVibes.filter(v => !themedIds.has(v.id) && v.category !== 'Community');
 
   const renderVibeCard = (vibe: Vibe) => {
