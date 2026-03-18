@@ -233,7 +233,7 @@ export const textures: TextureSwatch[] = [
   // ── Corinne ──
   { id: 'corinne-mulberry', name: 'Corinne Crush', category: 'Corinne', cssBackground: img('novelty-corinne-mulberry.png') },
   { id: 'corinne-plum', name: 'Corinne Plum', category: 'Corinne', cssBackground: img('novelty-corinne-plum.png') },
-  { id: 'corinne-lavender', name: 'Lavender', category: 'Corinne', cssBackground: img('novelty-corinne-lavender.png') },
+  { id: 'corinne-lavender', name: 'Mulberry', category: 'Corinne', cssBackground: img('novelty-corinne-lavender.png') },
 
   // ── ShayShari ──
   { id: 'shayshari-terra', name: 'ShayShari', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
