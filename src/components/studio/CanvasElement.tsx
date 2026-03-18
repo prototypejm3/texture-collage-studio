@@ -130,10 +130,14 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const texture = allTex.find(t => t.id === element.textureId);
   if (!texture) return null;
 
-  const effectStyles = getEffectStyles(element.effects);
   const clipPath = getClipPath(element.shape);
+  const filter = getFilterStyles(element.effects);
+  const shadow = getShadowStyle(element.effects.shadowDepth);
+  const { maskImage, borderRadius } = getEdgeMask(element.effects.edgeStyle);
+  const hasScissorEdge = !!maskImage;
 
   return (
+    // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
     <div
       ref={ref}
       onMouseDown={handleMouseDown}
@@ -141,7 +145,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         e.stopPropagation();
         onSelect();
       }}
-      className={`absolute cursor-move transition-shadow pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
       style={{
         left: element.x,
         top: element.y,
@@ -149,11 +153,25 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         height: element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
-        background: texture.cssBackground,
-        backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
-        clipPath,
-        ...effectStyles,
+        filter: shadow !== 'none' ? `drop-shadow(${shadow === getShadowStyle('lifted') ? '0 4px 6px hsla(220, 20%, 12%, 0.25)' : '0 12px 16px hsla(220, 20%, 12%, 0.3)'})` : undefined,
       }}
-    />
+    >
+      {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
+      <div
+        className="w-full h-full"
+        style={{
+          background: texture.cssBackground,
+          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+          clipPath: hasScissorEdge ? undefined : clipPath,
+          borderRadius,
+          filter,
+          WebkitMaskImage: maskImage,
+          WebkitMaskComposite: maskImage ? 'destination-in' as any : undefined,
+          maskImage,
+          maskComposite: maskImage ? 'intersect' as any : undefined,
+        }}
+      />
+    </div>
+  );
   );
 }
