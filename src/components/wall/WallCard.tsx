@@ -126,6 +126,14 @@ const shadowBoxStyles: Record<string, {
     outerShadow: '0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)',
     innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.04)',
   },
+  black: {
+    outerBg: 'linear-gradient(145deg, hsl(0, 0%, 15%) 0%, hsl(0, 0%, 8%) 20%, hsl(0, 0%, 18%) 40%, hsl(0, 0%, 6%) 60%, hsl(0, 0%, 14%) 80%, hsl(0, 0%, 10%) 100%)',
+    borderColor: 'hsl(0, 0%, 4%)',
+    innerBg: 'linear-gradient(135deg, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 16%) 50%, hsl(0, 0%, 12%) 100%)',
+    matBg: 'hsl(0, 0%, 97%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.15)',
+  },
   polaroid: {
     outerBg: 'hsl(0, 0%, 100%)',
     borderColor: 'hsl(0, 0%, 88%)',
