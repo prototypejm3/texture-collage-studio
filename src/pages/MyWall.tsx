@@ -229,6 +229,7 @@ const MyWall = () => {
             settings={currentSettings}
             onUpdate={handleUpdateSettings}
             onApplyFrameToAll={handleApplyFrameToAll}
+            onApplyHangingToAll={handleApplyHangingToAll}
             isPremium={isPremium}
           />
 
