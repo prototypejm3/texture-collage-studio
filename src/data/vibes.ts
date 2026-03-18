@@ -2354,4 +2354,51 @@ const sunshinePony: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony];
+// ── NEICE BEATS (Bongo Drums) ──
+const neiceBeats: Vibe = {
+  id: 'neice-beats',
+  name: 'Neice Beats',
+  emoji: '🥁',
+  category: 'Community',
+  creator: 'butterbb',
+  description: 'Pair of bongo drums ready to jam',
+  viewBox: '0 0 480 480',
+  sections: [
+    // Left drum body
+    { id: 'bongo-left-body', label: 'Left Drum', tone: 'medium',
+      path: 'M90,180 Q88,160 95,145 Q105,130 125,122 Q148,115 170,118 Q192,122 208,135 Q220,148 222,168 L225,340 Q224,362 215,375 Q200,390 175,395 Q148,398 125,392 Q105,385 95,370 Q88,358 87,340 Z' },
+    // Right drum body
+    { id: 'bongo-right-body', label: 'Right Drum', tone: 'medium',
+      path: 'M258,165 Q256,145 265,128 Q278,112 300,105 Q328,98 355,102 Q378,108 392,125 Q402,142 404,165 L407,355 Q405,378 395,392 Q380,408 355,414 Q328,418 305,412 Q282,405 270,390 Q260,375 258,355 Z' },
+    // Left drum head (top skin)
+    { id: 'bongo-left-head', label: 'Left Head', tone: 'light',
+      path: 'M92,175 Q90,155 100,140 Q112,128 132,120 Q155,114 175,118 Q195,124 210,138 Q220,152 222,172 Q218,188 205,198 Q188,208 168,212 Q145,214 125,208 Q108,200 98,188 Q92,182 92,175 Z' },
+    // Right drum head (top skin)
+    { id: 'bongo-right-head', label: 'Right Head', tone: 'light',
+      path: 'M260,160 Q258,138 270,122 Q285,108 305,100 Q332,94 358,100 Q378,108 392,125 Q400,142 402,162 Q398,180 385,192 Q368,204 345,210 Q322,214 302,208 Q282,200 268,186 Q260,175 260,160 Z' },
+    // Left drum rim
+    { id: 'bongo-left-rim', label: 'Left Rim', tone: 'dark',
+      path: 'M88,170 Q86,155 96,138 Q110,124 130,116 Q155,110 178,114 Q198,120 214,135 Q225,150 226,170 Q224,178 218,168 Q210,148 195,136 Q178,126 155,122 Q132,120 115,128 Q100,138 94,155 Q90,165 88,170 Z' },
+    // Right drum rim
+    { id: 'bongo-right-rim', label: 'Right Rim', tone: 'dark',
+      path: 'M255,158 Q253,138 265,120 Q280,105 302,96 Q330,90 358,96 Q380,104 396,120 Q406,138 408,160 Q405,168 400,158 Q394,140 380,126 Q362,114 340,108 Q318,104 300,110 Q282,118 272,135 Q262,150 255,158 Z' },
+    // Center bridge connecting drums
+    { id: 'bongo-bridge', label: 'Bridge', tone: 'dark',
+      path: 'M218,200 Q228,195 240,192 Q252,190 262,195 L265,360 Q258,368 248,370 Q238,370 228,365 L225,200 Z' },
+    // Left drum bottom ring
+    { id: 'bongo-left-bottom', label: 'Left Base', tone: 'dark',
+      path: 'M87,330 Q86,350 92,365 Q102,382 120,390 Q142,396 165,394 Q188,390 205,378 Q218,365 222,345 Q224,355 220,372 Q210,390 192,400 Q170,408 145,410 Q120,408 102,398 Q88,388 82,370 Q80,355 82,340 Z' },
+    // Right drum bottom ring
+    { id: 'bongo-right-bottom', label: 'Right Base', tone: 'dark',
+      path: 'M255,345 Q254,365 260,382 Q272,400 292,410 Q315,418 340,416 Q365,412 382,400 Q396,388 402,368 Q405,378 400,395 Q390,412 370,422 Q348,430 322,432 Q298,430 278,420 Q262,408 255,390 Q250,375 252,355 Z' },
+    // Left drum decoration stripe
+    { id: 'bongo-left-stripe', label: 'Left Pattern', tone: 'accent',
+      path: 'M92,240 Q95,235 110,232 Q135,228 160,230 Q185,232 205,238 Q218,242 220,248 L220,268 Q215,272 200,275 Q178,278 155,276 Q130,274 110,268 Q95,264 92,260 Z' },
+    // Right drum decoration stripe
+    { id: 'bongo-right-stripe', label: 'Right Pattern', tone: 'accent',
+      path: 'M260,230 Q264,225 282,220 Q310,216 340,218 Q368,222 388,228 Q400,234 402,240 L402,260 Q398,265 382,270 Q358,274 332,272 Q308,270 285,264 Q268,258 260,252 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony, neiceBeats];
