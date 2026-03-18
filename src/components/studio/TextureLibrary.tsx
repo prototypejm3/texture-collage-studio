@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, PenTool, Star, Grid3X3, Maximize } from 'lucide-react';
+import { Upload, X, Lock, Star, Grid3X3, Maximize } from 'lucide-react';
 
 interface TextureGroup {
   label: string;
