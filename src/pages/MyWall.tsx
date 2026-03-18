@@ -435,15 +435,17 @@ const MyWall = () => {
 
           {/* Tabs + controls */}
           <div className="flex items-center gap-4 mt-8 mb-8">
-            <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isDark ? 'bg-background/10' : 'bg-secondary/40'}`}>
+            <div className="flex items-center gap-2">
               {([['all', 'All'], ['display', 'Display'], ['hidden', 'Hidden'], ['draft', 'Draft']] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
-                  className={`px-3 py-1 text-[11px] font-medium rounded-md transition-colors tracking-wide ${
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all ${
                     activeTab === val
-                      ? isDark ? 'bg-background/20 text-background' : 'bg-background text-foreground shadow-sm'
-                      : isDark ? 'text-background/40 hover:text-background/60' : 'text-muted-foreground/60 hover:text-foreground/60'
+                      ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                      : isDark
+                        ? 'bg-transparent text-white/70 border-white/20 hover:bg-white/10 hover:text-white'
+                        : 'bg-transparent text-foreground/60 border-border hover:bg-secondary hover:text-foreground'
                   }`}
                 >
                   {label}
