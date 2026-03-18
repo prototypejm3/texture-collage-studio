@@ -56,7 +56,8 @@ export function Canvas({
     const solid = solidFrames[frameColor];
     if (solid) {
       return {
-        background: solid.bg,
+        bg: solid.bg,
+        bgSize: undefined as string | undefined,
         border: `3px solid ${solid.border}`,
         shadow: solid.shadow,
         innerBg: solid.innerBg,
@@ -66,15 +67,16 @@ export function Canvas({
     const tex = allTextures.find(t => t.id === frameColor);
     if (tex) {
       return {
-        background: tex.cssBackground,
-        backgroundSize: 'cover',
+        bg: tex.cssBackground,
+        bgSize: 'cover' as string | undefined,
         border: '3px solid hsla(0, 0%, 50%, 0.2)',
         shadow: 'hsla(0, 0%, 0%, 0.15)',
         innerBg: 'hsl(40, 20%, 97%)',
       };
     }
     // Fallback
-    return solidFrames.white;
+    const fb = solidFrames.white;
+    return { bg: fb.bg, bgSize: undefined as string | undefined, border: `3px solid ${fb.border}`, shadow: fb.shadow, innerBg: fb.innerBg };
   }, [frameColor, allTextures]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
