@@ -37,7 +37,7 @@ export function NavBar() {
           isCreate ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
-        <Palette className="w-4 h-4" />
+        <Brush className="w-4 h-4" />
         Create
       </Link>
       <Link
