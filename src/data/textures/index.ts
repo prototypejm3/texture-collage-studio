@@ -61,4 +61,29 @@ export const textures: TextureSwatch[] = [
   { id: 'fruit-citrus', name: 'Fruit Citrus', category: 'Fruit', cssBackground: img('fruit-citrus.png') },
   { id: 'fruit-apple', name: 'Fruit Apple', category: 'Fruit', cssBackground: img('fruit-apple.png') },
   { id: 'fruit-plum', name: 'Fruit Plum', category: 'Fruit', cssBackground: img('fruit-plum.png') },
+
+  // ── Animal ──
+  { id: 'animal-cheetah', name: 'Cheetah', category: 'Animal', cssBackground: img('cheetah-print.png') },
+  { id: 'animal-cheetah-white', name: 'White Cheetah', category: 'Animal', cssBackground: img('cheetah-white.png') },
+  { id: 'animal-cow', name: 'Cow Print', category: 'Animal', cssBackground: img('cow-print.png') },
+  { id: 'animal-zebra', name: 'Zebra', category: 'Animal', cssBackground: img('zebra-print.png') },
+
+  // ── Novelty ──
+  { id: 'novelty-apples', name: 'Apples', category: 'Novelty', cssBackground: img('novelty-apples.png') },
+  { id: 'novelty-bananas', name: 'Bananas', category: 'Novelty', cssBackground: img('novelty-bananas.png') },
+
+  // ── Stripe ──
+  { id: 'stripe-ink', name: 'Ink Stripe', category: 'Stripe', cssBackground: img('stripe-ink.png') },
+  { id: 'stripe-pinstripe', name: 'Pinstripe', category: 'Stripe', cssBackground: img('stripe-pinstripe.png') },
+  { id: 'stripe-woven', name: 'Woven Stripe', category: 'Stripe', cssBackground: img('stripe-woven.png') },
+
+  // ── Wood ──
+  { id: 'wood-oak', name: 'Oak', category: 'Wood', cssBackground: img('wood-oak.png') },
+  { id: 'wood-walnut', name: 'Walnut', category: 'Wood', cssBackground: img('wood-walnut.png') },
+  { id: 'wood-birch', name: 'Birch', category: 'Wood', cssBackground: img('wood-birch.png') },
+
+  // ── Concrete ──
+  { id: 'concrete-raw', name: 'Raw', category: 'Concrete', cssBackground: img('concrete-raw.png') },
+  { id: 'concrete-polished', name: 'Polished', category: 'Concrete', cssBackground: img('concrete-polished.png') },
+  { id: 'concrete-weathered', name: 'Weathered', category: 'Concrete', cssBackground: img('concrete-weathered.png') },
 ];
