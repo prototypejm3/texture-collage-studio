@@ -291,6 +291,7 @@ export function TextureLibrary({
               onDragStart={onDragStart}
               onTextureClick={onTextureClick}
               onRemoveCustomTexture={onRemoveCustomTexture}
+              viewMode={swatchView}
             />
           ))}
         </div>
