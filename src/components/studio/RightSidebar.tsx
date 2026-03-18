@@ -161,7 +161,7 @@ export function RightSidebar({
   ];
 
   const dbCommunityVibes = social.publicStencils.map(social.recordToVibe);
-  const communityVibes = [...builtInCommunityVibes, ...dbCommunityVibes];
+  const communityVibes = [...builtInCommunityVibes, ...builtInCategoryVibes, ...dbCommunityVibes];
 
   // Hidden stencils: built-in vibes that are hidden
   const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
