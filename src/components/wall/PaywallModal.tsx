@@ -90,8 +90,11 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
                   className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  Unlock My Wall — $4.99
+                  Unlock — $4.99
                 </a>
+                <p className="text-center text-[11px] text-muted-foreground -mt-1">
+                  Includes a 7-day free trial · Cancel anytime
+                </p>
                 <button
                   onClick={onReplace}
                   className="w-full py-2.5 rounded-xl bg-secondary text-secondary-foreground text-sm font-medium hover:bg-accent transition-colors flex items-center justify-center gap-2"
