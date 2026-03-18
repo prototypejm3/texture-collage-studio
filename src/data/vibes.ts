@@ -2299,4 +2299,58 @@ const fairy: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy];
+// ── SUNSHINE PONY ──
+const sunshinePony: Vibe = {
+  id: 'sunshine-pony',
+  name: 'Sunshine Pony',
+  emoji: '🐴',
+  description: 'Galloping horse silhouette with flowing mane & tail',
+  viewBox: '0 0 480 480',
+  sections: [
+    // Body
+    { id: 'pony-body', label: 'Body', tone: 'medium',
+      path: 'M180,200 Q195,175 220,168 Q250,160 280,165 Q310,170 335,185 Q358,200 370,220 Q380,240 375,260 Q368,278 350,288 Q330,296 305,295 Q280,294 260,290 Q240,286 220,278 Q200,270 188,255 Q178,240 175,222 Q175,210 180,200 Z' },
+    // Neck
+    { id: 'pony-neck', label: 'Neck', tone: 'medium',
+      path: 'M195,210 Q188,195 178,175 Q170,158 165,140 Q162,125 168,115 Q178,108 190,115 Q200,125 208,142 Q215,160 220,175 Q222,188 218,200 Q210,208 195,210 Z' },
+    // Head
+    { id: 'pony-head', label: 'Head', tone: 'dark',
+      path: 'M168,115 Q162,105 152,95 Q142,88 130,85 Q118,84 110,90 Q105,98 108,108 Q112,118 122,125 Q135,132 148,132 Q160,130 168,122 Q170,118 168,115 Z' },
+    // Ear
+    { id: 'pony-ear', label: 'Ear', tone: 'dark',
+      path: 'M140,88 Q142,72 148,62 Q155,56 158,64 Q156,76 150,86 Q146,90 140,88 Z' },
+    // Eye
+    { id: 'pony-eye', label: 'Eye', tone: 'accent',
+      path: 'M128,100 Q132,96 138,97 Q142,100 140,105 Q136,108 130,107 Q126,104 128,100 Z' },
+    // Mane
+    { id: 'pony-mane', label: 'Mane', tone: 'accent',
+      path: 'M155,70 Q165,78 172,95 Q180,112 185,132 Q190,150 192,168 Q194,180 190,185 Q184,178 180,160 Q175,142 168,125 Q160,110 150,98 Q142,88 138,78 Q140,68 148,65 Q152,66 155,70 Z' },
+    // Tail
+    { id: 'pony-tail', label: 'Tail', tone: 'accent',
+      path: 'M370,225 Q385,218 398,208 Q412,198 422,188 Q432,180 438,175 Q445,172 448,178 Q445,190 435,205 Q422,222 408,235 Q395,245 382,250 Q375,252 372,245 Q370,235 370,225 Z' },
+    // Front left leg
+    { id: 'pony-fl-leg', label: 'Front Left Leg', tone: 'medium',
+      path: 'M225,278 Q222,298 218,320 Q215,342 210,362 Q207,378 205,392 Q204,400 208,405 Q214,402 216,392 Q220,372 224,350 Q228,328 232,308 Q234,292 232,280 Z' },
+    // Front right leg (extended forward)
+    { id: 'pony-fr-leg', label: 'Front Right Leg', tone: 'dark',
+      path: 'M248,285 Q242,300 235,318 Q226,338 215,355 Q205,368 195,378 Q188,385 185,392 Q186,398 192,396 Q202,388 215,372 Q228,352 238,332 Q248,312 255,295 Q256,288 252,285 Z' },
+    // Back left leg
+    { id: 'pony-bl-leg', label: 'Back Left Leg', tone: 'medium',
+      path: 'M320,290 Q318,310 315,332 Q312,352 310,372 Q308,388 307,400 Q306,408 310,412 Q316,408 318,398 Q320,378 323,358 Q326,338 328,318 Q330,302 328,292 Z' },
+    // Back right leg (extended back)
+    { id: 'pony-br-leg', label: 'Back Right Leg', tone: 'dark',
+      path: 'M345,288 Q352,305 362,322 Q372,340 382,355 Q390,366 396,375 Q400,382 398,388 Q392,390 385,384 Q375,372 365,355 Q354,338 345,318 Q338,302 338,290 Z' },
+    // Hooves
+    { id: 'pony-hoof-fl', label: 'Front Left Hoof', tone: 'dark',
+      path: 'M205,400 Q202,405 200,412 Q202,418 208,418 Q214,415 215,408 Q214,402 208,400 Z' },
+    { id: 'pony-hoof-fr', label: 'Front Right Hoof', tone: 'dark',
+      path: 'M185,392 Q182,398 180,405 Q182,410 188,410 Q194,406 194,400 Q192,394 188,392 Z' },
+    { id: 'pony-hoof-bl', label: 'Back Left Hoof', tone: 'dark',
+      path: 'M307,408 Q304,414 302,420 Q304,425 310,425 Q316,422 317,415 Q316,410 310,408 Z' },
+    { id: 'pony-hoof-br', label: 'Back Right Hoof', tone: 'dark',
+      path: 'M396,382 Q398,388 400,395 Q398,400 392,400 Q386,396 387,390 Q390,384 396,382 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft, fairy, sunshinePony];
