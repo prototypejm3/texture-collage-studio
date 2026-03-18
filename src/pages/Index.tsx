@@ -213,6 +213,8 @@ const Index = () => {
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
+        ambientSound={ambientSound}
+        onAmbientSoundChange={setAmbientSound}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
