@@ -230,8 +230,6 @@ const Index = () => {
             onRemoveCustomTexture={removeCustomTexture}
             isPremium={isPremium}
             onRequestUpgrade={() => setShowPaywall(true)}
-            drawMode={studio.drawMode}
-            onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
           />
         </div>
         <Canvas
