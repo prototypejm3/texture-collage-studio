@@ -160,6 +160,7 @@ export function Canvas({
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
               onDropAsSwatch={onDropAsSwatch}
+              onDetachSection={onDetachSection}
               customTextures={customTextures}
             />
           )}
