@@ -32,6 +32,8 @@ const Index = () => {
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
+  const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load design state when editing from wall
   useEffect(() => {
@@ -41,9 +43,37 @@ const Index = () => {
       if (design?.studioState) {
         studio.loadState(design.studioState);
         setEditingDesignId(editId);
+        draftKeyRef.current = editId; // reuse same id for draft saves
       }
     }
   }, []); // Run once on mount
+
+  // Auto-save as draft every 15 seconds when canvas has content
+  useEffect(() => {
+    const hasContent = studio.elements.length > 0 || Object.keys(studio.vibeFills).length > 0;
+    if (!hasContent) return;
+
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(async () => {
+      if (!canvasRef.current) return;
+      try {
+        const dataUrl = await toPng(canvasRef.current, { pixelRatio: 1 });
+        const name = studio.activeVibe?.name || 'Untitled Draft';
+        const vibeName = studio.activeVibe?.name;
+        const studioState = studio.getState();
+        // Don't overwrite a design that's already saved (status = 'display')
+        if (editingDesignId) {
+          wall.updateDesign(editingDesignId, { previewImage: dataUrl, studioState, updatedAt: new Date().toISOString() } as any);
+        } else {
+          wall.saveDraft(draftKeyRef.current, dataUrl, name, vibeName, studioState);
+        }
+      } catch { /* silent fail */ }
+    }, 15000);
+
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    };
+  }, [studio.elements, studio.vibeFills, studio.activeVibe, studio.frameSize, studio.frameColor]);
 
   const handleDragStartLib = useCallback((textureId: string) => {}, []);
 
@@ -89,7 +119,13 @@ const Index = () => {
         return;
       }
 
-      wall.addDesign(dataUrl, name, vibeName, studioState);
+      // If there's an existing draft, promote it instead of creating new
+      const draftExists = wall.designs.find(d => d.id === draftKeyRef.current);
+      if (draftExists) {
+        wall.updateDesign(draftKeyRef.current, { previewImage: dataUrl, name, vibeName, studioState, status: 'display' as any });
+      } else {
+        wall.addDesign(dataUrl, name, vibeName, studioState);
+      }
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
