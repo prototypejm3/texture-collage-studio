@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
