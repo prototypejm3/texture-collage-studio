@@ -237,9 +237,8 @@ export function WallCard({
       className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
     >
       <div
-        className="cursor-pointer transition-transform duration-300 ease-out group-hover:scale-[1.015]"
+        className="transition-transform duration-300 ease-out group-hover:scale-[1.015]"
         style={{ transform: `rotate(${design.rotation || 0}deg)` }}
-        onClick={() => onOpen(design.id)}
       >
         <HangingWrapper style={design.hangingStyle || 'floating'} isDark={isDark}>
           <FrameWrapper style={design.frameStyle}>
