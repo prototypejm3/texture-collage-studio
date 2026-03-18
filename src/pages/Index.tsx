@@ -36,8 +36,8 @@ const Index = () => {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
   const [showToolKit, setShowToolKit] = useState(false);
-  const [toolKitPos, setToolKitPos] = useState({ x: 300, y: 12 });
-  const [toolKitSize, setToolKitSize] = useState({ w: 320, h: 400 });
+  const [toolKitPos, setToolKitPos] = useState({ x: 16, y: 12 });
+  const [toolKitSize, setToolKitSize] = useState({ w: 300, h: 500 });
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const resizeRef = useRef<{ startX: number; startY: number; origW: number; origH: number } | null>(null);
 
@@ -256,18 +256,6 @@ const Index = () => {
         onAmbientSoundChange={setAmbientSound}
       />
       <div className="flex flex-1 overflow-hidden relative">
-        <div className="w-[260px] flex-shrink-0">
-          <TextureLibrary
-            onDragStart={handleDragStartLib}
-            onTextureClick={handleTextureClick}
-            activeSectionId={studio.selectedSectionId}
-            customTextures={customTextures}
-            onUploadTexture={handleUploadTexture}
-            onRemoveCustomTexture={removeCustomTexture}
-            isPremium={isPremium}
-            onRequestUpgrade={() => setShowPaywall(true)}
-          />
-        </div>
         <Canvas
           elements={studio.elements}
           selectedId={studio.selectedId}
@@ -345,15 +333,29 @@ const Index = () => {
                       Draw Freehand
                     </button>
                   </div>
+                  {/* Element editing when selected */}
                   {studio.selectedElement && studio.selectedId && (
-                    <FloatingToolbar
-                      element={studio.selectedElement}
-                      onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                      onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                      onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                      onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-                    />
+                    <div className="border-b border-border">
+                      <FloatingToolbar
+                        element={studio.selectedElement}
+                        onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                        onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                        onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                        onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                      />
+                    </div>
                   )}
+                  {/* Full Texture Library */}
+                  <TextureLibrary
+                    onDragStart={handleDragStartLib}
+                    onTextureClick={handleTextureClick}
+                    activeSectionId={studio.selectedSectionId}
+                    customTextures={customTextures}
+                    onUploadTexture={handleUploadTexture}
+                    onRemoveCustomTexture={removeCustomTexture}
+                    isPremium={isPremium}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                  />
                 </div>
                 {/* Resize handle */}
                 <div
