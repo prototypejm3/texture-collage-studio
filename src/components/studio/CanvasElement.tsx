@@ -153,7 +153,11 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         height: element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
-        filter: shadow !== 'none' ? `drop-shadow(${shadow === getShadowStyle('lifted') ? '0 4px 6px hsla(220, 20%, 12%, 0.25)' : '0 12px 16px hsla(220, 20%, 12%, 0.3)'})` : undefined,
+        filter: element.effects.shadowDepth === 'lifted'
+          ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
+          : element.effects.shadowDepth === 'floating'
+            ? 'drop-shadow(0 12px 16px hsla(220, 20%, 12%, 0.3)) drop-shadow(0 4px 4px hsla(220, 20%, 12%, 0.15))'
+            : undefined,
       }}
     >
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
