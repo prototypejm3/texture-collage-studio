@@ -2197,33 +2197,7 @@ const astronaut: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── EARTH ──
-const earth: Vibe = {
-  id: 'earth', name: 'Earth', emoji: '🌍',
-  description: 'Planet Earth with continents',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'ea-ocean', label: 'Ocean', tone: 'medium',
-      path: circlePath(240, 240, 210) },
-    { id: 'ea-continent-africa', label: 'Africa', tone: 'accent',
-      path: 'M262,145 Q275,148 285,158 Q292,172 295,192 Q298,215 295,242 Q290,272 282,298 Q275,322 268,342 Q262,358 258,368 Q252,375 248,372 Q245,362 242,345 Q238,322 235,298 Q232,272 232,248 Q235,222 238,200 Q242,178 248,162 Q255,150 262,145 Z' },
-    { id: 'ea-continent-europe', label: 'Europe', tone: 'accent',
-      path: 'M248,92 Q262,88 278,92 Q292,100 302,115 Q308,132 305,148 Q298,142 288,138 Q275,135 262,138 Q252,142 245,148 Q240,135 238,118 Q240,102 248,92 Z' },
-    { id: 'ea-continent-americas', label: 'Americas', tone: 'accent',
-      path: 'M148,128 Q162,118 178,115 Q192,118 200,128 Q205,142 202,162 Q198,182 192,200 Q185,218 178,232 Q172,248 168,268 Q165,288 165,308 Q168,328 175,345 Q165,348 158,342 Q148,328 142,308 Q135,285 132,262 Q130,238 132,215 Q135,192 140,172 Q145,152 148,138 Z' },
-    { id: 'ea-continent-asia', label: 'Asia', tone: 'accent',
-      path: 'M312,135 Q328,128 345,128 Q362,132 372,145 Q380,162 382,182 Q378,205 370,225 Q358,242 342,252 Q325,258 310,252 Q298,242 292,228 Q288,212 290,195 Q295,175 302,158 Q308,145 312,138 Z' },
-    { id: 'ea-island1', label: 'Island 1', tone: 'accent',
-      path: 'M355,275 Q365,268 378,272 Q385,282 382,295 Q375,305 362,305 Q352,298 352,285 Z' },
-    { id: 'ea-island2', label: 'Island 2', tone: 'accent',
-      path: 'M175,348 Q185,342 198,345 Q205,355 202,368 Q195,378 182,378 Q172,372 170,358 Z' },
-    { id: 'ea-polar-n', label: 'North Pole', tone: 'light',
-      path: 'M200,42 Q220,32 240,30 Q262,32 282,42 Q268,48 252,52 Q238,55 222,52 Q210,48 202,45 Z' },
-    { id: 'ea-polar-s', label: 'South Pole', tone: 'light',
-      path: 'M205,432 Q222,442 240,445 Q258,442 278,432 Q268,438 255,442 Q240,445 225,442 Q212,438 208,435 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── ALIEN ──
 const alien: Vibe = {
