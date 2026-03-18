@@ -1272,31 +1272,7 @@ const worm: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── STRAWBERRY ──
-const strawberry: Vibe = {
-  id: 'strawberry', name: 'Strawberry', emoji: '🍓',
-  description: 'Juicy strawberry with leaf crown',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'straw-leaf-l', label: 'Left Leaf', tone: 'dark',
-      path: 'M200,128 Q170,105 142,95 Q118,92 108,102 Q105,118 118,132 Q138,148 165,155 Q188,158 202,148 Z' },
-    { id: 'straw-leaf-c', label: 'Center Leaf', tone: 'dark',
-      path: 'M222,118 Q228,85 240,58 Q248,42 255,42 Q262,48 268,68 Q275,95 278,122 Q265,132 250,135 Q235,132 225,125 Z' },
-    { id: 'straw-leaf-r', label: 'Right Leaf', tone: 'dark',
-      path: 'M278,128 Q308,105 335,95 Q358,92 368,102 Q372,118 358,132 Q338,148 312,155 Q290,158 275,148 Z' },
-    { id: 'straw-body', label: 'Berry', tone: 'accent',
-      path: 'M160,152 Q148,178 138,218 Q128,268 128,322 Q132,375 148,418 Q172,452 205,468 Q232,478 248,478 Q265,478 292,468 Q325,452 348,418 Q365,375 368,322 Q368,268 358,218 Q348,178 335,152 Q308,142 278,138 Q248,135 218,138 Q188,142 165,150 Z' },
-    { id: 'straw-seed1', label: 'Seed 1', tone: 'light', path: circlePath(208, 232, 8) },
-    { id: 'straw-seed2', label: 'Seed 2', tone: 'light', path: circlePath(288, 232, 8) },
-    { id: 'straw-seed3', label: 'Seed 3', tone: 'light', path: circlePath(248, 285, 8) },
-    { id: 'straw-seed4', label: 'Seed 4', tone: 'light', path: circlePath(198, 308, 8) },
-    { id: 'straw-seed5', label: 'Seed 5', tone: 'light', path: circlePath(298, 308, 8) },
-    { id: 'straw-seed6', label: 'Seed 6', tone: 'light', path: circlePath(228, 368, 7) },
-    { id: 'straw-seed7', label: 'Seed 7', tone: 'light', path: circlePath(268, 368, 7) },
-    { id: 'straw-seed8', label: 'Seed 8', tone: 'light', path: circlePath(248, 425, 6) },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── CATERPILLAR ──
 const caterpillar: Vibe = {
@@ -1553,27 +1529,7 @@ const tomato: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── BELL PEPPER ──
-const bellPepper: Vibe = {
-  id: 'bell-pepper', name: 'Bell Pepper', emoji: '🫑',
-  description: 'Chunky bell pepper with lobes',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'bp-stem', label: 'Stem', tone: 'dark',
-      path: 'M228,88 Q225,65 230,48 Q238,35 248,35 Q258,40 262,58 Q265,78 260,95 Q252,105 242,102 Q235,98 230,92 Z' },
-    { id: 'bp-body', label: 'Body', tone: 'accent',
-      path: 'M240,108 Q195,112 160,135 Q128,165 112,208 Q100,255 102,305 Q108,355 128,395 Q155,428 192,448 Q225,458 248,458 Q272,458 305,448 Q342,428 368,395 Q388,355 395,305 Q398,255 385,208 Q370,165 338,135 Q305,112 260,108 Z' },
-    { id: 'bp-lobe-line', label: 'Center Crease', tone: 'medium',
-      path: 'M240,115 Q235,195 232,285 Q230,365 235,445 L245,445 Q248,365 248,285 Q248,195 245,115 Z' },
-    { id: 'bp-left-crease', label: 'Left Crease', tone: 'medium',
-      path: 'M165,165 Q178,225 185,295 Q188,355 182,412 L175,410 Q172,348 175,288 Q172,222 160,162 Z' },
-    { id: 'bp-right-crease', label: 'Right Crease', tone: 'medium',
-      path: 'M332,165 Q318,225 312,295 Q308,355 315,412 L322,410 Q325,348 322,288 Q325,222 335,162 Z' },
-    { id: 'bp-highlight', label: 'Highlight', tone: 'light',
-      path: 'M155,228 Q148,272 150,318 Q155,362 168,398 Q172,375 175,338 Q175,295 172,255 Q168,228 162,215 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── BROCCOLI ──
 const broccoli: Vibe = {
@@ -1885,42 +1841,7 @@ const butterflyBold: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── ELEPHANT ──
-const elephant: Vibe = {
-  id: 'elephant', name: 'Elephant', emoji: '🐘',
-  description: 'Big elephant side profile with trunk',
-  viewBox: '0 0 480 440',
-  sections: [
-    { id: 'el-ear', label: 'Ear', tone: 'medium',
-      path: 'M82,110 Q48,98 25,118 Q5,148 2,188 Q2,232 18,268 Q42,302 72,318 Q98,328 115,320 Q125,308 125,288 Q122,252 115,215 Q108,178 100,148 Z' },
-    { id: 'el-ear-inner', label: 'Inner Ear', tone: 'light',
-      path: 'M88,145 Q65,138 48,155 Q32,178 30,208 Q32,242 48,272 Q68,295 88,305 Q102,300 105,282 Q105,252 100,218 Q95,182 92,158 Z' },
-    { id: 'el-head', label: 'Head', tone: 'dark',
-      path: 'M118,85 Q132,48 165,28 Q205,10 245,15 Q285,22 312,48 Q335,82 338,122 Q338,165 322,200 Q305,230 282,252 Q262,265 248,268 L128,258 Q115,235 110,205 Q108,168 112,135 Z' },
-    { id: 'el-eye', label: 'Eye', tone: 'light', path: circlePath(278, 100, 16) },
-    { id: 'el-trunk', label: 'Trunk', tone: 'dark',
-      path: 'M248,268 Q262,298 272,335 Q280,375 278,408 Q275,432 265,448 Q252,458 240,455 Q228,445 222,425 Q218,400 222,372 Q230,338 242,308 Q248,285 250,275 Z' },
-    { id: 'el-trunk-tip', label: 'Trunk Tip', tone: 'medium',
-      path: 'M240,455 Q228,462 215,458 Q205,450 202,438 Q205,428 215,425 Q228,428 238,440 Q242,448 242,452 Z' },
-    { id: 'el-tusk', label: 'Tusk', tone: 'light',
-      path: 'M258,292 Q245,312 238,342 Q232,368 235,382 Q240,392 248,385 Q255,372 260,348 Q265,322 265,302 Z' },
-    { id: 'el-body', label: 'Body', tone: 'dark',
-      path: 'M128,258 Q105,278 92,312 Q82,348 88,385 Q98,412 125,432 Q158,448 200,455 Q248,458 302,452 Q348,442 385,422 Q412,398 425,365 Q432,328 425,290 Q408,258 385,240 Q355,225 322,222 Q295,240 272,258 Q218,268 168,262 Z' },
-    { id: 'el-belly', label: 'Belly', tone: 'light',
-      path: 'M178,342 Q195,318 242,308 Q292,315 315,342 Q328,375 322,408 Q305,435 265,445 Q228,442 208,422 Q192,392 188,362 Z' },
-    { id: 'el-leg-fl', label: 'Front Left Leg', tone: 'dark',
-      path: 'M142,432 Q138,445 135,460 Q132,470 135,478 Q142,482 148,478 Q152,470 152,458 Q155,445 158,435 Z' },
-    { id: 'el-leg-fr', label: 'Front Right Leg', tone: 'medium',
-      path: 'M205,452 Q202,462 200,472 Q198,480 202,485 Q208,488 215,482 Q218,475 218,465 Q218,458 215,452 Z' },
-    { id: 'el-leg-bl', label: 'Back Left Leg', tone: 'dark',
-      path: 'M328,448 Q325,458 322,468 Q320,475 322,482 Q328,485 335,480 Q338,472 338,462 Q338,455 335,448 Z' },
-    { id: 'el-leg-br', label: 'Back Right Leg', tone: 'medium',
-      path: 'M385,428 Q382,442 380,455 Q378,465 380,472 Q388,475 395,470 Q398,462 398,452 Q398,442 395,432 Z' },
-    { id: 'el-tail', label: 'Tail', tone: 'dark',
-      path: 'M425,290 Q438,275 450,265 Q460,260 465,268 Q465,278 455,292 Q445,302 435,300 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── FISH ──
 const fish: Vibe = {
@@ -2053,34 +1974,7 @@ const seahorse: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── WHALE ──
-const whale: Vibe = {
-  id: 'whale', name: 'Whale', emoji: '🐋',
-  description: 'Gentle whale with spout',
-  viewBox: '0 0 480 420',
-  sections: [
-    { id: 'wh-spout-l', label: 'Spout Left', tone: 'light',
-      path: 'M145,88 Q138,62 135,38 Q135,18 142,12 Q148,15 152,35 Q155,58 155,82 Q152,92 148,95 Z' },
-    { id: 'wh-spout-r', label: 'Spout Right', tone: 'light',
-      path: 'M168,78 Q165,52 168,28 Q172,12 178,15 Q182,28 182,52 Q180,72 175,85 Q172,92 168,88 Z' },
-    { id: 'wh-head', label: 'Head', tone: 'dark',
-      path: 'M55,225 Q42,188 48,148 Q58,115 82,95 Q115,78 155,75 Q195,78 228,98 Q255,122 268,158 Q278,195 272,235 Q265,262 248,282 Q228,298 205,305 Q175,308 148,300 Q118,288 95,268 Q72,248 60,235 Z' },
-    { id: 'wh-eye', label: 'Eye', tone: 'light', path: circlePath(165, 178, 16) },
-    { id: 'wh-mouth', label: 'Mouth', tone: 'medium',
-      path: 'M75,258 Q105,278 145,292 Q182,300 215,298 Q242,290 262,275 Q252,292 232,305 Q208,315 178,315 Q148,312 118,302 Q92,288 72,272 Z' },
-    { id: 'wh-body', label: 'Body', tone: 'dark',
-      path: 'M272,235 Q292,248 322,260 Q358,272 395,278 Q428,278 452,268 Q468,252 475,232 Q478,212 472,192 Q462,175 445,165 Q425,158 402,162 Q375,170 348,185 Q318,205 292,228 Q280,238 275,242 Z' },
-    { id: 'wh-belly', label: 'Belly', tone: 'light',
-      path: 'M78,272 Q112,295 158,310 Q208,318 262,312 Q312,300 355,282 Q392,265 418,252 Q428,248 432,245 Q422,268 402,285 Q375,302 342,312 Q305,322 265,328 Q225,328 185,322 Q148,312 115,298 Q85,280 72,268 Z' },
-    { id: 'wh-flipper', label: 'Flipper', tone: 'medium',
-      path: 'M195,305 Q182,325 168,348 Q158,370 155,385 Q158,395 168,398 Q178,392 192,375 Q208,352 218,332 Q225,315 222,305 Z' },
-    { id: 'wh-tail-upper', label: 'Upper Tail', tone: 'dark',
-      path: 'M475,232 Q478,218 475,198 Q468,178 458,162 Q448,148 438,142 Q430,142 428,152 Q432,168 438,188 Q445,208 452,225 Z' },
-    { id: 'wh-tail-lower', label: 'Lower Tail', tone: 'dark',
-      path: 'M475,232 Q478,248 478,268 Q475,288 468,305 Q458,318 448,325 Q438,325 435,315 Q438,298 445,278 Q452,258 458,242 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── LOBSTER ──
 const lobster: Vibe = {
@@ -2303,33 +2197,7 @@ const astronaut: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── EARTH ──
-const earth: Vibe = {
-  id: 'earth', name: 'Earth', emoji: '🌍',
-  description: 'Planet Earth with continents',
-  viewBox: '0 0 480 480',
-  sections: [
-    { id: 'ea-ocean', label: 'Ocean', tone: 'medium',
-      path: circlePath(240, 240, 210) },
-    { id: 'ea-continent-africa', label: 'Africa', tone: 'accent',
-      path: 'M262,145 Q275,148 285,158 Q292,172 295,192 Q298,215 295,242 Q290,272 282,298 Q275,322 268,342 Q262,358 258,368 Q252,375 248,372 Q245,362 242,345 Q238,322 235,298 Q232,272 232,248 Q235,222 238,200 Q242,178 248,162 Q255,150 262,145 Z' },
-    { id: 'ea-continent-europe', label: 'Europe', tone: 'accent',
-      path: 'M248,92 Q262,88 278,92 Q292,100 302,115 Q308,132 305,148 Q298,142 288,138 Q275,135 262,138 Q252,142 245,148 Q240,135 238,118 Q240,102 248,92 Z' },
-    { id: 'ea-continent-americas', label: 'Americas', tone: 'accent',
-      path: 'M148,128 Q162,118 178,115 Q192,118 200,128 Q205,142 202,162 Q198,182 192,200 Q185,218 178,232 Q172,248 168,268 Q165,288 165,308 Q168,328 175,345 Q165,348 158,342 Q148,328 142,308 Q135,285 132,262 Q130,238 132,215 Q135,192 140,172 Q145,152 148,138 Z' },
-    { id: 'ea-continent-asia', label: 'Asia', tone: 'accent',
-      path: 'M312,135 Q328,128 345,128 Q362,132 372,145 Q380,162 382,182 Q378,205 370,225 Q358,242 342,252 Q325,258 310,252 Q298,242 292,228 Q288,212 290,195 Q295,175 302,158 Q308,145 312,138 Z' },
-    { id: 'ea-island1', label: 'Island 1', tone: 'accent',
-      path: 'M355,275 Q365,268 378,272 Q385,282 382,295 Q375,305 362,305 Q352,298 352,285 Z' },
-    { id: 'ea-island2', label: 'Island 2', tone: 'accent',
-      path: 'M175,348 Q185,342 198,345 Q205,355 202,368 Q195,378 182,378 Q172,372 170,358 Z' },
-    { id: 'ea-polar-n', label: 'North Pole', tone: 'light',
-      path: 'M200,42 Q220,32 240,30 Q262,32 282,42 Q268,48 252,52 Q238,55 222,52 Q210,48 202,45 Z' },
-    { id: 'ea-polar-s', label: 'South Pole', tone: 'light',
-      path: 'M205,432 Q222,442 240,445 Q258,442 278,432 Q268,438 255,442 Q240,445 225,442 Q212,438 208,435 Z' },
-  ],
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-};
+
 
 // ── ALIEN ──
 const alien: Vibe = {
@@ -2357,4 +2225,4 @@ const alien: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, strawberry, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, bellPepper, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, elephant, fish, octopus, crab, seahorse, whale, lobster, schoolFish, astronaut, earth, alien, scubaSkiba, bancroft];
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, scubaSkiba, bancroft];
