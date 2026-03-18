@@ -32,6 +32,15 @@ export function NavBar() {
         <LayoutGrid className="w-4 h-4" />
         My Wall
       </Link>
+      <Link
+        to="/gallery"
+        className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+          isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+        }`}
+      >
+        <Ghost className="w-4 h-4" />
+        Gallery
+      </Link>
 
       <div className="ml-auto flex items-center gap-2">
         {user ? (
