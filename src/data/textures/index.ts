@@ -187,6 +187,35 @@ export const textures: TextureSwatch[] = [
   // ── Maze ──
   { id: 'maze', name: 'Maze', category: 'Maze', cssBackground: img('maze.png') },
 
+  // ── Felt ──
+  { id: 'felt-sand', name: 'Sand', category: 'Felt', cssBackground: img('felt-sand.png') },
+  { id: 'felt-brown', name: 'Brown', category: 'Felt', cssBackground: img('felt-brown.png') },
+  { id: 'felt-olive', name: 'Olive', category: 'Felt', cssBackground: img('felt-olive.png') },
+  { id: 'felt-navy', name: 'Navy', category: 'Felt', cssBackground: img('felt-navy.png') },
+
+  // ── Cotton ──
+  { id: 'cotton-natural', name: 'Natural', category: 'Cotton', cssBackground: img('cotton-natural.png') },
+  { id: 'cotton-oatmeal', name: 'Oatmeal', category: 'Cotton', cssBackground: img('cotton-oatmeal.png') },
+
+  // ── Yarn ──
+  { id: 'yarn-cream', name: 'Cream', category: 'Yarn', cssBackground: img('yarn-cream.png') },
+  { id: 'yarn-oatmeal', name: 'Oatmeal', category: 'Yarn', cssBackground: img('yarn-oatmeal.png') },
+  { id: 'yarn-charcoal', name: 'Charcoal', category: 'Yarn', cssBackground: img('yarn-charcoal.png') },
+
+  // ── Corduroy ──
+  { id: 'cord-fine-sand', name: 'Fine Sand', category: 'Corduroy', cssBackground: img('cord-fine-sand.png') },
+  { id: 'cord-fine-brown', name: 'Fine Brown', category: 'Corduroy', cssBackground: img('cord-fine-brown.png') },
+  { id: 'cord-fine-olive', name: 'Fine Olive', category: 'Corduroy', cssBackground: img('cord-fine-olive.png') },
+  { id: 'cord-fine-navy', name: 'Fine Navy', category: 'Corduroy', cssBackground: img('cord-fine-navy.png') },
+  { id: 'cord-wide-sand', name: 'Wide Sand', category: 'Corduroy', cssBackground: img('cord-wide-sand.png') },
+  { id: 'cord-wide-brown', name: 'Wide Brown', category: 'Corduroy', cssBackground: img('cord-wide-brown.png') },
+  { id: 'cord-wide-olive', name: 'Wide Olive', category: 'Corduroy', cssBackground: img('cord-wide-olive.png') },
+  { id: 'cord-wide-navy', name: 'Wide Navy', category: 'Corduroy', cssBackground: img('cord-wide-navy.png') },
+  { id: 'cord-washed-sand', name: 'Washed Sand', category: 'Corduroy', cssBackground: img('cord-washed-sand.png') },
+  { id: 'cord-washed-brown', name: 'Washed Brown', category: 'Corduroy', cssBackground: img('cord-washed-brown.png') },
+  { id: 'cord-washed-olive', name: 'Washed Olive', category: 'Corduroy', cssBackground: img('cord-washed-olive.png') },
+  { id: 'cord-washed-navy', name: 'Washed Navy', category: 'Corduroy', cssBackground: img('cord-washed-navy.png') },
+
   // ── Alix ──
   { id: 'alix-rose', name: 'Rose', category: 'Alix', cssBackground: img('novelty-alix-rose.png') },
   { id: 'alix-blush', name: 'Blush', category: 'Alix', cssBackground: img('novelty-alix-blush.png') },
