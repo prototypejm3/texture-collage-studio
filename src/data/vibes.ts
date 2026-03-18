@@ -2412,6 +2412,7 @@ const fairyHeadband: Vibe = {
   name: 'Fairy Headband',
   emoji: '👑',
   category: 'Community',
+  baseLikes: 15, likesStartDate: '2026-03-16',
   creator: 'Alix',
   description: 'Whimsical fairy headband with flowers and butterfly wings',
   viewBox: '0 0 480 360',
