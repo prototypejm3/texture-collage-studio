@@ -49,6 +49,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
       <FreeformWall
         designs={designs}
         isPremium={isPremium}
+        isDark={isDark}
         onOpen={onOpen}
         onDuplicate={onDuplicate}
         onDelete={onDelete}

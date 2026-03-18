@@ -121,6 +121,7 @@ export function FreeformWall({
                 
                 onSizeChange={onSizeChange}
                 isPremium={isPremium}
+                isDark={isDark}
                 size={d.displaySize || 'medium'}
               />
             </div>
