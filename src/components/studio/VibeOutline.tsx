@@ -1,7 +1,7 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Vibe, VibeFills, TextureSwatch } from '@/types/studio';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, defaultSectionTransform } from '@/types/studio';
 import { textures } from '@/data/textures';
-import { Paintbrush, Scissors } from 'lucide-react';
+import { Paintbrush, Scissors, Trash2, RotateCw } from 'lucide-react';
 
 interface Props {
   vibe: Vibe;
@@ -9,10 +9,13 @@ interface Props {
   selectedSectionId: string | null;
   canvasWidth: number;
   canvasHeight: number;
+  sectionTransforms: SectionTransforms;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
+  onDeleteSection: (sectionId: string) => void;
+  onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   customTextures?: TextureSwatch[];
 }
 
@@ -29,14 +32,33 @@ function getTextureBackgroundSize(texture: TextureSwatch) {
     : '40px 40px';
 }
 
+/** Compute bounding box center of an SVG path */
+function getPathCenter(pathD: string): { cx: number; cy: number } {
+  const nums = pathD.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+  let sumX = 0, sumY = 0, count = 0;
+  for (let i = 0; i < nums.length - 1; i += 2) {
+    sumX += nums[i];
+    sumY += nums[i + 1];
+    count++;
+  }
+  return count > 0 ? { cx: sumX / count, cy: sumY / count } : { cx: 240, cy: 240 };
+}
+
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
+  sectionTransforms,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
+  onDeleteSection, onUpdateSectionTransform,
   customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [resizingId, setResizingId] = useState<string | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const dragStart = useRef<{ mx: number; my: number; tx: number; ty: number }>({ mx: 0, my: 0, tx: 0, ty: 0 });
+  const resizeStart = useRef<{ mx: number; my: number; scale: number }>({ mx: 0, my: 0, scale: 1 });
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
@@ -45,13 +67,7 @@ export function VibeOutline({
     setHoveredId(null);
     const textureId = e.dataTransfer.getData('textureId');
     if (!textureId) return;
-
-    setDropChoice({
-      sectionId,
-      textureId,
-      screenX: e.clientX,
-      screenY: e.clientY,
-    });
+    setDropChoice({ sectionId, textureId, screenX: e.clientX, screenY: e.clientY });
   }, []);
 
   const handleChooseFill = useCallback(() => {
@@ -72,16 +88,87 @@ export function VibeOutline({
     setDropChoice(null);
   }, [dropChoice, onDropAsSwatch]);
 
-  // Parse viewBox to get SVG coordinate dimensions
   const [vbX, vbY, vbW, vbH] = useMemo(() => {
     const parts = vibe.viewBox.split(/\s+/).map(Number);
     return parts.length === 4 ? parts : [0, 0, 480, 480];
   }, [vibe.viewBox]);
 
+  // Convert screen pixels to SVG units
+  const screenToSvg = useCallback((dx: number, dy: number) => {
+    if (!svgRef.current) return { dx: 0, dy: 0 };
+    const rect = svgRef.current.getBoundingClientRect();
+    return {
+      dx: (dx / rect.width) * vbW,
+      dy: (dy / rect.height) * vbH,
+    };
+  }, [vbW, vbH]);
+
+  // ── Drag handler ──
+  const handleSectionMouseDown = useCallback((e: React.MouseEvent, sectionId: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onSelectSection(sectionId);
+    setDraggingId(sectionId);
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    dragStart.current = { mx: e.clientX, my: e.clientY, tx: t.x, ty: t.y };
+  }, [sectionTransforms, onSelectSection]);
+
+  useEffect(() => {
+    if (!draggingId) return;
+    const handleMove = (e: MouseEvent) => {
+      const { dx, dy } = screenToSvg(
+        e.clientX - dragStart.current.mx,
+        e.clientY - dragStart.current.my,
+      );
+      onUpdateSectionTransform(draggingId, {
+        x: dragStart.current.tx + dx,
+        y: dragStart.current.ty + dy,
+      });
+    };
+    const handleUp = () => setDraggingId(null);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [draggingId, screenToSvg, onUpdateSectionTransform]);
+
+  // ── Resize handler ──
+  const handleResizeStart = useCallback((e: React.MouseEvent, sectionId: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setResizingId(sectionId);
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    resizeStart.current = { mx: e.clientX, my: e.clientY, scale: t.scale };
+  }, [sectionTransforms]);
+
+  useEffect(() => {
+    if (!resizingId) return;
+    const handleMove = (e: MouseEvent) => {
+      const dy = e.clientY - resizeStart.current.my;
+      const scaleDelta = 1 - dy * 0.005;
+      const newScale = Math.max(0.3, Math.min(3, resizeStart.current.scale * scaleDelta));
+      onUpdateSectionTransform(resizingId, { scale: newScale });
+    };
+    const handleUp = () => setResizingId(null);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [resizingId, onUpdateSectionTransform]);
+
+  const handleRotate = useCallback((sectionId: string, delta: number) => {
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    onUpdateSectionTransform(sectionId, { rotation: t.rotation + delta });
+  }, [sectionTransforms, onUpdateSectionTransform]);
+
   return (
     <>
-      {/* Single SVG handles both texture fills and strokes — guaranteed alignment */}
       <svg
+        ref={svgRef}
         data-vibe-svg
         viewBox={vibe.viewBox}
         width={canvasWidth}
@@ -91,18 +178,25 @@ export function VibeOutline({
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          {vibe.sections.map(section => (
-            <clipPath key={`clip-${section.id}`} id={`clip-${section.id}`}>
-              <path d={section.path} />
-            </clipPath>
-          ))}
+          {vibe.sections.map(section => {
+            const t = sectionTransforms[section.id] || defaultSectionTransform;
+            const { cx, cy } = getPathCenter(section.path);
+            return (
+              <clipPath key={`clip-${section.id}`} id={`clip-${section.id}`}>
+                <path
+                  d={section.path}
+                  transform={`translate(${t.x}, ${t.y}) rotate(${t.rotation}, ${cx}, ${cy}) scale(${t.scale})`}
+                  style={{ transformOrigin: `${cx}px ${cy}px` }}
+                />
+              </clipPath>
+            );
+          })}
         </defs>
 
-        {/* Texture fills using foreignObject inside clipPath */}
+        {/* Texture fills */}
         {vibe.sections.map(section => {
           const textureId = fills[section.id];
           if (!textureId) return null;
-
           const texture = allTextures.find(t => t.id === textureId);
           if (!texture) return null;
 
@@ -129,27 +223,32 @@ export function VibeOutline({
           );
         })}
 
-        {/* Interactive paths and strokes */}
+        {/* Interactive paths */}
         {vibe.sections.map(section => {
           const isFilled = !!fills[section.id];
           const isHovered = hoveredId === section.id;
           const isSelected = selectedSectionId === section.id;
+          const t = sectionTransforms[section.id] || defaultSectionTransform;
+          const { cx, cy } = getPathCenter(section.path);
+          const transform = `translate(${t.x}, ${t.y}) rotate(${t.rotation}, ${cx}, ${cy}) scale(${t.scale})`;
 
           return (
-            <g key={section.id}>
-              {/* Hit area */}
+            <g key={section.id} style={{ transformOrigin: `${cx}px ${cy}px` }}>
+              {/* Hit area — draggable */}
               <path
                 d={section.path}
                 fill="transparent"
-                className="pointer-events-auto cursor-pointer"
+                transform={transform}
+                className={`pointer-events-auto ${draggingId === section.id ? 'cursor-grabbing' : 'cursor-grab'}`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (isFilled) {
-                    onDetachSection(section.id);
-                  } else {
+                  if (isFilled && !isSelected) {
+                    onSelectSection(section.id);
+                  } else if (!isFilled) {
                     onSelectSection(section.id);
                   }
                 }}
+                onMouseDown={(e) => handleSectionMouseDown(e, section.id)}
                 onDragOver={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -165,6 +264,7 @@ export function VibeOutline({
               {isSelected && (
                 <path
                   d={section.path}
+                  transform={transform}
                   fill="hsl(24, 80%, 50%)"
                   opacity={0.12}
                   className="pointer-events-none animate-pulse"
@@ -175,6 +275,7 @@ export function VibeOutline({
               {isHovered && !isSelected && !isFilled && (
                 <path
                   d={section.path}
+                  transform={transform}
                   fill="hsl(24, 80%, 50%)"
                   opacity={0.06}
                   className="pointer-events-none"
@@ -184,6 +285,7 @@ export function VibeOutline({
               {/* Stroke */}
               <path
                 d={section.path}
+                transform={transform}
                 fill="none"
                 stroke={isSelected ? 'hsl(24, 80%, 50%)' : isHovered ? 'hsl(24, 60%, 60%)' : 'hsl(220, 15%, 25%)'}
                 strokeWidth={isSelected ? 4.5 : 3.5}
@@ -197,12 +299,88 @@ export function VibeOutline({
         })}
       </svg>
 
+      {/* Section toolbar — appears when a section is selected */}
+      {selectedSectionId && (() => {
+        const section = vibe.sections.find(s => s.id === selectedSectionId);
+        if (!section) return null;
+        const t = sectionTransforms[selectedSectionId] || defaultSectionTransform;
+        const { cx, cy } = getPathCenter(section.path);
+        const isFilled = !!fills[selectedSectionId];
+
+        // Convert SVG coordinates to screen position for the toolbar
+        const toolbarX = ((cx + t.x) / vbW) * canvasWidth;
+        const toolbarY = ((cy + t.y) / vbH) * canvasHeight - 45;
+
+        return (
+          <div
+            className="absolute z-[30] flex items-center gap-1 bg-popover border border-border rounded-lg shadow-lg px-1.5 py-1"
+            style={{
+              left: toolbarX,
+              top: Math.max(4, toolbarY),
+              transform: 'translateX(-50%)',
+            }}
+          >
+            {/* Rotate */}
+            <button
+              onClick={(e) => { e.stopPropagation(); handleRotate(selectedSectionId, -15); }}
+              className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Rotate left"
+            >
+              <RotateCw className="w-3 h-3 scale-x-[-1]" />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); handleRotate(selectedSectionId, 15); }}
+              className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Rotate right"
+            >
+              <RotateCw className="w-3 h-3" />
+            </button>
+
+            {/* Scale display + buttons */}
+            <div className="flex items-center gap-0.5 mx-1">
+              <button
+                onClick={(e) => { e.stopPropagation(); onUpdateSectionTransform(selectedSectionId, { scale: Math.max(0.3, t.scale - 0.1) }); }}
+                className="px-1 py-0.5 rounded text-[10px] hover:bg-secondary text-muted-foreground"
+              >
+                −
+              </button>
+              <span className="text-[9px] text-muted-foreground min-w-[28px] text-center">
+                {Math.round(t.scale * 100)}%
+              </span>
+              <button
+                onClick={(e) => { e.stopPropagation(); onUpdateSectionTransform(selectedSectionId, { scale: Math.min(3, t.scale + 0.1) }); }}
+                className="px-1 py-0.5 rounded text-[10px] hover:bg-secondary text-muted-foreground"
+              >
+                +
+              </button>
+            </div>
+
+            {/* Detach if filled */}
+            {isFilled && (
+              <button
+                onClick={(e) => { e.stopPropagation(); onDetachSection(selectedSectionId); }}
+                className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+                title="Detach as free element"
+              >
+                <Scissors className="w-3 h-3" />
+              </button>
+            )}
+
+            {/* Delete */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onDeleteSection(selectedSectionId); }}
+              className="p-1 rounded hover:bg-secondary text-destructive/60 hover:text-destructive transition-colors"
+              title="Delete section"
+            >
+              <Trash2 className="w-3 h-3" />
+            </button>
+          </div>
+        );
+      })()}
+
       {dropChoice && (
         <>
-          <div
-            className="fixed inset-0 z-[100]"
-            onClick={() => setDropChoice(null)}
-          />
+          <div className="fixed inset-0 z-[100]" onClick={() => setDropChoice(null)} />
           <div
             className="fixed z-[101] bg-popover border border-border rounded-xl shadow-xl py-1.5 min-w-[160px] animate-in fade-in zoom-in-95 duration-150"
             style={{
