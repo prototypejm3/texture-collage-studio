@@ -243,7 +243,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         <button
           onClick={() => handlePremiumClick(() => onAutoCurate?.())}
           className={iconClass(false, !isPremium)}
-          title={isPremium ? 'Arrange for me' : 'Premium — unlock to use'}
+          title={isPremium ? 'Arrange Nicely' : 'Premium — unlock to use'}
         >
           <Wand2 className="w-3.5 h-3.5" />
           {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
