@@ -40,6 +40,7 @@ export interface CanvasElement {
   zIndex: number;
   effects: MaterialEffects;
   sectionId?: string;
+  clipPathD?: string; // SVG path d for custom section clip
 }
 
 export interface MaterialEffects {
