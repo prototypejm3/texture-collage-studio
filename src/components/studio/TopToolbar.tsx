@@ -120,7 +120,7 @@ export function TopToolbar({
             >
               <Volume2 className="w-3.5 h-3.5" />
               {ambientSound && ambientSound !== 'none'
-                ? (['gallery', 'Gallery'], ['loft', 'Lofi Beats'], ['home', 'Chill'] as const).find(([v]) => v === ambientSound)?.[1] ?? 'Listen'
+                ? { gallery: 'Gallery', loft: 'Lofi Beats', home: 'Chill' }[ambientSound] ?? 'Listen'
                 : 'Listen'}
             </button>
             {showSoundMenu && (
