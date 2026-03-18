@@ -264,7 +264,7 @@ const Index = () => {
 
         {/* Floating Tool-Kit — appears over canvas when element selected OR draw mode */}
         <AnimatePresence>
-          {(showToolKit || studio.drawMode) && (
+          {(showToolKit || studio.drawMode || (studio.selectedElement && studio.selectedId)) && (
             <motion.div
               key="tool-kit"
               initial={{ opacity: 0, y: 10 }}
