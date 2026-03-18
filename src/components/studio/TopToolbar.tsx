@@ -120,8 +120,8 @@ export function TopToolbar({
             >
               <Volume2 className="w-3.5 h-3.5" />
               {ambientSound && ambientSound !== 'none'
-                ? { gallery: 'Gallery', loft: 'Lofi Beats', home: 'Chill' }[ambientSound] ?? 'Listen'
-                : 'Listen'}
+                ? { gallery: 'Gallery', loft: 'Lofi Beats', home: 'Chill' }[ambientSound] ?? 'Ambiance'
+                : 'Ambiance'}
             </button>
             {showSoundMenu && (
               <>
