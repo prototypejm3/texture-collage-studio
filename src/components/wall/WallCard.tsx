@@ -44,131 +44,128 @@ const statusOptions: { value: DesignStatus; label: string }[] = [
   { value: 'draft', label: 'Draft' },
 ];
 
-/* ─── Metallic gradient configs ─── */
-const metallicGradients: Record<string, {
-  main: string;
-  inner: string;
-  borderTop: string;
-  borderLeft: string;
-  borderRight: string;
-  borderBottom: string;
+/* ─── Shadow box configs per frame style ─── */
+const shadowBoxStyles: Record<string, {
+  outerBg: string;
+  borderColor: string;
+  innerBg: string;
   matBg: string;
+  outerShadow: string;
+  innerShadow: string;
 }> = {
   gold: {
-    main: 'linear-gradient(145deg, hsl(43, 60%, 55%) 0%, hsl(38, 65%, 45%) 20%, hsl(43, 70%, 60%) 40%, hsl(38, 55%, 40%) 60%, hsl(43, 60%, 55%) 80%, hsl(40, 65%, 50%) 100%)',
-    inner: 'linear-gradient(135deg, hsl(43, 55%, 50%) 0%, hsl(40, 60%, 58%) 50%, hsl(43, 55%, 50%) 100%)',
-    borderTop: '2px solid hsl(43, 70%, 70%)',
-    borderLeft: '2px solid hsl(43, 60%, 58%)',
-    borderRight: '2px solid hsl(38, 55%, 38%)',
-    borderBottom: '2px solid hsl(38, 50%, 35%)',
+    outerBg: 'linear-gradient(145deg, hsl(43, 60%, 55%) 0%, hsl(38, 65%, 45%) 20%, hsl(43, 70%, 60%) 40%, hsl(38, 55%, 40%) 60%, hsl(43, 60%, 55%) 80%, hsl(40, 65%, 50%) 100%)',
+    borderColor: 'hsl(38, 55%, 38%)',
+    innerBg: 'linear-gradient(135deg, hsl(43, 55%, 50%) 0%, hsl(40, 60%, 58%) 50%, hsl(43, 55%, 50%) 100%)',
     matBg: 'hsl(40, 15%, 95%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.12)',
   },
   chrome: {
-    main: 'linear-gradient(145deg, hsl(210, 5%, 78%) 0%, hsl(210, 8%, 60%) 20%, hsl(210, 5%, 85%) 40%, hsl(210, 8%, 55%) 60%, hsl(210, 5%, 75%) 80%, hsl(210, 8%, 65%) 100%)',
-    inner: 'linear-gradient(135deg, hsl(210, 5%, 70%) 0%, hsl(210, 8%, 80%) 50%, hsl(210, 5%, 70%) 100%)',
-    borderTop: '2px solid hsl(210, 5%, 88%)',
-    borderLeft: '2px solid hsl(210, 5%, 75%)',
-    borderRight: '2px solid hsl(210, 8%, 50%)',
-    borderBottom: '2px solid hsl(210, 8%, 45%)',
+    outerBg: 'linear-gradient(145deg, hsl(210, 5%, 78%) 0%, hsl(210, 8%, 60%) 20%, hsl(210, 5%, 85%) 40%, hsl(210, 8%, 55%) 60%, hsl(210, 5%, 75%) 80%, hsl(210, 8%, 65%) 100%)',
+    borderColor: 'hsl(210, 8%, 50%)',
+    innerBg: 'linear-gradient(135deg, hsl(210, 5%, 70%) 0%, hsl(210, 8%, 80%) 50%, hsl(210, 5%, 70%) 100%)',
     matBg: 'hsl(210, 5%, 96%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.4)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.1)',
   },
   copper: {
-    main: 'linear-gradient(145deg, hsl(18, 55%, 55%) 0%, hsl(15, 60%, 42%) 20%, hsl(20, 50%, 58%) 40%, hsl(15, 55%, 38%) 60%, hsl(18, 55%, 52%) 80%, hsl(20, 60%, 48%) 100%)',
-    inner: 'linear-gradient(135deg, hsl(18, 50%, 48%) 0%, hsl(20, 55%, 55%) 50%, hsl(18, 50%, 48%) 100%)',
-    borderTop: '2px solid hsl(18, 55%, 65%)',
-    borderLeft: '2px solid hsl(18, 50%, 55%)',
-    borderRight: '2px solid hsl(15, 55%, 35%)',
-    borderBottom: '2px solid hsl(15, 50%, 30%)',
+    outerBg: 'linear-gradient(145deg, hsl(18, 55%, 55%) 0%, hsl(15, 60%, 42%) 20%, hsl(20, 50%, 58%) 40%, hsl(15, 55%, 38%) 60%, hsl(18, 55%, 52%) 80%, hsl(20, 60%, 48%) 100%)',
+    borderColor: 'hsl(15, 55%, 35%)',
+    innerBg: 'linear-gradient(135deg, hsl(18, 50%, 48%) 0%, hsl(20, 55%, 55%) 50%, hsl(18, 50%, 48%) 100%)',
     matBg: 'hsl(20, 15%, 95%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.25)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.12)',
   },
   silver: {
-    main: 'linear-gradient(145deg, hsl(220, 8%, 72%) 0%, hsl(220, 10%, 58%) 20%, hsl(220, 6%, 80%) 40%, hsl(220, 10%, 52%) 60%, hsl(220, 8%, 70%) 80%, hsl(220, 10%, 62%) 100%)',
-    inner: 'linear-gradient(135deg, hsl(220, 6%, 65%) 0%, hsl(220, 8%, 75%) 50%, hsl(220, 6%, 65%) 100%)',
-    borderTop: '2px solid hsl(220, 6%, 82%)',
-    borderLeft: '2px solid hsl(220, 6%, 70%)',
-    borderRight: '2px solid hsl(220, 10%, 48%)',
-    borderBottom: '2px solid hsl(220, 10%, 42%)',
+    outerBg: 'linear-gradient(145deg, hsl(220, 8%, 72%) 0%, hsl(220, 10%, 58%) 20%, hsl(220, 6%, 80%) 40%, hsl(220, 10%, 52%) 60%, hsl(220, 8%, 70%) 80%, hsl(220, 10%, 62%) 100%)',
+    borderColor: 'hsl(220, 10%, 48%)',
+    innerBg: 'linear-gradient(135deg, hsl(220, 6%, 65%) 0%, hsl(220, 8%, 75%) 50%, hsl(220, 6%, 65%) 100%)',
     matBg: 'hsl(220, 5%, 96%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.35)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.1)',
+  },
+  wood: {
+    outerBg: 'linear-gradient(145deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 50%) 25%, hsl(28, 42%, 58%) 50%, hsl(22, 38%, 45%) 75%, hsl(30, 40%, 62%) 100%)',
+    borderColor: 'hsl(25, 35%, 35%)',
+    innerBg: 'linear-gradient(135deg, hsl(28, 35%, 52%) 0%, hsl(30, 40%, 60%) 50%, hsl(28, 35%, 52%) 100%)',
+    matBg: 'hsl(30, 15%, 95%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.1)',
+  },
+  minimal: {
+    outerBg: 'linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 96%) 50%, hsl(0, 0%, 100%) 100%)',
+    borderColor: 'hsl(0, 0%, 80%)',
+    innerBg: 'hsl(0, 0%, 98%)',
+    matBg: 'hsl(0, 0%, 100%)',
+    outerShadow: '0 6px 28px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.05)',
+  },
+  'shadow-box': {
+    outerBg: 'linear-gradient(145deg, hsl(0, 0%, 92%) 0%, hsl(0, 0%, 85%) 50%, hsl(0, 0%, 92%) 100%)',
+    borderColor: 'hsl(0, 0%, 30%)',
+    innerBg: 'hsl(0, 0%, 90%)',
+    matBg: 'hsl(0, 0%, 97%)',
+    outerShadow: '0 6px 30px rgba(0,0,0,0.1), inset 0 2px 8px rgba(0,0,0,0.06)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.08)',
+  },
+  floating: {
+    outerBg: 'linear-gradient(145deg, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 94%) 50%, hsl(0, 0%, 98%) 100%)',
+    borderColor: 'hsl(0, 0%, 85%)',
+    innerBg: 'hsl(0, 0%, 96%)',
+    matBg: 'hsl(0, 0%, 100%)',
+    outerShadow: '0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)',
+    innerShadow: 'inset 0 2px 12px rgba(0,0,0,0.04)',
+  },
+  polaroid: {
+    outerBg: 'hsl(0, 0%, 100%)',
+    borderColor: 'hsl(0, 0%, 88%)',
+    innerBg: 'hsl(0, 0%, 98%)',
+    matBg: 'hsl(0, 0%, 100%)',
+    outerShadow: '0 4px 20px rgba(0,0,0,0.1)',
+    innerShadow: 'inset 0 1px 8px rgba(0,0,0,0.04)',
   },
 };
 
-function MetallicFrame({ metal, children }: { metal: string; children: React.ReactNode }) {
-  const g = metallicGradients[metal];
-  if (!g) return <>{children}</>;
+function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
+  const config = shadowBoxStyles[style];
+  if (!config) {
+    // 'none' — no frame
+    return <div className="shadow-[0_4px_16px_rgba(0,0,0,0.06)]">{children}</div>;
+  }
 
   return (
     <div
-      className="p-[clamp(10px,2.5%,18px)] shadow-[0_6px_28px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.3)]"
+      className="p-[clamp(8px,2%,14px)]"
       style={{
-        background: g.main,
-        borderTop: g.borderTop,
-        borderLeft: g.borderLeft,
-        borderRight: g.borderRight,
-        borderBottom: g.borderBottom,
+        background: config.outerBg,
+        boxShadow: config.outerShadow,
       }}
     >
       <div
-        className="p-[clamp(3px,0.8%,5px)]"
+        className="p-[clamp(2px,0.5%,4px)]"
         style={{
-          background: g.inner,
-          boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,255,0.15)',
+          background: config.innerBg,
+          boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.15), inset 0 -1px 3px rgba(255,255,255,0.1)',
         }}
       >
-        <div style={{ backgroundColor: g.matBg }} className="p-[clamp(6px,1.5%,12px)]">
-          {children}
+        <div
+          className="border-2"
+          style={{ borderColor: config.borderColor }}
+        >
+          <div
+            className="p-[clamp(8px,2%,14px)]"
+            style={{
+              backgroundColor: config.matBg,
+              boxShadow: config.innerShadow,
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>
   );
-}
-
-function FrameWrapper({ style, children }: { style: FrameStyle; children: React.ReactNode }) {
-  if (['gold', 'chrome', 'copper', 'silver'].includes(style)) {
-    return <MetallicFrame metal={style}>{children}</MetallicFrame>;
-  }
-
-  switch (style) {
-    case 'minimal':
-      return (
-        <div className="bg-[hsl(0,0%,98%)] p-[clamp(12px,3%,20px)] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-          <div className="border border-[hsl(0,0%,20%)] border-opacity-80">
-            <div className="bg-white p-[clamp(8px,2%,16px)]">{children}</div>
-          </div>
-        </div>
-      );
-    case 'shadow-box':
-      return (
-        <div className="bg-[hsl(0,0%,95%)] p-[clamp(6px,1.5%,10px)] shadow-[0_6px_30px_rgba(0,0,0,0.1),inset_0_2px_8px_rgba(0,0,0,0.06)]">
-          <div className="border-2 border-[hsl(0,0%,30%)]">
-            <div className="bg-[hsl(0,0%,97%)] p-[clamp(10px,2.5%,18px)] shadow-[inset_0_2px_12px_rgba(0,0,0,0.08)]">{children}</div>
-          </div>
-        </div>
-      );
-    case 'wood':
-      return (
-        <div className="p-[clamp(8px,2%,14px)] shadow-[0_6px_24px_rgba(0,0,0,0.1)]" style={{ background: 'linear-gradient(135deg, hsl(30, 40%, 65%) 0%, hsl(25, 35%, 55%) 30%, hsl(28, 38%, 60%) 70%, hsl(30, 40%, 65%) 100%)' }}>
-          <div className="bg-white p-[clamp(8px,2%,14px)]">{children}</div>
-        </div>
-      );
-    case 'floating':
-      return (
-        <div className="relative">
-          <div className="absolute inset-[6%] bg-[hsl(0,0%,85%)] rounded-sm shadow-[0_8px_32px_rgba(0,0,0,0.12)]" />
-          <div className="relative bg-white p-[clamp(4px,1%,8px)] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-            <div className="border border-[hsl(0,0%,90%)]">{children}</div>
-          </div>
-        </div>
-      );
-    case 'polaroid':
-      return (
-        <div className="bg-white p-[clamp(8px,2%,14px)] pb-[clamp(36px,10%,56px)] shadow-[0_4px_20px_rgba(0,0,0,0.1)] rotate-[0.5deg]">
-          {children}
-        </div>
-      );
-    case 'none':
-    default:
-      return <div className="shadow-[0_4px_16px_rgba(0,0,0,0.06)]">{children}</div>;
-  }
 }
 
 export function WallCard({
