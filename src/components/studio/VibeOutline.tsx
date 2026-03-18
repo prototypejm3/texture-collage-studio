@@ -166,10 +166,6 @@ export function VibeOutline({
                 style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
 
-              {/* Label: show when unfilled, or when selected (so user knows which section) */}
-              {(!isFilled || isSelected) && (
-                <VibeLabel section={section} isHovered={isHovered} isSelected={isSelected} />
-              )}
             </g>
           );
         })}
