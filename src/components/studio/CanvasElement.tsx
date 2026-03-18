@@ -147,8 +147,11 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const clipPath = getClipPath(element.shape);
   const filter = getFilterStyles(element.effects);
   const shadow = getShadowStyle(element.effects.shadowDepth);
-  const { maskImage, borderRadius } = getEdgeMask(element.effects.edgeStyle);
+  const { maskImage, borderRadius, edgeClipPath } = getEdgeMask(element.effects.edgeStyle);
   const hasScissorEdge = !!maskImage;
+
+  // Determine final clip-path: edge clip-path overrides shape clip-path when set
+  const finalClipPath = hasScissorEdge ? undefined : (edgeClipPath || clipPath);
 
   return (
     // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
@@ -180,13 +183,13 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         style={{
           background: texture.cssBackground,
           backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
-          clipPath: hasScissorEdge ? undefined : clipPath,
+          clipPath: finalClipPath,
           borderRadius,
           filter,
           WebkitMaskImage: maskImage,
-          WebkitMaskComposite: maskImage ? 'destination-in' as any : undefined,
+          WebkitMaskComposite: maskImage ? 'source-over' as any : undefined,
           maskImage,
-          maskComposite: maskImage ? 'intersect' as any : undefined,
+          maskComposite: maskImage ? 'add' as any : undefined,
         }}
       />
     </div>
