@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Shuffle, Sparkles, Loader2 } from 'lucide-react';
+import { X, Shuffle, Sparkles, Loader2, Lock } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 
 interface VibeSelectorProps {
   isOpen: boolean;
   activeVibeId: string | null;
+  isPremium: boolean;
   onClose: () => void;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffle: () => void;
+  onRequestUpgrade: () => void;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
@@ -54,7 +56,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
   );
 }
 
-export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onShuffle }: VibeSelectorProps) {
+export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelectVibe, onShuffle, onRequestUpgrade }: VibeSelectorProps) {
   const [aiPrompt, setAiPrompt] = useState('');
   const [showAiInput, setShowAiInput] = useState(false);
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
@@ -90,14 +92,24 @@ export function VibeSelector({ isOpen, activeVibeId, onClose, onSelectVibe, onSh
             </h3>
             <div className="flex items-center gap-1.5">
               <button
-                onClick={() => setShowAiInput(v => !v)}
+                onClick={() => {
+                  if (!isPremium) {
+                    onRequestUpgrade();
+                    return;
+                  }
+                  setShowAiInput(v => !v);
+                }}
                 className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-md transition-colors ${
-                  showAiInput
+                  showAiInput && isPremium
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                <Sparkles className="w-2.5 h-2.5" /> AI Generate
+                {isPremium ? (
+                  <><Sparkles className="w-2.5 h-2.5" /> AI Generate</>
+                ) : (
+                  <><Lock className="w-2.5 h-2.5" /> AI Generate ✨</>
+                )}
               </button>
               {activeVibeId && (
                 <button
