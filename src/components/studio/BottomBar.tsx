@@ -18,16 +18,16 @@ interface Props {
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
-// Color frames shown as circles (excluding shadow-box, which is now a pill)
-const colorFrames: { id: FrameStyle; color: string; label: string }[] = [
+// Color frames for Shadow menu
+const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
   { id: 'gold', color: 'linear-gradient(145deg, hsl(43,74%,60%), hsl(43,74%,45%))', label: 'Gold' },
   { id: 'chrome', color: 'linear-gradient(145deg, hsl(0,0%,85%), hsl(0,0%,70%))', label: 'Chrome' },
   { id: 'copper', color: 'linear-gradient(145deg, hsl(20,60%,55%), hsl(20,50%,40%))', label: 'Copper' },
   { id: 'silver', color: 'linear-gradient(145deg, hsl(220,8%,72%), hsl(220,10%,58%))', label: 'Silver' },
-  { id: 'black', color: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))', label: 'Black' },
-  { id: 'minimal', color: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))', label: 'Minimal' },
+  { id: 'black', color: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))', label: 'Black', free: true },
+  { id: 'minimal', color: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))', label: 'White', free: true },
   { id: 'wood', color: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(25,35%,38%))', label: 'Wood' },
-  { id: 'none', color: 'transparent', label: 'None' },
+  { id: 'none', color: 'transparent', label: 'None', free: true },
 ];
 
 // Special styles as pill buttons
@@ -47,7 +47,6 @@ export function BottomBar({
 
   const handleSpecialSelect = (id: FrameStyle) => {
     if (id === 'shadow-box') {
-      // Toggle color picker menu for Shadow
       setShowColorMenu(prev => prev === 'shadow' ? null : 'shadow');
     } else {
       onWallFrameStyleChange(id);
@@ -56,9 +55,13 @@ export function BottomBar({
   };
 
   const handleColorSelect = (id: FrameStyle) => {
+    // Shadow-box applies the color variant; we keep wallFrameStyle as the color id
     onWallFrameStyleChange(id);
     setShowColorMenu(null);
   };
+
+  // Check if current frame is a shadow-box color
+  const isShadowColor = colorFrames.some(f => f.id === wallFrameStyle) || wallFrameStyle === 'shadow-box';
 
   return (
     <div className="flex items-center px-5 py-2 bg-popover border-t border-border relative">
@@ -86,11 +89,11 @@ export function BottomBar({
       <div className="flex items-center gap-3">
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
 
-        {/* Pill buttons for special styles */}
+        {/* Pill buttons */}
         <div className="flex items-center gap-1">
           {specialFrames.map(f => {
             const isActive = f.id === 'shadow-box'
-              ? wallFrameStyle === 'shadow-box'
+              ? isShadowColor
               : wallFrameStyle === f.id;
 
             return (
@@ -105,28 +108,41 @@ export function BottomBar({
                 >
                   {f.label}
                 </button>
+
+                {/* Shadow color picker popover */}
+                {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
+                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Shadow Box Color</p>
+                      <div className="flex items-center gap-2">
+                        {colorFrames.map(cf => {
+                          const locked = !cf.free && !isPremium;
+                          return (
+                            <button
+                              key={cf.id}
+                              onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                              className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
+                                wallFrameStyle === cf.id
+                                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-popover scale-110'
+                                  : 'hover:scale-110'
+                              } ${cf.id === 'none' ? 'border-2 border-border border-dashed' : 'border border-border/40'} ${
+                                locked ? 'opacity-40 cursor-not-allowed' : ''
+                              }`}
+                              style={{ background: cf.color }}
+                              title={locked ? 'Premium — unlock to use' : cf.label}
+                            >
+                              {locked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
-        </div>
-
-        <div className="w-px h-4 bg-border" />
-
-        {/* Color frame circles — always visible */}
-        <div className="flex items-center gap-1.5">
-          {colorFrames.map(f => (
-            <button
-              key={f.id}
-              onClick={() => handleColorSelect(f.id)}
-              className={`w-5 h-5 rounded-full transition-all flex-shrink-0 ${
-                wallFrameStyle === f.id
-                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110'
-                  : 'hover:scale-110'
-              } ${f.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'}`}
-              style={{ background: f.color }}
-              title={f.label}
-            />
-          ))}
         </div>
       </div>
 
