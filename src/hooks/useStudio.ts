@@ -307,6 +307,7 @@ export function useStudio() {
     setDisplaySize,
     setWallFrameStyle,
     setDrawMode,
+    setBackgroundTextureId,
     // Free-mode
     addElement,
     updateElement,
