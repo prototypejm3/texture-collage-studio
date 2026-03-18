@@ -139,6 +139,8 @@ const Index = () => {
         frameColor={studio.frameColor}
         onFrameSizeChange={studio.setFrameSize}
         onFrameColorChange={studio.setFrameColor}
+        wallFrameStyle={studio.wallFrameStyle}
+        onWallFrameStyleChange={studio.setWallFrameStyle}
         onGenerate={() => setShowVibeModal(true)}
         onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}

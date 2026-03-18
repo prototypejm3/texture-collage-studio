@@ -1,16 +1,18 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { FrameSize, FrameColor, TextureSwatch } from '@/types/studio';
+import { FrameSize, FrameColor } from '@/types/studio';
+import { FrameStyle } from '@/types/wall';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save, ChevronDown, Lock } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
-import { textures } from '@/data/textures';
 
 interface Props {
   frameSize: FrameSize;
   frameColor: FrameColor;
+  wallFrameStyle: FrameStyle;
   onFrameSizeChange: (size: FrameSize) => void;
   onFrameColorChange: (color: FrameColor) => void;
+  onWallFrameStyleChange: (style: FrameStyle) => void;
   onGenerate: () => void;
   onShuffle: () => void;
   onClear: () => void;
@@ -29,14 +31,24 @@ interface Props {
   onRequestUpgrade: () => void;
 }
 
-const solidOptions: { id: string; label: string; bg: string }[] = [
-  { id: 'white', label: 'White', bg: 'hsl(0, 0%, 95%)' },
-  { id: 'black', label: 'Black', bg: 'hsl(0, 0%, 10%)' },
+const frameStyleList: { id: FrameStyle; label: string }[] = [
+  { id: 'gold', label: 'Gold' },
+  { id: 'chrome', label: 'Chrome' },
+  { id: 'copper', label: 'Copper' },
+  { id: 'silver', label: 'Silver' },
+  { id: 'minimal', label: 'Minimal' },
+  { id: 'shadow-box', label: 'Shadow Box' },
+  { id: 'wood', label: 'Wood' },
+  { id: 'floating', label: 'Floating' },
+  { id: 'polaroid', label: 'Polaroid' },
+  { id: 'none', label: 'None' },
 ];
 
 export function TopToolbar({
   frameColor,
   onFrameColorChange,
+  wallFrameStyle,
+  onWallFrameStyleChange,
   onGenerate, onShuffle, onClear, onSave, onSaveToWall,
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
@@ -52,14 +64,7 @@ export function TopToolbar({
     e.target.value = '';
   };
 
-  // Get current frame display
-  const currentFrameDisplay = useMemo(() => {
-    const solid = solidOptions.find(s => s.id === frameColor);
-    if (solid) return { label: solid.label, bg: solid.bg, isImage: false };
-    const tex = textures.find(t => t.id === frameColor);
-    if (tex) return { label: tex.name, bg: tex.cssBackground, isImage: true };
-    return { label: 'White', bg: 'hsl(0, 0%, 95%)', isImage: false };
-  }, [frameColor]);
+  const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   return (
     <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border relative">
@@ -73,63 +78,35 @@ export function TopToolbar({
 
       {/* Center: Frame picker + reference */}
       <div className="flex items-center gap-4">
-        {/* Frame material picker */}
+        {/* Frame style picker */}
         <div className="relative">
           <button
             onClick={() => setFramePanelOpen(v => !v)}
             className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-border hover:border-muted-foreground transition-colors"
           >
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
-            <div
-              className="w-5 h-5 rounded border border-border/50"
-              style={{
-                background: currentFrameDisplay.bg,
-                backgroundSize: currentFrameDisplay.isImage ? 'cover' : undefined,
-              }}
-            />
-            <span className="text-xs text-foreground">{currentFrameDisplay.label}</span>
+            <span className="text-xs text-foreground">{currentFrameLabel}</span>
             <ChevronDown className="w-3 h-3 text-muted-foreground" />
           </button>
 
-          {/* Dropdown panel */}
           {framePanelOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setFramePanelOpen(false)} />
-              <div className="absolute top-full left-0 mt-1 z-50 w-[320px] max-h-[400px] overflow-y-auto rounded-xl border border-border bg-popover shadow-xl p-3">
-                {/* Solid colors */}
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Solid</p>
-                <div className="flex gap-2 mb-3">
-                  {solidOptions.map(s => (
-                    <button
-                      key={s.id}
-                      onClick={() => { onFrameColorChange(s.id); setFramePanelOpen(false); }}
-                      className={`w-10 h-10 rounded-lg border-2 transition-all ${
-                        frameColor === s.id ? 'border-primary scale-105' : 'border-border hover:border-muted-foreground'
-                      }`}
-                      style={{ backgroundColor: s.bg }}
-                      title={s.label}
-                    />
-                  ))}
-                </div>
-
-                {/* All textures as frame options */}
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Textures</p>
-                <div className="grid grid-cols-6 gap-1.5">
-                  {textures.map(tex => (
-                    <button
-                      key={tex.id}
-                      onClick={() => { onFrameColorChange(tex.id); setFramePanelOpen(false); }}
-                      title={tex.name}
-                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${
-                        frameColor === tex.id ? 'border-primary scale-105' : 'border-border/30 hover:border-muted-foreground'
-                      }`}
-                      style={{
-                        background: tex.cssBackground,
-                        backgroundSize: 'cover',
-                      }}
-                    />
-                  ))}
-                </div>
+              <div className="absolute top-full left-0 mt-1 z-50 w-44 rounded-xl border border-border bg-popover shadow-xl py-1.5 overflow-hidden">
+                <p className="px-4 pt-2 pb-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">Frame</p>
+                {frameStyleList.map(f => (
+                  <button
+                    key={f.id}
+                    onClick={() => { onWallFrameStyleChange(f.id); setFramePanelOpen(false); }}
+                    className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                      wallFrameStyle === f.id
+                        ? 'text-primary font-medium'
+                        : 'text-foreground hover:bg-accent'
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
               </div>
             </>
           )}
