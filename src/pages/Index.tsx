@@ -352,21 +352,59 @@ const Index = () => {
         />
 
 
-
-        <RightSidebar
-          activeVibeId={studio.activeVibe?.id ?? null}
-          isPremium={isPremium}
-          onSelectVibe={handleSelectVibe}
-          onShuffleVibeFills={studio.shuffleVibeFills}
-          onRequestUpgrade={() => setShowPaywall(true)}
-          onGenerateMood={handleGenerateMood}
-          isGeneratingMood={vibeGen.isGenerating}
-          customTemplate={customTemplate}
-          templateOpacity={templateOpacity}
-          onUploadTemplate={handleUploadTemplate}
-          onClearTemplate={clearTemplate}
-          onTemplateOpacityChange={setTemplateOpacity}
-        />
+        {/* Stencils right sidebar */}
+        <div
+          className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
+            showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[220px]') : 'w-0'
+          } overflow-hidden`}
+        >
+          {showStencils && (
+            <>
+              <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
+                {!stencilsMinimized && (
+                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
+                    <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
+                  </span>
+                )}
+                <div className={`flex items-center gap-1 ${stencilsMinimized ? 'mx-auto' : 'ml-auto'}`}>
+                  <button
+                    onClick={() => setStencilsMinimized(prev => !prev)}
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    title={stencilsMinimized ? 'Expand' : 'Minimize'}
+                  >
+                    {stencilsMinimized ? '◂' : '▸'}
+                  </button>
+                  {!stencilsMinimized && (
+                    <button
+                      onClick={() => setShowStencils(false)}
+                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+              {!stencilsMinimized && (
+                <div className="overflow-y-auto flex-1">
+                  <RightSidebar
+                    activeVibeId={studio.activeVibe?.id ?? null}
+                    isPremium={isPremium}
+                    onSelectVibe={handleSelectVibe}
+                    onShuffleVibeFills={studio.shuffleVibeFills}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                    onGenerateMood={handleGenerateMood}
+                    isGeneratingMood={vibeGen.isGenerating}
+                    customTemplate={customTemplate}
+                    templateOpacity={templateOpacity}
+                    onUploadTemplate={handleUploadTemplate}
+                    onClearTemplate={clearTemplate}
+                    onTemplateOpacityChange={setTemplateOpacity}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
         </div>
       </div>
 
