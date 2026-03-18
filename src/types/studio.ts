@@ -2,6 +2,7 @@ export type TextureCategory =
   | 'Ocean' | 'Sky' | 'Space'
   | 'Alix' | 'Corinne' | 'Shayshari' | 'Jayme'
   | 'Marble' | 'Nuts' | 'Fruit'
+  | 'Animal' | 'Novelty' | 'Stripe' | 'Wood' | 'Concrete'
   | 'Custom';
 
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
