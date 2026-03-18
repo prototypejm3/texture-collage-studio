@@ -71,7 +71,9 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 export function RightSidebar({
   activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
+  customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
 }: RightSidebarProps) {
+  const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
   const [aiPrompt, setAiPrompt] = useState('');
   const [moodPrompt, setMoodPrompt] = useState('');
