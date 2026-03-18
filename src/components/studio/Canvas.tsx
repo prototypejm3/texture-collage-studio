@@ -94,7 +94,7 @@ export function Canvas({
     onDrop(textureId, x, y);
   }, [onDrop, canvasRef]);
 
-  const isTextureFrame = !solidFrames[frameColor];
+  
 
   return (
     <div
