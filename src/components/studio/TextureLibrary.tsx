@@ -21,8 +21,8 @@ const groups: TextureGroup[] = [
   { label: 'Felt & Cotton', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
   { label: 'Leather', categories: ['Leather'] },
   { label: 'Hard Surfaces', categories: ['Wood', 'Marble', 'Concrete'] },
-  { label: 'Prints & Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze'] },
-  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'Riviera', 'ShayShari', 'Suede Ace', 'Jayme', 'Skott', 'Kaplan', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat'] },
+  { label: 'Prints & Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
