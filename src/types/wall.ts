@@ -28,6 +28,11 @@ export interface SavedDesign {
   isHero?: boolean;
   showTitleCard?: boolean;
   
+  // Museum label fields
+  curatorNote?: string;
+  edition?: string;
+  materials?: string;
+  
   displaySize: DesignSize;
   wallX?: number;
   wallY?: number;
