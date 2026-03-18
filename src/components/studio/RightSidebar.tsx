@@ -304,7 +304,6 @@ export function RightSidebar({
                     />
                     <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{aiPrompt.length}/12</span>
                   </div>
-                  />
                   <button
                     onClick={handleGenerate}
                     disabled={isGenerating || !aiPrompt.trim()}
