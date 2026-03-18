@@ -312,12 +312,15 @@ serve(async (req) => {
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: `Create a stencil of: "${prompt}"
 
-Think step by step:
-1. What is the most ICONIC silhouette of this subject? What features make it instantly recognizable?
-2. How should it be positioned in the 480×480 canvas to look bold and centered?
-3. How should it be divided into 4-8 logical sections?
+Use a friendly cartoon style, not abstract.
 
-Now generate the stencil with smooth, accurate SVG paths.` },
+Think step by step:
+1. SILHOUETTE FIRST: Draw a single, clear, recognizable outline of this subject. What key features make it instantly identifiable? (e.g. for a dinosaur: head with jaw, body, tail, legs)
+2. POSITION: Center it on the 480×480 canvas, filling 70-85% of the space.
+3. DIVIDE: Now slice the completed silhouette into 4-6 anatomical/structural sections. Each cut should follow natural boundaries of the subject.
+4. VERIFY: Do the sections tile back together to recreate the original silhouette perfectly? Are shared edges identical?
+
+Now generate the stencil with clean, bold SVG paths.` },
         ],
         tools: [
           {
