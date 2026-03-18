@@ -392,31 +392,70 @@ export function RightSidebar({
               </div>
             )}
 
-            {/* Stencil Grid */}
+            {/* Stencil Grid — grouped by theme */}
             <div className="p-3">
-              <div className="grid grid-cols-2 gap-2">
-                {allVibes.map(vibe => (
-                  <StencilCard
-                    key={vibe.id}
-                    vibe={vibe}
-                    isActive={activeVibeId === vibe.id}
-                    isHidden={social.hiddenIds.has(vibe.id)}
-                    isLoggedIn={!!user}
-                    onSelect={() => onSelectVibe(vibe)}
-                    onToggleHidden={() => social.toggleHidden(vibe.id)}
-                    onDelete={async () => {
-                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                      await social.deleteStencil(vibe.id);
-                      toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
-                    }}
-                    onReport={async () => {
-                      await social.reportStencil(vibe.id);
-                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                      toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
-                    }}
-                  />
-                ))}
-              </div>
+              {/* Uncategorized stencils first */}
+              {uncategorizedVibes.length > 0 && (
+                <div className="grid grid-cols-2 gap-2">
+                  {uncategorizedVibes.map(vibe => (
+                    <StencilCard
+                      key={vibe.id}
+                      vibe={vibe}
+                      isActive={activeVibeId === vibe.id}
+                      isHidden={social.hiddenIds.has(vibe.id)}
+                      isLoggedIn={!!user}
+                      onSelect={() => onSelectVibe(vibe)}
+                      onToggleHidden={() => social.toggleHidden(vibe.id)}
+                      onDelete={async () => {
+                        setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                        await social.deleteStencil(vibe.id);
+                        toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                      }}
+                      onReport={async () => {
+                        await social.reportStencil(vibe.id);
+                        setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                        toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Theme sections */}
+              {themeSections.map(section => (
+                <div key={section.label}>
+                  <div className="flex items-center gap-2 mt-4 mb-2">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+                      {section.emoji} {section.label}
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {section.vibes.map(vibe => (
+                      <StencilCard
+                        key={vibe.id}
+                        vibe={vibe}
+                        isActive={activeVibeId === vibe.id}
+                        isHidden={social.hiddenIds.has(vibe.id)}
+                        isLoggedIn={!!user}
+                        onSelect={() => onSelectVibe(vibe)}
+                        onToggleHidden={() => social.toggleHidden(vibe.id)}
+                        onDelete={async () => {
+                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                          await social.deleteStencil(vibe.id);
+                          toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                        }}
+                        onReport={async () => {
+                          await social.reportStencil(vibe.id);
+                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                          toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         ) : activeTab === 'community' ? (
