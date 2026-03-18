@@ -14,8 +14,10 @@ import { RightSidebar } from '@/components/studio/RightSidebar';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
+import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
+import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -34,6 +36,7 @@ const Index = () => {
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
 
   // Load design state when editing from wall
   useEffect(() => {
@@ -284,7 +287,11 @@ const Index = () => {
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
+        ambientSound={ambientSound}
+        onAmbientSoundChange={setAmbientSound}
       />
+
+      <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
 
       <GenerateVibeModal
         isOpen={showVibeModal}

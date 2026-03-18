@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
-import { FrameStyle } from '@/types/wall';
-import { Trash2, Save, Download } from 'lucide-react';
+import { FrameStyle, AmbientSound } from '@/types/wall';
+import { Trash2, Save, Download, Volume2 } from 'lucide-react';
 
 interface Props {
   frameSize: FrameSize;
@@ -11,6 +11,8 @@ interface Props {
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
+  ambientSound?: AmbientSound;
+  onAmbientSoundChange?: (sound: AmbientSound) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -34,11 +36,20 @@ const specialFrames: { id: FrameStyle; label: string }[] = [
   { id: 'polaroid', label: 'Polaroid' },
 ];
 
+const ambientOptions: { value: AmbientSound; label: string; emoji: string }[] = [
+  { value: 'none', label: 'Off', emoji: '🔇' },
+  { value: 'gallery', label: 'Gallery', emoji: '🏛' },
+  { value: 'loft', label: 'Lofi Beats', emoji: '🎵' },
+  { value: 'home', label: 'Chill', emoji: '🏠' },
+];
+
 export function BottomBar({
   frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  ambientSound, onAmbientSoundChange,
 }: Props) {
+  const [showSoundMenu, setShowSoundMenu] = useState(false);
   return (
     <div className="flex items-center px-5 py-2 bg-popover border-t border-border relative">
       {/* Left: Canvas size */}
@@ -101,8 +112,46 @@ export function BottomBar({
         </div>
       </div>
 
+      {/* Ambient sound */}
+      {onAmbientSoundChange && (
+        <div className="relative ml-auto mr-2">
+          <button
+            onClick={() => setShowSoundMenu(!showSoundMenu)}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${
+              ambientSound && ambientSound !== 'none'
+                ? 'bg-primary/10 text-primary'
+                : 'text-muted-foreground hover:bg-secondary'
+            }`}
+          >
+            <Volume2 className="w-3.5 h-3.5" />
+            {ambientSound && ambientSound !== 'none'
+              ? ambientOptions.find(a => a.value === ambientSound)?.label
+              : 'Listen'}
+          </button>
+          {showSoundMenu && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+              <div className="absolute bottom-full right-0 z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[130px]">
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+                {ambientOptions.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => { onAmbientSoundChange(opt.value); setShowSoundMenu(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${
+                      ambientSound === opt.value ? 'text-primary font-medium' : 'text-foreground'
+                    }`}
+                  >
+                    <span>{opt.emoji}</span> {opt.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
       {/* Right: Actions */}
-      <div className="flex items-center gap-1.5 ml-auto">
+      <div className={`flex items-center gap-1.5 ${!onAmbientSoundChange ? 'ml-auto' : ''}`}>
         <button onClick={onClear} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
           <Trash2 className="w-3.5 h-3.5" /> Clear
         </button>
