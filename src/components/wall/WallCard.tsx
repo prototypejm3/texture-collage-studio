@@ -17,6 +17,7 @@ interface WallCardProps {
   onSizeChange: (id: string, size: DesignSize) => void;
   onSubmitToGallery?: (id: string) => void;
   isPremium: boolean;
+  isDark?: boolean;
   size?: DesignSize;
 }
 
