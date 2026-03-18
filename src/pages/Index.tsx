@@ -243,6 +243,7 @@ const Index = () => {
           customTemplate={customTemplate}
           templateOpacity={templateOpacity}
           customTextures={customTextures}
+          backgroundTextureId={studio.backgroundTextureId}
           onSelect={studio.setSelectedId}
           onUpdate={studio.updateElement}
           onDrop={handleDrop}
