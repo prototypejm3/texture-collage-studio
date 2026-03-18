@@ -46,15 +46,12 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
-  drawMode?: boolean;
-  onToggleDraw?: () => void;
 }
 
 export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
-  drawMode, onToggleDraw,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   
