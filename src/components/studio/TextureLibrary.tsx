@@ -321,15 +321,21 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch' }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
   onDragStart: (id: string) => void;
   onTextureClick?: (id: string) => void;
   onRemoveCustomTexture: (id: string) => void;
+  viewMode?: 'swatch' | 'tiled';
 }) {
   const isCustom = tex.id.startsWith('custom-');
+  const isImage = isCustom || tex.cssBackground.startsWith('url(');
+  const bgSize = viewMode === 'tiled'
+    ? (isImage ? '60px 60px' : '40px 40px')
+    : 'cover';
+
   return (
     <motion.div
       draggable
@@ -346,7 +352,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
         className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
         style={{
           background: tex.cssBackground,
-          backgroundSize: (isCustom || tex.cssBackground.startsWith('url(')) ? 'cover' : '40px 40px',
+          backgroundSize: bgSize,
         }}
       />
       <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
