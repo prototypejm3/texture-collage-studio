@@ -67,6 +67,7 @@ export function TextureLibrary({
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [showElementTools, setShowElementTools] = useState(true);
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
+  const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleFav = useCallback((id: string) => {
