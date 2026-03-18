@@ -100,4 +100,23 @@ export const textures: TextureSwatch[] = [
   { id: 'leather-cognac', name: 'Cognac', category: 'Leather', cssBackground: img('leather-cognac.png') },
   { id: 'leather-mocha', name: 'Mocha', category: 'Leather', cssBackground: img('leather-mocha.png') },
   { id: 'leather-rye', name: 'Rye', category: 'Leather', cssBackground: img('leather-rye.png') },
+
+  // ── Ripple ──
+  { id: 'ripple-cream', name: 'Cream', category: 'Ripple', cssBackground: img('ripple-cream.png') },
+  { id: 'ripple-ink', name: 'Ink', category: 'Ripple', cssBackground: img('ripple-ink.png') },
+  { id: 'ripple-kraft', name: 'Kraft', category: 'Ripple', cssBackground: img('ripple-kraft.png') },
+  { id: 'ripple-lattice', name: 'Lattice', category: 'Ripple', cssBackground: img('ripple-lattice.png') },
+  { id: 'ripple-parchment', name: 'Parchment', category: 'Ripple', cssBackground: img('ripple-parchment.png') },
+
+  // ── Speckle ──
+  { id: 'speckle-blue', name: 'Blue', category: 'Speckle', cssBackground: img('speckle-blue.png') },
+  { id: 'speckle-ink', name: 'Ink', category: 'Speckle', cssBackground: img('speckle-ink.png') },
+
+  // ── Tie-dye ──
+  { id: 'tiedye-blush', name: 'Blush', category: 'Tie-dye', cssBackground: img('tiedye-blush.png') },
+  { id: 'tiedye-neutral', name: 'Neutral', category: 'Tie-dye', cssBackground: img('tiedye-neutral.png') },
+  { id: 'tiedye-rainbow', name: 'Rainbow', category: 'Tie-dye', cssBackground: img('tiedye-rainbow.png') },
+
+  // ── Maze ──
+  { id: 'maze', name: 'Maze', category: 'Maze', cssBackground: img('maze.png') },
 ];
