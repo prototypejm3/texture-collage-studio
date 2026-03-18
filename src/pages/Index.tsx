@@ -321,7 +321,7 @@ const Index = () => {
                 >
                   <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                     <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
-                    <span className="text-[9px] text-muted-foreground font-normal ml-1">⋮⋮ drag</span>
+                    <span className="text-[9px] text-muted-foreground font-normal ml-0.5 italic">— Drag Textile to the Canvas</span>
                   </span>
                   <button
                     onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
