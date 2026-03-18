@@ -149,6 +149,12 @@ export const textures: TextureSwatch[] = [
   { id: 'wood-walnut', name: 'Walnut Stout', category: 'Wood', cssBackground: img('wood-walnut.png') },
   { id: 'wood-birch', name: 'Birch Sap', category: 'Wood', cssBackground: img('wood-birch.png') },
 
+  // ── Marble ──
+  { id: 'marble-carrara', name: 'Carrara Blanc', category: 'Marble', cssBackground: img('marble-carrara.png') },
+  { id: 'marble-nero', name: 'Nero Negroni', category: 'Marble', cssBackground: img('marble-nero.png') },
+  { id: 'marble-rosa', name: 'Rosa Fizz', category: 'Marble', cssBackground: img('marble-rosa.png') },
+  { id: 'marble-verde', name: 'Verde Julep', category: 'Marble', cssBackground: img('marble-verde.png') },
+
   // ── Concrete ──
   { id: 'concrete-raw', name: 'Concrete Jungle', category: 'Concrete', cssBackground: img('concrete-raw.png') },
   { id: 'concrete-polished', name: 'Neat Pour', category: 'Concrete', cssBackground: img('concrete-polished.png') },
