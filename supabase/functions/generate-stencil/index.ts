@@ -69,6 +69,64 @@ Flower:
 
 You MUST respond using the generate_stencil tool. Return only valid SVG path data for each section. No explanations. No extra text.`;
 
+function getCuratedStencil(prompt: string) {
+  const normalized = prompt.toLowerCase().trim();
+
+  if (/(^|\b)(dinosaur|dino|t-rex|trex|tyrannosaurus)(\b|$)/.test(normalized)) {
+    return {
+      name: "Dinosaur",
+      emoji: "🦖",
+      description: "Bold T-Rex silhouette with large interlocking sections",
+      sections: [
+        {
+          id: "dino-head",
+          label: "Head",
+          tone: "accent",
+          path: "M84,196 Q108,152 154,132 Q194,116 238,126 Q252,128 260,140 Q258,154 244,164 Q220,176 206,196 Q194,214 178,224 Q148,240 114,232 Q92,226 80,210 Z",
+        },
+        {
+          id: "dino-neck",
+          label: "Neck",
+          tone: "medium",
+          path: "M178,224 Q196,198 214,178 Q236,160 258,154 Q276,164 286,186 Q276,222 254,254 Q236,276 214,292 Q192,286 176,262 Q168,244 178,224 Z",
+        },
+        {
+          id: "dino-back-tail",
+          label: "Back & Tail",
+          tone: "medium",
+          path: "M258,154 Q320,126 382,126 Q426,130 448,156 Q470,184 474,228 Q472,266 456,300 Q438,334 408,366 Q382,392 356,404 Q326,388 298,360 Q286,334 286,306 Q300,274 318,254 Q346,228 372,214 Q344,194 318,178 Q292,162 258,154 Z",
+        },
+        {
+          id: "dino-body",
+          label: "Body",
+          tone: "dark",
+          path: "M214,292 Q234,272 262,264 Q290,266 310,286 Q324,306 326,336 Q322,374 296,404 Q272,430 236,438 Q210,434 194,414 Q184,390 186,362 Q190,322 214,292 Z",
+        },
+        {
+          id: "dino-arm",
+          label: "Arm",
+          tone: "light",
+          path: "M218,286 Q232,280 246,284 Q252,292 246,304 Q236,312 230,324 Q224,336 212,338 Q202,332 202,320 Q206,300 218,286 Z",
+        },
+        {
+          id: "dino-leg-front",
+          label: "Front Leg",
+          tone: "medium",
+          path: "M218,436 Q242,424 260,432 Q268,446 266,466 Q256,472 238,472 Q220,472 206,470 Q196,458 202,446 Q208,440 218,436 Z",
+        },
+        {
+          id: "dino-leg-back",
+          label: "Back Leg",
+          tone: "dark",
+          path: "M278,420 Q306,404 332,410 Q342,430 340,462 Q330,472 312,472 Q286,472 266,470 Q258,456 264,438 Q270,426 278,420 Z",
+        },
+      ],
+    };
+  }
+
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -81,6 +139,26 @@ serve(async (req) => {
         JSON.stringify({ error: "prompt is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    const curated = getCuratedStencil(prompt);
+    if (curated) {
+      const vibe = {
+        id: `ai-${Date.now()}`,
+        name: curated.name,
+        emoji: curated.emoji,
+        description: curated.description,
+        viewBox: "0 0 480 480",
+        sections: curated.sections,
+        lightTextures: ["linen-white", "linen-natural", "boucle-cream", "boucle-ivory"],
+        mediumTextures: ["suede-camel", "leather-tan", "linen-mustard", "boucle-taupe"],
+        darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
+        accentTextures: ["boucle-blush", "linen-dusty-rose", "velvet-emerald"],
+      };
+
+      return new Response(JSON.stringify(vibe), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
