@@ -33,9 +33,9 @@ export function HangingWrapper({ style, children }: HangingWrapperProps) {
           <svg width="100" height="58" viewBox="0 0 100 58" className="block" style={{ marginTop: '-1px' }}>
             <defs>
               <linearGradient id="wire-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="hsl(0,0%,72%)" />
-                <stop offset="50%" stopColor="hsl(0,0%,50%)" />
-                <stop offset="100%" stopColor="hsl(0,0%,65%)" />
+                <stop offset="0%" stopColor="hsl(0,0%,15%)" />
+                <stop offset="50%" stopColor="hsl(0,0%,5%)" />
+                <stop offset="100%" stopColor="hsl(0,0%,20%)" />
               </linearGradient>
             </defs>
             <line x1="50" y1="2" x2="10" y2="56" stroke="url(#wire-grad)" strokeWidth="1" />
