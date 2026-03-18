@@ -247,6 +247,30 @@ export function useStudio() {
     return [...vibeSections, ...customSections].filter(s => !deletedSections.has(s.id));
   }, [activeVibe, customSections, deletedSections]);
 
+  const duplicateSection = useCallback((sectionId: string) => {
+    const section = allSections.find(s => s.id === sectionId);
+    if (!section) return;
+    const newId = `section-dup-${nextId++}`;
+    const newSection: VibeSection = {
+      ...section,
+      id: newId,
+      label: `${section.label} Copy`,
+    };
+    setCustomSections(prev => [...prev, newSection]);
+    // Copy fill if present
+    const existingFill = vibeFills[sectionId];
+    if (existingFill) {
+      setVibeFills(prev => ({ ...prev, [newId]: existingFill }));
+    }
+    // Copy transform with slight offset
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    setSectionTransforms(prev => ({
+      ...prev,
+      [newId]: { ...t, x: t.x + 15, y: t.y + 15 },
+    }));
+    setSelectedSectionId(newId);
+  }, [allSections, vibeFills, sectionTransforms]);
+
   // Detach a filled section into a free canvas element
   const detachSection = useCallback((sectionId: string) => {
     const section = allSections.find(s => s.id === sectionId);
@@ -376,6 +400,7 @@ export function useStudio() {
     addCustomSection,
     deleteCustomSection,
     deleteSection,
+    duplicateSection,
     updateSectionTransform,
     detachSection,
     // Serialization

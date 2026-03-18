@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, defaultSectionTransform } from '@/types/studio';
 import { textures } from '@/data/textures';
-import { Paintbrush, Scissors, Trash2, RotateCw } from 'lucide-react';
+import { Paintbrush, Scissors, Trash2, RotateCw, Copy } from 'lucide-react';
 
 interface Props {
   vibe: Vibe;
@@ -15,6 +15,7 @@ interface Props {
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
   onDeleteSection: (sectionId: string) => void;
+  onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   customTextures?: TextureSwatch[];
 }
@@ -49,7 +50,7 @@ export function VibeOutline({
   canvasWidth, canvasHeight,
   sectionTransforms,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
-  onDeleteSection, onUpdateSectionTransform,
+  onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   customTextures = [],
 }: Props) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -354,6 +355,15 @@ export function VibeOutline({
                 +
               </button>
             </div>
+
+            {/* Duplicate */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onDuplicateSection(selectedSectionId); }}
+              className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Duplicate section"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
 
             {/* Detach if filled */}
             {isFilled && (

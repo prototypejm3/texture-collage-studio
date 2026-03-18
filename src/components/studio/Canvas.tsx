@@ -29,6 +29,7 @@ interface Props {
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
   onDeleteSection: (sectionId: string) => void;
+  onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   drawMode?: boolean;
@@ -65,7 +66,7 @@ export function Canvas({
   backgroundTextureId, sectionTransforms,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
-  onDeleteSection, onUpdateSectionTransform,
+  onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
@@ -179,6 +180,7 @@ export function Canvas({
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
               onDeleteSection={onDeleteSection}
+              onDuplicateSection={onDuplicateSection}
               onUpdateSectionTransform={onUpdateSectionTransform}
               customTextures={customTextures}
             />
