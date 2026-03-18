@@ -107,8 +107,8 @@ export function Canvas({
       <div
         style={{
           padding: '16px',
-          background: 'background' in frameStyle ? (frameStyle as any).background : frameStyle.background,
-          backgroundSize: isTextureFrame ? 'cover' : undefined,
+          background: frameStyle.bg,
+          backgroundSize: frameStyle.bgSize,
           borderRadius: '4px',
           border: frameStyle.border,
           boxShadow: `
