@@ -3,7 +3,7 @@ export type WallBackground = 'brick' | 'concrete' | 'limewash' | 'black-brick' |
 export type FrameStyle = 'minimal' | 'shadow-box' | 'wood' | 'floating' | 'polaroid' | 'gold' | 'chrome' | 'copper' | 'silver' | 'none';
 
 export type DesignSize = 'small' | 'medium' | 'large';
-export type DesignStatus = 'in-progress' | 'finished';
+export type DesignStatus = 'display' | 'hidden' | 'draft';
 export type UserTier = 'free' | 'premium';
 
 export interface SavedDesign {
