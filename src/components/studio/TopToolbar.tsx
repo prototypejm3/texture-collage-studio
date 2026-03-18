@@ -166,6 +166,17 @@ export function TopToolbar({
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
+        {onToggleDraw && (
+          <Button
+            size="sm"
+            variant={drawMode ? 'default' : 'ghost'}
+            onClick={onToggleDraw}
+            className="gap-1.5 text-xs"
+            title="Draw a freehand section to fill with texture"
+          >
+            <PenTool className="w-3.5 h-3.5" /> Draw
+          </Button>
+        )}
         <Button size="sm" variant="default" onClick={onGenerate} className="gap-1.5 text-xs">
           <Sparkles className="w-3.5 h-3.5" /> Generate Vibe
         </Button>
