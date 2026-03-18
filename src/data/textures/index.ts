@@ -243,7 +243,7 @@ export const textures: TextureSwatch[] = [
   // ── Suede Ace ──
   { id: 'suede-ace-navy', name: 'Suede Ace', category: 'Suede Ace', cssBackground: img('novelty-suede-navy.png') },
   { id: 'suede-ace-forest', name: 'Woodruff', category: 'Suede Ace', cssBackground: img('novelty-suede-forest.png') },
-  { id: 'suede-ace-oxblood', name: 'Oxblood', category: 'Suede Ace', cssBackground: img('novelty-suede-oxblood.png') },
+  { id: 'suede-ace-oxblood', name: 'Twilight', category: 'Suede Ace', cssBackground: img('novelty-suede-oxblood.png') },
 
   // ── Jayme ──
   { id: 'jayme-gogh', name: 'Jayme Gogh', category: 'Jayme', cssBackground: img('novelty-jayme-gogh.png') },
