@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
-import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, ImagePlus, X, Save, ChevronDown, Lock, PenTool } from 'lucide-react';
-import { Slider } from '@/components/ui/slider';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Props {
   frameSize: FrameSize;
@@ -13,24 +13,9 @@ interface Props {
   onFrameSizeChange: (size: FrameSize) => void;
   onFrameColorChange: (color: FrameColor) => void;
   onWallFrameStyleChange: (style: FrameStyle) => void;
-  onGenerate: () => void;
-  onShuffle: () => void;
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
-  onToggleVibes: () => void;
-  vibesActive: boolean;
-  // Template
-  customTemplate: CustomTemplate | null;
-  templateOpacity: number;
-  onUploadTemplate: (file: File) => void;
-  onClearTemplate: () => void;
-  onTemplateOpacityChange: (val: number) => void;
-  // Premium
-  isPremium: boolean;
-  onRequestUpgrade: () => void;
-  drawMode?: boolean;
-  onToggleDraw?: () => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -47,41 +32,59 @@ const frameStyleList: { id: FrameStyle; label: string }[] = [
 ];
 
 export function TopToolbar({
-  frameColor,
-  onFrameColorChange,
   wallFrameStyle,
   onWallFrameStyleChange,
-  onGenerate, onShuffle, onClear, onSave, onSaveToWall,
-  onToggleVibes, vibesActive,
-  customTemplate, templateOpacity,
-  onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
-  isPremium, onRequestUpgrade,
-  drawMode, onToggleDraw,
+  onClear, onSave, onSaveToWall,
 }: Props) {
-  const templateInputRef = useRef<HTMLInputElement>(null);
   const [framePanelOpen, setFramePanelOpen] = useState(false);
+  const location = useLocation();
+  const { user, signOut } = useAuth();
 
-  const handleTemplateFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.type.startsWith('image/')) onUploadTemplate(file);
-    e.target.value = '';
-  };
+  const isCreate = location.pathname === '/' || location.pathname === '/create';
+  const isWall = location.pathname === '/wall';
+  const isGallery = location.pathname === '/gallery';
 
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   return (
-    <div className="flex items-center justify-between px-5 py-2.5 bg-popover border-b border-border relative">
-      {/* Left: Logo */}
-      <div className="flex items-center gap-2">
-        <Frame className="w-5 h-5 text-primary" />
-        <h1 className="text-sm font-semibold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          Shadow Box Studio
-        </h1>
+    <div className="flex items-center justify-between px-5 py-2.5 bg-background border-b border-border relative">
+      {/* Left: Logo + Nav */}
+      <div className="flex items-center gap-5">
+        <div className="flex items-center gap-2">
+          <Frame className="w-5 h-5 text-primary" />
+          <span className="text-sm font-bold tracking-tight text-foreground">ShadowBox</span>
+        </div>
+        <Link
+          to="/"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isCreate ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Palette className="w-4 h-4" />
+          Create
+        </Link>
+        <Link
+          to="/wall"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <LayoutGrid className="w-4 h-4" />
+          My Wall
+        </Link>
+        <Link
+          to="/gallery"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Ghost className="w-4 h-4" />
+          Gallery
+        </Link>
       </div>
 
-      {/* Center: Frame picker + reference */}
+      {/* Center: Frame picker */}
       <div className="flex items-center gap-4">
-        {/* Frame style picker */}
         <div className="relative">
           <button
             onClick={() => setFramePanelOpen(v => !v)}
@@ -114,57 +117,9 @@ export function TopToolbar({
             </>
           )}
         </div>
-
-        <div className="w-px h-5 bg-border" />
-
-        {/* Template reference image */}
-        <div className="flex items-center gap-1.5">
-          {!customTemplate ? (
-            <>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
-                className={`gap-1.5 text-xs ${!isPremium ? 'opacity-60' : ''}`}
-                title={isPremium ? 'Upload a reference image as canvas background' : 'Premium feature'}
-              >
-                {isPremium ? <ImagePlus className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />} Reference
-              </Button>
-              <input
-                ref={templateInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleTemplateFile}
-              />
-            </>
-          ) : (
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] text-muted-foreground truncate max-w-[80px]" title={customTemplate.name}>
-                📷 {customTemplate.name}
-              </span>
-              <div className="w-16">
-                <Slider
-                  value={[templateOpacity * 100]}
-                  min={5}
-                  max={80}
-                  step={5}
-                  onValueChange={([v]) => onTemplateOpacityChange(v / 100)}
-                />
-              </div>
-              <button
-                onClick={onClearTemplate}
-                className="p-0.5 rounded hover:bg-secondary transition-colors"
-                title="Remove reference image"
-              >
-                <X className="w-3 h-3 text-muted-foreground" />
-              </button>
-            </div>
-          )}
-        </div>
       </div>
 
-      {/* Right: Actions */}
+      {/* Right: Actions + Auth */}
       <div className="flex items-center gap-1.5">
         <Button size="sm" variant="ghost" onClick={onClear} className="gap-1.5 text-xs text-destructive hover:text-destructive">
           <Trash2 className="w-3.5 h-3.5" /> Clear
@@ -177,6 +132,28 @@ export function TopToolbar({
         <Button size="sm" onClick={onSave} className="gap-1.5 text-xs">
           <Download className="w-3.5 h-3.5" /> Export PNG
         </Button>
+        <div className="w-px h-5 bg-border mx-1" />
+        {user ? (
+          <>
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <User className="w-3 h-3" />
+              {user.email?.split('@')[0]}
+            </span>
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <LogOut className="w-3 h-3" /> Sign Out
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/auth"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            <LogIn className="w-3 h-3" /> Sign In
+          </Link>
+        )}
       </div>
     </div>
   );
