@@ -180,6 +180,7 @@ export function Canvas({
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
               onDeleteSection={onDeleteSection}
+              onDuplicateSection={onDuplicateSection}
               onUpdateSectionTransform={onUpdateSectionTransform}
               customTextures={customTextures}
             />
