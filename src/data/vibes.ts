@@ -2119,6 +2119,7 @@ const bancroft: Vibe = {
   id: 'bancroft', name: 'Bancroft', emoji: '🏍️',
   description: 'Classic cruiser motorcycle silhouette',
   category: 'Community',
+  baseLikes: 22, likesStartDate: '2026-03-05',
   viewBox: '0 0 480 320',
   sections: [
     { id: 'bc-rear-wheel', label: 'Rear Wheel', tone: 'dark',
