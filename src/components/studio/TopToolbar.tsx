@@ -1,10 +1,24 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Palette, LayoutGrid, Ghost, LogIn, LogOut, User, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+
+function useTheme() {
+  const [dark, setDark] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return document.documentElement.classList.contains('dark');
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return { dark, toggle: () => setDark(d => !d) };
+}
 
 interface Props {
   frameSize: FrameSize;
@@ -39,6 +53,7 @@ export function TopToolbar({
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { dark, toggle } = useTheme();
 
   const isCreate = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
@@ -88,6 +103,14 @@ export function TopToolbar({
 
       {/* Right: Auth */}
       <div className="flex items-center gap-1.5">
+        {/* Dark mode toggle */}
+        <button
+          onClick={toggle}
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
         {user ? (
           <>
             <span className="text-xs text-muted-foreground flex items-center gap-1">
