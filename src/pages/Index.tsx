@@ -256,18 +256,6 @@ const Index = () => {
         onAmbientSoundChange={setAmbientSound}
       />
       <div className="flex flex-1 overflow-hidden relative">
-        <div className="w-[260px] flex-shrink-0">
-          <TextureLibrary
-            onDragStart={handleDragStartLib}
-            onTextureClick={handleTextureClick}
-            activeSectionId={studio.selectedSectionId}
-            customTextures={customTextures}
-            onUploadTexture={handleUploadTexture}
-            onRemoveCustomTexture={removeCustomTexture}
-            isPremium={isPremium}
-            onRequestUpgrade={() => setShowPaywall(true)}
-          />
-        </div>
         <Canvas
           elements={studio.elements}
           selectedId={studio.selectedId}
