@@ -29,6 +29,8 @@ interface Props {
   // Premium
   isPremium: boolean;
   onRequestUpgrade: () => void;
+  drawMode?: boolean;
+  onToggleDraw?: () => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
