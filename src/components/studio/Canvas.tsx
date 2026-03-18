@@ -29,6 +29,7 @@ interface Props {
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
   onDeleteSection: (sectionId: string) => void;
+  onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   drawMode?: boolean;
