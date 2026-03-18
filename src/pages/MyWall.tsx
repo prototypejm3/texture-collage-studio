@@ -103,7 +103,12 @@ const MyWall = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`flex-1 overflow-y-auto ${bgStyles[wall.settings.background]} transition-colors duration-500`}
+        className={`flex-1 overflow-y-auto ${wall.settings.background !== 'custom' ? bgStyles[wall.settings.background] : ''} transition-colors duration-500`}
+        style={wall.settings.background === 'custom' && wall.settings.customWallImage ? {
+          backgroundImage: `url(${wall.settings.customWallImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        } : undefined}
       >
         <div className="max-w-5xl mx-auto px-8 py-10">
           {/* Customizer — minimal top bar */}

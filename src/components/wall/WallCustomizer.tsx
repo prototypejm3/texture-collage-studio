@@ -46,6 +46,18 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
+  const wallPhotoRef = useRef<HTMLInputElement>(null);
+
+  const handleWallPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      onUpdate({ background: 'custom', customWallImage: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
 
   const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(settings.background);
 
