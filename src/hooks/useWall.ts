@@ -55,6 +55,39 @@ export function useWall() {
     return id;
   }, [settings.defaultFrameStyle]);
 
+  // Draft: upsert a draft by draftKey (returns the draft id)
+  const saveDraft = useCallback((draftKey: string, preview: string, name: string, vibeName?: string, studioState?: string): string => {
+    const now = new Date().toISOString();
+    setDesigns(prev => {
+      const existing = prev.find(d => d.id === draftKey);
+      if (existing) {
+        return prev.map(d => d.id === draftKey ? { ...d, previewImage: preview, name, vibeName, studioState, updatedAt: now } : d);
+      }
+      const design: SavedDesign = {
+        id: draftKey,
+        name,
+        vibeName,
+        previewImage: preview,
+        createdAt: now,
+        updatedAt: now,
+        status: 'draft' as DesignStatus,
+        builtIRL: false,
+        pinned: false,
+        hidden: false,
+        frameStyle: settings.defaultFrameStyle,
+        displaySize: 'medium',
+        studioState,
+      };
+      return [design, ...prev];
+    });
+    return draftKey;
+  }, [settings.defaultFrameStyle]);
+
+  // Promote a draft to a full design
+  const promoteDraft = useCallback((draftKey: string) => {
+    setDesigns(prev => prev.map(d => d.id === draftKey ? { ...d, status: 'display' as DesignStatus, updatedAt: new Date().toISOString() } : d));
+  }, []);
+
   const replaceDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string) => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
