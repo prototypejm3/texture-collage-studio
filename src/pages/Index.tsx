@@ -119,7 +119,7 @@ const Index = () => {
     if (studio.activeVibe && studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
-  }, [studio]);
+  }, [studio.activeVibe, studio.selectedSectionId, studio.fillSection]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
