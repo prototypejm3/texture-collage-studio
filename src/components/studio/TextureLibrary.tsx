@@ -46,11 +46,6 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
-  selectedElement?: CanvasElement | null;
-  onUpdateElement?: (updates: Partial<CanvasElement>) => void;
-  onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
-  onDuplicate?: () => void;
-  onDelete?: () => void;
   drawMode?: boolean;
   onToggleDraw?: () => void;
 }
@@ -59,7 +54,6 @@ export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
-  selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
   drawMode, onToggleDraw,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
