@@ -45,6 +45,14 @@ const statusOptions: { value: DesignStatus; label: string }[] = [
   { value: 'draft', label: 'Draft' },
 ];
 
+const hangingOptions: { value: HangingStyle; label: string; emoji: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨' },
+  { value: 'string', label: 'String', emoji: '🧵' },
+  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
+  { value: 'hook', label: 'Hook', emoji: '🪝' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
+];
+
 /* ─── Shadow box configs per frame style ─── */
 const shadowBoxStyles: Record<string, {
   outerBg: string;
