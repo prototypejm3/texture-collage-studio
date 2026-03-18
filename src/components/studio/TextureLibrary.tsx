@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { textures } from '@/data/textures';
+import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, Star, Grid3X3, Maximize } from 'lucide-react';
+import { Upload, X, Lock, Star, Grid3X3, Maximize, Baby } from 'lucide-react';
 
 interface TextureGroup {
   label: string;
@@ -54,7 +55,7 @@ export function TextureLibrary({
   isPremium, onRequestUpgrade,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  
+  const [kidMode, setKidMode] = useState(false);
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -105,6 +106,14 @@ export function TextureLibrary({
             Textures
           </h2>
           <div className="flex items-center gap-1.5">
+            {/* Kid mode toggle */}
+            <button
+              onClick={() => setKidMode(!kidMode)}
+              className={`p-1 rounded transition-colors ${kidMode ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-secondary/60 text-muted-foreground/50 hover:text-muted-foreground'}`}
+              title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
+            >
+              <Baby className="w-3 h-3" />
+            </button>
             {/* Swatch / Tiled toggle */}
             <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
               <button
@@ -215,6 +224,7 @@ export function TextureLibrary({
               onTextureClick={onTextureClick}
               onRemoveCustomTexture={onRemoveCustomTexture}
               viewMode={swatchView}
+              kidMode={kidMode}
             />
           ))}
         </div>
@@ -244,7 +254,7 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch' }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
@@ -252,12 +262,14 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   onTextureClick?: (id: string) => void;
   onRemoveCustomTexture: (id: string) => void;
   viewMode?: 'swatch' | 'tiled';
+  kidMode?: boolean;
 }) {
   const isCustom = tex.id.startsWith('custom-');
   const isImage = isCustom || tex.cssBackground.startsWith('url(');
   const bgSize = viewMode === 'tiled'
     ? (isImage ? '60px 60px' : '40px 40px')
     : 'cover';
+  const displayName = kidMode ? (kidTextureNames[tex.id] || tex.name) : tex.name;
 
   return (
     <motion.div
@@ -279,7 +291,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
         }}
       />
       <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
-        {tex.name}
+        {displayName}
       </p>
       {/* Favorite star */}
       <button
