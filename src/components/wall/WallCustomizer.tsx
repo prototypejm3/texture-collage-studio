@@ -20,7 +20,7 @@ const backgrounds: { value: WallBackground; label: string; preview?: string; pre
   { value: 'clean-white', label: 'Clean White', previewColor: 'hsl(0 0% 98%)' },
   { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
   { value: 'brick', label: 'Brick', preview: '/walls/brick.png' },
-  { value: 'dark-brick', label: 'Dark Brick', preview: '/walls/dark-brick.png' },
+  
   { value: 'gray-brick', label: 'Gray Brick', preview: '/walls/gray-brick.png' },
   { value: 'black-brick', label: 'Black Brick', preview: '/walls/black-brick.png' },
   { value: 'black-stone', label: 'Black Stone', preview: '/walls/black-stone.png' },
