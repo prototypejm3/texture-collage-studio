@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { FrameStyle, AmbientSound } from '@/types/wall';
 import { Trash2, Save, Download, Volume2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
   frameSize: FrameSize;
@@ -17,9 +18,8 @@ interface Props {
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
-// Color frames shown as circles
+// Color frames shown as circles (excluding shadow-box, which is now a pill)
 const colorFrames: { id: FrameStyle; color: string; label: string }[] = [
-  { id: 'shadow-box', color: 'linear-gradient(145deg, hsl(0,0%,92%), hsl(0,0%,82%))', label: 'OG Shadow Box' },
   { id: 'gold', color: 'linear-gradient(145deg, hsl(43,74%,60%), hsl(43,74%,45%))', label: 'Gold' },
   { id: 'chrome', color: 'linear-gradient(145deg, hsl(0,0%,85%), hsl(0,0%,70%))', label: 'Chrome' },
   { id: 'copper', color: 'linear-gradient(145deg, hsl(20,60%,55%), hsl(20,50%,40%))', label: 'Copper' },
@@ -30,8 +30,9 @@ const colorFrames: { id: FrameStyle; color: string; label: string }[] = [
   { id: 'none', color: 'transparent', label: 'None' },
 ];
 
-// Separate special styles
+// Special styles as pill buttons
 const specialFrames: { id: FrameStyle; label: string }[] = [
+  { id: 'shadow-box', label: 'Shadow' },
   { id: 'floating', label: 'Floating' },
   { id: 'polaroid', label: 'Polaroid' },
 ];
@@ -50,6 +51,23 @@ export function BottomBar({
   ambientSound, onAmbientSoundChange,
 }: Props) {
   const [showSoundMenu, setShowSoundMenu] = useState(false);
+  // Whether color circles are expanded
+  const isColorFrame = colorFrames.some(f => f.id === wallFrameStyle);
+  const [circlesExpanded, setCirclesExpanded] = useState(isColorFrame);
+
+  const handleColorSelect = (id: FrameStyle) => {
+    onWallFrameStyleChange(id);
+  };
+
+  const handleSpecialSelect = (id: FrameStyle) => {
+    onWallFrameStyleChange(id);
+    setCirclesExpanded(false);
+  };
+
+  const handleExpandCircles = () => {
+    setCirclesExpanded(prev => !prev);
+  };
+
   return (
     <div className="flex items-center px-5 py-2 bg-popover border-t border-border relative">
       {/* Left: Canvas size */}
@@ -75,31 +93,13 @@ export function BottomBar({
       {/* Center: Frame picker */}
       <div className="flex items-center gap-3">
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
-        {/* Color circles */}
-        <div className="flex items-center gap-1.5">
-          {colorFrames.map(f => (
-            <button
-              key={f.id}
-              onClick={() => onWallFrameStyleChange(f.id)}
-              className={`w-5 h-5 rounded-full transition-all ${
-                wallFrameStyle === f.id
-                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110'
-                  : 'hover:scale-110'
-              } ${f.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'}`}
-              style={{ background: f.color }}
-              title={f.label}
-            />
-          ))}
-        </div>
 
-        <div className="w-px h-4 bg-border" />
-
-        {/* Special styles as text buttons */}
+        {/* Pill buttons for special styles */}
         <div className="flex items-center gap-1">
           {specialFrames.map(f => (
             <button
               key={f.id}
-              onClick={() => onWallFrameStyleChange(f.id)}
+              onClick={() => handleSpecialSelect(f.id)}
               className={`px-2.5 py-1 text-[11px] rounded-md transition-colors ${
                 wallFrameStyle === f.id
                   ? 'bg-primary text-primary-foreground'
@@ -109,6 +109,58 @@ export function BottomBar({
               {f.label}
             </button>
           ))}
+        </div>
+
+        <div className="w-px h-4 bg-border" />
+
+        {/* Color circle trigger + expanded circles */}
+        <div className="flex items-center gap-1.5">
+          {/* Current color swatch / expand toggle */}
+          {!circlesExpanded && (
+            <button
+              onClick={handleExpandCircles}
+              className={`w-5 h-5 rounded-full transition-all border border-border/40 hover:scale-110 ${
+                isColorFrame ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110' : ''
+              }`}
+              style={{
+                background: isColorFrame
+                  ? colorFrames.find(f => f.id === wallFrameStyle)?.color
+                  : colorFrames[0].color,
+              }}
+              title="Color frames"
+            />
+          )}
+
+          {/* Expanded color circles */}
+          <AnimatePresence>
+            {circlesExpanded && (
+              <motion.div
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: 'auto', opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="flex items-center gap-1.5 overflow-hidden"
+              >
+                {colorFrames.map((f, i) => (
+                  <motion.button
+                    key={f.id}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ delay: i * 0.03, duration: 0.15 }}
+                    onClick={() => handleColorSelect(f.id)}
+                    className={`w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                      wallFrameStyle === f.id
+                        ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110'
+                        : 'hover:scale-110'
+                    } ${f.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'}`}
+                    style={{ background: f.color }}
+                    title={f.label}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
