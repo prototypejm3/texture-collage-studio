@@ -161,6 +161,8 @@ const Index = () => {
             customTextures={customTextures}
             onUploadTexture={handleUploadTexture}
             onRemoveCustomTexture={removeCustomTexture}
+            isPremium={isPremium}
+            onRequestUpgrade={() => setShowPaywall(true)}
           />
         </div>
         <Canvas
