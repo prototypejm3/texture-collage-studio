@@ -55,8 +55,6 @@ export function TopToolbar({
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
-}: Props) {
-  const [framePanelOpen, setFramePanelOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
