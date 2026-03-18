@@ -223,7 +223,7 @@ export function TextureLibrary({
         {activeSectionId && (
           <div className="mb-3 px-2 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
             <p className="text-[10px] text-primary font-medium">
-              👆 Click a texture to fill the selected section
+              👆 Select a texture to add to the canvas to edit shapes, size, rotation & material effects.
             </p>
           </div>
         )}
