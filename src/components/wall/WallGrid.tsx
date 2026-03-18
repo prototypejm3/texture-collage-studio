@@ -96,6 +96,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
             return (
               <div key={d.id} className={spanClass}>
                 <WallCard {...cardProps(d, sz)} />
+                {showTitleCards && <TitleCard design={d} isDark={isDark} />}
               </div>
             );
           })}
