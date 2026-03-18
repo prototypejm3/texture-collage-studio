@@ -149,7 +149,7 @@ export function FreeformWall({
               </div>
 
               {showTitleCards && (
-                <div className="mt-4" data-no-drag>
+                <div className="mt-2" data-no-drag>
                   <TitleCard design={d} isDark={isDark} />
                 </div>
               )}
