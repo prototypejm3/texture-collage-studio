@@ -1,6 +1,6 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move } from 'lucide-react';
-import { useState } from 'react';
+import { LayoutGrid, AlignJustify, Columns, Star, Sparkles, Pencil, Check, Frame, Move, Camera, X } from 'lucide-react';
+import { useState, useRef } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
@@ -46,6 +46,18 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(settings.title);
   const [showFrameMenu, setShowFrameMenu] = useState(false);
+  const wallPhotoRef = useRef<HTMLInputElement>(null);
+
+  const handleWallPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      onUpdate({ background: 'custom', customWallImage: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
 
   const isDark = ['black-brick', 'black-concrete', 'dark-brick', 'black-stone'].includes(settings.background);
 
@@ -150,6 +162,29 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, isPremiu
                 )}
               </button>
             ))}
+            {/* Custom wall photo */}
+            <button
+              onClick={() => wallPhotoRef.current?.click()}
+              className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden flex items-center justify-center ${
+                settings.background === 'custom' ? 'border-primary scale-110 shadow-md' : 'border-border/40'
+              }`}
+              title="Upload your own wall photo"
+              style={settings.background === 'custom' && settings.customWallImage ? {
+                backgroundImage: `url(${settings.customWallImage})`,
+                backgroundSize: 'cover',
+              } : { backgroundColor: 'hsl(var(--secondary))' }}
+            >
+              {!(settings.background === 'custom' && settings.customWallImage) && (
+                <Camera className="w-3 h-3 text-muted-foreground" />
+              )}
+            </button>
+            <input
+              ref={wallPhotoRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleWallPhoto}
+            />
           </div>
         )}
       </div>

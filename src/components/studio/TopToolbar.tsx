@@ -2,7 +2,7 @@ import { useRef, useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor, TextureSwatch } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
-import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save, ChevronDown } from 'lucide-react';
+import { Shuffle, Sparkles, Trash2, Download, Frame, Palette, ImagePlus, X, Save, ChevronDown, Lock } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import { textures } from '@/data/textures';
 
@@ -24,6 +24,9 @@ interface Props {
   onUploadTemplate: (file: File) => void;
   onClearTemplate: () => void;
   onTemplateOpacityChange: (val: number) => void;
+  // Premium
+  isPremium: boolean;
+  onRequestUpgrade: () => void;
 }
 
 const solidOptions: { id: string; label: string; bg: string }[] = [
@@ -38,6 +41,7 @@ export function TopToolbar({
   onToggleVibes, vibesActive,
   customTemplate, templateOpacity,
   onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
+  isPremium, onRequestUpgrade,
 }: Props) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [framePanelOpen, setFramePanelOpen] = useState(false);
@@ -140,11 +144,11 @@ export function TopToolbar({
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => templateInputRef.current?.click()}
-                className="gap-1.5 text-xs"
-                title="Upload a reference image as canvas background"
+                onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                className={`gap-1.5 text-xs ${!isPremium ? 'opacity-60' : ''}`}
+                title={isPremium ? 'Upload a reference image as canvas background' : 'Premium feature'}
               >
-                <ImagePlus className="w-3.5 h-3.5" /> Reference
+                {isPremium ? <ImagePlus className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />} Reference
               </Button>
               <input
                 ref={templateInputRef}

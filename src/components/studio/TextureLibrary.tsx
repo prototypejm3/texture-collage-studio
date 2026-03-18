@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { textures } from '@/data/textures';
 import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, Lock } from 'lucide-react';
 
 interface TextureGroup {
   label: string;
@@ -32,11 +32,14 @@ interface TextureLibraryProps {
   customTextures: TextureSwatch[];
   onUploadTexture: (file: File) => void;
   onRemoveCustomTexture: (id: string) => void;
+  isPremium: boolean;
+  onRequestUpgrade: () => void;
 }
 
 export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
+  isPremium, onRequestUpgrade,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,11 +75,15 @@ export function TextureLibrary({
             Textures
           </h2>
           <button
-            onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
-            title="Upload your own texture"
+            onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
+            className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
+              isPremium
+                ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
+            }`}
+            title={isPremium ? 'Upload your own texture' : 'Premium feature'}
           >
-            <Upload className="w-3 h-3" /> Upload
+            {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
           </button>
           <input
             ref={fileInputRef}

@@ -151,6 +151,8 @@ const Index = () => {
         onUploadTemplate={handleUploadTemplate}
         onClearTemplate={clearTemplate}
         onTemplateOpacityChange={setTemplateOpacity}
+        isPremium={isPremium}
+        onRequestUpgrade={() => setShowPaywall(true)}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
@@ -161,6 +163,8 @@ const Index = () => {
             customTextures={customTextures}
             onUploadTexture={handleUploadTexture}
             onRemoveCustomTexture={removeCustomTexture}
+            isPremium={isPremium}
+            onRequestUpgrade={() => setShowPaywall(true)}
           />
         </div>
         <Canvas
