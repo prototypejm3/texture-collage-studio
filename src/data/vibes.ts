@@ -2671,4 +2671,54 @@ const trumpet: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
+// ── CAM'S AIRBUS A380 ── (Community)
+const camsAirbusA380: Vibe = {
+  id: 'cams-airbus-a380',
+  name: "Cam's Airbus A380",
+  emoji: '✈️',
+  category: 'Community',
+  creator: 'Cam',
+  description: 'A massive double-decker Airbus A380 in flight',
+  viewBox: '0 0 480 320',
+  sections: [
+    // Fuselage
+    { id: 'a380-fuselage', label: 'Fuselage', tone: 'light',
+      path: 'M60,160 Q40,148 38,140 Q40,132 60,128 L380,118 Q400,116 420,120 L430,128 Q438,135 438,145 Q438,155 430,162 L420,168 Q400,172 380,170 L60,160 Z' },
+    // Upper deck windows
+    { id: 'a380-upper-windows', label: 'Upper Deck', tone: 'dark',
+      path: 'M90,133 L370,122 L370,128 L90,138 Z' },
+    // Lower deck windows
+    { id: 'a380-lower-windows', label: 'Lower Deck', tone: 'dark',
+      path: 'M90,145 L370,136 L370,142 L90,152 Z' },
+    // Cockpit
+    { id: 'a380-cockpit', label: 'Cockpit', tone: 'accent',
+      path: 'M38,140 Q32,138 28,140 Q26,143 28,148 Q32,152 38,150 Q42,148 44,145 Q42,138 38,140 Z' },
+    // Tail / Vertical stabilizer
+    { id: 'a380-tail', label: 'Tail', tone: 'accent',
+      path: 'M400,118 L410,62 Q412,52 420,50 Q428,52 430,62 L434,80 Q436,95 432,110 L425,118 Z' },
+    // Horizontal stabilizer
+    { id: 'a380-h-stab', label: 'Horizontal Stabilizer', tone: 'medium',
+      path: 'M395,140 L430,125 Q445,120 455,125 Q458,130 452,135 L430,145 Q420,148 405,148 Z' },
+    // Left wing
+    { id: 'a380-wing-left', label: 'Left Wing', tone: 'medium',
+      path: 'M140,160 L100,250 Q95,262 105,265 Q115,265 125,258 L220,170 Z' },
+    // Right wing
+    { id: 'a380-wing-right', label: 'Right Wing', tone: 'medium',
+      path: 'M140,128 L100,42 Q95,30 105,28 Q115,28 125,35 L220,120 Z' },
+    // Engine 1 (left wing, inner)
+    { id: 'a380-engine-1', label: 'Engine 1', tone: 'dark',
+      path: 'M155,180 Q148,178 145,185 L140,210 Q138,218 145,220 Q152,220 155,215 L158,192 Q160,184 155,180 Z' },
+    // Engine 2 (left wing, outer)
+    { id: 'a380-engine-2', label: 'Engine 2', tone: 'dark',
+      path: 'M125,215 Q118,213 115,220 L110,242 Q108,250 115,252 Q122,252 125,247 L128,228 Q130,220 125,215 Z' },
+    // Engine 3 (right wing, inner)
+    { id: 'a380-engine-3', label: 'Engine 3', tone: 'dark',
+      path: 'M155,108 Q148,110 145,103 L140,80 Q138,72 145,70 Q152,70 155,75 L158,96 Q160,104 155,108 Z' },
+    // Engine 4 (right wing, outer)
+    { id: 'a380-engine-4', label: 'Engine 4', tone: 'dark',
+      path: 'M125,75 Q118,77 115,70 L110,48 Q108,40 115,38 Q122,38 125,43 L128,62 Q130,70 125,75 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
