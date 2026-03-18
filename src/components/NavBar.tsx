@@ -46,7 +46,7 @@ export function NavBar() {
           isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
-        <LayoutGrid className="w-4 h-4" />
+        <Grid2x2 className="w-4 h-4" />
         My Wall
       </Link>
       <Link
