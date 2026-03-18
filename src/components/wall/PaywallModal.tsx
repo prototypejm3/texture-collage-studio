@@ -57,9 +57,9 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
               <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-3">
                 <Lock className="w-6 h-6 text-primary" />
               </div>
-              <h2 className="text-lg font-bold text-foreground">Save your work</h2>
+              <h2 className="text-lg font-bold text-foreground">Unlock your full Wall</h2>
               <p className="text-sm text-muted-foreground mt-1">
-                You can save 1 design for free.
+                Save unlimited designs, customize your gallery, and build your collection.
               </p>
             </div>
 
