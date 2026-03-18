@@ -162,9 +162,13 @@ export function RightSidebar({
   const dbCommunityVibes = social.publicStencils.map(social.recordToVibe);
   const communityVibes = [...builtInCommunityVibes, ...dbCommunityVibes];
 
-  const tabs: { id: Tab; label: string; icon: any }[] = [
+  // Hidden stencils: built-in vibes that are hidden
+  const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
+
+  const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
     { id: 'stencils', label: 'Stencils', icon: Palette },
     { id: 'community', label: 'Community', icon: Globe },
+    { id: 'hidden', label: 'Hidden', icon: EyeOff, count: hiddenVibes.length },
   ];
 
   return (
