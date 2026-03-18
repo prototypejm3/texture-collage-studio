@@ -278,6 +278,9 @@ const Index = () => {
         onFrameSizeChange={studio.setFrameSize}
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
+        onClear={studio.clearCanvas}
+        onSave={handleExport}
+        onSaveToWall={handleSaveToWall}
       />
 
       <GenerateVibeModal
