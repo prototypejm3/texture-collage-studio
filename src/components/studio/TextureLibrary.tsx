@@ -55,7 +55,7 @@ export function TextureLibrary({
   isPremium, onRequestUpgrade,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  
+  const [kidMode, setKidMode] = useState(false);
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
