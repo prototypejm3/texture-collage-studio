@@ -222,7 +222,104 @@ const Index = () => {
         ambientSound={ambientSound}
         onAmbientSoundChange={setAmbientSound}
       />
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 overflow-hidden">
+        {/* Tool-Kit sidebar */}
+        <div
+          className={`flex-shrink-0 border-r border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
+            showToolKit ? (toolKitMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
+          } overflow-hidden`}
+        >
+          {showToolKit && (
+            <>
+              {/* Header */}
+              <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
+                {!toolKitMinimized && (
+                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
+                    <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
+                  </span>
+                )}
+                <div className={`flex items-center gap-1 ${toolKitMinimized ? 'mx-auto' : 'ml-auto'}`}>
+                  <button
+                    onClick={() => setToolKitMinimized(prev => !prev)}
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    title={toolKitMinimized ? 'Expand' : 'Minimize'}
+                  >
+                    {toolKitMinimized ? '▸' : '◂'}
+                  </button>
+                  {!toolKitMinimized && (
+                    <button
+                      onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
+                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+              {!toolKitMinimized && (
+                <div className="overflow-y-auto flex-1">
+                  {/* Draw Freehand */}
+                  <div className="px-3 py-2 border-b border-border">
+                    <button
+                      onClick={() => studio.setDrawMode(!studio.drawMode)}
+                      className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                        studio.drawMode
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                      }`}
+                    >
+                      <PenTool className="w-3.5 h-3.5" />
+                      Draw Freehand
+                    </button>
+                  </div>
+                  {/* Shape pre-selector */}
+                  <div className="px-3 py-2 border-b border-border">
+                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1.5">Shape</p>
+                    <div className="flex flex-wrap gap-1">
+                      {(['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'] as const).map(shape => (
+                        <button
+                          key={shape}
+                          onClick={() => studio.setNextShape(shape)}
+                          className={`px-2 py-1 text-[10px] rounded-md transition-colors capitalize ${
+                            studio.nextShape === shape
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                          }`}
+                        >
+                          {shape.replace('-', ' ')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Element editing when selected */}
+                  {studio.selectedElement && studio.selectedId && (
+                    <div className="border-b border-border">
+                      <FloatingToolbar
+                        element={studio.selectedElement}
+                        onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                        onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                        onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                        onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                      />
+                    </div>
+                  )}
+                  {/* Texture Library */}
+                  <TextureLibrary
+                    onDragStart={handleDragStartLib}
+                    onTextureClick={handleTextureClick}
+                    activeSectionId={studio.selectedSectionId}
+                    customTextures={customTextures}
+                    onUploadTexture={handleUploadTexture}
+                    onRemoveCustomTexture={removeCustomTexture}
+                    isPremium={isPremium}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <div className="flex-1 relative overflow-hidden">
         <Canvas
           elements={studio.elements}
           selectedId={studio.selectedId}
