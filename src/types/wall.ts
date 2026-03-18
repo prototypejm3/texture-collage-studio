@@ -8,6 +8,7 @@ export type UserTier = 'free' | 'premium';
 
 export interface SavedDesign {
   id: string;
+  wallId?: string; // which wall this belongs to
   name: string;
   description?: string;
   vibeName?: string;
