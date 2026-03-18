@@ -2227,34 +2227,32 @@ const alien: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── EARTH ──
-const earth: Vibe = {
-  id: 'earth', name: 'Earth', emoji: '🌍',
-  description: 'Planet Earth with continents',
+// ── SATURN ──
+const saturn: Vibe = {
+  id: 'saturn', name: 'Saturn', emoji: '🪐',
+  description: 'Ringed planet Saturn',
   viewBox: '0 0 480 480',
   sections: [
-    { id: 'ea-ocean', label: 'Ocean', tone: 'medium',
-      path: circlePath(240, 240, 205) },
-    { id: 'ea-africa', label: 'Africa', tone: 'accent',
-      path: 'M268,165 Q282,162 295,172 Q305,188 310,212 Q312,240 308,272 Q302,305 292,335 Q282,362 272,382 Q262,395 252,398 Q242,395 238,378 Q235,355 232,328 Q230,298 230,268 Q232,238 235,212 Q240,188 248,172 Q258,165 265,165 Z' },
-    { id: 'ea-europe', label: 'Europe', tone: 'accent',
-      path: 'M252,82 Q272,78 292,85 Q308,98 318,118 Q325,138 320,155 Q310,148 298,142 Q282,138 265,142 Q252,148 245,158 Q238,142 235,122 Q238,100 248,88 Z' },
-    { id: 'ea-americas', label: 'Americas', tone: 'accent',
-      path: 'M138,115 Q155,102 175,98 Q195,102 205,118 Q212,138 208,162 Q202,188 195,212 Q185,238 178,258 Q172,278 168,302 Q165,328 168,352 Q172,372 180,388 Q168,385 158,375 Q145,358 135,332 Q128,302 125,272 Q122,242 125,212 Q128,182 135,158 Q140,135 142,122 Z' },
-    { id: 'ea-south-america', label: 'South America', tone: 'accent',
-      path: 'M168,302 Q175,288 185,282 Q195,282 202,292 Q208,308 208,328 Q205,352 198,375 Q188,395 178,405 Q168,408 162,398 Q158,382 158,362 Q160,338 165,315 Z' },
-    { id: 'ea-asia', label: 'Asia', tone: 'accent',
-      path: 'M322,122 Q342,112 362,115 Q378,125 388,145 Q395,168 392,195 Q385,222 372,245 Q355,262 335,268 Q318,268 305,258 Q295,242 292,222 Q292,198 298,175 Q308,148 318,132 Z' },
-    { id: 'ea-australia', label: 'Australia', tone: 'accent',
-      path: 'M348,298 Q365,288 382,292 Q395,305 398,322 Q395,342 382,355 Q365,362 348,355 Q338,342 335,322 Q338,305 345,298 Z' },
-    { id: 'ea-greenland', label: 'Greenland', tone: 'accent',
-      path: 'M195,58 Q212,52 225,58 Q232,68 230,82 Q225,92 215,95 Q202,92 195,82 Q192,72 195,62 Z' },
-    { id: 'ea-polar-n', label: 'North Pole', tone: 'light',
-      path: 'M195,42 Q218,32 240,30 Q262,32 285,42 Q268,50 252,55 Q240,58 228,55 Q215,50 200,45 Z' },
-    { id: 'ea-polar-s', label: 'South Pole', tone: 'light',
-      path: 'M195,432 Q218,442 240,448 Q262,442 285,432 Q272,440 255,445 Q240,448 225,445 Q210,440 198,435 Z' },
+    { id: 'sa-ring-back', label: 'Ring Back', tone: 'light',
+      path: 'M58,228 Q120,195 195,182 Q240,178 285,182 Q360,195 422,228 Q360,218 285,210 Q240,208 195,210 Q120,218 58,228 Z' },
+    { id: 'sa-body', label: 'Planet Body', tone: 'medium',
+      path: circlePath(240, 260, 120) },
+    { id: 'sa-band1', label: 'Band 1', tone: 'dark',
+      path: 'M122,235 Q165,228 210,225 Q240,224 270,225 Q315,228 358,235 Q355,230 315,222 Q270,218 240,218 Q210,218 165,222 Q125,230 122,235 Z' },
+    { id: 'sa-band2', label: 'Band 2', tone: 'accent',
+      path: 'M125,268 Q168,260 215,255 Q240,254 265,255 Q312,260 355,268 Q312,275 265,278 Q240,280 215,278 Q168,275 125,268 Z' },
+    { id: 'sa-band3', label: 'Band 3', tone: 'dark',
+      path: 'M130,298 Q172,290 218,286 Q240,285 262,286 Q308,290 350,298 Q308,305 262,308 Q240,310 218,308 Q172,305 130,298 Z' },
+    { id: 'sa-highlight', label: 'Highlight', tone: 'light',
+      path: 'M175,200 Q195,188 218,182 Q235,180 245,185 Q238,198 225,210 Q210,218 195,218 Q182,215 178,208 Z' },
+    { id: 'sa-ring-front', label: 'Ring Front', tone: 'accent',
+      path: 'M32,265 Q95,298 175,315 Q220,322 240,322 Q260,322 305,315 Q385,298 448,265 Q385,282 305,295 Q260,300 240,300 Q220,300 175,295 Q95,282 32,265 Z' },
+    { id: 'sa-ring-outer', label: 'Ring Outer', tone: 'light',
+      path: 'M18,258 Q82,295 168,315 Q215,325 240,325 Q265,325 312,315 Q398,295 462,258 Q398,278 312,298 Q265,308 240,308 Q215,308 168,298 Q82,278 18,258 Z' },
+    { id: 'sa-shadow', label: 'Shadow on Ring', tone: 'dark',
+      path: 'M305,315 Q340,308 372,298 Q395,288 412,278 Q405,285 388,295 Q365,305 338,312 Q318,318 308,318 Z' },
   ],
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, earth, scubaSkiba, bancroft];
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, scubaSkiba, bancroft];
