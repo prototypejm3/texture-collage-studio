@@ -1,9 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 import { textures } from '@/data/textures';
-import { TextureCategory, TextureSwatch, CanvasElement, MaterialEffects } from '@/types/studio';
+import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, ChevronDown, ChevronUp, PenTool, Star, Grid3X3, Maximize } from 'lucide-react';
-import { FloatingToolbar } from './FloatingToolbar';
+import { Upload, X, Lock, PenTool, Star, Grid3X3, Maximize } from 'lucide-react';
 
 interface TextureGroup {
   label: string;
@@ -47,11 +46,6 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
-  selectedElement?: CanvasElement | null;
-  onUpdateElement?: (updates: Partial<CanvasElement>) => void;
-  onUpdateEffects?: (effects: Partial<MaterialEffects>) => void;
-  onDuplicate?: () => void;
-  onDelete?: () => void;
   drawMode?: boolean;
   onToggleDraw?: () => void;
 }
@@ -60,11 +54,10 @@ export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
-  selectedElement, onUpdateElement, onUpdateEffects, onDuplicate, onDelete,
   drawMode, onToggleDraw,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  const [showElementTools, setShowElementTools] = useState(true);
+  
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -108,72 +101,22 @@ export function TextureLibrary({
 
   return (
     <div className="h-full flex flex-col bg-card border-r border-border">
-      {/* Elements section */}
-      <div className="border-b border-border">
-        <button
-          onClick={() => setShowElementTools(!showElementTools)}
-          className="flex items-center gap-1.5 w-full px-4 py-2.5 text-sm font-semibold tracking-wide uppercase text-muted-foreground hover:text-foreground transition-colors"
-        >
-          ✂️ Elements
-          {showElementTools ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
-        </button>
-        {showElementTools && (
-          <div>
-            {selectedElement && onUpdateElement && onUpdateEffects && onDuplicate && onDelete ? (
-              <FloatingToolbar
-                element={selectedElement}
-                onUpdate={onUpdateElement}
-                onUpdateEffects={onUpdateEffects}
-                onDuplicate={onDuplicate}
-                onDelete={onDelete}
-              />
-            ) : (
-              <div className="px-4 py-3">
-                <p className="text-[10px] text-muted-foreground/60 italic mb-2">
-                  Select an element on the canvas to edit shapes, size, rotation & material effects.
-                </p>
-                <div className="space-y-2 opacity-40 pointer-events-none select-none">
-                  <div className="flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-muted-foreground">
-                    ✂️ Shapes
-                  </div>
-                  <div className="flex flex-wrap items-center gap-1 px-1">
-                    {['Soft Sq', 'Torn', 'Circle', 'Blob', 'Strip', 'Rect'].map(s => (
-                      <span key={s} className="h-8 px-2 flex items-center text-[9px] bg-secondary rounded-md">{s}</span>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-1 px-1">
-                    <span className="text-[10px] text-muted-foreground">W</span>
-                    <span className="w-12 h-7 bg-secondary rounded-md" />
-                    <span className="text-xs text-muted-foreground">×</span>
-                    <span className="w-12 h-7 bg-secondary rounded-md" />
-                    <span className="w-px h-6 bg-border mx-1" />
-                    <span className="text-[10px] text-muted-foreground">Rot</span>
-                    <span className="w-12 h-7 bg-secondary rounded-md" />
-                  </div>
-                  <div className="flex items-center gap-1.5 px-2 py-1.5 text-xs font-medium text-muted-foreground">
-                    Material Effects
-                  </div>
-                </div>
-              </div>
-            )}
-            {onToggleDraw && (
-              <div className="px-4 py-2">
-                <button
-                  onClick={onToggleDraw}
-                  className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                    drawMode
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                  }`}
-                >
-                  <PenTool className="w-3.5 h-3.5" />
-                  Draw Freehand
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      {/* Draw Freehand button */}
+      {onToggleDraw && (
+        <div className="px-4 py-2.5 border-b border-border">
+          <button
+            onClick={onToggleDraw}
+            className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+              drawMode
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            <PenTool className="w-3.5 h-3.5" />
+            Draw Freehand
+          </button>
+        </div>
+      )}
 
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">

@@ -11,6 +11,8 @@ import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
+import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
@@ -227,11 +229,6 @@ const Index = () => {
             onRemoveCustomTexture={removeCustomTexture}
             isPremium={isPremium}
             onRequestUpgrade={() => setShowPaywall(true)}
-            selectedElement={studio.selectedElement ?? null}
-            onUpdateElement={(updates) => studio.updateElement(studio.selectedId!, updates)}
-            onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-            onDelete={() => studio.deleteElement(studio.selectedId!)}
             drawMode={studio.drawMode}
             onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
           />
@@ -264,6 +261,39 @@ const Index = () => {
           onFinishDraw={studio.addCustomSection}
           onCancelDraw={() => studio.setDrawMode(false)}
         />
+
+        {/* Floating element toolbar — appears over canvas when element selected */}
+        <AnimatePresence>
+          {studio.selectedElement && studio.selectedId && (
+            <motion.div
+              key="element-toolbar"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.15 }}
+              className="absolute z-30 left-[280px] right-[220px] top-3 mx-auto max-w-[340px]"
+            >
+              <div className="bg-popover border border-border rounded-xl shadow-xl overflow-hidden max-h-[70vh] overflow-y-auto">
+                <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-secondary/30">
+                  <span className="text-xs font-semibold text-foreground">✂️ Elements</span>
+                  <button
+                    onClick={() => studio.setSelectedId(null)}
+                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+                <FloatingToolbar
+                  element={studio.selectedElement}
+                  onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+                  onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                  onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                  onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <RightSidebar
           activeVibeId={studio.activeVibe?.id ?? null}
