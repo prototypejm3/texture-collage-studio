@@ -4,17 +4,25 @@ import { TextureCategory, TextureSwatch } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Upload, X } from 'lucide-react';
 
-const categories: TextureCategory[] = [
-  'Royale', 'Banks', 'Bentley', 'Cody', 'Sunbrella',
-  'Bubbly', 'Karina', 'Crave', 'Caspiar', 'Checker',
-  'Soul', 'Nepal', 'Sorrento',
-  'Kenley', 'Villa', 'Leuven', 'Key Largo', 'Essence',
-  'Synergy', 'Milo', 'Faithful', 'Nico', 'Taylor Felt',
-  'Borough', 'Lucky', 'Merit', 'Prime', 'Tussah', 'Bloke',
-  'Leather', 'Wood', 'Concrete', 'Stripe', 'Grid',
-  'Animal', 'Ripple', 'Speckle', 'Tie-dye', 'Maze',
-  'Alix', 'Corinne', 'ShayShari', 'Suede Ace', 'Jayme',
-  'Skott', 'Kaplan', 'Riviera',
+interface TextureGroup {
+  label: string;
+  categories: TextureCategory[];
+}
+
+const groups: TextureGroup[] = [
+  { label: 'Velvet', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
+  { label: 'Chenille', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Linen', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Performance', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
+  { label: 'Bouclé', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Silk & Sheer', categories: ['Caspiar', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Felt & Cotton', categories: ['Taylor Felt', 'Bloke'] },
+  { label: 'Leather', categories: ['Leather'] },
+  { label: 'Hard Surfaces', categories: ['Wood', 'Concrete'] },
+  { label: 'Prints & Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze'] },
+  { label: 'Signature Florals', categories: ['Alix', 'Corinne', 'Riviera'] },
+  { label: 'Signature Naturals', categories: ['ShayShari', 'Suede Ace', 'Jayme', 'Skott', 'Kaplan'] },
 ];
 
 interface TextureLibraryProps {
@@ -30,13 +38,20 @@ export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
 }: TextureLibraryProps) {
-  const [activeCategory, setActiveCategory] = useState<TextureCategory | 'All' | 'Custom'>('All');
+  const [activeGroup, setActiveGroup] = useState<string>('All');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const allTextures = [...textures, ...customTextures];
-  const filtered = activeCategory === 'All'
-    ? allTextures
-    : allTextures.filter(t => t.category === activeCategory);
+
+  const activeCategories = activeGroup === 'All'
+    ? null
+    : activeGroup === 'Custom'
+      ? ['Custom' as TextureCategory]
+      : groups.find(g => g.label === activeGroup)?.categories ?? null;
+
+  const filtered = activeCategories
+    ? allTextures.filter(t => activeCategories.includes(t.category))
+    : allTextures;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -84,9 +99,9 @@ export function TextureLibrary({
 
         <div className="flex flex-wrap gap-1.5">
           <button
-            onClick={() => setActiveCategory('All')}
+            onClick={() => setActiveGroup('All')}
             className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
-              activeCategory === 'All'
+              activeGroup === 'All'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
             }`}
@@ -95,9 +110,9 @@ export function TextureLibrary({
           </button>
           {showCustomTab && (
             <button
-              onClick={() => setActiveCategory('Custom')}
+              onClick={() => setActiveGroup('Custom')}
               className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
-                activeCategory === 'Custom'
+                activeGroup === 'Custom'
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
@@ -105,66 +120,50 @@ export function TextureLibrary({
               ✨ My Textures
             </button>
           )}
-          {categories.map(cat => (
+          {groups.map(group => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={group.label}
+              onClick={() => setActiveGroup(group.label)}
               className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
-                activeCategory === cat
+                activeGroup === group.label
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              {cat}
+              {group.label}
             </button>
           ))}
         </div>
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-3">
-        <div className="grid grid-cols-3 gap-2">
-          {filtered.map(tex => {
-            const isCustom = tex.id.startsWith('custom-');
-            return (
-              <motion.div
-                key={tex.id}
-                draggable
-                onDragStart={(e) => {
-                  (e as any).dataTransfer?.setData('textureId', tex.id);
-                  onDragStart(tex.id);
-                }}
-                onClick={() => onTextureClick?.(tex.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className={`cursor-grab active:cursor-grabbing group relative`}
-              >
-                <div
-                  className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
-                  style={{
-                    background: tex.cssBackground,
-                    backgroundSize: (isCustom || tex.cssBackground.startsWith('url(')) ? 'cover' : '40px 40px',
-                  }}
-                />
-                <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
-                  {tex.name}
-                </p>
-                {isCustom && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onRemoveCustomTexture(tex.id);
-                    }}
-                    className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="w-2.5 h-2.5" />
-                  </button>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
+        {activeGroup !== 'All' && activeGroup !== 'Custom' ? (
+          /* Show sub-grouped by category when a group is active */
+          <div className="space-y-4">
+            {(groups.find(g => g.label === activeGroup)?.categories ?? []).map(cat => {
+              const catTextures = filtered.filter(t => t.category === cat);
+              if (catTextures.length === 0) return null;
+              return (
+                <div key={cat}>
+                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">{cat}</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {catTextures.map(tex => (
+                      <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2">
+            {filtered.map(tex => (
+              <SwatchItem key={tex.id} tex={tex} onDragStart={onDragStart} onTextureClick={onTextureClick} onRemoveCustomTexture={onRemoveCustomTexture} />
+            ))}
+          </div>
+        )}
 
         {/* Empty state for custom tab */}
-        {activeCategory === 'Custom' && customTextures.length === 0 && (
+        {activeGroup === 'Custom' && customTextures.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Upload className="w-8 h-8 text-muted-foreground/40 mb-2" />
             <p className="text-xs text-muted-foreground">No custom textures yet</p>
@@ -178,5 +177,49 @@ export function TextureLibrary({
         )}
       </div>
     </div>
+  );
+}
+
+function SwatchItem({ tex, onDragStart, onTextureClick, onRemoveCustomTexture }: {
+  tex: TextureSwatch;
+  onDragStart: (id: string) => void;
+  onTextureClick?: (id: string) => void;
+  onRemoveCustomTexture: (id: string) => void;
+}) {
+  const isCustom = tex.id.startsWith('custom-');
+  return (
+    <motion.div
+      draggable
+      onDragStart={(e) => {
+        (e as any).dataTransfer?.setData('textureId', tex.id);
+        onDragStart(tex.id);
+      }}
+      onClick={() => onTextureClick?.(tex.id)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+      className="cursor-grab active:cursor-grabbing group relative"
+    >
+      <div
+        className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
+        style={{
+          background: tex.cssBackground,
+          backgroundSize: (isCustom || tex.cssBackground.startsWith('url(')) ? 'cover' : '40px 40px',
+        }}
+      />
+      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+        {tex.name}
+      </p>
+      {isCustom && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemoveCustomTexture(tex.id);
+          }}
+          className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <X className="w-2.5 h-2.5" />
+        </button>
+      )}
+    </motion.div>
   );
 }
