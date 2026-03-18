@@ -1,5 +1,6 @@
 import { useRef, useCallback, useMemo } from 'react';
 import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch } from '@/types/studio';
+import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
@@ -10,6 +11,7 @@ interface Props {
   selectedId: string | null;
   frameSize: FrameSize;
   frameColor: FrameColor;
+  wallFrameStyle: FrameStyle;
   activeVibe: Vibe | null;
   vibeFills: VibeFills;
   selectedSectionId: string | null;
@@ -33,13 +35,21 @@ const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
 };
 
 // Solid color fallbacks for basic frame options
-const solidFrames: Record<string, { bg: string; border: string; shadow: string; innerBg: string }> = {
-  white: { bg: 'hsl(0, 0%, 98%)', border: 'hsl(0, 0%, 88%)', shadow: 'hsla(0, 0%, 0%, 0.1)', innerBg: 'hsl(40, 20%, 97%)' },
-  black: { bg: 'hsl(0, 0%, 8%)', border: 'hsl(0, 0%, 4%)', shadow: 'hsla(0, 0%, 0%, 0.3)', innerBg: 'hsl(0, 0%, 12%)' },
+const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: string; innerBg: string; padding: number; borderRadius: number }> = {
+  gold: { bg: 'linear-gradient(135deg, hsl(43, 74%, 60%), hsl(43, 74%, 45%), hsl(43, 74%, 65%))', border: '3px solid hsl(43, 60%, 40%)', shadow: 'hsla(43, 50%, 30%, 0.3)', innerBg: 'hsl(40, 20%, 97%)', padding: 16, borderRadius: 2 },
+  chrome: { bg: 'linear-gradient(135deg, hsl(0, 0%, 85%), hsl(0, 0%, 70%), hsl(0, 0%, 90%))', border: '3px solid hsl(0, 0%, 60%)', shadow: 'hsla(0, 0%, 0%, 0.2)', innerBg: 'hsl(0, 0%, 97%)', padding: 12, borderRadius: 1 },
+  copper: { bg: 'linear-gradient(135deg, hsl(20, 60%, 55%), hsl(20, 50%, 40%), hsl(20, 60%, 60%))', border: '3px solid hsl(20, 50%, 35%)', shadow: 'hsla(20, 40%, 25%, 0.3)', innerBg: 'hsl(30, 15%, 96%)', padding: 14, borderRadius: 2 },
+  silver: { bg: 'linear-gradient(135deg, hsl(0, 0%, 80%), hsl(0, 0%, 65%), hsl(0, 0%, 82%))', border: '3px solid hsl(0, 0%, 55%)', shadow: 'hsla(0, 0%, 0%, 0.15)', innerBg: 'hsl(0, 0%, 97%)', padding: 14, borderRadius: 2 },
+  minimal: { bg: 'hsl(0, 0%, 98%)', border: '2px solid hsl(0, 0%, 88%)', shadow: 'hsla(0, 0%, 0%, 0.08)', innerBg: 'hsl(0, 0%, 99%)', padding: 8, borderRadius: 0 },
+  'shadow-box': { bg: 'hsl(0, 0%, 96%)', border: '2px solid hsl(0, 0%, 85%)', shadow: 'hsla(0, 0%, 0%, 0.25)', innerBg: 'hsl(0, 0%, 99%)', padding: 24, borderRadius: 2 },
+  wood: { bg: 'linear-gradient(180deg, hsl(30, 40%, 45%), hsl(25, 35%, 35%), hsl(30, 40%, 42%))', border: '4px solid hsl(25, 35%, 30%)', shadow: 'hsla(25, 30%, 20%, 0.3)', innerBg: 'hsl(40, 20%, 97%)', padding: 16, borderRadius: 1 },
+  floating: { bg: 'transparent', border: 'none', shadow: 'hsla(0, 0%, 0%, 0.2)', innerBg: 'hsl(0, 0%, 100%)', padding: 0, borderRadius: 0 },
+  polaroid: { bg: 'hsl(0, 0%, 98%)', border: '2px solid hsl(0, 0%, 90%)', shadow: 'hsla(0, 0%, 0%, 0.12)', innerBg: 'hsl(0, 0%, 99%)', padding: 12, borderRadius: 2 },
+  none: { bg: 'transparent', border: 'none', shadow: 'hsla(0, 0%, 0%, 0)', innerBg: 'hsl(40, 20%, 97%)', padding: 0, borderRadius: 0 },
 };
 
 export function Canvas({
-  elements, selectedId, frameSize, frameColor,
+  elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   onSelect, onUpdate, onDrop,
@@ -51,33 +61,11 @@ export function Canvas({
 
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
-  // Resolve frame styling
+  // Resolve frame styling from wallFrameStyle
   const frameStyle = useMemo(() => {
-    const solid = solidFrames[frameColor];
-    if (solid) {
-      return {
-        bg: solid.bg,
-        bgSize: undefined as string | undefined,
-        border: `3px solid ${solid.border}`,
-        shadow: solid.shadow,
-        innerBg: solid.innerBg,
-      };
-    }
-    // Texture-based frame
-    const tex = allTextures.find(t => t.id === frameColor);
-    if (tex) {
-      return {
-        bg: tex.cssBackground,
-        bgSize: 'cover' as string | undefined,
-        border: '3px solid hsla(0, 0%, 50%, 0.2)',
-        shadow: 'hsla(0, 0%, 0%, 0.15)',
-        innerBg: 'hsl(40, 20%, 97%)',
-      };
-    }
-    // Fallback
-    const fb = solidFrames.white;
-    return { bg: fb.bg, bgSize: undefined as string | undefined, border: `3px solid ${fb.border}`, shadow: fb.shadow, innerBg: fb.innerBg };
-  }, [frameColor, allTextures]);
+    const style = wallFrameStyles[wallFrameStyle] || wallFrameStyles.gold;
+    return style;
+  }, [wallFrameStyle]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -106,16 +94,14 @@ export function Canvas({
       {/* Frame */}
       <div
         style={{
-          padding: '16px',
+          padding: `${frameStyle.padding}px`,
+          ...(wallFrameStyle === 'polaroid' ? { paddingBottom: '48px' } : {}),
           background: frameStyle.bg,
-          backgroundSize: frameStyle.bgSize,
-          borderRadius: '4px',
+          borderRadius: `${frameStyle.borderRadius}px`,
           border: frameStyle.border,
-          boxShadow: `
-            inset 0 2px 8px ${frameStyle.shadow},
-            0 8px 32px -8px ${frameStyle.shadow},
-            0 2px 8px ${frameStyle.shadow}
-          `,
+          boxShadow: wallFrameStyle === 'floating'
+            ? `0 12px 40px -8px ${frameStyle.shadow}`
+            : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
         }}
       >
         {/* Inner canvas */}

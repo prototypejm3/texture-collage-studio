@@ -174,6 +174,7 @@ const Index = () => {
           selectedId={studio.selectedId}
           frameSize={studio.frameSize}
           frameColor={studio.frameColor}
+          wallFrameStyle={studio.wallFrameStyle}
           activeVibe={studio.activeVibe}
           vibeFills={studio.vibeFills}
           selectedSectionId={studio.selectedSectionId}
