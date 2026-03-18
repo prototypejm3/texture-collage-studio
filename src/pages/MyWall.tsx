@@ -109,9 +109,13 @@ const MyWall = () => {
   }, [multiWall]);
 
   const handleApplyFrameToAll = useCallback((style: FrameStyle) => {
-    // Only apply to designs on this wall
     wallDesigns.forEach(d => wall.updateDesign(d.id, { frameStyle: style }));
   }, [wallDesigns, wall]);
+
+  const handleApplyHangingToAll = useCallback((style: HangingStyle) => {
+    wallDesigns.forEach(d => wall.updateDesign(d.id, { hangingStyle: style }));
+    handleUpdateSettings({ defaultHangingStyle: style });
+  }, [wallDesigns, wall, handleUpdateSettings]);
 
   const handleAddWall = useCallback(() => {
     if (!isPremium) {
