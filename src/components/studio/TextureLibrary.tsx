@@ -224,6 +224,7 @@ export function TextureLibrary({
               onTextureClick={onTextureClick}
               onRemoveCustomTexture={onRemoveCustomTexture}
               viewMode={swatchView}
+              kidMode={kidMode}
             />
           ))}
         </div>
