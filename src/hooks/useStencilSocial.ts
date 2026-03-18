@@ -170,6 +170,8 @@ export function useStencilSocial() {
     saveStencil,
     toggleFavorite,
     toggleHidden,
+    deleteStencil,
+    reportStencil,
     recordToVibe,
     refetch: () => { fetchPublicStencils(); fetchMyStencils(); fetchFavorites(); },
   };
