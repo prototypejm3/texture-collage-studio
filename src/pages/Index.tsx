@@ -154,8 +154,11 @@ const Index = () => {
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
+    } else if (!studio.selectedId && !studio.activeVibe) {
+      // No section or element selected — set as background
+      studio.setBackgroundTextureId(textureId);
     }
-  }, [studio.selectedSectionId, studio.fillSection]);
+  }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);

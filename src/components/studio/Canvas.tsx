@@ -128,7 +128,8 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: bgTextureUrl ? `url(${bgTextureUrl}) center/cover` : frameStyle.innerBg,
+            background: bgTextureUrl || frameStyle.innerBg,
+            backgroundSize: bgTextureUrl ? 'cover' : undefined,
             boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}
         >
