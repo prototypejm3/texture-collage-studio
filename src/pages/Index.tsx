@@ -155,6 +155,8 @@ const Index = () => {
         onTemplateOpacityChange={setTemplateOpacity}
         isPremium={isPremium}
         onRequestUpgrade={() => setShowPaywall(true)}
+        drawMode={studio.drawMode}
+        onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
