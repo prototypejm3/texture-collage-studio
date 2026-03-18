@@ -127,7 +127,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   // Community section
   const communityVibes = allVibes.filter(v => v.category === 'Community' && !themedIds.has(v.id));
   
-  // Uncategorized goes first
+  // Any remaining stencils that don't belong to a theme
   const uncategorized = allVibes.filter(v => !themedIds.has(v.id) && v.category !== 'Community');
 
   const renderVibeCard = (vibe: Vibe) => {
@@ -309,17 +309,10 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
 
               {/* Stencil Grid */}
               <div className="flex-1 overflow-y-auto px-6 py-4">
-                {/* Uncategorized */}
-                {uncategorized.length > 0 && (
-                  <div className="grid grid-cols-4 gap-3">
-                    {uncategorized.map(vibe => renderVibeCard(vibe))}
-                  </div>
-                )}
-
-                {/* Theme sections */}
+                {/* Theme sections first */}
                 {sections.map(section => (
                   <div key={section.label}>
-                    <div className="flex items-center gap-3 mt-6 mb-3">
+                    <div className="flex items-center gap-3 mt-6 mb-3 first:mt-0">
                       <div className="h-px flex-1 bg-border" />
                       <span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
                         {section.emoji} {section.label}
@@ -344,6 +337,13 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
                       {communityVibes.map(vibe => renderVibeCard(vibe))}
                     </div>
                   </>
+                )}
+
+                {/* Remaining stencils */}
+                {uncategorized.length > 0 && (
+                  <div className="mt-6 grid grid-cols-4 gap-3">
+                    {uncategorized.map(vibe => renderVibeCard(vibe))}
+                  </div>
                 )}
               </div>
             </div>
