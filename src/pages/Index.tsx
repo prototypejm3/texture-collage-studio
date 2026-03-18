@@ -289,6 +289,8 @@ const Index = () => {
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
+        isPremium={isPremium}
+        onRequestUpgrade={() => setShowPaywall(true)}
       />
 
       <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />

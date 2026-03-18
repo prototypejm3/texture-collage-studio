@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
-import { Trash2, Save, Download } from 'lucide-react';
+import { Trash2, Save, Download, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
   onClear: () => void;
   onSave: () => void;
   onSaveToWall?: () => void;
+  isPremium?: boolean;
+  onRequestUpgrade?: () => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -39,6 +41,7 @@ export function BottomBar({
   frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
+  isPremium = false, onRequestUpgrade,
 }: Props) {
   // Whether color circles are expanded
   const isColorFrame = colorFrames.some(f => f.id === wallFrameStyle);
@@ -163,8 +166,17 @@ export function BottomBar({
             <Save className="w-3.5 h-3.5" /> Save to Wall
           </button>
         )}
-        <button onClick={onSave} className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+        <button
+          onClick={() => isPremium ? onSave() : onRequestUpgrade?.()}
+          className={`relative flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+            isPremium
+              ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+              : 'bg-muted text-muted-foreground cursor-not-allowed'
+          }`}
+          title={isPremium ? 'Export as PNG' : 'Premium — unlock to use'}
+        >
           <Download className="w-3.5 h-3.5" /> Export PNG
+          {!isPremium && <Lock className="w-2.5 h-2.5 ml-0.5" />}
         </button>
       </div>
     </div>
