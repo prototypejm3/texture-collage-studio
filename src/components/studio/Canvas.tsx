@@ -61,33 +61,11 @@ export function Canvas({
 
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
-  // Resolve frame styling
+  // Resolve frame styling from wallFrameStyle
   const frameStyle = useMemo(() => {
-    const solid = solidFrames[frameColor];
-    if (solid) {
-      return {
-        bg: solid.bg,
-        bgSize: undefined as string | undefined,
-        border: `3px solid ${solid.border}`,
-        shadow: solid.shadow,
-        innerBg: solid.innerBg,
-      };
-    }
-    // Texture-based frame
-    const tex = allTextures.find(t => t.id === frameColor);
-    if (tex) {
-      return {
-        bg: tex.cssBackground,
-        bgSize: 'cover' as string | undefined,
-        border: '3px solid hsla(0, 0%, 50%, 0.2)',
-        shadow: 'hsla(0, 0%, 0%, 0.15)',
-        innerBg: 'hsl(40, 20%, 97%)',
-      };
-    }
-    // Fallback
-    const fb = solidFrames.white;
-    return { bg: fb.bg, bgSize: undefined as string | undefined, border: `3px solid ${fb.border}`, shadow: fb.shadow, innerBg: fb.innerBg };
-  }, [frameColor, allTextures]);
+    const style = wallFrameStyles[wallFrameStyle] || wallFrameStyles.gold;
+    return style;
+  }, [wallFrameStyle]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
