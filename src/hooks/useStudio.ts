@@ -273,6 +273,7 @@ export function useStudio() {
       if (state.activeVibe) setActiveVibe(state.activeVibe);
       if (state.vibeFills) setVibeFills(state.vibeFills);
       if (state.selectedSectionId !== undefined) setSelectedSectionId(state.selectedSectionId);
+      if (state.backgroundTextureId !== undefined) setBackgroundTextureId(state.backgroundTextureId);
       setSelectedId(null);
     } catch { /* ignore corrupt state */ }
   }, []);
