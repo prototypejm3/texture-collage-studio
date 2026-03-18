@@ -134,6 +134,20 @@ export function useStencilSocial() {
     }
   }, [user, hiddenIds]);
 
+  // Delete a stencil (own only)
+  const deleteStencil = useCallback(async (stencilId: string) => {
+    if (!user) return;
+    await supabase.from('stencils').delete().eq('id', stencilId).eq('user_id', user.id);
+    await fetchMyStencils();
+    await fetchPublicStencils();
+  }, [user, fetchMyStencils, fetchPublicStencils]);
+
+  // Report a stencil as bad
+  const reportStencil = useCallback(async (stencilId: string, reason: string = 'bad_quality') => {
+    if (!user) return;
+    await supabase.from('stencil_reports').insert({ user_id: user.id, stencil_id: stencilId, reason } as any);
+  }, [user]);
+
   // Convert DB record to Vibe
   const recordToVibe = (record: StencilRecord): Vibe => ({
     id: record.id,
@@ -156,6 +170,8 @@ export function useStencilSocial() {
     saveStencil,
     toggleFavorite,
     toggleHidden,
+    deleteStencil,
+    reportStencil,
     recordToVibe,
     refetch: () => { fetchPublicStencils(); fetchMyStencils(); fetchFavorites(); },
   };

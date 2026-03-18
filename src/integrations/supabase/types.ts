@@ -156,6 +156,38 @@ export type Database = {
         }
         Relationships: []
       }
+      stencil_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          stencil_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason?: string
+          stencil_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          stencil_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stencil_reports_stencil_id_fkey"
+            columns: ["stencil_id"]
+            isOneToOne: false
+            referencedRelation: "stencils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stencils: {
         Row: {
           created_at: string

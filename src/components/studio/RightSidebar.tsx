@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save, ImagePlus, X } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
@@ -367,6 +367,16 @@ export function RightSidebar({
                     isLoggedIn={!!user}
                     onSelect={() => onSelectVibe(vibe)}
                     onToggleHidden={() => social.toggleHidden(vibe.id)}
+                    onDelete={async () => {
+                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                      await social.deleteStencil(vibe.id);
+                      toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+                    }}
+                    onReport={async () => {
+                      await social.reportStencil(vibe.id);
+                      setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+                      toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
+                    }}
                   />
                 ))}
               </div>
@@ -418,13 +428,15 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleHidden }: {
+function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleHidden, onDelete, onReport }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
   isLoggedIn: boolean;
   onSelect: () => void;
   onToggleHidden: () => void;
+  onDelete: () => void;
+  onReport: () => void;
 }) {
   const isAiGenerated = vibe.id.startsWith('ai-');
 
@@ -445,22 +457,50 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
               <Check className="w-2.5 h-2.5 text-primary-foreground" />
             </div>
           )}
+          {isAiGenerated && (
+            <div className="absolute top-1 left-1 px-1 py-0.5 rounded bg-primary/90 text-primary-foreground text-[7px] font-bold uppercase tracking-wider">
+              AI
+            </div>
+          )}
         </div>
         <span className="text-[10px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
       </button>
 
-      {/* Hide toggle */}
-      {(isLoggedIn || isAiGenerated) && (
-        <button
-          onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
-          className="absolute top-1.5 right-1.5 p-1 rounded-full bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-secondary"
-          title={isHidden ? 'Show stencil' : 'Hide stencil'}
-        >
-          {isHidden ? <Eye className="w-3 h-3 text-muted-foreground" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
-        </button>
-      )}
+      {/* Action buttons on hover */}
+      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Hide toggle */}
+        {(isLoggedIn || isAiGenerated) && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
+            className="p-1 rounded-full bg-background/80 hover:bg-secondary transition-colors"
+            title={isHidden ? 'Show stencil' : 'Hide stencil'}
+          >
+            {isHidden ? <Eye className="w-3 h-3 text-muted-foreground" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
+          </button>
+        )}
+        {/* Report as bad */}
+        {isAiGenerated && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onReport(); }}
+            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
+            title="Report as bad"
+          >
+            <Flag className="w-3 h-3 text-muted-foreground" />
+          </button>
+        )}
+        {/* Delete */}
+        {isAiGenerated && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
+            title="Delete stencil"
+          >
+            <Trash2 className="w-3 h-3 text-muted-foreground" />
+          </button>
+        )}
+      </div>
     </motion.div>
   );
 }

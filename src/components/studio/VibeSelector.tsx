@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Shuffle, Sparkles, Loader2, Lock, Check } from 'lucide-react';
+import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
+import { toast } from '@/hooks/use-toast';
 
 interface VibeSelectorProps {
   isOpen: boolean;
@@ -13,6 +14,8 @@ interface VibeSelectorProps {
   onSelectVibe: (vibe: Vibe) => void;
   onShuffle: () => void;
   onRequestUpgrade: () => void;
+  onDeleteStencil?: (stencilId: string) => Promise<void>;
+  onReportStencil?: (stencilId: string, reason?: string) => Promise<void>;
 }
 
 function VibePreviewSVG({ vibe, size = 'md' }: { vibe: Vibe; size?: 'sm' | 'md' }) {
@@ -56,7 +59,7 @@ function VibePreviewSVG({ vibe, size = 'md' }: { vibe: Vibe; size?: 'sm' | 'md' 
   );
 }
 
-export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelectVibe, onShuffle, onRequestUpgrade }: VibeSelectorProps) {
+export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelectVibe, onShuffle, onRequestUpgrade, onDeleteStencil, onReportStencil }: VibeSelectorProps) {
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const { generateStencil, isGenerating } = useGenerateStencil();
@@ -68,6 +71,27 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
       onSelectVibe(vibe);
       setAiPrompt('');
     }
+  };
+
+  const handleDelete = async (e: React.MouseEvent, vibe: Vibe) => {
+    e.stopPropagation();
+    // Remove from local state
+    setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+    // Remove from DB if it's a saved stencil
+    if (onDeleteStencil && !vibe.id.startsWith('ai-')) {
+      await onDeleteStencil(vibe.id);
+    }
+    toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
+  };
+
+  const handleReport = async (e: React.MouseEvent, vibe: Vibe) => {
+    e.stopPropagation();
+    if (onReportStencil) {
+      await onReportStencil(vibe.id, 'bad_quality');
+    }
+    // Also remove from local view
+    setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
+    toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
   };
 
   const allVibes = [...vibes, ...aiGeneratedVibes];
@@ -200,6 +224,26 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
                           {isAiGenerated && (
                             <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold uppercase tracking-wider">
                               AI
+                            </div>
+                          )}
+
+                          {/* Delete & Report buttons for AI stencils */}
+                          {isAiGenerated && (
+                            <div className="absolute bottom-1.5 right-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button
+                                onClick={(e) => handleReport(e, vibe)}
+                                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
+                                title="Report as bad"
+                              >
+                                <Flag className="w-3 h-3" />
+                              </button>
+                              <button
+                                onClick={(e) => handleDelete(e, vibe)}
+                                className="p-1 rounded-md bg-foreground/70 text-background hover:bg-destructive transition-colors"
+                                title="Delete"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
                             </div>
                           )}
                         </div>
