@@ -291,14 +291,19 @@ export function RightSidebar({
               </div>
               {isPremium ? (
                 <div className="flex flex-col gap-2">
-                  <input
-                    type="text"
-                    value={aiPrompt}
-                    onChange={e => setAiPrompt(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
-                    placeholder="flower, castle, dinosaur…"
-                    className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    disabled={isGenerating}
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={aiPrompt}
+                      onChange={e => setAiPrompt(e.target.value.slice(0, 12))}
+                      onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
+                      placeholder="flower, castle…"
+                      maxLength={12}
+                      className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-10"
+                      disabled={isGenerating}
+                    />
+                    <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{aiPrompt.length}/12</span>
+                  </div>
                   />
                   <button
                     onClick={handleGenerate}
