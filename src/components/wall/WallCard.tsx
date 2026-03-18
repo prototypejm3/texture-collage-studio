@@ -21,12 +21,13 @@ interface WallCardProps {
 }
 
 const frameStyleList: { value: FrameStyle; label: string }[] = [
+  { value: 'shadow-box', label: 'Shadow Box' },
   { value: 'gold', label: 'Gold' },
   { value: 'chrome', label: 'Chrome' },
   { value: 'copper', label: 'Copper' },
   { value: 'silver', label: 'Silver' },
+  { value: 'black', label: 'Black' },
   { value: 'minimal', label: 'Minimal' },
-  { value: 'shadow-box', label: 'Shadow Box' },
   { value: 'wood', label: 'Wood' },
   { value: 'floating', label: 'Floating' },
   { value: 'polaroid', label: 'Polaroid' },
