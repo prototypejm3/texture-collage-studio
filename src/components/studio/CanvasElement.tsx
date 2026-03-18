@@ -173,5 +173,4 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       />
     </div>
   );
-  );
 }
