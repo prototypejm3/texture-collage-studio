@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save, ImagePlus, X } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
