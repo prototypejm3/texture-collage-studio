@@ -254,7 +254,7 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch' }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
@@ -262,12 +262,14 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   onTextureClick?: (id: string) => void;
   onRemoveCustomTexture: (id: string) => void;
   viewMode?: 'swatch' | 'tiled';
+  kidMode?: boolean;
 }) {
   const isCustom = tex.id.startsWith('custom-');
   const isImage = isCustom || tex.cssBackground.startsWith('url(');
   const bgSize = viewMode === 'tiled'
     ? (isImage ? '60px 60px' : '40px 40px')
     : 'cover';
+  const displayName = kidMode ? (kidTextureNames[tex.id] || tex.name) : tex.name;
 
   return (
     <motion.div
