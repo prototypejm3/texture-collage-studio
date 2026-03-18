@@ -73,7 +73,7 @@ export function Canvas({
   const bgTextureUrl = useMemo(() => {
     if (!backgroundTextureId) return null;
     const tex = allTextures.find(t => t.id === backgroundTextureId);
-    return tex?.image || null;
+    return tex?.cssBackground || null;
   }, [backgroundTextureId, allTextures]);
 
   // Resolve frame styling from wallFrameStyle
