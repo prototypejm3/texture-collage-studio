@@ -2173,6 +2173,7 @@ const schoolFish: Vibe = {
 const scubaSkiba: Vibe = {
   id: 'scuba-skiba', name: 'Scuba Skiba', emoji: '🤿',
   description: 'Scuba diver with tank, mask & flippers',
+  category: 'Community',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ss-beanie', label: 'Beanie', tone: 'accent',
