@@ -11,7 +11,7 @@ import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
-import { NavBar } from '@/components/NavBar';
+
 import { PaywallModal } from '@/components/wall/PaywallModal';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
@@ -161,7 +161,6 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <NavBar />
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
@@ -169,22 +168,9 @@ const Index = () => {
         onFrameColorChange={studio.setFrameColor}
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
-        onGenerate={() => setShowVibeModal(true)}
-        onShuffle={studio.shuffleElements}
         onClear={studio.clearCanvas}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
-        onToggleVibes={() => {}}
-        vibesActive={false}
-        customTemplate={customTemplate}
-        templateOpacity={templateOpacity}
-        onUploadTemplate={handleUploadTemplate}
-        onClearTemplate={clearTemplate}
-        onTemplateOpacityChange={setTemplateOpacity}
-        isPremium={isPremium}
-        onRequestUpgrade={() => setShowPaywall(true)}
-        drawMode={studio.drawMode}
-        onToggleDraw={() => studio.setDrawMode(!studio.drawMode)}
       />
       <div className="flex flex-1 overflow-hidden relative">
         <div className="w-[260px] flex-shrink-0">
@@ -238,6 +224,11 @@ const Index = () => {
           onRequestUpgrade={() => setShowPaywall(true)}
           onGenerateMood={handleGenerateMood}
           isGeneratingMood={vibeGen.isGenerating}
+          customTemplate={customTemplate}
+          templateOpacity={templateOpacity}
+          onUploadTemplate={handleUploadTemplate}
+          onClearTemplate={clearTemplate}
+          onTemplateOpacityChange={setTemplateOpacity}
         />
       </div>
 

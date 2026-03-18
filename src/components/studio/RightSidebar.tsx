@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, Heart, EyeOff, Eye, Globe, Save, ImagePlus, X } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
@@ -19,6 +19,12 @@ interface RightSidebarProps {
   // Mood generator
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
+  // Reference image
+  customTemplate: { name: string; dataUrl: string } | null;
+  templateOpacity: number;
+  onUploadTemplate: (file: File) => void;
+  onClearTemplate: () => void;
+  onTemplateOpacityChange: (val: number) => void;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
@@ -65,7 +71,9 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 export function RightSidebar({
   activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
+  customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
 }: RightSidebarProps) {
+  const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
   const [aiPrompt, setAiPrompt] = useState('');
   const [moodPrompt, setMoodPrompt] = useState('');
@@ -247,6 +255,62 @@ export function RightSidebar({
                 >
                   <Lock className="w-3 h-3" /> Unlock with Premium
                 </button>
+              )}
+            </div>
+
+            {/* Reference image */}
+            <div className="px-3 py-3 border-b border-border">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
+                <ImagePlus className="w-3.5 h-3.5" />
+                Reference Image
+              </div>
+              {!customTemplate ? (
+                <>
+                  <button
+                    onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                    className={`flex items-center justify-center gap-1.5 w-full px-3 py-1.5 text-xs rounded-lg transition-colors ${
+                      isPremium
+                        ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                        : 'bg-secondary/50 text-muted-foreground/60'
+                    }`}
+                  >
+                    {isPremium ? <ImagePlus className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                    {isPremium ? 'Upload Reference' : 'Premium Feature'}
+                  </button>
+                  <input
+                    ref={templateInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+                      e.target.value = '';
+                    }}
+                  />
+                </>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-muted-foreground truncate flex-1" title={customTemplate.name}>
+                    📷 {customTemplate.name}
+                  </span>
+                  <input
+                    type="range"
+                    min={5}
+                    max={80}
+                    step={5}
+                    value={templateOpacity * 100}
+                    onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
+                    className="w-16 h-1 accent-primary"
+                  />
+                  <button
+                    onClick={onClearTemplate}
+                    className="p-0.5 rounded hover:bg-secondary transition-colors"
+                    title="Remove reference"
+                  >
+                    <X className="w-3 h-3 text-muted-foreground" />
+                  </button>
+                </div>
               )}
             </div>
 

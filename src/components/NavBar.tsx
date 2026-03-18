@@ -10,7 +10,7 @@ export function NavBar() {
   const isGallery = location.pathname === '/gallery';
 
   return (
-    <nav className="h-12 border-b border-border bg-card flex items-center px-4 gap-6 flex-shrink-0">
+    <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
       <span className="text-sm font-bold tracking-tight text-foreground mr-4">
         ShadowBox
       </span>
