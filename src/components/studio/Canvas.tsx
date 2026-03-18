@@ -94,16 +94,14 @@ export function Canvas({
       {/* Frame */}
       <div
         style={{
-          padding: '16px',
+          padding: `${frameStyle.padding}px`,
+          ...(wallFrameStyle === 'polaroid' ? { paddingBottom: '48px' } : {}),
           background: frameStyle.bg,
-          backgroundSize: frameStyle.bgSize,
-          borderRadius: '4px',
+          borderRadius: `${frameStyle.borderRadius}px`,
           border: frameStyle.border,
-          boxShadow: `
-            inset 0 2px 8px ${frameStyle.shadow},
-            0 8px 32px -8px ${frameStyle.shadow},
-            0 2px 8px ${frameStyle.shadow}
-          `,
+          boxShadow: wallFrameStyle === 'floating'
+            ? `0 12px 40px -8px ${frameStyle.shadow}`
+            : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
         }}
       >
         {/* Inner canvas */}
