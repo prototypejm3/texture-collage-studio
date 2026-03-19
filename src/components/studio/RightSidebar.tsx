@@ -642,8 +642,8 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      className={`group relative flex flex-col items-center text-center rounded-xl p-2 transition-all border ${
+      whileHover={{ y: -1 }}
+      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
         isActive
           ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
           : 'border-border/50 hover:border-border hover:bg-secondary/50'
