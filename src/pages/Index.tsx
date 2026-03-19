@@ -230,102 +230,61 @@ const Index = () => {
         onAmbientSoundChange={setAmbientSound}
       />
       <div className="flex flex-1 overflow-hidden">
-        {/* Tool-Kit sidebar */}
-        <div
-          className={`flex-shrink-0 border-r border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
-            showToolKit ? (toolKitMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
-          } overflow-hidden`}
-        >
-          {showToolKit && (
-            <>
-              {/* Header */}
-              <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
-                {!toolKitMinimized && (
-                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
-                    <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
-                  </span>
-                )}
-                <div className={`flex items-center gap-1 ${toolKitMinimized ? 'mx-auto' : 'ml-auto'}`}>
-                  <button
-                    onClick={() => setToolKitMinimized(prev => !prev)}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                    title={toolKitMinimized ? 'Expand' : 'Minimize'}
-                  >
-                    {toolKitMinimized ? '▸' : '◂'}
-                  </button>
+        {/* Tool-Kit sidebar — desktop only */}
+        {!isMobile && (
+          <div
+            className={`flex-shrink-0 border-r border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
+              showToolKit ? (toolKitMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
+            } overflow-hidden`}
+          >
+            {showToolKit && (
+              <>
+                <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
                   {!toolKitMinimized && (
+                    <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
+                      <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
+                    </span>
+                  )}
+                  <div className={`flex items-center gap-1 ${toolKitMinimized ? 'mx-auto' : 'ml-auto'}`}>
                     <button
-                      onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
+                      onClick={() => setToolKitMinimized(prev => !prev)}
                       className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                      title={toolKitMinimized ? 'Expand' : 'Minimize'}
                     >
-                      ✕
+                      {toolKitMinimized ? '▸' : '◂'}
                     </button>
-                  )}
-                </div>
-              </div>
-              {!toolKitMinimized && (
-                <div className="overflow-y-auto flex-1">
-                  {/* Draw Freehand */}
-                  <div className="px-3 py-2 border-b border-border">
-                    <button
-                      onClick={() => studio.setDrawMode(!studio.drawMode)}
-                      className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                        studio.drawMode
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                      }`}
-                    >
-                      <PenTool className="w-3.5 h-3.5" />
-                      Draw Freehand
-                    </button>
+                    {!toolKitMinimized && (
+                      <button
+                        onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
+                        className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
-                  {/* Shape pre-selector */}
-                  <div className="px-3 py-2 border-b border-border">
-                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1.5">Shape</p>
-                    <div className="flex flex-wrap gap-1">
-                      {(['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'] as const).map(shape => (
-                        <button
-                          key={shape}
-                          onClick={() => studio.setNextShape(shape)}
-                          className={`px-2 py-1 text-[10px] rounded-md transition-colors capitalize ${
-                            studio.nextShape === shape
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                          }`}
-                        >
-                          {shape.replace('-', ' ')}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Element editing when selected */}
-                  {studio.selectedElement && studio.selectedId && (
-                    <div className="border-b border-border">
-                      <FloatingToolbar
-                        element={studio.selectedElement}
-                        onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                        onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                        onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                        onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-                      />
-                    </div>
-                  )}
-                  {/* Texture Library */}
-                  <TextureLibrary
-                    onDragStart={handleDragStartLib}
-                    onTextureClick={handleTextureClick}
-                    activeSectionId={studio.selectedSectionId}
-                    customTextures={customTextures}
-                    onUploadTexture={handleUploadTexture}
-                    onRemoveCustomTexture={removeCustomTexture}
-                    isPremium={isPremium}
-                    onRequestUpgrade={() => setShowPaywall(true)}
-                  />
                 </div>
-              )}
-            </>
-          )}
-        </div>
+                {!toolKitMinimized && (
+                  <ToolKitContent />
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Tool-Kit Sheet — mobile only */}
+        {isMobile && (
+          <Sheet open={showToolKit} onOpenChange={setShowToolKit}>
+            <SheetContent side="left" className="w-[300px] p-0 flex flex-col">
+              <SheetHeader className="px-3 py-2 border-b border-border">
+                <SheetTitle className="text-xs font-semibold flex items-center gap-1.5">
+                  <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
+                </SheetTitle>
+              </SheetHeader>
+              <ToolKitContent />
+            </SheetContent>
+          </Sheet>
+        )}
+
         <div className="flex-1 relative overflow-hidden">
           <Canvas
             elements={studio.elements}
@@ -358,59 +317,90 @@ const Index = () => {
           />
         </div>
 
-        {/* Stencils right sidebar */}
-        <div
-          className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
-            showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
-          } overflow-hidden`}
-        >
-          {showStencils && (
-            <>
-              <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
-                {!stencilsMinimized && (
-                  <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
-                    <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
-                  </span>
-                )}
-                <div className={`flex items-center gap-1 ${stencilsMinimized ? 'mx-auto' : 'ml-auto'}`}>
-                  <button
-                    onClick={() => setStencilsMinimized(prev => !prev)}
-                    className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                    title={stencilsMinimized ? 'Expand' : 'Minimize'}
-                  >
-                    {stencilsMinimized ? '◂' : '▸'}
-                  </button>
+        {/* Stencils right sidebar — desktop only */}
+        {!isMobile && (
+          <div
+            className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
+              showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
+            } overflow-hidden`}
+          >
+            {showStencils && (
+              <>
+                <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
                   {!stencilsMinimized && (
-                    <button
-                      onClick={() => setShowStencils(false)}
-                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                    >
-                      ✕
-                    </button>
+                    <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
+                      <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
+                    </span>
                   )}
+                  <div className={`flex items-center gap-1 ${stencilsMinimized ? 'mx-auto' : 'ml-auto'}`}>
+                    <button
+                      onClick={() => setStencilsMinimized(prev => !prev)}
+                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                      title={stencilsMinimized ? 'Expand' : 'Minimize'}
+                    >
+                      {stencilsMinimized ? '◂' : '▸'}
+                    </button>
+                    {!stencilsMinimized && (
+                      <button
+                        onClick={() => setShowStencils(false)}
+                        className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
                 </div>
+                {!stencilsMinimized && (
+                  <div className="overflow-y-auto flex-1 min-w-[280px]">
+                    <RightSidebar
+                      activeVibeId={studio.activeVibe?.id ?? null}
+                      isPremium={isPremium}
+                      onSelectVibe={handleSelectVibe}
+                      onShuffleVibeFills={studio.shuffleVibeFills}
+                      onRequestUpgrade={() => setShowPaywall(true)}
+                      onGenerateMood={handleGenerateMood}
+                      isGeneratingMood={vibeGen.isGenerating}
+                      customTemplate={customTemplate}
+                      templateOpacity={templateOpacity}
+                      onUploadTemplate={handleUploadTemplate}
+                      onClearTemplate={clearTemplate}
+                      onTemplateOpacityChange={setTemplateOpacity}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Stencils Sheet — mobile only */}
+        {isMobile && (
+          <Sheet open={showStencils} onOpenChange={setShowStencils}>
+            <SheetContent side="right" className="w-[300px] p-0 flex flex-col">
+              <SheetHeader className="px-3 py-2 border-b border-border">
+                <SheetTitle className="text-xs font-semibold flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
+                </SheetTitle>
+              </SheetHeader>
+              <div className="overflow-y-auto flex-1">
+                <RightSidebar
+                  activeVibeId={studio.activeVibe?.id ?? null}
+                  isPremium={isPremium}
+                  onSelectVibe={handleSelectVibe}
+                  onShuffleVibeFills={studio.shuffleVibeFills}
+                  onRequestUpgrade={() => setShowPaywall(true)}
+                  onGenerateMood={handleGenerateMood}
+                  isGeneratingMood={vibeGen.isGenerating}
+                  customTemplate={customTemplate}
+                  templateOpacity={templateOpacity}
+                  onUploadTemplate={handleUploadTemplate}
+                  onClearTemplate={clearTemplate}
+                  onTemplateOpacityChange={setTemplateOpacity}
+                />
               </div>
-              {!stencilsMinimized && (
-                <div className="overflow-y-auto flex-1 min-w-[280px]">
-                  <RightSidebar
-                    activeVibeId={studio.activeVibe?.id ?? null}
-                    isPremium={isPremium}
-                    onSelectVibe={handleSelectVibe}
-                    onShuffleVibeFills={studio.shuffleVibeFills}
-                    onRequestUpgrade={() => setShowPaywall(true)}
-                    onGenerateMood={handleGenerateMood}
-                    isGeneratingMood={vibeGen.isGenerating}
-                    customTemplate={customTemplate}
-                    templateOpacity={templateOpacity}
-                    onUploadTemplate={handleUploadTemplate}
-                    onClearTemplate={clearTemplate}
-                    onTemplateOpacityChange={setTemplateOpacity}
-                  />
-                </div>
-              )}
-            </>
-          )}
-        </div>
+            </SheetContent>
+          </Sheet>
+        )}
       </div>
 
       <BottomBar
