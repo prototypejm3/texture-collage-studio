@@ -364,73 +364,32 @@ const Index = () => {
           </AnimatePresence>
         )}
 
-        {/* ── Mobile Drawers ── */}
+        {/* ── Mobile Trays ── */}
         {isMobile && (
           <>
-            <Drawer open={mobileBuild} onOpenChange={setMobileBuild}>
-              <DrawerContent className="max-h-[75vh] flex flex-col">
-                <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
-                  <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
-                    <Scissors className="w-4 h-4 text-destructive" /> Build
-                  </DrawerTitle>
-                </DrawerHeader>
-                <div className="flex-1 overflow-y-auto">
-                  <BuildPanel
-                    drawMode={studio.drawMode}
-                    onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
-                    nextShape={studio.nextShape}
-                    onSetNextShape={studio.setNextShape}
-                    onDragStart={handleDragStartLib}
-                    onTextureClick={handleTextureClick}
-                    activeSectionId={studio.selectedSectionId}
-                    customTextures={customTextures}
-                    onUploadTexture={handleUploadTexture}
-                    onRemoveCustomTexture={removeCustomTexture}
-                    isPremium={isPremium}
-                    onRequestUpgrade={() => setShowPaywall(true)}
-                  />
-                </div>
-              </DrawerContent>
-            </Drawer>
-
-            <Drawer open={mobileContext} onOpenChange={setMobileContext}>
-              <DrawerContent className="max-h-[75vh] flex flex-col">
-                <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
-                  <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
-                    <Layers className="w-4 h-4 text-primary" />
-                    {studio.selectedElement ? 'Properties' : 'Templates & Stencils'}
-                  </DrawerTitle>
-                </DrawerHeader>
-                <div className="flex-1 overflow-y-auto">
-                  <ContextPanel
-                    selectedElement={studio.selectedElement}
-                    selectedId={studio.selectedId}
-                    activeVibe={studio.activeVibe}
-                    onUpdateElement={studio.updateElement}
-                    onUpdateEffects={studio.updateEffects}
-                    onDuplicateElement={studio.duplicateElement}
-                    onDeleteElement={(id) => { studio.deleteElement(id); }}
-                    frameSize={studio.frameSize}
-                    wallFrameStyle={studio.wallFrameStyle}
-                    onFrameSizeChange={studio.setFrameSize}
-                    onWallFrameStyleChange={studio.setWallFrameStyle}
-                    activeVibeId={studio.activeVibe?.id ?? null}
-                    isPremium={isPremium}
-                    onSelectVibe={handleSelectVibe}
-                    onShuffleVibeFills={studio.shuffleVibeFills}
-                    onRequestUpgrade={() => setShowPaywall(true)}
-                    onGenerateMood={handleGenerateMood}
-                    isGeneratingMood={vibeGen.isGenerating}
-                    customTemplate={customTemplate}
-                    templateOpacity={templateOpacity}
-                    onUploadTemplate={handleUploadTemplate}
-                    onClearTemplate={clearTemplate}
-                    onTemplateOpacityChange={setTemplateOpacity}
-                    backgroundTextureId={studio.backgroundTextureId}
-                  />
-                </div>
-              </DrawerContent>
-            </Drawer>
+            <MobileTextureTray
+              onTextureClick={handleTextureClick}
+              activeSectionId={studio.selectedSectionId}
+              customTextures={customTextures}
+              onUploadTexture={handleUploadTexture}
+              onRemoveCustomTexture={removeCustomTexture}
+              isPremium={isPremium}
+              onRequestUpgrade={() => setShowPaywall(true)}
+            />
+            <MobileStencilTray
+              activeVibeId={studio.activeVibe?.id ?? null}
+              isPremium={isPremium}
+              onSelectVibe={handleSelectVibe}
+              onShuffleVibeFills={studio.shuffleVibeFills}
+              onRequestUpgrade={() => setShowPaywall(true)}
+              onGenerateMood={handleGenerateMood}
+              isGeneratingMood={vibeGen.isGenerating}
+              customTemplate={customTemplate}
+              templateOpacity={templateOpacity}
+              onUploadTemplate={handleUploadTemplate}
+              onClearTemplate={clearTemplate}
+              onTemplateOpacityChange={setTemplateOpacity}
+            />
           </>
         )}
       </div>
