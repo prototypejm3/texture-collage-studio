@@ -34,8 +34,8 @@ export function StencilTray(props: StencilTrayProps) {
 
   const heights: Record<TrayState, string | number> = {
     hidden: 0,
-    peek: 48,
-    expanded: isMobile ? '50vh' : '40vh',
+    peek: 36,
+    expanded: isMobile ? '45vh' : '35vh',
   };
 
   const focusClass = props.focusMode && state !== 'hidden'
@@ -46,9 +46,9 @@ export function StencilTray(props: StencilTrayProps) {
     return (
       <button
         onClick={() => setState('peek')}
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-40 px-3 py-1.5 rounded-full bg-popover/90 border border-border shadow-md text-[10px] font-medium text-muted-foreground hover:text-foreground transition-colors backdrop-blur-sm"
+        className="absolute bottom-1.5 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-full bg-popover border border-border shadow-sm text-[9px] font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
-        <ChevronUp className="w-3 h-3 inline mr-1" />
+        <ChevronUp className="w-2.5 h-2.5 inline mr-0.5" />
         Stencils
       </button>
     );
@@ -56,28 +56,28 @@ export function StencilTray(props: StencilTrayProps) {
 
   return (
     <motion.div
-      className={`absolute bottom-0 left-0 right-0 z-40 bg-popover/95 backdrop-blur-sm border-t border-border shadow-lg rounded-t-xl overflow-hidden ${focusClass}`}
+      className={`absolute bottom-0 left-0 right-0 z-40 bg-popover border-t border-border shadow-md rounded-t-lg overflow-hidden ${focusClass}`}
       animate={{ height: heights[state] }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 32 }}
     >
       <div className="flex flex-col h-full">
-        {/* Drag handle */}
-        <button onClick={cycle} className="flex justify-center py-0.5 shrink-0 text-muted-foreground/30 hover:text-muted-foreground transition-colors">
-          <GripHorizontal className="w-5 h-5" />
+        {/* Handle */}
+        <button onClick={cycle} className="flex justify-center py-px shrink-0 text-muted-foreground/20 hover:text-muted-foreground/50 transition-colors">
+          <GripHorizontal className="w-4 h-4" />
         </button>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-3 py-1 shrink-0 border-b border-border/50">
-          <div className="flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Templates & Stencils</span>
-          </div>
+        <div className="flex items-center justify-between px-2 py-0.5 shrink-0 border-b border-border/40">
           <div className="flex items-center gap-1">
-            <button onClick={cycle} className="p-1 text-muted-foreground hover:text-foreground transition-colors">
-              {state === 'expanded' ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            <Sparkles className="w-3 h-3 text-primary" />
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Stencils</span>
+          </div>
+          <div className="flex items-center gap-0.5">
+            <button onClick={cycle} className="p-0.5 text-muted-foreground hover:text-foreground transition-colors">
+              {state === 'expanded' ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
             </button>
-            <button onClick={() => setState('hidden')} className="p-1 text-muted-foreground hover:text-foreground transition-colors">
-              <X className="w-3.5 h-3.5" />
+            <button onClick={() => setState('hidden')} className="p-0.5 text-muted-foreground hover:text-foreground transition-colors">
+              <X className="w-3 h-3" />
             </button>
           </div>
         </div>

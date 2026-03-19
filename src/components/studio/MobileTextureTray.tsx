@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { textures } from '@/data/textures';
-import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureSwatch } from '@/types/studio';
 import { ChevronDown, ChevronUp, GripHorizontal, X, Upload, Lock, Star } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -69,11 +68,10 @@ export function TextureTray({
     e.target.value = '';
   };
 
-  // Responsive heights
   const heights: Record<TrayState, string | number> = {
     hidden: 0,
-    peek: isMobile ? 110 : 100,
-    expanded: isMobile ? '50vh' : '40vh',
+    peek: isMobile ? 72 : 68,
+    expanded: isMobile ? '45vh' : '35vh',
   };
 
   const focusClass = focusMode && state !== 'hidden'
@@ -84,9 +82,9 @@ export function TextureTray({
     return (
       <button
         onClick={() => setState('peek')}
-        className="absolute top-2 left-1/2 -translate-x-1/2 z-40 px-3 py-1.5 rounded-full bg-popover/90 border border-border shadow-md text-[10px] font-medium text-muted-foreground hover:text-foreground transition-colors backdrop-blur-sm"
+        className="absolute top-1.5 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-full bg-popover border border-border shadow-sm text-[9px] font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
-        <ChevronDown className="w-3 h-3 inline mr-1" />
+        <ChevronDown className="w-2.5 h-2.5 inline mr-0.5" />
         Textures
       </button>
     );
@@ -94,53 +92,52 @@ export function TextureTray({
 
   return (
     <motion.div
-      className={`absolute top-0 left-0 right-0 z-40 bg-popover/95 backdrop-blur-sm border-b border-border shadow-lg overflow-hidden ${focusClass}`}
+      className={`absolute top-0 left-0 right-0 z-40 bg-popover border-b border-border shadow-md overflow-hidden ${focusClass}`}
       animate={{ height: heights[state] }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 32 }}
     >
       <div className="flex flex-col h-full">
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-3 py-1.5 shrink-0 border-b border-border/50">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Textures</span>
+        <div className="flex items-center justify-between px-2 py-1 shrink-0 border-b border-border/40">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Textures</span>
             <button
               onClick={() => setFilter(f => f === 'all' ? 'favs' : 'all')}
-              className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] transition-colors ${
+              className={`flex items-center gap-0.5 px-1.5 py-px rounded-full text-[8px] transition-colors ${
                 filter === 'favs' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'
               }`}
             >
-              <Star className="w-2.5 h-2.5" />
-              {filter === 'favs' ? `Favs (${favIds.size})` : 'All'}
+              <Star className="w-2 h-2" />
+              {filter === 'favs' ? `★ ${favIds.size}` : 'All'}
             </button>
             <button
               onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
-              className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              className="p-0.5 rounded text-muted-foreground hover:text-foreground transition-colors"
             >
               {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />}
-              <span className="hidden sm:inline">Upload</span>
             </button>
           </div>
-          <div className="flex items-center gap-1">
-            <button onClick={cycle} className="p-1 text-muted-foreground hover:text-foreground transition-colors">
-              {state === 'expanded' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          <div className="flex items-center gap-0.5">
+            <button onClick={cycle} className="p-0.5 text-muted-foreground hover:text-foreground transition-colors">
+              {state === 'expanded' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </button>
-            <button onClick={() => setState('hidden')} className="p-1 text-muted-foreground hover:text-foreground transition-colors">
-              <X className="w-3.5 h-3.5" />
+            <button onClick={() => setState('hidden')} className="p-0.5 text-muted-foreground hover:text-foreground transition-colors">
+              <X className="w-3 h-3" />
             </button>
           </div>
           <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
 
         {activeSectionId && (
-          <div className="mx-2 mt-1 px-2 py-1 rounded-md bg-primary/10 border border-primary/20">
-            <p className="text-[9px] text-primary font-medium">👆 Tap a texture to apply to the selected section</p>
+          <div className="mx-2 mt-0.5 px-1.5 py-0.5 rounded bg-primary/10 border border-primary/20">
+            <p className="text-[8px] text-primary font-medium">👆 Tap texture to apply</p>
           </div>
         )}
 
-        {/* Texture content */}
-        <div className="flex-1 overflow-y-auto px-2 py-1.5">
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto px-1.5 py-1">
           {state === 'peek' ? (
-            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
               {filtered.map(tex => (
                 <SwatchButton
                   key={tex.id}
@@ -155,7 +152,7 @@ export function TextureTray({
               ))}
             </div>
           ) : (
-            <div className={`grid gap-1.5 ${isMobile ? 'grid-cols-5' : 'grid-cols-8 md:grid-cols-10 lg:grid-cols-12'}`}>
+            <div className={`grid gap-1 ${isMobile ? 'grid-cols-6' : 'grid-cols-10 md:grid-cols-12 lg:grid-cols-16'}`}>
               {filtered.map(tex => (
                 <SwatchButton
                   key={tex.id}
@@ -171,9 +168,9 @@ export function TextureTray({
           )}
         </div>
 
-        {/* Drag handle */}
-        <button onClick={cycle} className="flex justify-center py-0.5 shrink-0 text-muted-foreground/30 hover:text-muted-foreground transition-colors">
-          <GripHorizontal className="w-5 h-5" />
+        {/* Handle */}
+        <button onClick={cycle} className="flex justify-center py-px shrink-0 text-muted-foreground/20 hover:text-muted-foreground/50 transition-colors">
+          <GripHorizontal className="w-4 h-4" />
         </button>
       </div>
     </motion.div>
@@ -190,7 +187,7 @@ function SwatchButton({ tex, isFav, onToggleFav, onClick, onDragStart, onRemove,
   compact?: boolean;
 }) {
   const isCustom = tex.id.startsWith('custom-');
-  const size = compact ? 'w-16 h-16' : 'aspect-square';
+  const size = compact ? 'w-11 h-11' : 'aspect-square';
 
   return (
     <div
@@ -203,29 +200,28 @@ function SwatchButton({ tex, isFav, onToggleFav, onClick, onDragStart, onRemove,
       onClick={onClick}
     >
       <div
-        className={`${size} rounded-lg border border-border/50 shadow-sm hover:shadow-md hover:scale-105 transition-all`}
+        className={`${size} rounded-md border border-border/40 shadow-sm hover:shadow hover:scale-105 transition-all`}
         style={{ background: tex.cssBackground, backgroundSize: 'cover' }}
       />
-      <p className={`text-muted-foreground mt-0.5 truncate text-center ${compact ? 'text-[8px] w-16' : 'text-[9px]'}`}>
+      <p className={`text-muted-foreground truncate text-center leading-tight ${compact ? 'text-[7px] w-11 mt-px' : 'text-[7px] mt-px'}`}>
         {tex.name}
       </p>
-      {/* Fav star */}
       <button
         onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
-        className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all ${
+        className={`absolute top-px left-px p-px rounded-full transition-all ${
           isFav
             ? 'bg-primary/90 text-primary-foreground opacity-100'
-            : 'bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100'
+            : 'bg-background/70 text-muted-foreground opacity-0 group-hover:opacity-100'
         }`}
       >
-        <Star className={`w-2 h-2 ${isFav ? 'fill-current' : ''}`} />
+        <Star className={`w-1.5 h-1.5 ${isFav ? 'fill-current' : ''}`} />
       </button>
       {isCustom && (
         <button
           onClick={(e) => { e.stopPropagation(); onRemove(tex.id); }}
-          className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-px right-px p-px rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <X className="w-2 h-2" />
+          <X className="w-1.5 h-1.5" />
         </button>
       )}
     </div>
