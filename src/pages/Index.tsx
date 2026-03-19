@@ -20,7 +20,7 @@ import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
-import { Scissors, PenTool, Sparkles } from 'lucide-react';
+import { Scissors, PenTool, Sparkles, Monitor, X } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -49,7 +49,7 @@ const Index = () => {
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
-
+  const [showMobileBanner, setShowMobileBanner] = useState(true);
   // Mobile drawer states
   const [mobileToolKit, setMobileToolKit] = useState(false);
   const [mobileStencils, setMobileStencils] = useState(false);
@@ -292,6 +292,17 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
+      {isMobile && showMobileBanner && (
+        <div className="flex items-center justify-between px-3 py-2 bg-primary/10 border-b border-primary/20 shrink-0">
+          <div className="flex items-center gap-2 text-[11px] text-primary">
+            <Monitor className="w-3.5 h-3.5 shrink-0" />
+            <span className="font-medium">Best experience on desktop — mobile app coming soon!</span>
+          </div>
+          <button onClick={() => setShowMobileBanner(false)} className="p-0.5 text-primary/60 hover:text-primary">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
