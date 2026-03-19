@@ -32,6 +32,8 @@ interface Props {
   onSaveToWall?: () => void;
   ambientSound?: AmbientSound;
   onAmbientSoundChange?: (sound: AmbientSound) => void;
+  focusMode?: boolean;
+  onToggleFocusMode?: () => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [

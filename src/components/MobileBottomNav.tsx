@@ -1,14 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Brush, Grid2x2, Landmark, Scissors, Sparkles } from 'lucide-react';
+import { Brush, Grid2x2, Landmark, Scissors, Layers } from 'lucide-react';
 
 interface MobileBottomNavProps {
-  onOpenToolKit?: () => void;
-  onOpenStencils?: () => void;
-  toolKitOpen?: boolean;
-  stencilsOpen?: boolean;
+  onOpenBuild?: () => void;
+  onOpenContext?: () => void;
+  buildOpen?: boolean;
+  contextOpen?: boolean;
 }
 
-export function MobileBottomNav({ onOpenToolKit, onOpenStencils, toolKitOpen, stencilsOpen }: MobileBottomNavProps) {
+export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, contextOpen }: MobileBottomNavProps) {
   const location = useLocation();
   const isStudio = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
@@ -17,16 +17,16 @@ export function MobileBottomNav({ onOpenToolKit, onOpenStencils, toolKitOpen, st
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-background border-t border-border safe-area-bottom">
       <div className="flex items-center justify-around h-14">
-        {isStudio && onOpenToolKit ? (
+        {isStudio && onOpenBuild ? (
           <>
             <button
-              onClick={onOpenToolKit}
+              onClick={onOpenBuild}
               className={`flex flex-col items-center gap-0.5 px-4 py-1.5 transition-colors ${
-                toolKitOpen ? 'text-primary' : 'text-muted-foreground'
+                buildOpen ? 'text-primary' : 'text-muted-foreground'
               }`}
             >
               <Scissors className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Tool-Kit</span>
+              <span className="text-[10px] font-medium">Build</span>
             </button>
             <Link
               to="/"
@@ -36,13 +36,13 @@ export function MobileBottomNav({ onOpenToolKit, onOpenStencils, toolKitOpen, st
               <span className="text-[10px] font-medium">Studio</span>
             </Link>
             <button
-              onClick={onOpenStencils}
+              onClick={onOpenContext}
               className={`flex flex-col items-center gap-0.5 px-4 py-1.5 transition-colors ${
-                stencilsOpen ? 'text-primary' : 'text-muted-foreground'
+                contextOpen ? 'text-primary' : 'text-muted-foreground'
               }`}
             >
-              <Sparkles className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Stencils</span>
+              <Layers className="w-5 h-5" />
+              <span className="text-[10px] font-medium">Context</span>
             </button>
           </>
         ) : (
