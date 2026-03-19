@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         globIgnores: ["**/textures/**", "**/walls/**"],
       },
-      buildExcludes: [/textures\/.*\.png$/, /walls\/.*\.png$/],
+      outDir: undefined,
       manifest: {
         name: "ShadowBox Studio",
         short_name: "ShadowBox",
