@@ -215,8 +215,6 @@ const Index = () => {
   }, [vibeGen, studio]);
 
   // Panel opacity based on focus mode
-  const panelOpacity = focusMode ? 'opacity-20 hover:opacity-100' : 'opacity-100';
-  const panelTransition = 'transition-opacity duration-300';
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
