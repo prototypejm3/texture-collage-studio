@@ -292,6 +292,17 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
+      {isMobile && showMobileBanner && (
+        <div className="flex items-center justify-between px-3 py-2 bg-primary/10 border-b border-primary/20 shrink-0">
+          <div className="flex items-center gap-2 text-[11px] text-primary">
+            <Monitor className="w-3.5 h-3.5 shrink-0" />
+            <span className="font-medium">Best experience on desktop — mobile app coming soon!</span>
+          </div>
+          <button onClick={() => setShowMobileBanner(false)} className="p-0.5 text-primary/60 hover:text-primary">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
