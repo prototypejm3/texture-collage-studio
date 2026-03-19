@@ -35,8 +35,6 @@ const Index = () => {
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
-  const [showBuildPanel, setShowBuildPanel] = useState(true);
-  const [showContextPanel, setShowContextPanel] = useState(true);
   const [focusMode, setFocusMode] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string; stencilCreator?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
