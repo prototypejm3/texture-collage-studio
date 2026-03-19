@@ -68,130 +68,103 @@ export function BottomBar({
   const isShadowColor = colorFrames.some(f => f.id === wallFrameStyle) || wallFrameStyle === 'shadow-box';
 
   return (
-    <div className="flex flex-col md:flex-row items-center px-3 md:px-5 py-2 bg-popover border-t border-border relative gap-2 md:gap-0 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] md:pb-2">
-      {/* Top row on mobile: Canvas + Frame */}
-      <div className="flex items-center gap-2 w-full md:w-auto">
-        {/* Canvas size */}
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-1 hidden sm:inline">Canvas</span>
-          {frameSizes.map(s => (
-            <button
-              key={s}
-              onClick={() => onFrameSizeChange(s)}
-              className={`px-2 md:px-3 py-1.5 text-[10px] md:text-[11px] rounded-md transition-colors ${
-                frameSize === s
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-
-        <div className="w-px h-5 bg-border mx-1 md:mx-4" />
-
-        {/* Frame picker */}
-        <div className="flex items-center gap-1 md:gap-3">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground hidden sm:inline">Frame</span>
-          <div className="flex items-center gap-1">
-            {specialFrames.map(f => {
-              const isActive = f.id === 'shadow-box'
-                ? isShadowColor
-                : wallFrameStyle === f.id;
-
-              return (
-                <div key={f.id} className="relative">
-                  <button
-                    onClick={() => handleSpecialSelect(f.id)}
-                    className={`px-2 md:px-2.5 py-1 text-[10px] md:text-[11px] rounded-md transition-colors ${
-                      isActive
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                    }`}
-                  >
-                    {f.label}
-                  </button>
-
-                  {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
-                        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Shadow Box Color</p>
-                        <div className="flex items-center gap-2">
-                          {colorFrames.map(cf => {
-                            const locked = !cf.free && !isPremium;
-                            return (
-                              <button
-                                key={cf.id}
-                                onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
-                                className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
-                                  wallFrameStyle === cf.id
-                                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-popover scale-110'
-                                    : 'hover:scale-110'
-                                } ${cf.id === 'none' ? 'border-2 border-border border-dashed' : 'border border-border/40'} ${
-                                  locked ? 'opacity-40 cursor-not-allowed' : ''
-                                }`}
-                                style={{ background: cf.color }}
-                                title={locked ? 'Premium — unlock to use' : cf.label}
-                              >
-                                {locked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+    <div className="flex items-center px-2 md:px-4 py-1 bg-popover border-t border-border relative gap-1.5">
+      {/* Canvas size */}
+      <div className="flex items-center gap-0.5">
+        <span className="text-[8px] uppercase tracking-wider text-muted-foreground mr-0.5 hidden sm:inline">Canvas</span>
+        {frameSizes.map(s => (
+          <button
+            key={s}
+            onClick={() => onFrameSizeChange(s)}
+            className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+              frameSize === s
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            {s}
+          </button>
+        ))}
       </div>
 
-      {/* Actions row */}
-      <div className="flex items-center gap-1.5 w-full md:w-auto md:ml-auto justify-end">
-        <button
-          onClick={onOpenToolKit}
-          className={`flex items-center gap-1 md:gap-1.5 px-2 md:px-3 py-1.5 text-[10px] md:text-xs rounded-lg transition-colors ${
-            toolKitOpen
-              ? 'bg-primary/10 text-primary font-medium'
-              : 'text-foreground hover:bg-secondary'
-          }`}
-        >
-          <Scissors className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Tool-Kit</span>
-        </button>
-        <button
-          onClick={onOpenStencils}
-          className={`flex items-center gap-1 md:gap-1.5 px-2 md:px-3 py-1.5 text-[10px] md:text-xs rounded-lg transition-colors ${
-            stencilsOpen
-              ? 'bg-primary/10 text-primary font-medium'
-              : 'text-foreground hover:bg-secondary'
-          }`}
-        >
-          <Sparkles className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Stencils</span>
-        </button>
-        <div className="w-px h-4 bg-border" />
-        <button onClick={onClear} className="flex items-center gap-1 px-2 md:px-3 py-1.5 text-[10px] md:text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
-          <Trash2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Clear</span>
+      <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
+
+      {/* Frame picker */}
+      <div className="flex items-center gap-0.5">
+        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Frame</span>
+        {specialFrames.map(f => {
+          const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+          return (
+            <div key={f.id} className="relative">
+              <button
+                onClick={() => handleSpecialSelect(f.id)}
+                className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                }`}
+              >
+                {f.label}
+              </button>
+              {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2">
+                    <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-1.5 text-center">Color</p>
+                    <div className="flex items-center gap-1.5">
+                      {colorFrames.map(cf => {
+                        const locked = !cf.free && !isPremium;
+                        return (
+                          <button
+                            key={cf.id}
+                            onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                            className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                              wallFrameStyle === cf.id
+                                ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110'
+                                : 'hover:scale-110'
+                            } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
+                              locked ? 'opacity-40 cursor-not-allowed' : ''
+                            }`}
+                            style={{ background: cf.color }}
+                            title={locked ? 'Premium' : cf.label}
+                          >
+                            {locked && <Lock className="w-1.5 h-1.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
+      {/* Actions */}
+      <div className="flex items-center gap-1">
+        <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-destructive hover:bg-destructive/10 rounded-md transition-colors">
+          <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Clear</span>
         </button>
         {onSaveToWall && (
-          <button onClick={onSaveToWall} className="flex items-center gap-1 px-2 md:px-3 py-1.5 text-[10px] md:text-xs text-foreground hover:bg-secondary rounded-lg transition-colors">
-            <Save className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Save</span>
+          <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-foreground hover:bg-secondary rounded-md transition-colors">
+            <Save className="w-3 h-3" /> <span className="hidden sm:inline">Save</span>
           </button>
         )}
         <button
           onClick={() => isPremium ? onSave() : onRequestUpgrade?.()}
-          className={`relative flex items-center gap-1 px-3 md:px-4 py-1.5 text-[10px] md:text-xs font-medium rounded-lg transition-colors ${
+          className={`relative flex items-center gap-0.5 px-2 py-0.5 text-[9px] font-medium rounded-md transition-colors ${
             isPremium
               ? 'bg-primary text-primary-foreground hover:bg-primary/90'
               : 'bg-muted text-muted-foreground cursor-not-allowed'
           }`}
-          title={isPremium ? 'Export as PNG' : 'Premium — unlock to use'}
+          title={isPremium ? 'Export as PNG' : 'Premium'}
         >
-          <Download className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Export PNG</span>
-          {!isPremium && <Lock className="w-2.5 h-2.5 ml-0.5" />}
+          <Download className="w-3 h-3" /> <span className="hidden sm:inline">Export</span>
+          {!isPremium && <Lock className="w-2 h-2 ml-0.5" />}
         </button>
       </div>
     </div>
