@@ -22,6 +22,8 @@ import { Vibe } from '@/types/studio';
 import { Scissors, PenTool, Sparkles } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 const Index = () => {
   const navigate = useNavigate();
