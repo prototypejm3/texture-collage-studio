@@ -113,6 +113,21 @@ export function TopToolbar({
 
       {/* Right: Listen + Auth */}
       <div className="flex items-center gap-1.5">
+        {/* Focus mode toggle */}
+        {onToggleFocusMode && (
+          <button
+            onClick={onToggleFocusMode}
+            className={`p-1.5 rounded-md transition-colors ${
+              focusMode
+                ? 'bg-primary/10 text-primary'
+                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+            }`}
+            title={focusMode ? 'Exit Focus Mode (F)' : 'Focus Mode (F)'}
+          >
+            {focusMode ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+          </button>
+        )}
+
         {/* Dark mode toggle */}
         <button
           onClick={toggle}
