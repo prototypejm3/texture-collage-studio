@@ -325,10 +325,6 @@ const Index = () => {
           onSaveToWall={handleSaveToWall}
           isPremium={isPremium}
           onRequestUpgrade={() => setShowPaywall(true)}
-          onOpenToolKit={() => setShowBuildPanel(prev => !prev)}
-          toolKitOpen={showBuildPanel}
-          onOpenStencils={() => setShowContextPanel(prev => !prev)}
-          stencilsOpen={showContextPanel}
         />
       )}
 
