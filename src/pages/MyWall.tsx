@@ -444,7 +444,7 @@ const MyWall = () => {
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border shadow-sm transition-all ${
+                  className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
                     activeTab === val
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
