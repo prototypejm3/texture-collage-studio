@@ -23,7 +23,8 @@ import { Scissors, Sparkles, Monitor, X, Eye, EyeOff, Layers, Palette } from 'lu
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { MobileTextureTray } from '@/components/studio/MobileTextureTray';
+import { MobileStencilTray } from '@/components/studio/MobileStencilTray';
 
 const Index = () => {
   const navigate = useNavigate();
