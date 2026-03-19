@@ -396,7 +396,7 @@ export function RightSidebar({
             <div className="p-3">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-4 gap-1">
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -431,7 +431,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="grid grid-cols-3 gap-1.5">
+                  <div className="grid grid-cols-4 gap-1">
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
@@ -476,7 +476,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-4 gap-1">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -572,15 +572,15 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
+        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
-            <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2.5 h-2.5 text-primary-foreground" />
+            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+              <Check className="w-2 h-2 text-primary-foreground" />
             </div>
           )}
           {isAiGenerated && (
-            <div className="absolute top-1 left-1 px-1 py-0.5 rounded bg-primary/90 text-primary-foreground text-[7px] font-bold uppercase tracking-wider">
+            <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
               AI
             </div>
           )}
@@ -650,11 +650,11 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
+        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
-            <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2.5 h-2.5 text-primary-foreground" />
+            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+              <Check className="w-2 h-2 text-primary-foreground" />
             </div>
           )}
         </div>
