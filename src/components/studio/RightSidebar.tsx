@@ -650,7 +650,7 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded-lg overflow-hidden mb-1.5 relative">
+        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
             <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
