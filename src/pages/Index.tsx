@@ -49,7 +49,7 @@ const Index = () => {
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
-
+  const [showMobileBanner, setShowMobileBanner] = useState(true);
   // Mobile drawer states
   const [mobileToolKit, setMobileToolKit] = useState(false);
   const [mobileStencils, setMobileStencils] = useState(false);
