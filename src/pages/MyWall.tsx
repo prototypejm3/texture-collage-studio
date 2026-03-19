@@ -439,7 +439,7 @@ const MyWall = () => {
 
           {/* Tabs + controls */}
           <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-6 md:mt-8 mb-6 md:mb-8">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
               {([['all', 'All'], ['display', 'Display'], ['hidden', 'Hidden'], ['draft', 'Draft']] as const).map(([val, label]) => (
                 <button
                   key={val}
