@@ -31,36 +31,38 @@ export function NavBar() {
       <span className="text-sm font-bold tracking-tight text-foreground mr-4">
         ShadowBox
       </span>
-      <Link
-        to="/"
-        className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-          isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-        }`}
-      >
-        <Brush className="w-4 h-4" />
-        Studio
-      </Link>
-      <Link
-        to="/wall"
-        className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-          isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-        }`}
-      >
-        <Grid2x2 className="w-4 h-4" />
-        My Wall
-      </Link>
-      <Link
-        to="/gallery"
-        className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-          isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-        }`}
-      >
-        <Landmark className="w-4 h-4" />
-        Gallery
-      </Link>
+      {/* Desktop nav links */}
+      <div className="hidden md:flex items-center gap-6">
+        <Link
+          to="/"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Brush className="w-4 h-4" />
+          Studio
+        </Link>
+        <Link
+          to="/wall"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Grid2x2 className="w-4 h-4" />
+          My Wall
+        </Link>
+        <Link
+          to="/gallery"
+          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Landmark className="w-4 h-4" />
+          Gallery
+        </Link>
+      </div>
 
       <div className="ml-auto flex items-center gap-2">
-        {/* Dark mode toggle */}
         <button
           onClick={toggle}
           className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
@@ -71,7 +73,7 @@ export function NavBar() {
 
         {user ? (
           <>
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
+            <span className="text-xs text-muted-foreground items-center gap-1 hidden sm:flex">
               <User className="w-3 h-3" />
               {user.email?.split('@')[0]}
             </span>
@@ -79,7 +81,7 @@ export function NavBar() {
               onClick={() => signOut()}
               className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              <LogOut className="w-3 h-3" /> Sign Out
+              <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
             </button>
           </>
         ) : (
