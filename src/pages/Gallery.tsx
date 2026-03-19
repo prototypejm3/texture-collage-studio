@@ -69,7 +69,7 @@ const Gallery = () => {
     <div className="h-screen flex flex-col overflow-hidden">
       <NavBar />
       <div className="flex-1 overflow-y-auto bg-muted/30">
-        <div className="max-w-6xl mx-auto px-6 py-10">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10 pb-20 md:pb-10">
           <div className="text-center mb-10">
             <h1 className="text-2xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Art Gallery
