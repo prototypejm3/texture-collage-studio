@@ -9,9 +9,6 @@ import { useUserTier } from '@/hooks/useUserTier';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
-import { BuildPanel } from '@/components/studio/BuildPanel';
-import { ContextPanel } from '@/components/studio/ContextPanel';
-import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
