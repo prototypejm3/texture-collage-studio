@@ -34,7 +34,7 @@ export function StencilTray(props: StencilTrayProps) {
 
   const heights: Record<TrayState, string | number> = {
     hidden: 0,
-    peek: 36,
+    peek: 28,
     expanded: isMobile ? '45vh' : '35vh',
   };
 
