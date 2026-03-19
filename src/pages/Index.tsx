@@ -19,7 +19,7 @@ import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
-import { Scissors, Sparkles, Monitor, X, Eye, EyeOff, Layers } from 'lucide-react';
+import { Scissors, Sparkles, Monitor, X, Eye, EyeOff, Layers, Palette } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
