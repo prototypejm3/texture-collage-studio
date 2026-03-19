@@ -662,7 +662,7 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
           {vibe.emoji} {vibe.name}
         </span>
         {creator && (
-          <span className="text-[9px] text-muted-foreground mt-0.5 block">
+          <span className="text-[8px] text-muted-foreground mt-0.5 block">
             by {creator}
           </span>
         )}
