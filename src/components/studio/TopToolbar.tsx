@@ -69,102 +69,97 @@ export function TopToolbar({
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   return (
-    <div className="flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5 bg-background border-b border-border relative">
+    <div className="flex items-center justify-between px-2 md:px-4 py-1 md:py-1.5 bg-background border-b border-border relative">
       {/* Left: Logo + Nav */}
-      <div className="flex items-center gap-3 md:gap-5">
-        <div className="flex items-center gap-2">
-          <Frame className="w-5 h-5 text-primary" />
-          <span className="text-sm font-bold tracking-tight text-foreground">ShadowBox</span>
+      <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-1.5">
+          <Frame className="w-4 h-4 text-primary" />
+          <span className="text-xs font-bold tracking-tight text-foreground">ShadowBox</span>
         </div>
-        {/* Desktop nav only */}
-        <div className="hidden md:flex items-center gap-5">
+        <div className="hidden md:flex items-center gap-3">
           <Link
             to="/"
-            className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
               isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
-            <Brush className="w-4 h-4" />
+            <Brush className="w-3 h-3" />
             Studio
           </Link>
           <Link
             to="/wall"
-            className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
               isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
-            <Grid2x2 className="w-4 h-4" />
+            <Grid2x2 className="w-3 h-3" />
             My Wall
           </Link>
           <Link
             to="/gallery"
-            className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
               isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
-            <Landmark className="w-4 h-4" />
+            <Landmark className="w-3 h-3" />
             Gallery
           </Link>
         </div>
       </div>
 
-      {/* Center spacer */}
       <div />
 
-      {/* Right: Listen + Auth */}
-      <div className="flex items-center gap-1.5">
-        {/* Focus mode toggle */}
+      {/* Right */}
+      <div className="flex items-center gap-1">
         {onToggleFocusMode && (
           <button
             onClick={onToggleFocusMode}
-            className={`p-1.5 rounded-md transition-colors ${
+            className={`p-1 rounded-md transition-colors ${
               focusMode
                 ? 'bg-primary/10 text-primary'
                 : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
-            title={focusMode ? 'Exit Focus Mode (F)' : 'Focus Mode (F)'}
+            title={focusMode ? 'Exit Focus (F)' : 'Focus (F)'}
           >
-            {focusMode ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            {focusMode ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
           </button>
         )}
 
-        {/* Dark mode toggle */}
         <button
           onClick={toggle}
-          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+          className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          title={dark ? 'Light mode' : 'Dark mode'}
         >
-          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {dark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
         </button>
 
-        {/* Listen */}
         {onAmbientSoundChange && (
           <div className="relative">
             <button
               onClick={() => setShowSoundMenu(!showSoundMenu)}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-lg transition-colors ${
+              className={`flex items-center gap-1 px-1.5 py-1 text-[10px] rounded-md transition-colors ${
                 ambientSound && ambientSound !== 'none'
                   ? 'bg-primary/10 text-primary'
                   : 'text-muted-foreground hover:bg-secondary'
               }`}
             >
-              <Volume2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">
+              <Volume2 className="w-3 h-3" />
+              <span className="hidden sm:inline text-[9px]">
                 {ambientSound && ambientSound !== 'none'
-                  ? { gallery: 'Gallery', loft: 'Lofi Beats', home: 'Chill' }[ambientSound] ?? 'Ambiance'
-                  : 'Ambiance'}
+                  ? { gallery: 'Gallery', loft: 'Lofi', home: 'Chill' }[ambientSound] ?? '♫'
+                  : '♫'}
               </span>
             </button>
             {showSoundMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
-                <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[130px]">
-                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-                  {([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi Beats', '🎵'], ['home', 'Chill', '🏠']] as const).map(([value, label, emoji]) => (
+                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                  <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+                  {([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi', '🎵'], ['home', 'Chill', '🏠']] as const).map(([value, label, emoji]) => (
                     <button
                       key={value}
                       onClick={() => { onAmbientSoundChange(value as AmbientSound); setShowSoundMenu(false); }}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${
+                      className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary flex items-center gap-1.5 ${
                         ambientSound === value ? 'text-primary font-medium' : 'text-foreground'
                       }`}
                     >
@@ -177,26 +172,26 @@ export function TopToolbar({
           </div>
         )}
 
-        <div className="w-px h-4 bg-border hidden sm:block" />
+        <div className="w-px h-3 bg-border hidden sm:block" />
         {user ? (
           <>
-            <span className="text-xs text-muted-foreground items-center gap-1 hidden sm:flex">
-              <User className="w-3 h-3" />
+            <span className="text-[10px] text-muted-foreground items-center gap-0.5 hidden sm:flex">
+              <User className="w-2.5 h-2.5" />
               {user.email?.split('@')[0]}
             </span>
             <button
               onClick={() => signOut()}
-              className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
             >
-              <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
+              <LogOut className="w-2.5 h-2.5" /> <span className="hidden sm:inline">Out</span>
             </button>
           </>
         ) : (
           <Link
             to="/auth"
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-0.5 px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
           >
-            <LogIn className="w-3 h-3" /> Sign In
+            <LogIn className="w-2.5 h-2.5" /> Sign In
           </Link>
         )}
       </div>
