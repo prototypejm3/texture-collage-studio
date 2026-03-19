@@ -12,6 +12,7 @@ import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { RightSidebar } from '@/components/studio/RightSidebar';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { PaywallModal } from '@/components/wall/PaywallModal';
@@ -23,7 +24,7 @@ import { Scissors, PenTool, Sparkles } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -49,6 +50,10 @@ const Index = () => {
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
 
+  // Mobile drawer states
+  const [mobileToolKit, setMobileToolKit] = useState(false);
+  const [mobileStencils, setMobileStencils] = useState(false);
+
   // Load design state when editing from wall
   useEffect(() => {
     const editId = searchParams.get('edit');
@@ -57,10 +62,10 @@ const Index = () => {
       if (design?.studioState) {
         studio.loadState(design.studioState);
         setEditingDesignId(editId);
-        draftKeyRef.current = editId; // reuse same id for draft saves
+        draftKeyRef.current = editId;
       }
     }
-  }, []); // Run once on mount
+  }, []);
 
   // Auto-save as draft every 15 seconds when canvas has content
   useEffect(() => {
@@ -76,7 +81,6 @@ const Index = () => {
         const vibeName = studio.activeVibe?.name;
         const stencilCreator = studio.activeVibe?.creator;
         const studioState = studio.getState();
-        // Don't overwrite a design that's already saved (status = 'display')
         if (editingDesignId) {
           wall.updateDesign(editingDesignId, { previewImage: dataUrl, studioState, stencilCreator, updatedAt: new Date().toISOString() } as any);
         } else {
@@ -135,7 +139,6 @@ const Index = () => {
         return;
       }
 
-      // If there's an existing draft, promote it instead of creating new
       const draftExists = wall.designs.find(d => d.id === draftKeyRef.current);
       if (draftExists) {
         wall.updateDesign(draftKeyRef.current, { previewImage: dataUrl, name, vibeName, stencilCreator, studioState, status: 'display' as any });
@@ -171,7 +174,6 @@ const Index = () => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     } else if (!studio.selectedId && !studio.activeVibe) {
-      // Toggle background: click same texture to clear
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     }
   }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
@@ -190,7 +192,6 @@ const Index = () => {
     const result = await vibeGen.generateVibe(prompt);
     if (result) {
       const vibe = vibeGen.toVibe(result);
-      // Apply the mood's texture fills to current stencil sections
       if (studio.activeVibe) {
         studio.activeVibe.sections.forEach(section => {
           const toneTextures = section.tone === 'light' ? result.lightTextures
@@ -203,7 +204,6 @@ const Index = () => {
           }
         });
       }
-      // Apply frame style if suggested
       if (result.frameChoice) {
         const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
         if (validFrameStyles.includes(result.frameChoice)) {
@@ -271,6 +271,25 @@ const Index = () => {
     </div>
   );
 
+  const StencilsContent = () => (
+    <div className="overflow-y-auto flex-1">
+      <RightSidebar
+        activeVibeId={studio.activeVibe?.id ?? null}
+        isPremium={isPremium}
+        onSelectVibe={handleSelectVibe}
+        onShuffleVibeFills={studio.shuffleVibeFills}
+        onRequestUpgrade={() => setShowPaywall(true)}
+        onGenerateMood={handleGenerateMood}
+        isGeneratingMood={vibeGen.isGenerating}
+        customTemplate={customTemplate}
+        templateOpacity={templateOpacity}
+        onUploadTemplate={handleUploadTemplate}
+        onClearTemplate={clearTemplate}
+        onTemplateOpacityChange={setTemplateOpacity}
+      />
+    </div>
+  );
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <TopToolbar
@@ -328,18 +347,18 @@ const Index = () => {
           </div>
         )}
 
-        {/* Tool-Kit Sheet — mobile only */}
+        {/* Tool-Kit Drawer — mobile only (bottom sheet) */}
         {isMobile && (
-          <Sheet open={showToolKit} onOpenChange={setShowToolKit}>
-            <SheetContent side="left" className="w-[300px] p-0 flex flex-col">
-              <SheetHeader className="px-3 py-2 border-b border-border">
-                <SheetTitle className="text-xs font-semibold flex items-center gap-1.5">
-                  <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
-                </SheetTitle>
-              </SheetHeader>
+          <Drawer open={mobileToolKit} onOpenChange={setMobileToolKit}>
+            <DrawerContent className="max-h-[70vh] flex flex-col">
+              <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
+                <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
+                  <Scissors className="w-4 h-4 text-destructive" /> Tool-Kit
+                </DrawerTitle>
+              </DrawerHeader>
               <ToolKitContent />
-            </SheetContent>
-          </Sheet>
+            </DrawerContent>
+          </Drawer>
         )}
 
         <div className="flex-1 relative overflow-hidden">
@@ -408,73 +427,89 @@ const Index = () => {
                   </div>
                 </div>
                 {!stencilsMinimized && (
-                  <div className="overflow-y-auto flex-1 min-w-[280px]">
-                    <RightSidebar
-                      activeVibeId={studio.activeVibe?.id ?? null}
-                      isPremium={isPremium}
-                      onSelectVibe={handleSelectVibe}
-                      onShuffleVibeFills={studio.shuffleVibeFills}
-                      onRequestUpgrade={() => setShowPaywall(true)}
-                      onGenerateMood={handleGenerateMood}
-                      isGeneratingMood={vibeGen.isGenerating}
-                      customTemplate={customTemplate}
-                      templateOpacity={templateOpacity}
-                      onUploadTemplate={handleUploadTemplate}
-                      onClearTemplate={clearTemplate}
-                      onTemplateOpacityChange={setTemplateOpacity}
-                    />
-                  </div>
+                  <StencilsContent />
                 )}
               </>
             )}
           </div>
         )}
 
-        {/* Stencils Sheet — mobile only */}
+        {/* Stencils Drawer — mobile only (bottom sheet) */}
         {isMobile && (
-          <Sheet open={showStencils} onOpenChange={setShowStencils}>
-            <SheetContent side="right" className="w-[300px] p-0 flex flex-col">
-              <SheetHeader className="px-3 py-2 border-b border-border">
-                <SheetTitle className="text-xs font-semibold flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
-                </SheetTitle>
-              </SheetHeader>
-              <div className="overflow-y-auto flex-1">
-                <RightSidebar
-                  activeVibeId={studio.activeVibe?.id ?? null}
-                  isPremium={isPremium}
-                  onSelectVibe={handleSelectVibe}
-                  onShuffleVibeFills={studio.shuffleVibeFills}
-                  onRequestUpgrade={() => setShowPaywall(true)}
-                  onGenerateMood={handleGenerateMood}
-                  isGeneratingMood={vibeGen.isGenerating}
-                  customTemplate={customTemplate}
-                  templateOpacity={templateOpacity}
-                  onUploadTemplate={handleUploadTemplate}
-                  onClearTemplate={clearTemplate}
-                  onTemplateOpacityChange={setTemplateOpacity}
-                />
-              </div>
-            </SheetContent>
-          </Sheet>
+          <Drawer open={mobileStencils} onOpenChange={setMobileStencils}>
+            <DrawerContent className="max-h-[70vh] flex flex-col">
+              <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
+                <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-primary" /> Stencils
+                </DrawerTitle>
+              </DrawerHeader>
+              <StencilsContent />
+            </DrawerContent>
+          </Drawer>
         )}
       </div>
 
-      <BottomBar
-        frameSize={studio.frameSize}
-        onFrameSizeChange={studio.setFrameSize}
-        wallFrameStyle={studio.wallFrameStyle}
-        onWallFrameStyleChange={studio.setWallFrameStyle}
-        onClear={studio.clearCanvas}
-        onSave={handleExport}
-        onSaveToWall={handleSaveToWall}
-        isPremium={isPremium}
-        onRequestUpgrade={() => setShowPaywall(true)}
-        onOpenToolKit={() => { setShowToolKit(prev => !prev); setToolKitMinimized(false); }}
-        toolKitOpen={showToolKit}
-        onOpenStencils={() => { setShowStencils(prev => !prev); setStencilsMinimized(false); }}
-        stencilsOpen={showStencils}
-      />
+      {/* Desktop bottom bar */}
+      {!isMobile && (
+        <BottomBar
+          frameSize={studio.frameSize}
+          onFrameSizeChange={studio.setFrameSize}
+          wallFrameStyle={studio.wallFrameStyle}
+          onWallFrameStyleChange={studio.setWallFrameStyle}
+          onClear={studio.clearCanvas}
+          onSave={handleExport}
+          onSaveToWall={handleSaveToWall}
+          isPremium={isPremium}
+          onRequestUpgrade={() => setShowPaywall(true)}
+          onOpenToolKit={() => { setShowToolKit(prev => !prev); setToolKitMinimized(false); }}
+          toolKitOpen={showToolKit}
+          onOpenStencils={() => { setShowStencils(prev => !prev); setStencilsMinimized(false); }}
+          stencilsOpen={showStencils}
+        />
+      )}
+
+      {/* Mobile bottom bar with compact controls + nav */}
+      {isMobile && (
+        <>
+          <div className="flex items-center justify-between px-2 py-1.5 bg-popover border-t border-border">
+            <div className="flex items-center gap-1">
+              {(['8x8', '12x12', '16x16', 'gallery'] as const).map(s => (
+                <button
+                  key={s}
+                  onClick={() => studio.setFrameSize(s)}
+                  className={`px-2 py-1 text-[9px] rounded-md transition-colors ${
+                    studio.frameSize === s
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground'
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1">
+              <button onClick={studio.clearCanvas} className="px-2 py-1 text-[9px] text-destructive hover:bg-destructive/10 rounded-md">
+                Clear
+              </button>
+              <button onClick={handleSaveToWall} className="px-2 py-1 text-[9px] text-foreground hover:bg-secondary rounded-md">
+                Save
+              </button>
+              <button
+                onClick={() => isPremium ? handleExport() : setShowPaywall(true)}
+                className="px-2.5 py-1 text-[9px] font-medium bg-primary text-primary-foreground rounded-md"
+              >
+                Export
+              </button>
+            </div>
+          </div>
+          <MobileBottomNav
+            onOpenToolKit={() => setMobileToolKit(prev => !prev)}
+            onOpenStencils={() => setMobileStencils(prev => !prev)}
+            toolKitOpen={mobileToolKit}
+            stencilsOpen={mobileStencils}
+          />
+        </>
+      )}
 
       <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
 

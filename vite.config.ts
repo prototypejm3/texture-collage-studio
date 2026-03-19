@@ -22,7 +22,9 @@ export default defineConfig(({ mode }) => ({
         globPatterns: ["**/*.{js,css,html,ico,svg,woff2}"],
         navigateFallbackDenylist: [/^\/~oauth/],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        globIgnores: ["**/textures/**", "**/walls/**"],
       },
+      
       manifest: {
         name: "ShadowBox Studio",
         short_name: "ShadowBox",

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +13,13 @@ import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
+
+function NonStudioBottomNav() {
+  const location = useLocation();
+  const isStudio = location.pathname === '/' || location.pathname === '/create';
+  if (isStudio) return null;
+  return <MobileBottomNav />;
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -30,7 +37,7 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <MobileBottomNav />
+          <NonStudioBottomNav />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
