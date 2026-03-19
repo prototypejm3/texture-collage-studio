@@ -585,7 +585,7 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
             </div>
           )}
         </div>
-        <span className="text-[10px] font-medium leading-tight truncate w-full block">
+        <span className="text-[9px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
       </button>
