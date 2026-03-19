@@ -47,6 +47,7 @@ const Index = () => {
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
+  const isMobile = useIsMobile();
 
   // Load design state when editing from wall
   useEffect(() => {
