@@ -37,7 +37,7 @@ const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolea
 // Special styles as pill buttons
 const specialFrames: { id: FrameStyle; label: string }[] = [
   { id: 'shadow-box', label: 'Shadow' },
-  { id: 'floating', label: 'Floating' },
+  { id: 'floating', label: 'Float' },
   { id: 'polaroid', label: 'Polaroid' },
 ];
 
@@ -61,138 +61,136 @@ export function BottomBar({
   };
 
   const handleColorSelect = (id: FrameStyle) => {
-    // Shadow-box applies the color variant; we keep wallFrameStyle as the color id
     onWallFrameStyleChange(id);
     setShowColorMenu(null);
   };
 
-  // Check if current frame is a shadow-box color
   const isShadowColor = colorFrames.some(f => f.id === wallFrameStyle) || wallFrameStyle === 'shadow-box';
 
   return (
-    <div className="flex items-center px-5 py-2 bg-popover border-t border-border relative">
-      {/* Left: Canvas size */}
-      <div className="flex items-center gap-1">
-        <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-2">Canvas</span>
-        {frameSizes.map(s => (
-          <button
-            key={s}
-            onClick={() => onFrameSizeChange(s)}
-            className={`px-3 py-1.5 text-[11px] rounded-md transition-colors ${
-              frameSize === s
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            {s}
-          </button>
-        ))}
-      </div>
-
-      <div className="w-px h-5 bg-border mx-4" />
-
-      {/* Center: Frame picker */}
-      <div className="flex items-center gap-3">
-        <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Frame</span>
-
-        {/* Pill buttons */}
+    <div className="flex flex-col md:flex-row items-center px-3 md:px-5 py-2 bg-popover border-t border-border relative gap-2 md:gap-0 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] md:pb-2">
+      {/* Top row on mobile: Canvas + Frame */}
+      <div className="flex items-center gap-2 w-full md:w-auto">
+        {/* Canvas size */}
         <div className="flex items-center gap-1">
-          {specialFrames.map(f => {
-            const isActive = f.id === 'shadow-box'
-              ? isShadowColor
-              : wallFrameStyle === f.id;
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground mr-1 hidden sm:inline">Canvas</span>
+          {frameSizes.map(s => (
+            <button
+              key={s}
+              onClick={() => onFrameSizeChange(s)}
+              className={`px-2 md:px-3 py-1.5 text-[10px] md:text-[11px] rounded-md transition-colors ${
+                frameSize === s
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
 
-            return (
-              <div key={f.id} className="relative">
-                <button
-                  onClick={() => handleSpecialSelect(f.id)}
-                  className={`px-2.5 py-1 text-[11px] rounded-md transition-colors ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                  }`}
-                >
-                  {f.label}
-                </button>
+        <div className="w-px h-5 bg-border mx-1 md:mx-4" />
 
-                {/* Shadow color picker popover */}
-                {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
-                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Shadow Box Color</p>
-                      <div className="flex items-center gap-2">
-                        {colorFrames.map(cf => {
-                          const locked = !cf.free && !isPremium;
-                          return (
-                            <button
-                              key={cf.id}
-                              onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
-                              className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
-                                wallFrameStyle === cf.id
-                                  ? 'ring-2 ring-primary ring-offset-2 ring-offset-popover scale-110'
-                                  : 'hover:scale-110'
-                              } ${cf.id === 'none' ? 'border-2 border-border border-dashed' : 'border border-border/40'} ${
-                                locked ? 'opacity-40 cursor-not-allowed' : ''
-                              }`}
-                              style={{ background: cf.color }}
-                              title={locked ? 'Premium — unlock to use' : cf.label}
-                            >
-                              {locked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
-                            </button>
-                          );
-                        })}
+        {/* Frame picker */}
+        <div className="flex items-center gap-1 md:gap-3">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground hidden sm:inline">Frame</span>
+          <div className="flex items-center gap-1">
+            {specialFrames.map(f => {
+              const isActive = f.id === 'shadow-box'
+                ? isShadowColor
+                : wallFrameStyle === f.id;
+
+              return (
+                <div key={f.id} className="relative">
+                  <button
+                    onClick={() => handleSpecialSelect(f.id)}
+                    className={`px-2 md:px-2.5 py-1 text-[10px] md:text-[11px] rounded-md transition-colors ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+
+                  {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
+                        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Shadow Box Color</p>
+                        <div className="flex items-center gap-2">
+                          {colorFrames.map(cf => {
+                            const locked = !cf.free && !isPremium;
+                            return (
+                              <button
+                                key={cf.id}
+                                onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                                className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
+                                  wallFrameStyle === cf.id
+                                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-popover scale-110'
+                                    : 'hover:scale-110'
+                                } ${cf.id === 'none' ? 'border-2 border-border border-dashed' : 'border border-border/40'} ${
+                                  locked ? 'opacity-40 cursor-not-allowed' : ''
+                                }`}
+                                style={{ background: cf.color }}
+                                title={locked ? 'Premium — unlock to use' : cf.label}
+                              >
+                                {locked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Right: Actions */}
-      <div className="flex items-center gap-1.5 ml-auto">
+      {/* Actions row */}
+      <div className="flex items-center gap-1.5 w-full md:w-auto md:ml-auto justify-end">
         <button
           onClick={onOpenToolKit}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors ${
+          className={`flex items-center gap-1 md:gap-1.5 px-2 md:px-3 py-1.5 text-[10px] md:text-xs rounded-lg transition-colors ${
             toolKitOpen
               ? 'bg-primary/10 text-primary font-medium'
               : 'text-foreground hover:bg-secondary'
           }`}
         >
-          <Scissors className="w-3.5 h-3.5" /> Tool-Kit
+          <Scissors className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Tool-Kit</span>
         </button>
         <button
           onClick={onOpenStencils}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors ${
+          className={`flex items-center gap-1 md:gap-1.5 px-2 md:px-3 py-1.5 text-[10px] md:text-xs rounded-lg transition-colors ${
             stencilsOpen
               ? 'bg-primary/10 text-primary font-medium'
               : 'text-foreground hover:bg-secondary'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" /> Stencils
+          <Sparkles className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Stencils</span>
         </button>
         <div className="w-px h-4 bg-border" />
-        <button onClick={onClear} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
-          <Trash2 className="w-3.5 h-3.5" /> Clear
+        <button onClick={onClear} className="flex items-center gap-1 px-2 md:px-3 py-1.5 text-[10px] md:text-xs text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
+          <Trash2 className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Clear</span>
         </button>
         {onSaveToWall && (
-          <button onClick={onSaveToWall} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-foreground hover:bg-secondary rounded-lg transition-colors">
-            <Save className="w-3.5 h-3.5" /> Save to Wall
+          <button onClick={onSaveToWall} className="flex items-center gap-1 px-2 md:px-3 py-1.5 text-[10px] md:text-xs text-foreground hover:bg-secondary rounded-lg transition-colors">
+            <Save className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Save</span>
           </button>
         )}
         <button
           onClick={() => isPremium ? onSave() : onRequestUpgrade?.()}
-          className={`relative flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+          className={`relative flex items-center gap-1 px-3 md:px-4 py-1.5 text-[10px] md:text-xs font-medium rounded-lg transition-colors ${
             isPremium
               ? 'bg-primary text-primary-foreground hover:bg-primary/90'
               : 'bg-muted text-muted-foreground cursor-not-allowed'
           }`}
           title={isPremium ? 'Export as PNG' : 'Premium — unlock to use'}
         >
-          <Download className="w-3.5 h-3.5" /> Export PNG
+          <Download className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Export PNG</span>
           {!isPremium && <Lock className="w-2.5 h-2.5 ml-0.5" />}
         </button>
       </div>

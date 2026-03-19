@@ -325,13 +325,13 @@ const MyWall = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`flex-1 overflow-y-auto ${wallBgClass} transition-colors duration-500 relative`}
+        className={`flex-1 overflow-y-auto ${wallBgClass} transition-colors duration-500 relative pb-16 md:pb-0`}
         style={wallBgStyle}
       >
         {/* Lighting overlay */}
         <LightingOverlay preset={currentSettings.lightingPreset || 'none'} />
 
-        <div className="max-w-5xl mx-auto px-8 py-10 relative z-[6]">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-10 relative z-[6]">
           {/* Wall picker + customizer */}
           <div className="flex items-center gap-3 mb-2">
             <div className="relative">
@@ -438,13 +438,13 @@ const MyWall = () => {
           />
 
           {/* Tabs + controls */}
-          <div className="flex items-center gap-4 mt-8 mb-8">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-6 md:mt-8 mb-6 md:mb-8">
+            <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
               {([['all', 'All'], ['display', 'Display'], ['hidden', 'Hidden'], ['draft', 'Draft']] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border shadow-sm transition-all ${
+                  className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
                     activeTab === val
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'

@@ -177,3 +177,15 @@
 .wall-bg-wood-walnut-wall {
   background: url('/walls/wood-walnut-wall.png') center/cover no-repeat;
 }
+
+/* Safe area for mobile bottom nav */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Mobile bottom nav spacing — pages need bottom padding on mobile */
+@media (max-width: 767px) {
+  .mobile-bottom-safe {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
