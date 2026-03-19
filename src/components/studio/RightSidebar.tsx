@@ -431,7 +431,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-1.5">
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
