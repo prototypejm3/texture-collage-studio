@@ -396,7 +396,7 @@ export function RightSidebar({
             <div className="p-3">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-1.5">
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -431,7 +431,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-1.5">
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
@@ -476,7 +476,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-1.5">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -517,7 +517,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-1.5">
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
@@ -564,15 +564,15 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      className={`group relative flex flex-col items-center text-center rounded-xl p-2 transition-all border ${
+      whileHover={{ y: -1 }}
+      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
         isActive
           ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
           : 'border-border/50 hover:border-border hover:bg-secondary/50'
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded-lg overflow-hidden mb-1.5 relative">
+        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
             <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
@@ -585,7 +585,7 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
             </div>
           )}
         </div>
-        <span className="text-[10px] font-medium leading-tight truncate w-full block">
+        <span className="text-[9px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
       </button>
@@ -642,15 +642,15 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      className={`group relative flex flex-col items-center text-center rounded-xl p-2 transition-all border ${
+      whileHover={{ y: -1 }}
+      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
         isActive
           ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
           : 'border-border/50 hover:border-border hover:bg-secondary/50'
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded-lg overflow-hidden mb-1.5 relative">
+        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
             <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
@@ -658,11 +658,11 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
             </div>
           )}
         </div>
-        <span className="text-[10px] font-medium leading-tight truncate w-full block">
+        <span className="text-[9px] font-medium leading-tight truncate w-full block">
           {vibe.emoji} {vibe.name}
         </span>
         {creator && (
-          <span className="text-[9px] text-muted-foreground mt-0.5 block">
+          <span className="text-[8px] text-muted-foreground mt-0.5 block">
             by {creator}
           </span>
         )}
