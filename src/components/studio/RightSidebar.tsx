@@ -572,15 +572,15 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
       }`}
     >
       <button onClick={onSelect} className="w-full">
-        <div className="w-full aspect-square rounded overflow-hidden mb-1 relative">
+        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
           <VibePreviewSVG vibe={vibe} />
           {isActive && (
-            <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2.5 h-2.5 text-primary-foreground" />
+            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+              <Check className="w-2 h-2 text-primary-foreground" />
             </div>
           )}
           {isAiGenerated && (
-            <div className="absolute top-1 left-1 px-1 py-0.5 rounded bg-primary/90 text-primary-foreground text-[7px] font-bold uppercase tracking-wider">
+            <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
               AI
             </div>
           )}
