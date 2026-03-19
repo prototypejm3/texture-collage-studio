@@ -48,9 +48,6 @@ const Index = () => {
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
-  // Mobile drawer states
-  const [mobileBuild, setMobileBuild] = useState(false);
-  const [mobileContext, setMobileContext] = useState(false);
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
