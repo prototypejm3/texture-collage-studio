@@ -325,7 +325,7 @@ const MyWall = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`flex-1 overflow-y-auto ${wallBgClass} transition-colors duration-500 relative`}
+        className={`flex-1 overflow-y-auto ${wallBgClass} transition-colors duration-500 relative pb-16 md:pb-0`}
         style={wallBgStyle}
       >
         {/* Lighting overlay */}
