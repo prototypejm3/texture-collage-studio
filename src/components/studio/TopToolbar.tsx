@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Volume2 } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Volume2, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 function useTheme() {
@@ -32,6 +32,8 @@ interface Props {
   onSaveToWall?: () => void;
   ambientSound?: AmbientSound;
   onAmbientSoundChange?: (sound: AmbientSound) => void;
+  focusMode?: boolean;
+  onToggleFocusMode?: () => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -52,6 +54,7 @@ export function TopToolbar({
   onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
   ambientSound, onAmbientSoundChange,
+  focusMode, onToggleFocusMode,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
@@ -110,6 +113,21 @@ export function TopToolbar({
 
       {/* Right: Listen + Auth */}
       <div className="flex items-center gap-1.5">
+        {/* Focus mode toggle */}
+        {onToggleFocusMode && (
+          <button
+            onClick={onToggleFocusMode}
+            className={`p-1.5 rounded-md transition-colors ${
+              focusMode
+                ? 'bg-primary/10 text-primary'
+                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+            }`}
+            title={focusMode ? 'Exit Focus Mode (F)' : 'Focus Mode (F)'}
+          >
+            {focusMode ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+          </button>
+        )}
+
         {/* Dark mode toggle */}
         <button
           onClick={toggle}
