@@ -6,12 +6,11 @@ import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { useWall } from '@/hooks/useWall';
 import { useUserTier } from '@/hooks/useUserTier';
-import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { Canvas } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
-import { RightSidebar } from '@/components/studio/RightSidebar';
-import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
+import { BuildPanel } from '@/components/studio/BuildPanel';
+import { ContextPanel } from '@/components/studio/ContextPanel';
 import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -20,7 +19,7 @@ import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
-import { Scissors, PenTool, Sparkles, Monitor, X } from 'lucide-react';
+import { Scissors, Sparkles, Monitor, X, Eye, EyeOff, Layers } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -38,11 +37,9 @@ const Index = () => {
   const canvasRef = useRef<HTMLDivElement>(null!);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showVibeModal, setShowVibeModal] = useState(false);
-  const [showToolKit, setShowToolKit] = useState(true);
-  const [toolKitMinimized, setToolKitMinimized] = useState(false);
-  const toolKitOpen = showToolKit && !toolKitMinimized;
-  const [showStencils, setShowStencils] = useState(true);
-  const [stencilsMinimized, setStencilsMinimized] = useState(false);
+  const [showBuildPanel, setShowBuildPanel] = useState(true);
+  const [showContextPanel, setShowContextPanel] = useState(true);
+  const [focusMode, setFocusMode] = useState(false);
   const [pendingSave, setPendingSave] = useState<{ preview: string; name: string; vibeName?: string; stencilCreator?: string } | null>(null);
   const [editingDesignId, setEditingDesignId] = useState<string | null>(null);
   const draftKeyRef = useRef<string>(`draft-${Date.now()}`);
@@ -51,8 +48,19 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   // Mobile drawer states
-  const [mobileToolKit, setMobileToolKit] = useState(false);
-  const [mobileStencils, setMobileStencils] = useState(false);
+  const [mobileBuild, setMobileBuild] = useState(false);
+  const [mobileContext, setMobileContext] = useState(false);
+
+  // Keyboard shortcut for focus mode
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'f' && !e.metaKey && !e.ctrlKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)) {
+        setFocusMode(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
 
   // Load design state when editing from wall
   useEffect(() => {
@@ -191,7 +199,6 @@ const Index = () => {
   const handleGenerateMood = useCallback(async (prompt: string) => {
     const result = await vibeGen.generateVibe(prompt);
     if (result) {
-      const vibe = vibeGen.toVibe(result);
       if (studio.activeVibe) {
         studio.activeVibe.sections.forEach(section => {
           const toneTextures = section.tone === 'light' ? result.lightTextures
@@ -214,84 +221,13 @@ const Index = () => {
     }
   }, [vibeGen, studio]);
 
-  const ToolKitContent = () => (
-    <div className="overflow-y-auto flex-1">
-      <div className="px-3 py-2 border-b border-border">
-        <button
-          onClick={() => studio.setDrawMode(!studio.drawMode)}
-          className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-            studio.drawMode
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-secondary text-secondary-foreground hover:bg-accent'
-          }`}
-        >
-          <PenTool className="w-3.5 h-3.5" />
-          Draw Freehand
-        </button>
-      </div>
-      <div className="px-3 py-2 border-b border-border">
-        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1.5">Shape</p>
-        <div className="flex flex-wrap gap-1">
-          {(['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'] as const).map(shape => (
-            <button
-              key={shape}
-              onClick={() => studio.setNextShape(shape)}
-              className={`px-2 py-1 text-[10px] rounded-md transition-colors capitalize ${
-                studio.nextShape === shape
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              {shape.replace('-', ' ')}
-            </button>
-          ))}
-        </div>
-      </div>
-      {studio.selectedElement && studio.selectedId && (
-        <div className="border-b border-border">
-          <FloatingToolbar
-            element={studio.selectedElement}
-            onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-            onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-            onDelete={() => { studio.deleteElement(studio.selectedId!); }}
-          />
-        </div>
-      )}
-      <TextureLibrary
-        onDragStart={handleDragStartLib}
-        onTextureClick={handleTextureClick}
-        activeSectionId={studio.selectedSectionId}
-        customTextures={customTextures}
-        onUploadTexture={handleUploadTexture}
-        onRemoveCustomTexture={removeCustomTexture}
-        isPremium={isPremium}
-        onRequestUpgrade={() => setShowPaywall(true)}
-      />
-    </div>
-  );
-
-  const StencilsContent = () => (
-    <div className="overflow-y-auto flex-1">
-      <RightSidebar
-        activeVibeId={studio.activeVibe?.id ?? null}
-        isPremium={isPremium}
-        onSelectVibe={handleSelectVibe}
-        onShuffleVibeFills={studio.shuffleVibeFills}
-        onRequestUpgrade={() => setShowPaywall(true)}
-        onGenerateMood={handleGenerateMood}
-        isGeneratingMood={vibeGen.isGenerating}
-        customTemplate={customTemplate}
-        templateOpacity={templateOpacity}
-        onUploadTemplate={handleUploadTemplate}
-        onClearTemplate={clearTemplate}
-        onTemplateOpacityChange={setTemplateOpacity}
-      />
-    </div>
-  );
+  // Panel opacity based on focus mode
+  const panelOpacity = focusMode ? 'opacity-20 hover:opacity-100' : 'opacity-100';
+  const panelTransition = 'transition-opacity duration-300';
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
+      {/* Mobile banner */}
       {isMobile && showMobileBanner && (
         <div className="flex items-center justify-between px-3 py-2 bg-primary/10 border-b border-primary/20 shrink-0">
           <div className="flex items-center gap-2 text-[11px] text-primary">
@@ -303,6 +239,8 @@ const Index = () => {
           </button>
         </div>
       )}
+
+      {/* Top bar with nav + focus toggle */}
       <TopToolbar
         frameSize={studio.frameSize}
         frameColor={studio.frameColor}
@@ -315,63 +253,42 @@ const Index = () => {
         onSaveToWall={handleSaveToWall}
         ambientSound={ambientSound}
         onAmbientSoundChange={setAmbientSound}
+        focusMode={focusMode}
+        onToggleFocusMode={() => setFocusMode(prev => !prev)}
       />
+
       <div className="flex flex-1 overflow-hidden">
-        {/* Tool-Kit sidebar — desktop only */}
+        {/* ── Left: Build Panel (desktop) ── */}
         {!isMobile && (
-          <div
-            className={`flex-shrink-0 border-r border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
-              showToolKit ? (toolKitMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
-            } overflow-hidden`}
-          >
-            {showToolKit && (
-              <>
-                <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
-                  {!toolKitMinimized && (
-                    <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
-                      <Scissors className="w-3.5 h-3.5 text-destructive" /> Tool-Kit
-                    </span>
-                  )}
-                  <div className={`flex items-center gap-1 ${toolKitMinimized ? 'mx-auto' : 'ml-auto'}`}>
-                    <button
-                      onClick={() => setToolKitMinimized(prev => !prev)}
-                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                      title={toolKitMinimized ? 'Expand' : 'Minimize'}
-                    >
-                      {toolKitMinimized ? '▸' : '◂'}
-                    </button>
-                    {!toolKitMinimized && (
-                      <button
-                        onClick={() => { studio.setSelectedId(null); studio.setDrawMode(false); setShowToolKit(false); }}
-                        className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                </div>
-                {!toolKitMinimized && (
-                  <ToolKitContent />
-                )}
-              </>
+          <AnimatePresence>
+            {showBuildPanel && (
+              <motion.div
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: 280, opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                className={`flex-shrink-0 border-r border-border overflow-hidden ${panelTransition} ${panelOpacity}`}
+              >
+                <BuildPanel
+                  drawMode={studio.drawMode}
+                  onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
+                  nextShape={studio.nextShape}
+                  onSetNextShape={studio.setNextShape}
+                  onDragStart={handleDragStartLib}
+                  onTextureClick={handleTextureClick}
+                  activeSectionId={studio.selectedSectionId}
+                  customTextures={customTextures}
+                  onUploadTexture={handleUploadTexture}
+                  onRemoveCustomTexture={removeCustomTexture}
+                  isPremium={isPremium}
+                  onRequestUpgrade={() => setShowPaywall(true)}
+                />
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         )}
 
-        {/* Tool-Kit Drawer — mobile only (bottom sheet) */}
-        {isMobile && (
-          <Drawer open={mobileToolKit} onOpenChange={setMobileToolKit}>
-            <DrawerContent className="max-h-[70vh] flex flex-col">
-              <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
-                <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
-                  <Scissors className="w-4 h-4 text-destructive" /> Tool-Kit
-                </DrawerTitle>
-              </DrawerHeader>
-              <ToolKitContent />
-            </DrawerContent>
-          </Drawer>
-        )}
-
+        {/* ── Center: Canvas ── */}
         <div className="flex-1 relative overflow-hidden">
           <Canvas
             elements={studio.elements}
@@ -404,59 +321,116 @@ const Index = () => {
           />
         </div>
 
-        {/* Stencils right sidebar — desktop only */}
+        {/* ── Right: Context Panel (desktop) ── */}
         {!isMobile && (
-          <div
-            className={`flex-shrink-0 border-l border-border bg-popover flex flex-col transition-all duration-300 ease-in-out ${
-              showStencils ? (stencilsMinimized ? 'w-[42px]' : 'w-[280px]') : 'w-0'
-            } overflow-hidden`}
-          >
-            {showStencils && (
-              <>
-                <div className="flex items-center justify-between px-2.5 py-2 border-b border-border bg-secondary/30 shrink-0">
-                  {!stencilsMinimized && (
-                    <span className="text-xs font-semibold text-foreground flex items-center gap-1.5 whitespace-nowrap">
-                      <Sparkles className="w-3.5 h-3.5 text-primary" /> Stencils
-                    </span>
-                  )}
-                  <div className={`flex items-center gap-1 ${stencilsMinimized ? 'mx-auto' : 'ml-auto'}`}>
-                    <button
-                      onClick={() => setStencilsMinimized(prev => !prev)}
-                      className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                      title={stencilsMinimized ? 'Expand' : 'Minimize'}
-                    >
-                      {stencilsMinimized ? '◂' : '▸'}
-                    </button>
-                    {!stencilsMinimized && (
-                      <button
-                        onClick={() => setShowStencils(false)}
-                        className="text-[10px] px-1.5 py-0.5 rounded bg-secondary hover:bg-accent text-muted-foreground transition-colors"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                </div>
-                {!stencilsMinimized && (
-                  <StencilsContent />
-                )}
-              </>
+          <AnimatePresence>
+            {showContextPanel && (
+              <motion.div
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: 300, opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                className={`flex-shrink-0 border-l border-border overflow-hidden ${panelTransition} ${panelOpacity}`}
+              >
+                <ContextPanel
+                  selectedElement={studio.selectedElement}
+                  selectedId={studio.selectedId}
+                  activeVibe={studio.activeVibe}
+                  onUpdateElement={studio.updateElement}
+                  onUpdateEffects={studio.updateEffects}
+                  onDuplicateElement={studio.duplicateElement}
+                  onDeleteElement={(id) => { studio.deleteElement(id); }}
+                  frameSize={studio.frameSize}
+                  wallFrameStyle={studio.wallFrameStyle}
+                  onFrameSizeChange={studio.setFrameSize}
+                  onWallFrameStyleChange={studio.setWallFrameStyle}
+                  activeVibeId={studio.activeVibe?.id ?? null}
+                  isPremium={isPremium}
+                  onSelectVibe={handleSelectVibe}
+                  onShuffleVibeFills={studio.shuffleVibeFills}
+                  onRequestUpgrade={() => setShowPaywall(true)}
+                  onGenerateMood={handleGenerateMood}
+                  isGeneratingMood={vibeGen.isGenerating}
+                  customTemplate={customTemplate}
+                  templateOpacity={templateOpacity}
+                  onUploadTemplate={handleUploadTemplate}
+                  onClearTemplate={clearTemplate}
+                  onTemplateOpacityChange={setTemplateOpacity}
+                  backgroundTextureId={studio.backgroundTextureId}
+                />
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         )}
 
-        {/* Stencils Drawer — mobile only (bottom sheet) */}
+        {/* ── Mobile Drawers ── */}
         {isMobile && (
-          <Drawer open={mobileStencils} onOpenChange={setMobileStencils}>
-            <DrawerContent className="max-h-[70vh] flex flex-col">
-              <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
-                <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-primary" /> Stencils
-                </DrawerTitle>
-              </DrawerHeader>
-              <StencilsContent />
-            </DrawerContent>
-          </Drawer>
+          <>
+            <Drawer open={mobileBuild} onOpenChange={setMobileBuild}>
+              <DrawerContent className="max-h-[75vh] flex flex-col">
+                <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
+                  <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
+                    <Scissors className="w-4 h-4 text-destructive" /> Build
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div className="flex-1 overflow-y-auto">
+                  <BuildPanel
+                    drawMode={studio.drawMode}
+                    onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
+                    nextShape={studio.nextShape}
+                    onSetNextShape={studio.setNextShape}
+                    onDragStart={handleDragStartLib}
+                    onTextureClick={handleTextureClick}
+                    activeSectionId={studio.selectedSectionId}
+                    customTextures={customTextures}
+                    onUploadTexture={handleUploadTexture}
+                    onRemoveCustomTexture={removeCustomTexture}
+                    isPremium={isPremium}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                  />
+                </div>
+              </DrawerContent>
+            </Drawer>
+
+            <Drawer open={mobileContext} onOpenChange={setMobileContext}>
+              <DrawerContent className="max-h-[75vh] flex flex-col">
+                <DrawerHeader className="px-4 py-2 border-b border-border shrink-0">
+                  <DrawerTitle className="text-sm font-semibold flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-primary" />
+                    {studio.selectedElement ? 'Properties' : 'Templates & Stencils'}
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div className="flex-1 overflow-y-auto">
+                  <ContextPanel
+                    selectedElement={studio.selectedElement}
+                    selectedId={studio.selectedId}
+                    activeVibe={studio.activeVibe}
+                    onUpdateElement={studio.updateElement}
+                    onUpdateEffects={studio.updateEffects}
+                    onDuplicateElement={studio.duplicateElement}
+                    onDeleteElement={(id) => { studio.deleteElement(id); }}
+                    frameSize={studio.frameSize}
+                    wallFrameStyle={studio.wallFrameStyle}
+                    onFrameSizeChange={studio.setFrameSize}
+                    onWallFrameStyleChange={studio.setWallFrameStyle}
+                    activeVibeId={studio.activeVibe?.id ?? null}
+                    isPremium={isPremium}
+                    onSelectVibe={handleSelectVibe}
+                    onShuffleVibeFills={studio.shuffleVibeFills}
+                    onRequestUpgrade={() => setShowPaywall(true)}
+                    onGenerateMood={handleGenerateMood}
+                    isGeneratingMood={vibeGen.isGenerating}
+                    customTemplate={customTemplate}
+                    templateOpacity={templateOpacity}
+                    onUploadTemplate={handleUploadTemplate}
+                    onClearTemplate={clearTemplate}
+                    onTemplateOpacityChange={setTemplateOpacity}
+                    backgroundTextureId={studio.backgroundTextureId}
+                  />
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </>
         )}
       </div>
 
@@ -472,10 +446,10 @@ const Index = () => {
           onSaveToWall={handleSaveToWall}
           isPremium={isPremium}
           onRequestUpgrade={() => setShowPaywall(true)}
-          onOpenToolKit={() => { setShowToolKit(prev => !prev); setToolKitMinimized(false); }}
-          toolKitOpen={showToolKit}
-          onOpenStencils={() => { setShowStencils(prev => !prev); setStencilsMinimized(false); }}
-          stencilsOpen={showStencils}
+          onOpenToolKit={() => setShowBuildPanel(prev => !prev)}
+          toolKitOpen={showBuildPanel}
+          onOpenStencils={() => setShowContextPanel(prev => !prev)}
+          stencilsOpen={showContextPanel}
         />
       )}
 
@@ -514,10 +488,10 @@ const Index = () => {
             </div>
           </div>
           <MobileBottomNav
-            onOpenToolKit={() => setMobileToolKit(prev => !prev)}
-            onOpenStencils={() => setMobileStencils(prev => !prev)}
-            toolKitOpen={mobileToolKit}
-            stencilsOpen={mobileStencils}
+            onOpenBuild={() => setMobileBuild(prev => !prev)}
+            onOpenContext={() => setMobileContext(prev => !prev)}
+            buildOpen={mobileBuild}
+            contextOpen={mobileContext}
           />
         </>
       )}
