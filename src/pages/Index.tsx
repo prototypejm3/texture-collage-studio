@@ -214,6 +214,63 @@ const Index = () => {
     }
   }, [vibeGen, studio]);
 
+  const ToolKitContent = () => (
+    <div className="overflow-y-auto flex-1">
+      <div className="px-3 py-2 border-b border-border">
+        <button
+          onClick={() => studio.setDrawMode(!studio.drawMode)}
+          className={`flex items-center gap-2 w-full px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+            studio.drawMode
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+          }`}
+        >
+          <PenTool className="w-3.5 h-3.5" />
+          Draw Freehand
+        </button>
+      </div>
+      <div className="px-3 py-2 border-b border-border">
+        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1.5">Shape</p>
+        <div className="flex flex-wrap gap-1">
+          {(['soft-square', 'rectangle', 'circle', 'strip', 'torn-edge', 'blob'] as const).map(shape => (
+            <button
+              key={shape}
+              onClick={() => studio.setNextShape(shape)}
+              className={`px-2 py-1 text-[10px] rounded-md transition-colors capitalize ${
+                studio.nextShape === shape
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+              }`}
+            >
+              {shape.replace('-', ' ')}
+            </button>
+          ))}
+        </div>
+      </div>
+      {studio.selectedElement && studio.selectedId && (
+        <div className="border-b border-border">
+          <FloatingToolbar
+            element={studio.selectedElement}
+            onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
+            onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+            onDelete={() => { studio.deleteElement(studio.selectedId!); }}
+          />
+        </div>
+      )}
+      <TextureLibrary
+        onDragStart={handleDragStartLib}
+        onTextureClick={handleTextureClick}
+        activeSectionId={studio.selectedSectionId}
+        customTextures={customTextures}
+        onUploadTexture={handleUploadTexture}
+        onRemoveCustomTexture={removeCustomTexture}
+        isPremium={isPremium}
+        onRequestUpgrade={() => setShowPaywall(true)}
+      />
+    </div>
+  );
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <TopToolbar
