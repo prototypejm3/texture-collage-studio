@@ -331,7 +331,7 @@ const MyWall = () => {
         {/* Lighting overlay */}
         <LightingOverlay preset={currentSettings.lightingPreset || 'none'} />
 
-        <div className="max-w-5xl mx-auto px-8 py-10 relative z-[6]">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-10 relative z-[6]">
           {/* Wall picker + customizer */}
           <div className="flex items-center gap-3 mb-2">
             <div className="relative">
