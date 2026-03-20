@@ -109,7 +109,7 @@ export function Canvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 flex items-center justify-center p-0"
+      className="flex-1 flex items-end justify-center p-0"
       style={{ background: 'hsl(var(--canvas-bg))' }}
       onClick={() => onSelect(null)}
     >
