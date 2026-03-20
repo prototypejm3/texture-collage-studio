@@ -491,8 +491,8 @@ export function RightSidebar({
               {communityVibes.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center">
                   <Globe className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
-                  <p className="text-[10px] text-muted-foreground">No community stencils yet</p>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">Generate one with AI and make it public!</p>
+                  <p className="text-[10px] text-muted-foreground">{kidMode ? 'No shapes from friends yet' : 'No community stencils yet'}</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Make a shape and share it!' : 'Generate one with AI and make it public!'}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
