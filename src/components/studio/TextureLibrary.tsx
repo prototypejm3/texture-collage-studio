@@ -98,7 +98,7 @@ export function TextureLibrary({
   const showCustomTab = customTextures.length > 0;
 
   return (
-    <div className="h-full flex flex-col bg-card border-r border-border">
+    <div className="h-full flex flex-col bg-card">
 
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
