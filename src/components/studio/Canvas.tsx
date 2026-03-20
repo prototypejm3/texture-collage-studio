@@ -494,7 +494,49 @@ export function Canvas({
         </div>
       )}
 
-      {/* Easel + Frame group */}
+      {/* Kid Mode Maybe Box */}
+      {kidMode && !easelMode && (
+        <div
+          ref={boxRef}
+          className="absolute z-30"
+          style={{
+            bottom: 44,
+            left: 44,
+          }}
+          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
+          onDragLeave={() => setBoxHover(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setBoxHover(false);
+            const fromBox = e.dataTransfer.getData('fromBox');
+            if (fromBox) {
+              // Dragged from box to desk — handled by onDragOutItem
+              return;
+            }
+            const textureId = e.dataTransfer.getData('textureId');
+            if (textureId) {
+              setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
+            }
+          }}
+        >
+          <MaybeBox
+            items={boxItems}
+            onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
+            onDragOutItem={(item) => {
+              setBoxItems(prev => prev.filter(i => i.id !== item.id));
+              // Put it on the desk near the box
+              if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                onTableDrop(item.textureId, 120, rect.height - 160);
+              }
+            }}
+            isHovered={boxHover}
+            customTextures={customTextures}
+          />
+        </div>
+      )}
+
       <div style={{
         display: 'flex',
         flexDirection: 'column',
