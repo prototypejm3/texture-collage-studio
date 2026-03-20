@@ -106,11 +106,12 @@ export function FreeformWall({
       <AnimatePresence>
         {positionedDesigns.map(d => {
           const w = sizeWidths[d.displaySize || 'medium'];
+          // Consistent shadow direction: light from top-left, shadow falls bottom-right
           const depthShadow = d.displaySize === 'large'
-            ? '0 12px 32px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.08)'
+            ? '4px 8px 32px rgba(0,0,0,0.22), 2px 4px 12px rgba(0,0,0,0.10)'
             : d.displaySize === 'small'
-              ? '0 2px 8px rgba(0,0,0,0.08)'
-              : '0 6px 20px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)';
+              ? '2px 4px 12px rgba(0,0,0,0.12)'
+              : '3px 6px 24px rgba(0,0,0,0.16), 1px 3px 8px rgba(0,0,0,0.08)';
           const rotation = d.rotation || 0;
 
           return (
