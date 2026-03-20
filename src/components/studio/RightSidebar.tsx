@@ -17,6 +17,7 @@ interface RightSidebarProps {
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
   onPlaceStencil: () => void;
+  onReplaceStencil?: (vibe: Vibe) => void;
   onRequestUpgrade: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
@@ -89,6 +90,31 @@ export function RightSidebar({
   const [saveDialogVibe, setSaveDialogVibe] = useState<Vibe | null>(null);
   const [saveName, setSaveName] = useState('');
   const [savePublic, setSavePublic] = useState(false);
+  // Replace vs Layer dialog
+  const [pendingVibe, setPendingVibe] = useState<Vibe | null>(null);
+
+  const handleStencilSelect = (vibe: Vibe) => {
+    if (activeVibeId && activeVibeId !== vibe.id) {
+      // Already have an active stencil — ask replace vs layer
+      setPendingVibe(vibe);
+    } else {
+      onSelectVibe(vibe);
+    }
+  };
+
+  const handleReplaceConfirm = () => {
+    if (!pendingVibe) return;
+    onSelectVibe(pendingVibe);
+    setPendingVibe(null);
+  };
+
+  const handleLayerConfirm = () => {
+    if (!pendingVibe) return;
+    onPlaceStencil(); // stamps current as elements
+    // Small delay so state settles before selecting new vibe
+    setTimeout(() => onSelectVibe(pendingVibe), 50);
+    setPendingVibe(null);
+  };
 
   const handleGenerate = async () => {
     const vibe = await generateStencil(aiPrompt);
@@ -224,6 +250,40 @@ export function RightSidebar({
         </div>
       </div>
 
+      {/* Replace vs Layer dialog */}
+      {pendingVibe && (
+        <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
+          <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
+            <h3 className="text-sm font-semibold mb-1">Switch Stencil</h3>
+            <p className="text-[10px] text-muted-foreground mb-3">
+              You already have a stencil on the canvas. What would you like to do?
+            </p>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleReplaceConfirm}
+                className="w-full px-3 py-2 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
+              >
+                <span className="font-semibold">Replace</span>
+                <span className="block text-[9px] text-muted-foreground mt-0.5">Remove current stencil and use the new one</span>
+              </button>
+              <button
+                onClick={handleLayerConfirm}
+                className="w-full px-3 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
+              >
+                <span className="font-semibold">Layer</span>
+                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">Stamp current stencil down and add the new one on top</span>
+              </button>
+              <button
+                onClick={() => setPendingVibe(null)}
+                className="w-full px-3 py-1.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Save dialog overlay */}
       {saveDialogVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
@@ -330,13 +390,6 @@ export function RightSidebar({
                   >
                     <Shuffle className="w-2.5 h-2.5" />
                   </button>
-                  <button
-                    onClick={onPlaceStencil}
-                    className="flex items-center gap-1 px-1.5 py-1 text-[10px] font-medium rounded bg-accent text-accent-foreground hover:bg-accent/80 transition-colors"
-                    title="Place stencil & add another"
-                  >
-                    <Stamp className="w-2.5 h-2.5" /> Place
-                  </button>
                 </div>
               </div>
             )}
@@ -385,7 +438,7 @@ export function RightSidebar({
                       isHidden={social.hiddenIds.has(vibe.id)}
                       isFavorited={social.favoritedIds.has(vibe.id)}
                       isLoggedIn={!!user}
-                      onSelect={() => onSelectVibe(vibe)}
+                      onSelect={() => handleStencilSelect(vibe)}
                       onToggleHidden={() => social.toggleHidden(vibe.id)}
                       onToggleFav={() => social.toggleFavorite(vibe.id)}
                       onDelete={async () => {
@@ -426,7 +479,7 @@ export function RightSidebar({
                         favCount={record?.fav_count ?? 0}
                         isFavorited={social.favoritedIds.has(vibe.id)}
                         isLoggedIn={!!user}
-                        onSelect={() => onSelectVibe(vibe)}
+                        onSelect={() => handleStencilSelect(vibe)}
                         onToggleFav={() => social.toggleFavorite(vibe.id)}
                         creator={creator}
                       />
@@ -455,7 +508,7 @@ export function RightSidebar({
                       whileTap={{ scale: 0.98 }}
                       className="group relative cursor-pointer opacity-60 hover:opacity-100"
                     >
-                      <button onClick={() => onSelectVibe(vibe)} className="w-full">
+                      <button onClick={() => handleStencilSelect(vibe)} className="w-full">
                         <div className={`aspect-square rounded overflow-hidden border shadow-sm border-border/50`}>
                           <VibePreviewSVG vibe={vibe} />
                         </div>
