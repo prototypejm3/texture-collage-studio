@@ -583,8 +583,8 @@ export function Canvas({
         <div
           className="absolute z-20"
           style={{
-            bottom: 28,
-            left: 32,
+            top: 12,
+            left: 16,
             perspective: '400px',
           }}
           onClick={(e) => e.stopPropagation()}
