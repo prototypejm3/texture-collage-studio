@@ -77,6 +77,7 @@ const MyWall = () => {
       return;
     }
     wall.duplicateDesign(id);
+    setActiveTab('all');
   }, [isPremium, wallDesigns.length, wall]);
 
   const handleDelete = useCallback((id: string) => {

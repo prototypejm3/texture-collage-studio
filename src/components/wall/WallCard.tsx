@@ -1,7 +1,7 @@
 import { SavedDesign, FrameStyle, DesignSize, DesignStatus, HangingStyle } from '@/types/wall';
 import { HangingWrapper } from './HangingWrapper';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw, X, Send, Check } from 'lucide-react';
+import { MoreHorizontal, Copy, Trash2, FolderOpen, Pin, PinOff, Hammer, EyeOff, Eye, Maximize2, Minimize2, Square, Pencil, RotateCw, RotateCcw, X, Send, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 interface WallCardProps {
@@ -193,7 +193,9 @@ export function WallCard({
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
+  const [frameExpanded, setFrameExpanded] = useState(false);
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
   const [editArtist, setEditArtist] = useState(design.artist || '');
@@ -230,6 +232,7 @@ export function WallCard({
 
   return (
     <motion.div
+      ref={cardRef}
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -288,23 +291,27 @@ export function WallCard({
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <div className="relative">
-          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
+          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
           </button>
-          {menuOpen && menuBtnRef.current && (() => {
-            const rect = menuBtnRef.current!.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - rect.bottom;
-            const openUp = spaceBelow < 300;
+          {menuOpen && cardRef.current && (() => {
+            const cardRect = cardRef.current!.getBoundingClientRect();
+            const spaceRight = window.innerWidth - cardRect.right;
+            const spaceBelow = window.innerHeight - cardRect.top;
+            const openUp = spaceBelow < 350;
+            const openLeft = spaceRight < 170;
             return (
               <>
                 <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
                 <div
-                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[60vh] overflow-y-auto"
+                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[70vh] overflow-y-auto"
                   style={{
-                    left: Math.min(rect.left, window.innerWidth - 160),
+                    ...(openLeft
+                      ? { right: window.innerWidth - cardRect.left + 6 }
+                      : { left: cardRect.right + 6 }),
                     ...(openUp
-                      ? { bottom: window.innerHeight - rect.top + 4 }
-                      : { top: rect.bottom + 4 }),
+                      ? { bottom: window.innerHeight - cardRect.bottom }
+                      : { top: cardRect.top }),
                   }}
                 >
                 <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
@@ -352,8 +359,15 @@ export function WallCard({
                   ))}
                 </div>
                 <div className="border-t border-border my-1" />
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
-                <div className="flex flex-wrap gap-1 px-3 py-1.5 max-h-[120px] overflow-y-auto">
+                <button
+                  onClick={(e) => { e.stopPropagation(); setFrameExpanded(!frameExpanded); }}
+                  className="w-full text-left px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest flex items-center gap-1 hover:text-foreground transition-colors"
+                >
+                  Frame
+                  {frameExpanded ? <ChevronUp className="w-2.5 h-2.5 ml-auto" /> : <ChevronDown className="w-2.5 h-2.5 ml-auto" />}
+                </button>
+                {frameExpanded && (
+                <div className="flex flex-wrap gap-1 px-3 py-1.5">
                   {frameStyleList.map(f => (
                     <button
                       key={f.value}
@@ -364,6 +378,7 @@ export function WallCard({
                     </button>
                   ))}
                 </div>
+                )}
                 {onSubmitToGallery && !design.gallerySubmissionId && (
                   <>
                     <div className="border-t border-border my-1" />
