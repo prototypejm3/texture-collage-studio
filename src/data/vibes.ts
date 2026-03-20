@@ -2829,4 +2829,27 @@ const teddyBear: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, tree, monkeyFace, shark, teddyBear, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
+// ── ROCKET SHIP ──
+const rocketShip: Vibe = {
+  id: 'rocket-ship', name: 'Rocket Ship', emoji: '🚀',
+  description: 'Simple cartoon rocket ship',
+  category: 'Space',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'rk-nose', label: 'Nose Cone', tone: 'accent',
+      path: 'M210,55 Q215,30 240,15 Q265,30 270,55 L270,120 L210,120 Z' },
+    { id: 'rk-body', label: 'Body', tone: 'light',
+      path: 'M210,120 L270,120 L275,330 L205,330 Z' },
+    { id: 'rk-window', label: 'Window', tone: 'dark',
+      path: 'M240,175 Q260,175 260,200 Q260,225 240,225 Q220,225 220,200 Q220,175 240,175 Z' },
+    { id: 'rk-fin-l', label: 'Left Fin', tone: 'medium',
+      path: 'M205,270 Q175,300 155,350 Q150,365 160,368 Q172,365 190,345 Q205,325 205,330 Z' },
+    { id: 'rk-fin-r', label: 'Right Fin', tone: 'medium',
+      path: 'M275,270 Q305,300 325,350 Q330,365 320,368 Q308,365 290,345 Q275,325 275,330 Z' },
+    { id: 'rk-flame', label: 'Flame', tone: 'accent',
+      path: 'M215,330 Q218,365 225,390 Q232,420 240,440 Q248,420 255,390 Q262,365 265,330 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, tree, monkeyFace, shark, teddyBear, rocketShip, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
