@@ -1255,6 +1255,7 @@ const dragonfly: Vibe = {
 const worm: Vibe = {
   id: 'worm', name: 'Worm', emoji: '🪱',
   description: 'Cute wiggly worm with segments',
+  category: 'Community', creator: 'Ace', baseLikes: 18, likesStartDate: '2026-03-12',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'worm-head', label: 'Head', tone: 'accent',
