@@ -387,7 +387,11 @@ export function Canvas({
       {!easelMode && (
         <div
           className="absolute z-20"
-          style={{ left: 32, top: 32 }}
+          style={{
+            top: 24,
+            left: '50%',
+            transform: 'translateX(calc(-50% - 160px))',
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Nameplate container with perspective */}
