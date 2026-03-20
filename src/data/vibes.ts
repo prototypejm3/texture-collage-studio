@@ -2716,4 +2716,86 @@ const camsAirbusA380: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
+// ── TREE ──
+const tree: Vibe = {
+  id: 'tree', name: 'Tree', emoji: '🌳',
+  description: 'Beautiful deciduous tree',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'tr-trunk', label: 'Trunk', tone: 'dark',
+      path: 'M215,310 L215,440 Q215,455 220,460 L260,460 Q265,455 265,440 L265,310 Z' },
+    { id: 'tr-roots', label: 'Roots', tone: 'dark',
+      path: 'M215,450 Q195,458 175,462 Q165,460 170,455 Q185,448 200,445 L215,445 Z M265,450 Q285,458 305,462 Q315,460 310,455 Q295,448 280,445 L265,445 Z' },
+    { id: 'tr-canopy', label: 'Canopy', tone: 'accent',
+      path: 'M240,42 Q310,42 360,80 Q400,112 415,160 Q425,205 408,248 Q395,280 370,305 Q340,325 305,335 Q275,340 240,340 Q205,340 175,335 Q140,325 110,305 Q85,280 72,248 Q55,205 65,160 Q80,112 120,80 Q170,42 240,42 Z' },
+    { id: 'tr-highlight', label: 'Highlight', tone: 'light',
+      path: 'M155,120 Q135,158 128,205 Q125,248 135,282 Q138,258 142,225 Q148,185 158,148 Q162,128 160,115 Z' },
+    { id: 'tr-shadow', label: 'Shadow', tone: 'medium',
+      path: 'M310,145 Q340,178 355,218 Q365,258 355,295 Q348,272 342,242 Q332,205 318,172 Q310,155 308,140 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── MONKEY FACE ──
+const monkeyFace: Vibe = {
+  id: 'monkey-face', name: 'Monkey', emoji: '🐵',
+  description: 'Playful monkey face',
+  category: 'Animals',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'mk-ear-l', label: 'Left Ear', tone: 'medium',
+      path: 'M95,185 Q70,155 62,120 Q58,90 72,72 Q92,58 115,68 Q135,82 142,108 Q148,135 140,162 Q132,180 115,188 Z' },
+    { id: 'mk-ear-inner-l', label: 'Left Inner Ear', tone: 'accent',
+      path: 'M100,165 Q82,142 78,115 Q76,92 88,82 Q102,75 115,82 Q128,95 132,118 Q135,142 125,162 Z' },
+    { id: 'mk-ear-r', label: 'Right Ear', tone: 'medium',
+      path: 'M385,185 Q410,155 418,120 Q422,90 408,72 Q388,58 365,68 Q345,82 338,108 Q332,135 340,162 Q348,180 365,188 Z' },
+    { id: 'mk-ear-inner-r', label: 'Right Inner Ear', tone: 'accent',
+      path: 'M380,165 Q398,142 402,115 Q404,92 392,82 Q378,75 365,82 Q352,95 348,118 Q345,142 355,162 Z' },
+    { id: 'mk-head', label: 'Head', tone: 'medium',
+      path: 'M240,55 Q320,55 372,105 Q415,148 425,215 Q430,275 408,330 Q380,380 335,410 Q290,435 240,438 Q190,435 145,410 Q100,380 72,330 Q50,275 55,215 Q65,148 108,105 Q160,55 240,55 Z' },
+    { id: 'mk-face', label: 'Face', tone: 'accent',
+      path: 'M240,138 Q300,138 338,172 Q365,202 372,248 Q375,288 358,322 Q335,355 300,372 Q272,382 240,385 Q208,382 180,372 Q145,355 122,322 Q105,288 108,248 Q115,202 142,172 Q180,138 240,138 Z' },
+    { id: 'mk-eye-l', label: 'Left Eye', tone: 'dark',
+      path: 'M185,228 Q195,215 210,212 Q225,215 230,228 Q228,242 215,248 Q200,248 188,240 Z' },
+    { id: 'mk-eye-r', label: 'Right Eye', tone: 'dark',
+      path: 'M295,228 Q285,215 270,212 Q255,215 250,228 Q252,242 265,248 Q280,248 292,240 Z' },
+    { id: 'mk-nose', label: 'Nose', tone: 'dark',
+      path: 'M225,285 Q232,275 240,272 Q248,275 255,285 Q255,298 248,305 Q240,308 232,305 Q225,298 225,288 Z' },
+    { id: 'mk-mouth', label: 'Mouth', tone: 'dark',
+      path: 'M210,328 Q222,345 240,350 Q258,345 270,328 Q258,338 240,342 Q222,338 212,330 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+// ── SHARK ──
+const shark: Vibe = {
+  id: 'shark', name: 'Shark', emoji: '🦈',
+  description: 'Great white shark',
+  category: 'Sea Life',
+  viewBox: '0 0 480 380',
+  sections: [
+    { id: 'sh-body', label: 'Body', tone: 'medium',
+      path: 'M45,195 Q55,160 85,140 Q130,118 195,108 Q260,102 325,112 Q380,125 415,148 Q435,162 450,180 Q460,192 455,205 Q448,218 430,228 Q400,245 355,258 Q305,268 245,272 Q185,272 135,262 Q95,248 68,228 Q50,215 45,200 Z' },
+    { id: 'sh-belly', label: 'Belly', tone: 'light',
+      path: 'M65,215 Q85,228 120,242 Q165,255 218,260 Q275,262 330,255 Q380,245 415,228 Q435,218 445,208 Q440,222 420,235 Q388,252 345,265 Q295,275 240,278 Q185,278 140,268 Q105,255 78,238 Q60,225 58,218 Z' },
+    { id: 'sh-dorsal', label: 'Dorsal Fin', tone: 'dark',
+      path: 'M235,108 Q240,62 255,35 Q268,22 275,28 Q278,45 275,72 Q272,95 268,108 Z' },
+    { id: 'sh-tail', label: 'Tail', tone: 'medium',
+      path: 'M45,195 Q28,165 18,135 Q15,118 22,112 Q30,115 38,130 Q45,150 48,170 Z M45,200 Q32,228 22,258 Q18,278 22,285 Q30,282 38,268 Q45,248 48,225 Z' },
+    { id: 'sh-pectoral', label: 'Pectoral Fin', tone: 'dark',
+      path: 'M280,235 Q295,258 318,285 Q332,298 340,295 Q342,285 335,268 Q322,248 305,232 Z' },
+    { id: 'sh-eye', label: 'Eye', tone: 'dark',
+      path: 'M395,168 Q400,162 408,162 Q415,165 415,172 Q412,178 405,178 Q398,175 395,170 Z' },
+    { id: 'sh-gill1', label: 'Gill 1', tone: 'dark',
+      path: 'M358,165 Q360,178 360,192 Q358,195 356,192 Q354,178 355,165 Z' },
+    { id: 'sh-gill2', label: 'Gill 2', tone: 'dark',
+      path: 'M345,162 Q347,175 347,190 Q345,193 343,190 Q341,175 342,162 Z' },
+    { id: 'sh-gill3', label: 'Gill 3', tone: 'dark',
+      path: 'M332,160 Q334,173 334,188 Q332,191 330,188 Q328,173 329,160 Z' },
+    { id: 'sh-teeth', label: 'Teeth', tone: 'light',
+      path: 'M420,195 Q428,192 438,192 Q445,195 448,200 Q445,202 438,200 Q430,198 422,198 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, tree, monkeyFace, shark, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
