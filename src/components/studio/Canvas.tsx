@@ -255,25 +255,25 @@ export function Canvas({
         backgroundPosition: 'center',
       }} />
 
-      {/* Wood desk surface — fades into concrete floor */}
+      {/* Wood desk surface — rectangular desk with rounded corners and concrete border */}
       {!easelMode && (
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: 36,
-            right: 36,
-            top: 36,
-            bottom: 36,
-            borderRadius: '50%',
+            left: 28,
+            right: 28,
+            top: 28,
+            bottom: 28,
+            borderRadius: 16,
             boxShadow: '0 12px 60px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.25)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: 36,
-            right: 36,
-            top: 36,
-            bottom: 36,
-            borderRadius: '50%',
+            left: 28,
+            right: 28,
+            top: 28,
+            bottom: 28,
+            borderRadius: 16,
             overflow: 'hidden',
           }}>
             {/* Wood grain texture */}
@@ -294,8 +294,17 @@ export function Canvas({
             <div style={{
               position: 'absolute',
               inset: 0,
-              borderRadius: '50%',
+              borderRadius: 16,
               boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.15), inset 0 -2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.1)',
+              pointerEvents: 'none',
+            }} />
+            {/* Desk edge bevel */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: 16,
+              border: '2px solid rgba(0,0,0,0.12)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
               pointerEvents: 'none',
             }} />
           </div>
