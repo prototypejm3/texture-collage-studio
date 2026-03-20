@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavBar } from '@/components/NavBar';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
 import { useGallery } from '@/hooks/useGallery';
@@ -65,6 +66,14 @@ function GalleryFrame({ style, children }: { style: string; children: React.Reac
 const Gallery = () => {
   const { submissions, myShadows, loading, toggleShadow } = useGallery();
   const { user } = useAuth();
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -73,10 +82,12 @@ const Gallery = () => {
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10 pb-20 md:pb-10">
           <div className="text-center mb-6 md:mb-10">
             <h1 className="text-2xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              🎨 Art Gallery
+              {kidMode ? '🎨 Show & Tell' : '🎨 Art Gallery'}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Community Swatchbox art digital museum
+              {kidMode
+                ? 'A place for kids to share what they made and see what others created ✨'
+                : 'Community Swatchbox art digital museum'}
             </p>
           </div>
 
@@ -86,11 +97,17 @@ const Gallery = () => {
             </div>
           ) : submissions.length === 0 ? (
             <div className="text-center py-20">
-              <span className="text-5xl block mb-4">🖼️</span>
-              <p className="text-lg font-semibold text-foreground">Opening Exhibition: April 1st</p>
-              <p className="text-sm text-muted-foreground mt-1">(not an April Fools joke 😄)</p>
-              <p className="text-sm text-muted-foreground mt-4">Stay tuned ✨</p>
-              <p className="text-xs text-muted-foreground/70 mt-2">Show your appreciation 🖤</p>
+              <span className="text-5xl block mb-4">{kidMode ? '🧸' : '🖼️'}</span>
+              <p className="text-lg font-semibold text-foreground">
+                {kidMode ? 'Opening April 1st' : 'Opening Exhibition: April 1st'}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {kidMode ? 'Get ready to play, share, and explore 🎉' : '(not an April Fools joke 😄)'}
+              </p>
+              <p className="text-sm text-muted-foreground mt-4">
+                {kidMode ? 'Give a little "shadow" to show you love it 💛' : 'Stay tuned ✨'}
+              </p>
+              {!kidMode && <p className="text-xs text-muted-foreground/70 mt-2">Show your appreciation 🖤</p>}
             </div>
           ) : (
             <div className="columns-2 md:columns-3 gap-5 space-y-5">
