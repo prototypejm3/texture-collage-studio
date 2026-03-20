@@ -796,6 +796,7 @@ export function Canvas({
               sectionTransforms={sectionTransforms}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
+              onFillBackground={onFillBackground}
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
               onDeleteSection={onDeleteSection}
