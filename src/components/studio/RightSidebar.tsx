@@ -448,7 +448,7 @@ export function RightSidebar({
                       isHidden={social.hiddenIds.has(vibe.id)}
                       isFavorited={social.favoritedIds.has(vibe.id)}
                       isLoggedIn={!!user}
-                      onSelect={() => onSelectVibe(vibe)}
+                      onSelect={() => handleStencilSelect(vibe)}
                       onToggleHidden={() => social.toggleHidden(vibe.id)}
                       onToggleFav={() => social.toggleFavorite(vibe.id)}
                       onDelete={async () => {
