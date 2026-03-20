@@ -489,7 +489,7 @@ export function RightSidebar({
                         favCount={record?.fav_count ?? 0}
                         isFavorited={social.favoritedIds.has(vibe.id)}
                         isLoggedIn={!!user}
-                        onSelect={() => onSelectVibe(vibe)}
+                        onSelect={() => handleStencilSelect(vibe)}
                         onToggleFav={() => social.toggleFavorite(vibe.id)}
                         creator={creator}
                       />
