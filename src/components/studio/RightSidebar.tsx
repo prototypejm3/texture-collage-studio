@@ -330,7 +330,7 @@ export function RightSidebar({
             )}
 
             {/* Stencil Grid — grouped by theme */}
-            <div className={compact ? 'p-1' : 'p-3'}>
+            <div className="p-2">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
                 <div className={`grid ${compact ? 'grid-cols-4 gap-1' : 'grid-cols-4 gap-1.5'}`}>
