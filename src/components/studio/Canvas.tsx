@@ -531,8 +531,8 @@ export function Canvas({
         </div>
       )}
 
-      {/* Kid Mode Maybe Box */}
-      {kidMode && !easelMode && (
+      {/* Kid Mode Maybe Box — visible in both desk and easel mode */}
+      {kidMode && (
         <div
           ref={boxRef}
           className="absolute z-30"
