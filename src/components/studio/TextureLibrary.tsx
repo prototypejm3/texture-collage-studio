@@ -57,16 +57,16 @@ interface TextureGroup {
 
 const groups: TextureGroup[] = [
   { label: 'Velvet', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Chenille', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
   { label: 'Linen', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Performance', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Durable', categories: ['Sunbrella', 'Key Largo'] },
   { label: 'Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Bouclé', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Silk & Sheer', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Felt & Cotton', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Textured', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Cotton & Felt', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
   { label: 'Leather', categories: ['Leather'] },
-  { label: 'Hard Surfaces', categories: ['Wood', 'Marble', 'Concrete'] },
-  { label: 'Prints & Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Hard', categories: ['Wood', 'Marble', 'Concrete'] },
+  { label: 'Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
   { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
