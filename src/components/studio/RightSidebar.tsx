@@ -281,9 +281,9 @@ export function RightSidebar({
       {pendingVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
           <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
-            <h3 className="text-sm font-semibold mb-1">Switch Stencil</h3>
+            <h3 className="text-sm font-semibold mb-1">{kidMode ? 'Switch Shape' : 'Switch Stencil'}</h3>
             <p className="text-[10px] text-muted-foreground mb-3">
-              You already have a stencil on the canvas. What would you like to do?
+              {kidMode ? 'You already have a shape! What do you want to do?' : 'You already have a stencil on the canvas. What would you like to do?'}
             </p>
             <div className="flex flex-col gap-2">
               <button
