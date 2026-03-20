@@ -94,6 +94,7 @@ const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: 
 };
 
 export function Canvas({
+  easelMode, onToggleEasel,
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
