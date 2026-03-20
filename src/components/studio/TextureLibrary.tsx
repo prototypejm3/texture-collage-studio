@@ -119,6 +119,7 @@ export function TextureLibrary({
   drawMode, onToggleDrawMode, nextShape, onSetNextShape,
   crayonMode, crayonTextureId, onToggleCrayonMode, onSetCrayonTexture,
 }: TextureLibraryProps) {
+  const isMobile = useIsMobile();
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
