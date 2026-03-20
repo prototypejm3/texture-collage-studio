@@ -6,6 +6,7 @@ import { VibeOutline } from './VibeOutline';
 import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
+import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import concreteFloor from '@/assets/concrete-floor.jpg';
 
 export type TableSurface = 'birch' | 'oak' | 'walnut';
