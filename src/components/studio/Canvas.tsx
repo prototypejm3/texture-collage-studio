@@ -389,11 +389,11 @@ export function Canvas({
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
-      {/* Concrete floor background */}
+      {/* Background — concrete floor (normal) or kid table (kids mode) */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `url(${concreteFloor})`,
-        backgroundSize: '512px 512px',
-        backgroundRepeat: 'repeat',
+        backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
+        backgroundSize: kidMode ? 'cover' : '512px 512px',
+        backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
         backgroundPosition: 'center',
       }} />
 
