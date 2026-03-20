@@ -415,7 +415,7 @@ export function RightSidebar({
                       </div>
                       <button
                         onClick={handleGenerate}
-                        disabled={isGenerating || !aiPrompt.trim()}
+                        disabled={isGenerating || !aiPrompt.trim() || aiCredits.limitReached}
                         className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${kidMode ? 'px-3 py-1.5' : ''}`}
                       >
                         {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
