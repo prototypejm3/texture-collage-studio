@@ -230,7 +230,7 @@ export function TopToolbar({
                   <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">{kidMode ? 'Music' : 'Ambiance'}</p>
                   {(kidMode
                     ? ([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const)
-                    : ([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi', '🎵'], ['home', 'Chill', '🏠']] as const)
+                    : ([['none', 'Off', ''], ['gallery', 'Gallery', ''], ['loft', 'Lofi', ''], ['home', 'Chill', '']] as const)
                   ).map(([value, label, emoji]) => (
                     <button
                       key={value}

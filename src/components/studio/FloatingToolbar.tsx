@@ -65,10 +65,10 @@ const edgeOptions: { value: EdgeStyle; label: string; kidLabel: string }[] = [
   { value: 'clean', label: 'Clean', kidLabel: 'Smooth' },
   { value: 'soft-fray', label: 'Soft Fray', kidLabel: 'Fuzzy' },
   { value: 'rough-torn', label: 'Rough Torn', kidLabel: 'Ripped' },
-  { value: 'pinking', label: '✂ Pinking', kidLabel: 'Zigzag Cut' },
-  { value: 'scallop', label: '✂ Scallop', kidLabel: 'Wavy Cut' },
-  { value: 'zigzag', label: '✂ Zigzag', kidLabel: 'Zappy Cut' },
-  { value: 'wave', label: '✂ Wave', kidLabel: 'Swirly Cut' },
+  { value: 'pinking', label: 'Pinking', kidLabel: 'Zigzag Cut' },
+  { value: 'scallop', label: 'Scallop', kidLabel: 'Wavy Cut' },
+  { value: 'zigzag', label: 'Zigzag', kidLabel: 'Zappy Cut' },
+  { value: 'wave', label: 'Wave', kidLabel: 'Swirly Cut' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
@@ -105,7 +105,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
             onClick={() => setShowShapes(!showShapes)}
             className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1"
           >
-            {kidMode ? '🔷 Pick a Shape' : '✂️ Shapes'}
+            {kidMode ? '🔷 Pick a Shape' : 'Shapes'}
             {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
           </button>
 
@@ -241,7 +241,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                 {/* Edge Style */}
                 <div>
                   <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
-                    {kidMode ? '✂️ How the Edges Look' : 'Edge Style (✂ = Scissor Cuts)'}
+                    {kidMode ? '✂️ How the Edges Look' : 'Edge Style'}
                   </label>
                   <div className="flex flex-wrap gap-1">
                     {edgeOptions.map(o => (
