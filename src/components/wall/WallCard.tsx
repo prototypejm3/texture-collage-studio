@@ -193,7 +193,9 @@ export function WallCard({
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
+  const [frameExpanded, setFrameExpanded] = useState(false);
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
   const [editArtist, setEditArtist] = useState(design.artist || '');
