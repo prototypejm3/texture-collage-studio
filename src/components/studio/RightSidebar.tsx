@@ -383,10 +383,10 @@ export function RightSidebar({
             )}
 
             {/* Stencil Grid — grouped by theme */}
-            <div className="p-3">
+            <div className={compact ? 'p-1' : 'p-3'}>
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                <div className={`grid ${compact ? 'grid-cols-2 gap-0.5' : 'grid-cols-4 gap-1'}`}>
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -421,7 +421,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                  <div className={`grid ${compact ? 'grid-cols-2 gap-0.5' : 'grid-cols-4 gap-1'}`}>
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
