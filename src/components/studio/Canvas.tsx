@@ -8,6 +8,8 @@ import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import concreteFloor from '@/assets/concrete-floor.jpg';
+import kidTable from '@/assets/kid-table.jpg';
+import kidArtFrame from '@/assets/kid-art-frame.png';
 
 export type TableSurface = 'birch' | 'oak' | 'walnut';
 
