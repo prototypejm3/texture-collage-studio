@@ -635,8 +635,8 @@ export function Canvas({
           cursor: onWallFrameStyleChange ? 'pointer' : undefined,
         }}
       >
-        {/* Kid mode art frame overlay */}
-        {kidMode && (
+        {/* Kid mode art frame overlay — hidden in plain/white mode */}
+        {kidMode && kidCanvasStyle === 'rainbow' && (
           <div className="absolute pointer-events-none" style={{
             inset: -24,
             backgroundImage: `url(${kidArtFrame})`,
@@ -645,7 +645,7 @@ export function Canvas({
             zIndex: 30,
           }} />
         )}
-        {/* Kid mode canvas style toggle (rainbow / plain) */}
+        {/* Kid mode canvas style toggle */}
         {kidMode && (
           <div className="absolute top-1 right-1 z-[35] flex gap-0.5">
             <button
@@ -657,7 +657,7 @@ export function Canvas({
               }`}
               title="Rainbow paper"
             >
-              🌈
+              🌈 Rainbow
             </button>
             <button
               onClick={() => setKidCanvasStyle('plain')}
@@ -666,9 +666,9 @@ export function Canvas({
                   ? 'bg-primary text-primary-foreground shadow-sm'
                   : 'bg-background/80 text-muted-foreground hover:text-foreground'
               }`}
-              title="Plain paper"
+              title="White paper"
             >
-              📄
+              ⬜ White
             </button>
           </div>
         )}
