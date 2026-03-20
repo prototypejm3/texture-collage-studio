@@ -241,7 +241,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                 {/* Edge Style */}
                 <div>
                   <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
-                    {kidMode ? '✂️ How the Edges Look' : 'Edge Style (✂ = Scissor Cuts)'}
+                    {kidMode ? '✂️ How the Edges Look' : 'Edge Style'}
                   </label>
                   <div className="flex flex-wrap gap-1">
                     {edgeOptions.map(o => (
