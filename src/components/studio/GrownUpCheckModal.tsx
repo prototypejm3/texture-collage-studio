@@ -68,7 +68,7 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
         </div>
 
         <p className="text-sm font-medium text-foreground mb-4 text-center leading-relaxed">
-          What is a W2?
+          What does APR stand for on a mortgage?
         </p>
 
         <input
