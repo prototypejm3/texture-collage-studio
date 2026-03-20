@@ -43,14 +43,12 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const handleSubmit = () => {
     if (!selected) return;
     if (check.accepted.includes(selected)) {
+      // Correct answer — but tease them first
       setResult('correct');
-      setTimeout(() => onSuccess(), 600);
+      setTimeout(() => onSuccess(), 1800);
     } else {
+      // Wrong — lock them in kid mode permanently (until settings)
       setResult('wrong');
-      setTimeout(() => {
-        setResult(null);
-        setSelected(null);
-      }, 1500);
     }
   };
 
@@ -116,14 +114,25 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
         {/* Result feedback */}
         <AnimatePresence mode="wait">
           {result === 'wrong' && (
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-center text-sm text-destructive mb-3"
+              className="text-center mb-3"
             >
-              hmm… not quite. try again 🤔
-            </motion.p>
+              <p className="text-sm text-foreground font-medium mb-1">
+                Just checking 😊 are you sure you're not a kid?
+              </p>
+              <p className="text-xs text-muted-foreground">
+                The kid space is way more fun 🎨💛
+              </p>
+              <button
+                onClick={onClose}
+                className="mt-3 w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+              >
+                Back to Kid Land 🧸
+              </button>
+            </motion.div>
           )}
           {result === 'correct' && (
             <motion.p
@@ -137,14 +146,16 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
           )}
         </AnimatePresence>
 
-        {/* Submit */}
-        <button
-          onClick={handleSubmit}
-          disabled={!selected || !!result}
-          className="w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-        >
-          Check
-        </button>
+        {/* Submit — only show if no result yet */}
+        {!result && (
+          <button
+            onClick={handleSubmit}
+            disabled={!selected}
+            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            Check
+          </button>
+        )}
       </motion.div>
     </div>
   );
