@@ -366,7 +366,7 @@ export function TextureLibrary({
         {crayonMode && !crayonTextureId && (
           <div className="mt-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
             <p className={`${kidMode ? 'text-[11px]' : 'text-[9px]'} text-primary font-medium`}>
-              🖍️ {kidMode ? 'Pick a color to draw with!' : 'Select a texture, then draw with it as a crayon.'}
+              {kidMode ? '🖍️' : '🖊️'} {kidMode ? 'Pick a color to draw with!' : 'Select a texture, then draw with it as a pen.'}
             </p>
           </div>
         )}
