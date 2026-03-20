@@ -30,6 +30,14 @@ export function BuildPanel({
   stencilsPoppedOut, onPopOutStencils,
 }: BuildPanelProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   return (
     <div className="flex flex-col h-full bg-popover">
