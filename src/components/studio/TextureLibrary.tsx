@@ -409,7 +409,16 @@ export function TextureLibrary({
             </button>
           </div>
         )}
-      </div>
+       </div>
+
+      <GrownUpCheckModal
+        isOpen={showGrownUpCheck}
+        onClose={() => setShowGrownUpCheck(false)}
+        onSuccess={() => {
+          setShowGrownUpCheck(false);
+          setKidMode(false);
+        }}
+      />
     </div>
   );
 }
