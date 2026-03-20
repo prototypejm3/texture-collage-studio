@@ -441,6 +441,7 @@ const Index = () => {
                   activeVibeId={studio.activeVibe?.id ?? null}
                   onSelectVibe={handleSelectVibe}
                   onShuffleVibeFills={studio.shuffleVibeFills}
+                  onPlaceStencil={studio.placeStencil}
                   onGenerateMood={handleGenerateMood}
                   isGeneratingMood={vibeGen.isGenerating}
                   customTemplate={customTemplate}
