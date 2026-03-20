@@ -129,6 +129,25 @@ export function Canvas({
     onSelectTableElement?.(id);
   }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
+  const [trashHover, setTrashHover] = useState(false);
+  const trashRef = useRef<HTMLDivElement>(null);
+
+  // Kid mode — synced from TextureLibrary
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  // Check if a mouse position is over the trash zone
+  const isOverTrash = useCallback((clientX: number, clientY: number) => {
+    if (!trashRef.current || !kidMode) return false;
+    const rect = trashRef.current.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+  }, [kidMode]);
 
   // Keyboard delete for selected element
   useEffect(() => {
