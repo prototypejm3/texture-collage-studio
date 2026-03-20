@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Sun, Volume2, Tag, Wand2, Eye, Lock } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Check, Frame, Move, Sun, Volume2, Tag, Wand2, Eye, Lock, Flashlight, GalleryVerticalEnd } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCustomizerProps {
@@ -43,7 +43,6 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
 const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
   { value: 'floating', label: 'Floating', emoji: '✨' },
   { value: 'string', label: 'String', emoji: '🧵' },
-  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
   { value: 'hook', label: 'Hook', emoji: '🪝' },
   { value: 'shelf', label: 'Shelf', emoji: '🪵' },
 ];
@@ -138,15 +137,15 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Hanging style */}
         <PremiumIconButton
-          icon={<Lamp className="w-3.5 h-3.5" />}
+          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
           isPremium={isPremium}
           isOpen={showHangingMenu}
           onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
           onClose={() => setShowHangingMenu(false)}
           iconClass={iconClass(false, !isPremium)}
-          title="Display style"
+          title="Hanging style"
         >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
+          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Hanging</p>
           {hangingStyles.map(hs => (
             <button
               key={hs.value}
@@ -157,6 +156,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </button>
           ))}
         </PremiumIconButton>
+
+        {/* Spotlight toggle */}
+        <button
+          onClick={() => isPremium ? onApplyHangingToAll?.('spotlight') : onRequestUpgrade?.()}
+          className={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
+          title={isPremium ? 'Spotlight' : 'Premium — unlock to use'}
+        >
+          <Flashlight className="w-3.5 h-3.5" />
+          {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
+        </button>
 
         {/* Lighting presets */}
         <PremiumIconButton
