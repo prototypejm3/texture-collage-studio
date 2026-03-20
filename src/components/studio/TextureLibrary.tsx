@@ -168,7 +168,7 @@ export function TextureLibrary({
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
             <h2 className="text-[10px] font-bold tracking-wide uppercase text-foreground">
-              Textures
+              {kidMode ? 'Colors' : 'Textures'}
             </h2>
             {onApplyModeChange && (
               <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5 ml-1">
