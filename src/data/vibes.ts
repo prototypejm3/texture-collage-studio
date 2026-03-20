@@ -2798,4 +2798,35 @@ const shark: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, tree, monkeyFace, shark, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
+// ── TEDDY BEAR ──
+const teddyBear: Vibe = {
+  id: 'teddy-bear', name: 'Teddy Bear', emoji: '🧸',
+  description: 'Cute sitting teddy bear',
+  category: 'Animals',
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'tb-head', label: 'Head', tone: 'medium',
+      path: 'M175,135 Q175,90 210,65 Q240,48 270,65 Q305,90 305,135 Q305,170 270,188 Q240,198 210,188 Q175,170 175,135 Z' },
+    { id: 'tb-ear-l', label: 'Left Ear', tone: 'dark',
+      path: 'M178,100 Q160,68 148,55 Q138,48 132,55 Q128,68 135,88 Q142,105 158,115 Z' },
+    { id: 'tb-ear-r', label: 'Right Ear', tone: 'dark',
+      path: 'M302,100 Q320,68 332,55 Q342,48 348,55 Q352,68 345,88 Q338,105 322,115 Z' },
+    { id: 'tb-body', label: 'Body', tone: 'medium',
+      path: 'M165,195 Q155,215 150,250 Q148,290 155,330 Q162,360 185,380 Q210,395 240,398 Q270,395 295,380 Q318,360 325,330 Q332,290 330,250 Q325,215 315,195 Q290,185 240,182 Q190,185 165,195 Z' },
+    { id: 'tb-belly', label: 'Belly Patch', tone: 'light',
+      path: 'M200,240 Q195,270 198,305 Q205,340 225,358 Q240,365 255,358 Q275,340 282,305 Q285,270 280,240 Q265,225 240,222 Q215,225 200,240 Z' },
+    { id: 'tb-arm-l', label: 'Left Arm', tone: 'medium',
+      path: 'M165,210 Q148,225 128,255 Q115,280 112,305 Q112,322 122,328 Q135,330 148,318 Q162,298 170,270 Q175,245 172,220 Z' },
+    { id: 'tb-arm-r', label: 'Right Arm', tone: 'medium',
+      path: 'M315,210 Q332,225 352,255 Q365,280 368,305 Q368,322 358,328 Q345,330 332,318 Q318,298 310,270 Q305,245 308,220 Z' },
+    { id: 'tb-leg-l', label: 'Left Leg', tone: 'medium',
+      path: 'M178,355 Q165,375 152,400 Q142,420 145,435 Q152,445 168,445 Q188,442 205,428 Q218,412 215,392 Q210,375 200,362 Z' },
+    { id: 'tb-leg-r', label: 'Right Leg', tone: 'medium',
+      path: 'M302,355 Q315,375 328,400 Q338,420 335,435 Q328,445 312,445 Q292,442 275,428 Q262,412 265,392 Q270,375 280,362 Z' },
+    { id: 'tb-snout', label: 'Snout', tone: 'light',
+      path: 'M222,148 Q220,138 228,130 Q240,125 252,130 Q260,138 258,148 Q255,158 240,162 Q225,158 222,148 Z' },
+  ],
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+};
+
+export const vibes: Vibe[] = [sunset, ocean, solarSystem, cat, dog, fruitBowl, mushroom, beehive, rainbow, mandala, mandalaFlower, butterfly, bear, owl, turtle, lion, rabbit, dinosaur, giraffe, hummingbird, bee, snail, frog, sun, butterflyAlt, dragonfly, worm, caterpillar, lizard, ladybug, flower, beeSimple, strawberryFruit, grapes, eggplant, tomato, broccoli, orangeSlice, banana, apple, pear, corn, carrot, cow, parrot, pig, butterflyBold, fish, octopus, crab, seahorse, lobster, schoolFish, astronaut, alien, saturn, guitar, musicNote, tambourine, maracas, trumpet, tree, monkeyFace, shark, teddyBear, camsAirbusA380, neiceBeats, scubaSkiba, bancroft, fairy, sunshinePony, fairyHeadband];
