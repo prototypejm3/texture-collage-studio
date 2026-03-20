@@ -261,7 +261,7 @@ export function TextureLibrary({
           </button>
           <button
             onClick={() => setActiveGroup('Favorites')}
-            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors flex items-center gap-0.5 ${
+            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors flex items-center gap-0.5 ${
               activeGroup === 'Favorites'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
