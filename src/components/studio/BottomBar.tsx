@@ -134,7 +134,7 @@ export function BottomBar({
       {/* Surface selector */}
       {onTableSurfaceChange && (
         <div className="flex items-center gap-0.5">
-          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Wood</span>
+          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Table' : 'Wood'}</span>
           {([
             { id: 'birch' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,75%), hsl(38,25%,65%))', label: 'Birch' },
             { id: 'oak' as TableSurface, bg: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(28,35%,42%))', label: 'Oak' },
