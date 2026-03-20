@@ -158,30 +158,43 @@ const zodiacWheel: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
-    // Outer ring: annulus between r=220 and r=175
     { id: 'zw-outer-ring', label: 'Outer Ring', tone: 'dark',
       path: 'M240,20 A220,220 0 1,1 239.99,20 Z M240,65 A175,175 0 1,0 240.01,65 Z' },
-    // Inner ring: annulus between r=175 and r=130
     { id: 'zw-inner-ring', label: 'Inner Ring', tone: 'medium',
       path: 'M240,65 A175,175 0 1,1 239.99,65 Z M240,110 A130,130 0 1,0 240.01,110 Z' },
-    // Segment group A (top-right quadrant spokes + opposite): 0°,30°,60° and 180°,210°,240°
     { id: 'zw-segments-a', label: 'Segments A', tone: 'light',
       path: 'M240,65 L240,20 L244,20 L244,65 Z M279,69 L299,26 L303,28 L282,71 Z M311,87 L349,51 L352,54 L314,90 Z M240,415 L240,460 L236,460 L236,415 Z M201,411 L181,454 L177,452 L198,409 Z M169,393 L131,429 L128,426 L166,390 Z' },
-    // Segment group B (right + bottom-right + left quadrant spokes): 90°,120°,150° and 270°,300°,330°
     { id: 'zw-segments-b', label: 'Segments B', tone: 'accent',
       path: 'M415,240 L460,240 L460,236 L415,236 Z M411,279 L454,299 L452,303 L409,282 Z M393,311 L429,349 L426,352 L390,314 Z M65,240 L20,240 L20,244 L65,244 Z M69,201 L26,181 L28,177 L71,198 Z M87,169 L51,131 L54,128 L90,166 Z' },
-    // Inner disc: r=130
     { id: 'zw-inner-disc', label: 'Inner Disc', tone: 'light',
       path: 'M240,110 A130,130 0 1,1 239.99,110 Z' },
-    // Center symbol: simple 8-pointed star
     { id: 'zw-center-star', label: 'Center Star', tone: 'accent',
       path: 'M240,180 L248,222 L290,222 L256,248 L266,290 L240,264 L214,290 L224,248 L190,222 L232,222 Z' },
-    // Center dot
     { id: 'zw-center-dot', label: 'Center Dot', tone: 'dark',
       path: 'M240,225 A18,18 0 1,1 239.99,225 Z' },
   ],
 };
 
+// ── MESSAGE BUBBLES 💬 ──
+const messageBubbles: Vibe = {
+  id: 'message-bubbles', name: 'Messages', emoji: '💬', category: 'For Fun',
+  description: 'Chat message bubbles with heart',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'mb-bg', label: 'Background', tone: 'light',
+      path: 'M40,30 Q30,30 30,45 L30,435 Q30,450 45,450 L435,450 Q450,450 450,435 L450,45 Q450,30 435,30 Z' },
+    { id: 'mb-bubble-left', label: 'Left Bubble', tone: 'medium',
+      path: 'M60,60 L280,60 Q310,60 310,90 L310,155 Q310,185 280,185 L110,185 L75,210 L85,185 L90,185 Q60,185 60,155 Z' },
+    { id: 'mb-bubble-right', label: 'Right Bubble', tone: 'dark',
+      path: 'M170,225 L400,225 Q420,225 420,250 L420,325 Q420,350 400,350 L395,350 L405,378 L365,350 L200,350 Q170,350 170,325 Z' },
+    { id: 'mb-bubble-small', label: 'Small Bubble', tone: 'medium',
+      path: 'M60,375 L230,375 Q255,375 255,398 L255,415 Q255,435 230,435 L100,435 L70,455 L78,435 L85,435 Q60,435 60,415 Z' },
+    { id: 'mb-heart', label: 'Heart', tone: 'accent',
+      path: 'M340,385 Q340,370 355,365 Q370,362 380,375 Q390,362 405,365 Q420,370 420,385 Q420,405 380,425 Q340,405 340,385 Z' },
+  ],
+};
+
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles,
 ];
