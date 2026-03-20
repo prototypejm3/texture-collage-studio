@@ -107,11 +107,14 @@ export function Canvas({
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
+
   // Keyboard delete for selected element
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Delete' || e.key === 'Backspace') {
-        // Don't delete if user is typing in an input
         const tag = (e.target as HTMLElement)?.tagName;
         if (tag === 'INPUT' || tag === 'TEXTAREA') return;
         if (selectedId) {
@@ -128,10 +131,6 @@ export function Canvas({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
-
-  // Right-click context menu state
-  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
