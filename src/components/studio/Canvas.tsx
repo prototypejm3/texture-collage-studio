@@ -292,12 +292,16 @@ export function Canvas({
     return () => obs.disconnect();
   }, []);
 
+  const isMobileCanvas = containerSize.width > 0 && containerSize.width < 768;
+  
   const canvasSize = useMemo(() => {
     if (!containerSize.width || !containerSize.height) return baseSize;
     const aspect = baseSize.w / baseSize.h;
-    // Max 70% of container, capped at base pixel size
-    const maxW = Math.min(containerSize.width * 0.55, baseSize.w);
-    const maxH = Math.min(containerSize.height * 0.7, baseSize.h);
+    // Mobile: use more of the screen; Desktop: cap at 55%
+    const widthFraction = isMobileCanvas ? 0.88 : 0.55;
+    const heightFraction = isMobileCanvas ? 0.65 : 0.7;
+    const maxW = Math.min(containerSize.width * widthFraction, baseSize.w);
+    const maxH = Math.min(containerSize.height * heightFraction, baseSize.h);
     let w = maxW;
     let h = w / aspect;
     if (h > maxH) {
@@ -305,7 +309,7 @@ export function Canvas({
       w = h * aspect;
     }
     return { w: Math.round(Math.max(w, 200)), h: Math.round(Math.max(h, 200)) };
-  }, [containerSize, baseSize]);
+  }, [containerSize, baseSize, isMobileCanvas]);
 
   const { w, h } = canvasSize;
 
