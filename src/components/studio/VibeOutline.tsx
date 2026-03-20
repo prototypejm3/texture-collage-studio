@@ -12,6 +12,7 @@ interface Props {
   sectionTransforms: SectionTransforms;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  onFillBackground?: (textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
   onDeleteSection: (sectionId: string) => void;
