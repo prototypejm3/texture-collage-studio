@@ -20,9 +20,7 @@ interface ContextPanelProps {
   onDuplicateElement: (id: string) => void;
   onDeleteElement: (id: string) => void;
   // Frame props
-  frameSize: FrameSize;
   wallFrameStyle: FrameStyle;
-  onFrameSizeChange: (size: FrameSize) => void;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   // Stencil/template props
   activeVibeId: string | null;
