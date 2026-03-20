@@ -296,10 +296,12 @@ export function WallCard({
           </button>
           {menuOpen && menuBtnRef.current && (() => {
             const btnRect = menuBtnRef.current!.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - btnRect.bottom;
+            const menuWidth = 160;
+            const menuHeight = 400;
             const spaceRight = window.innerWidth - btnRect.right;
-            const openUp = spaceBelow < 350;
-            const openLeft = spaceRight < 170;
+            const spaceBelow = window.innerHeight - btnRect.bottom;
+            const openLeft = spaceRight < menuWidth + 8;
+            const openUp = spaceBelow < menuHeight;
             return (
               <>
                 <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
@@ -307,8 +309,8 @@ export function WallCard({
                   className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[70vh] overflow-y-auto"
                   style={{
                     ...(openLeft
-                      ? { right: window.innerWidth - btnRect.left + 4 }
-                      : { left: btnRect.right + 4 }),
+                      ? { right: window.innerWidth - btnRect.right }
+                      : { left: btnRect.left }),
                     ...(openUp
                       ? { bottom: window.innerHeight - btnRect.top + 4 }
                       : { top: btnRect.bottom + 4 }),
