@@ -44,6 +44,7 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
+  const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
