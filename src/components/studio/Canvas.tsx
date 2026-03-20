@@ -188,46 +188,35 @@ export function Canvas({
 
       {/* Easel + Frame group */}
       <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         ...(easelMode ? {
-          transform: 'rotateX(12deg)',
+          transform: 'rotateX(8deg)',
           transformStyle: 'preserve-3d' as const,
           marginBottom: 20,
         } : {
           marginBottom: 20,
         }),
       }}>
-      {easelMode && (<>
-        {/* Legs poking above frame — two front legs + back support meeting at top */}
-        <div className="pointer-events-none" style={{
-          position: 'relative',
-          width: w + 160,
-          height: 80,
-          zIndex: 6,
-          marginBottom: -4,
-        }}>
-          {/* Left front leg */}
-          <div style={{ position: 'absolute', width: 8, height: 120, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, left: '25%', transform: 'rotate(-6deg)', transformOrigin: 'bottom center' }} />
-          {/* Right front leg */}
-          <div style={{ position: 'absolute', width: 8, height: 120, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, right: '25%', transform: 'rotate(6deg)', transformOrigin: 'bottom center' }} />
-          {/* Back support (center, taller) */}
-          <div style={{ position: 'absolute', width: 6, height: 130, background: '#C69C6D', borderRadius: '2px 2px 0 0', bottom: 0, left: '50%', marginLeft: -3 }} />
-          {/* Top junction */}
-          <div style={{ position: 'absolute', width: 20, height: 8, background: '#B8885A', borderRadius: 3, top: 0, left: '50%', marginLeft: -10 }} />
-        </div>
-      </>)}
 
-      {/* Shelf ledge below frame — visible in easel mode */}
+      {/* Legs poking above frame */}
       {easelMode && (
         <div className="pointer-events-none" style={{
           position: 'relative',
-          width: w + 40,
-          zIndex: 11,
-          marginTop: -2,
+          width: w + 100,
+          height: 90,
+          marginBottom: -6,
+          zIndex: 6,
         }}>
-          {/* Main shelf */}
-          <div style={{ width: '100%', height: 10, background: '#D8B48A', borderRadius: '0 0 3px 3px', boxShadow: '0 3px 6px rgba(0,0,0,0.1)' }} />
-          {/* Front lip */}
-          <div style={{ width: '100%', height: 5, background: '#C69C6D', borderRadius: '0 0 2px 2px' }} />
+          {/* Left front leg */}
+          <div style={{ position: 'absolute', width: 8, height: 140, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, left: '28%', transform: 'rotate(-5deg)', transformOrigin: 'bottom center' }} />
+          {/* Right front leg */}
+          <div style={{ position: 'absolute', width: 8, height: 140, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, right: '28%', transform: 'rotate(5deg)', transformOrigin: 'bottom center' }} />
+          {/* Back support (center, tallest) */}
+          <div style={{ position: 'absolute', width: 6, height: 150, background: '#C69C6D', borderRadius: '2px 2px 0 0', bottom: 0, left: '50%', marginLeft: -3 }} />
+          {/* Top junction block */}
+          <div style={{ position: 'absolute', width: 22, height: 8, background: '#B8885A', borderRadius: 3, top: 0, left: '50%', marginLeft: -11 }} />
         </div>
       )}
 
@@ -326,6 +315,23 @@ export function Canvas({
           )}
         </div>
       </div>
+
+      {/* Contact shadow where canvas meets shelf */}
+      {easelMode && (
+        <div style={{ width: w + 20, height: 3, background: 'rgba(0,0,0,0.12)', borderRadius: '0 0 2px 2px', marginTop: -1, zIndex: 11 }} />
+      )}
+
+      {/* Shelf / horizontal ledge — canvas rests on this */}
+      {easelMode && (
+        <div className="pointer-events-none" style={{
+          width: w + 60,
+          zIndex: 11,
+          marginTop: 0,
+        }}>
+          <div style={{ width: '100%', height: 10, background: '#D8B48A', borderRadius: 2, boxShadow: '0 3px 8px rgba(0,0,0,0.12)' }} />
+          <div style={{ width: '100%', height: 5, background: '#C69C6D', borderRadius: '0 0 3px 3px' }} />
+        </div>
+      )}
       </div>
 
       {/* Easel toggle + Workstation name card */}
