@@ -12,6 +12,7 @@ import { BottomBar } from '@/components/studio/BottomBar';
 import { BuildPanel } from '@/components/studio/BuildPanel';
 import { TextureLibrary } from '@/components/studio/TextureLibrary';
 import { PaywallModal } from '@/components/wall/PaywallModal';
+import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
