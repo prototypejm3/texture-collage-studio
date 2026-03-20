@@ -188,7 +188,8 @@ export function RightSidebar({
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
-  const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string> }[] = [
+  const funIds = new Set(funStencils.map(f => f.id));
+  const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean }[] = [
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     { label: 'Animals', kidLabel: '🐶 Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
     { label: 'Insects & Bugs', kidLabel: '🐛 Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -199,6 +200,7 @@ export function RightSidebar({
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
     { label: 'Numbers & Symbols', kidLabel: '🔢 Numbers', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
+    { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
   ];
 
   const themedIds = new Set<string>();
