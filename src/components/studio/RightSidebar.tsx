@@ -109,6 +109,22 @@ export function RightSidebar({
   };
 
   const handleLayerConfirm = () => {
+
+  // Hide stencil and switch to hidden tab
+  const handleHideStencil = useCallback((vibeId: string) => {
+    const wasHidden = social.hiddenIds.has(vibeId);
+    social.toggleHidden(vibeId);
+    if (!wasHidden) {
+      // Just hidden — switch to hidden tab so user sees it moved there
+      setActiveTab('hidden');
+      // If this was the active stencil, deselect it
+      if (activeVibeId === vibeId) {
+        onSelectVibe({ id: '', name: '', emoji: '', description: '', viewBox: '', sections: [], lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [] } as any);
+      }
+    }
+  }, [social, activeVibeId, onSelectVibe]);
+
+  const handleLayerConfirm = () => {
     if (!pendingVibe) return;
     onPlaceStencil(); // stamps current as elements
     // Small delay so state settles before selecting new vibe
