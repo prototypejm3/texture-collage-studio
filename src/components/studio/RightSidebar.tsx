@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { vibes } from '@/data/vibes';
+import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
@@ -117,11 +118,13 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
+  const letterIds = new Set(letterStencils.map(l => l.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },

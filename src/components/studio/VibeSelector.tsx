@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { vibes } from '@/data/vibes';
+import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag, Heart } from 'lucide-react';
@@ -95,7 +96,9 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   };
 
   // Theme groupings for organized display
+  const letterIds = new Set(letterStencils.map(l => l.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -106,7 +109,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Music', emoji: '🎵', ids: new Set([]) }, // category-based
   ];
 
-  const allVibes = [...vibes, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...letterStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
