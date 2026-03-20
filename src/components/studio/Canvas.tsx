@@ -78,6 +78,7 @@ interface Props {
   isPremium?: boolean;
   onRequestUpgrade?: () => void;
   drawMode?: boolean;
+  crayonMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
 }
@@ -119,7 +120,7 @@ export function Canvas({
   canvasRef,
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
-  drawMode = false, onFinishDraw, onCancelDraw,
+  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw,
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
@@ -807,6 +808,7 @@ export function Canvas({
               canvasHeight={h}
               onFinishDraw={onFinishDraw}
               onCancel={onCancelDraw}
+              crayonMode={crayonMode}
             />
           )}
         </div>

@@ -318,13 +318,19 @@ const Index = () => {
   }, [pendingSave, wall, upgradeToPremium]);
 
   const handleTextureClick = useCallback((textureId: string) => {
+    if (studio.crayonMode) {
+      // In crayon mode, clicking a texture picks the crayon color and enters draw mode
+      studio.setCrayonTextureId(textureId);
+      studio.setDrawMode(true);
+      return;
+    }
     if (textureApplyMode === 'background') {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     } else if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
     // In 'swatch' mode with no section selected, clicking does nothing (drag to add)
-  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId]);
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
@@ -499,8 +505,9 @@ const Index = () => {
               isPremium={isPremium}
               onRequestUpgrade={() => setShowPaywall(true)}
               drawMode={studio.drawMode}
+              crayonMode={studio.crayonMode}
               onFinishDraw={studio.addCustomSection}
-              onCancelDraw={() => studio.setDrawMode(false)}
+              onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}
@@ -574,9 +581,22 @@ const Index = () => {
                 onApplyModeChange={setTextureApplyMode}
                 backgroundTextureId={studio.backgroundTextureId}
                 drawMode={studio.drawMode}
-                onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
+                onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
                 nextShape={studio.nextShape}
                 onSetNextShape={studio.setNextShape}
+                crayonMode={studio.crayonMode}
+                crayonTextureId={studio.crayonTextureId}
+                onToggleCrayonMode={() => {
+                  const next = !studio.crayonMode;
+                  studio.setCrayonMode(next);
+                  if (next) {
+                    studio.setDrawMode(false); // will be set when they pick a color
+                  } else {
+                    studio.setDrawMode(false);
+                    studio.setCrayonTextureId(null);
+                  }
+                }}
+                onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
               />
             </div>
             {/* Right half: Stencils (always visible) */}

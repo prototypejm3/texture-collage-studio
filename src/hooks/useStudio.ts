@@ -33,6 +33,8 @@ export function useStudio() {
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [drawMode, setDrawMode] = useState(false);
+  const [crayonMode, setCrayonMode] = useState(false);
+  const [crayonTextureId, setCrayonTextureId] = useState<string | null>(null);
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
   const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
@@ -92,6 +94,8 @@ export function useStudio() {
     setSelectedSectionId(null);
     setCustomSections([]);
     setDrawMode(false);
+    setCrayonMode(false);
+    setCrayonTextureId(null);
     setBackgroundTextureId(null);
     setSectionTransforms({});
     setDeletedSections(new Set());
@@ -223,7 +227,7 @@ export function useStudio() {
 
   // ── Custom drawn sections ──
 
-  const addCustomSection = useCallback((pathD: string) => {
+  const addCustomSection = useCallback((pathD: string, overrideTextureId?: string) => {
     // Parse path to compute bounding box
     const nums = pathD.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -236,8 +240,8 @@ export function useStudio() {
     const w = Math.max(maxX - minX, 20);
     const h = Math.max(maxY - minY, 20);
 
-    // Use a random texture as default fill
-    const textureId = textures[Math.floor(Math.random() * Math.min(textures.length, 20))].id;
+    // Use override texture (crayon), or random
+    const textureId = overrideTextureId || crayonTextureId || textures[Math.floor(Math.random() * Math.min(textures.length, 20))].id;
 
     const id = `el-${nextId++}`;
     const newEl: CanvasElement = {
@@ -255,8 +259,11 @@ export function useStudio() {
     };
     setElements(prev => [...prev, newEl]);
     setSelectedId(id);
-    setDrawMode(false);
-  }, [nextShape]);
+    // In crayon mode, stay in draw mode so they can keep drawing
+    if (!crayonMode) {
+      setDrawMode(false);
+    }
+  }, [nextShape, crayonMode, crayonTextureId]);
 
   const deleteCustomSection = useCallback((sectionId: string) => {
     setCustomSections(prev => prev.filter(s => s.id !== sectionId));
@@ -422,6 +429,8 @@ export function useStudio() {
     vibeFills,
     selectedSectionId,
     drawMode,
+    crayonMode,
+    crayonTextureId,
     customSections,
     backgroundTextureId,
     sectionTransforms,
@@ -432,6 +441,8 @@ export function useStudio() {
     setDisplaySize,
     setWallFrameStyle,
     setDrawMode,
+    setCrayonMode,
+    setCrayonTextureId,
     setBackgroundTextureId,
     nextShape,
     setNextShape,
