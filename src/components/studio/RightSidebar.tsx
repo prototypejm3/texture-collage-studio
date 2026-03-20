@@ -487,65 +487,51 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
 
   return (
     <motion.div
-      whileHover={{ y: -1 }}
-      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
-        isActive
-          ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
-          : 'border-border/50 hover:border-border hover:bg-secondary/50'
-      }`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onSelect}
+      className="cursor-grab active:cursor-grabbing group relative"
     >
-      <button onClick={onSelect} className="w-full">
-        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
-          <VibePreviewSVG vibe={vibe} />
-          {isActive && (
-            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2 h-2 text-primary-foreground" />
-            </div>
-          )}
-          {isAiGenerated && (
-            <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
-              AI
-            </div>
-          )}
-        </div>
-        <span className="text-[9px] font-medium leading-tight truncate w-full block">
-          {vibe.emoji} {vibe.name}
-        </span>
-      </button>
-
-      {/* Action buttons on hover */}
-      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-        {/* Hide toggle */}
-        {(isLoggedIn || isAiGenerated) && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-secondary transition-colors"
-            title={isHidden ? 'Show stencil' : 'Hide stencil'}
-          >
-            {isHidden ? <Eye className="w-3 h-3 text-muted-foreground" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
-          </button>
+      <div
+        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        }`}
+      >
+        <VibePreviewSVG vibe={vibe} />
+        {isActive && (
+          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-2 h-2 text-primary-foreground" />
+          </div>
         )}
-        {/* Report as bad */}
         {isAiGenerated && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onReport(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
-            title="Report as bad"
-          >
-            <Flag className="w-3 h-3 text-muted-foreground" />
-          </button>
-        )}
-        {/* Delete */}
-        {isAiGenerated && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onDelete(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
-            title="Delete stencil"
-          >
-            <Trash2 className="w-3 h-3 text-muted-foreground" />
-          </button>
+          <div className="absolute top-0.5 left-0.5 px-1 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
+            AI
+          </div>
         )}
       </div>
+      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+        {vibe.emoji} {vibe.name}
+      </p>
+
+      {/* Action buttons on hover — matches texture favorite star positioning */}
+      {(isLoggedIn || isAiGenerated) && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
+          className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100`}
+          title={isHidden ? 'Show stencil' : 'Hide stencil'}
+        >
+          {isHidden ? <Eye className="w-2.5 h-2.5" /> : <EyeOff className="w-2.5 h-2.5" />}
+        </button>
+      )}
+      {isAiGenerated && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+          title="Delete"
+        >
+          <Trash2 className="w-2.5 h-2.5" />
+        </button>
+      )}
     </motion.div>
   );
 }
