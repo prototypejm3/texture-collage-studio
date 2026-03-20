@@ -233,6 +233,16 @@ export function VibeOutline({
           const { cx, cy } = getPathCenter(section.path);
           const transform = `translate(${t.x}, ${t.y}) rotate(${t.rotation}, ${cx}, ${cy}) scale(${t.scale})`;
 
+          // Compute bounding box for resize handles
+          const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+          for (let i = 0; i < nums.length - 1; i += 2) {
+            minX = Math.min(minX, nums[i]);
+            maxX = Math.max(maxX, nums[i]);
+            minY = Math.min(minY, nums[i + 1]);
+            maxY = Math.max(maxY, nums[i + 1]);
+          }
+
           return (
             <g key={section.id} style={{ transformOrigin: `${cx}px ${cy}px` }}>
               {/* Hit area — draggable */}
@@ -295,6 +305,32 @@ export function VibeOutline({
                 className="pointer-events-none transition-colors"
                 style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
+
+              {/* Resize corner handles — only for selected section */}
+              {isSelected && minX !== Infinity && (() => {
+                const handleSize = 10;
+                const corners = [
+                  { x: minX, y: minY },
+                  { x: maxX, y: minY },
+                  { x: maxX, y: maxY },
+                  { x: minX, y: maxY },
+                ];
+                return corners.map((corner, i) => (
+                  <rect
+                    key={`handle-${i}`}
+                    x={corner.x * t.scale + t.x - handleSize / 2}
+                    y={corner.y * t.scale + t.y - handleSize / 2}
+                    width={handleSize}
+                    height={handleSize}
+                    rx={2}
+                    fill="hsl(24, 80%, 50%)"
+                    stroke="white"
+                    strokeWidth={1.5}
+                    className="pointer-events-auto cursor-nwse-resize"
+                    onMouseDown={(e) => handleResizeStart(e, section.id)}
+                  />
+                ));
+              })()}
             </g>
           );
         })}
