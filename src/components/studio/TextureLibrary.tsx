@@ -60,6 +60,11 @@ interface TextureLibraryProps {
   applyMode?: 'swatch' | 'background';
   onApplyModeChange?: (mode: 'swatch' | 'background') => void;
   backgroundTextureId?: string | null;
+  // Shape/draw tools
+  drawMode?: boolean;
+  onToggleDrawMode?: () => void;
+  nextShape?: ElementShape;
+  onSetNextShape?: (shape: ElementShape) => void;
 }
 
 export function TextureLibrary({
@@ -67,6 +72,7 @@ export function TextureLibrary({
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
   applyMode = 'swatch', onApplyModeChange, backgroundTextureId,
+  drawMode, onToggleDrawMode, nextShape, onSetNextShape,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [kidMode, setKidMode] = useState(false);
