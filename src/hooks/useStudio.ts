@@ -446,6 +446,7 @@ export function useStudio() {
     fillSection,
     selectSection,
     shuffleVibeFills,
+    placeStencil,
     // Custom sections
     addCustomSection,
     deleteCustomSection,
