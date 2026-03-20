@@ -114,10 +114,7 @@ const Index = () => {
   }, [studio]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
-  const [tableElements, setTableElements] = useState<Array<{
-    id: string; textureId: string; x: number; y: number;
-    width: number; height: number; rotation: number; clipPathD?: string;
-  }>>([]);
+  const [tableElements, setTableElements] = useState<TableElement[]>([]);
   const tableIdRef = useRef(1);
 
   const handleTableDrop = useCallback((textureId: string, x: number, y: number) => {
@@ -128,6 +125,18 @@ const Index = () => {
       width: 80,
       height: 80,
       rotation: Math.floor(Math.random() * 20) - 10,
+    }]);
+  }, []);
+
+  const handleStencilTableDrop = useCallback((vibeId: string, x: number, y: number) => {
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId: '',
+      vibeId,
+      x, y,
+      width: 100,
+      height: 100,
+      rotation: Math.floor(Math.random() * 10) - 5,
     }]);
   }, []);
 
@@ -155,6 +164,12 @@ const Index = () => {
     // Remove from canvas
     studio.deleteElement(elementId);
   }, [studio]);
+
+  // Selected table element for editing
+  const [selectedTableElId, setSelectedTableElId] = useState<string | null>(null);
+  const selectedTableElement = useMemo(() => 
+    tableElements.find(el => el.id === selectedTableElId) || null
+  , [tableElements, selectedTableElId]);
 
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
