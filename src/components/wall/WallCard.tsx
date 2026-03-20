@@ -294,10 +294,10 @@ export function WallCard({
           <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
           </button>
-          {menuOpen && cardRef.current && (() => {
-            const cardRect = cardRef.current!.getBoundingClientRect();
-            const spaceRight = window.innerWidth - cardRect.right;
-            const spaceBelow = window.innerHeight - cardRect.top;
+          {menuOpen && menuBtnRef.current && (() => {
+            const btnRect = menuBtnRef.current!.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - btnRect.bottom;
+            const spaceRight = window.innerWidth - btnRect.right;
             const openUp = spaceBelow < 350;
             const openLeft = spaceRight < 170;
             return (
@@ -307,11 +307,11 @@ export function WallCard({
                   className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[70vh] overflow-y-auto"
                   style={{
                     ...(openLeft
-                      ? { right: window.innerWidth - cardRect.left + 6 }
-                      : { left: cardRect.right + 6 }),
+                      ? { right: window.innerWidth - btnRect.left + 4 }
+                      : { left: btnRect.right + 4 }),
                     ...(openUp
-                      ? { bottom: window.innerHeight - cardRect.bottom }
-                      : { top: cardRect.top }),
+                      ? { bottom: window.innerHeight - btnRect.top + 4 }
+                      : { top: btnRect.bottom + 4 }),
                   }}
                 >
                 <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
