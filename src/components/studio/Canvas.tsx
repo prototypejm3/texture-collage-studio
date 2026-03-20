@@ -162,6 +162,7 @@ export function Canvas({
         backgroundSize: '400px auto',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
+        perspective: '1200px',
       }}
       onDragOver={handleTableDragOver}
       onDrop={handleTableDrop}
