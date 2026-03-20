@@ -18,6 +18,8 @@ interface Props {
   stencilsOpen?: boolean;
   tableSurface?: TableSurface;
   onTableSurfaceChange?: (surface: TableSurface) => void;
+  easelMode?: boolean;
+  onToggleEasel?: () => void;
 }
 
 // Color frames for Shadow menu
@@ -46,6 +48,7 @@ export function BottomBar({
   onOpenToolKit, toolKitOpen = false,
   onOpenStencils, stencilsOpen = false,
   tableSurface = 'birch', onTableSurfaceChange,
+  easelMode = true, onToggleEasel,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
@@ -142,6 +145,40 @@ export function BottomBar({
             />
           ))}
         </div>
+      )}
+
+      {/* Easel / Desk toggle */}
+      {onToggleEasel && (
+        <>
+          <div className="w-px h-4 bg-border mx-0.5" />
+          <button
+            onClick={onToggleEasel}
+            className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+              easelMode
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+            title={easelMode ? 'Switch to flat desk' : 'Switch to easel'}
+          >
+            {easelMode ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="4" y="3" width="16" height="13" rx="1" />
+                <line x1="3" y1="16" x2="21" y2="16" />
+                <line x1="6" y1="16" x2="3" y2="23" />
+                <line x1="18" y1="16" x2="21" y2="23" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="1" />
+                <line x1="6" y1="18" x2="6" y2="22" />
+                <line x1="18" y1="18" x2="18" y2="22" />
+                <line x1="4" y1="22" x2="8" y2="22" />
+                <line x1="16" y1="22" x2="20" y2="22" />
+              </svg>
+            )}
+            <span className="hidden sm:inline">{easelMode ? 'Easel' : 'Desk'}</span>
+          </button>
+        </>
       )}
 
       {/* Spacer */}

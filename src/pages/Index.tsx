@@ -47,6 +47,7 @@ const Index = () => {
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
+  const [easelMode, setEaselMode] = useState(true);
   const [workstationName, setWorkstationName] = useState(() => {
     return localStorage.getItem('workstationName') || '';
   });
@@ -322,6 +323,8 @@ const Index = () => {
 
           <div className="flex-1 relative overflow-hidden min-h-0">
             <Canvas
+              easelMode={easelMode}
+              onToggleEasel={() => setEaselMode(prev => !prev)}
               elements={studio.elements}
               selectedId={studio.selectedId}
               frameSize={studio.frameSize}
@@ -412,6 +415,8 @@ const Index = () => {
             onRequestUpgrade={() => setShowPaywall(true)}
             tableSurface={tableSurface}
             onTableSurfaceChange={setTableSurface}
+            easelMode={easelMode}
+            onToggleEasel={() => setEaselMode(prev => !prev)}
           />
         )}
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}

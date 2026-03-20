@@ -28,6 +28,8 @@ interface TableElement {
 }
 
 interface Props {
+  easelMode: boolean;
+  onToggleEasel: () => void;
   elements: CanvasElement[];
   selectedId: string | null;
   frameSize: FrameSize;
@@ -92,6 +94,7 @@ const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: 
 };
 
 export function Canvas({
+  easelMode, onToggleEasel,
   elements, selectedId, frameSize, frameColor, wallFrameStyle,
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
@@ -212,7 +215,7 @@ export function Canvas({
   }, [onTableDrop]);
 
   // selectedTableId moved above
-  const [easelMode, setEaselMode] = useState(false);
+  // easelMode is now a prop
   const [showFramePicker, setShowFramePicker] = useState(false);
 
   const framePickerOptions: { id: FrameStyle; label: string }[] = [
@@ -555,28 +558,7 @@ export function Canvas({
       )}
       </div>
 
-      {/* Easel toggle — bottom-right */}
-      <div
-        className="absolute bottom-4 right-4 z-20"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={() => setEaselMode(prev => !prev)}
-          className={`flex items-center justify-center w-8 h-8 rounded-lg shadow-lg transition-colors ${
-            easelMode ? 'bg-primary text-primary-foreground' : 'bg-black/90 text-white/60 hover:text-white'
-          }`}
-          title={easelMode ? 'Flat view' : 'Easel view'}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(180deg)' }}>
-            <rect x="4" y="3" width="16" height="13" rx="1" />
-            <rect x="11" y="1" width="2" height="3" rx="0.5" />
-            <line x1="3" y1="16" x2="21" y2="16" />
-            <line x1="6" y1="16" x2="3" y2="23" />
-            <line x1="18" y1="16" x2="21" y2="23" />
-            <line x1="12" y1="16" x2="12" y2="23" />
-          </svg>
-        </button>
-      </div>
+      {/* Easel toggle removed — now in BottomBar */}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && (
