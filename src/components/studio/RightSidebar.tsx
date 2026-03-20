@@ -90,6 +90,31 @@ export function RightSidebar({
   const [saveDialogVibe, setSaveDialogVibe] = useState<Vibe | null>(null);
   const [saveName, setSaveName] = useState('');
   const [savePublic, setSavePublic] = useState(false);
+  // Replace vs Layer dialog
+  const [pendingVibe, setPendingVibe] = useState<Vibe | null>(null);
+
+  const handleStencilSelect = (vibe: Vibe) => {
+    if (activeVibeId && activeVibeId !== vibe.id) {
+      // Already have an active stencil — ask replace vs layer
+      setPendingVibe(vibe);
+    } else {
+      onSelectVibe(vibe);
+    }
+  };
+
+  const handleReplaceConfirm = () => {
+    if (!pendingVibe) return;
+    onSelectVibe(pendingVibe);
+    setPendingVibe(null);
+  };
+
+  const handleLayerConfirm = () => {
+    if (!pendingVibe) return;
+    onPlaceStencil(); // stamps current as elements
+    // Small delay so state settles before selecting new vibe
+    setTimeout(() => onSelectVibe(pendingVibe), 50);
+    setPendingVibe(null);
+  };
 
   const handleGenerate = async () => {
     const vibe = await generateStencil(aiPrompt);
