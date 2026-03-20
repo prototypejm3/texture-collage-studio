@@ -116,10 +116,10 @@ export function Canvas({
     return () => ro.disconnect();
   }, []);
 
-  // Canvas fits within container with ~48px padding on each side
-  const padding = 48;
+  // Canvas fits within container with generous padding — same feel in desk & easel mode
+  const padding = 80;
   const maxDim = Math.min(containerSize.width - padding * 2, containerSize.height - padding * 2);
-  const canvasSize = Math.max(200, Math.min(maxDim, 600)); // clamp between 200-600
+  const canvasSize = Math.max(200, Math.min(maxDim, 480)); // max 480 to keep wood visible
   const w = canvasSize;
   const h = canvasSize;
 
