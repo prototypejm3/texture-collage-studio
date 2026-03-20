@@ -252,6 +252,7 @@ export function TextureLibrary({
               onRemoveCustomTexture={onRemoveCustomTexture}
               viewMode={swatchView}
               kidMode={kidMode}
+              isActiveBackground={backgroundTextureId === tex.id}
             />
           ))}
         </div>
