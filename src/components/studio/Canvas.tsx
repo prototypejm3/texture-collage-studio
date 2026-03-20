@@ -186,13 +186,18 @@ export function Canvas({
         );
       })}
 
-      {/* Easel + Frame group — tilted toward viewer */}
+      {/* Easel + Frame group */}
       <div style={{
-        transform: 'rotateX(12deg)',
-        transformStyle: 'preserve-3d',
-        marginBottom: 20,
+        ...(easelMode ? {
+          transform: 'rotateX(12deg)',
+          transformStyle: 'preserve-3d' as const,
+          marginBottom: 20,
+        } : {
+          marginBottom: 20,
+        }),
       }}>
-      {/* Easel structure */}
+      {/* Easel structure — only visible in easel mode */}
+      {easelMode && (
       <div className="absolute pointer-events-none" style={{
         zIndex: 5,
         bottom: 0,
