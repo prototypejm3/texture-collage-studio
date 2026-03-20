@@ -195,6 +195,28 @@ const messageBubbles: Vibe = {
   ],
 };
 
+// ── STREET LAMP 🏮 ──
+const streetLamp: Vibe = {
+  id: 'street-lamp', name: 'Street Lamp', emoji: '🏮', category: 'For Fun',
+  description: 'Elegant street lamp with glow',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'sl-glow', label: 'Light Glow', tone: 'light',
+      path: 'M160,80 Q140,50 180,30 Q220,10 260,20 Q310,35 320,80 Q330,130 300,180 Q280,220 260,260 Q240,290 220,260 Q200,220 180,180 Q155,130 160,80 Z' },
+    { id: 'sl-lamp-head', label: 'Lamp Head', tone: 'dark',
+      path: 'M200,95 Q195,80 210,72 L270,72 Q285,80 280,95 L285,130 Q288,145 270,150 L210,150 Q192,145 195,130 Z' },
+    { id: 'sl-lamp-cap', label: 'Lamp Cap', tone: 'medium',
+      path: 'M215,60 Q215,50 225,48 L255,48 Q265,50 265,60 L265,72 L215,72 Z M230,48 L232,35 Q240,28 248,35 L250,48 Z' },
+    { id: 'sl-arm', label: 'Curved Arm', tone: 'dark',
+      path: 'M235,150 L237,180 Q238,200 245,210 Q260,230 265,250 L255,250 Q248,230 235,215 Q225,200 225,180 L223,150 Z' },
+    { id: 'sl-pole', label: 'Pole', tone: 'dark',
+      path: 'M230,250 L250,250 L252,420 L228,420 Z' },
+    { id: 'sl-base', label: 'Base', tone: 'medium',
+      path: 'M190,415 Q188,410 200,408 L280,408 Q292,410 290,415 L295,435 Q298,450 280,455 L200,455 Q182,450 185,435 Z' },
+  ],
+};
+
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles, streetLamp,
 ];
