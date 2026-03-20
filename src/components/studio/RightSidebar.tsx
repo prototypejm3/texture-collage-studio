@@ -93,6 +93,16 @@ export function RightSidebar({
   // Replace vs Layer dialog
   const [pendingVibe, setPendingVibe] = useState<Vibe | null>(null);
 
+  // Kid mode — synced from TextureLibrary via custom event
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
   const handleStencilSelect = (vibe: Vibe) => {
     if (activeVibeId && activeVibeId !== vibe.id) {
       // Already have an active stencil — ask replace vs layer
