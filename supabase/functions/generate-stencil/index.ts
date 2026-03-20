@@ -10,22 +10,30 @@ const SYSTEM_PROMPT = `You are a world-class SVG illustrator creating stencil ou
 
 The canvas is 480×480.
 
+GOLDEN RULE: Create a simple, recognizable cartoon silhouette that a child could easily identify at first glance.
+A user should instantly say "That's a [subject]!" — never "What is that?"
+
 CRITICAL RULE
 You must FIRST create a clear, recognizable OUTER SILHOUETTE of the subject.
 ONLY AFTER the silhouette is correct should you divide it into sections.
 
-STEP 1: SILHOUETTE
-- Imagine a single, continuous outline of the subject — like a sticker or cookie cutter
-- The silhouette alone must be instantly recognizable
-- Use a friendly, slightly cartoon style — NOT abstract or overly realistic
+STEP 1: SILHOUETTE — MOST IMPORTANT
+- Think of the subject as a STICKER or COOKIE CUTTER shape
+- Use a simple CARTOON style — bold, clean, friendly proportions
+- Exaggerate defining features (big head, clear tail, obvious wings, etc.)
+- The silhouette alone, with NO internal detail, must be 100% identifiable
+- Use the most iconic/recognizable pose (e.g., side profile for animals)
 - Center the subject and fill 70–85% of the canvas
+- DO NOT use abstract or artistic interpretation — be LITERAL
 
-STEP 2: DIVIDE INTO SECTIONS
-- Cut the silhouette into 4–6 large interlocking sections
-- Sections must follow the subject's anatomy/structure (head, body, legs, etc.)
-- No random blob shapes — each piece should be a logical part of the subject
+STEP 2: DIVIDE INTO SECTIONS (4–6 only)
+- Cut the silhouette into 4–6 LARGE interlocking sections
+- Sections must follow the subject's anatomy/structure (head, body, legs, tail, wings, etc.)
+- Every section must be BIG — no tiny fragments or slivers
+- No random blob shapes — each piece should be a logical, nameable part
 - Sections must tile together perfectly: no gaps, no overlaps
 - Shared edges between sections must use identical coordinates
+- NEVER cut through key identity features (face, eyes, distinctive shapes)
 
 SHAPE RULES
 - Use bold, simple curves (Q and C commands)
@@ -34,6 +42,7 @@ SHAPE RULES
 - Use only: M, L, Q, C, Z with integers only
 - Keep anchor points minimal — fewer is better
 - Shapes must look clean and intentional
+- NO overlapping geometry, NO confusing intersections
 
 SECTION DESIGN
 Each section gets a tone for shading:
@@ -45,7 +54,14 @@ Each section gets a tone for shading:
 COMPOSITION
 - Strong, clear profile or front-facing view
 - The silhouette should read clearly even at thumbnail size
-- Don't cut through key identity features (eyes, face shape)
+- Proportions should be slightly cartoonish (bigger heads, simpler limbs)
+
+SPECIFIC SUBJECT GUIDANCE
+- Animals: Must have clearly identifiable head shape, body, and limbs/tail
+- Dragons: Clear head with snout, curved body, tail, simple wing shapes
+- People: Recognizable head, torso, limbs in a clear pose
+- Objects: Iconic shape with 2-3 defining details
+- Buildings: Clear architectural silhouette with key features
 
 You MUST respond using the generate_stencil tool. Return only valid SVG path data for each section. No explanations. No extra text.`;
 
@@ -58,6 +74,18 @@ interface CuratedStencil {
 }
 
 const CURATED: CuratedStencil[] = [
+  {
+    name: "Dragon", emoji: "🐉", description: "Friendly cartoon dragon with wings",
+    keywords: /(dragon|dragons|drake|wyvern)/,
+    sections: [
+      { id: "dragon-head", label: "Head", tone: "accent", path: "M100,160 Q110,120 140,100 Q170,85 200,90 Q225,95 240,115 Q250,130 245,150 Q238,170 220,185 Q200,195 180,200 Q150,205 125,195 Q105,185 100,170 Z" },
+      { id: "dragon-body", label: "Body", tone: "dark", path: "M180,200 Q200,195 225,190 Q260,195 290,220 Q320,250 340,290 Q350,320 345,350 Q335,380 310,395 Q280,405 250,400 Q220,390 200,370 Q180,340 175,310 Q170,270 172,240 Q174,215 180,200 Z" },
+      { id: "dragon-wing", label: "Wing", tone: "medium", path: "M225,190 Q260,140 300,100 Q330,75 360,65 Q390,60 410,75 Q420,90 410,110 Q395,130 370,155 Q340,185 310,210 Q290,225 275,230 Q260,220 250,210 Q240,200 225,190 Z" },
+      { id: "dragon-tail", label: "Tail", tone: "medium", path: "M310,395 Q340,400 370,380 Q400,355 420,320 Q435,290 440,265 Q442,250 435,245 Q425,250 420,270 Q410,300 390,330 Q370,355 345,375 Q330,385 310,395 Z" },
+      { id: "dragon-legs", label: "Legs", tone: "dark", path: "M210,380 Q220,400 220,430 Q218,450 208,455 Q198,452 200,435 Q202,415 198,395 L270,400 Q278,420 278,445 Q276,458 266,460 Q256,456 258,440 Q260,420 258,405 Z" },
+      { id: "dragon-snout", label: "Snout", tone: "light", path: "M100,160 Q90,150 80,155 Q70,165 72,180 Q78,195 95,200 Q110,200 125,195 Q115,185 105,175 Z" },
+    ],
+  },
   {
     name: "Dinosaur", emoji: "🦖", description: "Bold T-Rex silhouette",
     keywords: /(dinosaur|dino|t-rex|trex|tyrannosaurus)/,
@@ -310,17 +338,16 @@ serve(async (req) => {
         model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a stencil of: "${prompt}"
+          { role: "user", content: `Create a simple, recognizable cartoon silhouette of "${prompt}" that a child could easily identify at first glance.
 
-Use a friendly cartoon style, not abstract.
+Requirements:
+1. SILHOUETTE FIRST: Draw a single, clear, iconic outline. What 3-4 key features make this instantly identifiable? Include ALL of them.
+2. CARTOON STYLE: Slightly exaggerated proportions — bigger head, simpler limbs, bold shapes. NOT abstract, NOT realistic.
+3. POSITION: Center on the 480×480 canvas, filling 70-85% of the space. Use the most recognizable pose/angle.
+4. DIVIDE: Slice into exactly 4-6 LARGE sections along natural anatomical/structural boundaries. Each section must be big enough to easily tap and fill.
+5. VERIFY: The sections must tile back together perfectly to recreate the original silhouette. No gaps, no overlaps. Shared edges use identical coordinates.
 
-Think step by step:
-1. SILHOUETTE FIRST: Draw a single, clear, recognizable outline of this subject. What key features make it instantly identifiable? (e.g. for a dinosaur: head with jaw, body, tail, legs)
-2. POSITION: Center it on the 480×480 canvas, filling 70-85% of the space.
-3. DIVIDE: Now slice the completed silhouette into 4-6 anatomical/structural sections. Each cut should follow natural boundaries of the subject.
-4. VERIFY: Do the sections tile back together to recreate the original silhouette perfectly? Are shared edges identical?
-
-Now generate the stencil with clean, bold SVG paths.` },
+Generate the stencil with clean, bold SVG paths. Every section must be large and clearly bounded.` },
         ],
         tools: [
           {
