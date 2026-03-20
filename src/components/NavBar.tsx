@@ -32,11 +32,11 @@ export function NavBar() {
         Swatchbox Studio
       </span>
       {/* Desktop nav links */}
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-1 bg-muted/60 rounded-full p-1 border border-border">
         <Link
           to="/"
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-            isStudio ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full transition-colors ${
+            isStudio ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
           }`}
         >
           <Brush className="w-4 h-4" />
@@ -45,8 +45,8 @@ export function NavBar() {
         <Link
           to="/wall"
           data-nav="wall"
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-            isWall ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full transition-colors ${
+            isWall ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
           }`}
         >
           <Grid2x2 className="w-4 h-4" />
@@ -55,8 +55,8 @@ export function NavBar() {
         <Link
           to="/gallery"
           data-nav="gallery"
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-            isGallery ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full transition-colors ${
+            isGallery ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
           }`}
         >
           <Landmark className="w-4 h-4" />
