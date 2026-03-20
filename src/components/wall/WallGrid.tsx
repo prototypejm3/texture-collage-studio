@@ -114,7 +114,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
         {designs.map(d => (
           <div key={d.id}>
             <WallCard {...cardProps(d)} />
-            {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+            {showTitleCards && <TitleCard design={d} isDark={isDark} onUpdateName={(id, name) => onUpdate(id, { name })} />}
           </div>
         ))}
       </AnimatePresence>
