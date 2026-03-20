@@ -65,6 +65,14 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const { generateStencil, isGenerating } = useGenerateStencil();
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleGenerate = async () => {
     const vibe = await generateStencil(aiPrompt);
