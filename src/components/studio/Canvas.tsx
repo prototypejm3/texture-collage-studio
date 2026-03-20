@@ -103,7 +103,41 @@ export function Canvas({
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { w, h } = frameSizeMap[frameSize];
+  const baseSize = frameSizeMap[frameSize];
+
+  // Dynamically size canvas to fit container with padding for desk space
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new ResizeObserver(entries => {
+      const { width, height } = entries[0].contentRect;
+      setContainerSize({ width, height });
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const canvasSize = useMemo(() => {
+    if (!containerSize.width || !containerSize.height) return baseSize;
+    const aspect = baseSize.w / baseSize.h;
+    // Leave room for desk edges + nameplate (~80px padding each side)
+    const maxW = containerSize.width - 160;
+    const maxH = containerSize.height - 120;
+    let w = maxW;
+    let h = w / aspect;
+    if (h > maxH) {
+      h = maxH;
+      w = h * aspect;
+    }
+    // Don't exceed original size on large screens
+    w = Math.min(w, baseSize.w);
+    h = Math.min(h, baseSize.h);
+    return { w: Math.round(w), h: Math.round(h) };
+  }, [containerSize, baseSize]);
+
+  const { w, h } = canvasSize;
 
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
