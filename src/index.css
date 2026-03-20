@@ -48,6 +48,8 @@
     --canvas-bg: 40 15% 94%;
     --frame-shadow: 220 20% 12%;
     --toolbar-bg: 0 0% 100%;
+    --terracotta: 16 65% 45%;
+    --terracotta-foreground: 16 40% 30%;
   }
 
   .dark {
@@ -82,6 +84,8 @@
     --canvas-bg: 220 30% 14%;
     --frame-shadow: 0 0% 0%;
     --toolbar-bg: 220 30% 20%;
+    --terracotta: 16 55% 55%;
+    --terracotta-foreground: 16 45% 75%;
   }
 }
 
