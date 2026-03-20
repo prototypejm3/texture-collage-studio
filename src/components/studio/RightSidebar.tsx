@@ -282,7 +282,7 @@ export function RightSidebar({
             </div>
           </div>
         </div>
-      )
+      )}
 
       {/* Save dialog overlay */}
       {saveDialogVibe && (
