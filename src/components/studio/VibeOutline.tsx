@@ -436,7 +436,18 @@ export function VibeOutline({
               className="w-full text-left px-3.5 py-2 text-xs hover:bg-secondary flex items-center gap-2.5 text-foreground transition-colors"
             >
               <Paintbrush className="w-3.5 h-3.5 text-primary" />
-              Fill whole shape
+              Fill this shape
+            </button>
+            <div className="border-t border-border mx-2 my-0.5" />
+            <button
+              onClick={() => {
+                if (dropChoice && onFillBackground) onFillBackground(dropChoice.textureId);
+                setDropChoice(null);
+              }}
+              className="w-full text-left px-3.5 py-2 text-xs hover:bg-secondary flex items-center gap-2.5 text-foreground transition-colors"
+            >
+              <PaintBucket className="w-3.5 h-3.5 text-accent-foreground" />
+              Fill whole background
             </button>
             <div className="border-t border-border mx-2 my-0.5" />
             <button
