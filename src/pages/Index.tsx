@@ -375,7 +375,6 @@ const Index = () => {
             />
           )}
         </div>
-
         {/* ── Canvas/Frame bar ── */}
         {!isMobile && (
           <BottomBar
