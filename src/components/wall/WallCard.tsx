@@ -291,7 +291,7 @@ export function WallCard({
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <div className="relative">
-          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
+          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
           </button>
           {menuOpen && cardRef.current && (() => {
