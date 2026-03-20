@@ -973,6 +973,7 @@ const rabbit: Vibe = {
 const dinosaur: Vibe = {
   id: 'dinosaur', name: 'Dinosaur', emoji: '🦕',
   description: 'Friendly long-neck dino with spiky back',
+  category: 'Community', creator: 'Ty', baseLikes: 30, likesStartDate: '2026-03-04',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'dino-head', label: 'Head', tone: 'medium',
@@ -1254,6 +1255,7 @@ const dragonfly: Vibe = {
 const worm: Vibe = {
   id: 'worm', name: 'Worm', emoji: '🪱',
   description: 'Cute wiggly worm with segments',
+  category: 'Community', creator: 'Ace', baseLikes: 18, likesStartDate: '2026-03-12',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'worm-head', label: 'Head', tone: 'accent',
@@ -1307,6 +1309,7 @@ const caterpillar: Vibe = {
 const lizard: Vibe = {
   id: 'lizard', name: 'Lizard', emoji: '🦎',
   description: 'Sleek lizard with long tail & splayed toes',
+  category: 'Community', creator: 'Ace', baseLikes: 21, likesStartDate: '2026-03-10',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'liz-head', label: 'Head', tone: 'dark',
@@ -1533,8 +1536,9 @@ const tomato: Vibe = {
 
 // ── BROCCOLI ──
 const broccoli: Vibe = {
-  id: 'broccoli', name: 'Broccoli', emoji: '🥦',
+  id: 'broccoli', name: 'Little Tree', emoji: '🥦',
   description: 'Fluffy broccoli floret tree',
+  category: 'Community', creator: 'Yuck', baseLikes: 16, likesStartDate: '2026-03-14',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'br-crown', label: 'Crown', tone: 'dark',
@@ -1702,6 +1706,7 @@ const carrot: Vibe = {
 const cow: Vibe = {
   id: 'cow', name: 'Cow', emoji: '🐄',
   description: 'Sturdy cow side profile',
+  category: 'Community', creator: 'Tyron', baseLikes: 25, likesStartDate: '2026-03-06',
   viewBox: '0 0 480 400',
   sections: [
     { id: 'cow-horn-l', label: 'Left Horn', tone: 'light',
