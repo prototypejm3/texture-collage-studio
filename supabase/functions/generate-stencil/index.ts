@@ -338,17 +338,16 @@ serve(async (req) => {
         model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a stencil of: "${prompt}"
+          { role: "user", content: `Create a simple, recognizable cartoon silhouette of "${prompt}" that a child could easily identify at first glance.
 
-Use a friendly cartoon style, not abstract.
+Requirements:
+1. SILHOUETTE FIRST: Draw a single, clear, iconic outline. What 3-4 key features make this instantly identifiable? Include ALL of them.
+2. CARTOON STYLE: Slightly exaggerated proportions — bigger head, simpler limbs, bold shapes. NOT abstract, NOT realistic.
+3. POSITION: Center on the 480×480 canvas, filling 70-85% of the space. Use the most recognizable pose/angle.
+4. DIVIDE: Slice into exactly 4-6 LARGE sections along natural anatomical/structural boundaries. Each section must be big enough to easily tap and fill.
+5. VERIFY: The sections must tile back together perfectly to recreate the original silhouette. No gaps, no overlaps. Shared edges use identical coordinates.
 
-Think step by step:
-1. SILHOUETTE FIRST: Draw a single, clear, recognizable outline of this subject. What key features make it instantly identifiable? (e.g. for a dinosaur: head with jaw, body, tail, legs)
-2. POSITION: Center it on the 480×480 canvas, filling 70-85% of the space.
-3. DIVIDE: Now slice the completed silhouette into 4-6 anatomical/structural sections. Each cut should follow natural boundaries of the subject.
-4. VERIFY: Do the sections tile back together to recreate the original silhouette perfectly? Are shared edges identical?
-
-Now generate the stencil with clean, bold SVG paths.` },
+Generate the stencil with clean, bold SVG paths. Every section must be large and clearly bounded.` },
         ],
         tools: [
           {
