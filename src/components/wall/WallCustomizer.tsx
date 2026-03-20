@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Check, Frame, Move, Sun, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd } from 'lucide-react';
 import { useState } from 'react';
 
 interface WallCustomizerProps {
@@ -169,7 +169,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Lighting presets */}
         <PremiumIconButton
-          icon={<Sun className="w-3.5 h-3.5" />}
+          icon={<Lamp className="w-3.5 h-3.5" />}
           isPremium={isPremium}
           isOpen={showLightingMenu}
           onToggle={() => isPremium ? setShowLightingMenu(!showLightingMenu) : onRequestUpgrade?.()}
