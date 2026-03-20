@@ -70,8 +70,13 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
       const fullPin = arr.join('');
       if (fullPin.length === 4) {
         if (isNewPin) {
-          // Save new PIN
+          // Save new PIN and optional hint
           localStorage.setItem('grownup-pin', fullPin);
+          if (pinHint.trim()) {
+            localStorage.setItem('grownup-pin-hint', pinHint.trim());
+          } else {
+            localStorage.removeItem('grownup-pin-hint');
+          }
           onSuccess();
         } else {
           // Check PIN
