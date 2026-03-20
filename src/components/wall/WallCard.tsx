@@ -238,7 +238,7 @@ export function WallCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
+      className={`group relative ${design.hidden ? 'opacity-40' : ''} ${menuOpen || editPanelOpen ? 'z-[9990]' : ''}`}
     >
       <div
         className="transition-transform duration-300 ease-out group-hover:scale-[1.015]"
@@ -289,7 +289,7 @@ export function WallCard({
       )}
 
       {/* Hover actions */}
-      <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+      <div className={`absolute bottom-2 right-2 flex items-center gap-1 transition-opacity duration-200 z-10 ${menuOpen || editPanelOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
         <div className="relative">
           <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
