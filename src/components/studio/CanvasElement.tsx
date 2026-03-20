@@ -137,12 +137,17 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     };
     const handleUp = (e: MouseEvent) => {
       setIsDragging(false);
-      // Check if released outside the canvas — promote to table element
-      if (onMoveToTable && canvasRef?.current) {
+      if (canvasRef?.current) {
         const rect = canvasRef.current.getBoundingClientRect();
         const cx = e.clientX;
         const cy = e.clientY;
-        if (cx < rect.left || cx > rect.right || cy < rect.top || cy > rect.bottom) {
+        // Dragged below canvas = trash
+        if (cy > rect.bottom) {
+          onDelete?.();
+          return;
+        }
+        // Dragged outside canvas sides/top = move to table
+        if (onMoveToTable && (cx < rect.left || cx > rect.right || cy < rect.top)) {
           onMoveToTable(e.clientX, e.clientY);
         }
       }
@@ -175,6 +180,12 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     <div
       ref={ref}
       onMouseDown={handleMouseDown}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onSelect();
+        if (onDelete) onDelete();
+      }}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();

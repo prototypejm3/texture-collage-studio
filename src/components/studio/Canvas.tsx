@@ -108,6 +108,29 @@ export function Canvas({
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
+
+  // Keyboard delete for selected element
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        if (selectedId) {
+          e.preventDefault();
+          onDeleteElement(selectedId);
+          onSelect(null);
+        } else if (selectedTableId) {
+          e.preventDefault();
+          onTableElementDelete(selectedTableId);
+          setSelectedTableId(null);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
@@ -188,7 +211,7 @@ export function Canvas({
     onTableDrop(textureId, x, y);
   }, [onTableDrop]);
 
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  // selectedTableId moved above
   const [easelMode, setEaselMode] = useState(false);
   const [showFramePicker, setShowFramePicker] = useState(false);
 
