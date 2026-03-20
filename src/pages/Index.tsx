@@ -413,6 +413,7 @@ const Index = () => {
               onTableDrop={handleTableDrop}
               onTableElementUpdate={handleTableElementUpdate}
               onTableElementDelete={handleTableElementDelete}
+              onStencilTableDrop={handleStencilTableDrop}
               canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
               onWallFrameStyleChange={studio.setWallFrameStyle}
               isPremium={isPremium}
