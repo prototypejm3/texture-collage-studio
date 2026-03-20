@@ -347,7 +347,7 @@ const Index = () => {
 
           {/* ── Texture Library under canvas (desktop only) ── */}
           {!isMobile && (
-            <div className="shrink-0 overflow-auto" style={{ maxHeight: '40%' }}>
+            <div className="overflow-hidden" style={{ height: '30%' }}>
               <TextureLibrary
                 onDragStart={handleDragStartLib}
                 onTextureClick={handleTextureClick}
