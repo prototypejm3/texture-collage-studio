@@ -336,6 +336,47 @@ const Index = () => {
             </div>
           )}
 
+          {/* ── Left panel: Edit Table Element (desktop only) ── */}
+          {!isMobile && !studio.selectedId && selectedTableElement && (
+            <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
+              <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Desk Item</span>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                <FloatingToolbar
+                  element={{
+                    id: selectedTableElement.id,
+                    textureId: selectedTableElement.textureId,
+                    x: selectedTableElement.x,
+                    y: selectedTableElement.y,
+                    width: selectedTableElement.width,
+                    height: selectedTableElement.height,
+                    rotation: selectedTableElement.rotation,
+                    shape: selectedTableElement.shape || 'soft-square',
+                    zIndex: 5,
+                    effects: selectedTableElement.effects || { bleachFade: 0, edgeStyle: 'clean', wrinkle: 'none', grainBoost: 0, shadowDepth: 'flat' },
+                    clipPathD: selectedTableElement.clipPathD,
+                  }}
+                  onUpdate={(updates) => handleTableElementUpdate(selectedTableElId!, updates)}
+                  onUpdateEffects={(effects) => {
+                    const el = tableElements.find(e => e.id === selectedTableElId);
+                    if (el) handleTableElementUpdate(selectedTableElId!, { effects: { ...(el.effects || { bleachFade: 0, edgeStyle: 'clean', wrinkle: 'none', grainBoost: 0, shadowDepth: 'flat' }), ...effects } });
+                  }}
+                  onDuplicate={() => {
+                    if (!selectedTableElement) return;
+                    setTableElements(prev => [...prev, {
+                      ...selectedTableElement,
+                      id: `table-${tableIdRef.current++}`,
+                      x: selectedTableElement.x + 20,
+                      y: selectedTableElement.y + 20,
+                    }]);
+                  }}
+                  onDelete={() => { handleTableElementDelete(selectedTableElId!); setSelectedTableElId(null); }}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex-1 relative overflow-hidden min-h-0">
             <Canvas
               easelMode={easelMode}
