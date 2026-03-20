@@ -211,7 +211,7 @@ export function Canvas({
     onTableDrop(textureId, x, y);
   }, [onTableDrop]);
 
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  // selectedTableId moved above
   const [easelMode, setEaselMode] = useState(false);
   const [showFramePicker, setShowFramePicker] = useState(false);
 
