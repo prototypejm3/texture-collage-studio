@@ -161,6 +161,7 @@ export function TopToolbar({
           </Link>
           <Link
             to="/gallery"
+            data-nav="gallery"
             className={`flex items-center gap-1 text-xs font-medium transition-colors ${
               isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
             }`}
