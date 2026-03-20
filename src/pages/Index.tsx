@@ -323,6 +323,8 @@ const Index = () => {
 
           <div className="flex-1 relative overflow-hidden min-h-0">
             <Canvas
+              easelMode={easelMode}
+              onToggleEasel={() => setEaselMode(prev => !prev)}
               elements={studio.elements}
               selectedId={studio.selectedId}
               frameSize={studio.frameSize}
