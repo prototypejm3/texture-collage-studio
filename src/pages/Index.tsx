@@ -255,6 +255,11 @@ const Index = () => {
     studio.selectVibe(vibe);
   }, [studio]);
 
+  const handleClearAll = useCallback(() => {
+    studio.clearCanvas();
+    clearTemplate();
+  }, [studio, clearTemplate]);
+
   const handleExport = useCallback(async () => {
     if (!canvasRef.current) return;
     try {
