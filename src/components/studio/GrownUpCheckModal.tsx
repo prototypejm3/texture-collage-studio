@@ -22,8 +22,10 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const handleSubmit = () => {
     const trimmed = answer.trim().toLowerCase();
     if (!trimmed) return;
-    // Accept common correct answers
-    if (trimmed === 'w-2' || trimmed === 'w2' || trimmed === 'a tax form' || trimmed === 'tax form' || trimmed === 'wage and tax statement' || trimmed === 'taxes' || trimmed === 'a w-2' || trimmed === 'a w2') {
+    // Accept any tax-related answer
+    const taxKeywords = ['tax', 'w-2', 'w2', 'wage', 'irs', 'income', 'employer', '1099', 'withholding', 'deduction', 'refund', 'filing'];
+    const isTaxRelated = taxKeywords.some(kw => trimmed.includes(kw));
+    if (isTaxRelated) {
       setResult('correct');
       setTimeout(() => onSuccess(), 1800);
     } else {
