@@ -318,13 +318,19 @@ const Index = () => {
   }, [pendingSave, wall, upgradeToPremium]);
 
   const handleTextureClick = useCallback((textureId: string) => {
+    if (studio.crayonMode) {
+      // In crayon mode, clicking a texture picks the crayon color and enters draw mode
+      studio.setCrayonTextureId(textureId);
+      studio.setDrawMode(true);
+      return;
+    }
     if (textureApplyMode === 'background') {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     } else if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
     }
     // In 'swatch' mode with no section selected, clicking does nothing (drag to add)
-  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId]);
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
