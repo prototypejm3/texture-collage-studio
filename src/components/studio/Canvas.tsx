@@ -390,6 +390,41 @@ export function Canvas({
         );
       })}
 
+      {/* Kid Mode Trash Zone */}
+      {kidMode && (
+        <div
+          ref={trashRef}
+          className={`absolute z-30 flex flex-col items-center justify-center rounded-full transition-all duration-200 cursor-default select-none ${
+            trashHover
+              ? 'bg-destructive/30 border-destructive scale-110 shadow-lg'
+              : 'bg-muted/40 border-border/60 hover:bg-muted/60'
+          } border-2 border-dashed`}
+          style={{
+            width: 64,
+            height: 64,
+            bottom: easelMode ? 16 : 44,
+            right: easelMode ? 16 : 44,
+          }}
+          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setTrashHover(true); }}
+          onDragLeave={() => setTrashHover(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setTrashHover(false);
+            if (selectedId) {
+              onDeleteElement(selectedId);
+              onSelect(null);
+            } else if (selectedTableId) {
+              onTableElementDelete(selectedTableId);
+              setSelectedTableId(null);
+            }
+          }}
+        >
+          <span className="text-xl leading-none">🗑️</span>
+          <span className={`text-[8px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Trash</span>
+        </div>
+      )}
+
       {/* Easel + Frame group */}
       <div style={{
         display: 'flex',
