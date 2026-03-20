@@ -162,6 +162,9 @@ export function Canvas({
         background: '#D8C8A8',
         ...(easelMode ? { perspective: '1200px' } : {}),
       }}
+      onDragOver={handleTableDragOver}
+      onDrop={handleTableDrop}
+      onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
       {/* Wood texture rotated 90° for horizontal grain */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -172,10 +175,6 @@ export function Canvas({
         transform: 'rotate(90deg) scale(2.5)',
         transformOrigin: 'center',
       }} />
-      onDragOver={handleTableDragOver}
-      onDrop={handleTableDrop}
-      onClick={() => { onSelect(null); setSelectedTableId(null); }}
-    >
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
         const tex = allTextures.find(t => t.id === tel.textureId);
