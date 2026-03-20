@@ -490,6 +490,8 @@ const Index = () => {
               onStencilTableDrop={handleStencilTableDrop}
               onSelectTableElement={setSelectedTableElId}
               selectedTableElementId={selectedTableElId}
+              onDuplicateStencilSection={handleDuplicateStencilSection}
+              onDetachStencilSection={handleDetachStencilSection}
               canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
               onWallFrameStyleChange={studio.setWallFrameStyle}
               isPremium={isPremium}
