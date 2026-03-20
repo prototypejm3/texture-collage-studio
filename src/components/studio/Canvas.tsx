@@ -24,6 +24,7 @@ interface TableElement {
   width: number;
   height: number;
   rotation: number;
+  clipPathD?: string;
 }
 
 interface Props {
@@ -617,6 +618,10 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
     };
   }, [isDragging, onUpdate]);
 
+  const clipStyle = element.clipPathD
+    ? `path('${element.clipPathD}')`
+    : 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)';
+
   return (
     <div
       onMouseDown={handleMouseDown}
@@ -630,7 +635,7 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
         transform: `rotate(${element.rotation}deg)`,
         zIndex: 5,
         filter: 'drop-shadow(0 4px 8px hsla(220, 20%, 12%, 0.3))',
-        clipPath: 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)',
+        clipPath: clipStyle,
       }}
     >
       {isSelected && (
