@@ -437,42 +437,25 @@ const Index = () => {
                 onSetNextShape={studio.setNextShape}
               />
             </div>
-            {/* Right half: Stencils or Element Editor */}
+            {/* Right half: Stencils (always visible) */}
             <div className="flex-1 overflow-hidden">
-              {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) ? (
-                <div className="flex flex-col h-full bg-popover">
-                  <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                    <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
-                  </div>
-                  <div className="flex-1 overflow-y-auto">
-                    <FloatingToolbar
-                      element={studio.elements.find(e => e.id === studio.selectedId)!}
-                      onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                      onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
-                      onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                      onDelete={() => studio.deleteElement(studio.selectedId!)}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <BuildPanel
-                  isPremium={isPremium}
-                  onRequestUpgrade={() => setShowPaywall(true)}
-                  activeVibeId={studio.activeVibe?.id ?? null}
-                  onSelectVibe={handleSelectVibe}
-                  onShuffleVibeFills={studio.shuffleVibeFills}
-                  onPlaceStencil={studio.placeStencil}
-                  onGenerateMood={handleGenerateMood}
-                  isGeneratingMood={vibeGen.isGenerating}
-                  customTemplate={customTemplate}
-                  templateOpacity={templateOpacity}
-                  onUploadTemplate={handleUploadTemplate}
-                  onClearTemplate={clearTemplate}
-                  onTemplateOpacityChange={setTemplateOpacity}
-                  stencilsPoppedOut={stencilsPoppedOut}
-                  onPopOutStencils={() => setStencilsPoppedOut(true)}
-                />
-              )}
+              <BuildPanel
+                isPremium={isPremium}
+                onRequestUpgrade={() => setShowPaywall(true)}
+                activeVibeId={studio.activeVibe?.id ?? null}
+                onSelectVibe={handleSelectVibe}
+                onShuffleVibeFills={studio.shuffleVibeFills}
+                onPlaceStencil={studio.placeStencil}
+                onGenerateMood={handleGenerateMood}
+                isGeneratingMood={vibeGen.isGenerating}
+                customTemplate={customTemplate}
+                templateOpacity={templateOpacity}
+                onUploadTemplate={handleUploadTemplate}
+                onClearTemplate={clearTemplate}
+                onTemplateOpacityChange={setTemplateOpacity}
+                stencilsPoppedOut={stencilsPoppedOut}
+                onPopOutStencils={() => setStencilsPoppedOut(true)}
+              />
             </div>
           </div>
         )}
