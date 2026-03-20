@@ -164,12 +164,12 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
     >
       {/* Instructions */}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[51] px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium shadow-lg flex items-center gap-2">
-        ✏️ Draw a shape — it will auto-close
+        {crayonMode ? '🖍️ Draw with your crayon!' : '✏️ Draw a shape — it will auto-close'}
         <button
           onClick={(e) => { e.stopPropagation(); onCancel(); }}
           className="ml-1 px-1.5 py-0.5 rounded bg-primary-foreground/20 hover:bg-primary-foreground/30 text-[10px] transition-colors"
         >
-          Cancel
+          {crayonMode ? 'Done' : 'Cancel'}
         </button>
       </div>
 
@@ -188,15 +188,15 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
       >
-        <rect width="100%" height="100%" fill="hsla(40, 20%, 95%, 0.06)" />
+        <rect width="100%" height="100%" fill={crayonMode ? 'transparent' : 'hsla(40, 20%, 95%, 0.06)'} />
 
         {/* Soft shadow */}
         <path
           ref={smudgePathRef}
           d=""
           fill="none"
-          stroke="hsla(0, 0%, 30%, 0.08)"
-          strokeWidth={4}
+          stroke={crayonMode ? 'hsla(0, 0%, 30%, 0.12)' : 'hsla(0, 0%, 30%, 0.08)'}
+          strokeWidth={crayonMode ? 8 : 4}
           strokeLinejoin="round"
           strokeLinecap="round"
         />
@@ -204,13 +204,13 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
         <path
           ref={livePathRef}
           d=""
-          fill="hsla(220, 60%, 50%, 0.06)"
-          stroke="hsl(220, 60%, 45%)"
-          strokeWidth={2}
+          fill={crayonMode ? 'hsla(30, 60%, 50%, 0.15)' : 'hsla(220, 60%, 50%, 0.06)'}
+          stroke={crayonMode ? 'hsl(30, 70%, 45%)' : 'hsl(220, 60%, 45%)'}
+          strokeWidth={crayonMode ? 5 : 2}
           strokeLinejoin="round"
           strokeLinecap="round"
-          strokeDasharray="6 3"
-          opacity={0.8}
+          strokeDasharray={crayonMode ? undefined : '6 3'}
+          opacity={crayonMode ? 0.9 : 0.8}
         />
       </svg>
     </div>
