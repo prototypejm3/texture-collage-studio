@@ -161,6 +161,7 @@ export function RightSidebar({
   };
 
   const handleGenerate = async () => {
+    if (!isPremium) { aiCredits.guardFreeUser(); return; }
     if (aiCredits.guardAiAction()) return;
     const vibe = await generateStencil(aiPrompt);
     if (vibe) {
