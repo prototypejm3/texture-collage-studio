@@ -15,6 +15,10 @@ import { PaywallModal } from '@/components/wall/PaywallModal';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
+import { vibes } from '@/data/vibes';
+import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+
+const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
 import { Monitor, X } from 'lucide-react';
