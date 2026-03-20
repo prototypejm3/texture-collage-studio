@@ -180,19 +180,19 @@ export function Canvas({
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: '8%',
-            right: '8%',
-            top: '5%',
-            bottom: '5%',
+            left: '3%',
+            right: '3%',
+            top: '3%',
+            bottom: '3%',
             borderRadius: 8,
             boxShadow: '0 12px 60px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: '8%',
-            right: '8%',
-            top: '5%',
-            bottom: '5%',
+            left: '3%',
+            right: '3%',
+            top: '3%',
+            bottom: '3%',
             borderRadius: 6,
             overflow: 'hidden',
           }}>
@@ -442,8 +442,8 @@ export function Canvas({
         <div
           className="absolute z-20"
           style={{
-            bottom: 'calc(5% + 20px)',
-            left: 'calc(8% + 24px)',
+            bottom: 'calc(3% + 20px)',
+            left: 'calc(3% + 24px)',
             perspective: '400px',
           }}
           onClick={(e) => e.stopPropagation()}
