@@ -194,7 +194,7 @@ export function RightSidebar({
   ];
 
   return (
-    <div className="flex flex-col h-full bg-popover">
+    <div className="flex flex-col h-full bg-card">
       {/* Tab switcher */}
       {/* Filter pills — matches texture category pills */}
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
