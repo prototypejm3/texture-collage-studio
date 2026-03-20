@@ -343,14 +343,15 @@ export function RightSidebar({
       <div className="flex-1 overflow-y-auto texture-panel">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
-            {/* AI Stencil + AI Mood on one line */}
+            {/* AI Stencil + AI Mood — hidden in kid mode */}
+            {!kidMode && (
             <div className="px-2 py-1.5 border-b border-border bg-muted/30">
               <div className="flex gap-1.5">
                 {/* AI Stencil */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
-                    {kidMode ? '✨ Magic Shape' : 'AI Stencil'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">{kidMode ? 'New!' : 'Beta'}</span>
+                    AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                   </div>
                   {isPremium ? (
                     <div className="flex gap-1">
@@ -392,7 +393,7 @@ export function RightSidebar({
                     <div className="flex-1 min-w-0">
                      <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                         <Sparkles className="w-3 h-3 text-accent-foreground" />
-                        {kidMode ? '🎨 Magic Color' : 'AI Mood'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">{kidMode ? 'New!' : 'Beta'}</span>
+                        AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                       </div>
                       <div className="flex gap-1">
                         <div className="relative flex-1">
@@ -421,6 +422,7 @@ export function RightSidebar({
                 )}
               </div>
             </div>
+            )}
 
             {/* Category filter pills */}
             <div className="px-2 py-1 border-b border-border bg-secondary/20">
