@@ -366,6 +366,7 @@ const Index = () => {
               isPremium={isPremium}
               onSelectVibe={handleSelectVibe}
               onShuffleVibeFills={studio.shuffleVibeFills}
+              onPlaceStencil={studio.placeStencil}
               onRequestUpgrade={() => setShowPaywall(true)}
               onGenerateMood={handleGenerateMood}
               isGeneratingMood={vibeGen.isGenerating}
