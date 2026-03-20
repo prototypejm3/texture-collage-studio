@@ -356,6 +356,12 @@ export function Canvas({
 
       {/* Frame */}
       <div
+        onClick={(e) => {
+          if (e.target === e.currentTarget && onWallFrameStyleChange) {
+            e.stopPropagation();
+            setShowFramePicker(prev => !prev);
+          }
+        }}
         style={{
           padding: `${frameStyle.padding}px`,
           ...(wallFrameStyle === 'polaroid' ? { paddingBottom: '48px' } : {}),
@@ -367,8 +373,66 @@ export function Canvas({
             : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
           zIndex: 10,
           position: 'relative' as const,
+          cursor: onWallFrameStyleChange ? 'pointer' : undefined,
         }}
       >
+        {/* Frame style picker popover */}
+        {showFramePicker && onWallFrameStyleChange && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setShowFramePicker(false); }} />
+            <div
+              className="absolute z-50 bg-popover border border-border rounded-lg shadow-xl p-2.5"
+              style={{ bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: 8 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Style pills */}
+              <div className="flex items-center gap-1 mb-2">
+                <span className="text-[8px] uppercase tracking-widest text-muted-foreground mr-1">Frame</span>
+                {framePickerOptions.map(f => {
+                  const isShadowColor = frameColorOptions.some(c => c.id === wallFrameStyle);
+                  const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+                  return (
+                    <button
+                      key={f.id}
+                      onClick={() => {
+                        onWallFrameStyleChange(f.id);
+                        if (f.id !== 'shadow-box') setShowFramePicker(false);
+                      }}
+                      className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+                        isActive ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {/* Color circles */}
+              <div className="flex items-center gap-1.5">
+                {frameColorOptions.map(cf => {
+                  const locked = !cf.free && !isPremium;
+                  return (
+                    <button
+                      key={cf.id}
+                      onClick={() => {
+                        if (locked) { onRequestUpgrade?.(); return; }
+                        onWallFrameStyleChange(cf.id);
+                        setShowFramePicker(false);
+                      }}
+                      className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                        wallFrameStyle === cf.id ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110' : 'hover:scale-110'
+                      } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
+                        locked ? 'opacity-40 cursor-not-allowed' : ''
+                      }`}
+                      style={{ background: cf.color }}
+                      title={locked ? 'Premium' : cf.label}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
         {/* Inner canvas */}
         <div
           ref={canvasRef}
