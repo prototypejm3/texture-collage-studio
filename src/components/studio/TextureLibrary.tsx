@@ -226,7 +226,7 @@ export function TextureLibrary({
               }`}
               title={isPremium ? 'Upload your own texture' : 'Premium feature'}
             >
-              {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} Upload
+              {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} {kidMode ? 'Add' : 'Upload'}
             </button>
           </div>
           <input
