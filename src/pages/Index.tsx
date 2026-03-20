@@ -580,9 +580,22 @@ const Index = () => {
                 onApplyModeChange={setTextureApplyMode}
                 backgroundTextureId={studio.backgroundTextureId}
                 drawMode={studio.drawMode}
-                onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
+                onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
                 nextShape={studio.nextShape}
                 onSetNextShape={studio.setNextShape}
+                crayonMode={studio.crayonMode}
+                crayonTextureId={studio.crayonTextureId}
+                onToggleCrayonMode={() => {
+                  const next = !studio.crayonMode;
+                  studio.setCrayonMode(next);
+                  if (next) {
+                    studio.setDrawMode(false); // will be set when they pick a color
+                  } else {
+                    studio.setDrawMode(false);
+                    studio.setCrayonTextureId(null);
+                  }
+                }}
+                onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
               />
             </div>
             {/* Right half: Stencils (always visible) */}
