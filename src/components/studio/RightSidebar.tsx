@@ -194,26 +194,29 @@ export function RightSidebar({
   ];
 
   return (
-    <div className="flex flex-col h-full bg-popover">
+    <div className="flex flex-col h-full bg-card">
       {/* Tab switcher */}
-      <div className="flex border-b border-border">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 flex items-center justify-center gap-1 px-2 py-2.5 text-[11px] font-medium transition-colors ${
-              activeTab === tab.id
-                ? 'text-primary border-b-2 border-primary bg-primary/5'
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
-            }`}
-          >
-            <tab.icon className="w-3.5 h-3.5" />
-            {tab.label}
-            {tab.count !== undefined && tab.count > 0 && (
-              <span className="ml-0.5 px-1 py-0 text-[9px] rounded-full bg-muted text-muted-foreground">{tab.count}</span>
-            )}
-          </button>
-        ))}
+      {/* Filter pills — matches texture category pills */}
+      <div className="px-2 py-1 border-b border-border bg-secondary/30">
+        <div className="flex flex-wrap gap-1">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                activeTab === tab.id
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+              }`}
+            >
+              <tab.icon className="w-2.5 h-2.5" />
+              {tab.label}
+              {tab.count !== undefined && tab.count > 0 && (
+                <span className="text-[8px] ml-0.5 opacity-70">{tab.count}</span>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Save dialog overlay */}
@@ -245,7 +248,7 @@ export function RightSidebar({
       )}
 
       {/* Tab content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto texture-panel">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
             {/* AI Stencil */}
@@ -327,10 +330,10 @@ export function RightSidebar({
             )}
 
             {/* Stencil Grid — grouped by theme */}
-            <div className={compact ? 'p-1' : 'p-3'}>
+            <div className="p-2">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className={`grid ${compact ? 'grid-cols-4 gap-1' : 'grid-cols-4 gap-1.5'}`}>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -358,14 +361,14 @@ export function RightSidebar({
               {/* Theme sections */}
               {themeSections.map(section => (
                 <div key={section.label}>
-                  <div className="flex items-center gap-2 mt-4 mb-2">
+                  <div className="flex items-center gap-1.5 mt-2 mb-1">
                     <div className="h-px flex-1 bg-border" />
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
                       {section.emoji} {section.label}
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className={`grid ${compact ? 'grid-cols-4 gap-1' : 'grid-cols-4 gap-1.5'}`}>
+                  <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
@@ -394,23 +397,15 @@ export function RightSidebar({
           </div>
         ) : activeTab === 'community' ? (
           <div className="flex flex-col">
-            <div className="px-3 py-3 border-b border-border">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Community Stencils
-              </h3>
-              <p className="text-[10px] text-muted-foreground mt-0.5">
-                Public stencils from other creators
-              </p>
-            </div>
-            <div className="flex-1 overflow-y-auto p-3">
+            <div className="flex-1 overflow-y-auto p-2">
               {communityVibes.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <Globe className="w-8 h-8 text-muted-foreground/40 mb-2" />
-                  <p className="text-xs text-muted-foreground">No community stencils yet</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <Globe className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
+                  <p className="text-[10px] text-muted-foreground">No community stencils yet</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -435,42 +430,36 @@ export function RightSidebar({
         ) : (
           /* Hidden tab */
           <div className="flex flex-col h-full">
-            <div className="px-3 py-3 border-b border-border">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Hidden Stencils
-              </h3>
-              <p className="text-[10px] text-muted-foreground mt-0.5">
-                Stencils you've hidden — unhide to bring them back
-              </p>
-            </div>
-            <div className="flex-1 overflow-y-auto p-3">
+            <div className="flex-1 overflow-y-auto p-2">
               {hiddenVibes.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <EyeOff className="w-8 h-8 text-muted-foreground/40 mb-2" />
-                  <p className="text-xs text-muted-foreground">No hidden stencils</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <EyeOff className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
+                  <p className="text-[10px] text-muted-foreground">No hidden stencils</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">Hide stencils from the Stencils tab</p>
                 </div>
               ) : (
-                <div className={`grid gap-1.5 ${compact ? 'grid-cols-4' : 'grid-cols-4'}`}>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
-                      whileHover={{ y: -2 }}
-                      className="group relative flex flex-col items-center text-center rounded-xl p-2 transition-all border border-border/50 hover:border-border hover:bg-secondary/50 opacity-60 hover:opacity-100"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="group relative cursor-pointer opacity-60 hover:opacity-100"
                     >
                       <button onClick={() => onSelectVibe(vibe)} className="w-full">
-                        <div className="w-full aspect-square rounded-lg overflow-hidden mb-1.5">
+                        <div className={`aspect-square rounded-lg overflow-hidden border shadow-sm border-border/50`}>
                           <VibePreviewSVG vibe={vibe} />
                         </div>
-                        <span className="text-[10px] font-medium leading-tight truncate w-full block">
+                        <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
                           {vibe.emoji} {vibe.name}
-                        </span>
+                        </p>
                       </button>
                       <button
                         onClick={() => social.toggleHidden(vibe.id)}
-                        className="mt-1 flex items-center gap-1 px-2 py-1 text-[10px] rounded-md bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
+                        className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all hover:bg-accent"
+                        title="Unhide"
                       >
-                        <Eye className="w-3 h-3" /> Unhide
+                        <Eye className="w-2.5 h-2.5" />
                       </button>
                     </motion.div>
                   ))}
@@ -498,65 +487,51 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
 
   return (
     <motion.div
-      whileHover={{ y: -1 }}
-      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
-        isActive
-          ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
-          : 'border-border/50 hover:border-border hover:bg-secondary/50'
-      }`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onSelect}
+      className="cursor-grab active:cursor-grabbing group relative"
     >
-      <button onClick={onSelect} className="w-full">
-        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
-          <VibePreviewSVG vibe={vibe} />
-          {isActive && (
-            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2 h-2 text-primary-foreground" />
-            </div>
-          )}
-          {isAiGenerated && (
-            <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
-              AI
-            </div>
-          )}
-        </div>
-        <span className="text-[9px] font-medium leading-tight truncate w-full block">
-          {vibe.emoji} {vibe.name}
-        </span>
-      </button>
-
-      {/* Action buttons on hover */}
-      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-        {/* Hide toggle */}
-        {(isLoggedIn || isAiGenerated) && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-secondary transition-colors"
-            title={isHidden ? 'Show stencil' : 'Hide stencil'}
-          >
-            {isHidden ? <Eye className="w-3 h-3 text-muted-foreground" /> : <EyeOff className="w-3 h-3 text-muted-foreground" />}
-          </button>
+      <div
+        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        }`}
+      >
+        <VibePreviewSVG vibe={vibe} />
+        {isActive && (
+          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-2 h-2 text-primary-foreground" />
+          </div>
         )}
-        {/* Report as bad */}
         {isAiGenerated && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onReport(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
-            title="Report as bad"
-          >
-            <Flag className="w-3 h-3 text-muted-foreground" />
-          </button>
-        )}
-        {/* Delete */}
-        {isAiGenerated && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onDelete(); }}
-            className="p-1 rounded-full bg-background/80 hover:bg-destructive/20 transition-colors"
-            title="Delete stencil"
-          >
-            <Trash2 className="w-3 h-3 text-muted-foreground" />
-          </button>
+          <div className="absolute top-0.5 left-0.5 px-1 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
+            AI
+          </div>
         )}
       </div>
+      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+        {vibe.emoji} {vibe.name}
+      </p>
+
+      {/* Action buttons on hover — matches texture favorite star positioning */}
+      {(isLoggedIn || isAiGenerated) && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
+          className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100`}
+          title={isHidden ? 'Show stencil' : 'Hide stencil'}
+        >
+          {isHidden ? <Eye className="w-2.5 h-2.5" /> : <EyeOff className="w-2.5 h-2.5" />}
+        </button>
+      )}
+      {isAiGenerated && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-destructive/80 text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+          title="Delete"
+        >
+          <Trash2 className="w-2.5 h-2.5" />
+        </button>
+      )}
     </motion.div>
   );
 }
@@ -571,59 +546,48 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
   onToggleFav: () => void;
   creator?: string;
 }) {
-  const shadowIcons = Math.floor(favCount / 25);
-  const remainder = favCount % 25;
-
   return (
     <motion.div
-      whileHover={{ y: -1 }}
-      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
-        isActive
-          ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
-          : 'border-border/50 hover:border-border hover:bg-secondary/50'
-      }`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onSelect}
+      className="cursor-grab active:cursor-grabbing group relative"
     >
-      <button onClick={onSelect} className="w-full">
-        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
-          <VibePreviewSVG vibe={vibe} />
-          {isActive && (
-            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2 h-2 text-primary-foreground" />
-            </div>
-          )}
-        </div>
-        <span className="text-[9px] font-medium leading-tight truncate w-full block">
-          {vibe.emoji} {vibe.name}
-        </span>
-        {creator && (
-          <span className="text-[8px] text-muted-foreground mt-0.5 block">
-            by {creator}
-          </span>
+      <div
+        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        }`}
+      >
+        <VibePreviewSVG vibe={vibe} />
+        {isActive && (
+          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-2 h-2 text-primary-foreground" />
+          </div>
         )}
+      </div>
+      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+        {vibe.emoji} {vibe.name}
+      </p>
+
+      {/* Fav button — matches texture star positioning */}
+      <button
+        onClick={(e) => { e.stopPropagation(); if (isLoggedIn) onToggleFav(); }}
+        className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all ${
+          isFavorited
+            ? 'bg-primary/90 text-primary-foreground opacity-100'
+            : 'bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100'
+        }`}
+        title={isLoggedIn ? (isFavorited ? 'Remove shadow' : 'Cast a shadow') : 'Sign in to cast shadows'}
+      >
+        <Save className={`w-2.5 h-2.5 ${isFavorited ? 'fill-current' : ''}`} />
       </button>
 
-      {/* Shadow count + toggle */}
-      <div className="flex items-center gap-1 mt-1">
-        <button
-          onClick={(e) => { e.stopPropagation(); if (isLoggedIn) onToggleFav(); }}
-          className={`flex items-center gap-0.5 text-[10px] transition-colors ${
-            isFavorited ? 'text-primary' : 'text-muted-foreground hover:text-primary'
-          } ${!isLoggedIn ? 'cursor-default' : ''}`}
-          title={isLoggedIn ? (isFavorited ? 'Remove shadow' : 'Cast a shadow') : 'Sign in to cast shadows'}
-        >
-          {shadowIcons > 0 ? (
-            <span className="flex items-center gap-px">
-              {Array.from({ length: Math.min(shadowIcons, 5) }).map((_, i) => (
-                <span key={i} className="text-[10px]">👤</span>
-              ))}
-              {shadowIcons > 5 && <span className="text-[9px] text-muted-foreground ml-0.5">+{shadowIcons - 5}</span>}
-            </span>
-          ) : (
-            <span className="text-[10px]">👤</span>
-          )}
-          <span className="ml-0.5">{favCount}</span>
-        </button>
-      </div>
+      {/* Shadow count badge */}
+      {favCount > 0 && (
+        <span className="absolute bottom-5 right-0.5 px-1 py-0 text-[7px] rounded-full bg-foreground/60 text-background font-medium">
+          {favCount}
+        </span>
+      )}
     </motion.div>
   );
 }
