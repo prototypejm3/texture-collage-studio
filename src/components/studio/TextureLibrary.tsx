@@ -313,7 +313,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
-        className="aspect-square rounded-lg overflow-hidden border border-border/50 shadow-sm"
+        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${isActiveBackground ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'}`}
         style={{
           background: tex.cssBackground,
           backgroundSize: bgSize,
