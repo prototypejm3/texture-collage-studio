@@ -212,8 +212,8 @@ export function TextureLibrary({
           ))}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto texture-panel p-3">
-        <div className="grid grid-cols-3 gap-2">
+      <div className="flex-1 overflow-y-auto texture-panel p-2">
+        <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1.5">
           {filtered.map(tex => (
             <SwatchItem
               key={tex.id}
