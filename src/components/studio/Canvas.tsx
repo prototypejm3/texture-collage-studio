@@ -137,11 +137,19 @@ export function Canvas({
   });
   const [boxHover, setBoxHover] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
+  const [boxPos, setBoxPos] = useState(() => {
+    try { const raw = localStorage.getItem('kid-box-pos'); return raw ? JSON.parse(raw) : { x: 44, y: -1 }; } catch { return { x: 44, y: -1 }; }
+  });
+  const boxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isBoxDragging, setIsBoxDragging] = useState(false);
 
-  // Persist box items
+  // Persist box items & position
   useEffect(() => {
     try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
   }, [boxItems]);
+  useEffect(() => {
+    try { localStorage.setItem('kid-box-pos', JSON.stringify(boxPos)); } catch {}
+  }, [boxPos]);
 
   // Kid mode — synced from TextureLibrary
   const [kidMode, setKidMode] = useState(() => {
@@ -238,6 +246,24 @@ export function Canvas({
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
+
+  // Box dragging
+  useEffect(() => {
+    if (!isBoxDragging) return;
+    const handleMove = (e: MouseEvent) => {
+      const dx = e.clientX - boxDragStart.current.mx;
+      const dy = e.clientY - boxDragStart.current.my;
+      setBoxPos({ x: boxDragStart.current.bx + dx, y: boxDragStart.current.by + dy });
+    };
+    const handleUp = () => setIsBoxDragging(false);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [isBoxDragging]);
+
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
@@ -500,8 +526,17 @@ export function Canvas({
           ref={boxRef}
           className="absolute z-30"
           style={{
-            bottom: 44,
-            left: 44,
+            left: boxPos.x,
+            ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
+          }}
+          onMouseDown={(e) => {
+            // Only start box drag from the box itself, not from items inside
+            if ((e.target as HTMLElement).closest('button')) return;
+            e.stopPropagation();
+            e.preventDefault();
+            setIsBoxDragging(true);
+            const currentTop = boxRef.current ? boxRef.current.getBoundingClientRect().top - (containerRef.current?.getBoundingClientRect().top || 0) : 0;
+            boxDragStart.current = { mx: e.clientX, my: e.clientY, bx: boxPos.x, by: currentTop };
           }}
           onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
           onDragLeave={() => setBoxHover(false)}
@@ -510,10 +545,7 @@ export function Canvas({
             e.stopPropagation();
             setBoxHover(false);
             const fromBox = e.dataTransfer.getData('fromBox');
-            if (fromBox) {
-              // Dragged from box to desk — handled by onDragOutItem
-              return;
-            }
+            if (fromBox) return;
             const textureId = e.dataTransfer.getData('textureId');
             if (textureId) {
               setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
@@ -525,10 +557,9 @@ export function Canvas({
             onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
             onDragOutItem={(item) => {
               setBoxItems(prev => prev.filter(i => i.id !== item.id));
-              // Put it on the desk near the box
               if (containerRef.current) {
                 const rect = containerRef.current.getBoundingClientRect();
-                onTableDrop(item.textureId, 120, rect.height - 160);
+                onTableDrop(item.textureId, boxPos.x + 100, boxPos.y < 0 ? rect.height - 160 : boxPos.y);
               }
             }}
             isHovered={boxHover}
