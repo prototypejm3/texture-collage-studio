@@ -311,7 +311,6 @@ export function TextureLibrary({
               }`}
             >
               <PenTool className="w-3 h-3" />
-              {kidMode ? '✏️ Draw' : 'Draw'}
             </button>
             {shapes.map(shape => (
               <button
