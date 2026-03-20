@@ -66,10 +66,10 @@ interface Props {
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
-  '8x8': { w: 280, h: 280 },
-  '12x12': { w: 360, h: 360 },
-  '16x16': { w: 420, h: 420 },
-  'gallery': { w: 460, h: 320 },
+  '8x8': { w: 380, h: 380 },
+  '12x12': { w: 480, h: 480 },
+  '16x16': { w: 560, h: 560 },
+  'gallery': { w: 600, h: 420 },
 };
 
 // Solid color fallbacks for basic frame options
@@ -105,7 +105,7 @@ export function Canvas({
   const containerRef = useRef<HTMLDivElement>(null);
   const baseSize = frameSizeMap[frameSize];
 
-  // Dynamically size canvas to fit container with padding for desk space
+  // Dynamically size canvas to fit container, capped at base size
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   
   useEffect(() => {
@@ -122,9 +122,9 @@ export function Canvas({
   const canvasSize = useMemo(() => {
     if (!containerSize.width || !containerSize.height) return baseSize;
     const aspect = baseSize.w / baseSize.h;
-    // Leave room for desk edges + nameplate (~80px padding each side)
-    const maxW = containerSize.width - 160;
-    const maxH = containerSize.height - 120;
+    // Max 70% of container, capped at base pixel size
+    const maxW = Math.min(containerSize.width * 0.55, baseSize.w);
+    const maxH = Math.min(containerSize.height * 0.7, baseSize.h);
     let w = maxW;
     let h = w / aspect;
     if (h > maxH) {
