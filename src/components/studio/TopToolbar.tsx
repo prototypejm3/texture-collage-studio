@@ -225,8 +225,11 @@ export function TopToolbar({
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
                 <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
-                  <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-                  {([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi', '🎵'], ['home', 'Chill', '🏠']] as const).map(([value, label, emoji]) => (
+                  <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">{kidMode ? 'Music' : 'Ambiance'}</p>
+                  {(kidMode
+                    ? ([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const)
+                    : ([['none', 'Off', '🔇'], ['gallery', 'Gallery', '🏛'], ['loft', 'Lofi', '🎵'], ['home', 'Chill', '🏠']] as const)
+                  ).map(([value, label, emoji]) => (
                     <button
                       key={value}
                       onClick={() => { onAmbientSoundChange(value as AmbientSound); setShowSoundMenu(false); }}
