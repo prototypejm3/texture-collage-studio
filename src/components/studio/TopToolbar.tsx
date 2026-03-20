@@ -2,9 +2,10 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
+import { AiWelcomeModal } from './AiWelcomeModal';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
@@ -55,6 +56,7 @@ export function TopToolbar({
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
+  const [showAiWelcome, setShowAiWelcome] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
@@ -68,6 +70,38 @@ export function TopToolbar({
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
+
+  // AI stencil toggle (on by default)
+  const [aiEnabled, setAiEnabled] = useState(() => {
+    try { return localStorage.getItem('ai-stencil-enabled') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setAiEnabled((e as CustomEvent).detail);
+    window.addEventListener('ai-enabled-change', handler);
+    return () => window.removeEventListener('ai-enabled-change', handler);
+  }, []);
+
+  // Show AI welcome modal on first login
+  useEffect(() => {
+    if (user && !localStorage.getItem('ai-welcome-shown')) {
+      setShowAiWelcome(true);
+    }
+  }, [user]);
+
+  const handleAiToggle = () => {
+    const next = !aiEnabled;
+    localStorage.setItem('ai-stencil-enabled', String(next));
+    setAiEnabled(next);
+    window.dispatchEvent(new CustomEvent('ai-enabled-change', { detail: next }));
+  };
+
+  const handleAiWelcomeClose = (enabled: boolean) => {
+    localStorage.setItem('ai-welcome-shown', 'true');
+    localStorage.setItem('ai-stencil-enabled', String(enabled));
+    setAiEnabled(enabled);
+    setShowAiWelcome(false);
+    window.dispatchEvent(new CustomEvent('ai-enabled-change', { detail: enabled }));
+  };
 
   const handleKidToggle = () => {
     if (kidMode) {
@@ -153,6 +187,19 @@ export function TopToolbar({
           <span className="text-sm leading-none">🧸</span>
         </button>
 
+        {/* AI Toggle */}
+        <button
+          onClick={handleAiToggle}
+          className={`p-1.5 rounded-md transition-colors ${
+            aiEnabled
+              ? 'bg-primary/15 text-primary'
+              : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+          }`}
+          title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+        >
+          <Sparkles className="w-4 h-4" />
+        </button>
+
         <button
           onClick={toggle}
           className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
@@ -225,6 +272,10 @@ export function TopToolbar({
       isOpen={showGrownUpCheck}
       onClose={() => setShowGrownUpCheck(false)}
       onSuccess={handleGrownUpSuccess}
+    />
+    <AiWelcomeModal
+      isOpen={showAiWelcome}
+      onClose={handleAiWelcomeClose}
     />
     </>
   );
