@@ -282,7 +282,7 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false, isActiveBackground = false }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
@@ -291,6 +291,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   onRemoveCustomTexture: (id: string) => void;
   viewMode?: 'swatch' | 'tiled';
   kidMode?: boolean;
+  isActiveBackground?: boolean;
 }) {
   const isCustom = tex.id.startsWith('custom-');
   const isImage = isCustom || tex.cssBackground.startsWith('url(');
