@@ -49,6 +49,9 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
+  const [stencilsCollapsed, setStencilsCollapsed] = useState(() => {
+    try { return localStorage.getItem('stencils-collapsed') === 'true'; } catch { return false; }
+  });
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
@@ -600,25 +603,49 @@ const Index = () => {
                 onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
               />
             </div>
-            {/* Right half: Stencils (always visible) */}
-            <div className="flex-1 overflow-hidden">
-              <BuildPanel
-                isPremium={isPremium}
-                onRequestUpgrade={() => setShowPaywall(true)}
-                activeVibeId={studio.activeVibe?.id ?? null}
-                onSelectVibe={handleSelectVibe}
-                onShuffleVibeFills={studio.shuffleVibeFills}
-                onPlaceStencil={studio.placeStencil}
-                onGenerateMood={handleGenerateMood}
-                isGeneratingMood={vibeGen.isGenerating}
-                customTemplate={customTemplate}
-                templateOpacity={templateOpacity}
-                onUploadTemplate={handleUploadTemplate}
-                onClearTemplate={clearTemplate}
-                onTemplateOpacityChange={setTemplateOpacity}
-                stencilsPoppedOut={stencilsPoppedOut}
-                onPopOutStencils={() => setStencilsPoppedOut(true)}
-              />
+            {/* Right half: Stencils (collapsible) */}
+            <div
+              className="overflow-hidden transition-all duration-300 relative"
+              style={{
+                flex: stencilsCollapsed ? '0 0 32px' : '1 1 0%',
+                minWidth: stencilsCollapsed ? 32 : undefined,
+              }}
+            >
+              {/* Collapse/expand tab */}
+              <button
+                onClick={() => {
+                  const next = !stencilsCollapsed;
+                  setStencilsCollapsed(next);
+                  try { localStorage.setItem('stencils-collapsed', String(next)); } catch {}
+                }}
+                className="absolute top-1 left-1 z-20 p-1 rounded-md bg-secondary/80 hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+                title={stencilsCollapsed ? 'Show Stencils' : 'Hide Stencils'}
+              >
+                {stencilsCollapsed ? (
+                  <span className="text-[10px] font-bold writing-mode-vertical" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>🧩 Shapes</span>
+                ) : (
+                  <span className="text-[10px]">◀ Hide</span>
+                )}
+              </button>
+              {!stencilsCollapsed && (
+                <BuildPanel
+                  isPremium={isPremium}
+                  onRequestUpgrade={() => setShowPaywall(true)}
+                  activeVibeId={studio.activeVibe?.id ?? null}
+                  onSelectVibe={handleSelectVibe}
+                  onShuffleVibeFills={studio.shuffleVibeFills}
+                  onPlaceStencil={studio.placeStencil}
+                  onGenerateMood={handleGenerateMood}
+                  isGeneratingMood={vibeGen.isGenerating}
+                  customTemplate={customTemplate}
+                  templateOpacity={templateOpacity}
+                  onUploadTemplate={handleUploadTemplate}
+                  onClearTemplate={clearTemplate}
+                  onTemplateOpacityChange={setTemplateOpacity}
+                  stencilsPoppedOut={stencilsPoppedOut}
+                  onPopOutStencils={() => setStencilsPoppedOut(true)}
+                />
+              )}
             </div>
           </div>
         )}
