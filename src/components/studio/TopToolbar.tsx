@@ -273,6 +273,10 @@ export function TopToolbar({
       onClose={() => setShowGrownUpCheck(false)}
       onSuccess={handleGrownUpSuccess}
     />
+    <AiWelcomeModal
+      isOpen={showAiWelcome}
+      onClose={handleAiWelcomeClose}
+    />
     </>
   );
 }
