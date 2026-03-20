@@ -156,7 +156,7 @@ export function TextureLibrary({
   return (
     <div className="h-full flex flex-col bg-card">
 
-      <div className="px-2 py-1 border-b border-border">
+      <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
             <h2 className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">
