@@ -455,7 +455,7 @@ export function RightSidebar({
                       isFavorited={social.favoritedIds.has(vibe.id)}
                       isLoggedIn={!!user}
                       onSelect={() => handleStencilSelect(vibe)}
-                      onToggleHidden={() => social.toggleHidden(vibe.id)}
+                      onToggleHidden={() => handleHideStencil(vibe.id)}
                       onToggleFav={() => social.toggleFavorite(vibe.id)}
                       onDelete={async () => {
                         setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
