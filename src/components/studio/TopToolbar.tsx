@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
 import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { GrownUpCheckModal } from './GrownUpCheckModal';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
@@ -53,9 +54,39 @@ export function TopToolbar({
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
+  const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
+
+  // Kid mode state
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  const handleKidToggle = () => {
+    if (kidMode) {
+      // Trying to turn OFF → show grown-up check
+      setShowGrownUpCheck(true);
+    } else {
+      // Turn ON kid mode
+      localStorage.setItem('kid-mode', 'true');
+      setKidMode(true);
+      window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: true }));
+    }
+  };
+
+  const handleGrownUpSuccess = () => {
+    setShowGrownUpCheck(false);
+    localStorage.setItem('kid-mode', 'false');
+    setKidMode(false);
+    window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: false }));
+  };
 
   const isStudio = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
@@ -64,12 +95,15 @@ export function TopToolbar({
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   return (
+    <>
     <div className="flex items-center justify-between px-2 md:px-4 py-1 md:py-1.5 bg-background border-b border-border relative">
       {/* Left: Logo + Nav */}
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1.5">
           <Frame className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold tracking-tight text-foreground">Swatchbox Studio</span>
+          <span className="text-xs font-bold tracking-tight text-foreground">
+            {kidMode ? '🧸 Swatchbox Studio' : 'Swatchbox Studio'}
+          </span>
         </div>
         <div className="hidden md:flex items-center gap-3">
           <Link
@@ -79,7 +113,7 @@ export function TopToolbar({
             }`}
           >
             <Brush className="w-3 h-3" />
-            Studio
+            {kidMode ? 'Create' : 'Studio'}
           </Link>
           <Link
             to="/wall"
@@ -88,7 +122,7 @@ export function TopToolbar({
             }`}
           >
             <Grid2x2 className="w-3 h-3" />
-            My Wall
+            {kidMode ? 'My Room' : 'My Wall'}
           </Link>
           <Link
             to="/gallery"
@@ -97,7 +131,7 @@ export function TopToolbar({
             }`}
           >
             <Landmark className="w-3 h-3" />
-            Gallery
+            {kidMode ? 'Show & Tell' : 'Gallery'}
           </Link>
         </div>
       </div>
@@ -106,6 +140,19 @@ export function TopToolbar({
 
       {/* Right */}
       <div className="flex items-center gap-1">
+        {/* Kid Mode Toggle */}
+        <button
+          onClick={handleKidToggle}
+          className={`p-1.5 rounded-md transition-colors ${
+            kidMode
+              ? 'bg-primary/15 text-primary'
+              : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+          }`}
+          title={kidMode ? 'Kids Mode (on)' : 'Kids Mode (off)'}
+        >
+          <span className="text-sm leading-none">🧸</span>
+        </button>
+
         <button
           onClick={toggle}
           className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
@@ -173,5 +220,12 @@ export function TopToolbar({
         )}
       </div>
     </div>
+
+    <GrownUpCheckModal
+      isOpen={showGrownUpCheck}
+      onClose={() => setShowGrownUpCheck(false)}
+      onSuccess={handleGrownUpSuccess}
+    />
+    </>
   );
 }
