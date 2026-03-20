@@ -314,11 +314,28 @@ export function Canvas({
       </div>
       </div>
 
-      {/* Workstation name card */}
+      {/* Easel toggle + Workstation name card */}
       <div
-        className="absolute bottom-4 right-4 z-20"
+        className="absolute bottom-4 right-4 z-20 flex items-center gap-2"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Easel toggle */}
+        <button
+          onClick={() => setEaselMode(prev => !prev)}
+          className={`flex items-center justify-center w-8 h-8 rounded-lg shadow-lg transition-colors ${
+            easelMode ? 'bg-primary text-primary-foreground' : 'bg-black/90 text-white/60 hover:text-white'
+          }`}
+          title={easelMode ? 'Flat view' : 'Easel view'}
+        >
+          {/* Simple easel icon — triangle with a bar */}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <line x1="4" y1="14" x2="8" y2="2" />
+            <line x1="12" y1="14" x2="8" y2="2" />
+            <line x1="8" y1="14" x2="8" y2="5" />
+            <line x1="5" y1="9" x2="11" y2="9" />
+          </svg>
+        </button>
+        {/* Name card */}
         <div className="bg-black/90 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 min-w-[180px]">
           <span className="text-[10px] uppercase tracking-widest text-white/50 select-none">@</span>
           <input
