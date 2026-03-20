@@ -7,13 +7,12 @@ import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 
-export type TableSurface = 'light-wood' | 'white' | 'linen' | 'marble';
+export type TableSurface = 'birch' | 'oak' | 'walnut';
 
 const surfaceImages: Record<TableSurface, string> = {
-  'light-wood': '/images/wood-table-bg.jpg',
-  'white': '/images/surface-white.jpg',
-  'linen': '/images/surface-linen.jpg',
-  'marble': '/images/surface-marble.jpg',
+  'birch': '/walls/wood-birch-wall.png',
+  'oak': '/walls/wood-oak-wall.png',
+  'walnut': '/walls/wood-walnut-wall.png',
 };
 
 interface TableElement {
