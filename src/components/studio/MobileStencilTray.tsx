@@ -35,7 +35,7 @@ export function StencilTray(props: StencilTrayProps) {
   const heights: Record<TrayState, string | number> = {
     hidden: 0,
     peek: 28,
-    expanded: isMobile ? '45vh' : '35vh',
+    expanded: isMobile ? '35vh' : '18vh',
   };
 
   const focusClass = props.focusMode && state !== 'hidden'
