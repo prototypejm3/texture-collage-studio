@@ -378,6 +378,7 @@ export function Canvas({
           )}
         </div>
       </div>
+      </div>
 
       {/* Workstation name card */}
       <div
