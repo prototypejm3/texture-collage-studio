@@ -414,7 +414,8 @@ const Index = () => {
               onTableElementUpdate={handleTableElementUpdate}
               onTableElementDelete={handleTableElementDelete}
               onStencilTableDrop={handleStencilTableDrop}
-              canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+              onSelectTableElement={setSelectedTableElId}
+              selectedTableElementId={selectedTableElId}
               onWallFrameStyleChange={studio.setWallFrameStyle}
               isPremium={isPremium}
               onRequestUpgrade={() => setShowPaywall(true)}
