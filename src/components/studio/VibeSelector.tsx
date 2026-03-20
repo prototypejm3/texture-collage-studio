@@ -114,7 +114,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Letters', emoji: '🔤', ids: letterIds },
   ];
 
-  const allVibes = [...vibes, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...funStencils, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
