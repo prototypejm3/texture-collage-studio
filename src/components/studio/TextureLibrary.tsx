@@ -162,7 +162,7 @@ export function TextureLibrary({
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setActiveGroup('All')}
-            className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
               activeGroup === 'All'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -172,34 +172,34 @@ export function TextureLibrary({
           </button>
           <button
             onClick={() => setActiveGroup('Favorites')}
-            className={`px-2.5 py-1 text-xs rounded-full transition-colors flex items-center gap-1 ${
+            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors flex items-center gap-0.5 ${
               activeGroup === 'Favorites'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
             }`}
           >
-            <Star className="w-3 h-3" /> Favorites
+            <Star className="w-2.5 h-2.5" /> Favs
             {favIds.size > 0 && (
-              <span className="text-[9px] ml-0.5 opacity-70">{favIds.size}</span>
+              <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
             )}
           </button>
           {showCustomTab && (
             <button
               onClick={() => setActiveGroup('Custom')}
-              className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
                 activeGroup === 'Custom'
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              ✨ My Textures
+              ✨ Mine
             </button>
           )}
           {groups.map(group => (
             <button
               key={group.label}
               onClick={() => setActiveGroup(group.label)}
-              className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
                 activeGroup === group.label
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
