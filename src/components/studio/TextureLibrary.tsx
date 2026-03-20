@@ -102,6 +102,11 @@ interface TextureLibraryProps {
   onToggleDrawMode?: () => void;
   nextShape?: ElementShape;
   onSetNextShape?: (shape: ElementShape) => void;
+  // Crayon mode
+  crayonMode?: boolean;
+  crayonTextureId?: string | null;
+  onToggleCrayonMode?: () => void;
+  onSetCrayonTexture?: (textureId: string) => void;
 }
 
 export function TextureLibrary({
@@ -110,6 +115,7 @@ export function TextureLibrary({
   isPremium, onRequestUpgrade,
   applyMode = 'swatch', onApplyModeChange, backgroundTextureId,
   drawMode, onToggleDrawMode, nextShape, onSetNextShape,
+  crayonMode, crayonTextureId, onToggleCrayonMode, onSetCrayonTexture,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [kidMode, setKidMode] = useState(() => {
