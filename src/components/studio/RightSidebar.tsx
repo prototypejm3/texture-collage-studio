@@ -386,7 +386,7 @@ export function RightSidebar({
             <div className="p-3">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className="grid grid-cols-4 gap-1">
+                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
