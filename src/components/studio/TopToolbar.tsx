@@ -71,6 +71,38 @@ export function TopToolbar({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // AI stencil toggle (on by default)
+  const [aiEnabled, setAiEnabled] = useState(() => {
+    try { return localStorage.getItem('ai-stencil-enabled') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setAiEnabled((e as CustomEvent).detail);
+    window.addEventListener('ai-enabled-change', handler);
+    return () => window.removeEventListener('ai-enabled-change', handler);
+  }, []);
+
+  // Show AI welcome modal on first login
+  useEffect(() => {
+    if (user && !localStorage.getItem('ai-welcome-shown')) {
+      setShowAiWelcome(true);
+    }
+  }, [user]);
+
+  const handleAiToggle = () => {
+    const next = !aiEnabled;
+    localStorage.setItem('ai-stencil-enabled', String(next));
+    setAiEnabled(next);
+    window.dispatchEvent(new CustomEvent('ai-enabled-change', { detail: next }));
+  };
+
+  const handleAiWelcomeClose = (enabled: boolean) => {
+    localStorage.setItem('ai-welcome-shown', 'true');
+    localStorage.setItem('ai-stencil-enabled', String(enabled));
+    setAiEnabled(enabled);
+    setShowAiWelcome(false);
+    window.dispatchEvent(new CustomEvent('ai-enabled-change', { detail: enabled }));
+  };
+
   const handleKidToggle = () => {
     if (kidMode) {
       // Trying to turn OFF → show grown-up check
