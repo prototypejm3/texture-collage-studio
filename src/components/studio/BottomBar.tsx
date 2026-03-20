@@ -4,6 +4,17 @@ import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const FREE_EXPORT_LIMIT = 1;
+const EXPORT_COUNT_KEY = 'free-export-count';
+
+function getFreeExportCount(): number {
+  try { return parseInt(localStorage.getItem(EXPORT_COUNT_KEY) || '0', 10); } catch { return 0; }
+}
+
+function incrementFreeExportCount(): void {
+  try { localStorage.setItem(EXPORT_COUNT_KEY, String(getFreeExportCount() + 1)); } catch {}
+}
+
 interface Props {
   wallFrameStyle: FrameStyle;
   onWallFrameStyleChange: (style: FrameStyle) => void;
@@ -203,16 +214,25 @@ export function BottomBar({
           </button>
         )}
         <button
-          onClick={() => isPremium ? onSave() : onRequestUpgrade?.()}
+          onClick={() => {
+            if (isPremium) {
+              onSave();
+            } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
+              incrementFreeExportCount();
+              onSave();
+            } else {
+              onRequestUpgrade?.();
+            }
+          }}
           className={`relative flex items-center gap-0.5 px-2 py-0.5 text-[9px] font-medium rounded-md transition-colors ${
-            isPremium
+            isPremium || getFreeExportCount() < FREE_EXPORT_LIMIT
               ? 'bg-primary text-primary-foreground hover:bg-primary/90'
               : 'bg-muted text-muted-foreground cursor-not-allowed'
           }`}
-          title={isPremium ? 'Export as PNG' : 'Premium'}
+          title={isPremium ? 'Export as PNG' : getFreeExportCount() < FREE_EXPORT_LIMIT ? 'Export (1 free)' : 'Premium'}
         >
           <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Export'}</span>
-          {!isPremium && <Lock className="w-2 h-2 ml-0.5" />}
+          {!isPremium && getFreeExportCount() >= FREE_EXPORT_LIMIT && <Lock className="w-2 h-2 ml-0.5" />}
         </button>
       </div>
     </div>
