@@ -116,9 +116,14 @@ export function Canvas({
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
   onStencilTableDrop,
+  onSelectTableElement,
+  selectedTableElementId,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const selectedTableId = selectedTableElementId ?? null;
+  const setSelectedTableId = useCallback((id: string | null) => {
+    onSelectTableElement?.(id);
+  }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
 
   // Keyboard delete for selected element
