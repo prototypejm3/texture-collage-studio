@@ -383,6 +383,8 @@ const Index = () => {
             onSaveToWall={handleSaveToWall}
             isPremium={isPremium}
             onRequestUpgrade={() => setShowPaywall(true)}
+            tableSurface={tableSurface}
+            onTableSurfaceChange={setTableSurface}
           />
         )}
 
