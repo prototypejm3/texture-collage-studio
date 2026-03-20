@@ -182,7 +182,7 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel 
         onMouseDown={handleStart}
         onMouseMove={handleMove}
         onMouseUp={handleEnd}
-        onMouseLeave={handleEnd}
+        
         onTouchStart={handleStart}
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
