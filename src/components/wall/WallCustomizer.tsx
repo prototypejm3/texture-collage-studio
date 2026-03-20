@@ -19,11 +19,14 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'single', label: 'List', icon: <AlignJustify className="w-3.5 h-3.5" /> },
 ];
 
-const backgrounds: { value: WallBackground; label: string; preview?: string; previewColor?: string }[] = [
-  { value: 'white-brick', label: 'White Brick', preview: '/walls/white-brick.png' },
-  { value: 'wood-birch-wall', label: 'Birch', preview: '/walls/wood-birch-wall.png' },
-  { value: 'wood-oak-wall', label: 'Oak', preview: '/walls/wood-oak-wall.png' },
-  { value: 'wood-walnut-wall', label: 'Walnut', preview: '/walls/wood-walnut-wall.png' },
+const backgrounds: { value: WallBackground; label: string; kidLabel?: string; preview?: string; previewColor?: string }[] = [
+  { value: 'white-brick', label: 'White Brick', kidLabel: 'White Brick', preview: '/walls/white-brick.png' },
+  { value: 'wood-birch-wall', label: 'Birch', kidLabel: 'Light Wood', preview: '/walls/wood-birch-wall.png' },
+  { value: 'wood-oak-wall', label: 'Oak', kidLabel: 'Medium Wood', preview: '/walls/wood-oak-wall.png' },
+  { value: 'wood-walnut-wall', label: 'Walnut', kidLabel: 'Dark Wood', preview: '/walls/wood-walnut-wall.png' },
+  { value: 'sky-blue', label: 'Sky Blue', kidLabel: '☁️ Sky Blue', preview: '/walls/sky-blue-wall.png' },
+  { value: 'mint', label: 'Mint', kidLabel: '🌿 Mint', preview: '/walls/mint-wall.png' },
+  { value: 'blush', label: 'Blush', kidLabel: '🌸 Blush', preview: '/walls/blush-wall.png' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
