@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
