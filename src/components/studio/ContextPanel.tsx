@@ -106,24 +106,10 @@ export function ContextPanel(props: ContextPanelProps) {
                   onDelete={() => props.onDeleteElement(props.selectedId!)}
                 />
 
-                {/* Frame controls inline */}
+                {/* Canvas format label */}
                 <div className="px-3 py-3 border-t border-border">
-                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Canvas Size</p>
-                  <div className="flex gap-1">
-                    {frameSizes.map(s => (
-                      <button
-                        key={s}
-                        onClick={() => props.onFrameSizeChange(s)}
-                        className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${
-                          props.frameSize === s
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1">Format</p>
+                  <span className="text-[10px] font-semibold text-foreground">12×12 Canvas</span>
                 </div>
 
                 <div className="px-3 py-3 border-t border-border">
