@@ -1109,12 +1109,15 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
 
   return (
     <div
-      onMouseDown={handleMouseDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       onClick={(e) => { e.stopPropagation(); onSelect(); }}
-      className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} active:scale-[0.98] transition-transform`}
       style={{
         left: element.x,
         top: element.y,
+        touchAction: 'none',
         width: element.width,
         height: element.height,
         transform: `rotate(${element.rotation}deg)`,
