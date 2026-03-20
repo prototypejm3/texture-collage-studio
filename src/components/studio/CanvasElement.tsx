@@ -169,7 +169,9 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
     <div
       ref={ref}
-      onMouseDown={handleMouseDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -180,7 +182,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         e.stopPropagation();
         onSelect();
       }}
-      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} active:scale-[0.98] transition-transform`}
       style={{
         left: element.clipPathD ? 0 : element.x,
         top: element.clipPathD ? 0 : element.y,
@@ -188,6 +190,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         height: element.clipPathD ? '100%' : element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
+        touchAction: 'none',
         filter: element.effects.shadowDepth === 'lifted'
           ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
           : element.effects.shadowDepth === 'floating'
