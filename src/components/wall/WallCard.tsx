@@ -392,7 +392,8 @@ export function WallCard({
                 </button>
               </div>
             </>
-          )}
+            );
+          })()}
         </div>
       </div>
 
