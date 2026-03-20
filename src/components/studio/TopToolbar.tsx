@@ -187,6 +187,19 @@ export function TopToolbar({
           <span className="text-sm leading-none">🧸</span>
         </button>
 
+        {/* AI Toggle */}
+        <button
+          onClick={handleAiToggle}
+          className={`p-1.5 rounded-md transition-colors ${
+            aiEnabled
+              ? 'bg-primary/15 text-primary'
+              : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+          }`}
+          title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+        >
+          <Sparkles className="w-4 h-4" />
+        </button>
+
         <button
           onClick={toggle}
           className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
