@@ -42,6 +42,7 @@ const Index = () => {
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
+  const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
