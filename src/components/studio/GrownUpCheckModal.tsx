@@ -43,14 +43,12 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const handleSubmit = () => {
     if (!selected) return;
     if (check.accepted.includes(selected)) {
+      // Correct answer — but tease them first
       setResult('correct');
-      setTimeout(() => onSuccess(), 600);
+      setTimeout(() => onSuccess(), 1800);
     } else {
+      // Wrong — lock them in kid mode permanently (until settings)
       setResult('wrong');
-      setTimeout(() => {
-        setResult(null);
-        setSelected(null);
-      }, 1500);
     }
   };
 
