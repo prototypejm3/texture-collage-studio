@@ -157,7 +157,7 @@ export function Canvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
+      className="flex-1 flex items-center justify-center p-0 relative overflow-hidden"
       style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: '400px auto',
