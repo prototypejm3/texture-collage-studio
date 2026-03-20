@@ -6,6 +6,7 @@ import { VibeOutline } from './VibeOutline';
 import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
+import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import concreteFloor from '@/assets/concrete-floor.jpg';
 
 export type TableSurface = 'birch' | 'oak' | 'walnut';
@@ -131,6 +132,16 @@ export function Canvas({
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
   const [trashHover, setTrashHover] = useState(false);
   const trashRef = useRef<HTMLDivElement>(null);
+  const [boxItems, setBoxItems] = useState<BoxItem[]>(() => {
+    try { const raw = localStorage.getItem('kid-maybe-box'); return raw ? JSON.parse(raw) : []; } catch { return []; }
+  });
+  const [boxHover, setBoxHover] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // Persist box items
+  useEffect(() => {
+    try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
+  }, [boxItems]);
 
   // Kid mode — synced from TextureLibrary
   const [kidMode, setKidMode] = useState(() => {
@@ -141,6 +152,12 @@ export function Canvas({
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
+
+  const isOverBox = useCallback((clientX: number, clientY: number) => {
+    if (!boxRef.current || !kidMode) return false;
+    const rect = boxRef.current.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+  }, [kidMode]);
 
   // Check if a mouse position is over the trash zone
   const isOverTrash = useCallback((clientX: number, clientY: number) => {
@@ -170,26 +187,48 @@ export function Canvas({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
 
-  // Trash zone: delete element on mouseup if over trash
+  // Trash & Maybe Box zones: handle element on mouseup
   useEffect(() => {
     if (!kidMode) return;
     const handleMouseUp = (e: MouseEvent) => {
+      // Check Maybe Box first
+      if (isOverBox(e.clientX, e.clientY)) {
+        if (selectedTableId) {
+          const tel = tableElements.find(t => t.id === selectedTableId);
+          if (tel) {
+            setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: tel.textureId, vibeId: tel.vibeId }]);
+            onTableElementDelete(selectedTableId);
+            setSelectedTableId(null);
+          }
+        } else if (selectedId) {
+          const el = elements.find(e => e.id === selectedId);
+          if (el) {
+            setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: el.textureId }]);
+            onDeleteElement(selectedId);
+            onSelect(null);
+          }
+        }
+        setBoxHover(false);
+        setTrashHover(false);
+        return;
+      }
+      // Check Trash
       if (isOverTrash(e.clientX, e.clientY)) {
         if (selectedTableId) {
           onTableElementDelete(selectedTableId);
           setSelectedTableId(null);
-          setTrashHover(false);
         } else if (selectedId) {
           onDeleteElement(selectedId);
           onSelect(null);
-          setTrashHover(false);
         }
       }
       setTrashHover(false);
+      setBoxHover(false);
     };
     const handleMouseMove = (e: MouseEvent) => {
       if (e.buttons === 1 && (selectedId || selectedTableId)) {
         setTrashHover(isOverTrash(e.clientX, e.clientY));
+        setBoxHover(isOverBox(e.clientX, e.clientY));
       }
     };
     window.addEventListener('mouseup', handleMouseUp);
@@ -198,7 +237,7 @@ export function Canvas({
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [kidMode, selectedId, selectedTableId, isOverTrash, onDeleteElement, onTableElementDelete, onSelect]);
+  }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
@@ -455,7 +494,49 @@ export function Canvas({
         </div>
       )}
 
-      {/* Easel + Frame group */}
+      {/* Kid Mode Maybe Box */}
+      {kidMode && !easelMode && (
+        <div
+          ref={boxRef}
+          className="absolute z-30"
+          style={{
+            bottom: 44,
+            left: 44,
+          }}
+          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
+          onDragLeave={() => setBoxHover(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setBoxHover(false);
+            const fromBox = e.dataTransfer.getData('fromBox');
+            if (fromBox) {
+              // Dragged from box to desk — handled by onDragOutItem
+              return;
+            }
+            const textureId = e.dataTransfer.getData('textureId');
+            if (textureId) {
+              setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
+            }
+          }}
+        >
+          <MaybeBox
+            items={boxItems}
+            onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
+            onDragOutItem={(item) => {
+              setBoxItems(prev => prev.filter(i => i.id !== item.id));
+              // Put it on the desk near the box
+              if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                onTableDrop(item.textureId, 120, rect.height - 160);
+              }
+            }}
+            isHovered={boxHover}
+            customTextures={customTextures}
+          />
+        </div>
+      )}
+
       <div style={{
         display: 'flex',
         flexDirection: 'column',
