@@ -5,6 +5,7 @@ interface Props {
   canvasHeight: number;
   onFinishDraw: (pathD: string) => void;
   onCancel: () => void;
+  crayonMode?: boolean;
 }
 
 /**
