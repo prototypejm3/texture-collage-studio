@@ -41,7 +41,7 @@ interface ContextPanelProps {
   backgroundTextureId: string | null;
 }
 
-const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
+// Frame sizes kept internally for potential future use
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
   { id: 'gold', label: 'Gold' },
