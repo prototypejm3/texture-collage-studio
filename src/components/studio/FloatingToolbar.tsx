@@ -53,10 +53,10 @@ function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }
 }
 
 const shapeOptions: { value: ElementShape; label: string; kidLabel: string }[] = [
-  { value: 'soft-square', label: 'Soft Square', kidLabel: '⬜ Squishy' },
-  { value: 'torn-edge', label: 'Torn Edge', kidLabel: '🫧 Ripped' },
-  { value: 'circle', label: 'Circle', kidLabel: '⭕ Round' },
-  { value: 'blob', label: 'Blob', kidLabel: '🫠 Blobby' },
+  { value: 'soft-square', label: 'Soft Square', kidLabel: 'Squishy' },
+  { value: 'torn-edge', label: 'Torn Edge', kidLabel: 'Ripped' },
+  { value: 'circle', label: 'Circle', kidLabel: 'Round' },
+  { value: 'blob', label: 'Blob', kidLabel: 'Blobby' },
   { value: 'strip', label: 'Strip', kidLabel: 'Skinny' },
   { value: 'rectangle', label: 'Rectangle', kidLabel: 'Wide' },
 ];
