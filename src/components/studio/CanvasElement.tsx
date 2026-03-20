@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { X } from 'lucide-react';
 import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
@@ -120,40 +120,35 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  // Unified pointer handler for both mouse and touch
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
     e.preventDefault();
     onSelect();
     setIsDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY, elX: element.x, elY: element.y };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }, [element.x, element.y, onSelect]);
 
-  useEffect(() => {
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
-    const handleMove = (e: MouseEvent) => {
-      const dx = e.clientX - dragStart.current.x;
-      const dy = e.clientY - dragStart.current.y;
-      onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
-    };
-    const handleUp = (e: MouseEvent) => {
-      setIsDragging(false);
-      if (canvasRef?.current) {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const cx = e.clientX;
-        const cy = e.clientY;
-        // Dragged outside canvas sides/top = move to table
-        if (onMoveToTable && (cx < rect.left || cx > rect.right || cy < rect.top)) {
-          onMoveToTable(e.clientX, e.clientY);
-        }
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
+  }, [isDragging, onUpdate]);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (canvasRef?.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const cx = e.clientX;
+      const cy = e.clientY;
+      if (onMoveToTable && (cx < rect.left || cx > rect.right || cy < rect.top)) {
+        onMoveToTable(e.clientX, e.clientY);
       }
-    };
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', handleUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
-    };
-  }, [isDragging, onUpdate, onMoveToTable, canvasRef]);
+    }
+  }, [isDragging, onMoveToTable, canvasRef]);
 
   const allTex = [...textures, ...customTextures];
   const texture = allTex.find(t => t.id === element.textureId);
@@ -174,7 +169,9 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
     <div
       ref={ref}
-      onMouseDown={handleMouseDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -185,7 +182,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         e.stopPropagation();
         onSelect();
       }}
-      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} active:scale-[0.98] transition-transform`}
       style={{
         left: element.clipPathD ? 0 : element.x,
         top: element.clipPathD ? 0 : element.y,
@@ -193,6 +190,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         height: element.clipPathD ? '100%' : element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
+        touchAction: 'none',
         filter: element.effects.shadowDepth === 'lifted'
           ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
           : element.effects.shadowDepth === 'floating'

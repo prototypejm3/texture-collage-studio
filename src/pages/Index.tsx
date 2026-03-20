@@ -380,18 +380,7 @@ const Index = () => {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      {/* Mobile banner */}
-      {isMobile && showMobileBanner && (
-        <div className="flex items-center justify-between px-3 py-2 bg-primary/10 border-b border-primary/20 shrink-0">
-          <div className="flex items-center gap-2 text-[11px] text-primary">
-            <Monitor className="w-3.5 h-3.5 shrink-0" />
-            <span className="font-medium">Best experience on desktop — mobile app coming soon!</span>
-          </div>
-          <button onClick={() => setShowMobileBanner(false)} className="p-0.5 text-primary/60 hover:text-primary">
-            <X className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      )}
+      {/* Mobile welcome — no discouraging banner */}
 
       {/* Top bar with nav + focus toggle */}
       <TopToolbar
@@ -657,23 +646,29 @@ const Index = () => {
         )}
       </div>
 
-      {/* Mobile bottom bar with compact controls + nav */}
+      {/* Mobile bottom bar — thumb-reachable */}
       {isMobile && (
-        <div className="flex items-center justify-between px-1.5 py-1 bg-popover border-t border-border safe-area-bottom">
-          <div className="flex items-center gap-0.5">
-            <button onClick={handleClearAll} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
+        <div className="flex items-center justify-between px-2 py-2 bg-popover border-t border-border" style={{ paddingBottom: 'max(8px, env(safe-area-inset-bottom))' }}>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleClearAll}
+              className="flex items-center justify-center px-3 py-2.5 min-w-[44px] min-h-[44px] text-xs text-destructive active:bg-destructive/10 rounded-xl transition-colors"
+            >
               Clear
             </button>
-            <button onClick={handleSaveToWall} className="px-1.5 py-0.5 text-[8px] text-foreground hover:bg-secondary rounded-md">
+            <button
+              onClick={handleSaveToWall}
+              className="flex items-center justify-center px-3 py-2.5 min-w-[44px] min-h-[44px] text-xs text-foreground active:bg-secondary rounded-xl transition-colors"
+            >
               Save
             </button>
-            <button
-              onClick={() => isPremium ? handleExport() : setShowPaywall(true)}
-              className="px-2 py-0.5 text-[8px] font-medium bg-primary text-primary-foreground rounded-md"
-            >
-              Export
-            </button>
           </div>
+          <button
+            onClick={() => isPremium ? handleExport() : setShowPaywall(true)}
+            className="flex items-center justify-center px-4 py-2.5 min-w-[44px] min-h-[44px] text-xs font-semibold bg-primary text-primary-foreground rounded-xl active:scale-95 transition-transform"
+          >
+            Export
+          </button>
         </div>
       )}
 

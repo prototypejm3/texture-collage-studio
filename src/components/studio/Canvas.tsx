@@ -207,10 +207,10 @@ export function Canvas({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
 
-  // Trash & Maybe Box zones: handle element on mouseup
+  // Trash & Maybe Box zones: handle element on pointer up (mouse + touch)
   useEffect(() => {
     if (!kidMode) return;
-    const handleMouseUp = (e: MouseEvent) => {
+    const handlePointerUp = (e: PointerEvent) => {
       // Check Maybe Box first
       if (isOverBox(e.clientX, e.clientY)) {
         if (selectedTableId) {
@@ -245,34 +245,34 @@ export function Canvas({
       setTrashHover(false);
       setBoxHover(false);
     };
-    const handleMouseMove = (e: MouseEvent) => {
-      if (e.buttons === 1 && (selectedId || selectedTableId)) {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pressure > 0 && (selectedId || selectedTableId)) {
         setTrashHover(isOverTrash(e.clientX, e.clientY));
         setBoxHover(isOverBox(e.clientX, e.clientY));
       }
     };
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointermove', handlePointerMove);
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
 
   // Box dragging
   useEffect(() => {
     if (!isBoxDragging) return;
-    const handleMove = (e: MouseEvent) => {
+    const handleMove = (e: PointerEvent) => {
       const dx = e.clientX - boxDragStart.current.mx;
       const dy = e.clientY - boxDragStart.current.my;
       setBoxPos({ x: boxDragStart.current.bx + dx, y: boxDragStart.current.by + dy });
     };
     const handleUp = () => setIsBoxDragging(false);
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', handleUp);
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
     return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
     };
   }, [isBoxDragging]);
 
@@ -292,12 +292,16 @@ export function Canvas({
     return () => obs.disconnect();
   }, []);
 
+  const isMobileCanvas = containerSize.width > 0 && containerSize.width < 768;
+  
   const canvasSize = useMemo(() => {
     if (!containerSize.width || !containerSize.height) return baseSize;
     const aspect = baseSize.w / baseSize.h;
-    // Max 70% of container, capped at base pixel size
-    const maxW = Math.min(containerSize.width * 0.55, baseSize.w);
-    const maxH = Math.min(containerSize.height * 0.7, baseSize.h);
+    // Mobile: use more of the screen; Desktop: cap at 55%
+    const widthFraction = isMobileCanvas ? 0.88 : 0.55;
+    const heightFraction = isMobileCanvas ? 0.65 : 0.7;
+    const maxW = Math.min(containerSize.width * widthFraction, baseSize.w);
+    const maxH = Math.min(containerSize.height * heightFraction, baseSize.h);
     let w = maxW;
     let h = w / aspect;
     if (h > maxH) {
@@ -305,7 +309,7 @@ export function Canvas({
       w = h * aspect;
     }
     return { w: Math.round(Math.max(w, 200)), h: Math.round(Math.max(h, 200)) };
-  }, [containerSize, baseSize]);
+  }, [containerSize, baseSize, isMobileCanvas]);
 
   const { w, h } = canvasSize;
 
@@ -998,29 +1002,25 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
   const [isDragging, setIsDragging] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
     e.preventDefault();
     onSelect();
     setIsDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY, elX: element.x, elY: element.y };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }, [element.x, element.y, onSelect]);
 
-  useEffect(() => {
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
-    const handleMove = (e: MouseEvent) => {
-      const dx = e.clientX - dragStart.current.x;
-      const dy = e.clientY - dragStart.current.y;
-      onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
-    };
-    const handleUp = () => setIsDragging(false);
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', handleUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
-    };
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
   }, [isDragging, onUpdate]);
+
+  const handlePointerUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   // If this is a stencil element, render SVG outline with clickable sections
   const vibe = element.vibeId ? allStencilVibes.find(v => v.id === element.vibeId) : null;
@@ -1034,14 +1034,17 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
 
     return (
       <div
-        onMouseDown={handleMouseDown}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
         onClick={(e) => { e.stopPropagation(); onSelect(); setSelectedSection(null); }}
-        className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''}`}
+        className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''} active:scale-[0.98] transition-transform`}
         style={{
           left: element.x,
           top: element.y,
           width: element.width,
           height: element.height,
+          touchAction: 'none',
           transform: `rotate(${element.rotation}deg)`,
           zIndex: 5,
           filter: 'drop-shadow(0 3px 6px hsla(220, 20%, 12%, 0.25))',
@@ -1110,12 +1113,15 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
 
   return (
     <div
-      onMouseDown={handleMouseDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       onClick={(e) => { e.stopPropagation(); onSelect(); }}
-      className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} active:scale-[0.98] transition-transform`}
       style={{
         left: element.x,
         top: element.y,
+        touchAction: 'none',
         width: element.width,
         height: element.height,
         transform: `rotate(${element.rotation}deg)`,
