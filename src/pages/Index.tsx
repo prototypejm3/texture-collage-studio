@@ -44,6 +44,7 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
+  const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
@@ -175,10 +176,11 @@ const Index = () => {
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
-    } else if (!studio.selectedId && !studio.activeVibe) {
+    } else if (textureApplyMode === 'background') {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     }
-  }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
+    // In 'swatch' mode, clicking does nothing special (drag to add)
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
@@ -357,6 +359,9 @@ const Index = () => {
                 onRemoveCustomTexture={removeCustomTexture}
                 isPremium={isPremium}
                 onRequestUpgrade={() => setShowPaywall(true)}
+                applyMode={textureApplyMode}
+                onApplyModeChange={setTextureApplyMode}
+                backgroundTextureId={studio.backgroundTextureId}
               />
             </div>
           )}
