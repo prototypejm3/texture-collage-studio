@@ -248,7 +248,7 @@ export function RightSidebar({
       )}
 
       {/* Tab content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto texture-panel">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
             {/* AI Stencil */}
