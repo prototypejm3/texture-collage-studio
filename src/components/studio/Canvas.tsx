@@ -92,6 +92,7 @@ export function Canvas({
   customTemplate, templateOpacity,
   backgroundTextureId, sectionTransforms,
   tableElements, tableSurface,
+  workstationName, onWorkstationNameChange,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
