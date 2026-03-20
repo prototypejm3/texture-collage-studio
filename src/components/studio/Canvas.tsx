@@ -187,26 +187,48 @@ export function Canvas({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
 
-  // Trash zone: delete element on mouseup if over trash
+  // Trash & Maybe Box zones: handle element on mouseup
   useEffect(() => {
     if (!kidMode) return;
     const handleMouseUp = (e: MouseEvent) => {
+      // Check Maybe Box first
+      if (isOverBox(e.clientX, e.clientY)) {
+        if (selectedTableId) {
+          const tel = tableElements.find(t => t.id === selectedTableId);
+          if (tel) {
+            setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: tel.textureId, vibeId: tel.vibeId }]);
+            onTableElementDelete(selectedTableId);
+            setSelectedTableId(null);
+          }
+        } else if (selectedId) {
+          const el = elements.find(e => e.id === selectedId);
+          if (el) {
+            setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: el.textureId }]);
+            onDeleteElement(selectedId);
+            onSelect(null);
+          }
+        }
+        setBoxHover(false);
+        setTrashHover(false);
+        return;
+      }
+      // Check Trash
       if (isOverTrash(e.clientX, e.clientY)) {
         if (selectedTableId) {
           onTableElementDelete(selectedTableId);
           setSelectedTableId(null);
-          setTrashHover(false);
         } else if (selectedId) {
           onDeleteElement(selectedId);
           onSelect(null);
-          setTrashHover(false);
         }
       }
       setTrashHover(false);
+      setBoxHover(false);
     };
     const handleMouseMove = (e: MouseEvent) => {
       if (e.buttons === 1 && (selectedId || selectedTableId)) {
         setTrashHover(isOverTrash(e.clientX, e.clientY));
+        setBoxHover(isOverBox(e.clientX, e.clientY));
       }
     };
     window.addEventListener('mouseup', handleMouseUp);
@@ -215,7 +237,7 @@ export function Canvas({
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [kidMode, selectedId, selectedTableId, isOverTrash, onDeleteElement, onTableElementDelete, onSelect]);
+  }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
