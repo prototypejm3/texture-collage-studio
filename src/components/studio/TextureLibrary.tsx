@@ -111,8 +111,16 @@ export function TextureLibrary({
   drawMode, onToggleDrawMode, nextShape, onSetNextShape,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  const [kidMode, setKidMode] = useState(true);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
+
+  // Sync kidMode to localStorage and broadcast to other components
+  useEffect(() => {
+    localStorage.setItem('kid-mode', String(kidMode));
+    window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: kidMode }));
+  }, [kidMode]);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
