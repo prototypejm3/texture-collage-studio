@@ -184,7 +184,7 @@ export function BottomBar({
                 <line x1="16" y1="22" x2="20" y2="22" />
               </svg>
             )}
-            <span className="hidden sm:inline">{easelMode ? 'Easel' : 'Desk'}</span>
+            <span className="hidden sm:inline">{kidMode ? (easelMode ? 'Stand Up' : 'Flat') : (easelMode ? 'Easel' : 'Desk')}</span>
           </button>
         </>
       )}
