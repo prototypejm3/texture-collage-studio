@@ -35,10 +35,10 @@ const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolea
 ];
 
 // Special styles as pill buttons
-const specialFrames: { id: FrameStyle; label: string }[] = [
-  { id: 'shadow-box', label: 'Shadow' },
-  { id: 'floating', label: 'Float' },
-  { id: 'polaroid', label: 'Polaroid' },
+const specialFrames: { id: FrameStyle; label: string; kidLabel: string }[] = [
+  { id: 'shadow-box', label: 'Shadow', kidLabel: 'Box' },
+  { id: 'floating', label: 'Float', kidLabel: 'Float' },
+  { id: 'polaroid', label: 'Polaroid', kidLabel: 'Photo' },
 ];
 
 export function BottomBar({
@@ -93,7 +93,7 @@ export function BottomBar({
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                {f.label}
+                {kidMode ? f.kidLabel : f.label}
               </button>
               {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
                 <>
@@ -134,7 +134,7 @@ export function BottomBar({
       {/* Surface selector */}
       {onTableSurfaceChange && (
         <div className="flex items-center gap-0.5">
-          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Table' : 'Wood'}</span>
+          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Desk' : 'Wood'}</span>
           {([
             { id: 'birch' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,75%), hsl(38,25%,65%))', label: 'Birch' },
             { id: 'oak' as TableSurface, bg: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(28,35%,42%))', label: 'Oak' },
