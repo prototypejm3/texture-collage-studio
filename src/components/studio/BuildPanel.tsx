@@ -10,6 +10,7 @@ interface BuildPanelProps {
   activeVibeId: string | null;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
+  onPlaceStencil: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
   customTemplate: CustomTemplate | null;
