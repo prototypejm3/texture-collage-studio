@@ -46,7 +46,7 @@ const adultChecks: AdultCheck[] = [
     accepted: ['A', 'B'],
   },
   {
-    question: 'You're about to go to sleep. You:',
+    question: "You're about to go to sleep. You:",
     options: [
       { label: 'A', text: 'Close your eyes peacefully' },
       { label: 'B', text: 'Remember that embarrassing thing from 2014' },
