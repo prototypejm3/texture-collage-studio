@@ -207,10 +207,10 @@ export function Canvas({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
 
-  // Trash & Maybe Box zones: handle element on mouseup
+  // Trash & Maybe Box zones: handle element on pointer up (mouse + touch)
   useEffect(() => {
     if (!kidMode) return;
-    const handleMouseUp = (e: MouseEvent) => {
+    const handlePointerUp = (e: PointerEvent) => {
       // Check Maybe Box first
       if (isOverBox(e.clientX, e.clientY)) {
         if (selectedTableId) {
@@ -245,17 +245,17 @@ export function Canvas({
       setTrashHover(false);
       setBoxHover(false);
     };
-    const handleMouseMove = (e: MouseEvent) => {
-      if (e.buttons === 1 && (selectedId || selectedTableId)) {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pressure > 0 && (selectedId || selectedTableId)) {
         setTrashHover(isOverTrash(e.clientX, e.clientY));
         setBoxHover(isOverBox(e.clientX, e.clientY));
       }
     };
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointermove', handlePointerMove);
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
 
