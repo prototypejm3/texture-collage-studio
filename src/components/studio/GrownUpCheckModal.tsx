@@ -22,10 +22,12 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const handleSubmit = () => {
     const trimmed = answer.trim().toLowerCase();
     if (!trimmed) return;
-    // Accept any tax-related answer
-    const taxKeywords = ['tax', 'w-2', 'w2', 'wage', 'irs', 'income', 'employer', '1099', 'withholding', 'deduction', 'refund', 'filing'];
-    const isTaxRelated = taxKeywords.some(kw => trimmed.includes(kw));
-    if (isTaxRelated) {
+    // Accept any mortgage/interest/escrow related answer
+    const grownUpKeywords = ['mortgage', 'interest', 'loan', 'escrow', 'credit', 'insurance', 'premium', 'deductible', 'apr', 'refinance', 'amortiz', 'equity', 'down payment', 'principal', 'rate', 'bank', 'lender', 'payment', 'house', 'home', 'buy', 'borrow', 'debt', 'monthly', 'fixed', 'variable', 'arm',
+      // also keep tax keywords
+      'tax', 'w-2', 'w2', 'wage', 'irs', 'income', 'employer', '1099', 'withholding', 'deduction', 'refund', 'filing'];
+    const isGrownUp = grownUpKeywords.some(kw => trimmed.includes(kw));
+    if (isGrownUp) {
       setResult('correct');
       setTimeout(() => onSuccess(), 1800);
     } else {
