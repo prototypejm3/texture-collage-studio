@@ -51,7 +51,7 @@ export function BottomBar({
   isPremium = false, onRequestUpgrade,
   onOpenToolKit, toolKitOpen = false,
   onOpenStencils, stencilsOpen = false,
-  tableSurface = 'light-wood', onTableSurfaceChange,
+  tableSurface = 'birch', onTableSurfaceChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
