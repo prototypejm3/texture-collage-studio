@@ -7,6 +7,16 @@ import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 
+interface TableElement {
+  id: string;
+  textureId: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotation: number;
+}
+
 interface Props {
   elements: CanvasElement[];
   selectedId: string | null;
@@ -21,6 +31,7 @@ interface Props {
   customTextures?: TextureSwatch[];
   backgroundTextureId: string | null;
   sectionTransforms: SectionTransforms;
+  tableElements: TableElement[];
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
@@ -31,6 +42,10 @@ interface Props {
   onDeleteSection: (sectionId: string) => void;
   onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
+  onDeleteElement: (id: string) => void;
+  onTableDrop: (textureId: string, x: number, y: number) => void;
+  onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
+  onTableElementDelete: (id: string) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   drawMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
