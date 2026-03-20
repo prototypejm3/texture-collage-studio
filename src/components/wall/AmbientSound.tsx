@@ -417,6 +417,16 @@ export function AmbientSoundPlayer({ sound, showControl = false }: AmbientSoundP
   const [isPlaying, setIsPlaying] = useState(false);
   const [userStarted, setUserStarted] = useState(false);
 
+  // Kid mode state
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
   const startAudio = useCallback(() => {
     if (sound === 'none') return;
 
@@ -431,7 +441,7 @@ export function AmbientSoundPlayer({ sound, showControl = false }: AmbientSoundP
 
     const ctx = new AudioContext();
     ctxRef.current = ctx;
-    const engine = createLofiEngine(ctx, sound);
+    const engine = createLofiEngine(ctx, sound, kidMode);
     engine.master.connect(ctx.destination);
     engineRef.current = engine;
 
@@ -439,7 +449,7 @@ export function AmbientSoundPlayer({ sound, showControl = false }: AmbientSoundP
     engine.master.gain.setValueAtTime(0, ctx.currentTime);
     engine.master.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 2);
     setIsPlaying(true);
-  }, [sound]);
+  }, [sound, kidMode]);
 
   const stopAudio = useCallback(() => {
     if (engineRef.current && ctxRef.current) {
