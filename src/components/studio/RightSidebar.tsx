@@ -250,6 +250,40 @@ export function RightSidebar({
         </div>
       </div>
 
+      {/* Replace vs Layer dialog */}
+      {pendingVibe && (
+        <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
+          <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
+            <h3 className="text-sm font-semibold mb-1">Switch Stencil</h3>
+            <p className="text-[10px] text-muted-foreground mb-3">
+              You already have a stencil on the canvas. What would you like to do?
+            </p>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleReplaceConfirm}
+                className="w-full px-3 py-2 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
+              >
+                <span className="font-semibold">Replace</span>
+                <span className="block text-[9px] text-muted-foreground mt-0.5">Remove current stencil and use the new one</span>
+              </button>
+              <button
+                onClick={handleLayerConfirm}
+                className="w-full px-3 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
+              >
+                <span className="font-semibold">Layer</span>
+                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">Stamp current stencil down and add the new one on top</span>
+              </button>
+              <button
+                onClick={() => setPendingVibe(null)}
+                className="w-full px-3 py-1.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+
       {/* Save dialog overlay */}
       {saveDialogVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
