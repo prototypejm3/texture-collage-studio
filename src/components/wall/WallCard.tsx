@@ -359,8 +359,15 @@ export function WallCard({
                   ))}
                 </div>
                 <div className="border-t border-border my-1" />
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Frame</p>
-                <div className="flex flex-wrap gap-1 px-3 py-1.5 max-h-[120px] overflow-y-auto">
+                <button
+                  onClick={(e) => { e.stopPropagation(); setFrameExpanded(!frameExpanded); }}
+                  className="w-full text-left px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest flex items-center gap-1 hover:text-foreground transition-colors"
+                >
+                  Frame
+                  {frameExpanded ? <ChevronUp className="w-2.5 h-2.5 ml-auto" /> : <ChevronDown className="w-2.5 h-2.5 ml-auto" />}
+                </button>
+                {frameExpanded && (
+                <div className="flex flex-wrap gap-1 px-3 py-1.5">
                   {frameStyleList.map(f => (
                     <button
                       key={f.value}
@@ -371,6 +378,7 @@ export function WallCard({
                     </button>
                   ))}
                 </div>
+                )}
                 {onSubmitToGallery && !design.gallerySubmissionId && (
                   <>
                     <div className="border-t border-border my-1" />
