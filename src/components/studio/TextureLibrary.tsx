@@ -253,6 +253,36 @@ export function TextureLibrary({
             </button>
           ))}
         </div>
+
+        {/* Shape & Draw tools */}
+        {onToggleDrawMode && onSetNextShape && nextShape && (
+          <div className="flex items-center gap-1 mt-1 flex-wrap">
+            <button
+              onClick={onToggleDrawMode}
+              className={`flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium rounded-full transition-colors ${
+                drawMode
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+              }`}
+            >
+              <PenTool className="w-3 h-3" />
+              Draw
+            </button>
+            {shapes.map(shape => (
+              <button
+                key={shape.value}
+                onClick={() => onSetNextShape(shape.value)}
+                className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                  nextShape === shape.value
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                }`}
+              >
+                {shape.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-2">
         <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1.5">
