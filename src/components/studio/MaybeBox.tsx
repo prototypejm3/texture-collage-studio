@@ -137,7 +137,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
 
         {/* Label */}
         <span className="absolute bottom-1 text-[7px] font-bold text-amber-200/80 tracking-wider uppercase pointer-events-none">
-          {isOpen ? '📦 My Box' : '📦 My Box'}
+          {isOpen ? '🖼️ My Frame' : '🖼️ My Frame'}
         </span>
       </button>
     </div>
