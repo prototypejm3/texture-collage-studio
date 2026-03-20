@@ -580,18 +580,18 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
-        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
-          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        className={`aspect-square rounded overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-1 ring-primary/40' : 'border-border/50'
         }`}
       >
         <VibePreviewSVG vibe={vibe} />
         {isActive && (
-          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
-            <Check className="w-2 h-2 text-primary-foreground" />
+          <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-1.5 h-1.5 text-primary-foreground" />
           </div>
         )}
       </div>
-      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
         {vibe.emoji} {vibe.name}
       </p>
 
