@@ -311,13 +311,31 @@ export function TextureLibrary({
             <button
               onClick={onToggleDrawMode}
               className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-medium rounded-full transition-colors ${
-                drawMode
+                drawMode && !crayonMode
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
               <PenTool className="w-3 h-3" />
+              {kidMode ? 'Draw' : ''}
             </button>
+            {kidMode && onToggleCrayonMode && (
+              <button
+                onClick={onToggleCrayonMode}
+                className={`flex items-center gap-1 px-2 py-0.5 text-[12px] font-semibold rounded-full transition-colors ${
+                  crayonMode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                }`}
+              >
+                🖍️ Crayon
+              </button>
+            )}
+            {crayonMode && crayonTextureId && (
+              <span className="flex items-center gap-1 text-[11px] text-primary font-medium">
+                ← pick a color below!
+              </span>
+            )}
             {shapes.map(shape => (
               <button
                 key={shape.value}
@@ -332,6 +350,15 @@ export function TextureLibrary({
                 {kidMode ? shape.kidLabel : shape.label}
               </button>
             ))}
+          </div>
+        )}
+
+        {/* Crayon mode hint */}
+        {crayonMode && !crayonTextureId && (
+          <div className="mt-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
+            <p className={`${kidMode ? 'text-[11px]' : 'text-[9px]'} text-primary font-medium`}>
+              🖍️ {kidMode ? 'Pick a color to draw with!' : 'Select a texture, then draw with it as a crayon.'}
+            </p>
           </div>
         )}
       </div>
