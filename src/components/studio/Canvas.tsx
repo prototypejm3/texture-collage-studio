@@ -315,6 +315,23 @@ export function Canvas({
           )}
         </div>
       </div>
+
+      {/* Contact shadow where canvas meets shelf */}
+      {easelMode && (
+        <div style={{ width: w + 20, height: 3, background: 'rgba(0,0,0,0.12)', borderRadius: '0 0 2px 2px', marginTop: -1, zIndex: 11 }} />
+      )}
+
+      {/* Shelf / horizontal ledge — canvas rests on this */}
+      {easelMode && (
+        <div className="pointer-events-none" style={{
+          width: w + 60,
+          zIndex: 11,
+          marginTop: 0,
+        }}>
+          <div style={{ width: '100%', height: 10, background: '#D8B48A', borderRadius: 2, boxShadow: '0 3px 8px rgba(0,0,0,0.12)' }} />
+          <div style={{ width: '100%', height: 5, background: '#C69C6D', borderRadius: '0 0 3px 3px' }} />
+        </div>
+      )}
       </div>
 
       {/* Easel toggle + Workstation name card */}
