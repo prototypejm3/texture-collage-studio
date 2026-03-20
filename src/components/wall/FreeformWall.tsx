@@ -151,7 +151,7 @@ export function FreeformWall({
 
               {showTitleCards && (
                 <div className="mt-2" data-no-drag>
-                  <TitleCard design={d} isDark={isDark} />
+                  <TitleCard design={d} isDark={isDark} onUpdateName={(id, name) => onUpdate(id, { name })} />
                 </div>
               )}
             </div>

@@ -76,7 +76,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
             return (
               <div key={d.id} className={`w-full ${widthClass} mx-auto`}>
                 <WallCard {...cardProps(d, sz)} />
-                {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+                {showTitleCards && <TitleCard design={d} isDark={isDark} onUpdateName={(id, name) => onUpdate(id, { name })} />}
               </div>
             );
           })}
@@ -99,7 +99,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
             return (
               <div key={d.id} className={spanClass}>
                 <WallCard {...cardProps(d, sz)} />
-                {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+                {showTitleCards && <TitleCard design={d} isDark={isDark} onUpdateName={(id, name) => onUpdate(id, { name })} />}
               </div>
             );
           })}
@@ -114,7 +114,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
         {designs.map(d => (
           <div key={d.id}>
             <WallCard {...cardProps(d)} />
-            {showTitleCards && <TitleCard design={d} isDark={isDark} />}
+            {showTitleCards && <TitleCard design={d} isDark={isDark} onUpdateName={(id, name) => onUpdate(id, { name })} />}
           </div>
         ))}
       </AnimatePresence>
