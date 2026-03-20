@@ -505,8 +505,9 @@ const Index = () => {
               isPremium={isPremium}
               onRequestUpgrade={() => setShowPaywall(true)}
               drawMode={studio.drawMode}
+              crayonMode={studio.crayonMode}
               onFinishDraw={studio.addCustomSection}
-              onCancelDraw={() => studio.setDrawMode(false)}
+              onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}
