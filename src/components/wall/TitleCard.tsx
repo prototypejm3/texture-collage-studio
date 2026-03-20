@@ -8,8 +8,8 @@ interface TitleCardProps {
 }
 
 export function TitleCard({ design, isDark, placement = 'below' }: TitleCardProps) {
-  const textBase = isDark ? 'text-background/80' : 'text-foreground/60';
-  const textTitle = isDark ? 'text-background font-bold' : 'text-foreground/80 font-bold';
+  const textBase = 'text-terracotta';
+  const textTitle = 'text-terracotta-foreground font-bold';
 
   return (
     <motion.div
