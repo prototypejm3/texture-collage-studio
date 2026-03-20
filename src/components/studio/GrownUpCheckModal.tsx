@@ -144,9 +144,17 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              <p className="text-sm font-medium text-foreground mb-4 text-center">
+              <p className="text-sm font-medium text-foreground mb-2 text-center">
                 Enter your 4-digit PIN
               </p>
+              {(() => {
+                const savedHint = typeof window !== 'undefined' ? localStorage.getItem('grownup-pin-hint') : null;
+                return savedHint ? (
+                  <p className="text-xs text-muted-foreground mb-3 text-center">
+                    Hint: <span className="italic">{savedHint}</span>
+                  </p>
+                ) : null;
+              })()}
               <div className="flex justify-center gap-3 mb-4">
                 {pin.map((d, i) => (
                   <input
