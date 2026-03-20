@@ -362,6 +362,20 @@ export function RightSidebar({
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
                     {kidMode ? '✨ Magic Shape' : 'AI Stencil'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                    {kidMode && (
+                      <button
+                        onClick={() => {
+                          const next = false;
+                          localStorage.setItem('ai-stencil-enabled', String(next));
+                          setAiEnabled(next);
+                          window.dispatchEvent(new CustomEvent('ai-enabled-change', { detail: next }));
+                        }}
+                        className="ml-auto p-0.5 rounded text-muted-foreground/50 hover:text-destructive hover:bg-destructive/10 transition-colors"
+                        title="Hide Magic Shape (parents)"
+                      >
+                        <EyeOff className="w-3 h-3" />
+                      </button>
+                    )}
                   </div>
                   {(isPremium || kidMode) ? (
                     <div className="flex gap-1">
