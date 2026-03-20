@@ -110,10 +110,12 @@ interface Props {
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
   onDelete?: () => void;
+  onMoveToTable?: (x: number, y: number) => void;
+  canvasRef?: React.RefObject<HTMLDivElement>;
   customTextures?: TextureSwatch[];
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, customTextures = [] }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });

@@ -84,7 +84,7 @@ export function Canvas({
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
-  onDeleteElement, onTableDrop, onTableElementUpdate, onTableElementDelete,
+  onDeleteElement, onMoveToTable, onTableDrop, onTableElementUpdate, onTableElementDelete,
   canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
