@@ -262,17 +262,17 @@ export function Canvas({
   // Box dragging
   useEffect(() => {
     if (!isBoxDragging) return;
-    const handleMove = (e: MouseEvent) => {
+    const handleMove = (e: PointerEvent) => {
       const dx = e.clientX - boxDragStart.current.mx;
       const dy = e.clientY - boxDragStart.current.my;
       setBoxPos({ x: boxDragStart.current.bx + dx, y: boxDragStart.current.by + dy });
     };
     const handleUp = () => setIsBoxDragging(false);
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', handleUp);
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
     return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
     };
   }, [isBoxDragging]);
 
