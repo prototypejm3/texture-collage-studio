@@ -808,6 +808,7 @@ export function Canvas({
               canvasHeight={h}
               onFinishDraw={onFinishDraw}
               onCancel={onCancelDraw}
+              crayonMode={crayonMode}
             />
           )}
         </div>
