@@ -745,6 +745,12 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
   const vibe = element.vibeId ? allStencilVibes.find(v => v.id === element.vibeId) : null;
 
   if (vibe) {
+    // Single detached section piece
+    const isDetachedPiece = !!element.clipPathD;
+    const sectionsToRender = isDetachedPiece
+      ? vibe.sections.filter(s => s.path === element.clipPathD)
+      : vibe.sections;
+
     return (
       <div
         onMouseDown={handleMouseDown}
@@ -770,16 +776,17 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
           </button>
         )}
         <svg viewBox={vibe.viewBox} className="w-full h-full">
-          {vibe.sections.map(section => (
+          {sectionsToRender.map(section => (
             <path
               key={section.id}
               d={section.path}
               fill={section.tone === 'dark' ? 'hsl(220, 20%, 25%)' : section.tone === 'light' ? 'hsl(40, 20%, 90%)' : section.tone === 'accent' ? 'hsl(24, 60%, 50%)' : 'hsl(220, 15%, 55%)'}
-              stroke={selectedSection === section.id ? 'hsl(var(--primary))' : 'hsl(220, 15%, 40%)'}
-              strokeWidth={selectedSection === section.id ? 3 : 1.5}
-              opacity={selectedSection && selectedSection !== section.id ? 0.5 : 0.85}
+              stroke={!isDetachedPiece && selectedSection === section.id ? 'hsl(var(--primary))' : 'hsl(220, 15%, 40%)'}
+              strokeWidth={!isDetachedPiece && selectedSection === section.id ? 3 : 1.5}
+              opacity={!isDetachedPiece && selectedSection && selectedSection !== section.id ? 0.5 : 0.85}
               className="cursor-pointer transition-opacity"
               onClick={(e) => {
+                if (isDetachedPiece) return;
                 e.stopPropagation();
                 onSelect();
                 setSelectedSection(prev => prev === section.id ? null : section.id);
@@ -788,8 +795,8 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
           ))}
         </svg>
 
-        {/* Section action toolbar */}
-        {isSelected && selectedSection && (
+        {/* Section action toolbar — only for full stencils, not detached pieces */}
+        {!isDetachedPiece && isSelected && selectedSection && (
           <div
             className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-popover border border-border rounded-md shadow-lg p-0.5 z-50"
             onClick={(e) => e.stopPropagation()}
