@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
-  frameSize: FrameSize;
-  onFrameSizeChange: (size: FrameSize) => void;
   wallFrameStyle: FrameStyle;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   onClear: () => void;
@@ -22,8 +19,6 @@ interface Props {
   tableSurface?: TableSurface;
   onTableSurfaceChange?: (surface: TableSurface) => void;
 }
-
-const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
 // Color frames for Shadow menu
 const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
