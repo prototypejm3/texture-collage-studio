@@ -73,10 +73,10 @@ const Gallery = () => {
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10 pb-20 md:pb-10">
           <div className="text-center mb-6 md:mb-10">
             <h1 className="text-2xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              Art Gallery
+              🎨 Art Gallery
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Community shadow box art — leave a shadow to show your appreciation
+              Community Swatchbox art digital museum
             </p>
           </div>
 
@@ -86,9 +86,11 @@ const Gallery = () => {
             </div>
           ) : submissions.length === 0 ? (
             <div className="text-center py-20">
-              <Ghost className="w-10 h-10 text-muted-foreground/30 mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground">No art in the gallery yet</p>
-              <p className="text-xs text-muted-foreground/60 mt-1">Submit your first piece from My Wall!</p>
+              <span className="text-5xl block mb-4">🖼️</span>
+              <p className="text-lg font-semibold text-foreground">Opening Exhibition: April 1st</p>
+              <p className="text-sm text-muted-foreground mt-1">(not an April Fools joke 😄)</p>
+              <p className="text-sm text-muted-foreground mt-4">Stay tuned ✨</p>
+              <p className="text-xs text-muted-foreground/70 mt-2">Show your appreciation 🖤</p>
             </div>
           ) : (
             <div className="columns-2 md:columns-3 gap-5 space-y-5">
