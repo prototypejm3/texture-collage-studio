@@ -120,6 +120,8 @@ export function Canvas({
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
+  onDuplicateStencilSection,
+  onDetachStencilSection,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedTableId = selectedTableElementId ?? null;
