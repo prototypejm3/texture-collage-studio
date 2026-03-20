@@ -47,6 +47,7 @@ const Index = () => {
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
+  const [easelMode, setEaselMode] = useState(true);
   const [workstationName, setWorkstationName] = useState(() => {
     return localStorage.getItem('workstationName') || '';
   });
