@@ -189,7 +189,7 @@ export function TextureLibrary({
                   }`}
                   title="Apply as canvas background"
                 >
-                  {kidMode ? 'Fill' : 'Background'}
+                  {kidMode ? '🎨 Fill' : 'Background'}
                 </button>
               </div>
             )}
