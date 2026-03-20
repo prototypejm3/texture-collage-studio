@@ -129,6 +129,25 @@ export function Canvas({
     onSelectTableElement?.(id);
   }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
+  const [trashHover, setTrashHover] = useState(false);
+  const trashRef = useRef<HTMLDivElement>(null);
+
+  // Kid mode — synced from TextureLibrary
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  // Check if a mouse position is over the trash zone
+  const isOverTrash = useCallback((clientX: number, clientY: number) => {
+    if (!trashRef.current || !kidMode) return false;
+    const rect = trashRef.current.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+  }, [kidMode]);
 
   // Keyboard delete for selected element
   useEffect(() => {
@@ -150,6 +169,36 @@ export function Canvas({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
+
+  // Trash zone: delete element on mouseup if over trash
+  useEffect(() => {
+    if (!kidMode) return;
+    const handleMouseUp = (e: MouseEvent) => {
+      if (isOverTrash(e.clientX, e.clientY)) {
+        if (selectedTableId) {
+          onTableElementDelete(selectedTableId);
+          setSelectedTableId(null);
+          setTrashHover(false);
+        } else if (selectedId) {
+          onDeleteElement(selectedId);
+          onSelect(null);
+          setTrashHover(false);
+        }
+      }
+      setTrashHover(false);
+    };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (e.buttons === 1 && (selectedId || selectedTableId)) {
+        setTrashHover(isOverTrash(e.clientX, e.clientY));
+      }
+    };
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [kidMode, selectedId, selectedTableId, isOverTrash, onDeleteElement, onTableElementDelete, onSelect]);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
@@ -370,6 +419,41 @@ export function Canvas({
           />
         );
       })}
+
+      {/* Kid Mode Trash Zone */}
+      {kidMode && (
+        <div
+          ref={trashRef}
+          className={`absolute z-30 flex flex-col items-center justify-center rounded-full transition-all duration-200 cursor-default select-none ${
+            trashHover
+              ? 'bg-destructive/30 border-destructive scale-110 shadow-lg'
+              : 'bg-muted/40 border-border/60 hover:bg-muted/60'
+          } border-2 border-dashed`}
+          style={{
+            width: 64,
+            height: 64,
+            bottom: easelMode ? 16 : 44,
+            right: easelMode ? 16 : 44,
+          }}
+          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setTrashHover(true); }}
+          onDragLeave={() => setTrashHover(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setTrashHover(false);
+            if (selectedId) {
+              onDeleteElement(selectedId);
+              onSelect(null);
+            } else if (selectedTableId) {
+              onTableElementDelete(selectedTableId);
+              setSelectedTableId(null);
+            }
+          }}
+        >
+          <span className="text-xl leading-none">🗑️</span>
+          <span className={`text-[8px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Trash</span>
+        </div>
+      )}
 
       {/* Easel + Frame group */}
       <div style={{
