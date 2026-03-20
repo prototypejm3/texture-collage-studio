@@ -10,12 +10,212 @@ interface AmbientSoundProps {
 // ── Lofi beat generator using Web Audio API ──
 // Creates a rhythmic, warm, lo-fi style ambient beat
 
-function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: GainNode; stop: () => void } {
+function createLofiEngine(ctx: AudioContext, type: AmbientSoundType, kidMode: boolean): { master: GainNode; stop: () => void } {
   const master = ctx.createGain();
   master.gain.value = 0;
 
   const intervals: ReturnType<typeof setInterval>[] = [];
   const sources: (OscillatorNode | AudioBufferSourceNode)[] = [];
+
+  if (kidMode) {
+    // ── KID MODE SOUNDS — playful, bright, bouncy ──
+    if (type === 'gallery') {
+      // Gallery: Gentle music box / xylophone melody
+      const melodyNotes = [523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25, 587.33]; // C5 D5 E5 G5 A5 pentatonic
+      let noteIdx = 0;
+      const melodyInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        const freq = melodyNotes[noteIdx % melodyNotes.length];
+        noteIdx++;
+
+        // Xylophone-like tone (sine + harmonic)
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const osc2 = ctx.createOscillator();
+        osc2.type = 'sine';
+        osc2.frequency.value = freq * 4; // bell harmonic
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.06, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+        const g2 = ctx.createGain();
+        g2.gain.setValueAtTime(0.015, now);
+        g2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.connect(g).connect(master);
+        osc2.connect(g2).connect(master);
+        osc.start(now);
+        osc.stop(now + 1);
+        osc2.start(now);
+        osc2.stop(now + 0.5);
+      }, 600);
+      intervals.push(melodyInterval);
+
+      // Soft sparkle pad
+      const padOsc = ctx.createOscillator();
+      padOsc.type = 'sine';
+      padOsc.frequency.value = 392; // G4
+      const padGain = ctx.createGain();
+      padGain.gain.value = 0.015;
+      padOsc.connect(padGain).connect(master);
+      padOsc.start();
+      sources.push(padOsc);
+
+    } else if (type === 'loft') {
+      // Loft: Bouncy, fun beat — toy drum + plucky bass + cheerful melody
+      const bpm = 110;
+      const beatMs = (60 / bpm) * 1000;
+
+      // Plucky bass notes (bouncy)
+      const bassNotes = [261.63, 293.66, 329.63, 293.66]; // C4 D4 E4 D4
+      let bassIdx = 0;
+      const bassInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        const freq = bassNotes[bassIdx % bassNotes.length];
+        bassIdx++;
+        const osc = ctx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.value = freq / 2;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.08, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(g).connect(master);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }, beatMs);
+      intervals.push(bassInterval);
+
+      // Toy drum — soft kick + clap pattern
+      let drumBeat = 0;
+      const drumInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        if (drumBeat % 4 === 0 || drumBeat % 4 === 2) {
+          // Soft round kick
+          const kick = ctx.createOscillator();
+          kick.type = 'sine';
+          kick.frequency.setValueAtTime(180, now);
+          kick.frequency.exponentialRampToValueAtTime(60, now + 0.06);
+          const kg = ctx.createGain();
+          kg.gain.setValueAtTime(0.1, now);
+          kg.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          kick.connect(kg).connect(master);
+          kick.start(now);
+          kick.stop(now + 0.2);
+        }
+        if (drumBeat % 4 === 2) {
+          // Soft clap (noise burst)
+          const clapBuf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+          const clapData = clapBuf.getChannelData(0);
+          for (let i = 0; i < clapData.length; i++) {
+            clapData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.008));
+          }
+          const clapSrc = ctx.createBufferSource();
+          clapSrc.buffer = clapBuf;
+          const cf = ctx.createBiquadFilter();
+          cf.type = 'bandpass';
+          cf.frequency.value = 1500;
+          const cg = ctx.createGain();
+          cg.gain.value = 0.06;
+          clapSrc.connect(cf).connect(cg).connect(master);
+          clapSrc.start(now);
+        }
+        drumBeat++;
+      }, beatMs / 2);
+      intervals.push(drumInterval);
+
+      // Cheerful melody — high xylophone
+      const melNotes = [659.25, 783.99, 880, 783.99, 659.25, 587.33, 523.25, 587.33]; // E5 G5 A5...
+      let melIdx = 0;
+      const melInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        const freq = melNotes[melIdx % melNotes.length];
+        melIdx++;
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.04, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.connect(g).connect(master);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      }, beatMs * 2);
+      intervals.push(melInterval);
+
+    } else if (type === 'home') {
+      // Home: Gentle lullaby — soft, dreamy, calming
+      const bpm = 72;
+      const beatMs = (60 / bpm) * 1000;
+
+      // Warm dreamy pad
+      const padNotes = [261.63, 329.63, 392]; // C4 E4 G4 major triad
+      padNotes.forEach(freq => {
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const g = ctx.createGain();
+        g.gain.value = 0.02;
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass';
+        f.frequency.value = 500;
+        osc.connect(f).connect(g).connect(master);
+        osc.start();
+        sources.push(osc);
+      });
+
+      // Gentle lullaby melody — pentatonic, slow
+      const lullabyNotes = [523.25, 587.33, 659.25, 523.25, 783.99, 659.25, 587.33, 523.25];
+      let lulIdx = 0;
+      const lulInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        const freq = lullabyNotes[lulIdx % lullabyNotes.length];
+        lulIdx++;
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.035, now + 0.15);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass';
+        f.frequency.value = 800;
+        osc.connect(f).connect(g).connect(master);
+        osc.start(now);
+        osc.stop(now + 1.5);
+      }, beatMs * 1.5);
+      intervals.push(lulInterval);
+
+      // Soft twinkle — random high sparkles
+      const twinkleInterval = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        const now = ctx.currentTime;
+        const freq = 1200 + Math.random() * 800;
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.01, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.connect(g).connect(master);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }, 2500 + Math.random() * 1500);
+      intervals.push(twinkleInterval);
+    }
+
+    const stop = () => {
+      intervals.forEach(id => clearInterval(id));
+      sources.forEach(s => { try { s.stop(); } catch {} });
+    };
+    return { master, stop };
+  }
+
+  // ── NORMAL MODE SOUNDS (original) ──
 
   // Warm vinyl crackle — filtered noise
   const crackleBufferSize = ctx.sampleRate * 4;
@@ -23,7 +223,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
   for (let ch = 0; ch < 2; ch++) {
     const data = crackleBuffer.getChannelData(ch);
     for (let i = 0; i < crackleBufferSize; i++) {
-      // Crackle: mostly silence with occasional pops
       data[i] = Math.random() < 0.002 ? (Math.random() - 0.5) * 0.8 : (Math.random() - 0.5) * 0.003;
     }
   }
@@ -41,7 +240,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
   sources.push(crackleSource);
 
   if (type === 'gallery') {
-    // Gallery: Soft room tone + gentle pad
     const pad = ctx.createOscillator();
     pad.type = 'sine';
     pad.frequency.value = 220;
@@ -54,7 +252,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
     pad.start();
     sources.push(pad);
 
-    // Subtle fifth harmony
     const pad2 = ctx.createOscillator();
     pad2.type = 'sine';
     pad2.frequency.value = 330;
@@ -64,7 +261,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
     pad2.start();
     sources.push(pad2);
 
-    // Soft room noise
     const roomBuffer = ctx.createBuffer(2, ctx.sampleRate * 4, ctx.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
       const data = roomBuffer.getChannelData(ch);
@@ -82,14 +278,12 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
     roomSrc.start();
     sources.push(roomSrc);
   } else if (type === 'loft') {
-    // Loft: Lo-fi beat with kick + hi-hat pattern + bass
     const bpm = 75;
     const beatInterval = 60 / bpm;
 
-    // Bass note (sub oscillator)
     const bassOsc = ctx.createOscillator();
     bassOsc.type = 'sine';
-    bassOsc.frequency.value = 55; // A1
+    bassOsc.frequency.value = 55;
     const bassGain = ctx.createGain();
     bassGain.gain.value = 0.06;
     const bassFilter = ctx.createBiquadFilter();
@@ -99,8 +293,7 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
     bassOsc.start();
     sources.push(bassOsc);
 
-    // Warm chord pad
-    const chordNotes = [130.81, 164.81, 196]; // C3, E3, G3
+    const chordNotes = [130.81, 164.81, 196];
     chordNotes.forEach(freq => {
       const osc = ctx.createOscillator();
       osc.type = 'triangle';
@@ -115,12 +308,10 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
       sources.push(osc);
     });
 
-    // Kick drum pattern
     let beatCount = 0;
     const kickInterval = setInterval(() => {
       if (ctx.state === 'closed') return;
       const now = ctx.currentTime;
-      // Kick on beats 1 and 3
       if (beatCount % 4 === 0 || beatCount % 4 === 2) {
         const kickOsc = ctx.createOscillator();
         kickOsc.type = 'sine';
@@ -133,7 +324,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
         kickOsc.start(now);
         kickOsc.stop(now + 0.25);
       }
-      // Hi-hat on every beat
       const hatBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.05, ctx.sampleRate);
       const hatData = hatBuffer.getChannelData(0);
       for (let i = 0; i < hatData.length; i++) {
@@ -148,17 +338,14 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
       hatGain.gain.value = beatCount % 2 === 0 ? 0.04 : 0.025;
       hatSrc.connect(hatFilter).connect(hatGain).connect(master);
       hatSrc.start(now);
-
       beatCount++;
     }, beatInterval * 1000);
     intervals.push(kickInterval);
   } else if (type === 'home') {
-    // Home: Warm, gentle ambient with soft melody
     const bpm = 60;
     const beatInterval = 60 / bpm;
 
-    // Warm pad — minor 7th chord
-    const padNotes = [146.83, 174.61, 220, 261.63]; // D3, F3, A3, C4
+    const padNotes = [146.83, 174.61, 220, 261.63];
     padNotes.forEach(freq => {
       const osc = ctx.createOscillator();
       osc.type = 'sine';
@@ -173,15 +360,13 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
       sources.push(osc);
     });
 
-    // Gentle melody — random pentatonic notes
-    const melodyNotes = [293.66, 329.63, 392, 440, 523.25]; // D4, E4, G4, A4, C5
+    const melodyNotes = [293.66, 329.63, 392, 440, 523.25];
     let noteIndex = 0;
     const melodyInterval = setInterval(() => {
       if (ctx.state === 'closed') return;
       const now = ctx.currentTime;
       const freq = melodyNotes[noteIndex % melodyNotes.length];
       noteIndex = Math.floor(Math.random() * melodyNotes.length);
-
       const osc = ctx.createOscillator();
       osc.type = 'triangle';
       osc.frequency.value = freq;
@@ -198,7 +383,6 @@ function createLofiEngine(ctx: AudioContext, type: AmbientSoundType): { master: 
     }, beatInterval * 2 * 1000);
     intervals.push(melodyInterval);
 
-    // Soft room noise
     const noiseBuffer = ctx.createBuffer(2, ctx.sampleRate * 4, ctx.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
       const data = noiseBuffer.getChannelData(ch);
