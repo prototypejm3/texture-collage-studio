@@ -169,6 +169,36 @@ export function Canvas({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
+
+  // Trash zone: delete element on mouseup if over trash
+  useEffect(() => {
+    if (!kidMode) return;
+    const handleMouseUp = (e: MouseEvent) => {
+      if (isOverTrash(e.clientX, e.clientY)) {
+        if (selectedTableId) {
+          onTableElementDelete(selectedTableId);
+          setSelectedTableId(null);
+          setTrashHover(false);
+        } else if (selectedId) {
+          onDeleteElement(selectedId);
+          onSelect(null);
+          setTrashHover(false);
+        }
+      }
+      setTrashHover(false);
+    };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (e.buttons === 1 && (selectedId || selectedTableId)) {
+        setTrashHover(isOverTrash(e.clientX, e.clientY));
+      }
+    };
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [kidMode, selectedId, selectedTableId, isOverTrash, onDeleteElement, onTableElementDelete, onSelect]);
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
