@@ -168,14 +168,14 @@ export function TextureLibrary({
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
-            <h2 className="text-[10px] font-bold tracking-wide uppercase text-foreground">
+            <h2 className={`font-bold tracking-wide uppercase text-foreground ${kidMode ? 'text-xs' : 'text-[10px]'}`}>
               {kidMode ? 'Colors' : 'Textures'}
             </h2>
             {onApplyModeChange && (
               <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5 ml-1">
                 <button
                   onClick={() => onApplyModeChange('swatch')}
-                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                  className={`px-1.5 py-0.5 rounded font-medium transition-colors ${kidMode ? 'text-[11px]' : 'text-[9px]'} ${
                     applyMode === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'
                   }`}
                   title="Apply as swatch element"
@@ -184,7 +184,7 @@ export function TextureLibrary({
                 </button>
                 <button
                   onClick={() => onApplyModeChange('background')}
-                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                  className={`px-1.5 py-0.5 rounded font-medium transition-colors ${kidMode ? 'text-[11px]' : 'text-[9px]'} ${
                     applyMode === 'background' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'
                   }`}
                   title="Apply as canvas background"
@@ -242,7 +242,7 @@ export function TextureLibrary({
 
         {activeSectionId && (
           <div className="mb-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
-            <p className="text-[9px] text-primary font-medium">
+            <p className={`${kidMode ? 'text-[11px]' : 'text-[9px]'} text-primary font-medium`}>
               {kidMode ? '👆 Tap a color to paint the piece!' : '👆 Tap a texture to fill the selected section.'}
             </p>
           </div>
@@ -251,7 +251,7 @@ export function TextureLibrary({
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setActiveGroup('All')}
-            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
               activeGroup === 'All'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -261,7 +261,7 @@ export function TextureLibrary({
           </button>
           <button
             onClick={() => setActiveGroup('Favorites')}
-            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors flex items-center gap-0.5 ${
+            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors flex items-center gap-0.5 ${
               activeGroup === 'Favorites'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -275,7 +275,7 @@ export function TextureLibrary({
           {showCustomTab && (
             <button
               onClick={() => setActiveGroup('Custom')}
-              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
                 activeGroup === 'Custom'
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -288,7 +288,7 @@ export function TextureLibrary({
             <button
               key={group.label}
               onClick={() => setActiveGroup(group.label)}
-              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
                 activeGroup === group.label
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -304,7 +304,7 @@ export function TextureLibrary({
           <div className="flex items-center gap-1 mt-1 flex-wrap">
             <button
               onClick={onToggleDrawMode}
-              className={`flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium rounded-full transition-colors ${
+              className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-medium rounded-full transition-colors ${
                 drawMode
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -316,7 +316,7 @@ export function TextureLibrary({
               <button
                 key={shape.value}
                 onClick={() => onSetNextShape(shape.value)}
-                className={`flex items-center gap-1 px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                className={`flex items-center gap-1 px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
                   nextShape === shape.value
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
