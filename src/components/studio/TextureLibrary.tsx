@@ -212,7 +212,7 @@ export function TextureLibrary({
           ))}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto texture-panel p-3">
+      <div className="flex-1 overflow-y-auto texture-panel p-3" style={{ maxHeight: 'calc(12 / 3 * 90px + 16px)' }}>
         <div className="grid grid-cols-3 gap-2">
           {filtered.map(tex => (
             <SwatchItem
