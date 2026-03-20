@@ -51,6 +51,14 @@ export function BottomBar({
   easelMode = true, onToggleEasel,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleSpecialSelect = (id: FrameStyle) => {
     if (id === 'shadow-box') {
