@@ -103,6 +103,7 @@ export function Canvas({
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   onDeleteElement, onMoveToTable, onTableDrop, onTableElementUpdate, onTableElementDelete,
   canvasRef,
+  onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
