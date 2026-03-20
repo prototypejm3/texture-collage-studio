@@ -14,6 +14,7 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const [mode, setMode] = useState<'question' | 'pin' | 'set-pin'>('question');
   const [pin, setPin] = useState(['', '', '', '']);
   const [newPin, setNewPin] = useState(['', '', '', '']);
+  const [pinHint, setPinHint] = useState('');
   const [pinError, setPinError] = useState(false);
   const pinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
   const newPinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
@@ -26,6 +27,7 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
       setResult(null);
       setPin(['', '', '', '']);
       setNewPin(['', '', '', '']);
+      setPinHint('');
       setPinError(false);
       // If a PIN is saved, go straight to PIN entry
       setMode(savedPin ? 'pin' : 'question');
@@ -68,8 +70,13 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
       const fullPin = arr.join('');
       if (fullPin.length === 4) {
         if (isNewPin) {
-          // Save new PIN
+          // Save new PIN and optional hint
           localStorage.setItem('grownup-pin', fullPin);
+          if (pinHint.trim()) {
+            localStorage.setItem('grownup-pin-hint', pinHint.trim());
+          } else {
+            localStorage.removeItem('grownup-pin-hint');
+          }
           onSuccess();
         } else {
           // Check PIN
@@ -137,9 +144,17 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              <p className="text-sm font-medium text-foreground mb-4 text-center">
+              <p className="text-sm font-medium text-foreground mb-2 text-center">
                 Enter your 4-digit PIN
               </p>
+              {(() => {
+                const savedHint = typeof window !== 'undefined' ? localStorage.getItem('grownup-pin-hint') : null;
+                return savedHint ? (
+                  <p className="text-xs text-muted-foreground mb-3 text-center">
+                    Hint: <span className="italic">{savedHint}</span>
+                  </p>
+                ) : null;
+              })()}
               <div className="flex justify-center gap-3 mb-4">
                 {pin.map((d, i) => (
                   <input
@@ -269,6 +284,14 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
                   />
                 ))}
               </div>
+              <input
+                type="text"
+                value={pinHint}
+                onChange={(e) => setPinHint(e.target.value)}
+                placeholder="Add a hint word (optional)"
+                maxLength={30}
+                className="w-full px-4 py-2.5 rounded-xl text-sm border-2 border-border bg-secondary/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors mb-4"
+              />
               <button
                 onClick={() => onSuccess()}
                 className="w-full text-xs text-muted-foreground hover:text-foreground text-center py-1"
