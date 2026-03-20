@@ -162,10 +162,61 @@ export function useStudio() {
     if (!activeVibe) return;
     const fills: VibeFills = {};
     activeVibe.sections.forEach(section => {
-      fills[section.id] = pickTextureForTone(activeVibe, section.tone);
+      const vibePool = {
+        light: activeVibe.lightTextures,
+        medium: activeVibe.mediumTextures,
+        dark: activeVibe.darkTextures,
+        accent: activeVibe.accentTextures,
+      }[section.tone];
+      const valid = vibePool.filter(id => textures.some(t => t.id === id));
+      if (valid.length > 0) {
+        fills[section.id] = pickRandom(valid);
+      } else {
+        fills[section.id] = textures[Math.floor(Math.random() * textures.length)].id;
+      }
     });
     setVibeFills(fills);
   }, [activeVibe]);
+
+  // Place current stencil as free elements on canvas, freeing the vibe slot for another
+  const placeStencil = useCallback(() => {
+    if (!activeVibe) return;
+    const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
+    sections.forEach(section => {
+      const textureId = vibeFills[section.id] || textures[Math.floor(Math.random() * textures.length)].id;
+      const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+      let minX = 480, minY = 480, maxX = 0, maxY = 0;
+      for (let i = 0; i < nums.length - 1; i += 2) {
+        minX = Math.min(minX, nums[i]);
+        maxX = Math.max(maxX, nums[i]);
+        minY = Math.min(minY, nums[i + 1]);
+        maxY = Math.max(maxY, nums[i + 1]);
+      }
+      const w = Math.max(maxX - minX, 20);
+      const h = Math.max(maxY - minY, 20);
+      const id = `el-${nextId++}`;
+      setElements(prev => [...prev, {
+        id,
+        textureId,
+        x: minX,
+        y: minY,
+        width: w,
+        height: h,
+        rotation: 0,
+        shape: 'soft-square' as const,
+        zIndex: nextId,
+        effects: { ...defaultEffects },
+        sectionId: section.id,
+        clipPathD: section.path,
+      }]);
+    });
+    setActiveVibe(null);
+    setVibeFills({});
+    setSelectedSectionId(null);
+    setCustomSections([]);
+    setSectionTransforms({});
+    setDeletedSections(new Set());
+  }, [activeVibe, vibeFills, deletedSections]);
 
   // ── Custom drawn sections ──
 
