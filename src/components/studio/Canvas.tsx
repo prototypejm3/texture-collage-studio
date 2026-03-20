@@ -157,7 +157,7 @@ export function Canvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
+      className="flex-1 flex items-center justify-center p-0 relative overflow-hidden"
       style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: '400px auto',
@@ -358,7 +358,7 @@ export function Canvas({
           </svg>
         </button>
         {/* Name card */}
-        <div className="bg-black/90 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 min-w-[180px]">
+        <div className="bg-black/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 min-w-[180px]" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2)' }}>
           <span className="text-[10px] uppercase tracking-widest text-white/50 select-none">@</span>
           <input
             type="text"
