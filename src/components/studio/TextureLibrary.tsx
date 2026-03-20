@@ -179,7 +179,7 @@ export function TextureLibrary({
                   }`}
                   title="Apply as swatch element"
                 >
-                  Swatch
+                  {kidMode ? 'Piece' : 'Swatch'}
                 </button>
                 <button
                   onClick={() => onApplyModeChange('background')}
