@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
+import { X } from 'lucide-react';
 import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
