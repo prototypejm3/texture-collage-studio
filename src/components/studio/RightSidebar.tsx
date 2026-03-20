@@ -397,23 +397,15 @@ export function RightSidebar({
           </div>
         ) : activeTab === 'community' ? (
           <div className="flex flex-col">
-            <div className="px-3 py-3 border-b border-border">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Community Stencils
-              </h3>
-              <p className="text-[10px] text-muted-foreground mt-0.5">
-                Public stencils from other creators
-              </p>
-            </div>
-            <div className="flex-1 overflow-y-auto p-3">
+            <div className="flex-1 overflow-y-auto p-2">
               {communityVibes.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <Globe className="w-8 h-8 text-muted-foreground/40 mb-2" />
-                  <p className="text-xs text-muted-foreground">No community stencils yet</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <Globe className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
+                  <p className="text-[10px] text-muted-foreground">No community stencils yet</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
