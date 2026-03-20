@@ -365,6 +365,8 @@ export function Canvas({
             onSelect={() => { setSelectedTableId(tel.id); onSelect(null); }}
             onUpdate={(updates) => onTableElementUpdate(tel.id, updates)}
             onDelete={() => onTableElementDelete(tel.id)}
+            onDuplicateSection={onDuplicateStencilSection}
+            onDetachSection={onDetachStencilSection}
           />
         );
       })}
