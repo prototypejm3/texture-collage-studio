@@ -33,6 +33,8 @@ export function useStudio() {
   const [vibeFills, setVibeFills] = useState<VibeFills>({});
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(null);
   const [drawMode, setDrawMode] = useState(false);
+  const [crayonMode, setCrayonMode] = useState(false);
+  const [crayonTextureId, setCrayonTextureId] = useState<string | null>(null);
   const [customSections, setCustomSections] = useState<VibeSection[]>([]);
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
   const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
