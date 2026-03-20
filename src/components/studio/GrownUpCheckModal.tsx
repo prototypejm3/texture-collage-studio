@@ -27,6 +27,7 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
       setResult(null);
       setPin(['', '', '', '']);
       setNewPin(['', '', '', '']);
+      setPinHint('');
       setPinError(false);
       // If a PIN is saved, go straight to PIN entry
       setMode(savedPin ? 'pin' : 'question');
