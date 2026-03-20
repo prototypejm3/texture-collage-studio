@@ -321,6 +321,21 @@ const Index = () => {
           )}
         </div>
 
+        {/* ── Canvas/Frame bar ── */}
+        {!isMobile && (
+          <BottomBar
+            frameSize={studio.frameSize}
+            onFrameSizeChange={studio.setFrameSize}
+            wallFrameStyle={studio.wallFrameStyle}
+            onWallFrameStyleChange={studio.setWallFrameStyle}
+            onClear={studio.clearCanvas}
+            onSave={handleExport}
+            onSaveToWall={handleSaveToWall}
+            isPremium={isPremium}
+            onRequestUpgrade={() => setShowPaywall(true)}
+          />
+        )}
+
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
         {!isMobile && (
           <div className="flex border-t border-border" style={{ height: '35%' }}>
@@ -348,8 +363,8 @@ const Index = () => {
             <div className="flex-1 overflow-hidden">
               {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) ? (
                 <div className="flex flex-col h-full bg-popover">
-                  <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border bg-secondary/30 shrink-0">
-                    <span className="text-xs font-semibold text-foreground">Edit Element</span>
+                  <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
+                    <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
                   </div>
                   <div className="flex-1 overflow-y-auto">
                     <FloatingToolbar
@@ -383,21 +398,6 @@ const Index = () => {
           </div>
         )}
       </div>
-
-      {/* Desktop bottom bar */}
-      {!isMobile && (
-        <BottomBar
-          frameSize={studio.frameSize}
-          onFrameSizeChange={studio.setFrameSize}
-          wallFrameStyle={studio.wallFrameStyle}
-          onWallFrameStyleChange={studio.setWallFrameStyle}
-          onClear={studio.clearCanvas}
-          onSave={handleExport}
-          onSaveToWall={handleSaveToWall}
-          isPremium={isPremium}
-          onRequestUpgrade={() => setShowPaywall(true)}
-        />
-      )}
 
       {/* Mobile bottom bar with compact controls + nav */}
       {isMobile && (
