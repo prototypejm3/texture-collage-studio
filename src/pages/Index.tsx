@@ -364,9 +364,6 @@ const Index = () => {
             </div>
           </div>
         )}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Desktop bottom bar */}
