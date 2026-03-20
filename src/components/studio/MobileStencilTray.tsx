@@ -20,6 +20,7 @@ interface StencilTrayProps {
   onClearTemplate: () => void;
   onTemplateOpacityChange: (val: number) => void;
   focusMode?: boolean;
+  onDockBack?: () => void;
 }
 
 export function StencilTray(props: StencilTrayProps) {
