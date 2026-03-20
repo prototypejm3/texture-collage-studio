@@ -192,14 +192,17 @@ export function useStudio() {
         minY = Math.min(minY, nums[i + 1]);
         maxY = Math.max(maxY, nums[i + 1]);
       }
-      const w = Math.max(maxX - minX, 20);
-      const h = Math.max(maxY - minY, 20);
+      const w = Math.max(maxX - minX, 20) * 0.5;
+      const h = Math.max(maxY - minY, 20) * 0.5;
+      // Center the scaled-down element at the original center
+      const centerX = (minX + maxX) / 2;
+      const centerY = (minY + maxY) / 2;
       const id = `el-${nextId++}`;
       setElements(prev => [...prev, {
         id,
         textureId,
-        x: minX,
-        y: minY,
+        x: centerX - w / 2,
+        y: centerY - h / 2,
         width: w,
         height: h,
         rotation: 0,
