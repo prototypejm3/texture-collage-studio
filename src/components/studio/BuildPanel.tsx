@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
