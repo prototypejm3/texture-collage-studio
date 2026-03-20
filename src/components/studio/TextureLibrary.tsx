@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
