@@ -190,98 +190,91 @@ export function Canvas({
         bottom: 0,
         left: '50%',
         transform: 'translateX(-50%)',
-        width: w + 120,
-        height: h * 1.35,
+        width: w + 200,
+        height: h * 1.45,
       }}>
-        {/* Left front leg — subtle angle forming wide triangle */}
+        {/* Left front leg */}
         <div style={{
           position: 'absolute',
           width: 6,
-          height: h * 1.3,
+          height: h * 1.4,
           background: '#C69C6D',
-          borderRadius: '3px 3px 2px 2px',
+          borderRadius: 3,
           bottom: 0,
-          left: '50%',
-          marginLeft: -4,
-          transform: 'rotate(-7deg)',
+          left: w * 0.15,
+          transform: 'rotate(-8deg)',
           transformOrigin: 'bottom center',
         }} />
         {/* Right front leg */}
         <div style={{
           position: 'absolute',
           width: 6,
-          height: h * 1.3,
+          height: h * 1.4,
           background: '#C69C6D',
-          borderRadius: '3px 3px 2px 2px',
+          borderRadius: 3,
           bottom: 0,
-          left: '50%',
-          marginLeft: -2,
-          transform: 'rotate(7deg)',
+          right: w * 0.15,
+          transform: 'rotate(8deg)',
           transformOrigin: 'bottom center',
         }} />
-        {/* Back support leg — taller, centered, leans back slightly */}
+        {/* Back support leg */}
         <div style={{
           position: 'absolute',
           width: 5,
-          height: h * 1.15,
+          height: h * 1.1,
           background: '#A67C52',
           borderRadius: 2,
           bottom: 0,
           left: '50%',
           marginLeft: -2.5,
-          transform: 'rotate(0deg)',
-          transformOrigin: 'bottom center',
         }} />
-        {/* Top junction — small block where legs meet */}
+        {/* Top junction block */}
         <div style={{
           position: 'absolute',
-          width: 14,
-          height: 10,
+          width: 16,
+          height: 12,
           background: '#B8885A',
           borderRadius: 3,
-          bottom: h * 1.25,
+          top: 0,
           left: '50%',
-          marginLeft: -7,
+          marginLeft: -8,
         }} />
-        {/* Horizontal ledge — where the canvas rests */}
+        {/* Horizontal ledge */}
         <div style={{
           position: 'absolute',
-          width: w * 0.55,
-          height: 7,
+          width: w * 0.65,
+          height: 8,
           background: '#D8B48A',
           borderRadius: 2,
-          bottom: h * 0.22,
+          bottom: h * 0.28,
           left: '50%',
           transform: 'translateX(-50%)',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
         }} />
-        {/* Small ledge lip — front edge */}
+        {/* Ledge lip */}
         <div style={{
           position: 'absolute',
-          width: w * 0.55,
-          height: 3,
+          width: w * 0.65,
+          height: 4,
           background: '#C69C6D',
           borderRadius: '0 0 2px 2px',
-          bottom: h * 0.22 - 3,
+          bottom: h * 0.28 - 4,
           left: '50%',
           transform: 'translateX(-50%)',
         }} />
       </div>
 
       {/* Shadow under easel */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          zIndex: 4,
-          bottom: -4,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: w * 0.7,
-          height: 14,
-          background: 'radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-        }}
-      />
+      <div className="absolute pointer-events-none" style={{
+        zIndex: 4,
+        bottom: -4,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: w * 0.7,
+        height: 14,
+        background: 'radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%)',
+        borderRadius: '50%',
+      }} />
 
       {/* Frame */}
       <div
