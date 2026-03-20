@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
@@ -30,13 +30,21 @@ export function BuildPanel({
   stencilsPoppedOut, onPopOutStencils,
 }: BuildPanelProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   return (
     <div className="flex flex-col h-full bg-popover">
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-foreground">Stencils</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-foreground">{kidMode ? 'Shapes' : 'Stencils'}</span>
         </div>
         <div className="flex items-center gap-1.5">
           {/* Reference Image upload — mirrors Textures' Upload button */}

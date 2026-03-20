@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
@@ -111,8 +111,16 @@ export function TextureLibrary({
   drawMode, onToggleDrawMode, nextShape, onSetNextShape,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  const [kidMode, setKidMode] = useState(true);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
+
+  // Sync kidMode to localStorage and broadcast to other components
+  useEffect(() => {
+    localStorage.setItem('kid-mode', String(kidMode));
+    window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: kidMode }));
+  }, [kidMode]);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -160,7 +168,7 @@ export function TextureLibrary({
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
             <h2 className="text-[10px] font-bold tracking-wide uppercase text-foreground">
-              Textures
+              {kidMode ? 'Colors' : 'Textures'}
             </h2>
             {onApplyModeChange && (
               <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5 ml-1">
@@ -171,7 +179,7 @@ export function TextureLibrary({
                   }`}
                   title="Apply as swatch element"
                 >
-                  Swatch
+                  {kidMode ? 'Piece' : 'Swatch'}
                 </button>
                 <button
                   onClick={() => onApplyModeChange('background')}
@@ -180,7 +188,7 @@ export function TextureLibrary({
                   }`}
                   title="Apply as canvas background"
                 >
-                  Background
+                  {kidMode ? 'Fill' : 'Background'}
                 </button>
               </div>
             )}
@@ -218,7 +226,7 @@ export function TextureLibrary({
               }`}
               title={isPremium ? 'Upload your own texture' : 'Premium feature'}
             >
-              {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} Upload
+              {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} {kidMode ? 'Add' : 'Upload'}
             </button>
           </div>
           <input

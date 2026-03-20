@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
@@ -92,6 +92,16 @@ export function RightSidebar({
   const [savePublic, setSavePublic] = useState(false);
   // Replace vs Layer dialog
   const [pendingVibe, setPendingVibe] = useState<Vibe | null>(null);
+
+  // Kid mode — synced from TextureLibrary via custom event
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleStencilSelect = (vibe: Vibe) => {
     if (activeVibeId && activeVibeId !== vibe.id) {
@@ -236,9 +246,9 @@ export function RightSidebar({
   const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
 
   const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
-    { id: 'stencils', label: 'Templates', icon: Palette },
-    { id: 'community', label: 'Community', icon: Globe },
-    { id: 'hidden', label: 'Hidden', icon: EyeOff, count: hiddenVibes.length },
+    { id: 'stencils', label: kidMode ? 'Shapes' : 'Templates', icon: Palette },
+    { id: 'community', label: kidMode ? 'By Friends' : 'Community', icon: Globe },
+    { id: 'hidden', label: kidMode ? 'Put Away' : 'Hidden', icon: EyeOff, count: hiddenVibes.length },
   ];
 
   return (
