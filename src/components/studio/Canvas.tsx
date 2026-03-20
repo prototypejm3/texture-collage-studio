@@ -295,6 +295,13 @@ export function Canvas({
     return () => obs.disconnect();
   }, []);
 
+  // Default easel button position to bottom center once we know container size
+  useEffect(() => {
+    if (easelBtnPos.x === -1 && containerSize.width > 0) {
+      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: containerSize.height - 52 });
+    }
+  }, [containerSize, easelBtnPos.x]);
+
   const isMobileCanvas = containerSize.width > 0 && containerSize.width < 768;
   
   const canvasSize = useMemo(() => {
