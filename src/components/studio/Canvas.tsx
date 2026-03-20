@@ -1,4 +1,4 @@
-import { useRef, useCallback, useMemo } from 'react';
+import { useRef, useCallback, useMemo, useState } from 'react';
 import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
