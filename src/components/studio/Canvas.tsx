@@ -155,10 +155,13 @@ export function Canvas({
       ref={containerRef}
       className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
       style={{ background: 'hsl(30, 20%, 30%)' }}
+      onDragOver={handleTableDragOver}
+      onDrop={handleTableDrop}
+      onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
       {/* Rotated wood texture background */}
       <div
-        className="absolute inset-[-50%] pointer-events-none"
+        className="absolute pointer-events-none"
         style={{
           backgroundImage: `url(${surfaceImages[tableSurface]})`,
           backgroundSize: 'cover',
@@ -170,10 +173,6 @@ export function Canvas({
           top: '-50%',
         }}
       />
-      onDragOver={handleTableDragOver}
-      onDrop={handleTableDrop}
-      onClick={() => { onSelect(null); setSelectedTableId(null); }}
-    >
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
         const tex = allTextures.find(t => t.id === tel.textureId);
