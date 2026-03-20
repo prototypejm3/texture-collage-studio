@@ -121,7 +121,24 @@ export function Canvas({
     onDrop(textureId, x, y);
   }, [onDrop, canvasRef]);
 
-  
+  const handleTableDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  }, []);
+
+  const handleTableDrop = useCallback((e: React.DragEvent) => {
+    // Only handle drops on the table itself, not the canvas
+    const textureId = e.dataTransfer.getData('textureId');
+    if (!textureId || !containerRef.current) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - 40;
+    const y = e.clientY - rect.top - 40;
+    onTableDrop(textureId, x, y);
+  }, [onTableDrop]);
+
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 
   return (
     <div
