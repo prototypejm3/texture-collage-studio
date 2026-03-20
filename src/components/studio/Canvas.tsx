@@ -166,6 +166,22 @@ export function Canvas({
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
+      {/* Concrete floor background */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: `
+          radial-gradient(ellipse at 20% 30%, rgba(160,155,148,0.4) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 70%, rgba(140,135,128,0.3) 0%, transparent 50%),
+          repeating-conic-gradient(rgba(150,145,138,0.03) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px,
+          linear-gradient(135deg, #9B9590 0%, #8A8580 25%, #928D88 50%, #858079 75%, #9B9590 100%)
+        `,
+      }} />
+      {/* Subtle concrete noise overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
+        backgroundSize: '256px 256px',
+        opacity: 0.5,
+      }} />
+
       {/* Wood texture rotated 90° for horizontal grain */}
       <div className="absolute pointer-events-none" style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
