@@ -391,7 +391,7 @@ const Index = () => {
         )}
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
         {!isMobile && (
-          <div className="flex border-t border-border" style={{ height: '35%' }}>
+          <div className="flex border-t border-border shrink-0" style={{ height: 220 }}>
             {/* Left half: Textures */}
             <div className="flex-1 overflow-hidden border-r border-border">
               <TextureLibrary
