@@ -152,120 +152,117 @@ const MyWall = () => {
     const wallHanging = currentSettings.defaultHangingStyle || 'floating';
 
     // ── 3. Layout constants (percentage-based) ──
-    const SPACING = 6;       // % gap between frames
-    const MARGIN_X = 12;     // % padding from left/right edges
-    const MARGIN_Y = 15;     // % padding from top/bottom edges
+    const MARGIN_X = 10;
+    const MARGIN_Y = 12;
 
-    // Size widths/heights in % for collision detection
-    const tierWidth: Record<DesignSize, number> = { small: 14, medium: 18, large: 24 };
-    const tierHeight: Record<DesignSize, number> = { small: 16, medium: 20, large: 26 };
+    // Size dimensions in % of wall
+    const tierW: Record<DesignSize, number> = { small: 15, medium: 20, large: 26 };
+    const tierH: Record<DesignSize, number> = { small: 17, medium: 22, large: 28 };
+    const GAP = 3; // minimum gap between pieces in %
 
-    // ── 4. Gallery row templates — structured, balanced, no overlap ──
+    interface Rect { x: number; y: number; w: number; h: number }
     interface Slot { x: number; y: number; size: DesignSize }
 
-    function buildLayout(heroSlot: Slot, otherSlots: Slot[]): void {
-      // Place hero
-      wall.updateDesign(hero.id, {
-        wallX: heroSlot.x,
-        wallY: heroSlot.y,
-        displaySize: heroSlot.size,
-        rotation: 0,
-        hangingStyle: wallHanging,
+    function rectsOverlap(a: Rect, b: Rect): boolean {
+      return !(a.x + a.w + GAP <= b.x || b.x + b.w + GAP <= a.x ||
+               a.y + a.h + GAP <= b.y || b.y + b.h + GAP <= a.y);
+    }
+
+    function slotToRect(s: Slot): Rect {
+      const w = tierW[s.size];
+      const h = tierH[s.size];
+      return { x: s.x - w / 2, y: s.y - h / 2, w, h };
+    }
+
+    function slotsOverlap(slots: Slot[]): boolean {
+      const rects = slots.map(slotToRect);
+      for (let i = 0; i < rects.length; i++) {
+        for (let j = i + 1; j < rects.length; j++) {
+          if (rectsOverlap(rects[i], rects[j])) return true;
+        }
+      }
+      return false;
+    }
+
+    // Grid-based placement: arrange pieces in rows with guaranteed no overlap
+    function gridLayout(pieces: SavedDesign[], heroIdx: number): Slot[] {
+      const slots: Slot[] = [];
+      const placed: Rect[] = [];
+
+      // Determine sizes: hero gets 'large', others alternate medium/small
+      const sizes: DesignSize[] = pieces.map((_, i) =>
+        i === heroIdx ? 'large' : (pieces.length <= 4 ? 'medium' : 'small')
+      );
+
+      // Sort by size descending for better packing (hero first)
+      const indices = pieces.map((_, i) => i);
+      indices.sort((a, b) => {
+        if (a === heroIdx) return -1;
+        if (b === heroIdx) return 1;
+        return tierW[sizes[b]] - tierW[sizes[a]];
       });
 
-      // Place others
-      others.forEach((d, i) => {
-        if (i < otherSlots.length) {
-          wall.updateDesign(d.id, {
-            wallX: otherSlots[i].x,
-            wallY: otherSlots[i].y,
-            displaySize: otherSlots[i].size,
-            rotation: 0,
-            hangingStyle: wallHanging,
-          });
+      // Place each piece, scanning for first non-overlapping position
+      for (const idx of indices) {
+        const size = sizes[idx];
+        const w = tierW[size];
+        const h = tierH[size];
+        let bestSlot: Slot | null = null;
+
+        // Scan rows then columns for first fit
+        for (let cy = MARGIN_Y + h / 2; cy + h / 2 <= 100 - MARGIN_Y; cy += 5) {
+          for (let cx = MARGIN_X + w / 2; cx + w / 2 <= 100 - MARGIN_X; cx += 4) {
+            const candidate: Rect = { x: cx - w / 2, y: cy - h / 2, w, h };
+            const overlaps = placed.some(r => rectsOverlap(candidate, r));
+            if (!overlaps) {
+              bestSlot = { x: cx, y: cy, size };
+              break;
+            }
+          }
+          if (bestSlot) break;
         }
-      });
+
+        if (!bestSlot) {
+          // Fallback: stack at bottom
+          const cy = placed.length > 0
+            ? Math.max(...placed.map(r => r.y + r.h)) + GAP + h / 2
+            : 50;
+          bestSlot = { x: 50, y: Math.min(cy, 90), size };
+        }
+
+        slots[idx] = bestSlot;
+        placed.push(slotToRect(bestSlot));
+      }
+
+      return slots;
     }
+
+    // Use predefined templates for small counts, grid for larger
+    let allSlots: Slot[];
 
     if (count === 1) {
-      // Single piece centered
-      buildLayout({ x: 50, y: 45, size: 'large' }, []);
+      allSlots = [{ x: 50, y: 45, size: 'large' }];
     } else if (count === 2) {
-      // Hero center-left, supporting center-right, aligned on same baseline
-      buildLayout(
-        { x: 38, y: 45, size: 'large' },
-        [{ x: 65, y: 47, size: 'medium' }]
-      );
+      allSlots = gridLayout([hero, ...others], 0);
     } else if (count === 3) {
-      // Hero centered, flanked by two supporting pieces
-      buildLayout(
-        { x: 50, y: 45, size: 'large' },
-        [
-          { x: 22, y: 47, size: 'medium' },
-          { x: 78, y: 47, size: 'medium' },
-        ]
-      );
-    } else if (count === 4) {
-      // Top row: 2 small pieces, Middle: hero, Bottom: 1 piece
-      buildLayout(
-        { x: 50, y: 42, size: 'large' },
-        [
-          { x: 25, y: 25, size: 'small' },
-          { x: 75, y: 25, size: 'small' },
-          { x: 50, y: 72, size: 'medium' },
-        ]
-      );
-    } else if (count === 5) {
-      // Top row: 2 pieces, Middle: hero, Bottom: 2 pieces
-      buildLayout(
-        { x: 50, y: 45, size: 'large' },
-        [
-          { x: 25, y: 22, size: 'small' },
-          { x: 75, y: 22, size: 'small' },
-          { x: 28, y: 72, size: 'medium' },
-          { x: 72, y: 72, size: 'medium' },
-        ]
-      );
-    } else if (count === 6) {
-      // Top: 2, Middle: hero + 1, Bottom: 2
-      buildLayout(
-        { x: 38, y: 45, size: 'large' },
-        [
-          { x: 30, y: 20, size: 'small' },
-          { x: 70, y: 20, size: 'small' },
-          { x: 72, y: 47, size: 'medium' },
-          { x: 28, y: 74, size: 'small' },
-          { x: 68, y: 74, size: 'small' },
-        ]
-      );
+      allSlots = gridLayout([hero, ...others], 0);
     } else {
-      // 7+ pieces: 3-row grid distribution
-      const topCount = Math.ceil((count - 1) / 2);
-      const bottomCount = others.length - topCount;
-
-      const heroSlot: Slot = { x: 50, y: 45, size: 'large' };
-      const otherSlots: Slot[] = [];
-
-      // Top row — evenly distributed
-      for (let i = 0; i < topCount; i++) {
-        const cols = Math.min(topCount, 4);
-        const segW = (100 - MARGIN_X * 2) / (cols + 1);
-        const x = MARGIN_X + segW * ((i % cols) + 1);
-        const row = Math.floor(i / cols);
-        otherSlots.push({ x, y: MARGIN_Y + row * (tierHeight.small + SPACING), size: 'small' });
-      }
-
-      // Bottom row — evenly distributed
-      for (let i = 0; i < bottomCount; i++) {
-        const cols = Math.min(bottomCount, 4);
-        const segW = (100 - MARGIN_X * 2) / (cols + 1);
-        const x = MARGIN_X + segW * ((i % cols) + 1);
-        const row = Math.floor(i / cols);
-        otherSlots.push({ x, y: 70 + row * (tierHeight.small + SPACING), size: 'small' });
-      }
-
-      buildLayout(heroSlot, otherSlots);
+      allSlots = gridLayout([hero, ...others], 0);
     }
+
+    // Apply positions
+    const allPieces = [hero, ...others];
+    allPieces.forEach((d, i) => {
+      if (i < allSlots.length) {
+        wall.updateDesign(d.id, {
+          wallX: allSlots[i].x,
+          wallY: allSlots[i].y,
+          displaySize: allSlots[i].size,
+          rotation: 0,
+          hangingStyle: wallHanging,
+        });
+      }
+    });
 
     // Switch to freeform if not already
     if (currentSettings.layout !== 'freeform') {
