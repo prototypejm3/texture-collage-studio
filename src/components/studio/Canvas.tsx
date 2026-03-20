@@ -629,7 +629,7 @@ export function Canvas({
                     whiteSpace: 'nowrap',
                     userSelect: 'none',
                     fontFamily: "'Inter', 'system-ui', sans-serif",
-                  }}>'s Desk</span>
+                  }}>'s Workspace</span>
                 </div>
               </div>
 
