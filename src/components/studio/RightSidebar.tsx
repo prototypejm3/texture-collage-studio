@@ -168,6 +168,7 @@ export function RightSidebar({
   };
 
   const handleGenerate = async () => {
+    if (aiCredits.guardAiAction()) return;
     const vibe = await generateStencil(aiPrompt);
     if (vibe) {
       setAiGeneratedVibes(prev => [...prev, vibe]);
