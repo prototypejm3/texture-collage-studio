@@ -159,7 +159,7 @@ export function TextureLibrary({
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1">
-            <h2 className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">
+            <h2 className="text-[10px] font-bold tracking-wide uppercase text-foreground">
               Textures
             </h2>
             {onApplyModeChange && (
