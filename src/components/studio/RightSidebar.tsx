@@ -90,14 +90,7 @@ export function RightSidebar({
   const aiCredits = useAiCredits();
   const { generateStencil, isGenerating } = useGenerateStencil({
     onCreditsError: (msg, status) => aiCredits.recordFailure(msg, status),
-    onSuccess: () => {
-      aiCredits.recordSuccess();
-      // Show low warning at 80% usage (4 of 5)
-      const limit = checkGenerationLimit();
-      if (limit.remaining <= 1 && limit.remaining > 0) {
-        aiCredits.showLowWarning();
-      }
-    },
+    onSuccess: () => aiCredits.recordSuccess(),
   });
   const { user } = useAuth();
   const social = useStencilSocial();
