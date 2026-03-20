@@ -876,7 +876,7 @@ export function Canvas({
                     whiteSpace: 'nowrap',
                     userSelect: 'none',
                     fontFamily: "'Inter', 'system-ui', sans-serif",
-                  }}>'s Workspace</span>
+                  }}>'s {kidMode ? 'Art Table' : 'Workspace'}</span>
                 </div>
               </div>
 
