@@ -36,7 +36,7 @@ const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolea
 
 // Special styles as pill buttons
 const specialFrames: { id: FrameStyle; label: string; kidLabel: string }[] = [
-  { id: 'shadow-box', label: 'Shadow', kidLabel: '📦 Box' },
+  { id: 'shadow-box', label: 'Shadow', kidLabel: '🖼️ Frame' },
   { id: 'floating', label: 'Float', kidLabel: '☁️ Float' },
   { id: 'polaroid', label: 'Polaroid', kidLabel: '📸 Photo' },
 ];
