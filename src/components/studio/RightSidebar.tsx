@@ -432,14 +432,14 @@ export function RightSidebar({
                   </div>
                 </div>
 
-                {/* AI Mood — shown when stencil selected */}
+                {/* AI Mood — shown when stencil selected, premium only */}
                 {activeVibeId && !kidMode && (
                   <>
                     <div className="w-px bg-border self-stretch" />
                     <div className="flex-1 min-w-0">
                      <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                         <Sparkles className="w-3 h-3 text-accent-foreground" />
-                        AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                        AI Mood
                       </div>
                       <div className="flex gap-1">
                         <div className="relative flex-1">
@@ -450,17 +450,27 @@ export function RightSidebar({
                             onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
                             placeholder="cozy, tropical…"
                             maxLength={12}
-                            className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
-                            disabled={isGeneratingMood || aiCredits.limitReached}
+                            className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${!isPremium ? 'opacity-60' : ''}`}
+                            disabled={isGeneratingMood || aiCredits.limitReached || !isPremium}
                           />
                           <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                         </div>
                         <button
                           onClick={handleGenerateMood}
                           disabled={isGeneratingMood || !moodPrompt.trim() || aiCredits.limitReached}
-                          className="flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded transition-colors ${
+                            !isPremium
+                              ? 'bg-secondary/50 text-muted-foreground/60 cursor-pointer'
+                              : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
+                          }`}
                         >
-                          {isGeneratingMood ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
+                          {!isPremium ? (
+                            <Lock className="w-2.5 h-2.5" />
+                          ) : isGeneratingMood ? (
+                            <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                          ) : (
+                            <Sparkles className="w-2.5 h-2.5" />
+                          )}
                         </button>
                       </div>
                     </div>
