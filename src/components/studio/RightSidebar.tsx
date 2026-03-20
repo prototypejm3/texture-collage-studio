@@ -249,7 +249,7 @@ export function RightSidebar({
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
             {/* Reference image — compact */}
-            <div className="px-2 py-1.5 border-b border-border">
+            <div className="px-2 py-1.5 border-b border-border max-w-xs">
               <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                 <ImagePlus className="w-3 h-3" />
                 Reference Image
@@ -305,7 +305,7 @@ export function RightSidebar({
             </div>
 
             {/* AI Generate Stencil — compact */}
-            <div className="px-2 py-1.5 border-b border-border bg-muted/30">
+            <div className="px-2 py-1.5 border-b border-border bg-muted/30 max-w-xs">
               <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                 <Sparkles className="w-3 h-3 text-primary" />
                 AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
@@ -345,7 +345,7 @@ export function RightSidebar({
 
             {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
-              <div className="px-2 py-1.5 border-b border-border bg-accent/10">
+              <div className="px-2 py-1.5 border-b border-border bg-accent/10 max-w-xs">
                 <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                   <Sparkles className="w-3 h-3 text-accent-foreground" />
                   AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
