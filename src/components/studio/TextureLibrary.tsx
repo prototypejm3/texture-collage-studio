@@ -98,7 +98,7 @@ export function TextureLibrary({
   const showCustomTab = customTextures.length > 0;
 
   return (
-    <div className="h-full flex flex-col bg-card border-r border-border">
+    <div className="h-full flex flex-col bg-card">
 
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
@@ -212,7 +212,7 @@ export function TextureLibrary({
           ))}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto texture-panel p-3" style={{ maxHeight: 'calc(12 / 3 * 90px + 16px)' }}>
+      <div className="flex-1 overflow-y-auto texture-panel p-3">
         <div className="grid grid-cols-3 gap-2">
           {filtered.map(tex => (
             <SwatchItem

@@ -1,5 +1,4 @@
-import { TextureLibrary } from './TextureLibrary';
-import { TextureSwatch, ElementShape, Vibe } from '@/types/studio';
+import { ElementShape, Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
 import { PenTool, Scissors, Sparkles, ExternalLink } from 'lucide-react';
@@ -9,12 +8,6 @@ interface BuildPanelProps {
   onToggleDrawMode: () => void;
   nextShape: ElementShape;
   onSetNextShape: (shape: ElementShape) => void;
-  onDragStart: (textureId: string) => void;
-  onTextureClick: (textureId: string) => void;
-  activeSectionId: string | null;
-  customTextures: TextureSwatch[];
-  onUploadTexture: (file: File) => void;
-  onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
   // Stencil props
@@ -44,8 +37,6 @@ const shapes: { value: ElementShape; label: string }[] = [
 export function BuildPanel({
   drawMode, onToggleDrawMode,
   nextShape, onSetNextShape,
-  onDragStart, onTextureClick, activeSectionId,
-  customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
   activeVibeId, onSelectVibe, onShuffleVibeFills,
   onGenerateMood, isGeneratingMood,
@@ -131,18 +122,6 @@ export function BuildPanel({
             ))}
           </div>
         </div>
-
-        {/* Texture library */}
-        <TextureLibrary
-          onDragStart={onDragStart}
-          onTextureClick={onTextureClick}
-          activeSectionId={activeSectionId}
-          customTextures={customTextures}
-          onUploadTexture={onUploadTexture}
-          onRemoveCustomTexture={onRemoveCustomTexture}
-          isPremium={isPremium}
-          onRequestUpgrade={onRequestUpgrade}
-        />
       </div>
     </div>
   );
