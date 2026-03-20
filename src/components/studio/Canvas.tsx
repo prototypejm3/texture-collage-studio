@@ -66,6 +66,8 @@ interface Props {
   onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
   onTableElementDelete: (id: string) => void;
   onStencilTableDrop?: (vibeId: string, x: number, y: number) => void;
+  onSelectTableElement?: (id: string | null) => void;
+  selectedTableElementId?: string | null;
   canvasRef: React.RefObject<HTMLDivElement>;
   onWallFrameStyleChange?: (style: FrameStyle) => void;
   isPremium?: boolean;
