@@ -606,6 +606,16 @@ export function RightSidebar({
           </div>
         )}
       </div>
+
+      {/* AI Credits Banner */}
+      <AiCreditsBanner
+        type={aiCredits.limitReached ? 'limit' : 'warning'}
+        visible={aiCredits.limitReached || aiCredits.lowWarning}
+        onDismiss={aiCredits.limitReached ? aiCredits.dismissModal : aiCredits.dismissWarning}
+      />
+
+      {/* AI Low Credits Modal */}
+      <AiLowCreditsModal isOpen={aiCredits.showModal} onClose={aiCredits.dismissModal} />
     </div>
   );
 }
