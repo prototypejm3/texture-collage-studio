@@ -48,6 +48,7 @@ export function BottomBar({
   onOpenToolKit, toolKitOpen = false,
   onOpenStencils, stencilsOpen = false,
   tableSurface = 'birch', onTableSurfaceChange,
+  easelMode = true, onToggleEasel,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
