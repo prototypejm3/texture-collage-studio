@@ -4,6 +4,7 @@ import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool, RectangleHorizontal, Minus } from 'lucide-react';
+import { GrownUpCheckModal } from './GrownUpCheckModal';
 
 function ShapeIcon({ shape }: { shape: ElementShape }) {
   const size = 14;
@@ -129,6 +130,7 @@ export function TextureLibrary({
     window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: kidMode }));
   }, [kidMode]);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
+  const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleFav = useCallback((id: string) => {
@@ -202,7 +204,14 @@ export function TextureLibrary({
           </div>
           <div className="flex items-center gap-1">
             <button
-              onClick={() => setKidMode(!kidMode)}
+              onClick={() => {
+                if (kidMode) {
+                  // Turning off kid mode requires grown-up check
+                  setShowGrownUpCheck(true);
+                } else {
+                  setKidMode(true);
+                }
+              }}
               className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all ${kidMode ? 'bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30 scale-105' : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'}`}
               title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
             >
@@ -400,7 +409,16 @@ export function TextureLibrary({
             </button>
           </div>
         )}
-      </div>
+       </div>
+
+      <GrownUpCheckModal
+        isOpen={showGrownUpCheck}
+        onClose={() => setShowGrownUpCheck(false)}
+        onSuccess={() => {
+          setShowGrownUpCheck(false);
+          setKidMode(false);
+        }}
+      />
     </div>
   );
 }
