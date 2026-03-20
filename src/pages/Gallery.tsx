@@ -66,6 +66,14 @@ function GalleryFrame({ style, children }: { style: string; children: React.Reac
 const Gallery = () => {
   const { submissions, myShadows, loading, toggleShadow } = useGallery();
   const { user } = useAuth();
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
