@@ -184,6 +184,74 @@ export function Canvas({
         );
       })}
 
+      {/* Wooden stand behind frame */}
+      <div className="absolute pointer-events-none" style={{ zIndex: 5, bottom: 0, left: '50%', transform: 'translateX(-50%)' }}>
+        {/* Left leg */}
+        <div style={{
+          position: 'absolute',
+          width: 8,
+          height: h * 1.2,
+          background: '#C69C6D',
+          borderRadius: 3,
+          bottom: 0,
+          left: -w * 0.28,
+          transform: 'rotate(-10deg)',
+          transformOrigin: 'bottom center',
+          boxShadow: '1px 0 2px rgba(0,0,0,0.15)',
+        }} />
+        {/* Right leg */}
+        <div style={{
+          position: 'absolute',
+          width: 8,
+          height: h * 1.2,
+          background: '#C69C6D',
+          borderRadius: 3,
+          bottom: 0,
+          right: -w * 0.28,
+          transform: 'rotate(10deg)',
+          transformOrigin: 'bottom center',
+          boxShadow: '-1px 0 2px rgba(0,0,0,0.15)',
+        }} />
+        {/* Center back support */}
+        <div style={{
+          position: 'absolute',
+          width: 6,
+          height: h * 0.9,
+          background: '#A67C52',
+          borderRadius: 2,
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }} />
+        {/* Horizontal support bar */}
+        <div style={{
+          position: 'absolute',
+          width: w * 0.6,
+          height: 6,
+          background: '#D8B48A',
+          borderRadius: 2,
+          bottom: h * 0.15,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        }} />
+      </div>
+
+      {/* Shadow under entire structure */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          zIndex: 4,
+          bottom: -8,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: w * 0.8,
+          height: 16,
+          background: 'radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }}
+      />
+
       {/* Frame */}
       <div
         style={{
