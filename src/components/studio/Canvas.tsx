@@ -41,6 +41,8 @@ interface Props {
   sectionTransforms: SectionTransforms;
   tableElements: TableElement[];
   tableSurface: TableSurface;
+  workstationName: string;
+  onWorkstationNameChange: (name: string) => void;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
