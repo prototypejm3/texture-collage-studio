@@ -461,20 +461,8 @@ const Index = () => {
       {/* Mobile bottom bar with compact controls + nav */}
       {isMobile && (
         <div className="flex items-center justify-between px-1.5 py-1 bg-popover border-t border-border safe-area-bottom">
-          <div className="flex items-center gap-0.5">
-            {(['8x8', '12x12', '16x16', 'gallery'] as const).map(s => (
-              <button
-                key={s}
-                onClick={() => studio.setFrameSize(s)}
-                className={`px-1.5 py-0.5 text-[8px] rounded-md transition-colors ${
-                  studio.frameSize === s
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground'
-                }`}
-              >
-                {s}
-              </button>
-            ))}
+          <div className="flex items-center gap-1">
+            <span className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground">12×12 Canvas</span>
           </div>
           <div className="flex items-center gap-0.5">
             <button onClick={studio.clearCanvas} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
