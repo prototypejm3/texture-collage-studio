@@ -161,16 +161,12 @@ export function Canvas({
     >
       {/* Rotated wood texture background */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `url(${surfaceImages[tableSurface]})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transform: 'rotate(90deg)',
-          width: '200%',
-          height: '200%',
-          left: '-50%',
-          top: '-50%',
+          transform: 'rotate(90deg) scale(1.5)',
         }}
       />
       {/* Table elements (swatches on the wood table) */}
