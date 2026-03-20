@@ -214,7 +214,7 @@ export function Canvas({
   }, [onTableDrop]);
 
   // selectedTableId moved above
-  const [easelMode, setEaselMode] = useState(false);
+  // easelMode is now a prop
   const [showFramePicker, setShowFramePicker] = useState(false);
 
   const framePickerOptions: { id: FrameStyle; label: string }[] = [
