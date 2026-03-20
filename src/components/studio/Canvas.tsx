@@ -132,6 +132,22 @@ export function Canvas({
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
   const [trashHover, setTrashHover] = useState(false);
   const trashRef = useRef<HTMLDivElement>(null);
+  const [boxItems, setBoxItems] = useState<BoxItem[]>(() => {
+    try { const raw = localStorage.getItem('kid-maybe-box'); return raw ? JSON.parse(raw) : []; } catch { return []; }
+  });
+  const [boxHover, setBoxHover] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // Persist box items
+  useEffect(() => {
+    try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
+  }, [boxItems]);
+
+  const isOverBox = useCallback((clientX: number, clientY: number) => {
+    if (!boxRef.current || !kidMode) return false;
+    const rect = boxRef.current.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+  }, [kidMode]);
 
   // Kid mode — synced from TextureLibrary
   const [kidMode, setKidMode] = useState(() => {
