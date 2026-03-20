@@ -359,6 +359,9 @@ const Index = () => {
                 onRemoveCustomTexture={removeCustomTexture}
                 isPremium={isPremium}
                 onRequestUpgrade={() => setShowPaywall(true)}
+                applyMode={textureApplyMode}
+                onApplyModeChange={setTextureApplyMode}
+                backgroundTextureId={studio.backgroundTextureId}
               />
             </div>
           )}
