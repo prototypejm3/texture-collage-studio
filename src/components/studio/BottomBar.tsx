@@ -211,7 +211,7 @@ export function BottomBar({
           }`}
           title={isPremium ? 'Export as PNG' : 'Premium'}
         >
-          <Download className="w-3 h-3" /> <span className="hidden sm:inline">Export</span>
+          <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Export'}</span>
           {!isPremium && <Lock className="w-2 h-2 ml-0.5" />}
         </button>
       </div>

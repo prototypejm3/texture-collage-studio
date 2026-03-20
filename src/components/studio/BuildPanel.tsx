@@ -59,7 +59,7 @@ export function BuildPanel({
                 }`}
                 title={isPremium ? 'Upload reference image' : 'Premium feature'}
               >
-                {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} Reference
+                {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} {kidMode ? 'Picture' : 'Reference'}
               </button>
               <input
                 ref={templateInputRef}

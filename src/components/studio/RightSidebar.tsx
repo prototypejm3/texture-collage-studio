@@ -524,8 +524,8 @@ export function RightSidebar({
               {hiddenVibes.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center">
                   <EyeOff className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
-                  <p className="text-[10px] text-muted-foreground">No hidden stencils</p>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">Hide stencils from the Stencils tab</p>
+                  <p className="text-[10px] text-muted-foreground">{kidMode ? 'Nothing put away' : 'No hidden stencils'}</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Put away shapes you don\'t want to see' : 'Hide stencils from the Stencils tab'}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">

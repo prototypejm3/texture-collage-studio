@@ -350,8 +350,8 @@ export function TextureLibrary({
         {activeGroup === 'Favorites' && favIds.size === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Star className="w-8 h-8 text-muted-foreground/40 mb-2" />
-            <p className="text-xs text-muted-foreground">No favorites yet</p>
-            <p className="text-[10px] text-muted-foreground mt-1">Hover a texture and click ★ to favorite</p>
+            <p className="text-xs text-muted-foreground">{kidMode ? 'No favorites yet' : 'No favorites yet'}</p>
+            <p className="text-[10px] text-muted-foreground mt-1">{kidMode ? 'Hover a color and click ★ to save it!' : 'Hover a texture and click ★ to favorite'}</p>
           </div>
         )}
 
