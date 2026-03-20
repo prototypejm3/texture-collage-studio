@@ -1703,6 +1703,7 @@ const carrot: Vibe = {
 const cow: Vibe = {
   id: 'cow', name: 'Cow', emoji: '🐄',
   description: 'Sturdy cow side profile',
+  category: 'Community', creator: 'Tyron', baseLikes: 25, likesStartDate: '2026-03-06',
   viewBox: '0 0 480 400',
   sections: [
     { id: 'cow-horn-l', label: 'Left Horn', tone: 'light',
