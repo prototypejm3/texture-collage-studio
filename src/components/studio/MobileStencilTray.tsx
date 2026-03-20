@@ -98,6 +98,15 @@ export function StencilTray(props: StencilTrayProps) {
             <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Stencils</span>
           </div>
           <div className="flex items-center gap-0.5">
+            {!isMobile && props.onDockBack && (
+              <button
+                onClick={() => { props.onDockBack?.(); setIsOpen(false); }}
+                className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
+                title="Dock back to sidebar"
+              >
+                <ArrowLeftToLine className="w-3 h-3" />
+              </button>
+            )}
             {!isMobile && (
               <button
                 onClick={() => setIsExpanded(e => !e)}
