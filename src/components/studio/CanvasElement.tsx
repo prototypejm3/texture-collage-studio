@@ -120,40 +120,35 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  // Unified pointer handler for both mouse and touch
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
     e.preventDefault();
     onSelect();
     setIsDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY, elX: element.x, elY: element.y };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }, [element.x, element.y, onSelect]);
 
-  useEffect(() => {
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
-    const handleMove = (e: MouseEvent) => {
-      const dx = e.clientX - dragStart.current.x;
-      const dy = e.clientY - dragStart.current.y;
-      onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
-    };
-    const handleUp = (e: MouseEvent) => {
-      setIsDragging(false);
-      if (canvasRef?.current) {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const cx = e.clientX;
-        const cy = e.clientY;
-        // Dragged outside canvas sides/top = move to table
-        if (onMoveToTable && (cx < rect.left || cx > rect.right || cy < rect.top)) {
-          onMoveToTable(e.clientX, e.clientY);
-        }
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
+  }, [isDragging, onUpdate]);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (canvasRef?.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const cx = e.clientX;
+      const cy = e.clientY;
+      if (onMoveToTable && (cx < rect.left || cx > rect.right || cy < rect.top)) {
+        onMoveToTable(e.clientX, e.clientY);
       }
-    };
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', handleUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
-    };
-  }, [isDragging, onUpdate, onMoveToTable, canvasRef]);
+    }
+  }, [isDragging, onMoveToTable, canvasRef]);
 
   const allTex = [...textures, ...customTextures];
   const texture = allTex.find(t => t.id === element.textureId);
