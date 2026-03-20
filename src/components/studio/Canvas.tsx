@@ -288,6 +288,7 @@ export function Canvas({
         background: 'radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%)',
         borderRadius: '50%',
       }} />
+      )}
 
       {/* Frame */}
       <div
