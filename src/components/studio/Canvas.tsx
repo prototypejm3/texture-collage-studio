@@ -407,23 +407,25 @@ export function Canvas({
       }} />
 
       {/* Wood desk surface — rectangular desk with rounded corners and concrete border */}
-      {!easelMode && (
+      {!easelMode && (() => {
+        const deskInset = kidMode ? 56 : 28;
+        return (
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: 28,
-            right: 28,
-            top: 28,
-            bottom: 28,
+            left: deskInset,
+            right: deskInset,
+            top: deskInset,
+            bottom: deskInset,
             borderRadius: 16,
             boxShadow: '0 12px 60px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.25)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: 28,
-            right: 28,
-            top: 28,
-            bottom: 28,
+            left: deskInset,
+            right: deskInset,
+            top: deskInset,
+            bottom: deskInset,
             borderRadius: 16,
             overflow: 'hidden',
           }}>
@@ -460,7 +462,8 @@ export function Canvas({
             }} />
           </div>
         </>
-      )}
+        );
+      })()}
 
       {/* Easel mode — full wood background */}
       {easelMode && (
