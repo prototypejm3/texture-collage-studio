@@ -316,7 +316,7 @@ export function TextureLibrary({
               <button
                 key={shape.value}
                 onClick={() => onSetNextShape(shape.value)}
-                className={`flex items-center gap-1 px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                className={`flex items-center gap-1 px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
                   nextShape === shape.value
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
