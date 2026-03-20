@@ -44,7 +44,7 @@ export function BuildPanel({
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wide text-foreground">Stencils</span>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-foreground">{kidMode ? 'Shapes' : 'Stencils'}</span>
         </div>
         <div className="flex items-center gap-1.5">
           {/* Reference Image upload — mirrors Textures' Upload button */}
