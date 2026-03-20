@@ -95,7 +95,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
             isHovered ? 'bg-amber-600' : 'bg-amber-800'
           }`}
           style={{
-            height: 36,
+            height: 47,
             borderRadius: '0 0 6px 6px',
             boxShadow: isHovered
               ? '0 4px 16px rgba(180, 120, 40, 0.5), inset 0 -4px 8px rgba(0,0,0,0.15)'
