@@ -18,7 +18,12 @@ export interface GeneratedVibe {
   frameChoice: string;
 }
 
-export function useGenerateVibe() {
+interface UseGenerateVibeOptions {
+  onCreditsError?: (message?: string, status?: number) => void;
+  onSuccess?: () => void;
+}
+
+export function useGenerateVibe(options?: UseGenerateVibeOptions) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedVibe, setGeneratedVibe] = useState<GeneratedVibe | null>(null);
 
@@ -48,21 +53,37 @@ export function useGenerateVibe() {
 
       if (error) {
         console.error('Generate vibe error:', error);
-        toast({ title: 'Generation failed', description: error.message || 'Could not generate vibe.', variant: 'destructive' });
+        const msg = error.message || 'Could not generate vibe.';
+        const status = (error as any)?.status;
+        if (status === 402 || status === 429 || /quota|limit|credit|rate|insufficient|payment/i.test(msg)) {
+          options?.onCreditsError?.(msg, status);
+          return null;
+        }
+        options?.onCreditsError?.(msg, status);
+        toast({ title: 'Generation failed', description: msg, variant: 'destructive' });
         return null;
       }
 
       if (data?.error) {
-        toast({ title: 'Generation failed', description: data.error, variant: 'destructive' });
+        const dataError = data.error as string;
+        if (/quota|limit|credit|rate|insufficient|payment|429|402/i.test(dataError)) {
+          options?.onCreditsError?.(dataError);
+          return null;
+        }
+        options?.onCreditsError?.(dataError);
+        toast({ title: 'Generation failed', description: dataError, variant: 'destructive' });
         return null;
       }
 
       recordGeneration();
+      options?.onSuccess?.();
       setGeneratedVibe(data as GeneratedVibe);
       toast({ title: `${data.emoji} ${data.name}`, description: data.description });
       return data as GeneratedVibe;
     } catch (e) {
       console.error('Generate vibe error:', e);
+      const msg = e instanceof Error ? e.message : 'Failed to generate vibe. Try again.';
+      options?.onCreditsError?.(msg);
       toast({ title: 'Error', description: 'Failed to generate vibe. Try again.', variant: 'destructive' });
       return null;
     } finally {
