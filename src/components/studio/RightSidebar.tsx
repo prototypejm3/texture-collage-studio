@@ -602,15 +602,20 @@ export function RightSidebar({
         )}
       </div>
 
-      {/* AI Credits Banner */}
-      <AiCreditsBanner
-        type={aiCredits.limitReached ? 'limit' : 'warning'}
-        visible={aiCredits.limitReached || aiCredits.lowWarning}
-        onDismiss={aiCredits.limitReached ? aiCredits.dismissModal : aiCredits.dismissWarning}
-      />
+      {/* AI Credits Banner — only for premium users at limit */}
+      {isPremium && aiCredits.limitReached && (
+        <AiCreditsBanner
+          type="limit"
+          visible={true}
+          onDismiss={aiCredits.dismissModal}
+        />
+      )}
 
-      {/* AI Low Credits Modal */}
+      {/* Daily limit modal — premium users */}
       <AiLowCreditsModal isOpen={aiCredits.showModal} onClose={aiCredits.dismissModal} />
+
+      {/* Premium upsell modal — free users */}
+      <AiPremiumUpsellModal isOpen={aiCredits.showPremiumModal} onClose={aiCredits.dismissPremiumModal} onUpgrade={onRequestUpgrade} />
     </div>
   );
 }
