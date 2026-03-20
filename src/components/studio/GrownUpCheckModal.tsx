@@ -14,6 +14,7 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const [mode, setMode] = useState<'question' | 'pin' | 'set-pin'>('question');
   const [pin, setPin] = useState(['', '', '', '']);
   const [newPin, setNewPin] = useState(['', '', '', '']);
+  const [pinHint, setPinHint] = useState('');
   const [pinError, setPinError] = useState(false);
   const pinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
   const newPinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
