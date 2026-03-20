@@ -56,6 +56,7 @@ export function TopToolbar({
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
+  const [showAiWelcome, setShowAiWelcome] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { dark, toggle } = useTheme();
