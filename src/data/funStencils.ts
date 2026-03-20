@@ -127,7 +127,30 @@ const discoBall: Vibe = {
       path: 'M280,320 Q310,290 330,240 Q340,270 325,310 Q310,345 285,365 Q265,380 250,385 Q275,365 290,340 Z' },
   ],
 };
+// ── CHEESE BOARD 🧀 ──
+const cheeseBoard: Vibe = {
+  id: 'cheese-board', name: 'Cheese Board', emoji: '🧀', category: 'For Fun',
+  description: 'Charcuterie cheese board with knife',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'cb-board', label: 'Board', tone: 'medium',
+      path: 'M60,120 Q50,110 65,105 L415,105 Q430,110 420,120 L420,400 Q425,415 415,420 L65,420 Q50,415 60,400 Z' },
+    { id: 'cb-board-edge', label: 'Board Edge', tone: 'dark',
+      path: 'M60,390 Q50,415 65,420 L415,420 Q430,415 420,390 L420,400 Q425,415 415,420 L65,420 Q50,415 60,400 Z' },
+    { id: 'cb-cheese-wedge', label: 'Cheese Wedge', tone: 'accent',
+      path: 'M100,180 L220,150 L200,290 Z' },
+    { id: 'cb-cheese-holes', label: 'Cheese Detail', tone: 'light',
+      path: 'M140,200 Q148,192 156,200 Q148,210 140,200 Z M165,235 Q170,228 178,233 Q173,242 165,235 Z M130,245 Q136,240 142,246 Q136,253 130,245 Z' },
+    { id: 'cb-crackers', label: 'Crackers', tone: 'light',
+      path: 'M250,170 L310,170 L310,210 L250,210 Z M260,225 L320,225 L320,265 L260,265 Z M245,280 L305,280 L305,320 L245,320 Z' },
+    { id: 'cb-knife-blade', label: 'Knife Blade', tone: 'light',
+      path: 'M340,150 L380,148 Q395,155 390,170 L365,175 L340,170 Z' },
+    { id: 'cb-knife-handle', label: 'Knife Handle', tone: 'dark',
+      path: 'M340,155 L290,165 Q280,170 282,178 L290,180 L340,170 Z' },
+  ],
+};
 
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard,
 ];
