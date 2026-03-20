@@ -132,6 +132,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const sections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
   
   for (const group of themeGroups) {
+    if (group.adultOnly && kidMode) continue;
     const items = allVibes.filter(v => 
       group.ids.has(v.id) || (v.category === group.label)
     );
