@@ -27,11 +27,33 @@ export function useWall() {
   const [settings, setSettings] = useState<WallSettings>(loadSettings);
 
   useEffect(() => {
-    localStorage.setItem(DESIGNS_KEY, JSON.stringify(designs));
+    const data = JSON.stringify(designs);
+    try {
+      localStorage.setItem(DESIGNS_KEY, data);
+    } catch (e) {
+      // Quota exceeded — strip studioState from older designs to free space
+      console.warn('localStorage quota exceeded, pruning studioState from older designs');
+      const pruned = designs.map((d, i) => i < 2 ? d : { ...d, studioState: undefined });
+      try {
+        localStorage.setItem(DESIGNS_KEY, JSON.stringify(pruned));
+      } catch {
+        // Still too big — keep only the 20 most recent designs
+        const trimmed = pruned.slice(0, 20);
+        try {
+          localStorage.setItem(DESIGNS_KEY, JSON.stringify(trimmed));
+        } catch {
+          console.error('localStorage still full after pruning');
+        }
+      }
+    }
   }, [designs]);
 
   useEffect(() => {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    } catch {
+      console.warn('Could not save wall settings to localStorage');
+    }
   }, [settings]);
 
   const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
