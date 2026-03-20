@@ -197,25 +197,39 @@ export function Canvas({
         }),
       }}>
       {easelMode && (<>
-        {/* Easel structure */}
-        <div className="absolute pointer-events-none" style={{
-          zIndex: 5,
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: w + 200,
-          height: h * 1.45,
+        {/* Legs poking above frame — two front legs + back support meeting at top */}
+        <div className="pointer-events-none" style={{
+          position: 'relative',
+          width: w + 160,
+          height: 80,
+          zIndex: 6,
+          marginBottom: -4,
         }}>
-          <div style={{ position: 'absolute', width: 6, height: h * 1.4, background: '#C69C6D', borderRadius: 3, bottom: 0, left: w * 0.15, transform: 'rotate(-8deg)', transformOrigin: 'bottom center' }} />
-          <div style={{ position: 'absolute', width: 6, height: h * 1.4, background: '#C69C6D', borderRadius: 3, bottom: 0, right: w * 0.15, transform: 'rotate(8deg)', transformOrigin: 'bottom center' }} />
-          <div style={{ position: 'absolute', width: 5, height: h * 1.1, background: '#A67C52', borderRadius: 2, bottom: 0, left: '50%', marginLeft: -2.5 }} />
-          <div style={{ position: 'absolute', width: 16, height: 12, background: '#B8885A', borderRadius: 3, top: 0, left: '50%', marginLeft: -8 }} />
-          <div style={{ position: 'absolute', width: w * 0.65, height: 8, background: '#D8B48A', borderRadius: 2, bottom: h * 0.28, left: '50%', transform: 'translateX(-50%)', boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }} />
-          <div style={{ position: 'absolute', width: w * 0.65, height: 4, background: '#C69C6D', borderRadius: '0 0 2px 2px', bottom: h * 0.28 - 4, left: '50%', transform: 'translateX(-50%)' }} />
+          {/* Left front leg */}
+          <div style={{ position: 'absolute', width: 8, height: 120, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, left: '25%', transform: 'rotate(-6deg)', transformOrigin: 'bottom center' }} />
+          {/* Right front leg */}
+          <div style={{ position: 'absolute', width: 8, height: 120, background: '#D8B48A', borderRadius: '3px 3px 0 0', bottom: 0, right: '25%', transform: 'rotate(6deg)', transformOrigin: 'bottom center' }} />
+          {/* Back support (center, taller) */}
+          <div style={{ position: 'absolute', width: 6, height: 130, background: '#C69C6D', borderRadius: '2px 2px 0 0', bottom: 0, left: '50%', marginLeft: -3 }} />
+          {/* Top junction */}
+          <div style={{ position: 'absolute', width: 20, height: 8, background: '#B8885A', borderRadius: 3, top: 0, left: '50%', marginLeft: -10 }} />
         </div>
-        {/* Shadow under easel */}
-        <div className="absolute pointer-events-none" style={{ zIndex: 4, bottom: -4, left: '50%', transform: 'translateX(-50%)', width: w * 0.7, height: 14, background: 'radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
       </>)}
+
+      {/* Shelf ledge below frame — visible in easel mode */}
+      {easelMode && (
+        <div className="pointer-events-none" style={{
+          position: 'relative',
+          width: w + 40,
+          zIndex: 11,
+          marginTop: -2,
+        }}>
+          {/* Main shelf */}
+          <div style={{ width: '100%', height: 10, background: '#D8B48A', borderRadius: '0 0 3px 3px', boxShadow: '0 3px 6px rgba(0,0,0,0.1)' }} />
+          {/* Front lip */}
+          <div style={{ width: '100%', height: 5, background: '#C69C6D', borderRadius: '0 0 2px 2px' }} />
+        </div>
+      )}
 
       {/* Frame */}
       <div
