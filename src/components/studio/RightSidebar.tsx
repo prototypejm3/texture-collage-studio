@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+import { funStencils } from '@/data/funStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp } from 'lucide-react';
@@ -181,13 +182,14 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
-  const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string> }[] = [
+  const funIds = new Set(funStencils.map(f => f.id));
+  const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean }[] = [
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     { label: 'Animals', kidLabel: '🐶 Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
     { label: 'Insects & Bugs', kidLabel: '🐛 Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -198,11 +200,13 @@ export function RightSidebar({
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
     { label: 'Numbers & Symbols', kidLabel: '🔢 Numbers', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
+    { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
   ];
 
   const themedIds = new Set<string>();
   const themeSections: { label: string; kidLabel: string; emoji: string; vibes: typeof allVibes }[] = [];
   for (const group of themeGroups) {
+    if (group.adultOnly && kidMode) continue;
     const items = allVibes.filter(v => group.ids.has(v.id) || v.category === group.label);
     if (items.length > 0) themeSections.push({ label: group.label, kidLabel: group.kidLabel, emoji: group.emoji, vibes: items });
     items.forEach(v => themedIds.add(v.id));
