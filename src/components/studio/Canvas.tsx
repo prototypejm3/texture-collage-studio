@@ -163,6 +163,14 @@ export function Canvas({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // Kid canvas style: rainbow or plain
+  const [kidCanvasStyle, setKidCanvasStyle] = useState<'rainbow' | 'plain'>(() => {
+    try { return (localStorage.getItem('kid-canvas-style') as 'rainbow' | 'plain') || 'rainbow'; } catch { return 'rainbow'; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem('kid-canvas-style', kidCanvasStyle); } catch {}
+  }, [kidCanvasStyle]);
+
   const isOverBox = useCallback((clientX: number, clientY: number) => {
     if (!boxRef.current || !kidMode) return false;
     const rect = boxRef.current.getBoundingClientRect();
