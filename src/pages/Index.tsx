@@ -415,6 +415,8 @@ const Index = () => {
             onRequestUpgrade={() => setShowPaywall(true)}
             tableSurface={tableSurface}
             onTableSurfaceChange={setTableSurface}
+            easelMode={easelMode}
+            onToggleEasel={() => setEaselMode(prev => !prev)}
           />
         )}
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
