@@ -43,7 +43,6 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
 const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
   { value: 'floating', label: 'Floating', emoji: '✨' },
   { value: 'string', label: 'String', emoji: '🧵' },
-  { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
   { value: 'hook', label: 'Hook', emoji: '🪝' },
   { value: 'shelf', label: 'Shelf', emoji: '🪵' },
 ];
