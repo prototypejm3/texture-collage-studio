@@ -9,6 +9,10 @@ import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
+import { useAiCredits } from '@/hooks/useAiCredits';
+import { AiLowCreditsModal } from '@/components/studio/AiLowCreditsModal';
+import { AiCreditsBanner } from '@/components/studio/AiCreditsBanner';
+import { checkGenerationLimit } from '@/hooks/useGenerationLimit';
 
 type Tab = 'stencils' | 'community' | 'hidden';
 
