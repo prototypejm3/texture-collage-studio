@@ -507,7 +507,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className={`grid gap-1.5 ${compact ? 'grid-cols-2' : 'grid-cols-3'}`}>
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
