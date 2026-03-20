@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
-import { GripHorizontal, X, Sparkles, Minimize2, Maximize2 } from 'lucide-react';
+import { GripHorizontal, X, Sparkles, Minimize2, Maximize2, ArrowLeftToLine } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface StencilTrayProps {
