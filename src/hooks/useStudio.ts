@@ -143,7 +143,6 @@ export function useStudio() {
 
   const selectVibe = useCallback((vibe: Vibe) => {
     setActiveVibe(vibe);
-    setElements([]);
     setSelectedId(null);
     setSelectedSectionId(null);
     setVibeFills({});
