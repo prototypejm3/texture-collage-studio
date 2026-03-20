@@ -57,31 +57,31 @@ const shapeOptions: { value: ElementShape; label: string; kidLabel: string }[] =
   { value: 'torn-edge', label: 'Torn Edge', kidLabel: '🫧 Ripped' },
   { value: 'circle', label: 'Circle', kidLabel: '⭕ Round' },
   { value: 'blob', label: 'Blob', kidLabel: '🫠 Blobby' },
-  { value: 'strip', label: 'Strip', kidLabel: '📏 Skinny' },
-  { value: 'rectangle', label: 'Rectangle', kidLabel: '📦 Wide' },
+  { value: 'strip', label: 'Strip', kidLabel: 'Skinny' },
+  { value: 'rectangle', label: 'Rectangle', kidLabel: 'Wide' },
 ];
 
 const edgeOptions: { value: EdgeStyle; label: string; kidLabel: string }[] = [
-  { value: 'clean', label: 'Clean', kidLabel: '✨ Smooth' },
-  { value: 'soft-fray', label: 'Soft Fray', kidLabel: '🧶 Fuzzy' },
-  { value: 'rough-torn', label: 'Rough Torn', kidLabel: '📜 Ripped' },
-  { value: 'pinking', label: '✂ Pinking', kidLabel: '✂️ Zigzag Cut' },
-  { value: 'scallop', label: '✂ Scallop', kidLabel: '🌊 Wavy Cut' },
-  { value: 'zigzag', label: '✂ Zigzag', kidLabel: '⚡ Zappy Cut' },
-  { value: 'wave', label: '✂ Wave', kidLabel: '🌀 Swirly Cut' },
+  { value: 'clean', label: 'Clean', kidLabel: 'Smooth' },
+  { value: 'soft-fray', label: 'Soft Fray', kidLabel: 'Fuzzy' },
+  { value: 'rough-torn', label: 'Rough Torn', kidLabel: 'Ripped' },
+  { value: 'pinking', label: '✂ Pinking', kidLabel: 'Zigzag Cut' },
+  { value: 'scallop', label: '✂ Scallop', kidLabel: 'Wavy Cut' },
+  { value: 'zigzag', label: '✂ Zigzag', kidLabel: 'Zappy Cut' },
+  { value: 'wave', label: '✂ Wave', kidLabel: 'Swirly Cut' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
-  { value: 'none', label: 'None', kidLabel: '😊 Flat' },
-  { value: 'light', label: 'Light', kidLabel: '😏 A Little' },
-  { value: 'medium', label: 'Medium', kidLabel: '😬 Crunchy' },
-  { value: 'heavy', label: 'Heavy', kidLabel: '🤪 Super Wrinkly' },
+  { value: 'none', label: 'None', kidLabel: 'Flat' },
+  { value: 'light', label: 'Light', kidLabel: 'A Little' },
+  { value: 'medium', label: 'Medium', kidLabel: 'Crunchy' },
+  { value: 'heavy', label: 'Heavy', kidLabel: 'Super Wrinkly' },
 ];
 
 const shadowOptions: { value: ShadowDepth; label: string; kidLabel: string }[] = [
-  { value: 'flat', label: 'Flat', kidLabel: '📄 Flat' },
-  { value: 'lifted', label: 'Lifted', kidLabel: '📋 Peeling Up' },
-  { value: 'floating', label: 'Floating', kidLabel: '🎈 Floating!' },
+  { value: 'flat', label: 'Flat', kidLabel: 'Flat' },
+  { value: 'lifted', label: 'Lifted', kidLabel: 'Peeling Up' },
+  { value: 'floating', label: 'Floating', kidLabel: 'Floating!' },
 ];
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
