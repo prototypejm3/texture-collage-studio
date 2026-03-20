@@ -47,6 +47,13 @@ const Index = () => {
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
+  const [workstationName, setWorkstationName] = useState(() => {
+    return localStorage.getItem('workstationName') || '';
+  });
+  const handleWorkstationNameChange = useCallback((name: string) => {
+    setWorkstationName(name);
+    localStorage.setItem('workstationName', name);
+  }, []);
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
