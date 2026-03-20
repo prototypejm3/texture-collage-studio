@@ -319,7 +319,7 @@ export function RightSidebar({
             <input
               value={saveName}
               onChange={e => setSaveName(e.target.value)}
-              placeholder="Name your stencil"
+              placeholder={kidMode ? 'Name your shape' : 'Name your stencil'}
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground mb-3"
             />
             <label className="flex items-center gap-2 text-xs text-muted-foreground mb-4 cursor-pointer">
