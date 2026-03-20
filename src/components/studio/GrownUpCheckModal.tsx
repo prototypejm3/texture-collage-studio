@@ -10,49 +10,13 @@ interface AdultCheck {
 
 const adultChecks: AdultCheck[] = [
   {
-    question: 'Which one actually happens?',
+    question: "What is Santa's real first name?",
     options: [
-      { label: 'A', text: 'I wake up early and have a calm morning' },
-      { label: 'B', text: 'I check one thing on my phone and lose 45 minutes' },
-      { label: 'C', text: 'I feel fully rested every day' },
+      { label: 'A', text: 'Santa' },
+      { label: 'B', text: 'Kris' },
+      { label: 'C', text: 'Nicholas' },
     ],
-    accepted: ['B'],
-  },
-  {
-    question: 'What does "free trial" usually mean?',
-    options: [
-      { label: 'A', text: 'Free forever' },
-      { label: 'B', text: 'You will forget and get charged' },
-      { label: 'C', text: 'A generous gift' },
-    ],
-    accepted: ['B'],
-  },
-  {
-    question: 'You have 6 tabs open, 3 ideas started, and 1 almost finished. What do you do?',
-    options: [
-      { label: 'A', text: 'Finish one' },
-      { label: 'B', text: 'Start a new one' },
-      { label: 'C', text: 'Reorganize everything' },
-    ],
-    accepted: ['B', 'C'],
-  },
-  {
-    question: 'What is the correct response to "we need to talk"?',
-    options: [
-      { label: 'A', text: 'Panic immediately' },
-      { label: 'B', text: 'Scroll through every past mistake' },
-      { label: 'C', text: 'Say "sure!" and stay calm' },
-    ],
-    accepted: ['A', 'B'],
-  },
-  {
-    question: "You're about to go to sleep. You:",
-    options: [
-      { label: 'A', text: 'Close your eyes peacefully' },
-      { label: 'B', text: 'Remember that embarrassing thing from 2014' },
-      { label: 'C', text: 'Fall asleep in 5 minutes' },
-    ],
-    accepted: ['B'],
+    accepted: ['C'],
   },
 ];
 
