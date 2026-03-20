@@ -153,12 +153,23 @@ export function Canvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 flex items-end justify-center p-0 relative"
-      style={{
-        backgroundImage: `url(${surfaceImages[tableSurface]})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
+      className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
+      style={{ background: 'hsl(30, 20%, 30%)' }}
+    >
+      {/* Rotated wood texture background */}
+      <div
+        className="absolute inset-[-50%] pointer-events-none"
+        style={{
+          backgroundImage: `url(${surfaceImages[tableSurface]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: 'rotate(90deg)',
+          width: '200%',
+          height: '200%',
+          left: '-50%',
+          top: '-50%',
+        }}
+      />
       onDragOver={handleTableDragOver}
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
