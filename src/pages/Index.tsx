@@ -336,6 +336,9 @@ const Index = () => {
             onTableElementUpdate={handleTableElementUpdate}
             onTableElementDelete={handleTableElementDelete}
             canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+            onWallFrameStyleChange={studio.setWallFrameStyle}
+            isPremium={isPremium}
+            onRequestUpgrade={() => setShowPaywall(true)}
             drawMode={studio.drawMode}
             onFinishDraw={studio.addCustomSection}
             onCancelDraw={() => studio.setDrawMode(false)}
