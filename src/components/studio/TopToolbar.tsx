@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { FrameSize, FrameColor } from '@/types/studio';
 import { FrameStyle, AmbientSound } from '@/types/wall';
 import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -21,11 +20,7 @@ function useTheme() {
 }
 
 interface Props {
-  frameSize: FrameSize;
-  frameColor: FrameColor;
   wallFrameStyle: FrameStyle;
-  onFrameSizeChange: (size: FrameSize) => void;
-  onFrameColorChange: (color: FrameColor) => void;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   onClear: () => void;
   onSave: () => void;

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CanvasElement, MaterialEffects, Vibe, FrameSize } from '@/types/studio';
+import { CanvasElement, MaterialEffects, Vibe } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { FloatingToolbar } from './FloatingToolbar';
 import { RightSidebar } from './RightSidebar';
@@ -20,9 +20,7 @@ interface ContextPanelProps {
   onDuplicateElement: (id: string) => void;
   onDeleteElement: (id: string) => void;
   // Frame props
-  frameSize: FrameSize;
   wallFrameStyle: FrameStyle;
-  onFrameSizeChange: (size: FrameSize) => void;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   // Stencil/template props
   activeVibeId: string | null;
@@ -41,7 +39,7 @@ interface ContextPanelProps {
   backgroundTextureId: string | null;
 }
 
-const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
+// Frame sizes kept internally for potential future use
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
   { id: 'gold', label: 'Gold' },
@@ -108,24 +106,10 @@ export function ContextPanel(props: ContextPanelProps) {
                   onDelete={() => props.onDeleteElement(props.selectedId!)}
                 />
 
-                {/* Frame controls inline */}
+                {/* Canvas format label */}
                 <div className="px-3 py-3 border-t border-border">
-                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Canvas Size</p>
-                  <div className="flex gap-1">
-                    {frameSizes.map(s => (
-                      <button
-                        key={s}
-                        onClick={() => props.onFrameSizeChange(s)}
-                        className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${
-                          props.frameSize === s
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1">Format</p>
+                  <span className="text-[10px] font-semibold text-foreground">12×12 Canvas</span>
                 </div>
 
                 <div className="px-3 py-3 border-t border-border">

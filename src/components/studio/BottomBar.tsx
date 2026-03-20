@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
-  frameSize: FrameSize;
-  onFrameSizeChange: (size: FrameSize) => void;
   wallFrameStyle: FrameStyle;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   onClear: () => void;
@@ -22,8 +19,6 @@ interface Props {
   tableSurface?: TableSurface;
   onTableSurfaceChange?: (surface: TableSurface) => void;
 }
-
-const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
 
 // Color frames for Shadow menu
 const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
@@ -45,7 +40,6 @@ const specialFrames: { id: FrameStyle; label: string }[] = [
 ];
 
 export function BottomBar({
-  frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
   isPremium = false, onRequestUpgrade,
@@ -73,22 +67,9 @@ export function BottomBar({
 
   return (
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover border-t border-border relative gap-1.5">
-      {/* Canvas size */}
-      <div className="flex items-center gap-0.5">
-        <span className="text-[8px] uppercase tracking-wider text-muted-foreground mr-0.5 hidden sm:inline">Canvas</span>
-        {frameSizes.map(s => (
-          <button
-            key={s}
-            onClick={() => onFrameSizeChange(s)}
-            className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
-              frameSize === s
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            {s}
-          </button>
-        ))}
+      {/* Canvas format label */}
+      <div className="flex items-center gap-1">
+        <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">12×12 Canvas</span>
       </div>
 
       <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
