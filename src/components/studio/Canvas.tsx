@@ -81,6 +81,7 @@ interface Props {
   crayonMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
+  onFillBackground?: (textureId: string) => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
