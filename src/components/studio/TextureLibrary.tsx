@@ -323,7 +323,7 @@ export function TextureLibrary({
                 }`}
               >
                 <ShapeIcon shape={shape.value} />
-                {shape.label}
+                {kidMode ? shape.kidLabel : shape.label}
               </button>
             ))}
           </div>
