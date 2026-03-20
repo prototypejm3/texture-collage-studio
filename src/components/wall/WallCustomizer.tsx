@@ -135,35 +135,13 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           ))}
         </PremiumIconButton>
 
-        {/* Hanging style */}
-        <PremiumIconButton
-          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
-          isPremium={isPremium}
-          isOpen={showHangingMenu}
-          onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
-          onClose={() => setShowHangingMenu(false)}
-          iconClass={iconClass(false, !isPremium)}
-          title="Hanging style"
-        >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Hanging</p>
-          {hangingStyles.map(hs => (
-            <button
-              key={hs.value}
-              onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
-              className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-            >
-              <span>{hs.emoji}</span> {hs.label}
-            </button>
-          ))}
-        </PremiumIconButton>
-
         {/* Spotlight toggle */}
         <button
           onClick={() => isPremium ? onApplyHangingToAll?.('spotlight') : onRequestUpgrade?.()}
           className={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
           title={isPremium ? 'Spotlight' : 'Premium — unlock to use'}
         >
-          <LampDesk className="w-3.5 h-3.5" />
+          <GalleryVerticalEnd className="w-3.5 h-3.5" />
           {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
         </button>
 
