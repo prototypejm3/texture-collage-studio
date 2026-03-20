@@ -29,7 +29,7 @@ export function NavBar() {
   return (
     <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
       <span className="text-sm font-bold tracking-tight text-foreground mr-4">
-        ShadowBox
+        Swatchbox Studio
       </span>
       {/* Desktop nav links */}
       <div className="hidden md:flex items-center gap-6">
