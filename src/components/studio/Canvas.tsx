@@ -113,6 +113,7 @@ export function Canvas({
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
+  onStencilTableDrop,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
