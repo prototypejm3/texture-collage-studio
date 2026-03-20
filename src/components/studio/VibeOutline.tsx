@@ -50,7 +50,7 @@ export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
   sectionTransforms,
-  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
+  onSelectSection, onDropInSection, onFillBackground, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   customTextures = [],
 }: Props) {
