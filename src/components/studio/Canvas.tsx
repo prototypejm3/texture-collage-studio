@@ -260,20 +260,20 @@ export function Canvas({
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: 8,
-            right: 8,
-            top: 8,
-            bottom: 8,
-            borderRadius: 6,
-            boxShadow: '0 12px 60px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2)',
+            left: 36,
+            right: 36,
+            top: 36,
+            bottom: 36,
+            borderRadius: '50%',
+            boxShadow: '0 12px 60px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.25)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: 8,
-            right: 8,
-            top: 8,
-            bottom: 8,
-            borderRadius: 4,
+            left: 36,
+            right: 36,
+            top: 36,
+            bottom: 36,
+            borderRadius: '50%',
             overflow: 'hidden',
           }}>
             {/* Wood grain texture */}
@@ -290,24 +290,12 @@ export function Canvas({
               left: '-100%',
               top: '-100%',
             }} />
-            {/* Fade edges — wood blends into concrete */}
+            {/* Subtle inner shadow for depth/beveled edge */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              boxShadow: `
-                inset 40px 0 60px -20px rgba(139,139,139,0.7),
-                inset -40px 0 60px -20px rgba(139,139,139,0.7),
-                inset 0 40px 60px -20px rgba(139,139,139,0.6),
-                inset 0 -40px 60px -20px rgba(139,139,139,0.6)
-              `,
-              pointerEvents: 'none',
-            }} />
-            {/* Desk edge highlight */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: 5,
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 4px rgba(0,0,0,0.08)',
+              borderRadius: '50%',
+              boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.15), inset 0 -2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.1)',
               pointerEvents: 'none',
             }} />
           </div>
