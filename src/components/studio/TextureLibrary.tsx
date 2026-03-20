@@ -52,6 +52,7 @@ const shapes: { value: ElementShape; label: string; kidLabel: string }[] = [
 
 interface TextureGroup {
   label: string;
+  kidLabel: string;
   categories: TextureCategory[];
 }
 
