@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { TitleCard } from './TitleCard';
 import { AnimatePresence } from 'framer-motion';
 
+const BASE_WIDTH = 900;
 const sizeWidths: Record<DesignSize, number> = {
   small: 140,
   medium: 210,
