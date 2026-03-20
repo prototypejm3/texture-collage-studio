@@ -255,6 +255,11 @@ const Index = () => {
     studio.selectVibe(vibe);
   }, [studio]);
 
+  const handleClearAll = useCallback(() => {
+    studio.clearCanvas();
+    clearTemplate();
+  }, [studio, clearTemplate]);
+
   const handleExport = useCallback(async () => {
     if (!canvasRef.current) return;
     try {
@@ -392,7 +397,7 @@ const Index = () => {
       <TopToolbar
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
-        onClear={studio.clearCanvas}
+        onClear={handleClearAll}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
         ambientSound={ambientSound}
@@ -557,7 +562,7 @@ const Index = () => {
           <BottomBar
             wallFrameStyle={studio.wallFrameStyle}
             onWallFrameStyleChange={studio.setWallFrameStyle}
-            onClear={studio.clearCanvas}
+            onClear={handleClearAll}
             onSave={handleExport}
             onSaveToWall={handleSaveToWall}
             isPremium={isPremium}
@@ -656,7 +661,7 @@ const Index = () => {
       {isMobile && (
         <div className="flex items-center justify-between px-1.5 py-1 bg-popover border-t border-border safe-area-bottom">
           <div className="flex items-center gap-0.5">
-            <button onClick={studio.clearCanvas} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
+            <button onClick={handleClearAll} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
               Clear
             </button>
             <button onClick={handleSaveToWall} className="px-1.5 py-0.5 text-[8px] text-foreground hover:bg-secondary rounded-md">
