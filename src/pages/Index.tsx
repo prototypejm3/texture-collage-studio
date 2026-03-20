@@ -176,10 +176,11 @@ const Index = () => {
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
-    } else if (!studio.selectedId && !studio.activeVibe) {
+    } else if (textureApplyMode === 'background') {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     }
-  }, [studio.selectedSectionId, studio.fillSection, studio.selectedId, studio.activeVibe, studio.setBackgroundTextureId]);
+    // In 'swatch' mode, clicking does nothing special (drag to add)
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
