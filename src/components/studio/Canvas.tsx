@@ -343,13 +343,13 @@ export function Canvas({
       )}
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
-        const tex = allTextures.find(t => t.id === tel.textureId);
-        if (!tex) return null;
+        const tex = tel.vibeId ? null : allTextures.find(t => t.id === tel.textureId);
+        if (!tex && !tel.vibeId) return null;
         return (
           <TableSwatch
             key={tel.id}
             element={tel}
-            texture={tex}
+            texture={tex || null}
             isSelected={selectedTableId === tel.id}
             onSelect={() => { setSelectedTableId(tel.id); onSelect(null); }}
             onUpdate={(updates) => onTableElementUpdate(tel.id, updates)}

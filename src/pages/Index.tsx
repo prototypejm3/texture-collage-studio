@@ -6,7 +6,7 @@ import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { useWall } from '@/hooks/useWall';
 import { useUserTier } from '@/hooks/useUserTier';
-import { Canvas, TableSurface } from '@/components/studio/Canvas';
+import { Canvas, TableSurface, TableElement } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { BuildPanel } from '@/components/studio/BuildPanel';
