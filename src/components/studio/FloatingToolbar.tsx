@@ -65,10 +65,10 @@ const edgeOptions: { value: EdgeStyle; label: string; kidLabel: string }[] = [
   { value: 'clean', label: 'Clean', kidLabel: 'Smooth' },
   { value: 'soft-fray', label: 'Soft Fray', kidLabel: 'Fuzzy' },
   { value: 'rough-torn', label: 'Rough Torn', kidLabel: 'Ripped' },
-  { value: 'pinking', label: '✂ Pinking', kidLabel: 'Zigzag Cut' },
-  { value: 'scallop', label: '✂ Scallop', kidLabel: 'Wavy Cut' },
-  { value: 'zigzag', label: '✂ Zigzag', kidLabel: 'Zappy Cut' },
-  { value: 'wave', label: '✂ Wave', kidLabel: 'Swirly Cut' },
+  { value: 'pinking', label: 'Pinking', kidLabel: 'Zigzag Cut' },
+  { value: 'scallop', label: 'Scallop', kidLabel: 'Wavy Cut' },
+  { value: 'zigzag', label: 'Zigzag', kidLabel: 'Zappy Cut' },
+  { value: 'wave', label: 'Wave', kidLabel: 'Swirly Cut' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
