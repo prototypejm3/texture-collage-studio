@@ -284,6 +284,14 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
                   />
                 ))}
               </div>
+              <input
+                type="text"
+                value={pinHint}
+                onChange={(e) => setPinHint(e.target.value)}
+                placeholder="Add a hint word (optional)"
+                maxLength={30}
+                className="w-full px-4 py-2.5 rounded-xl text-sm border-2 border-border bg-secondary/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors mb-4"
+              />
               <button
                 onClick={() => onSuccess()}
                 className="w-full text-xs text-muted-foreground hover:text-foreground text-center py-1"
