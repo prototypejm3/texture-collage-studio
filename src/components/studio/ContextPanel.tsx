@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CanvasElement, MaterialEffects, Vibe, FrameSize } from '@/types/studio';
+import { CanvasElement, MaterialEffects, Vibe } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { FloatingToolbar } from './FloatingToolbar';
 import { RightSidebar } from './RightSidebar';
