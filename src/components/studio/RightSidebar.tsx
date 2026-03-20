@@ -191,10 +191,10 @@ export function RightSidebar({
   ];
 
   const themedIds = new Set<string>();
-  const themeSections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
+  const themeSections: { label: string; kidLabel: string; emoji: string; vibes: typeof allVibes }[] = [];
   for (const group of themeGroups) {
     const items = allVibes.filter(v => group.ids.has(v.id) || v.category === group.label);
-    if (items.length > 0) themeSections.push({ label: group.label, emoji: group.emoji, vibes: items });
+    if (items.length > 0) themeSections.push({ label: group.label, kidLabel: group.kidLabel, emoji: group.emoji, vibes: items });
     items.forEach(v => themedIds.add(v.id));
   }
   const uncategorizedVibes = allVibes.filter(v => !themedIds.has(v.id));
