@@ -288,7 +288,7 @@ export function TextureLibrary({
             <button
               key={group.label}
               onClick={() => setActiveGroup(group.label)}
-              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
                 activeGroup === group.label
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
