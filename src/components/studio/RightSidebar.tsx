@@ -341,14 +341,6 @@ export function RightSidebar({
                 )}
               </div>
             </div>
-                <button
-                  onClick={onRequestUpgrade}
-                  className="flex items-center gap-1 px-2 py-1 text-[10px] rounded bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
-                >
-                  <Lock className="w-2.5 h-2.5" /> Unlock
-                </button>
-              )}
-            </div>
 
             {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
