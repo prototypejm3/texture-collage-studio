@@ -43,6 +43,7 @@ interface Props {
   onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   onDeleteElement: (id: string) => void;
+  onMoveToTable: (id: string, x: number, y: number) => void;
   onTableDrop: (textureId: string, x: number, y: number) => void;
   onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
   onTableElementDelete: (id: string) => void;
