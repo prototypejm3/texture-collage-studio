@@ -248,99 +248,98 @@ export function RightSidebar({
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
-            {/* Reference image — compact */}
-            <div className="px-2 py-1.5 border-b border-border max-w-xs">
-              <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
-                <ImagePlus className="w-3 h-3" />
-                Reference Image
-              </div>
-              {!customTemplate ? (
-                <>
-                  <button
-                    onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
-                    className={`flex items-center justify-center gap-1 w-full px-2 py-1 text-[10px] rounded transition-colors ${
-                      isPremium
-                        ? 'bg-secondary text-secondary-foreground hover:bg-accent'
-                        : 'bg-secondary/50 text-muted-foreground/60'
-                    }`}
-                  >
-                    {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />}
-                    {isPremium ? 'Upload Reference' : 'Premium Feature'}
-                  </button>
-                  <input
-                    ref={templateInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file && file.type.startsWith('image/')) onUploadTemplate(file);
-                      e.target.value = '';
-                    }}
-                  />
-                </>
-              ) : (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[9px] text-muted-foreground truncate flex-1" title={customTemplate.name}>
-                    📷 {customTemplate.name}
-                  </span>
-                  <input
-                    type="range"
-                    min={5}
-                    max={80}
-                    step={5}
-                    value={templateOpacity * 100}
-                    onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
-                    className="w-14 h-1 accent-primary"
-                  />
-                  <button
-                    onClick={onClearTemplate}
-                    className="p-0.5 rounded hover:bg-secondary transition-colors"
-                    title="Remove reference"
-                  >
-                    <X className="w-2.5 h-2.5 text-muted-foreground" />
-                  </button>
+            {/* Reference Image + AI Stencil — same row */}
+            <div className="flex border-b border-border">
+              {/* Reference Image */}
+              <div className="flex-1 px-2 py-1.5 border-r border-border">
+                <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                  <ImagePlus className="w-3 h-3" />
+                  Reference Image
                 </div>
-              )}
-            </div>
-
-            {/* AI Generate Stencil — compact */}
-            <div className="px-2 py-1.5 border-b border-border bg-muted/30 max-w-xs">
-              <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
-                <Sparkles className="w-3 h-3 text-primary" />
-                AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
-              </div>
-              {isPremium ? (
-                <div className="flex gap-1.5">
-                  <div className="relative flex-1">
+                {!customTemplate ? (
+                  <>
+                    <button
+                      onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                      className={`flex items-center justify-center gap-1 w-full px-2 py-1 text-[10px] rounded transition-colors ${
+                        isPremium
+                          ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                          : 'bg-secondary/50 text-muted-foreground/60'
+                      }`}
+                    >
+                      {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />}
+                      {isPremium ? 'Upload Reference' : 'Premium'}
+                    </button>
                     <input
-                      type="text"
-                      value={aiPrompt}
-                      onChange={e => setAiPrompt(e.target.value.slice(0, 12))}
-                      onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
-                      placeholder="flower, castle…"
-                      maxLength={12}
-                      className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
-                      disabled={isGenerating}
+                      ref={templateInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+                        e.target.value = '';
+                      }}
                     />
-                    <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <span className="text-[9px] text-muted-foreground truncate flex-1" title={customTemplate.name}>
+                      📷 {customTemplate.name}
+                    </span>
+                    <input
+                      type="range"
+                      min={5}
+                      max={80}
+                      step={5}
+                      value={templateOpacity * 100}
+                      onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
+                      className="w-10 h-1 accent-primary"
+                    />
+                    <button onClick={onClearTemplate} className="p-0.5 rounded hover:bg-secondary transition-colors" title="Remove reference">
+                      <X className="w-2.5 h-2.5 text-muted-foreground" />
+                    </button>
                   </div>
-                  <button
-                    onClick={handleGenerate}
-                    disabled={isGenerating || !aiPrompt.trim()}
-                    className="flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-                  >
-                    {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
-                  </button>
+                )}
+              </div>
+
+              {/* AI Stencil */}
+              <div className="flex-1 px-2 py-1.5 bg-muted/30">
+                <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                  <Sparkles className="w-3 h-3 text-primary" />
+                  AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                 </div>
-              ) : (
-                <button
-                  onClick={onRequestUpgrade}
-                  className="flex items-center gap-1 px-2 py-1 text-[10px] rounded bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
-                >
-                  <Lock className="w-2.5 h-2.5" /> Unlock
-                </button>
-              )}
+                {isPremium ? (
+                  <div className="flex gap-1">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={aiPrompt}
+                        onChange={e => setAiPrompt(e.target.value.slice(0, 12))}
+                        onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
+                        placeholder="flower, castle…"
+                        maxLength={12}
+                        className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
+                        disabled={isGenerating}
+                      />
+                      <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
+                    </div>
+                    <button
+                      onClick={handleGenerate}
+                      disabled={isGenerating || !aiPrompt.trim()}
+                      className="flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={onRequestUpgrade}
+                    className="flex items-center justify-center gap-1 w-full px-2 py-1 text-[10px] rounded bg-secondary/50 text-muted-foreground/60"
+                  >
+                    <Lock className="w-2.5 h-2.5" /> Premium
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Mood generator — shown after a stencil is selected */}
@@ -386,7 +385,7 @@ export function RightSidebar({
             <div className={compact ? 'p-1' : 'p-3'}>
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className={`grid ${compact ? 'grid-cols-2 gap-0.5' : 'grid-cols-4 gap-1'}`}>
+                <div className={`grid ${compact ? 'grid-cols-4 gap-1' : 'grid-cols-4 gap-1.5'}`}>
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -421,7 +420,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className={`grid ${compact ? 'grid-cols-2 gap-0.5' : 'grid-cols-4 gap-1'}`}>
+                  <div className={`grid ${compact ? 'grid-cols-4 gap-1' : 'grid-cols-4 gap-1.5'}`}>
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
@@ -507,7 +506,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
                 </div>
               ) : (
-                <div className={`grid gap-1.5 ${compact ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                <div className={`grid gap-1.5 ${compact ? 'grid-cols-4' : 'grid-cols-4'}`}>
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
