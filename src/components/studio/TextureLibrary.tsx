@@ -304,7 +304,7 @@ export function TextureLibrary({
           <div className="flex items-center gap-1 mt-1 flex-wrap">
             <button
               onClick={onToggleDrawMode}
-              className={`flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium rounded-full transition-colors ${
+              className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-medium rounded-full transition-colors ${
                 drawMode
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
