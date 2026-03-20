@@ -683,10 +683,14 @@ export function Canvas({
 
 // ── Table Swatch Component ──
 import { X } from 'lucide-react';
+import { vibes } from '@/data/vibes';
+import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+
+const allStencilVibes = [...vibes, ...letterStencils, ...numberSymbolStencils];
 
 interface TableSwatchProps {
   element: TableElement;
-  texture: TextureSwatch;
+  texture: TextureSwatch | null;
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<TableElement>) => void;
@@ -721,6 +725,51 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
     };
   }, [isDragging, onUpdate]);
 
+  // If this is a stencil element, render SVG outline
+  const vibe = element.vibeId ? allStencilVibes.find(v => v.id === element.vibeId) : null;
+
+  if (vibe) {
+    return (
+      <div
+        onMouseDown={handleMouseDown}
+        onClick={(e) => { e.stopPropagation(); onSelect(); }}
+        className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''}`}
+        style={{
+          left: element.x,
+          top: element.y,
+          width: element.width,
+          height: element.height,
+          transform: `rotate(${element.rotation}deg)`,
+          zIndex: 5,
+          filter: 'drop-shadow(0 3px 6px hsla(220, 20%, 12%, 0.25))',
+        }}
+      >
+        {isSelected && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+            className="absolute -top-2.5 -right-2.5 z-50 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+            title="Remove"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        )}
+        <svg viewBox={vibe.viewBox} className="w-full h-full">
+          {vibe.sections.map(section => (
+            <path
+              key={section.id}
+              d={section.path}
+              fill={section.tone === 'dark' ? 'hsl(220, 20%, 25%)' : section.tone === 'light' ? 'hsl(40, 20%, 90%)' : section.tone === 'accent' ? 'hsl(24, 60%, 50%)' : 'hsl(220, 15%, 55%)'}
+              stroke="hsl(220, 15%, 40%)"
+              strokeWidth="1.5"
+              opacity={0.85}
+            />
+          ))}
+        </svg>
+      </div>
+    );
+  }
+
+  // Regular texture swatch
   const clipStyle = element.clipPathD
     ? `path('${element.clipPathD}')`
     : 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)';
@@ -751,13 +800,15 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
           <X className="w-3 h-3" />
         </button>
       )}
-      <div
-        className="w-full h-full"
-        style={{
-          background: texture.cssBackground,
-          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
-        }}
-      />
+      {texture && (
+        <div
+          className="w-full h-full"
+          style={{
+            background: texture.cssBackground,
+            backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+          }}
+        />
+      )}
     </div>
   );
 }
