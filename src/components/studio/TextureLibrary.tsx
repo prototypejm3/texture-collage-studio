@@ -100,47 +100,45 @@ export function TextureLibrary({
   return (
     <div className="h-full flex flex-col bg-card">
 
-      <div className="px-3 py-2 border-b border-border">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+      <div className="px-2 py-1 border-b border-border">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">
             Textures
           </h2>
-          <div className="flex items-center gap-1.5">
-            {/* Kid mode toggle */}
+          <div className="flex items-center gap-1">
             <button
               onClick={() => setKidMode(!kidMode)}
-              className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-colors ${kidMode ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-secondary/60 text-muted-foreground/60 hover:text-muted-foreground'}`}
+              className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${kidMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/60 text-muted-foreground/60 hover:text-muted-foreground'}`}
               title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
             >
               Kids
             </button>
-            {/* Swatch / Tiled toggle */}
-            <div className="flex items-center gap-0.5 rounded-md bg-secondary/60 p-0.5">
+            <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5">
               <button
                 onClick={() => setSwatchView('swatch')}
-                className={`p-1 rounded transition-colors ${swatchView === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                className={`p-0.5 rounded transition-colors ${swatchView === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
                 title="Swatch view"
               >
-                <Maximize className="w-3 h-3" />
+                <Maximize className="w-2.5 h-2.5" />
               </button>
               <button
                 onClick={() => setSwatchView('tiled')}
-                className={`p-1 rounded transition-colors ${swatchView === 'tiled' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
+                className={`p-0.5 rounded transition-colors ${swatchView === 'tiled' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}
                 title="Tiled view"
               >
-                <Grid3X3 className="w-3 h-3" />
+                <Grid3X3 className="w-2.5 h-2.5" />
               </button>
             </div>
             <button
               onClick={() => isPremium ? fileInputRef.current?.click() : onRequestUpgrade()}
-              className={`flex items-center gap-1 px-2 py-1 text-[10px] rounded-lg transition-colors ${
+              className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded transition-colors ${
                 isPremium
                   ? 'bg-secondary text-secondary-foreground hover:bg-accent'
                   : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
               }`}
               title={isPremium ? 'Upload your own texture' : 'Premium feature'}
             >
-              {isPremium ? <Upload className="w-3 h-3" /> : <Lock className="w-3 h-3" />} Upload
+              {isPremium ? <Upload className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} Upload
             </button>
           </div>
           <input
@@ -154,17 +152,17 @@ export function TextureLibrary({
         </div>
 
         {activeSectionId && (
-          <div className="mb-3 px-2 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
-            <p className="text-[10px] text-primary font-medium">
-              👆 Select a texture to add to the canvas to edit shapes, size, rotation & material effects.
+          <div className="mb-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
+            <p className="text-[9px] text-primary font-medium">
+              👆 Tap a texture to fill the selected section.
             </p>
           </div>
         )}
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setActiveGroup('All')}
-            className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
               activeGroup === 'All'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -174,34 +172,34 @@ export function TextureLibrary({
           </button>
           <button
             onClick={() => setActiveGroup('Favorites')}
-            className={`px-2.5 py-1 text-xs rounded-full transition-colors flex items-center gap-1 ${
+            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors flex items-center gap-0.5 ${
               activeGroup === 'Favorites'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
             }`}
           >
-            <Star className="w-3 h-3" /> Favorites
+            <Star className="w-2.5 h-2.5" /> Favs
             {favIds.size > 0 && (
-              <span className="text-[9px] ml-0.5 opacity-70">{favIds.size}</span>
+              <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
             )}
           </button>
           {showCustomTab && (
             <button
               onClick={() => setActiveGroup('Custom')}
-              className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
                 activeGroup === 'Custom'
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              ✨ My Textures
+              ✨ Mine
             </button>
           )}
           {groups.map(group => (
             <button
               key={group.label}
               onClick={() => setActiveGroup(group.label)}
-              className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
                 activeGroup === group.label
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
