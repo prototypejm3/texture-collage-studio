@@ -156,14 +156,23 @@ export function Canvas({
       className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
       style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
-        backgroundSize: 'auto 100%',
-        backgroundRepeat: 'repeat-x',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
       onDragOver={handleTableDragOver}
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${surfaceImages[tableSurface]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transform: 'rotate(90deg) scale(3.25)',
+          transformOrigin: 'center',
+        }}
+      />
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
         const tex = allTextures.find(t => t.id === tel.textureId);
