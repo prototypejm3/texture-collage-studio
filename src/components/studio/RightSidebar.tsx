@@ -390,16 +390,6 @@ export function RightSidebar({
                   >
                     <Shuffle className="w-2.5 h-2.5" />
                   </button>
-                  <div className="flex items-center gap-0.5 ml-auto">
-                    <span className="text-[8px] text-muted-foreground/60 mr-0.5">New stencil:</span>
-                    <button
-                      onClick={onPlaceStencil}
-                      className="flex items-center gap-0.5 px-1.5 py-1 text-[9px] font-medium rounded bg-accent text-accent-foreground hover:bg-accent/80 transition-colors"
-                      title="Keep current stencil as elements, then add another on top"
-                    >
-                      <Stamp className="w-2.5 h-2.5" /> Layer
-                    </button>
-                  </div>
                 </div>
               </div>
             )}
