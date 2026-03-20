@@ -24,7 +24,7 @@ interface BuildPanelProps {
 
 export function BuildPanel({
   isPremium, onRequestUpgrade,
-  activeVibeId, onSelectVibe, onShuffleVibeFills,
+  activeVibeId, onSelectVibe, onShuffleVibeFills, onPlaceStencil,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   stencilsPoppedOut, onPopOutStencils,
