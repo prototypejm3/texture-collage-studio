@@ -46,6 +46,7 @@ const Index = () => {
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
+  const [tableSurface, setTableSurface] = useState<TableSurface>('light-wood');
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
