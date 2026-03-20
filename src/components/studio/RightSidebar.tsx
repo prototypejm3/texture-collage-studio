@@ -304,15 +304,15 @@ export function RightSidebar({
               )}
             </div>
 
-            {/* AI Generate Stencil */}
-            <div className="px-3 py-3 border-b border-border bg-muted/30">
-              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
-                AI Generate Stencil <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+            {/* AI Generate Stencil — compact */}
+            <div className="px-2 py-1.5 border-b border-border bg-muted/30">
+              <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                <Sparkles className="w-3 h-3 text-primary" />
+                AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
               </div>
               {isPremium ? (
-                <div className="flex flex-col gap-2">
-                  <div className="relative">
+                <div className="flex gap-1.5">
+                  <div className="relative flex-1">
                     <input
                       type="text"
                       value={aiPrompt}
@@ -320,29 +320,25 @@ export function RightSidebar({
                       onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
                       placeholder="flower, castle…"
                       maxLength={12}
-                      className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-10"
+                      className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
                       disabled={isGenerating}
                     />
-                    <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{aiPrompt.length}/12</span>
+                    <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
                   </div>
                   <button
                     onClick={handleGenerate}
                     disabled={isGenerating || !aiPrompt.trim()}
-                    className="flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
                   >
-                    {isGenerating ? (
-                      <><Loader2 className="w-3 h-3 animate-spin" /> Generating…</>
-                    ) : (
-                      <><Sparkles className="w-3 h-3" /> Create</>
-                    )}
+                    {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
                   </button>
                 </div>
               ) : (
                 <button
                   onClick={onRequestUpgrade}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
+                  className="flex items-center gap-1 px-2 py-1 text-[10px] rounded bg-secondary text-secondary-foreground hover:bg-accent transition-colors w-full justify-center"
                 >
-                  <Lock className="w-3 h-3" /> Unlock with Premium
+                  <Lock className="w-2.5 h-2.5" /> Unlock
                 </button>
               )}
             </div>
