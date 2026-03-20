@@ -345,13 +345,13 @@ export function RightSidebar({
 
             {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
-              <div className="px-3 py-3 border-b border-border bg-accent/10">
-                <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-accent-foreground" />
-                  AI Mood — auto-fill textures <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+              <div className="px-2 py-1.5 border-b border-border bg-accent/10">
+                <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                  <Sparkles className="w-3 h-3 text-accent-foreground" />
+                  AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <div className="relative">
+                <div className="flex gap-1.5">
+                  <div className="relative flex-1">
                     <input
                       type="text"
                       value={moodPrompt}
@@ -359,31 +359,25 @@ export function RightSidebar({
                       onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
                       placeholder="cozy cabin, tropical…"
                       maxLength={12}
-                      className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-10"
+                      className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
                       disabled={isGeneratingMood}
                     />
-                    <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50">{moodPrompt.length}/12</span>
+                    <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleGenerateMood}
-                      disabled={isGeneratingMood || !moodPrompt.trim()}
-                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      {isGeneratingMood ? (
-                        <><Loader2 className="w-3 h-3 animate-spin" /> Generating…</>
-                      ) : (
-                        <><Sparkles className="w-3 h-3" /> Generate Mood</>
-                      )}
-                    </button>
-                    <button
-                      onClick={onShuffleVibeFills}
-                      className="flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
-                      title="Shuffle fills"
-                    >
-                      <Shuffle className="w-3 h-3" />
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleGenerateMood}
+                    disabled={isGeneratingMood || !moodPrompt.trim()}
+                    className="flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isGeneratingMood ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
+                  </button>
+                  <button
+                    onClick={onShuffleVibeFills}
+                    className="flex items-center px-1.5 py-1 text-[10px] rounded bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
+                    title="Shuffle fills"
+                  >
+                    <Shuffle className="w-2.5 h-2.5" />
+                  </button>
                 </div>
               </div>
             )}
