@@ -172,8 +172,7 @@ const Index = () => {
   // ── Stencil section operations on desk ──
   const handleDuplicateStencilSection = useCallback((vibeId: string, sectionId: string, parentElement: TableElement) => {
     // Find the vibe to get section path
-    const allVibes = [...(require('@/data/vibes').vibes), ...(require('@/data/letterStencils').letterStencils), ...(require('@/data/letterStencils').numberSymbolStencils)];
-    const vibe = allVibes.find((v: any) => v.id === vibeId);
+    const vibe = allStencilVibesForDesk.find((v: any) => v.id === vibeId);
     if (!vibe) return;
     const section = vibe.sections.find((s: any) => s.id === sectionId);
     if (!section) return;
