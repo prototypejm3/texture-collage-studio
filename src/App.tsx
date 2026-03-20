@@ -37,6 +37,8 @@ const App = () => (
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <NonStudioBottomNav />
