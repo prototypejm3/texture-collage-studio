@@ -60,7 +60,7 @@ const groups: TextureGroup[] = [
   { label: 'Velvet', kidLabel: '🧸 Soft & Fancy', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
   { label: 'Soft', kidLabel: '☁️ Super Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
   { label: 'Linen', kidLabel: '🧵 Cloth', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Durable', kidLabel: '💪 Tough', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Durable', kidLabel: '💪 Linen', categories: ['Sunbrella', 'Key Largo'] },
   { label: 'Woven', kidLabel: '🧶 Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
   { label: 'Textured', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
   { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
