@@ -508,6 +508,7 @@ const Index = () => {
               crayonMode={studio.crayonMode}
               onFinishDraw={studio.addCustomSection}
               onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
+              onFillBackground={(textureId) => studio.setBackgroundTextureId(textureId)}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}

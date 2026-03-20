@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, defaultSectionTransform } from '@/types/studio';
 import { textures } from '@/data/textures';
-import { Paintbrush, Scissors, Trash2, RotateCw, Copy } from 'lucide-react';
+import { Paintbrush, Scissors, Trash2, RotateCw, Copy, PaintBucket } from 'lucide-react';
 
 interface Props {
   vibe: Vibe;
@@ -12,6 +12,7 @@ interface Props {
   sectionTransforms: SectionTransforms;
   onSelectSection: (sectionId: string) => void;
   onDropInSection: (sectionId: string, textureId: string) => void;
+  onFillBackground?: (textureId: string) => void;
   onDropAsSwatch: (textureId: string, x: number, y: number) => void;
   onDetachSection: (sectionId: string) => void;
   onDeleteSection: (sectionId: string) => void;
@@ -49,7 +50,7 @@ export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
   sectionTransforms,
-  onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
+  onSelectSection, onDropInSection, onFillBackground, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
   customTextures = [],
 }: Props) {
@@ -435,7 +436,18 @@ export function VibeOutline({
               className="w-full text-left px-3.5 py-2 text-xs hover:bg-secondary flex items-center gap-2.5 text-foreground transition-colors"
             >
               <Paintbrush className="w-3.5 h-3.5 text-primary" />
-              Fill whole shape
+              Fill this shape
+            </button>
+            <div className="border-t border-border mx-2 my-0.5" />
+            <button
+              onClick={() => {
+                if (dropChoice && onFillBackground) onFillBackground(dropChoice.textureId);
+                setDropChoice(null);
+              }}
+              className="w-full text-left px-3.5 py-2 text-xs hover:bg-secondary flex items-center gap-2.5 text-foreground transition-colors"
+            >
+              <PaintBucket className="w-3.5 h-3.5 text-accent-foreground" />
+              Fill whole background
             </button>
             <div className="border-t border-border mx-2 my-0.5" />
             <button

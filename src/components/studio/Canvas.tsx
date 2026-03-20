@@ -81,6 +81,7 @@ interface Props {
   crayonMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
+  onFillBackground?: (textureId: string) => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -120,7 +121,7 @@ export function Canvas({
   canvasRef,
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
-  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw,
+  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground,
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
@@ -795,6 +796,7 @@ export function Canvas({
               sectionTransforms={sectionTransforms}
               onSelectSection={onSelectSection}
               onDropInSection={onDropInSection}
+              onFillBackground={onFillBackground}
               onDropAsSwatch={onDropAsSwatch}
               onDetachSection={onDetachSection}
               onDeleteSection={onDeleteSection}
