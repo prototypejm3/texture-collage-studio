@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -11,27 +11,88 @@ interface Props {
 export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
   const [answer, setAnswer] = useState('');
   const [result, setResult] = useState<'correct' | 'wrong' | null>(null);
+  const [mode, setMode] = useState<'question' | 'pin' | 'set-pin'>('question');
+  const [pin, setPin] = useState(['', '', '', '']);
+  const [newPin, setNewPin] = useState(['', '', '', '']);
+  const [pinError, setPinError] = useState(false);
+  const pinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+  const newPinRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+
+  const savedPin = typeof window !== 'undefined' ? localStorage.getItem('grownup-pin') : null;
 
   useEffect(() => {
     if (isOpen) {
       setAnswer('');
       setResult(null);
+      setPin(['', '', '', '']);
+      setNewPin(['', '', '', '']);
+      setPinError(false);
+      // If a PIN is saved, go straight to PIN entry
+      setMode(savedPin ? 'pin' : 'question');
     }
-  }, [isOpen]);
+  }, [isOpen, savedPin]);
 
   const handleSubmit = () => {
     const trimmed = answer.trim().toLowerCase();
     if (!trimmed) return;
-    // Accept any mortgage/interest/escrow related answer
     const grownUpKeywords = ['mortgage', 'interest', 'loan', 'escrow', 'credit', 'insurance', 'premium', 'deductible', 'apr', 'refinance', 'amortiz', 'equity', 'down payment', 'principal', 'rate', 'bank', 'lender', 'payment', 'house', 'home', 'buy', 'borrow', 'debt', 'monthly', 'fixed', 'variable', 'arm',
-      // also keep tax keywords
-      'tax', 'w-2', 'w2', 'wage', 'irs', 'income', 'employer', '1099', 'withholding', 'deduction', 'refund', 'filing'];
+      'tax', 'w-2', 'w2', 'wage', 'irs', 'income', 'employer', '1099', 'withholding', 'deduction', 'refund', 'filing',
+      'annual', 'percent'];
     const isGrownUp = grownUpKeywords.some(kw => trimmed.includes(kw));
     if (isGrownUp) {
       setResult('correct');
-      setTimeout(() => onSuccess(), 1800);
+      // Show set-pin step after a brief delay
+      setTimeout(() => setMode('set-pin'), 1200);
     } else {
       setResult('wrong');
+    }
+  };
+
+  const handlePinInput = (index: number, value: string, isNewPin: boolean) => {
+    const digit = value.replace(/\D/g, '').slice(-1);
+    const arr = isNewPin ? [...newPin] : [...pin];
+    arr[index] = digit;
+    if (isNewPin) {
+      setNewPin(arr);
+    } else {
+      setPin(arr);
+      setPinError(false);
+    }
+    // Auto-focus next
+    if (digit && index < 3) {
+      const refs = isNewPin ? newPinRefs : pinRefs;
+      refs[index + 1].current?.focus();
+    }
+    // Auto-submit when all 4 filled
+    if (digit && index === 3) {
+      const fullPin = arr.join('');
+      if (fullPin.length === 4) {
+        if (isNewPin) {
+          // Save new PIN
+          localStorage.setItem('grownup-pin', fullPin);
+          onSuccess();
+        } else {
+          // Check PIN
+          if (fullPin === savedPin) {
+            onSuccess();
+          } else {
+            setPinError(true);
+            setPin(['', '', '', '']);
+            const refs = isNewPin ? newPinRefs : pinRefs;
+            setTimeout(() => refs[0].current?.focus(), 100);
+          }
+        }
+      }
+    }
+  };
+
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent, isNewPin: boolean) => {
+    if (e.key === 'Backspace') {
+      const arr = isNewPin ? [...newPin] : [...pin];
+      if (!arr[index] && index > 0) {
+        const refs = isNewPin ? newPinRefs : pinRefs;
+        refs[index - 1].current?.focus();
+      }
     }
   };
 
@@ -67,66 +128,156 @@ export function GrownUpCheckModal({ isOpen, onClose, onSuccess }: Props) {
           <p className="text-xs text-muted-foreground mt-1">Just making sure 🙂</p>
         </div>
 
-        <p className="text-sm font-medium text-foreground mb-4 text-center leading-relaxed">
-          What does APR stand for on a mortgage?
-        </p>
-
-        <input
-          type="text"
-          value={answer}
-          onChange={(e) => { if (!result) setAnswer(e.target.value); }}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(); }}
-          placeholder="Type your answer…"
-          maxLength={100}
-          className={`w-full px-4 py-3 rounded-xl text-sm border-2 bg-secondary/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors mb-5 ${
-            result ? 'pointer-events-none opacity-60' : 'border-border'
-          }`}
-          autoFocus
-        />
-
         <AnimatePresence mode="wait">
-          {result === 'wrong' && (
+          {/* PIN entry mode (when PIN is already set) */}
+          {mode === 'pin' && (
             <motion.div
-              initial={{ opacity: 0, y: -5 }}
+              key="pin"
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="text-center mb-3"
+              exit={{ opacity: 0, y: -10 }}
             >
-              <p className="text-sm text-foreground font-medium mb-1">
-                Just checking 😊 are you sure you're not a kid?
+              <p className="text-sm font-medium text-foreground mb-4 text-center">
+                Enter your 4-digit PIN
               </p>
-              <p className="text-xs text-muted-foreground">
-                The kid space is way more fun 🎨💛
-              </p>
+              <div className="flex justify-center gap-3 mb-4">
+                {pin.map((d, i) => (
+                  <input
+                    key={i}
+                    ref={pinRefs[i]}
+                    type="password"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={d}
+                    onChange={(e) => handlePinInput(i, e.target.value, false)}
+                    onKeyDown={(e) => handlePinKeyDown(i, e, false)}
+                    className={`w-12 h-14 text-center text-xl font-bold rounded-xl border-2 bg-secondary/30 text-foreground focus:outline-none focus:border-primary transition-colors ${
+                      pinError ? 'border-destructive animate-shake' : 'border-border'
+                    }`}
+                    autoFocus={i === 0}
+                  />
+                ))}
+              </div>
+              {pinError && (
+                <p className="text-xs text-destructive text-center mb-3">Wrong PIN — try again</p>
+              )}
               <button
-                onClick={onClose}
-                className="mt-3 w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                onClick={() => setMode('question')}
+                className="w-full text-xs text-muted-foreground hover:text-foreground text-center py-1"
               >
-                Back to Kid Land 🧸
+                Forgot PIN? Answer question instead
               </button>
             </motion.div>
           )}
-          {result === 'correct' && (
-            <motion.p
-              initial={{ opacity: 0, y: -5 }}
+
+          {/* Question mode */}
+          {mode === 'question' && (
+            <motion.div
+              key="question"
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="text-center text-sm text-primary font-medium mb-3"
+              exit={{ opacity: 0, y: -10 }}
             >
-              ✅ Yep, you're a grown-up!
-            </motion.p>
+              <p className="text-sm font-medium text-foreground mb-4 text-center leading-relaxed">
+                What does APR stand for on a mortgage?
+              </p>
+
+              <input
+                type="text"
+                value={answer}
+                onChange={(e) => { if (!result) setAnswer(e.target.value); }}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(); }}
+                placeholder="Type your answer…"
+                maxLength={100}
+                className={`w-full px-4 py-3 rounded-xl text-sm border-2 bg-secondary/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors mb-5 ${
+                  result ? 'pointer-events-none opacity-60' : 'border-border'
+                }`}
+                autoFocus
+              />
+
+              {result === 'wrong' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center mb-3"
+                >
+                  <p className="text-sm text-foreground font-medium mb-1">
+                    Just checking 😊 are you sure you're not a kid?
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    The kid space is way more fun 🎨💛
+                  </p>
+                  <button
+                    onClick={onClose}
+                    className="mt-3 w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  >
+                    Back to Kid Land 🧸
+                  </button>
+                </motion.div>
+              )}
+              {result === 'correct' && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center text-sm text-primary font-medium mb-3"
+                >
+                  ✅ Yep, you're a grown-up!
+                </motion.p>
+              )}
+
+              {!result && (
+                <button
+                  onClick={handleSubmit}
+                  disabled={!answer.trim()}
+                  className="w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  Check
+                </button>
+              )}
+            </motion.div>
+          )}
+
+          {/* Set PIN mode (after answering correctly) */}
+          {mode === 'set-pin' && (
+            <motion.div
+              key="set-pin"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <p className="text-sm font-medium text-foreground mb-1 text-center">
+                Set a 4-digit PIN
+              </p>
+              <p className="text-xs text-muted-foreground mb-4 text-center">
+                Use this next time instead of the question
+              </p>
+              <div className="flex justify-center gap-3 mb-5">
+                {newPin.map((d, i) => (
+                  <input
+                    key={i}
+                    ref={newPinRefs[i]}
+                    type="password"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={d}
+                    onChange={(e) => handlePinInput(i, e.target.value, true)}
+                    onKeyDown={(e) => handlePinKeyDown(i, e, true)}
+                    className="w-12 h-14 text-center text-xl font-bold rounded-xl border-2 border-border bg-secondary/30 text-foreground focus:outline-none focus:border-primary transition-colors"
+                    autoFocus={i === 0}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => onSuccess()}
+                className="w-full text-xs text-muted-foreground hover:text-foreground text-center py-1"
+              >
+                Skip for now
+              </button>
+            </motion.div>
           )}
         </AnimatePresence>
-
-        {!result && (
-          <button
-            onClick={handleSubmit}
-            disabled={!answer.trim()}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            Check
-          </button>
-        )}
       </motion.div>
     </div>
   );
