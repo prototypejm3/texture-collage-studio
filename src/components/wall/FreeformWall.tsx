@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { SavedDesign, FrameStyle, DesignSize } from '@/types/wall';
 import { WallCard } from './WallCard';
 import { TitleCard } from './TitleCard';
 import { AnimatePresence } from 'framer-motion';
 
+const BASE_WIDTH = 900;
 const sizeWidths: Record<DesignSize, number> = {
   small: 140,
   medium: 210,
@@ -45,7 +46,19 @@ export function FreeformWall({
 }: FreeformWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [scale, setScale] = useState(1);
   const dragStart = useRef<{ x: number; y: number; startX: number; startY: number } | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width ?? BASE_WIDTH;
+      setScale(Math.max(0.35, Math.min(1, w / BASE_WIDTH)));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent, design: SavedDesign) => {
     const target = e.target as HTMLElement;
@@ -105,7 +118,7 @@ export function FreeformWall({
     >
       <AnimatePresence>
         {positionedDesigns.map(d => {
-          const w = sizeWidths[d.displaySize || 'medium'];
+          const w = sizeWidths[d.displaySize || 'medium'] * scale;
           // Consistent shadow direction: light from top-left, shadow falls bottom-right
           const depthShadow = d.displaySize === 'large'
             ? '4px 8px 32px rgba(0,0,0,0.22), 2px 4px 12px rgba(0,0,0,0.10)'
