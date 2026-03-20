@@ -344,12 +344,11 @@ export function Canvas({
       )}
       </div>
 
-      {/* Easel toggle + Workstation name card */}
+      {/* Easel toggle — bottom-right */}
       <div
-        className="absolute bottom-4 right-4 z-20 flex items-center gap-2"
+        className="absolute bottom-4 right-4 z-20"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Easel toggle */}
         <button
           onClick={() => setEaselMode(prev => !prev)}
           className={`flex items-center justify-center w-8 h-8 rounded-lg shadow-lg transition-colors ${
@@ -357,7 +356,6 @@ export function Canvas({
           }`}
           title={easelMode ? 'Flat view' : 'Easel view'}
         >
-          {/* Easel icon matching reference */}
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(180deg)' }}>
             <rect x="4" y="3" width="16" height="13" rx="1" />
             <rect x="11" y="1" width="2" height="3" rx="0.5" />
@@ -367,19 +365,118 @@ export function Canvas({
             <line x1="12" y1="16" x2="12" y2="23" />
           </svg>
         </button>
-        {/* Name card */}
-        <div className="bg-black/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 min-w-[180px]" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2)' }}>
-          <span className="text-[10px] uppercase tracking-widest text-white/50 select-none">@</span>
-          <input
-            type="text"
-            value={workstationName}
-            onChange={(e) => onWorkstationNameChange(e.target.value)}
-            className="bg-transparent text-white text-xs font-medium outline-none border-none w-full placeholder:text-white/30"
-            placeholder="your name"
-          />
-          <span className="text-[10px] text-white/40 whitespace-nowrap select-none">Swatchbox Studio</span>
-        </div>
       </div>
+
+      {/* Desk Nameplate — only in desk (non-easel) mode */}
+      {!easelMode && (
+        <div
+          className="absolute z-20"
+          style={{ left: 32, top: 32 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Nameplate container with perspective */}
+          <div style={{
+            width: 'clamp(160px, 28%, 240px)',
+            perspective: '600px',
+          }}>
+            {/* Shadow under the whole nameplate */}
+            <div style={{
+              position: 'absolute',
+              bottom: -4,
+              left: 8,
+              right: 8,
+              height: 12,
+              background: 'rgba(0,0,0,0.12)',
+              borderRadius: '50%',
+              filter: 'blur(8px)',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Front face — tilted backward */}
+            <div style={{
+              background: '#1F1F1F',
+              padding: '10px 14px 8px',
+              transformOrigin: 'bottom center',
+              transform: 'rotateX(11deg)',
+              borderRadius: '2px 2px 0 0',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 2px rgba(0,0,0,0.3)',
+              position: 'relative',
+            }}>
+              {/* Subtle top edge highlight */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 1,
+                background: 'rgba(255,255,255,0.08)',
+                borderRadius: '2px 2px 0 0',
+              }} />
+              <div style={{
+                color: '#EAEAEA',
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                lineHeight: 1.3,
+                fontFamily: "'Inter', 'system-ui', sans-serif",
+              }}>
+                Swatchbox Studio
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                marginTop: 2,
+              }}>
+                <input
+                  type="text"
+                  value={workstationName}
+                  onChange={(e) => onWorkstationNameChange(e.target.value)}
+                  className="bg-transparent outline-none border-none"
+                  style={{
+                    color: 'rgba(234,234,234,0.4)',
+                    fontSize: 9,
+                    fontWeight: 400,
+                    letterSpacing: '0.06em',
+                    fontFamily: "'Inter', 'system-ui', sans-serif",
+                    width: '100%',
+                    padding: 0,
+                    margin: 0,
+                  }}
+                  placeholder="Your Name"
+                />
+                <span style={{
+                  color: 'rgba(234,234,234,0.25)',
+                  fontSize: 9,
+                  whiteSpace: 'nowrap',
+                  userSelect: 'none',
+                }}>'s Desk</span>
+              </div>
+            </div>
+
+            {/* Base — flat on table */}
+            <div style={{
+              background: '#2A2A2A',
+              height: 4,
+              borderRadius: '0 0 2px 2px',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+            }} />
+
+            {/* Thickness edge */}
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 3,
+              background: '#252525',
+              borderRadius: '0 0 2px 2px',
+              transform: 'translateY(100%)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+            }} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
