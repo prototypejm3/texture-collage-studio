@@ -661,7 +661,7 @@ const Index = () => {
       {isMobile && (
         <div className="flex items-center justify-between px-1.5 py-1 bg-popover border-t border-border safe-area-bottom">
           <div className="flex items-center gap-0.5">
-            <button onClick={studio.clearCanvas} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
+            <button onClick={handleClearAll} className="px-1.5 py-0.5 text-[8px] text-destructive hover:bg-destructive/10 rounded-md">
               Clear
             </button>
             <button onClick={handleSaveToWall} className="px-1.5 py-0.5 text-[8px] text-foreground hover:bg-secondary rounded-md">
