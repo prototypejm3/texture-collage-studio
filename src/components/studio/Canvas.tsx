@@ -61,6 +61,9 @@ interface Props {
   onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
   onTableElementDelete: (id: string) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
+  onWallFrameStyleChange?: (style: FrameStyle) => void;
+  isPremium?: boolean;
+  onRequestUpgrade?: () => void;
   drawMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
