@@ -143,134 +143,124 @@ const MyWall = () => {
       })[0];
     const others = filtered.filter(d => d.id !== hero.id);
 
-    // ── 2. Size tiers: hero=large, assign small/medium to others ──
-    const sizedOthers = others.map((d, i) => ({
-      ...d,
-      _tier: (count <= 3 ? 'medium' : (i % 3 === 0 ? 'small' : 'medium')) as DesignSize,
-    }));
-
-    // ── 3. Enforce single hanging style ──
+    // ── 2. Enforce uniform hanging style & 0° rotation ──
     const wallHanging = currentSettings.defaultHangingStyle || 'floating';
 
-    // ── 4. Depth layers — hero=front, alternate mid/back ──
-    type DepthLayer = 'front' | 'mid' | 'back';
-    const depthShadow: Record<DepthLayer, number> = { back: 0, mid: 1, front: 2 };
-    const heroDepth: DepthLayer = 'front';
-    const otherDepths: DepthLayer[] = sizedOthers.map((_, i) => i % 2 === 0 ? 'mid' : 'back');
+    // ── 3. Layout constants (percentage-based) ──
+    const SPACING = 6;       // % gap between frames
+    const MARGIN_X = 12;     // % padding from left/right edges
+    const MARGIN_Y = 15;     // % padding from top/bottom edges
 
-    // ── 5. Gallery layout constants ──
-    const MIN_SPACING = 4;   // % units (≈24px at 600px wide)
-    const MAX_SPACING = 10;  // % units (≈64px)
+    // Size widths/heights in % for collision detection
+    const tierWidth: Record<DesignSize, number> = { small: 14, medium: 18, large: 24 };
+    const tierHeight: Record<DesignSize, number> = { small: 16, medium: 20, large: 26 };
 
-    // ── 6. Place Hero — slight offset from center ──
-    const heroOffsetX = count <= 2 ? 0 : (Math.random() > 0.5 ? 4 : -4);
-    const heroX = 50 + heroOffsetX;
-    const heroY = count <= 3 ? 42 : 32;
+    // ── 4. Gallery row templates — structured, balanced, no overlap ──
+    interface Slot { x: number; y: number; size: DesignSize }
 
-    wall.updateDesign(hero.id, {
-      wallX: heroX,
-      wallY: heroY,
-      displaySize: 'large',
-      rotation: 0,
-      hangingStyle: wallHanging,
-    });
-
-    if (others.length === 0) {
-      toast({ title: '✨ Arranged!', description: 'Your gallery is curated.' });
-      return;
-    }
-
-    // ── 7. Generate non-overlapping positions ──
-    // Define alignment lines (invisible grid for organic-but-ordered feel)
-    const vLines = [18, 30, 42, 50, 58, 70, 82]; // vertical snap lines
-    const hLines = [22, 38, 52, 65, 78];          // horizontal baselines
-
-    // Size widths in % for collision detection
-    const tierWidth: Record<DesignSize, number> = { small: 14, medium: 20, large: 26 };
-    const tierHeight: Record<DesignSize, number> = { small: 16, medium: 22, large: 28 };
-
-    interface Placed { x: number; y: number; w: number; h: number }
-    const placed: Placed[] = [{
-      x: heroX, y: heroY,
-      w: tierWidth.large, h: tierHeight.large,
-    }];
-
-    const overlaps = (x: number, y: number, w: number, h: number): boolean => {
-      return placed.some(p => {
-        const dx = Math.abs(x - p.x);
-        const dy = Math.abs(y - p.y);
-        const minDx = (w + p.w) / 2 + MIN_SPACING;
-        const minDy = (h + p.h) / 2 + MIN_SPACING;
-        return dx < minDx && dy < minDy;
-      });
-    };
-
-    // Curated layout templates for common counts
-    const templatePositions: Record<number, { x: number; y: number }[]> = {
-      1: [{ x: 50, y: 72 }],
-      2: [{ x: 28, y: 65 }, { x: 72, y: 65 }],
-      3: [{ x: 24, y: 58 }, { x: 76, y: 58 }, { x: 50, y: 78 }],
-      4: [{ x: 22, y: 52 }, { x: 78, y: 52 }, { x: 32, y: 76 }, { x: 68, y: 76 }],
-      5: [{ x: 20, y: 48 }, { x: 80, y: 48 }, { x: 28, y: 72 }, { x: 50, y: 80 }, { x: 72, y: 72 }],
-    };
-
-    // Snap to nearest alignment line for organic-but-ordered feel
-    const snapToLine = (val: number, lines: number[]): number => {
-      let best = lines[0];
-      let bestDist = Math.abs(val - lines[0]);
-      for (const l of lines) {
-        const dist = Math.abs(val - l);
-        if (dist < bestDist) { best = l; bestDist = dist; }
-      }
-      return best;
-    };
-
-    sizedOthers.forEach((d, i) => {
-      const tier = d._tier;
-      const w = tierWidth[tier];
-      const h = tierHeight[tier];
-      let x: number, y: number;
-
-      if (templatePositions[others.length] && i < templatePositions[others.length].length) {
-        // Use curated template
-        const tp = templatePositions[others.length][i];
-        x = snapToLine(tp.x, vLines);
-        y = snapToLine(tp.y, hLines);
-      } else {
-        // For 6+ items, distribute in rows
-        const cols = Math.min(others.length, 4);
-        const row = Math.floor(i / cols);
-        const col = i % cols;
-        const spacing = 80 / (cols + 1);
-        x = snapToLine(10 + spacing * (col + 1), vLines);
-        y = snapToLine(55 + row * 22, hLines);
-      }
-
-      // Nudge to avoid overlaps
-      let attempts = 0;
-      while (overlaps(x, y, w, h) && attempts < 20) {
-        x += (attempts % 2 === 0 ? 1 : -1) * (MIN_SPACING + attempts);
-        if (x < 10 || x > 90) { x = 50; y += MAX_SPACING; }
-        attempts++;
-      }
-
-      // Clamp
-      x = Math.max(10, Math.min(90, x));
-      y = Math.max(15, Math.min(85, y));
-
-      // ── 8. Slight tilt (max ±2°), most items straight ──
-      const rotation = Math.random() > 0.6 ? Math.round((Math.random() - 0.5) * 4) : 0;
-
-      placed.push({ x, y, w, h });
-
-      wall.updateDesign(d.id, {
-        wallX: x,
-        wallY: y,
-        displaySize: tier,
-        rotation,
+    function buildLayout(heroSlot: Slot, otherSlots: Slot[]): void {
+      // Place hero
+      wall.updateDesign(hero.id, {
+        wallX: heroSlot.x,
+        wallY: heroSlot.y,
+        displaySize: heroSlot.size,
+        rotation: 0,
         hangingStyle: wallHanging,
       });
-    });
+
+      // Place others
+      others.forEach((d, i) => {
+        if (i < otherSlots.length) {
+          wall.updateDesign(d.id, {
+            wallX: otherSlots[i].x,
+            wallY: otherSlots[i].y,
+            displaySize: otherSlots[i].size,
+            rotation: 0,
+            hangingStyle: wallHanging,
+          });
+        }
+      });
+    }
+
+    if (count === 1) {
+      // Single piece centered
+      buildLayout({ x: 50, y: 45, size: 'large' }, []);
+    } else if (count === 2) {
+      // Hero center-left, supporting center-right, aligned on same baseline
+      buildLayout(
+        { x: 38, y: 45, size: 'large' },
+        [{ x: 65, y: 47, size: 'medium' }]
+      );
+    } else if (count === 3) {
+      // Hero centered, flanked by two supporting pieces
+      buildLayout(
+        { x: 50, y: 45, size: 'large' },
+        [
+          { x: 22, y: 47, size: 'medium' },
+          { x: 78, y: 47, size: 'medium' },
+        ]
+      );
+    } else if (count === 4) {
+      // Top row: 2 small pieces, Middle: hero, Bottom: 1 piece
+      buildLayout(
+        { x: 50, y: 42, size: 'large' },
+        [
+          { x: 25, y: 25, size: 'small' },
+          { x: 75, y: 25, size: 'small' },
+          { x: 50, y: 72, size: 'medium' },
+        ]
+      );
+    } else if (count === 5) {
+      // Top row: 2 pieces, Middle: hero, Bottom: 2 pieces
+      buildLayout(
+        { x: 50, y: 45, size: 'large' },
+        [
+          { x: 25, y: 22, size: 'small' },
+          { x: 75, y: 22, size: 'small' },
+          { x: 28, y: 72, size: 'medium' },
+          { x: 72, y: 72, size: 'medium' },
+        ]
+      );
+    } else if (count === 6) {
+      // Top: 2, Middle: hero + 1, Bottom: 2
+      buildLayout(
+        { x: 38, y: 45, size: 'large' },
+        [
+          { x: 30, y: 20, size: 'small' },
+          { x: 70, y: 20, size: 'small' },
+          { x: 72, y: 47, size: 'medium' },
+          { x: 28, y: 74, size: 'small' },
+          { x: 68, y: 74, size: 'small' },
+        ]
+      );
+    } else {
+      // 7+ pieces: 3-row grid distribution
+      const topCount = Math.ceil((count - 1) / 2);
+      const bottomCount = others.length - topCount;
+
+      const heroSlot: Slot = { x: 50, y: 45, size: 'large' };
+      const otherSlots: Slot[] = [];
+
+      // Top row — evenly distributed
+      for (let i = 0; i < topCount; i++) {
+        const cols = Math.min(topCount, 4);
+        const segW = (100 - MARGIN_X * 2) / (cols + 1);
+        const x = MARGIN_X + segW * ((i % cols) + 1);
+        const row = Math.floor(i / cols);
+        otherSlots.push({ x, y: MARGIN_Y + row * (tierHeight.small + SPACING), size: 'small' });
+      }
+
+      // Bottom row — evenly distributed
+      for (let i = 0; i < bottomCount; i++) {
+        const cols = Math.min(bottomCount, 4);
+        const segW = (100 - MARGIN_X * 2) / (cols + 1);
+        const x = MARGIN_X + segW * ((i % cols) + 1);
+        const row = Math.floor(i / cols);
+        otherSlots.push({ x, y: 70 + row * (tierHeight.small + SPACING), size: 'small' });
+      }
+
+      buildLayout(heroSlot, otherSlots);
+    }
 
     // Switch to freeform if not already
     if (currentSettings.layout !== 'freeform') {
