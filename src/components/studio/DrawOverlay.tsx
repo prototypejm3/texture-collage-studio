@@ -84,7 +84,7 @@ function smoothToSvgPath(rawPoints: { x: number; y: number }[], autoClose: boole
   return d;
 }
 
-export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel }: Props) {
+export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel, crayonMode = false }: Props) {
   const pointsRef = useRef<{ x: number; y: number }[]>([]);
   const isDrawingRef = useRef(false);
   const svgRef = useRef<SVGSVGElement>(null);
