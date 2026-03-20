@@ -163,7 +163,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           className={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
           title={isPremium ? 'Spotlight' : 'Premium — unlock to use'}
         >
-          <Flashlight className="w-3.5 h-3.5" />
+          <LampDesk className="w-3.5 h-3.5" />
           {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
         </button>
 
