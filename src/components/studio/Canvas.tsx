@@ -162,6 +162,7 @@ export function Canvas({
         backgroundSize: '400px auto',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
+        perspective: '1200px',
       }}
       onDragOver={handleTableDragOver}
       onDrop={handleTableDrop}
@@ -184,6 +185,12 @@ export function Canvas({
         );
       })}
 
+      {/* Easel + Frame group — tilted toward viewer */}
+      <div style={{
+        transform: 'rotateX(12deg)',
+        transformStyle: 'preserve-3d',
+        marginBottom: 20,
+      }}>
       {/* Easel structure */}
       <div className="absolute pointer-events-none" style={{
         zIndex: 5,
@@ -370,6 +377,7 @@ export function Canvas({
             />
           )}
         </div>
+      </div>
       </div>
 
       {/* Workstation name card */}
