@@ -145,15 +145,42 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           ))}
         </PremiumIconButton>
 
-        {/* Spotlight toggle */}
-        <button
-          onClick={() => isPremium ? onApplyHangingToAll?.('spotlight') : onRequestUpgrade?.()}
-          className={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
-          title={isPremium ? 'Spotlight' : 'Premium — unlock to use'}
+        {/* Hanging style */}
+        <PremiumIconButton
+          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
+          isPremium={isPremium}
+          isOpen={showHangingMenu}
+          onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
+          onClose={() => setShowHangingMenu(false)}
+          iconClass={iconClass(settings.defaultHangingStyle !== 'floating', !isPremium)}
+          title="Hanging style"
         >
-          <GalleryVerticalEnd className="w-3.5 h-3.5" />
-          {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-        </button>
+          {['Style', 'String', 'Nail'].map(group => {
+            const items = hangingStyles.filter(h => h.group === group);
+            if (items.length === 0) return null;
+            return (
+              <div key={group}>
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                {items.map(hs => (
+                  <button
+                    key={hs.value}
+                    onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+                  >
+                    <span>{hs.emoji}</span> {hs.label}
+                  </button>
+                ))}
+              </div>
+            );
+          })}
+          <div className="border-t border-border my-1" />
+          <button
+            onClick={() => { onApplyHangingToAll?.('spotlight'); setShowHangingMenu(false); }}
+            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === 'spotlight' ? 'text-primary font-medium' : 'text-foreground'}`}
+          >
+            <span>💡</span> Spotlight
+          </button>
+        </PremiumIconButton>
 
         {/* Lighting presets */}
         <PremiumIconButton
