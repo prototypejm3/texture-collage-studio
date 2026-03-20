@@ -390,9 +390,9 @@ export function RightSidebar({
                   <>
                     <div className="w-px bg-border self-stretch" />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                     <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                         <Sparkles className="w-3 h-3 text-accent-foreground" />
-                        AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                        {kidMode ? '🎨 Magic Color' : 'AI Mood'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">{kidMode ? 'New!' : 'Beta'}</span>
                       </div>
                       <div className="flex gap-1">
                         <div className="relative flex-1">
