@@ -190,6 +190,24 @@ export function Canvas({
 
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
   const [easelMode, setEaselMode] = useState(false);
+  const [showFramePicker, setShowFramePicker] = useState(false);
+
+  const framePickerOptions: { id: FrameStyle; label: string }[] = [
+    { id: 'shadow-box', label: 'Shadow' },
+    { id: 'floating', label: 'Float' },
+    { id: 'polaroid', label: 'Polaroid' },
+  ];
+
+  const frameColorOptions: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
+    { id: 'gold', color: 'linear-gradient(145deg, hsl(43,74%,60%), hsl(43,74%,45%))', label: 'Gold' },
+    { id: 'chrome', color: 'linear-gradient(145deg, hsl(0,0%,85%), hsl(0,0%,70%))', label: 'Chrome' },
+    { id: 'copper', color: 'linear-gradient(145deg, hsl(20,60%,55%), hsl(20,50%,40%))', label: 'Copper' },
+    { id: 'silver', color: 'linear-gradient(145deg, hsl(220,8%,72%), hsl(220,10%,58%))', label: 'Silver' },
+    { id: 'black', color: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))', label: 'Black', free: true },
+    { id: 'minimal', color: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))', label: 'White', free: true },
+    { id: 'wood', color: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(25,35%,38%))', label: 'Wood' },
+    { id: 'none', color: 'transparent', label: 'None', free: true },
+  ];
 
   return (
     <div
