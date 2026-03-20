@@ -222,6 +222,14 @@ export function Canvas({
                 onSelect={() => onSelect(el.id)}
                 onUpdate={(updates) => onUpdate(el.id, updates)}
                 onDelete={() => onDeleteElement(el.id)}
+                onMoveToTable={(mouseX, mouseY) => {
+                  // Convert mouse position to table-relative coords
+                  if (containerRef.current) {
+                    const tableRect = containerRef.current.getBoundingClientRect();
+                    onMoveToTable(el.id, mouseX - tableRect.left - 40, mouseY - tableRect.top - 40);
+                  }
+                }}
+                canvasRef={canvasRef}
                 customTextures={customTextures}
               />
             ))}
