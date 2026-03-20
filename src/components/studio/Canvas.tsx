@@ -159,7 +159,7 @@ export function Canvas({
       ref={containerRef}
       className="flex-1 flex items-center justify-center p-0 relative overflow-hidden"
       style={{
-        background: '#D8C8A8',
+        background: '#8B8B8B',
         ...(easelMode ? { perspective: '1200px' } : {}),
       }}
       onDragOver={handleTableDragOver}
