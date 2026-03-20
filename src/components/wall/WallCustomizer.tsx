@@ -40,11 +40,21 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
-  { value: 'floating', label: 'Floating', emoji: '✨' },
-  { value: 'string', label: 'String', emoji: '🧵' },
-  { value: 'hook', label: 'Hook', emoji: '🪝' },
-  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
+const hangingStyles: { value: HangingStyle; label: string; emoji: string; group?: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨', group: 'Style' },
+  { value: 'string', label: 'String', emoji: '🧵', group: 'String' },
+  { value: 'lighted-string', label: 'Lighted', emoji: '💡', group: 'String' },
+  { value: 'metal-wire', label: 'Metal', emoji: '🔗', group: 'String' },
+  { value: 'hemp', label: 'Hemp', emoji: '🌿', group: 'String' },
+  { value: 'white-string', label: 'White', emoji: '🤍', group: 'String' },
+  { value: 'braided', label: 'Braided', emoji: '🪢', group: 'String' },
+  { value: 'pink-yarn', label: 'Pink Yarn', emoji: '🩷', group: 'String' },
+  { value: 'beaded', label: 'Beaded', emoji: '📿', group: 'String' },
+  { value: 'hook', label: 'Hook', emoji: '🪝', group: 'Style' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵', group: 'Style' },
+  { value: 'silver-screw', label: 'Silver Screw', emoji: '🔩', group: 'Nail' },
+  { value: 'red-tack', label: 'Red Tack', emoji: '📌', group: 'Nail' },
+  { value: 'cork-tack', label: 'Cork Tack', emoji: '🟤', group: 'Nail' },
 ];
 
 const lightingPresets: { value: LightingPreset; label: string; emoji: string }[] = [
@@ -135,15 +145,42 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           ))}
         </PremiumIconButton>
 
-        {/* Spotlight toggle */}
-        <button
-          onClick={() => isPremium ? onApplyHangingToAll?.('spotlight') : onRequestUpgrade?.()}
-          className={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
-          title={isPremium ? 'Spotlight' : 'Premium — unlock to use'}
+        {/* Hanging style */}
+        <PremiumIconButton
+          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
+          isPremium={isPremium}
+          isOpen={showHangingMenu}
+          onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
+          onClose={() => setShowHangingMenu(false)}
+          iconClass={iconClass(settings.defaultHangingStyle !== 'floating', !isPremium)}
+          title="Hanging style"
         >
-          <GalleryVerticalEnd className="w-3.5 h-3.5" />
-          {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-        </button>
+          {['Style', 'String', 'Nail'].map(group => {
+            const items = hangingStyles.filter(h => h.group === group);
+            if (items.length === 0) return null;
+            return (
+              <div key={group}>
+                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                {items.map(hs => (
+                  <button
+                    key={hs.value}
+                    onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
+                  >
+                    <span>{hs.emoji}</span> {hs.label}
+                  </button>
+                ))}
+              </div>
+            );
+          })}
+          <div className="border-t border-border my-1" />
+          <button
+            onClick={() => { onApplyHangingToAll?.('spotlight'); setShowHangingMenu(false); }}
+            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === 'spotlight' ? 'text-primary font-medium' : 'text-foreground'}`}
+          >
+            <span>💡</span> Spotlight
+          </button>
+        </PremiumIconButton>
 
         {/* Lighting presets */}
         <PremiumIconButton
