@@ -108,6 +108,7 @@ interface Props {
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
+  onDelete?: () => void;
   customTextures?: TextureSwatch[];
 }
 
