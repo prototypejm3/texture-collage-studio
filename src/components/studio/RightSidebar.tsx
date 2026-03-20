@@ -77,6 +77,7 @@ export function RightSidebar({
 }: RightSidebarProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [aiPrompt, setAiPrompt] = useState('');
   const [moodPrompt, setMoodPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
@@ -340,12 +341,43 @@ export function RightSidebar({
               </div>
             )}
 
-            {/* Stencil Grid — grouped by theme */}
-            <div className="p-2">
-              {/* Uncategorized stencils first */}
-              {uncategorizedVibes.length > 0 && (
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
-                  {uncategorizedVibes.map(vibe => (
+            {/* Category filter pills */}
+            <div className="px-2 py-1 border-b border-border bg-secondary/20">
+              <div className="flex flex-wrap gap-1">
+                <button
+                  onClick={() => setActiveCategory('All')}
+                  className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                    activeCategory === 'All'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                  }`}
+                >
+                  All
+                </button>
+                {themeSections.map(section => (
+                  <button
+                    key={section.label}
+                    onClick={() => setActiveCategory(section.label)}
+                    className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                      activeCategory === section.label
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    }`}
+                  >
+                    {section.emoji} {section.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Stencil Grid — flat, filtered by category */}
+            <div className="p-1.5">
+              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
+                {(() => {
+                  const displayVibes = activeCategory === 'All'
+                    ? [...uncategorizedVibes, ...themeSections.flatMap(s => s.vibes)]
+                    : themeSections.find(s => s.label === activeCategory)?.vibes || [];
+                  return displayVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
                       vibe={vibe}
@@ -367,47 +399,9 @@ export function RightSidebar({
                         toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
                       }}
                     />
-                  ))}
-                </div>
-              )}
-
-              {/* Theme sections */}
-              {themeSections.map(section => (
-                <div key={section.label}>
-                  <div className="flex items-center gap-1.5 mt-2 mb-1">
-                    <div className="h-px flex-1 bg-border" />
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
-                      {section.emoji} {section.label}
-                    </span>
-                    <div className="h-px flex-1 bg-border" />
-                  </div>
-                  <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
-                    {section.vibes.map(vibe => (
-                      <StencilCard
-                        key={vibe.id}
-                        vibe={vibe}
-                        isActive={activeVibeId === vibe.id}
-                        isHidden={social.hiddenIds.has(vibe.id)}
-                        isFavorited={social.favoritedIds.has(vibe.id)}
-                        isLoggedIn={!!user}
-                        onSelect={() => onSelectVibe(vibe)}
-                        onToggleHidden={() => social.toggleHidden(vibe.id)}
-                        onToggleFav={() => social.toggleFavorite(vibe.id)}
-                        onDelete={async () => {
-                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                          await social.deleteStencil(vibe.id);
-                          toast({ title: 'Deleted', description: `"${vibe.name}" removed.` });
-                        }}
-                        onReport={async () => {
-                          await social.reportStencil(vibe.id);
-                          setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
-                          toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
+                  ));
+                })()}
+              </div>
             </div>
           </div>
         ) : activeTab === 'community' ? (
@@ -420,7 +414,7 @@ export function RightSidebar({
                   <p className="text-[9px] text-muted-foreground mt-0.5">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
+                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -453,7 +447,7 @@ export function RightSidebar({
                   <p className="text-[9px] text-muted-foreground mt-0.5">Hide stencils from the Stencils tab</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
+                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
@@ -462,10 +456,10 @@ export function RightSidebar({
                       className="group relative cursor-pointer opacity-60 hover:opacity-100"
                     >
                       <button onClick={() => onSelectVibe(vibe)} className="w-full">
-                        <div className={`aspect-square rounded-lg overflow-hidden border shadow-sm border-border/50`}>
+                        <div className={`aspect-square rounded overflow-hidden border shadow-sm border-border/50`}>
                           <VibePreviewSVG vibe={vibe} />
                         </div>
-                        <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+                        <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
                           {vibe.emoji} {vibe.name}
                         </p>
                       </button>
@@ -510,23 +504,23 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, onSele
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
-        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
-          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        className={`aspect-square rounded overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-1 ring-primary/40' : 'border-border/50'
         }`}
       >
         <VibePreviewSVG vibe={vibe} />
         {isActive && (
-          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
-            <Check className="w-2 h-2 text-primary-foreground" />
+          <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-1.5 h-1.5 text-primary-foreground" />
           </div>
         )}
         {isAiGenerated && (
-          <div className="absolute top-0.5 left-0.5 px-1 py-0 rounded bg-primary/90 text-primary-foreground text-[6px] font-bold uppercase tracking-wider">
+          <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[5px] font-bold uppercase tracking-wider">
             AI
           </div>
         )}
       </div>
-      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
         {vibe.emoji} {vibe.name}
       </p>
 
@@ -586,18 +580,18 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
-        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
-          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        className={`aspect-square rounded overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-1 ring-primary/40' : 'border-border/50'
         }`}
       >
         <VibePreviewSVG vibe={vibe} />
         {isActive && (
-          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
-            <Check className="w-2 h-2 text-primary-foreground" />
+          <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-1.5 h-1.5 text-primary-foreground" />
           </div>
         )}
       </div>
-      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
         {vibe.emoji} {vibe.name}
       </p>
 
