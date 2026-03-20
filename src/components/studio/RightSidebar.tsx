@@ -108,7 +108,6 @@ export function RightSidebar({
     setPendingVibe(null);
   };
 
-  const handleLayerConfirm = () => {
 
   // Hide stencil and switch to hidden tab
   const handleHideStencil = useCallback((vibeId: string) => {
