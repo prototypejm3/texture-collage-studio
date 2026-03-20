@@ -234,7 +234,7 @@ export function RightSidebar({
   const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
 
   const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
-    { id: 'stencils', label: 'Stencils', icon: Palette },
+    { id: 'stencils', label: 'Templates', icon: Palette },
     { id: 'community', label: 'Community', icon: Globe },
     { id: 'hidden', label: 'Hidden', icon: EyeOff, count: hiddenVibes.length },
   ];
