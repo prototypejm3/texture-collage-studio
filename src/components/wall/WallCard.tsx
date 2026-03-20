@@ -192,6 +192,7 @@ export function WallCard({
   onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, isDark, size = 'medium',
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
