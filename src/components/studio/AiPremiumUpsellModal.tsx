@@ -1,12 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Palette } from 'lucide-react';
+import { Sparkles, Lock } from 'lucide-react';
 
-interface AiLowCreditsModalProps {
+interface AiPremiumUpsellModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onUpgrade: () => void;
 }
 
-export function AiLowCreditsModal({ isOpen, onClose }: AiLowCreditsModalProps) {
+export function AiPremiumUpsellModal({ isOpen, onClose, onUpgrade }: AiPremiumUpsellModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -19,30 +20,30 @@ export function AiLowCreditsModal({ isOpen, onClose }: AiLowCreditsModalProps) {
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
             className="relative bg-popover border border-border rounded-2xl p-6 w-full max-w-xs shadow-2xl"
           >
-            <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-amber-100 dark:bg-amber-900/30">
-              <Sparkles className="w-7 h-7 text-amber-500" />
+            <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-primary/15">
+              <Sparkles className="w-7 h-7 text-primary" />
             </div>
 
-            <p className="text-center text-sm leading-relaxed text-foreground mb-1">
-              We used up today's magic ✨
-            </p>
-            <p className="text-center text-xs text-muted-foreground mb-5">
-              AI is taking a break — explore the other features for now 💛
+            <h3 className="text-center text-sm font-semibold text-foreground mb-1">
+              AI is part of Studio Premium ✨
+            </h3>
+            <p className="text-center text-xs text-muted-foreground mb-5 leading-relaxed">
+              Unlock to create your own custom designs with AI-powered stencils and moods.
             </p>
 
             <div className="flex flex-col gap-2">
               <button
-                onClick={onClose}
-                className="w-full px-4 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                onClick={() => { onUpgrade(); onClose(); }}
+                className="w-full px-4 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-1.5"
               >
-                <Palette className="w-4 h-4 inline mr-1.5 -mt-0.5" />
-                Keep Creating
+                <Lock className="w-4 h-4" />
+                Unlock Premium
               </button>
               <button
                 onClick={onClose}
                 className="w-full px-3 py-2 text-xs rounded-xl bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
               >
-                Got it
+                Keep Creating
               </button>
             </div>
           </motion.div>

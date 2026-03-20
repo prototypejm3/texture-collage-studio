@@ -41,7 +41,7 @@ export function useGenerateVibe(options?: UseGenerateVibeOptions) {
 
     const limit = checkGenerationLimit();
     if (!limit.allowed) {
-      toast({ title: 'Rate limit reached', description: `You can generate 5 per hour. Try again in ${limit.resetIn} min.`, variant: 'destructive' });
+      toast({ title: 'Daily limit reached', description: `You've used all ${limit.max} AI generations for today. Come back tomorrow!`, variant: 'destructive' });
       return null;
     }
 

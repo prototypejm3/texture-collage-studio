@@ -1,25 +1,49 @@
-const RATE_KEY = 'gen_timestamps';
-const MAX_PER_HOUR = 5;
-const HOUR_MS = 60 * 60 * 1000;
+const RATE_KEY = 'gen_daily';
+const MAX_PER_DAY = 5;
+const FREE_TRIAL_KEY = 'ai_free_trial_used';
 
-export function checkGenerationLimit(): { allowed: boolean; remaining: number; resetIn: number } {
-  const now = Date.now();
-  const raw = localStorage.getItem(RATE_KEY);
-  const timestamps: number[] = raw ? JSON.parse(raw).filter((t: number) => now - t < HOUR_MS) : [];
+function getTodayKey(): string {
+  return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+}
 
-  if (timestamps.length >= MAX_PER_HOUR) {
-    const oldest = Math.min(...timestamps);
-    const resetIn = Math.ceil((oldest + HOUR_MS - now) / 60000);
-    return { allowed: false, remaining: 0, resetIn };
-  }
+interface DailyData {
+  date: string;
+  count: number;
+}
 
-  return { allowed: true, remaining: MAX_PER_HOUR - timestamps.length, resetIn: 0 };
+function getDailyData(): DailyData {
+  const today = getTodayKey();
+  try {
+    const raw = localStorage.getItem(RATE_KEY);
+    if (raw) {
+      const data: DailyData = JSON.parse(raw);
+      if (data.date === today) return data;
+    }
+  } catch {}
+  return { date: today, count: 0 };
+}
+
+export function checkGenerationLimit(): { allowed: boolean; remaining: number; used: number; max: number } {
+  const data = getDailyData();
+  const remaining = Math.max(0, MAX_PER_DAY - data.count);
+  return {
+    allowed: data.count < MAX_PER_DAY,
+    remaining,
+    used: data.count,
+    max: MAX_PER_DAY,
+  };
 }
 
 export function recordGeneration() {
-  const now = Date.now();
-  const raw = localStorage.getItem(RATE_KEY);
-  const timestamps: number[] = raw ? JSON.parse(raw).filter((t: number) => now - t < HOUR_MS) : [];
-  timestamps.push(now);
-  localStorage.setItem(RATE_KEY, JSON.stringify(timestamps));
+  const data = getDailyData();
+  data.count += 1;
+  localStorage.setItem(RATE_KEY, JSON.stringify(data));
+}
+
+export function hasUsedFreeTrial(): boolean {
+  try { return localStorage.getItem(FREE_TRIAL_KEY) === 'true'; } catch { return false; }
+}
+
+export function markFreeTrialUsed() {
+  localStorage.setItem(FREE_TRIAL_KEY, 'true');
 }
