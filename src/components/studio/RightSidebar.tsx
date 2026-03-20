@@ -77,6 +77,7 @@ export function RightSidebar({
 }: RightSidebarProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [aiPrompt, setAiPrompt] = useState('');
   const [moodPrompt, setMoodPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
