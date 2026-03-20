@@ -397,7 +397,7 @@ const Index = () => {
       <TopToolbar
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
-        onClear={studio.clearCanvas}
+        onClear={handleClearAll}
         onSave={handleExport}
         onSaveToWall={handleSaveToWall}
         ambientSound={ambientSound}
