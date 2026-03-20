@@ -152,14 +152,14 @@ export function TextureLibrary({
         </div>
 
         {activeSectionId && (
-          <div className="mb-3 px-2 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
-            <p className="text-[10px] text-primary font-medium">
-              👆 Select a texture to add to the canvas to edit shapes, size, rotation & material effects.
+          <div className="mb-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
+            <p className="text-[9px] text-primary font-medium">
+              👆 Tap a texture to fill the selected section.
             </p>
           </div>
         )}
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setActiveGroup('All')}
             className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
