@@ -184,6 +184,7 @@ export function RightSidebar({
   };
 
   const handleGenerateMood = () => {
+    if (!isPremium) { aiCredits.guardFreeUser(); return; }
     if (aiCredits.guardAiAction()) return;
     if (moodPrompt.trim()) {
       onGenerateMood(moodPrompt.trim());
