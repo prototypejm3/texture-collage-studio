@@ -124,39 +124,126 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, o
 
 /* ─── Curated Hanging Mode ─── */
 
+interface LayoutSlot {
+  design: SavedDesign;
+  row: number;
+  col: number;
+  colSpan: number;
+  size: 'large' | 'normal';
+}
+
 function CuratedLayout({ designs, cardProps }: {
   designs: SavedDesign[];
   cardProps: (d: SavedDesign, size?: 'normal' | 'large') => any;
 }) {
-  const positioned = useMemo(() => {
+  const positioned = useMemo((): LayoutSlot[] => {
     if (designs.length === 0) return [];
-    if (designs.length === 1) return [{ design: designs[0], size: 'large' as const, col: 'span 2', offsetY: 0 }];
 
-    return designs.map((d, i) => {
-      const isAnchor = i === 0;
-      const offsets = [0, 24, -16, 12, -8, 20, -12, 8];
-      return {
-        design: d,
-        size: (isAnchor ? 'large' : 'normal') as 'large' | 'normal',
-        col: isAnchor ? 'span 2' : 'span 1',
-        offsetY: isAnchor ? 0 : offsets[i % offsets.length],
-      };
-    });
+    // Pick hero: pinned > largest > first
+    const hero = designs.find(d => d.pinned)
+      || [...designs].sort((a, b) => {
+        const order: Record<string, number> = { large: 3, medium: 2, small: 1 };
+        return (order[b.displaySize] || 2) - (order[a.displaySize] || 2);
+      })[0];
+    const others = designs.filter(d => d.id !== hero.id);
+
+    // Gallery row templates based on total count
+    // Each template defines rows with column positions for balanced arrangement
+    if (designs.length === 1) {
+      return [{ design: hero, row: 0, col: 1, colSpan: 1, size: 'large' }];
+    }
+    if (designs.length === 2) {
+      return [
+        { design: others[0], row: 0, col: 0, colSpan: 1, size: 'normal' },
+        { design: hero, row: 0, col: 1, colSpan: 1, size: 'large' },
+      ];
+    }
+    if (designs.length === 3) {
+      return [
+        { design: others[0], row: 0, col: 0, colSpan: 1, size: 'normal' },
+        { design: hero, row: 0, col: 1, colSpan: 1, size: 'large' },
+        { design: others[1], row: 0, col: 2, colSpan: 1, size: 'normal' },
+      ];
+    }
+
+    // 4+ pieces: arrange in 2-3 rows
+    const slots: LayoutSlot[] = [];
+
+    if (designs.length <= 5) {
+      // Row 1: supporting pieces (top)
+      const topCount = Math.min(others.length, designs.length <= 4 ? 1 : 2);
+      const topPieces = others.slice(0, topCount);
+      topPieces.forEach((d, i) => {
+        const totalCols = topCount;
+        const colPos = totalCols === 1 ? 1 : i === 0 ? 0 : 2;
+        slots.push({ design: d, row: 0, col: colPos, colSpan: 1, size: 'normal' });
+      });
+
+      // Row 2: hero centered
+      slots.push({ design: hero, row: 1, col: 1, colSpan: 1, size: 'large' });
+
+      // Row 3: remaining pieces (bottom)
+      const bottomPieces = others.slice(topCount);
+      bottomPieces.forEach((d, i) => {
+        const totalCols = bottomPieces.length;
+        const colPos = totalCols === 1 ? 1
+          : totalCols === 2 ? (i === 0 ? 0 : 2)
+          : i;
+        slots.push({ design: d, row: 2, col: Math.min(colPos, 2), colSpan: 1, size: 'normal' });
+      });
+    } else {
+      // 6+ pieces: 3 rows, balanced distribution
+      const topCount = Math.ceil((others.length) / 2);
+      const bottomCount = others.length - topCount;
+
+      // Top row
+      others.slice(0, topCount).forEach((d, i) => {
+        slots.push({ design: d, row: 0, col: i % 3, colSpan: 1, size: 'normal' });
+      });
+
+      // Middle row: hero
+      slots.push({ design: hero, row: 1, col: 1, colSpan: 1, size: 'large' });
+
+      // Bottom row
+      others.slice(topCount).forEach((d, i) => {
+        slots.push({ design: d, row: 2, col: i % 3, colSpan: 1, size: 'normal' });
+      });
+    }
+
+    return slots;
   }, [designs]);
 
+  // Group by rows for rendering
+  const rows = useMemo(() => {
+    const rowMap = new Map<number, LayoutSlot[]>();
+    positioned.forEach(slot => {
+      if (!rowMap.has(slot.row)) rowMap.set(slot.row, []);
+      rowMap.get(slot.row)!.push(slot);
+    });
+    // Sort each row by col
+    rowMap.forEach(slots => slots.sort((a, b) => a.col - b.col));
+    return Array.from(rowMap.entries()).sort(([a], [b]) => a - b);
+  }, [positioned]);
+
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-8 items-start">
+    <div className="flex flex-col items-center gap-8 py-4 px-8">
       <AnimatePresence>
-        {positioned.map(({ design, size, col, offsetY }) => (
+        {rows.map(([rowIndex, slots]) => (
           <motion.div
-            key={design.id}
-            initial={{ opacity: 0, y: 30 }}
+            key={`row-${rowIndex}`}
+            className="flex items-center justify-center gap-8 lg:gap-12 w-full max-w-5xl"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className={col === 'span 2' ? 'col-span-2 max-w-2xl mx-auto w-full' : ''}
-            style={{ transform: `translateY(${offsetY}px)` }}
+            transition={{ duration: 0.5, delay: rowIndex * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <WallCard {...cardProps(design, size)} />
+            {slots.map(({ design, size }) => (
+              <div
+                key={design.id}
+                className={`${size === 'large' ? 'w-[45%] max-w-lg' : 'w-[28%] max-w-xs'} flex-shrink-0`}
+              >
+                <WallCard {...cardProps(design, size)} />
+              </div>
+            ))}
           </motion.div>
         ))}
       </AnimatePresence>
