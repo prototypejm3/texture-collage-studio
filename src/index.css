@@ -182,6 +182,18 @@
   background: url('/walls/wood-walnut-wall.png') center/cover no-repeat;
 }
 
+.wall-bg-sky-blue {
+  background: url('/walls/sky-blue-wall.png') center/cover no-repeat;
+}
+
+.wall-bg-mint {
+  background: url('/walls/mint-wall.png') center/cover no-repeat;
+}
+
+.wall-bg-blush {
+  background: url('/walls/blush-wall.png') center/cover no-repeat;
+}
+
 /* Safe area for mobile bottom nav */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
