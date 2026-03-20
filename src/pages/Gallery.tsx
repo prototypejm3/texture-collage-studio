@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavBar } from '@/components/NavBar';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
 import { useGallery } from '@/hooks/useGallery';
