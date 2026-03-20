@@ -156,7 +156,8 @@ export function Canvas({
       className="flex-1 flex items-end justify-center p-0 relative overflow-hidden"
       style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
-        backgroundSize: 'cover',
+        backgroundSize: '300px auto',
+        backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
       }}
       onDragOver={handleTableDragOver}
@@ -167,9 +168,10 @@ export function Canvas({
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `url(${surfaceImages[tableSurface]})`,
-          backgroundSize: 'cover',
+          backgroundSize: '300px auto',
+          backgroundRepeat: 'repeat',
           backgroundPosition: 'center',
-          transform: 'rotate(90deg) scale(3.25)',
+          transform: 'rotate(90deg) scale(2)',
           transformOrigin: 'center',
         }}
       />
