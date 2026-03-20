@@ -66,7 +66,7 @@ export function BottomBar({
   const isShadowColor = colorFrames.some(f => f.id === wallFrameStyle) || wallFrameStyle === 'shadow-box';
 
   return (
-    <div className="flex items-center px-2 md:px-4 py-1 bg-popover border-t border-border relative gap-1.5">
+    <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
       {/* Canvas format label */}
       <div className="flex items-center gap-1">
         <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">12×12 Canvas</span>
