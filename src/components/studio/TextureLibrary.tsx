@@ -47,12 +47,17 @@ interface TextureLibraryProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
+  // Background mode
+  applyMode?: 'swatch' | 'background';
+  onApplyModeChange?: (mode: 'swatch' | 'background') => void;
+  backgroundTextureId?: string | null;
 }
 
 export function TextureLibrary({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
+  applyMode = 'swatch', onApplyModeChange, backgroundTextureId,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
   const [kidMode, setKidMode] = useState(false);
