@@ -10,6 +10,8 @@ import MyWall from "./pages/MyWall.tsx";
 import Gallery from "./pages/Gallery.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
+import About from "./pages/About.tsx";
+import Terms from "./pages/Terms.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
