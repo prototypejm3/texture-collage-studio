@@ -246,6 +246,24 @@ export function Canvas({
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [kidMode, selectedId, selectedTableId, isOverTrash, isOverBox, onDeleteElement, onTableElementDelete, onSelect, elements, tableElements]);
+
+  // Box dragging
+  useEffect(() => {
+    if (!isBoxDragging) return;
+    const handleMove = (e: MouseEvent) => {
+      const dx = e.clientX - boxDragStart.current.mx;
+      const dy = e.clientY - boxDragStart.current.my;
+      setBoxPos({ x: boxDragStart.current.bx + dx, y: boxDragStart.current.by + dy });
+    };
+    const handleUp = () => setIsBoxDragging(false);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [isBoxDragging]);
+
   const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
