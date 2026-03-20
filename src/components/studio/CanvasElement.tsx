@@ -181,6 +181,20 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             : undefined,
       }}
     >
+      {/* Remove button */}
+      {isSelected && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="absolute -top-2.5 -right-2.5 z-50 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform pointer-events-auto"
+          title="Remove"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
+
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
       <div
         className="w-full h-full"
