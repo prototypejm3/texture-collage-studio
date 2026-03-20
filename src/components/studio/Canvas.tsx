@@ -348,18 +348,12 @@ export function Canvas({
           title={easelMode ? 'Flat view' : 'Easel view'}
         >
           {/* Easel icon matching reference */}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            {/* Canvas/board */}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'rotate(180deg)' }}>
             <rect x="4" y="3" width="16" height="13" rx="1" />
-            {/* Top peg */}
             <rect x="11" y="1" width="2" height="3" rx="0.5" />
-            {/* Shelf ledge */}
             <line x1="3" y1="16" x2="21" y2="16" />
-            {/* Left leg */}
             <line x1="6" y1="16" x2="3" y2="23" />
-            {/* Right leg */}
             <line x1="18" y1="16" x2="21" y2="23" />
-            {/* Back leg */}
             <line x1="12" y1="16" x2="12" y2="23" />
           </svg>
         </button>
