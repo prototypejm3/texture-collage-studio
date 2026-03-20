@@ -294,7 +294,7 @@ export function TextureLibrary({
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              {group.label}
+              {kidMode ? group.kidLabel : group.label}
             </button>
           ))}
         </div>
