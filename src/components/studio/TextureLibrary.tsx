@@ -57,18 +57,18 @@ interface TextureGroup {
 }
 
 const groups: TextureGroup[] = [
-  { label: 'Velvet', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
-  { label: 'Linen', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Durable', categories: ['Sunbrella', 'Key Largo'] },
-  { label: 'Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Textured', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Cotton & Felt', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
-  { label: 'Leather', categories: ['Leather'] },
-  { label: 'Hard', categories: ['Wood', 'Marble', 'Concrete'] },
-  { label: 'Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+  { label: 'Velvet', kidLabel: '🧸 Soft & Fancy', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
+  { label: 'Soft', kidLabel: '☁️ Super Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Linen', kidLabel: '🧵 Cloth', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Durable', kidLabel: '💪 Tough', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Woven', kidLabel: '🧶 Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
+  { label: 'Textured', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Cotton & Felt', kidLabel: '🧤 Cozy', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Leather', kidLabel: '🐄 Leather', categories: ['Leather'] },
+  { label: 'Hard', kidLabel: '🪵 Hard Stuff', categories: ['Wood', 'Marble', 'Concrete'] },
+  { label: 'Patterns', kidLabel: '🌈 Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Signature', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
