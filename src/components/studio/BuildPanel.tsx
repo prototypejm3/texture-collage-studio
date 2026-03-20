@@ -105,6 +105,7 @@ export function BuildPanel({
               isPremium={isPremium}
               onSelectVibe={onSelectVibe}
               onShuffleVibeFills={onShuffleVibeFills}
+              onPlaceStencil={onPlaceStencil}
               onRequestUpgrade={onRequestUpgrade}
               onGenerateMood={onGenerateMood}
               isGeneratingMood={isGeneratingMood}
