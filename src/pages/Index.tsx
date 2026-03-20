@@ -141,7 +141,7 @@ const Index = () => {
   const handleMoveToTable = useCallback((elementId: string, x: number, y: number) => {
     const el = studio.elements.find(e => e.id === elementId);
     if (!el) return;
-    // Add to table
+    // Add to table, preserving clip path for stencil pieces
     setTableElements(prev => [...prev, {
       id: `table-${tableIdRef.current++}`,
       textureId: el.textureId,
@@ -149,6 +149,7 @@ const Index = () => {
       width: el.width,
       height: el.height,
       rotation: el.rotation,
+      clipPathD: el.clipPathD,
     }]);
     // Remove from canvas
     studio.deleteElement(elementId);

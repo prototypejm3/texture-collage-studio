@@ -24,6 +24,7 @@ interface TableElement {
   width: number;
   height: number;
   rotation: number;
+  clipPathD?: string;
 }
 
 interface Props {
