@@ -1307,6 +1307,7 @@ const caterpillar: Vibe = {
 const lizard: Vibe = {
   id: 'lizard', name: 'Lizard', emoji: '🦎',
   description: 'Sleek lizard with long tail & splayed toes',
+  category: 'Community', creator: 'Ace', baseLikes: 21, likesStartDate: '2026-03-10',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'liz-head', label: 'Head', tone: 'dark',
