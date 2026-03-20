@@ -192,6 +192,7 @@ export function WallCard({
   onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, isDark, size = 'medium',
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
   const [editName, setEditName] = useState(design.name);
   const [editDesc, setEditDesc] = useState(design.description || '');
@@ -287,13 +288,25 @@ export function WallCard({
       {/* Hover actions */}
       <div className="absolute bottom-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <div className="relative">
-          <button onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
+          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
             <MoreHorizontal className="w-3 h-3" />
           </button>
-          {menuOpen && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
-              <div className="absolute right-0 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[60vh] overflow-y-auto" style={{ bottom: 'auto', top: '100%', marginTop: 4 }}>
+          {menuOpen && menuBtnRef.current && (() => {
+            const rect = menuBtnRef.current!.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const openUp = spaceBelow < 300;
+            return (
+              <>
+                <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
+                <div
+                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[60vh] overflow-y-auto"
+                  style={{
+                    left: Math.min(rect.left, window.innerWidth - 160),
+                    ...(openUp
+                      ? { bottom: window.innerHeight - rect.top + 4 }
+                      : { top: rect.bottom + 4 }),
+                  }}
+                >
                 <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
                   <FolderOpen className="w-3 h-3" /> Open in Studio
                 </button>
@@ -379,7 +392,8 @@ export function WallCard({
                 </button>
               </div>
             </>
-          )}
+            );
+          })()}
         </div>
       </div>
 
