@@ -242,7 +242,7 @@ export function TextureLibrary({
         {activeSectionId && (
           <div className="mb-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
             <p className="text-[9px] text-primary font-medium">
-              👆 Tap a texture to fill the selected section.
+              {kidMode ? '👆 Tap a color to paint the piece!' : '👆 Tap a texture to fill the selected section.'}
             </p>
           </div>
         )}
