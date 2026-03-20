@@ -238,7 +238,7 @@ export function WallCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`group relative ${design.hidden ? 'opacity-40' : ''}`}
+      className={`group relative ${design.hidden ? 'opacity-40' : ''} ${menuOpen || editPanelOpen ? 'z-[9990]' : ''}`}
     >
       <div
         className="transition-transform duration-300 ease-out group-hover:scale-[1.015]"
