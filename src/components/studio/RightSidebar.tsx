@@ -3,7 +3,7 @@ import { vibes } from '@/data/vibes';
 import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
