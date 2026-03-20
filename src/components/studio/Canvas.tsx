@@ -66,10 +66,10 @@ interface Props {
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
-  '8x8': { w: 280, h: 280 },
-  '12x12': { w: 360, h: 360 },
-  '16x16': { w: 420, h: 420 },
-  'gallery': { w: 460, h: 320 },
+  '8x8': { w: 380, h: 380 },
+  '12x12': { w: 480, h: 480 },
+  '16x16': { w: 560, h: 560 },
+  'gallery': { w: 600, h: 420 },
 };
 
 // Solid color fallbacks for basic frame options
