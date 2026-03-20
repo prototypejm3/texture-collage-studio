@@ -206,6 +206,7 @@ export function RightSidebar({
   const themedIds = new Set<string>();
   const themeSections: { label: string; kidLabel: string; emoji: string; vibes: typeof allVibes }[] = [];
   for (const group of themeGroups) {
+    if (group.adultOnly && kidMode) continue;
     const items = allVibes.filter(v => group.ids.has(v.id) || v.category === group.label);
     if (items.length > 0) themeSections.push({ label: group.label, kidLabel: group.kidLabel, emoji: group.emoji, vibes: items });
     items.forEach(v => themedIds.add(v.id));
