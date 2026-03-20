@@ -2,7 +2,7 @@ import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, Mate
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
@@ -52,41 +52,51 @@ function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }
   }
 }
 
-const shapeOptions: { value: ElementShape; label: string }[] = [
-  { value: 'soft-square', label: 'Soft Square' },
-  { value: 'torn-edge', label: 'Torn Edge' },
-  { value: 'circle', label: 'Circle' },
-  { value: 'blob', label: 'Blob' },
-  { value: 'strip', label: 'Strip' },
-  { value: 'rectangle', label: 'Rectangle' },
+const shapeOptions: { value: ElementShape; label: string; kidLabel: string }[] = [
+  { value: 'soft-square', label: 'Soft Square', kidLabel: '⬜ Squishy' },
+  { value: 'torn-edge', label: 'Torn Edge', kidLabel: '🫧 Ripped' },
+  { value: 'circle', label: 'Circle', kidLabel: '⭕ Round' },
+  { value: 'blob', label: 'Blob', kidLabel: '🫠 Blobby' },
+  { value: 'strip', label: 'Strip', kidLabel: '📏 Skinny' },
+  { value: 'rectangle', label: 'Rectangle', kidLabel: '📦 Wide' },
 ];
 
-const edgeOptions: { value: EdgeStyle; label: string }[] = [
-  { value: 'clean', label: 'Clean' },
-  { value: 'soft-fray', label: 'Soft Fray' },
-  { value: 'rough-torn', label: 'Rough Torn' },
-  { value: 'pinking', label: '✂ Pinking' },
-  { value: 'scallop', label: '✂ Scallop' },
-  { value: 'zigzag', label: '✂ Zigzag' },
-  { value: 'wave', label: '✂ Wave' },
+const edgeOptions: { value: EdgeStyle; label: string; kidLabel: string }[] = [
+  { value: 'clean', label: 'Clean', kidLabel: '✨ Smooth' },
+  { value: 'soft-fray', label: 'Soft Fray', kidLabel: '🧶 Fuzzy' },
+  { value: 'rough-torn', label: 'Rough Torn', kidLabel: '📜 Ripped' },
+  { value: 'pinking', label: '✂ Pinking', kidLabel: '✂️ Zigzag Cut' },
+  { value: 'scallop', label: '✂ Scallop', kidLabel: '🌊 Wavy Cut' },
+  { value: 'zigzag', label: '✂ Zigzag', kidLabel: '⚡ Zappy Cut' },
+  { value: 'wave', label: '✂ Wave', kidLabel: '🌀 Swirly Cut' },
 ];
 
-const wrinkleOptions: { value: WrinkleLevel; label: string }[] = [
-  { value: 'none', label: 'None' },
-  { value: 'light', label: 'Light' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'heavy', label: 'Heavy' },
+const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
+  { value: 'none', label: 'None', kidLabel: '😊 Flat' },
+  { value: 'light', label: 'Light', kidLabel: '😏 A Little' },
+  { value: 'medium', label: 'Medium', kidLabel: '😬 Crunchy' },
+  { value: 'heavy', label: 'Heavy', kidLabel: '🤪 Super Wrinkly' },
 ];
 
-const shadowOptions: { value: ShadowDepth; label: string }[] = [
-  { value: 'flat', label: 'Flat' },
-  { value: 'lifted', label: 'Lifted' },
-  { value: 'floating', label: 'Floating' },
+const shadowOptions: { value: ShadowDepth; label: string; kidLabel: string }[] = [
+  { value: 'flat', label: 'Flat', kidLabel: '📄 Flat' },
+  { value: 'lifted', label: 'Lifted', kidLabel: '📋 Peeling Up' },
+  { value: 'floating', label: 'Floating', kidLabel: '🎈 Floating!' },
 ];
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(true);
   const [showShapes, setShowShapes] = useState(true);
+
+  // Kid mode
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   return (
     <div className="p-3 space-y-2">
@@ -95,7 +105,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
             onClick={() => setShowShapes(!showShapes)}
             className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1"
           >
-            ✂️ Shapes
+            {kidMode ? '🔷 Pick a Shape' : '✂️ Shapes'}
             {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
           </button>
 
@@ -114,10 +124,10 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                     onUpdate(updates);
                   }}
                   className="h-8 px-2 gap-1"
-                  title={s.label}
+                  title={kidMode ? s.kidLabel : s.label}
                 >
                   <StencilIcon shape={s.value} active={element.shape === s.value} />
-                  <span className="text-[9px] hidden sm:inline">{s.label}</span>
+                  <span className="text-[9px] hidden sm:inline">{kidMode ? s.kidLabel : s.label}</span>
                 </Button>
               ))}
             </div>
@@ -126,43 +136,71 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
           {/* Quick actions row */}
           <div className="flex items-center gap-1 mb-2 px-1">
             {/* Resize */}
-            <div className="flex items-center gap-1">
-              <Maximize2 className="w-3 h-3 text-muted-foreground" />
-              <input
-                type="number"
-                value={Math.round(element.width)}
-                onChange={e => onUpdate({ width: Number(e.target.value) || 50 })}
-                className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
-              />
-              <span className="text-xs text-muted-foreground">×</span>
-              <input
-                type="number"
-                value={Math.round(element.height)}
-                onChange={e => onUpdate({ height: Number(e.target.value) || 50 })}
-                className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
-              />
-            </div>
+            {kidMode ? (
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground">📐 Size</span>
+                <Slider
+                  value={[element.width]}
+                  onValueChange={([v]) => onUpdate({ width: v, height: element.shape === 'strip' ? element.height : v })}
+                  min={30}
+                  max={200}
+                  step={5}
+                  className="w-20"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <Maximize2 className="w-3 h-3 text-muted-foreground" />
+                <input
+                  type="number"
+                  value={Math.round(element.width)}
+                  onChange={e => onUpdate({ width: Number(e.target.value) || 50 })}
+                  className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
+                />
+                <span className="text-xs text-muted-foreground">×</span>
+                <input
+                  type="number"
+                  value={Math.round(element.height)}
+                  onChange={e => onUpdate({ height: Number(e.target.value) || 50 })}
+                  className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
+                />
+              </div>
+            )}
 
             <div className="w-px h-6 bg-border mx-1" />
 
             {/* Rotate */}
-            <div className="flex items-center gap-1">
-              <RotateCw className="w-3 h-3 text-muted-foreground" />
-              <input
-                type="number"
-                value={element.rotation}
-                onChange={e => onUpdate({ rotation: Number(e.target.value) })}
-                className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
-              />
-              <span className="text-[10px] text-muted-foreground">°</span>
-            </div>
+            {kidMode ? (
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground">🔄 Spin</span>
+                <Slider
+                  value={[element.rotation + 180]}
+                  onValueChange={([v]) => onUpdate({ rotation: v - 180 })}
+                  min={0}
+                  max={360}
+                  step={5}
+                  className="w-16"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <RotateCw className="w-3 h-3 text-muted-foreground" />
+                <input
+                  type="number"
+                  value={element.rotation}
+                  onChange={e => onUpdate({ rotation: Number(e.target.value) })}
+                  className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none"
+                />
+                <span className="text-[10px] text-muted-foreground">°</span>
+              </div>
+            )}
 
             <div className="w-px h-6 bg-border mx-1" />
 
-            <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Duplicate">
+            <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title={kidMode ? 'Make a Copy' : 'Duplicate'}>
               <Copy className="w-3.5 h-3.5" />
             </Button>
-            <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Delete">
+            <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title={kidMode ? 'Remove' : 'Delete'}>
               <Trash2 className="w-3.5 h-3.5" />
             </Button>
           </div>
@@ -172,7 +210,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
             onClick={() => setShowEffects(!showEffects)}
             className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors"
           >
-            Material Effects
+            {kidMode ? '🎨 Make It Look Cool' : 'Material Effects'}
             {showEffects ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
           </button>
 
@@ -186,7 +224,10 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                 {/* Bleach/Fade */}
                 <div>
                   <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
-                    Bleach / Fade — {element.effects.bleachFade}%
+                    {kidMode
+                      ? `☀️ Fade It Out — ${element.effects.bleachFade}%`
+                      : `Bleach / Fade — ${element.effects.bleachFade}%`
+                    }
                   </label>
                   <Slider
                     value={[element.effects.bleachFade]}
@@ -199,7 +240,9 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
                 {/* Edge Style */}
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style (✂ = Scissor Cuts)</label>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
+                    {kidMode ? '✂️ How the Edges Look' : 'Edge Style (✂ = Scissor Cuts)'}
+                  </label>
                   <div className="flex flex-wrap gap-1">
                     {edgeOptions.map(o => (
                       <button
@@ -211,7 +254,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
                       >
-                        {o.label}
+                        {kidMode ? o.kidLabel : o.label}
                       </button>
                     ))}
                   </div>
@@ -219,7 +262,9 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
                 {/* Wrinkle */}
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Wrinkle</label>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
+                    {kidMode ? '🤏 Crumple It Up?' : 'Wrinkle'}
+                  </label>
                   <div className="flex gap-1">
                     {wrinkleOptions.map(o => (
                       <button
@@ -231,7 +276,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
                       >
-                        {o.label}
+                        {kidMode ? o.kidLabel : o.label}
                       </button>
                     ))}
                   </div>
@@ -240,7 +285,10 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                 {/* Grain Boost */}
                 <div>
                   <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
-                    Grain / Texture Boost — {element.effects.grainBoost}%
+                    {kidMode
+                      ? `🔍 Make It Bumpy — ${element.effects.grainBoost}%`
+                      : `Grain / Texture Boost — ${element.effects.grainBoost}%`
+                    }
                   </label>
                   <Slider
                     value={[element.effects.grainBoost]}
@@ -253,7 +301,9 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
 
                 {/* Shadow Depth */}
                 <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Shadow Depth</label>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
+                    {kidMode ? '👻 How Floaty Is It?' : 'Shadow Depth'}
+                  </label>
                   <div className="flex gap-1">
                     {shadowOptions.map(o => (
                       <button
@@ -265,7 +315,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
                       >
-                        {o.label}
+                        {kidMode ? o.kidLabel : o.label}
                       </button>
                     ))}
                   </div>
