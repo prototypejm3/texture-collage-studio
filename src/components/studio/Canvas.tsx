@@ -163,6 +163,14 @@ export function Canvas({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // Kid canvas style: rainbow or plain
+  const [kidCanvasStyle, setKidCanvasStyle] = useState<'rainbow' | 'plain'>(() => {
+    try { return (localStorage.getItem('kid-canvas-style') as 'rainbow' | 'plain') || 'rainbow'; } catch { return 'rainbow'; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem('kid-canvas-style', kidCanvasStyle); } catch {}
+  }, [kidCanvasStyle]);
+
   const isOverBox = useCallback((clientX: number, clientY: number) => {
     if (!boxRef.current || !kidMode) return false;
     const rect = boxRef.current.getBoundingClientRect();
@@ -637,6 +645,33 @@ export function Canvas({
             zIndex: 30,
           }} />
         )}
+        {/* Kid mode canvas style toggle (rainbow / plain) */}
+        {kidMode && (
+          <div className="absolute top-1 right-1 z-[35] flex gap-0.5">
+            <button
+              onClick={() => setKidCanvasStyle('rainbow')}
+              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                kidCanvasStyle === 'rainbow'
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
+              }`}
+              title="Rainbow paper"
+            >
+              🌈
+            </button>
+            <button
+              onClick={() => setKidCanvasStyle('plain')}
+              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                kidCanvasStyle === 'plain'
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
+              }`}
+              title="Plain paper"
+            >
+              📄
+            </button>
+          </div>
+        )}
         {/* Frame style picker popover */}
         {showFramePicker && onWallFrameStyleChange && (
           <>
@@ -703,7 +738,9 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: bgTextureUrl || frameStyle.innerBg,
+            background: kidMode && kidCanvasStyle === 'rainbow' && !bgTextureUrl
+              ? 'linear-gradient(135deg, hsl(0 85% 85%), hsl(30 90% 85%), hsl(55 90% 85%), hsl(120 70% 85%), hsl(200 80% 85%), hsl(270 75% 88%), hsl(320 80% 87%))'
+              : bgTextureUrl || frameStyle.innerBg,
             backgroundSize: bgTextureUrl ? 'cover' : undefined,
             boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}
