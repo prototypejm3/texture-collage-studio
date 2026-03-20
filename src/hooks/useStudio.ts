@@ -94,6 +94,8 @@ export function useStudio() {
     setSelectedSectionId(null);
     setCustomSections([]);
     setDrawMode(false);
+    setCrayonMode(false);
+    setCrayonTextureId(null);
     setBackgroundTextureId(null);
     setSectionTransforms({});
     setDeletedSections(new Set());
