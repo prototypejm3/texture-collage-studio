@@ -93,7 +93,7 @@ export function RightSidebar({
   // Replace vs Layer dialog
   const [pendingVibe, setPendingVibe] = useState<Vibe | null>(null);
 
-  // Kid mode — synced from TextureLibrary via custom event
+  // Kid mode — synced via custom event
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
@@ -101,6 +101,16 @@ export function RightSidebar({
     const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  // AI stencil toggle — synced via custom event
+  const [aiEnabled, setAiEnabled] = useState(() => {
+    try { return localStorage.getItem('ai-stencil-enabled') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setAiEnabled((e as CustomEvent).detail);
+    window.addEventListener('ai-enabled-change', handler);
+    return () => window.removeEventListener('ai-enabled-change', handler);
   }, []);
 
   const handleStencilSelect = (vibe: Vibe) => {
