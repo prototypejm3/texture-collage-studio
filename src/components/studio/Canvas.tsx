@@ -184,70 +184,101 @@ export function Canvas({
         );
       })}
 
-      {/* Wooden stand behind frame */}
-      <div className="absolute pointer-events-none" style={{ zIndex: 5, bottom: 0, left: '50%', transform: 'translateX(-50%)' }}>
-        {/* Left leg */}
-        <div style={{
-          position: 'absolute',
-          width: 8,
-          height: h * 1.2,
-          background: '#C69C6D',
-          borderRadius: 3,
-          bottom: 0,
-          left: -w * 0.28,
-          transform: 'rotate(-10deg)',
-          transformOrigin: 'bottom center',
-          boxShadow: '1px 0 2px rgba(0,0,0,0.15)',
-        }} />
-        {/* Right leg */}
-        <div style={{
-          position: 'absolute',
-          width: 8,
-          height: h * 1.2,
-          background: '#C69C6D',
-          borderRadius: 3,
-          bottom: 0,
-          right: -w * 0.28,
-          transform: 'rotate(10deg)',
-          transformOrigin: 'bottom center',
-          boxShadow: '-1px 0 2px rgba(0,0,0,0.15)',
-        }} />
-        {/* Center back support */}
+      {/* Easel structure */}
+      <div className="absolute pointer-events-none" style={{
+        zIndex: 5,
+        bottom: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: w + 120,
+        height: h * 1.35,
+      }}>
+        {/* Left front leg — subtle angle forming wide triangle */}
         <div style={{
           position: 'absolute',
           width: 6,
-          height: h * 0.9,
+          height: h * 1.3,
+          background: '#C69C6D',
+          borderRadius: '3px 3px 2px 2px',
+          bottom: 0,
+          left: '50%',
+          marginLeft: -4,
+          transform: 'rotate(-7deg)',
+          transformOrigin: 'bottom center',
+        }} />
+        {/* Right front leg */}
+        <div style={{
+          position: 'absolute',
+          width: 6,
+          height: h * 1.3,
+          background: '#C69C6D',
+          borderRadius: '3px 3px 2px 2px',
+          bottom: 0,
+          left: '50%',
+          marginLeft: -2,
+          transform: 'rotate(7deg)',
+          transformOrigin: 'bottom center',
+        }} />
+        {/* Back support leg — taller, centered, leans back slightly */}
+        <div style={{
+          position: 'absolute',
+          width: 5,
+          height: h * 1.15,
           background: '#A67C52',
           borderRadius: 2,
           bottom: 0,
           left: '50%',
-          transform: 'translateX(-50%)',
+          marginLeft: -2.5,
+          transform: 'rotate(0deg)',
+          transformOrigin: 'bottom center',
         }} />
-        {/* Horizontal support bar */}
+        {/* Top junction — small block where legs meet */}
         <div style={{
           position: 'absolute',
-          width: w * 0.6,
-          height: 6,
+          width: 14,
+          height: 10,
+          background: '#B8885A',
+          borderRadius: 3,
+          bottom: h * 1.25,
+          left: '50%',
+          marginLeft: -7,
+        }} />
+        {/* Horizontal ledge — where the canvas rests */}
+        <div style={{
+          position: 'absolute',
+          width: w * 0.55,
+          height: 7,
           background: '#D8B48A',
           borderRadius: 2,
-          bottom: h * 0.15,
+          bottom: h * 0.22,
           left: '50%',
           transform: 'translateX(-50%)',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        }} />
+        {/* Small ledge lip — front edge */}
+        <div style={{
+          position: 'absolute',
+          width: w * 0.55,
+          height: 3,
+          background: '#C69C6D',
+          borderRadius: '0 0 2px 2px',
+          bottom: h * 0.22 - 3,
+          left: '50%',
+          transform: 'translateX(-50%)',
         }} />
       </div>
 
-      {/* Shadow under entire structure */}
+      {/* Shadow under easel */}
       <div
         className="absolute pointer-events-none"
         style={{
           zIndex: 4,
-          bottom: -8,
+          bottom: -4,
           left: '50%',
           transform: 'translateX(-50%)',
-          width: w * 0.8,
-          height: 16,
-          background: 'radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%)',
+          width: w * 0.7,
+          height: 14,
+          background: 'radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%)',
           borderRadius: '50%',
         }}
       />
