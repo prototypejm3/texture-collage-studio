@@ -159,12 +159,19 @@ export function Canvas({
       ref={containerRef}
       className="flex-1 flex items-center justify-center p-0 relative overflow-hidden"
       style={{
+        background: '#D8C8A8',
+        ...(easelMode ? { perspective: '1200px' } : {}),
+      }}
+    >
+      {/* Wood texture rotated 90° for horizontal grain */}
+      <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: '400px auto',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
-        ...(easelMode ? { perspective: '1200px' } : {}),
-      }}
+        transform: 'rotate(90deg) scale(2.5)',
+        transformOrigin: 'center',
+      }} />
       onDragOver={handleTableDragOver}
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
