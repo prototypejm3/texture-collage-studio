@@ -137,15 +137,15 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Hanging style */}
         <PremiumIconButton
-          icon={<Lamp className="w-3.5 h-3.5" />}
+          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
           isPremium={isPremium}
           isOpen={showHangingMenu}
           onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
           onClose={() => setShowHangingMenu(false)}
           iconClass={iconClass(false, !isPremium)}
-          title="Display style"
+          title="Hanging style"
         >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Display style</p>
+          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Hanging</p>
           {hangingStyles.map(hs => (
             <button
               key={hs.value}
@@ -155,6 +155,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               <span>{hs.emoji}</span> {hs.label}
             </button>
           ))}
+        </PremiumIconButton>
+
+        {/* Spotlight */}
+        <PremiumIconButton
+          icon={<Flashlight className="w-3.5 h-3.5" />}
+          isPremium={isPremium}
+          isOpen={false}
+          onToggle={() => isPremium ? onApplyHangingToAll?.('spotlight') : onRequestUpgrade?.()}
+          onClose={() => {}}
+          iconClass={iconClass(settings.defaultHangingStyle === 'spotlight', !isPremium)}
+          title="Spotlight"
+        >
+          <></>
         </PremiumIconButton>
 
         {/* Lighting presets */}
