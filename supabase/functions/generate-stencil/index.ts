@@ -75,6 +75,18 @@ interface CuratedStencil {
 
 const CURATED: CuratedStencil[] = [
   {
+    name: "Dragon", emoji: "🐉", description: "Friendly cartoon dragon with wings",
+    keywords: /(dragon|dragons|drake|wyvern)/,
+    sections: [
+      { id: "dragon-head", label: "Head", tone: "accent", path: "M100,160 Q110,120 140,100 Q170,85 200,90 Q225,95 240,115 Q250,130 245,150 Q238,170 220,185 Q200,195 180,200 Q150,205 125,195 Q105,185 100,170 Z" },
+      { id: "dragon-body", label: "Body", tone: "dark", path: "M180,200 Q200,195 225,190 Q260,195 290,220 Q320,250 340,290 Q350,320 345,350 Q335,380 310,395 Q280,405 250,400 Q220,390 200,370 Q180,340 175,310 Q170,270 172,240 Q174,215 180,200 Z" },
+      { id: "dragon-wing", label: "Wing", tone: "medium", path: "M225,190 Q260,140 300,100 Q330,75 360,65 Q390,60 410,75 Q420,90 410,110 Q395,130 370,155 Q340,185 310,210 Q290,225 275,230 Q260,220 250,210 Q240,200 225,190 Z" },
+      { id: "dragon-tail", label: "Tail", tone: "medium", path: "M310,395 Q340,400 370,380 Q400,355 420,320 Q435,290 440,265 Q442,250 435,245 Q425,250 420,270 Q410,300 390,330 Q370,355 345,375 Q330,385 310,395 Z" },
+      { id: "dragon-legs", label: "Legs", tone: "dark", path: "M210,380 Q220,400 220,430 Q218,450 208,455 Q198,452 200,435 Q202,415 198,395 L270,400 Q278,420 278,445 Q276,458 266,460 Q256,456 258,440 Q260,420 258,405 Z" },
+      { id: "dragon-snout", label: "Snout", tone: "light", path: "M100,160 Q90,150 80,155 Q70,165 72,180 Q78,195 95,200 Q110,200 125,195 Q115,185 105,175 Z" },
+    ],
+  },
+  {
     name: "Dinosaur", emoji: "🦖", description: "Bold T-Rex silhouette",
     keywords: /(dinosaur|dino|t-rex|trex|tyrannosaurus)/,
     sections: [
