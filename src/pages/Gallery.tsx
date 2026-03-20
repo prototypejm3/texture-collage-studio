@@ -1,4 +1,5 @@
 import { NavBar } from '@/components/NavBar';
+import { OnboardingTutorial } from '@/components/OnboardingTutorial';
 import { useGallery } from '@/hooks/useGallery';
 import { useAuth } from '@/hooks/useAuth';
 import { motion } from 'framer-motion';
@@ -147,7 +148,8 @@ const Gallery = () => {
             </div>
           )}
         </div>
-      </div>
+    </div>
+      <OnboardingTutorial page="gallery" />
     </div>
   );
 };
