@@ -265,6 +265,18 @@ const Index = () => {
               onRemoveCustomTexture={removeCustomTexture}
               isPremium={isPremium}
               onRequestUpgrade={() => setShowPaywall(true)}
+              activeVibeId={studio.activeVibe?.id ?? null}
+              onSelectVibe={handleSelectVibe}
+              onShuffleVibeFills={studio.shuffleVibeFills}
+              onGenerateMood={handleGenerateMood}
+              isGeneratingMood={vibeGen.isGenerating}
+              customTemplate={customTemplate}
+              templateOpacity={templateOpacity}
+              onUploadTemplate={handleUploadTemplate}
+              onClearTemplate={clearTemplate}
+              onTemplateOpacityChange={setTemplateOpacity}
+              stencilsPoppedOut={stencilsPoppedOut}
+              onPopOutStencils={() => setStencilsPoppedOut(true)}
             />
           </div>
         )}
