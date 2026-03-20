@@ -46,7 +46,19 @@ export function FreeformWall({
 }: FreeformWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [scale, setScale] = useState(1);
   const dragStart = useRef<{ x: number; y: number; startX: number; startY: number } | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width ?? BASE_WIDTH;
+      setScale(Math.max(0.35, Math.min(1, w / BASE_WIDTH)));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent, design: SavedDesign) => {
     const target = e.target as HTMLElement;
