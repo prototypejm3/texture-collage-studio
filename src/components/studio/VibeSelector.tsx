@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { vibes } from '@/data/vibes';
-import { letterStencils } from '@/data/letterStencils';
+import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag, Heart } from 'lucide-react';
