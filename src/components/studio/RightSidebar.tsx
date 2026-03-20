@@ -9,6 +9,10 @@ import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
+import { useAiCredits } from '@/hooks/useAiCredits';
+import { AiLowCreditsModal } from '@/components/studio/AiLowCreditsModal';
+import { AiCreditsBanner } from '@/components/studio/AiCreditsBanner';
+import { checkGenerationLimit } from '@/hooks/useGenerationLimit';
 
 type Tab = 'stencils' | 'community' | 'hidden';
 
@@ -83,7 +87,18 @@ export function RightSidebar({
   const [aiPrompt, setAiPrompt] = useState('');
   const [moodPrompt, setMoodPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
-  const { generateStencil, isGenerating } = useGenerateStencil();
+  const aiCredits = useAiCredits();
+  const { generateStencil, isGenerating } = useGenerateStencil({
+    onCreditsError: (msg, status) => aiCredits.recordFailure(msg, status),
+    onSuccess: () => {
+      aiCredits.recordSuccess();
+      // Show low warning at 80% usage (4 of 5)
+      const limit = checkGenerationLimit();
+      if (limit.remaining <= 1 && limit.remaining > 0) {
+        aiCredits.showLowWarning();
+      }
+    },
+  });
   const { user } = useAuth();
   const social = useStencilSocial();
 
@@ -153,6 +168,7 @@ export function RightSidebar({
   };
 
   const handleGenerate = async () => {
+    if (aiCredits.guardAiAction()) return;
     const vibe = await generateStencil(aiPrompt);
     if (vibe) {
       setAiGeneratedVibes(prev => [...prev, vibe]);
@@ -174,6 +190,7 @@ export function RightSidebar({
   };
 
   const handleGenerateMood = () => {
+    if (aiCredits.guardAiAction()) return;
     if (moodPrompt.trim()) {
       onGenerateMood(moodPrompt.trim());
       setMoodPrompt('');
@@ -392,13 +409,13 @@ export function RightSidebar({
                           placeholder={kidMode ? 'dragon, cat…' : 'flower, castle…'}
                           maxLength={12}
                           className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${kidMode ? 'text-xs py-1.5' : ''}`}
-                          disabled={isGenerating}
+                          disabled={isGenerating || aiCredits.limitReached}
                         />
                         <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
                       </div>
                       <button
                         onClick={handleGenerate}
-                        disabled={isGenerating || !aiPrompt.trim()}
+                        disabled={isGenerating || !aiPrompt.trim() || aiCredits.limitReached}
                         className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${kidMode ? 'px-3 py-1.5' : ''}`}
                       >
                         {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
@@ -433,13 +450,13 @@ export function RightSidebar({
                             placeholder="cozy, tropical…"
                             maxLength={12}
                             className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
-                            disabled={isGeneratingMood}
+                            disabled={isGeneratingMood || aiCredits.limitReached}
                           />
                           <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                         </div>
                         <button
                           onClick={handleGenerateMood}
-                          disabled={isGeneratingMood || !moodPrompt.trim()}
+                          disabled={isGeneratingMood || !moodPrompt.trim() || aiCredits.limitReached}
                           className="flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
                           {isGeneratingMood ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
@@ -589,6 +606,16 @@ export function RightSidebar({
           </div>
         )}
       </div>
+
+      {/* AI Credits Banner */}
+      <AiCreditsBanner
+        type={aiCredits.limitReached ? 'limit' : 'warning'}
+        visible={aiCredits.limitReached || aiCredits.lowWarning}
+        onDismiss={aiCredits.limitReached ? aiCredits.dismissModal : aiCredits.dismissWarning}
+      />
+
+      {/* AI Low Credits Modal */}
+      <AiLowCreditsModal isOpen={aiCredits.showModal} onClose={aiCredits.dismissModal} />
     </div>
   );
 }
