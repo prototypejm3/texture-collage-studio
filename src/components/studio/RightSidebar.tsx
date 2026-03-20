@@ -361,9 +361,9 @@ export function RightSidebar({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
-                    AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                    {kidMode ? '✨ Magic Shape' : 'AI Stencil'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
                   </div>
-                  {isPremium ? (
+                  {(isPremium || kidMode) ? (
                     <div className="flex gap-1">
                       <div className="relative flex-1">
                         <input
@@ -371,9 +371,9 @@ export function RightSidebar({
                           value={aiPrompt}
                           onChange={e => setAiPrompt(e.target.value.slice(0, 12))}
                           onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
-                          placeholder="flower, castle…"
+                          placeholder={kidMode ? 'dragon, cat…' : 'flower, castle…'}
                           maxLength={12}
-                          className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
+                          className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${kidMode ? 'text-xs py-1.5' : ''}`}
                           disabled={isGenerating}
                         />
                         <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
@@ -381,7 +381,7 @@ export function RightSidebar({
                       <button
                         onClick={handleGenerate}
                         disabled={isGenerating || !aiPrompt.trim()}
-                        className="flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${kidMode ? 'px-3 py-1.5' : ''}`}
                       >
                         {isGenerating ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Sparkles className="w-2.5 h-2.5" />}
                       </button>
@@ -397,7 +397,7 @@ export function RightSidebar({
                 </div>
 
                 {/* AI Mood — shown when stencil selected */}
-                {activeVibeId && (
+                {activeVibeId && !kidMode && (
                   <>
                     <div className="w-px bg-border self-stretch" />
                     <div className="flex-1 min-w-0">
