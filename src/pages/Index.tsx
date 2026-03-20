@@ -115,7 +115,7 @@ const Index = () => {
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<Array<{
     id: string; textureId: string; x: number; y: number;
-    width: number; height: number; rotation: number;
+    width: number; height: number; rotation: number; clipPathD?: string;
   }>>([]);
   const tableIdRef = useRef(1);
 
