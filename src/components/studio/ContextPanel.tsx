@@ -27,6 +27,7 @@ interface ContextPanelProps {
   isPremium: boolean;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
+  onPlaceStencil: () => void;
   onRequestUpgrade: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
@@ -139,6 +140,7 @@ export function ContextPanel(props: ContextPanelProps) {
                 isPremium={props.isPremium}
                 onSelectVibe={props.onSelectVibe}
                 onShuffleVibeFills={props.onShuffleVibeFills}
+                onPlaceStencil={props.onPlaceStencil}
                 onRequestUpgrade={props.onRequestUpgrade}
                 onGenerateMood={props.onGenerateMood}
                 isGeneratingMood={props.isGeneratingMood}

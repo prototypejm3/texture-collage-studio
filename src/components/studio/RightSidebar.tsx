@@ -3,7 +3,7 @@ import { vibes } from '@/data/vibes';
 import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag } from 'lucide-react';
+import { Sparkles, Loader2, Lock, Check, Shuffle, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp } from 'lucide-react';
 import { useGenerateStencil } from '@/hooks/useGenerateStencil';
 import { useStencilSocial } from '@/hooks/useStencilSocial';
 import { useAuth } from '@/hooks/useAuth';
@@ -16,6 +16,7 @@ interface RightSidebarProps {
   isPremium: boolean;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
+  onPlaceStencil: () => void;
   onRequestUpgrade: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
@@ -69,7 +70,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 }
 
 export function RightSidebar({
-  activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
+  activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onPlaceStencil, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   compact = false,
@@ -328,6 +329,13 @@ export function RightSidebar({
                   >
                     <Shuffle className="w-2.5 h-2.5" />
                   </button>
+                  <button
+                    onClick={onPlaceStencil}
+                    className="flex items-center gap-1 px-1.5 py-1 text-[10px] font-medium rounded bg-accent text-accent-foreground hover:bg-accent/80 transition-colors"
+                    title="Place stencil & add another"
+                  >
+                    <Stamp className="w-2.5 h-2.5" /> Place
+                  </button>
                 </div>
               </div>
             )}
@@ -343,9 +351,11 @@ export function RightSidebar({
                       vibe={vibe}
                       isActive={activeVibeId === vibe.id}
                       isHidden={social.hiddenIds.has(vibe.id)}
+                      isFavorited={social.favoritedIds.has(vibe.id)}
                       isLoggedIn={!!user}
                       onSelect={() => onSelectVibe(vibe)}
                       onToggleHidden={() => social.toggleHidden(vibe.id)}
+                      onToggleFav={() => social.toggleFavorite(vibe.id)}
                       onDelete={async () => {
                         setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
                         await social.deleteStencil(vibe.id);
@@ -378,9 +388,11 @@ export function RightSidebar({
                         vibe={vibe}
                         isActive={activeVibeId === vibe.id}
                         isHidden={social.hiddenIds.has(vibe.id)}
+                        isFavorited={social.favoritedIds.has(vibe.id)}
                         isLoggedIn={!!user}
                         onSelect={() => onSelectVibe(vibe)}
                         onToggleHidden={() => social.toggleHidden(vibe.id)}
+                        onToggleFav={() => social.toggleFavorite(vibe.id)}
                         onDelete={async () => {
                           setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
                           await social.deleteStencil(vibe.id);
@@ -476,13 +488,15 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleHidden, onDelete, onReport }: {
+function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, onSelect, onToggleHidden, onToggleFav, onDelete, onReport }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
+  isFavorited: boolean;
   isLoggedIn: boolean;
   onSelect: () => void;
   onToggleHidden: () => void;
+  onToggleFav: () => void;
   onDelete: () => void;
   onReport: () => void;
 }) {
@@ -516,7 +530,22 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
         {vibe.emoji} {vibe.name}
       </p>
 
-      {/* Action buttons on hover — matches texture favorite star positioning */}
+      {/* Fav heart button — bottom-right on hover */}
+      {isLoggedIn && !isAiGenerated && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
+          className={`absolute bottom-5 right-0.5 p-0.5 rounded-full transition-all ${
+            isFavorited
+              ? 'text-rose-500 opacity-100'
+              : 'text-muted-foreground opacity-0 group-hover:opacity-100 bg-background/80'
+          }`}
+          title={isFavorited ? 'Unfavorite' : 'Favorite'}
+        >
+          <Heart className={`w-2.5 h-2.5 ${isFavorited ? 'fill-current' : ''}`} />
+        </button>
+      )}
+
+      {/* Hide button — top-left on hover */}
       {(isLoggedIn || isAiGenerated) && (
         <button
           onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}

@@ -10,6 +10,7 @@ interface BuildPanelProps {
   activeVibeId: string | null;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
+  onPlaceStencil: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
   customTemplate: CustomTemplate | null;
@@ -23,7 +24,7 @@ interface BuildPanelProps {
 
 export function BuildPanel({
   isPremium, onRequestUpgrade,
-  activeVibeId, onSelectVibe, onShuffleVibeFills,
+  activeVibeId, onSelectVibe, onShuffleVibeFills, onPlaceStencil,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   stencilsPoppedOut, onPopOutStencils,
@@ -104,6 +105,7 @@ export function BuildPanel({
               isPremium={isPremium}
               onSelectVibe={onSelectVibe}
               onShuffleVibeFills={onShuffleVibeFills}
+              onPlaceStencil={onPlaceStencil}
               onRequestUpgrade={onRequestUpgrade}
               onGenerateMood={onGenerateMood}
               isGeneratingMood={isGeneratingMood}
