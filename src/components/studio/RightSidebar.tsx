@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
