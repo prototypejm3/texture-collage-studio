@@ -16,15 +16,14 @@ interface RightSidebarProps {
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
   onRequestUpgrade: () => void;
-  // Mood generator
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
-  // Reference image
   customTemplate: { name: string; dataUrl: string } | null;
   templateOpacity: number;
   onUploadTemplate: (file: File) => void;
   onClearTemplate: () => void;
   onTemplateOpacityChange: (val: number) => void;
+  compact?: boolean;
 }
 
 function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
@@ -72,6 +71,7 @@ export function RightSidebar({
   activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
+  compact = false,
 }: RightSidebarProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
@@ -386,7 +386,7 @@ export function RightSidebar({
             <div className="p-3">
               {/* Uncategorized stencils first */}
               {uncategorizedVibes.length > 0 && (
-                <div className="grid grid-cols-4 gap-1">
+                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
                   {uncategorizedVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
@@ -421,7 +421,7 @@ export function RightSidebar({
                     </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="grid grid-cols-4 gap-1">
+                  <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
                     {section.vibes.map(vibe => (
                       <StencilCard
                         key={vibe.id}
@@ -466,7 +466,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-4 gap-1">
+                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -507,7 +507,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Hide stencils from the Stencils tab to see them here</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className={`grid gap-1.5 ${compact ? 'grid-cols-2' : 'grid-cols-3'}`}>
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}

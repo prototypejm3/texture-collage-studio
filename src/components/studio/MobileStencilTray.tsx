@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
-import { GripHorizontal, X, Sparkles, Minimize2, Maximize2 } from 'lucide-react';
+import { GripHorizontal, X, Sparkles, Minimize2, Maximize2, ArrowLeftToLine } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface StencilTrayProps {
@@ -20,6 +20,7 @@ interface StencilTrayProps {
   onClearTemplate: () => void;
   onTemplateOpacityChange: (val: number) => void;
   focusMode?: boolean;
+  onDockBack?: () => void;
 }
 
 export function StencilTray(props: StencilTrayProps) {
@@ -97,6 +98,15 @@ export function StencilTray(props: StencilTrayProps) {
             <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Stencils</span>
           </div>
           <div className="flex items-center gap-0.5">
+            {!isMobile && props.onDockBack && (
+              <button
+                onClick={() => { props.onDockBack?.(); setIsOpen(false); }}
+                className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
+                title="Dock back to sidebar"
+              >
+                <ArrowLeftToLine className="w-3 h-3" />
+              </button>
+            )}
             {!isMobile && (
               <button
                 onClick={() => setIsExpanded(e => !e)}
