@@ -279,6 +279,24 @@ export function Canvas({
           )}
         </div>
       </div>
+
+      {/* Workstation name card */}
+      <div
+        className="absolute bottom-4 right-4 z-20"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="bg-black/90 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 min-w-[180px]">
+          <span className="text-[10px] uppercase tracking-widest text-white/50 select-none">@</span>
+          <input
+            type="text"
+            value={workstationName}
+            onChange={(e) => onWorkstationNameChange(e.target.value)}
+            className="bg-transparent text-white text-xs font-medium outline-none border-none w-full placeholder:text-white/30"
+            placeholder="your name"
+          />
+          <span className="text-[10px] text-white/40 whitespace-nowrap select-none">'s Workstation</span>
+        </div>
+      </div>
     </div>
   );
 }
