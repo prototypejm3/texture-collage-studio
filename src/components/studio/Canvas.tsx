@@ -131,10 +131,7 @@ export function Canvas({
       h = maxH;
       w = h * aspect;
     }
-    // Don't exceed original size on large screens
-    w = Math.min(w, baseSize.w);
-    h = Math.min(h, baseSize.h);
-    return { w: Math.round(w), h: Math.round(h) };
+    return { w: Math.round(Math.max(w, 200)), h: Math.round(Math.max(h, 200)) };
   }, [containerSize, baseSize]);
 
   const { w, h } = canvasSize;
