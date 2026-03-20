@@ -93,7 +93,7 @@ export function BottomBar({
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                {f.label}
+                {kidMode ? f.kidLabel : f.label}
               </button>
               {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
                 <>
