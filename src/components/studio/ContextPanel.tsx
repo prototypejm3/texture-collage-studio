@@ -27,6 +27,7 @@ interface ContextPanelProps {
   isPremium: boolean;
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
+  onPlaceStencil: () => void;
   onRequestUpgrade: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
