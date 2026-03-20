@@ -328,22 +328,25 @@ const Index = () => {
             />
           )}
 
-          {/* ── Stencil Tray (bottom overlay) ── */}
-          <StencilTray
-            activeVibeId={studio.activeVibe?.id ?? null}
-            isPremium={isPremium}
-            onSelectVibe={handleSelectVibe}
-            onShuffleVibeFills={studio.shuffleVibeFills}
-            onRequestUpgrade={() => setShowPaywall(true)}
-            onGenerateMood={handleGenerateMood}
-            isGeneratingMood={vibeGen.isGenerating}
-            customTemplate={customTemplate}
-            templateOpacity={templateOpacity}
-            onUploadTemplate={handleUploadTemplate}
-            onClearTemplate={clearTemplate}
-            onTemplateOpacityChange={setTemplateOpacity}
-            focusMode={focusMode}
-          />
+          {/* ── Stencil Tray (floating, when popped out on desktop or always on mobile) ── */}
+          {(isMobile || stencilsPoppedOut) && (
+            <StencilTray
+              activeVibeId={studio.activeVibe?.id ?? null}
+              isPremium={isPremium}
+              onSelectVibe={handleSelectVibe}
+              onShuffleVibeFills={studio.shuffleVibeFills}
+              onRequestUpgrade={() => setShowPaywall(true)}
+              onGenerateMood={handleGenerateMood}
+              isGeneratingMood={vibeGen.isGenerating}
+              customTemplate={customTemplate}
+              templateOpacity={templateOpacity}
+              onUploadTemplate={handleUploadTemplate}
+              onClearTemplate={clearTemplate}
+              onTemplateOpacityChange={setTemplateOpacity}
+              focusMode={focusMode}
+              onDockBack={!isMobile ? () => setStencilsPoppedOut(false) : undefined}
+            />
+          )}
         </div>
       </div>
 
