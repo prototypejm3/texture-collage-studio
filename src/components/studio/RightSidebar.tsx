@@ -546,59 +546,48 @@ function CommunityStencilCard({ vibe, isActive, favCount, isFavorited, isLoggedI
   onToggleFav: () => void;
   creator?: string;
 }) {
-  const shadowIcons = Math.floor(favCount / 25);
-  const remainder = favCount % 25;
-
   return (
     <motion.div
-      whileHover={{ y: -1 }}
-      className={`group relative flex flex-col items-center text-center rounded-lg p-1.5 transition-all border ${
-        isActive
-          ? 'bg-primary/8 border-primary ring-1 ring-primary/30'
-          : 'border-border/50 hover:border-border hover:bg-secondary/50'
-      }`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onSelect}
+      className="cursor-grab active:cursor-grabbing group relative"
     >
-      <button onClick={onSelect} className="w-full">
-        <div className="w-full h-10 rounded overflow-hidden mb-0.5 relative">
-          <VibePreviewSVG vibe={vibe} />
-          {isActive && (
-            <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-2 h-2 text-primary-foreground" />
-            </div>
-          )}
-        </div>
-        <span className="text-[9px] font-medium leading-tight truncate w-full block">
-          {vibe.emoji} {vibe.name}
-        </span>
-        {creator && (
-          <span className="text-[8px] text-muted-foreground mt-0.5 block">
-            by {creator}
-          </span>
+      <div
+        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${
+          isActive ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'
+        }`}
+      >
+        <VibePreviewSVG vibe={vibe} />
+        {isActive && (
+          <div className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+            <Check className="w-2 h-2 text-primary-foreground" />
+          </div>
         )}
+      </div>
+      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+        {vibe.emoji} {vibe.name}
+      </p>
+
+      {/* Fav button — matches texture star positioning */}
+      <button
+        onClick={(e) => { e.stopPropagation(); if (isLoggedIn) onToggleFav(); }}
+        className={`absolute top-0.5 left-0.5 p-0.5 rounded-full transition-all ${
+          isFavorited
+            ? 'bg-primary/90 text-primary-foreground opacity-100'
+            : 'bg-background/80 text-muted-foreground opacity-0 group-hover:opacity-100'
+        }`}
+        title={isLoggedIn ? (isFavorited ? 'Remove shadow' : 'Cast a shadow') : 'Sign in to cast shadows'}
+      >
+        <Save className={`w-2.5 h-2.5 ${isFavorited ? 'fill-current' : ''}`} />
       </button>
 
-      {/* Shadow count + toggle */}
-      <div className="flex items-center gap-1 mt-1">
-        <button
-          onClick={(e) => { e.stopPropagation(); if (isLoggedIn) onToggleFav(); }}
-          className={`flex items-center gap-0.5 text-[10px] transition-colors ${
-            isFavorited ? 'text-primary' : 'text-muted-foreground hover:text-primary'
-          } ${!isLoggedIn ? 'cursor-default' : ''}`}
-          title={isLoggedIn ? (isFavorited ? 'Remove shadow' : 'Cast a shadow') : 'Sign in to cast shadows'}
-        >
-          {shadowIcons > 0 ? (
-            <span className="flex items-center gap-px">
-              {Array.from({ length: Math.min(shadowIcons, 5) }).map((_, i) => (
-                <span key={i} className="text-[10px]">👤</span>
-              ))}
-              {shadowIcons > 5 && <span className="text-[9px] text-muted-foreground ml-0.5">+{shadowIcons - 5}</span>}
-            </span>
-          ) : (
-            <span className="text-[10px]">👤</span>
-          )}
-          <span className="ml-0.5">{favCount}</span>
-        </button>
-      </div>
+      {/* Shadow count badge */}
+      {favCount > 0 && (
+        <span className="absolute bottom-5 right-0.5 px-1 py-0 text-[7px] rounded-full bg-foreground/60 text-background font-medium">
+          {favCount}
+        </span>
+      )}
     </motion.div>
   );
 }
