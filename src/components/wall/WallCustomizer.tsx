@@ -169,7 +169,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         {/* Lighting presets */}
         <PremiumIconButton
-          icon={<Sun className="w-3.5 h-3.5" />}
+          icon={<Lamp className="w-3.5 h-3.5" />}
           isPremium={isPremium}
           isOpen={showLightingMenu}
           onToggle={() => isPremium ? setShowLightingMenu(!showLightingMenu) : onRequestUpgrade?.()}
