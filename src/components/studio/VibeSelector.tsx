@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
@@ -65,6 +65,14 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const { generateStencil, isGenerating } = useGenerateStencil();
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleGenerate = async () => {
     const vibe = await generateStencil(aiPrompt);
@@ -100,8 +108,8 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
   const funIds = new Set(funStencils.map(f => f.id));
-  const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
-    { label: 'For Fun', emoji: '✨', ids: funIds },
+  const themeGroups: { label: string; emoji: string; ids: Set<string>; adultOnly?: boolean }[] = [
+    { label: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -114,7 +122,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Letters', emoji: '🔤', ids: letterIds },
   ];
 
-  const allVibes = [...vibes, ...funStencils, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
@@ -124,6 +132,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const sections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
   
   for (const group of themeGroups) {
+    if (group.adultOnly && kidMode) continue;
     const items = allVibes.filter(v => 
       group.ids.has(v.id) || (v.category === group.label)
     );
