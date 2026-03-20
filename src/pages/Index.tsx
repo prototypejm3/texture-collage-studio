@@ -383,8 +383,6 @@ const Index = () => {
         {/* ── Canvas/Frame bar ── */}
         {!isMobile && (
           <BottomBar
-            frameSize={studio.frameSize}
-            onFrameSizeChange={studio.setFrameSize}
             wallFrameStyle={studio.wallFrameStyle}
             onWallFrameStyleChange={studio.setWallFrameStyle}
             onClear={studio.clearCanvas}
