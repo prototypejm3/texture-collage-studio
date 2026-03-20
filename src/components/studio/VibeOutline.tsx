@@ -306,30 +306,25 @@ export function VibeOutline({
                 style={{ opacity: isFilled && !isSelected ? 0.5 : 0.9 }}
               />
 
-              {/* Resize corner handles — only for selected section */}
+              {/* Resize handle — single bottom-right corner, small and unobtrusive */}
               {isSelected && minX !== Infinity && (() => {
-                const handleSize = 10;
-                const corners = [
-                  { x: minX, y: minY },
-                  { x: maxX, y: minY },
-                  { x: maxX, y: maxY },
-                  { x: minX, y: maxY },
-                ];
-                return corners.map((corner, i) => (
+                const handleSize = 7;
+                const corner = { x: maxX, y: maxY };
+                return (
                   <rect
-                    key={`handle-${i}`}
                     x={corner.x * t.scale + t.x - handleSize / 2}
                     y={corner.y * t.scale + t.y - handleSize / 2}
                     width={handleSize}
                     height={handleSize}
-                    rx={2}
-                    fill="hsl(24, 80%, 50%)"
-                    stroke="white"
-                    strokeWidth={1.5}
-                    className="pointer-events-auto cursor-nwse-resize"
+                    rx={1.5}
+                    fill="hsl(var(--primary))"
+                    stroke="hsl(var(--primary-foreground))"
+                    strokeWidth={1}
+                    opacity={0.7}
+                    className="pointer-events-auto cursor-nwse-resize hover:opacity-100 transition-opacity"
                     onMouseDown={(e) => handleResizeStart(e, section.id)}
                   />
-                ));
+                );
               })()}
             </g>
           );
