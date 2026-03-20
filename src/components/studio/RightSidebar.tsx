@@ -447,7 +447,7 @@ export function RightSidebar({
                   <p className="text-[9px] text-muted-foreground mt-0.5">Hide stencils from the Stencils tab</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
+                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
@@ -456,10 +456,10 @@ export function RightSidebar({
                       className="group relative cursor-pointer opacity-60 hover:opacity-100"
                     >
                       <button onClick={() => onSelectVibe(vibe)} className="w-full">
-                        <div className={`aspect-square rounded-lg overflow-hidden border shadow-sm border-border/50`}>
+                        <div className={`aspect-square rounded overflow-hidden border shadow-sm border-border/50`}>
                           <VibePreviewSVG vibe={vibe} />
                         </div>
-                        <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+                        <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
                           {vibe.emoji} {vibe.name}
                         </p>
                       </button>
