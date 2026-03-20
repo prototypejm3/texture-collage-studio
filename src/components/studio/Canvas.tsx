@@ -68,6 +68,8 @@ interface Props {
   onStencilTableDrop?: (vibeId: string, x: number, y: number) => void;
   onSelectTableElement?: (id: string | null) => void;
   selectedTableElementId?: string | null;
+  onDuplicateStencilSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
+  onDetachStencilSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   onWallFrameStyleChange?: (style: FrameStyle) => void;
   isPremium?: boolean;
