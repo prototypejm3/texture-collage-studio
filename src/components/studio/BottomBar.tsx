@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
@@ -51,6 +51,14 @@ export function BottomBar({
   easelMode = true, onToggleEasel,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleSpecialSelect = (id: FrameStyle) => {
     if (id === 'shadow-box') {
@@ -72,7 +80,7 @@ export function BottomBar({
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
-        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Frame</span>
+        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Border' : 'Frame'}</span>
         {specialFrames.map(f => {
           const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
           return (
@@ -126,7 +134,7 @@ export function BottomBar({
       {/* Surface selector */}
       {onTableSurfaceChange && (
         <div className="flex items-center gap-0.5">
-          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Wood</span>
+          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Table' : 'Wood'}</span>
           {([
             { id: 'birch' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,75%), hsl(38,25%,65%))', label: 'Birch' },
             { id: 'oak' as TableSurface, bg: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(28,35%,42%))', label: 'Oak' },
@@ -176,7 +184,7 @@ export function BottomBar({
                 <line x1="16" y1="22" x2="20" y2="22" />
               </svg>
             )}
-            <span className="hidden sm:inline">{easelMode ? 'Easel' : 'Desk'}</span>
+            <span className="hidden sm:inline">{kidMode ? (easelMode ? 'Stand Up' : 'Flat') : (easelMode ? 'Easel' : 'Desk')}</span>
           </button>
         </>
       )}
@@ -187,7 +195,7 @@ export function BottomBar({
       {/* Actions */}
       <div className="flex items-center gap-1">
         <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
-          <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Clear</span>
+          <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Start Over' : 'Clear'}</span>
         </button>
         {onSaveToWall && (
           <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-foreground hover:bg-secondary rounded-md transition-colors">
@@ -203,7 +211,7 @@ export function BottomBar({
           }`}
           title={isPremium ? 'Export as PNG' : 'Premium'}
         >
-          <Download className="w-3 h-3" /> <span className="hidden sm:inline">Export</span>
+          <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Export'}</span>
           {!isPremium && <Lock className="w-2 h-2 ml-0.5" />}
         </button>
       </div>

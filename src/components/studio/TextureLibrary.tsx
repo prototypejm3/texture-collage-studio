@@ -41,13 +41,13 @@ function ShapeIcon({ shape }: { shape: ElementShape }) {
   }
 }
 
-const shapes: { value: ElementShape; label: string }[] = [
-  { value: 'soft-square', label: 'Soft Sq' },
-  { value: 'rectangle', label: 'Rect' },
-  { value: 'circle', label: 'Circle' },
-  { value: 'strip', label: 'Strip' },
-  { value: 'torn-edge', label: 'Torn' },
-  { value: 'blob', label: 'Blob' },
+const shapes: { value: ElementShape; label: string; kidLabel: string }[] = [
+  { value: 'soft-square', label: 'Soft Sq', kidLabel: '⬜ Square' },
+  { value: 'rectangle', label: 'Rect', kidLabel: '▬ Long' },
+  { value: 'circle', label: 'Circle', kidLabel: '⚫ Circle' },
+  { value: 'strip', label: 'Strip', kidLabel: '➖ Thin' },
+  { value: 'torn-edge', label: 'Torn', kidLabel: '💥 Ripped' },
+  { value: 'blob', label: 'Blob', kidLabel: '💧 Blob' },
 ];
 
 interface TextureGroup {
@@ -196,10 +196,10 @@ export function TextureLibrary({
           <div className="flex items-center gap-1">
             <button
               onClick={() => setKidMode(!kidMode)}
-              className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${kidMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/60 text-muted-foreground/60 hover:text-muted-foreground'}`}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all ${kidMode ? 'bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30 scale-105' : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'}`}
               title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
             >
-              Kids
+              🧒 Kids
             </button>
             <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5">
               <button
@@ -242,7 +242,7 @@ export function TextureLibrary({
         {activeSectionId && (
           <div className="mb-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
             <p className="text-[9px] text-primary font-medium">
-              👆 Tap a texture to fill the selected section.
+              {kidMode ? '👆 Tap a color to paint the piece!' : '👆 Tap a texture to fill the selected section.'}
             </p>
           </div>
         )}
@@ -310,7 +310,7 @@ export function TextureLibrary({
               }`}
             >
               <PenTool className="w-3 h-3" />
-              Draw
+              {kidMode ? '✏️ Draw' : 'Draw'}
             </button>
             {shapes.map(shape => (
               <button
@@ -323,7 +323,7 @@ export function TextureLibrary({
                 }`}
               >
                 <ShapeIcon shape={shape.value} />
-                {shape.label}
+                {kidMode ? shape.kidLabel : shape.label}
               </button>
             ))}
           </div>
@@ -350,8 +350,8 @@ export function TextureLibrary({
         {activeGroup === 'Favorites' && favIds.size === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Star className="w-8 h-8 text-muted-foreground/40 mb-2" />
-            <p className="text-xs text-muted-foreground">No favorites yet</p>
-            <p className="text-[10px] text-muted-foreground mt-1">Hover a texture and click ★ to favorite</p>
+            <p className="text-xs text-muted-foreground">{kidMode ? 'No favorites yet' : 'No favorites yet'}</p>
+            <p className="text-[10px] text-muted-foreground mt-1">{kidMode ? 'Hover a color and click ★ to save it!' : 'Hover a texture and click ★ to favorite'}</p>
           </div>
         )}
 

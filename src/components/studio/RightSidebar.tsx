@@ -281,24 +281,24 @@ export function RightSidebar({
       {pendingVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
           <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
-            <h3 className="text-sm font-semibold mb-1">Switch Stencil</h3>
+            <h3 className="text-sm font-semibold mb-1">{kidMode ? 'Switch Shape' : 'Switch Stencil'}</h3>
             <p className="text-[10px] text-muted-foreground mb-3">
-              You already have a stencil on the canvas. What would you like to do?
+              {kidMode ? 'You already have a shape! What do you want to do?' : 'You already have a stencil on the canvas. What would you like to do?'}
             </p>
             <div className="flex flex-col gap-2">
               <button
                 onClick={handleReplaceConfirm}
                 className="w-full px-3 py-2 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
               >
-                <span className="font-semibold">Replace</span>
-                <span className="block text-[9px] text-muted-foreground mt-0.5">Remove current stencil and use the new one</span>
+                <span className="font-semibold">{kidMode ? 'Swap It' : 'Replace'}</span>
+                <span className="block text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Take away the old one, use the new one' : 'Remove current stencil and use the new one'}</span>
               </button>
               <button
                 onClick={handleLayerConfirm}
                 className="w-full px-3 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
               >
-                <span className="font-semibold">Layer</span>
-                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">Stamp current stencil down and add the new one on top</span>
+                <span className="font-semibold">{kidMode ? 'Stack It' : 'Layer'}</span>
+                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">{kidMode ? 'Keep the old one and put the new one on top' : 'Stamp current stencil down and add the new one on top'}</span>
               </button>
               <button
                 onClick={() => setPendingVibe(null)}
@@ -315,17 +315,17 @@ export function RightSidebar({
       {saveDialogVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
           <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
-            <h3 className="text-sm font-semibold mb-3">Save Stencil</h3>
+            <h3 className="text-sm font-semibold mb-3">{kidMode ? 'Save Shape' : 'Save Stencil'}</h3>
             <input
               value={saveName}
               onChange={e => setSaveName(e.target.value)}
-              placeholder="Name your stencil"
+              placeholder={kidMode ? 'Name your shape' : 'Name your stencil'}
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground mb-3"
             />
             <label className="flex items-center gap-2 text-xs text-muted-foreground mb-4 cursor-pointer">
               <input type="checkbox" checked={savePublic} onChange={e => setSavePublic(e.target.checked)} className="rounded" />
               <Globe className="w-3 h-3" />
-              Make public (others can see & favorite)
+              {kidMode ? 'Share with friends' : 'Make public (others can see & favorite)'}
             </label>
             <div className="flex gap-2">
               <button onClick={() => setSaveDialogVibe(null)} className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors">
@@ -350,7 +350,7 @@ export function RightSidebar({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
-                    AI Stencil <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                    {kidMode ? '✨ Magic Shape' : 'AI Stencil'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">{kidMode ? 'New!' : 'Beta'}</span>
                   </div>
                   {isPremium ? (
                     <div className="flex gap-1">
@@ -390,9 +390,9 @@ export function RightSidebar({
                   <>
                     <div className="w-px bg-border self-stretch" />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
+                     <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                         <Sparkles className="w-3 h-3 text-accent-foreground" />
-                        AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
+                        {kidMode ? '🎨 Magic Color' : 'AI Mood'} <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">{kidMode ? 'New!' : 'Beta'}</span>
                       </div>
                       <div className="flex gap-1">
                         <div className="relative flex-1">
@@ -491,8 +491,8 @@ export function RightSidebar({
               {communityVibes.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center">
                   <Globe className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
-                  <p className="text-[10px] text-muted-foreground">No community stencils yet</p>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">Generate one with AI and make it public!</p>
+                  <p className="text-[10px] text-muted-foreground">{kidMode ? 'No shapes from friends yet' : 'No community stencils yet'}</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Make a shape and share it!' : 'Generate one with AI and make it public!'}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
@@ -524,8 +524,8 @@ export function RightSidebar({
               {hiddenVibes.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center">
                   <EyeOff className="w-6 h-6 text-muted-foreground/40 mb-1.5" />
-                  <p className="text-[10px] text-muted-foreground">No hidden stencils</p>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">Hide stencils from the Stencils tab</p>
+                  <p className="text-[10px] text-muted-foreground">{kidMode ? 'Nothing put away' : 'No hidden stencils'}</p>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Put away shapes you don\'t want to see' : 'Hide stencils from the Stencils tab'}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
