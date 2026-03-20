@@ -320,7 +320,7 @@ const Index = () => {
           )}
         </div>
 
-        {/* ── Bottom panel: Textures (left) + Build tools (right) ── */}
+        {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
         {!isMobile && (
           <div className="flex border-t border-border" style={{ height: '35%' }}>
             {/* Left half: Textures */}
