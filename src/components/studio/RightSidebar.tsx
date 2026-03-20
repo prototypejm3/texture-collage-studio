@@ -177,24 +177,24 @@ export function RightSidebar({
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
-  const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
-    { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
-    { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
-    { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
-    { label: 'Sea Life', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
-    { label: 'Food & Fruit', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
-    { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
-    { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
-    { label: 'Music', emoji: '🎵', ids: new Set([]) },
-    { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
-    { label: 'Letters', emoji: '🔤', ids: letterIds },
+  const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
+    { label: 'Animals', kidLabel: '🐶 Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
+    { label: 'Insects & Bugs', kidLabel: '🐛 Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
+    { label: 'Sea Life', kidLabel: '🐟 Ocean', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
+    { label: 'Food & Fruit', kidLabel: '🍕 Food', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
+    { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
+    { label: 'Art & Pattern', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
+    { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
+    { label: 'Numbers & Symbols', kidLabel: '🔢 Numbers', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
   ];
 
   const themedIds = new Set<string>();
-  const themeSections: { label: string; emoji: string; vibes: typeof allVibes }[] = [];
+  const themeSections: { label: string; kidLabel: string; emoji: string; vibes: typeof allVibes }[] = [];
   for (const group of themeGroups) {
     const items = allVibes.filter(v => group.ids.has(v.id) || v.category === group.label);
-    if (items.length > 0) themeSections.push({ label: group.label, emoji: group.emoji, vibes: items });
+    if (items.length > 0) themeSections.push({ label: group.label, kidLabel: group.kidLabel, emoji: group.emoji, vibes: items });
     items.forEach(v => themedIds.add(v.id));
   }
   const uncategorizedVibes = allVibes.filter(v => !themedIds.has(v.id));
@@ -445,7 +445,7 @@ export function RightSidebar({
                         : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    {section.emoji} {section.label}
+                    {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
                   </button>
                 ))}
               </div>
