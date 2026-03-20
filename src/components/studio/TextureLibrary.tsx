@@ -196,10 +196,10 @@ export function TextureLibrary({
           <div className="flex items-center gap-1">
             <button
               onClick={() => setKidMode(!kidMode)}
-              className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${kidMode ? 'bg-primary text-primary-foreground' : 'bg-secondary/60 text-muted-foreground/60 hover:text-muted-foreground'}`}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all ${kidMode ? 'bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30 scale-105' : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'}`}
               title={kidMode ? 'Switch to classic names' : 'Kid-friendly names'}
             >
-              Kids
+              🧒 Kids
             </button>
             <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5">
               <button
