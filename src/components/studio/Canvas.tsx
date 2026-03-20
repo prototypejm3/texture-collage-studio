@@ -78,6 +78,7 @@ interface Props {
   isPremium?: boolean;
   onRequestUpgrade?: () => void;
   drawMode?: boolean;
+  crayonMode?: boolean;
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
 }
