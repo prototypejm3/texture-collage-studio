@@ -431,15 +431,15 @@ export function Canvas({
         <div
           className="absolute z-20"
           style={{
-            top: 24,
+            top: 'calc(3% + 12px)',
             left: '50%',
-            transform: 'translateX(calc(-50% - 160px))',
+            transform: 'translateX(-50%)',
           }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Nameplate container with perspective */}
           <div style={{
-            width: 'clamp(160px, 28%, 240px)',
+            width: 200,
             perspective: '600px',
           }}>
             {/* Shadow under the whole nameplate */}
@@ -458,7 +458,7 @@ export function Canvas({
             {/* Front face — tilted backward */}
             <div style={{
               background: '#1F1F1F',
-              padding: '10px 14px 8px',
+              padding: '8px 14px 6px',
               transformOrigin: 'bottom center',
               transform: 'rotateX(11deg)',
               borderRadius: '2px 2px 0 0',
@@ -475,44 +475,39 @@ export function Canvas({
                 background: 'rgba(255,255,255,0.08)',
                 borderRadius: '2px 2px 0 0',
               }} />
-              <div style={{
-                color: '#EAEAEA',
-                fontSize: 11,
-                fontWeight: 600,
-                letterSpacing: '0.04em',
-                lineHeight: 1.3,
-                fontFamily: "'Inter', 'system-ui', sans-serif",
-              }}>
-                Swatchbox Studio
-              </div>
+              {/* Editable name + "'s Desk" on one line */}
               <div style={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-                marginTop: 2,
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                gap: 0,
               }}>
                 <input
                   type="text"
                   value={workstationName}
                   onChange={(e) => onWorkstationNameChange(e.target.value)}
-                  className="bg-transparent outline-none border-none"
+                  className="bg-transparent outline-none border-none text-center"
                   style={{
-                    color: 'rgba(234,234,234,0.4)',
-                    fontSize: 9,
-                    fontWeight: 400,
-                    letterSpacing: '0.06em',
+                    color: '#EAEAEA',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    letterSpacing: '0.04em',
                     fontFamily: "'Inter', 'system-ui', sans-serif",
-                    width: '100%',
+                    width: workstationName.length > 0 ? `${Math.max(workstationName.length * 7, 40)}px` : '60px',
+                    maxWidth: 120,
                     padding: 0,
                     margin: 0,
                   }}
                   placeholder="Your Name"
                 />
                 <span style={{
-                  color: 'rgba(234,234,234,0.25)',
-                  fontSize: 9,
+                  color: 'rgba(234,234,234,0.5)',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
                   whiteSpace: 'nowrap',
                   userSelect: 'none',
+                  fontFamily: "'Inter', 'system-ui', sans-serif",
                 }}>'s Desk</span>
               </div>
             </div>
