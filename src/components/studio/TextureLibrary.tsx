@@ -107,9 +107,33 @@ export function TextureLibrary({
 
       <div className="px-2 py-1 border-b border-border">
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">
-            Textures
-          </h2>
+          <div className="flex items-center gap-1">
+            <h2 className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">
+              Textures
+            </h2>
+            {onApplyModeChange && (
+              <div className="flex items-center gap-0.5 rounded bg-secondary/60 p-0.5 ml-1">
+                <button
+                  onClick={() => onApplyModeChange('swatch')}
+                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                    applyMode === 'swatch' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'
+                  }`}
+                  title="Apply as swatch element"
+                >
+                  Swatch
+                </button>
+                <button
+                  onClick={() => onApplyModeChange('background')}
+                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                    applyMode === 'background' ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-muted-foreground'
+                  }`}
+                  title="Apply as canvas background"
+                >
+                  Background
+                </button>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-1">
             <button
               onClick={() => setKidMode(!kidMode)}
