@@ -190,6 +190,7 @@ export function RightSidebar({
   };
 
   const handleGenerateMood = () => {
+    if (aiCredits.guardAiAction()) return;
     if (moodPrompt.trim()) {
       onGenerateMood(moodPrompt.trim());
       setMoodPrompt('');
