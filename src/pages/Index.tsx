@@ -720,6 +720,7 @@ const Index = () => {
           </filter>
         </defs>
       </svg>
+      <OnboardingTutorial page="studio" />
     </div>
   );
 };

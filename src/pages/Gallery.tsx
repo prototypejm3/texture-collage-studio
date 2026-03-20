@@ -148,7 +148,8 @@ const Gallery = () => {
             </div>
           )}
         </div>
-      </div>
+    </div>
+      <OnboardingTutorial page="gallery" />
     </div>
   );
 };

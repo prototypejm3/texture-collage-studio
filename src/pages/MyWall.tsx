@@ -576,6 +576,7 @@ const MyWall = () => {
         onSubmit={handleConfirmGallerySubmit}
         onClose={() => setGallerySubmitId(null)}
       />
+      <OnboardingTutorial page="wall" />
     </div>
   );
 };
