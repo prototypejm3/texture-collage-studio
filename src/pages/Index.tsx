@@ -6,7 +6,7 @@ import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { useWall } from '@/hooks/useWall';
 import { useUserTier } from '@/hooks/useUserTier';
-import { Canvas } from '@/components/studio/Canvas';
+import { Canvas, TableSurface } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { BuildPanel } from '@/components/studio/BuildPanel';
@@ -46,6 +46,7 @@ const Index = () => {
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
+  const [tableSurface, setTableSurface] = useState<TableSurface>('light-wood');
 
   // Keyboard shortcut for focus mode
   useEffect(() => {
@@ -312,6 +313,7 @@ const Index = () => {
             backgroundTextureId={studio.backgroundTextureId}
             sectionTransforms={studio.sectionTransforms}
             tableElements={tableElements}
+            tableSurface={tableSurface}
             onSelect={studio.setSelectedId}
             onUpdate={studio.updateElement}
             onDrop={handleDrop}
@@ -381,6 +383,8 @@ const Index = () => {
             onSaveToWall={handleSaveToWall}
             isPremium={isPremium}
             onRequestUpgrade={() => setShowPaywall(true)}
+            tableSurface={tableSurface}
+            onTableSurfaceChange={setTableSurface}
           />
         )}
 

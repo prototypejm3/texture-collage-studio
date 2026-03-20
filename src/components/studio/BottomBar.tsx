@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
+import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,6 +19,8 @@ interface Props {
   toolKitOpen?: boolean;
   onOpenStencils?: () => void;
   stencilsOpen?: boolean;
+  tableSurface?: TableSurface;
+  onTableSurfaceChange?: (surface: TableSurface) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
@@ -48,6 +51,7 @@ export function BottomBar({
   isPremium = false, onRequestUpgrade,
   onOpenToolKit, toolKitOpen = false,
   onOpenStencils, stencilsOpen = false,
+  tableSurface = 'light-wood', onTableSurfaceChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
 
@@ -140,6 +144,33 @@ export function BottomBar({
           );
         })}
       </div>
+
+      <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
+
+      {/* Surface selector */}
+      {onTableSurfaceChange && (
+        <div className="flex items-center gap-0.5">
+          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Table</span>
+          {([
+            { id: 'light-wood' as TableSurface, bg: 'linear-gradient(145deg, hsl(35,50%,55%), hsl(30,40%,40%))', label: 'Wood' },
+            { id: 'white' as TableSurface, bg: 'hsl(0,0%,95%)', label: 'White' },
+            { id: 'linen' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,82%), hsl(35,25%,75%))', label: 'Linen' },
+            { id: 'marble' as TableSurface, bg: 'linear-gradient(145deg, hsl(0,0%,90%), hsl(0,0%,85%))', label: 'Stone' },
+          ]).map(s => (
+            <button
+              key={s.id}
+              onClick={() => onTableSurfaceChange(s.id)}
+              className={`w-5 h-5 rounded-full transition-all flex-shrink-0 border ${
+                tableSurface === s.id
+                  ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: s.bg }}
+              title={s.label}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Spacer */}
       <div className="flex-1" />

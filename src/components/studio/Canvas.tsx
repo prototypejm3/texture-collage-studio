@@ -7,6 +7,15 @@ import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 
+export type TableSurface = 'light-wood' | 'white' | 'linen' | 'marble';
+
+const surfaceImages: Record<TableSurface, string> = {
+  'light-wood': '/images/wood-table-bg.jpg',
+  'white': '/images/surface-white.jpg',
+  'linen': '/images/surface-linen.jpg',
+  'marble': '/images/surface-marble.jpg',
+};
+
 interface TableElement {
   id: string;
   textureId: string;
@@ -32,6 +41,7 @@ interface Props {
   backgroundTextureId: string | null;
   sectionTransforms: SectionTransforms;
   tableElements: TableElement[];
+  tableSurface: TableSurface;
   onSelect: (id: string | null) => void;
   onUpdate: (id: string, updates: Partial<CanvasElement>) => void;
   onDrop: (textureId: string, x: number, y: number) => void;
@@ -80,7 +90,7 @@ export function Canvas({
   activeVibe, vibeFills, selectedSectionId,
   customTemplate, templateOpacity,
   backgroundTextureId, sectionTransforms,
-  tableElements,
+  tableElements, tableSurface,
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
@@ -146,7 +156,7 @@ export function Canvas({
       ref={containerRef}
       className="flex-1 flex items-end justify-center p-0 relative"
       style={{
-        backgroundImage: 'url(/images/wood-table-bg.jpg)',
+        backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
