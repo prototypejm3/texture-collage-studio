@@ -8,6 +8,8 @@ import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { textures } from '@/data/textures';
 import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import concreteFloor from '@/assets/concrete-floor.jpg';
+import kidTable from '@/assets/kid-table.jpg';
+import kidArtFrame from '@/assets/kid-art-frame.png';
 
 export type TableSurface = 'birch' | 'oak' | 'walnut';
 
@@ -387,11 +389,11 @@ export function Canvas({
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
-      {/* Concrete floor background */}
+      {/* Background — concrete floor (normal) or kid table (kids mode) */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `url(${concreteFloor})`,
-        backgroundSize: '512px 512px',
-        backgroundRepeat: 'repeat',
+        backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
+        backgroundSize: kidMode ? 'cover' : '512px 512px',
+        backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
         backgroundPosition: 'center',
       }} />
 
@@ -601,7 +603,7 @@ export function Canvas({
         </div>
       )}
 
-      {/* Frame */}
+      {/* Frame — kid mode uses art frame image overlay instead of border */}
       <div
         onClick={(e) => {
           if (e.target === e.currentTarget && onWallFrameStyleChange) {
@@ -610,19 +612,31 @@ export function Canvas({
           }
         }}
         style={{
-          padding: `${frameStyle.padding}px`,
-          ...(wallFrameStyle === 'polaroid' ? { paddingBottom: '48px' } : {}),
-          background: frameStyle.bg,
-          borderRadius: `${frameStyle.borderRadius}px`,
-          border: frameStyle.border,
-          boxShadow: wallFrameStyle === 'floating'
-            ? `0 12px 40px -8px ${frameStyle.shadow}`
-            : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
+          padding: kidMode ? 0 : `${frameStyle.padding}px`,
+          ...(wallFrameStyle === 'polaroid' && !kidMode ? { paddingBottom: '48px' } : {}),
+          background: kidMode ? 'transparent' : frameStyle.bg,
+          borderRadius: kidMode ? 0 : `${frameStyle.borderRadius}px`,
+          border: kidMode ? 'none' : frameStyle.border,
+          boxShadow: kidMode
+            ? 'none'
+            : wallFrameStyle === 'floating'
+              ? `0 12px 40px -8px ${frameStyle.shadow}`
+              : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
           zIndex: 10,
           position: 'relative' as const,
           cursor: onWallFrameStyleChange ? 'pointer' : undefined,
         }}
       >
+        {/* Kid mode art frame overlay */}
+        {kidMode && (
+          <div className="absolute pointer-events-none" style={{
+            inset: -24,
+            backgroundImage: `url(${kidArtFrame})`,
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 30,
+          }} />
+        )}
         {/* Frame style picker popover */}
         {showFramePicker && onWallFrameStyleChange && (
           <>
@@ -862,7 +876,7 @@ export function Canvas({
                     whiteSpace: 'nowrap',
                     userSelect: 'none',
                     fontFamily: "'Inter', 'system-ui', sans-serif",
-                  }}>'s Workspace</span>
+                  }}>'s {kidMode ? 'Art Table' : 'Workspace'}</span>
                 </div>
               </div>
 
