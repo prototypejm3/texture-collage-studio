@@ -450,7 +450,7 @@ export function RightSidebar({
                             placeholder="cozy, tropical…"
                             maxLength={12}
                             className="w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8"
-                            disabled={isGeneratingMood}
+                            disabled={isGeneratingMood || aiCredits.limitReached}
                           />
                           <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                         </div>
