@@ -325,7 +325,7 @@ export function RightSidebar({
             <label className="flex items-center gap-2 text-xs text-muted-foreground mb-4 cursor-pointer">
               <input type="checkbox" checked={savePublic} onChange={e => setSavePublic(e.target.checked)} className="rounded" />
               <Globe className="w-3 h-3" />
-              Make public (others can see & favorite)
+              {kidMode ? 'Share with friends' : 'Make public (others can see & favorite)'}
             </label>
             <div className="flex gap-2">
               <button onClick={() => setSaveDialogVibe(null)} className="flex-1 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors">
