@@ -146,6 +146,9 @@ export function Canvas({
   });
   const boxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const [isBoxDragging, setIsBoxDragging] = useState(false);
+  const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
+    try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+  });
 
   // Persist box items & position
   useEffect(() => {
