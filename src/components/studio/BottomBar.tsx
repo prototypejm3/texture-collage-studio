@@ -20,6 +20,8 @@ interface Props {
   toolKitOpen?: boolean;
   onOpenStencils?: () => void;
   stencilsOpen?: boolean;
+  tableSurface?: TableSurface;
+  onTableSurfaceChange?: (surface: TableSurface) => void;
 }
 
 const frameSizes: FrameSize[] = ['8x8', '12x12', '16x16', 'gallery'];
