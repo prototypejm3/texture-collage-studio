@@ -337,15 +337,15 @@ const Index = () => {
                 applyMode={textureApplyMode}
                 onApplyModeChange={setTextureApplyMode}
                 backgroundTextureId={studio.backgroundTextureId}
-              />
-            </div>
-            {/* Right half: Build + Stencils */}
-            <div className="flex-1 overflow-hidden">
-              <BuildPanel
                 drawMode={studio.drawMode}
                 onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
                 nextShape={studio.nextShape}
                 onSetNextShape={studio.setNextShape}
+              />
+            </div>
+            {/* Right half: Stencils */}
+            <div className="flex-1 overflow-hidden">
+              <BuildPanel
                 isPremium={isPremium}
                 onRequestUpgrade={() => setShowPaywall(true)}
                 activeVibeId={studio.activeVibe?.id ?? null}
