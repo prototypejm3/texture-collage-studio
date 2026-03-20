@@ -146,6 +146,9 @@ export function Canvas({
   });
   const boxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const [isBoxDragging, setIsBoxDragging] = useState(false);
+  const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
+    try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+  });
 
   // Persist box items & position
   useEffect(() => {
@@ -291,6 +294,13 @@ export function Canvas({
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  // Default easel button position to bottom center once we know container size
+  useEffect(() => {
+    if (easelBtnPos.x === -1 && containerSize.width > 0) {
+      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: containerSize.height - 52 });
+    }
+  }, [containerSize, easelBtnPos.x]);
 
   const isMobileCanvas = containerSize.width > 0 && containerSize.width < 768;
   
@@ -839,22 +849,54 @@ export function Canvas({
       )}
       </div>
 
-      {/* Easel/Desk toggle — on the floor below canvas */}
-      {onToggleEasel && kidMode && (
-        <button
-          onClick={(e) => { e.stopPropagation(); onToggleEasel(); }}
-          className="absolute z-20 flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all shadow-lg border border-border/30 bg-popover text-foreground hover:bg-accent"
-          style={{
-            bottom: 16,
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-          title={easelMode ? 'Switch to flat desk' : 'Switch to easel'}
-        >
-          {easelMode ? '🖥️' : '🧍'}
-          <span>{easelMode ? 'Sit Down' : 'Stand Up'}</span>
-        </button>
-      )}
+      {/* Easel/Desk toggle — draggable on the floor */}
+      {onToggleEasel && kidMode && (() => {
+        const btnKey = 'kid-easel-btn-pos';
+        return (
+          <div
+            className="absolute z-20 cursor-grab active:cursor-grabbing"
+            style={{
+              left: easelBtnPos.x,
+              top: easelBtnPos.y,
+              touchAction: 'none',
+              userSelect: 'none',
+            }}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              const startX = e.clientX;
+              const startY = e.clientY;
+              const origX = easelBtnPos.x;
+              const origY = easelBtnPos.y;
+              let moved = false;
+
+              const onMove = (ev: PointerEvent) => {
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+                if (!containerRef.current) return;
+                const r = containerRef.current.getBoundingClientRect();
+                const nx = Math.max(0, Math.min(r.width - 140, origX + dx));
+                const ny = Math.max(0, Math.min(r.height - 44, origY + dy));
+                setEaselBtnPos({ x: nx, y: ny });
+              };
+              const onUp = () => {
+                window.removeEventListener('pointermove', onMove);
+                window.removeEventListener('pointerup', onUp);
+                if (!moved) onToggleEasel();
+                try { localStorage.setItem(btnKey, JSON.stringify(easelBtnPos)); } catch {}
+              };
+              window.addEventListener('pointermove', onMove);
+              window.addEventListener('pointerup', onUp);
+            }}
+          >
+            <div className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold shadow-lg border border-border/30 bg-popover text-foreground pointer-events-none select-none">
+              {easelMode ? '🖥️' : '🧍'}
+              <span>{easelMode ? 'Sit Down' : 'Stand Up'}</span>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && (
