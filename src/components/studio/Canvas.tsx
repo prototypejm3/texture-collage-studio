@@ -143,14 +143,33 @@ export function Canvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 flex items-end justify-center p-0"
+      className="flex-1 flex items-end justify-center p-0 relative"
       style={{
         backgroundImage: 'url(/images/wood-table-bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
-      onClick={() => onSelect(null)}
+      onDragOver={handleTableDragOver}
+      onDrop={handleTableDrop}
+      onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
+      {/* Table elements (swatches on the wood table) */}
+      {tableElements.map(tel => {
+        const tex = allTextures.find(t => t.id === tel.textureId);
+        if (!tex) return null;
+        return (
+          <TableSwatch
+            key={tel.id}
+            element={tel}
+            texture={tex}
+            isSelected={selectedTableId === tel.id}
+            onSelect={() => { setSelectedTableId(tel.id); onSelect(null); }}
+            onUpdate={(updates) => onTableElementUpdate(tel.id, updates)}
+            onDelete={() => onTableElementDelete(tel.id)}
+          />
+        );
+      })}
+
       {/* Frame */}
       <div
         style={{
@@ -162,13 +181,15 @@ export function Canvas({
           boxShadow: wallFrameStyle === 'floating'
             ? `0 12px 40px -8px ${frameStyle.shadow}`
             : `inset 0 2px 8px ${frameStyle.shadow}, 0 8px 32px -8px ${frameStyle.shadow}, 0 2px 8px ${frameStyle.shadow}`,
+          zIndex: 10,
+          position: 'relative' as const,
         }}
       >
         {/* Inner canvas */}
         <div
           ref={canvasRef}
           onDragOver={handleDragOver}
-          onDrop={handleDrop}
+          onDrop={(e) => { e.stopPropagation(); handleDrop(e); }}
           className="relative overflow-hidden"
           style={{
             width: w,
@@ -199,6 +220,7 @@ export function Canvas({
                 isSelected={el.id === selectedId}
                 onSelect={() => onSelect(el.id)}
                 onUpdate={(updates) => onUpdate(el.id, updates)}
+                onDelete={() => onDeleteElement(el.id)}
                 customTextures={customTextures}
               />
             ))}
@@ -235,6 +257,83 @@ export function Canvas({
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── Table Swatch Component ──
+import { X } from 'lucide-react';
+
+interface TableSwatchProps {
+  element: TableElement;
+  texture: TextureSwatch;
+  isSelected: boolean;
+  onSelect: () => void;
+  onUpdate: (updates: Partial<TableElement>) => void;
+  onDelete: () => void;
+}
+
+function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelete }: TableSwatchProps) {
+  const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onSelect();
+    setIsDragging(true);
+    dragStart.current = { x: e.clientX, y: e.clientY, elX: element.x, elY: element.y };
+  }, [element.x, element.y, onSelect]);
+
+  useEffect(() => {
+    if (!isDragging) return;
+    const handleMove = (e: MouseEvent) => {
+      const dx = e.clientX - dragStart.current.x;
+      const dy = e.clientY - dragStart.current.y;
+      onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
+    };
+    const handleUp = () => setIsDragging(false);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [isDragging, onUpdate]);
+
+  return (
+    <div
+      onMouseDown={handleMouseDown}
+      onClick={(e) => { e.stopPropagation(); onSelect(); }}
+      className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+      style={{
+        left: element.x,
+        top: element.y,
+        width: element.width,
+        height: element.height,
+        transform: `rotate(${element.rotation}deg)`,
+        zIndex: 5,
+        filter: 'drop-shadow(0 4px 8px hsla(220, 20%, 12%, 0.3))',
+        clipPath: 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)',
+      }}
+    >
+      {isSelected && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          className="absolute -top-2.5 -right-2.5 z-50 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+          style={{ clipPath: 'none' }}
+          title="Remove"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
+      <div
+        className="w-full h-full"
+        style={{
+          background: texture.cssBackground,
+          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+        }}
+      />
     </div>
   );
 }
