@@ -377,7 +377,7 @@ export function Canvas({
             className="bg-transparent text-white text-xs font-medium outline-none border-none w-full placeholder:text-white/30"
             placeholder="your name"
           />
-          <span className="text-[10px] text-white/40 whitespace-nowrap select-none">'s Workstation</span>
+          <span className="text-[10px] text-white/40 whitespace-nowrap select-none">Swatchbox Studio</span>
         </div>
       </div>
     </div>
