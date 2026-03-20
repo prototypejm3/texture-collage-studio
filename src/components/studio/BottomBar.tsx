@@ -40,7 +40,6 @@ const specialFrames: { id: FrameStyle; label: string }[] = [
 ];
 
 export function BottomBar({
-  frameSize, onFrameSizeChange,
   wallFrameStyle, onWallFrameStyleChange,
   onClear, onSave, onSaveToWall,
   isPremium = false, onRequestUpgrade,
