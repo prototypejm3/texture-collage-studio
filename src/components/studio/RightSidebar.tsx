@@ -70,7 +70,7 @@ function VibePreviewSVG({ vibe }: { vibe: Vibe }) {
 }
 
 export function RightSidebar({
-  activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
+  activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onPlaceStencil, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   compact = false,
