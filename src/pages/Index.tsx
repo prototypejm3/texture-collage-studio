@@ -323,6 +323,7 @@ const Index = () => {
             onDuplicateSection={studio.duplicateSection}
             onUpdateSectionTransform={studio.updateSectionTransform}
             onDeleteElement={studio.deleteElement}
+            onMoveToTable={handleMoveToTable}
             onTableDrop={handleTableDrop}
             onTableElementUpdate={handleTableElementUpdate}
             onTableElementDelete={handleTableElementDelete}
