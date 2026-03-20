@@ -111,44 +111,26 @@ export function TopToolbar({
 
       {/* Right */}
       <div className="flex items-center gap-1">
-        {onToggleFocusMode && (
-          <button
-            onClick={onToggleFocusMode}
-            className={`p-1 rounded-md transition-colors ${
-              focusMode
-                ? 'bg-primary/10 text-primary'
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-            title={focusMode ? 'Exit Focus (F)' : 'Focus (F)'}
-          >
-            {focusMode ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-          </button>
-        )}
-
         <button
           onClick={toggle}
-          className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
           title={dark ? 'Light mode' : 'Dark mode'}
         >
-          {dark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
 
         {onAmbientSoundChange && (
           <div className="relative">
             <button
               onClick={() => setShowSoundMenu(!showSoundMenu)}
-              className={`flex items-center gap-1 px-1.5 py-1 text-[10px] rounded-md transition-colors ${
+              className={`p-1.5 rounded-md transition-colors ${
                 ambientSound && ambientSound !== 'none'
                   ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-secondary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
               }`}
+              title="Ambient sound"
             >
-              <Volume2 className="w-3 h-3" />
-              <span className="hidden sm:inline text-[9px]">
-                {ambientSound && ambientSound !== 'none'
-                  ? { gallery: 'Gallery', loft: 'Lofi', home: 'Chill' }[ambientSound] ?? '♫'
-                  : '♫'}
-              </span>
+              <Ear className="w-4 h-4" />
             </button>
             {showSoundMenu && (
               <>
