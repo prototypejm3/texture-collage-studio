@@ -466,7 +466,7 @@ export function RightSidebar({
                   <p className="text-[10px] text-muted-foreground mt-1">Generate one with AI and make it public!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-4 gap-1">
+                <div className={`grid gap-1 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
