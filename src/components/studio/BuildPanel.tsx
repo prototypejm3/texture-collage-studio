@@ -1,15 +1,14 @@
 import { TextureLibrary } from './TextureLibrary';
-import { TextureSwatch, ElementShape } from '@/types/studio';
-import { PenTool, Scissors } from 'lucide-react';
+import { TextureSwatch, ElementShape, Vibe } from '@/types/studio';
+import { CustomTemplate } from '@/hooks/useCustomTemplate';
+import { RightSidebar } from './RightSidebar';
+import { PenTool, Scissors, Sparkles, ExternalLink } from 'lucide-react';
 
 interface BuildPanelProps {
-  // Draw mode
   drawMode: boolean;
   onToggleDrawMode: () => void;
-  // Shape pre-selector
   nextShape: ElementShape;
   onSetNextShape: (shape: ElementShape) => void;
-  // Texture library
   onDragStart: (textureId: string) => void;
   onTextureClick: (textureId: string) => void;
   activeSectionId: string | null;
@@ -18,6 +17,19 @@ interface BuildPanelProps {
   onRemoveCustomTexture: (id: string) => void;
   isPremium: boolean;
   onRequestUpgrade: () => void;
+  // Stencil props
+  activeVibeId: string | null;
+  onSelectVibe: (vibe: Vibe) => void;
+  onShuffleVibeFills: () => void;
+  onGenerateMood: (prompt: string) => void;
+  isGeneratingMood: boolean;
+  customTemplate: CustomTemplate | null;
+  templateOpacity: number;
+  onUploadTemplate: (file: File) => void;
+  onClearTemplate: () => void;
+  onTemplateOpacityChange: (val: number) => void;
+  stencilsPoppedOut: boolean;
+  onPopOutStencils: () => void;
 }
 
 const shapes: { value: ElementShape; label: string }[] = [
@@ -35,6 +47,10 @@ export function BuildPanel({
   onDragStart, onTextureClick, activeSectionId,
   customTextures, onUploadTexture, onRemoveCustomTexture,
   isPremium, onRequestUpgrade,
+  activeVibeId, onSelectVibe, onShuffleVibeFills,
+  onGenerateMood, isGeneratingMood,
+  customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
+  stencilsPoppedOut, onPopOutStencils,
 }: BuildPanelProps) {
   return (
     <div className="flex flex-col h-full bg-popover">
@@ -91,6 +107,42 @@ export function BuildPanel({
           isPremium={isPremium}
           onRequestUpgrade={onRequestUpgrade}
         />
+
+        {/* ── Inline Stencils ── */}
+        {!stencilsPoppedOut && (
+          <div className="border-t border-border">
+            <div className="flex items-center justify-between px-3 py-1.5 bg-secondary/30">
+              <div className="flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-primary" />
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Stencils</span>
+              </div>
+              <button
+                onClick={onPopOutStencils}
+                className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
+                title="Pop out to floating panel"
+              >
+                <ExternalLink className="w-3 h-3" />
+              </button>
+            </div>
+            <div className="max-h-[40vh] overflow-y-auto stencils-compact">
+              <RightSidebar
+                activeVibeId={activeVibeId}
+                isPremium={isPremium}
+                onSelectVibe={onSelectVibe}
+                onShuffleVibeFills={onShuffleVibeFills}
+                onRequestUpgrade={onRequestUpgrade}
+                onGenerateMood={onGenerateMood}
+                isGeneratingMood={isGeneratingMood}
+                customTemplate={customTemplate}
+                templateOpacity={templateOpacity}
+                onUploadTemplate={onUploadTemplate}
+                onClearTemplate={onClearTemplate}
+                onTemplateOpacityChange={onTemplateOpacityChange}
+                compact
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
