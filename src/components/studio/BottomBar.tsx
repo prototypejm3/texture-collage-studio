@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FrameSize } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
-import { FrameStyle } from '@/types/wall';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
