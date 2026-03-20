@@ -347,12 +347,20 @@ export function Canvas({
           }`}
           title={easelMode ? 'Flat view' : 'Easel view'}
         >
-          {/* Simple easel icon — triangle with a bar */}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <line x1="4" y1="14" x2="8" y2="2" />
-            <line x1="12" y1="14" x2="8" y2="2" />
-            <line x1="8" y1="14" x2="8" y2="5" />
-            <line x1="5" y1="9" x2="11" y2="9" />
+          {/* Easel icon matching reference */}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            {/* Canvas/board */}
+            <rect x="4" y="3" width="16" height="13" rx="1" />
+            {/* Top peg */}
+            <rect x="11" y="1" width="2" height="3" rx="0.5" />
+            {/* Shelf ledge */}
+            <line x1="3" y1="16" x2="21" y2="16" />
+            {/* Left leg */}
+            <line x1="6" y1="16" x2="3" y2="23" />
+            {/* Right leg */}
+            <line x1="18" y1="16" x2="21" y2="23" />
+            {/* Back leg */}
+            <line x1="12" y1="16" x2="12" y2="23" />
           </svg>
         </button>
         {/* Name card */}
