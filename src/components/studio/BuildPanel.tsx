@@ -1,7 +1,8 @@
+import { useRef } from 'react';
 import { Vibe } from '@/types/studio';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
 import { RightSidebar } from './RightSidebar';
-import { Sparkles, ExternalLink } from 'lucide-react';
+import { Sparkles, ExternalLink, ImagePlus, Lock, X } from 'lucide-react';
 
 interface BuildPanelProps {
   isPremium: boolean;
@@ -27,6 +28,8 @@ export function BuildPanel({
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
   stencilsPoppedOut, onPopOutStencils,
 }: BuildPanelProps) {
+  const templateInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="flex flex-col h-full bg-popover">
       {/* Header */}
@@ -35,15 +38,62 @@ export function BuildPanel({
           <Sparkles className="w-3 h-3 text-primary" />
           <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Stencils</span>
         </div>
-        {!stencilsPoppedOut && (
-          <button
-            onClick={onPopOutStencils}
-            className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
-            title="Pop out to floating panel"
-          >
-            <ExternalLink className="w-3 h-3" />
-          </button>
-        )}
+        <div className="flex items-center gap-1.5">
+          {/* Reference Image upload — mirrors Textures' Upload button */}
+          {!customTemplate ? (
+            <>
+              <button
+                onClick={() => isPremium ? templateInputRef.current?.click() : onRequestUpgrade()}
+                className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded transition-colors ${
+                  isPremium
+                    ? 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
+                }`}
+                title={isPremium ? 'Upload reference image' : 'Premium feature'}
+              >
+                {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />} Reference
+              </button>
+              <input
+                ref={templateInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+                  e.target.value = '';
+                }}
+              />
+            </>
+          ) : (
+            <div className="flex items-center gap-1">
+              <span className="text-[8px] text-muted-foreground truncate max-w-[60px]" title={customTemplate.name}>
+                📷 {customTemplate.name}
+              </span>
+              <input
+                type="range"
+                min={5}
+                max={80}
+                step={5}
+                value={templateOpacity * 100}
+                onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
+                className="w-10 h-1 accent-primary"
+              />
+              <button onClick={onClearTemplate} className="p-0.5 rounded hover:bg-secondary transition-colors" title="Remove reference">
+                <X className="w-2.5 h-2.5 text-muted-foreground" />
+              </button>
+            </div>
+          )}
+          {!stencilsPoppedOut && (
+            <button
+              onClick={onPopOutStencils}
+              className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
+              title="Pop out to floating panel"
+            >
+              <ExternalLink className="w-3 h-3" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
