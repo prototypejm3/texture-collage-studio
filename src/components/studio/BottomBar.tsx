@@ -150,7 +150,7 @@ export function BottomBar({
 
       {/* Actions */}
       <div className="flex items-center gap-1">
-        <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-destructive hover:bg-destructive/10 rounded-md transition-colors">
+        <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
           <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Clear</span>
         </button>
         {onSaveToWall && (
