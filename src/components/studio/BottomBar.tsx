@@ -152,10 +152,9 @@ export function BottomBar({
         <div className="flex items-center gap-0.5">
           <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Table</span>
           {([
-            { id: 'light-wood' as TableSurface, bg: 'linear-gradient(145deg, hsl(35,50%,55%), hsl(30,40%,40%))', label: 'Wood' },
-            { id: 'white' as TableSurface, bg: 'hsl(0,0%,95%)', label: 'White' },
-            { id: 'linen' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,82%), hsl(35,25%,75%))', label: 'Linen' },
-            { id: 'marble' as TableSurface, bg: 'linear-gradient(145deg, hsl(0,0%,90%), hsl(0,0%,85%))', label: 'Stone' },
+            { id: 'birch' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,75%), hsl(38,25%,65%))', label: 'Birch' },
+            { id: 'oak' as TableSurface, bg: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(28,35%,42%))', label: 'Oak' },
+            { id: 'walnut' as TableSurface, bg: 'linear-gradient(145deg, hsl(20,35%,35%), hsl(18,30%,25%))', label: 'Walnut' },
           ]).map(s => (
             <button
               key={s.id}
