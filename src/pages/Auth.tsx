@@ -46,7 +46,7 @@ export default function AuthPage() {
         <div className="flex items-center justify-center gap-2 mb-8">
           <Frame className="w-7 h-7 text-primary" />
           <h1 className="text-2xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            ShadowBox
+            Swatchbox Studio
           </h1>
         </div>
 

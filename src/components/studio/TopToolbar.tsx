@@ -69,7 +69,7 @@ export function TopToolbar({
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1.5">
           <Frame className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold tracking-tight text-foreground">ShadowBox</span>
+          <span className="text-xs font-bold tracking-tight text-foreground">Swatchbox Studio</span>
         </div>
         <div className="hidden md:flex items-center gap-3">
           <Link
