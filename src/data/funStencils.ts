@@ -217,6 +217,32 @@ const streetLamp: Vibe = {
   ],
 };
 
+// ── MOONLIT WINDOW 🌙 ──
+const moonWindow: Vibe = {
+  id: 'moon-window', name: 'Moon Window', emoji: '🌙', category: 'For Fun',
+  description: 'Window with a crescent moon outside',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'mw-sky', label: 'Night Sky', tone: 'dark',
+      path: 'M100,50 L380,50 Q395,50 395,65 L395,380 L85,380 L85,65 Q85,50 100,50 Z' },
+    { id: 'mw-frame', label: 'Window Frame', tone: 'medium',
+      path: 'M80,40 L400,40 Q410,40 410,55 L410,390 L70,390 L70,55 Q70,40 80,40 Z M100,60 L380,60 Q390,60 390,72 L390,375 L90,375 L90,72 Q90,60 100,60 Z' },
+    { id: 'mw-pane-tl', label: 'Top Left Pane', tone: 'dark',
+      path: 'M100,60 L230,60 L230,210 L100,210 Q90,210 90,200 L90,72 Q90,60 100,60 Z' },
+    { id: 'mw-pane-tr', label: 'Top Right Pane', tone: 'dark',
+      path: 'M250,60 L380,60 Q390,60 390,72 L390,200 Q390,210 380,210 L250,210 Z' },
+    { id: 'mw-pane-bl', label: 'Bottom Left Pane', tone: 'dark',
+      path: 'M90,230 L230,230 L230,375 L90,375 Z' },
+    { id: 'mw-pane-br', label: 'Bottom Right Pane', tone: 'dark',
+      path: 'M250,230 L390,230 L390,375 L250,375 Z' },
+    { id: 'mw-moon', label: 'Moon', tone: 'accent',
+      path: 'M300,100 Q280,80 285,60 Q295,45 315,42 Q340,40 352,58 Q335,50 322,62 Q310,78 315,100 Q318,115 330,125 Q310,128 300,115 Z' },
+    { id: 'mw-sill', label: 'Window Sill', tone: 'medium',
+      path: 'M55,385 L425,385 Q435,385 435,398 L435,415 Q435,430 420,430 L60,430 Q45,430 45,415 L45,398 Q45,385 55,385 Z' },
+  ],
+};
+
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles, streetLamp,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles, streetLamp, moonWindow,
 ];
