@@ -151,6 +151,37 @@ const cheeseBoard: Vibe = {
   ],
 };
 
+// ── ZODIAC WHEEL ♈ ──
+const zodiacWheel: Vibe = {
+  id: 'zodiac-wheel', name: 'Zodiac Wheel', emoji: '♈', category: 'For Fun',
+  description: 'Mystical zodiac wheel with radial segments',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    // Outer ring: annulus between r=220 and r=175
+    { id: 'zw-outer-ring', label: 'Outer Ring', tone: 'dark',
+      path: 'M240,20 A220,220 0 1,1 239.99,20 Z M240,65 A175,175 0 1,0 240.01,65 Z' },
+    // Inner ring: annulus between r=175 and r=130
+    { id: 'zw-inner-ring', label: 'Inner Ring', tone: 'medium',
+      path: 'M240,65 A175,175 0 1,1 239.99,65 Z M240,110 A130,130 0 1,0 240.01,110 Z' },
+    // Segment group A (top-right quadrant spokes + opposite): 0°,30°,60° and 180°,210°,240°
+    { id: 'zw-segments-a', label: 'Segments A', tone: 'light',
+      path: 'M240,65 L240,20 L244,20 L244,65 Z M279,69 L299,26 L303,28 L282,71 Z M311,87 L349,51 L352,54 L314,90 Z M240,415 L240,460 L236,460 L236,415 Z M201,411 L181,454 L177,452 L198,409 Z M169,393 L131,429 L128,426 L166,390 Z' },
+    // Segment group B (right + bottom-right + left quadrant spokes): 90°,120°,150° and 270°,300°,330°
+    { id: 'zw-segments-b', label: 'Segments B', tone: 'accent',
+      path: 'M415,240 L460,240 L460,236 L415,236 Z M411,279 L454,299 L452,303 L409,282 Z M393,311 L429,349 L426,352 L390,314 Z M65,240 L20,240 L20,244 L65,244 Z M69,201 L26,181 L28,177 L71,198 Z M87,169 L51,131 L54,128 L90,166 Z' },
+    // Inner disc: r=130
+    { id: 'zw-inner-disc', label: 'Inner Disc', tone: 'light',
+      path: 'M240,110 A130,130 0 1,1 239.99,110 Z' },
+    // Center symbol: simple 8-pointed star
+    { id: 'zw-center-star', label: 'Center Star', tone: 'accent',
+      path: 'M240,180 L248,222 L290,222 L256,248 L266,290 L240,264 L214,290 L224,248 L190,222 L232,222 Z' },
+    // Center dot
+    { id: 'zw-center-dot', label: 'Center Dot', tone: 'dark',
+      path: 'M240,225 A18,18 0 1,1 239.99,225 Z' },
+  ],
+};
+
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel,
 ];
