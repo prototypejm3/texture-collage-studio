@@ -16,7 +16,7 @@ const surfaceImages: Record<TableSurface, string> = {
   'walnut': '/walls/wood-walnut-wall.png',
 };
 
-interface TableElement {
+export interface TableElement {
   id: string;
   textureId: string;
   x: number;
@@ -25,6 +25,9 @@ interface TableElement {
   height: number;
   rotation: number;
   clipPathD?: string;
+  vibeId?: string;
+  shape?: ElementShape;
+  effects?: MaterialEffects;
 }
 
 interface Props {

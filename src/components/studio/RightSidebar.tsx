@@ -572,6 +572,10 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, onSele
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
       onClick={onSelect}
+      draggable
+      onDragStart={(e: any) => {
+        e.dataTransfer?.setData('vibeId', vibe.id);
+      }}
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
