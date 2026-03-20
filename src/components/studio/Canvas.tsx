@@ -110,7 +110,11 @@ export function Canvas({
     <div
       ref={containerRef}
       className="flex-1 flex items-end justify-center p-0"
-      style={{ background: 'hsl(var(--canvas-bg))' }}
+      style={{
+        backgroundImage: 'url(/images/wood-table-bg.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
       onClick={() => onSelect(null)}
     >
       {/* Frame */}
