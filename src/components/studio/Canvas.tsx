@@ -208,16 +208,26 @@ export function Canvas({
   }, []);
 
   const handleTableDrop = useCallback((e: React.DragEvent) => {
-    // Only handle drops on the table itself, not the canvas
-    const textureId = e.dataTransfer.getData('textureId');
-    if (!textureId || !containerRef.current) return;
     e.preventDefault();
     e.stopPropagation();
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - 40;
     const y = e.clientY - rect.top - 40;
-    onTableDrop(textureId, x, y);
-  }, [onTableDrop]);
+
+    // Check for stencil (vibe) drag
+    const vibeId = e.dataTransfer.getData('vibeId');
+    if (vibeId && onStencilTableDrop) {
+      onStencilTableDrop(vibeId, x, y);
+      return;
+    }
+
+    // Texture drag
+    const textureId = e.dataTransfer.getData('textureId');
+    if (textureId) {
+      onTableDrop(textureId, x, y);
+    }
+  }, [onTableDrop, onStencilTableDrop]);
 
   // selectedTableId moved above
   // easelMode is now a prop
