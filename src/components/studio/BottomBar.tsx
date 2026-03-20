@@ -67,22 +67,9 @@ export function BottomBar({
 
   return (
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover border-t border-border relative gap-1.5">
-      {/* Canvas size */}
-      <div className="flex items-center gap-0.5">
-        <span className="text-[8px] uppercase tracking-wider text-muted-foreground mr-0.5 hidden sm:inline">Canvas</span>
-        {frameSizes.map(s => (
-          <button
-            key={s}
-            onClick={() => onFrameSizeChange(s)}
-            className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
-              frameSize === s
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            {s}
-          </button>
-        ))}
+      {/* Canvas format label */}
+      <div className="flex items-center gap-1">
+        <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">12×12 Canvas</span>
       </div>
 
       <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
