@@ -107,6 +107,30 @@ export function Canvas({
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
+  // Keyboard delete for selected element
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        // Don't delete if user is typing in an input
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        if (selectedId) {
+          e.preventDefault();
+          onDeleteElement(selectedId);
+          onSelect(null);
+        } else if (selectedTableId) {
+          e.preventDefault();
+          onTableElementDelete(selectedTableId);
+          setSelectedTableId(null);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedId, selectedTableId, onDeleteElement, onTableElementDelete, onSelect]);
+
+  // Right-click context menu state
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const baseSize = frameSizeMap[frameSize];
 
