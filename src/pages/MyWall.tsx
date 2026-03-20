@@ -16,7 +16,7 @@ import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { ArtistNoteModal } from '@/components/wall/ArtistNoteModal';
 import { NavBar } from '@/components/NavBar';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
-import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground } from '@/types/wall';
+import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground, SavedDesign } from '@/types/wall';
 import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown, Pencil, Check } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { toast } from '@/hooks/use-toast';
