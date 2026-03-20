@@ -15,6 +15,10 @@ import { PaywallModal } from '@/components/wall/PaywallModal';
 import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
+import { vibes } from '@/data/vibes';
+import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+
+const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
 import { Monitor, X } from 'lucide-react';
@@ -164,6 +168,76 @@ const Index = () => {
     // Remove from canvas
     studio.deleteElement(elementId);
   }, [studio]);
+
+  // ── Stencil section operations on desk ──
+  const handleDuplicateStencilSection = useCallback((vibeId: string, sectionId: string, parentElement: TableElement) => {
+    // Find the vibe to get section path
+    const vibe = allStencilVibesForDesk.find((v: any) => v.id === vibeId);
+    if (!vibe) return;
+    const section = vibe.sections.find((s: any) => s.id === sectionId);
+    if (!section) return;
+
+    // Parse viewBox and section path to compute relative position
+    const vb = vibe.viewBox.split(' ').map(Number);
+    const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (let i = 0; i < nums.length - 1; i += 2) {
+      minX = Math.min(minX, nums[i]);
+      maxX = Math.max(maxX, nums[i]);
+      minY = Math.min(minY, nums[i + 1]);
+      maxY = Math.max(maxY, nums[i + 1]);
+    }
+    const scaleX = parentElement.width / vb[2];
+    const scaleY = parentElement.height / vb[3];
+    const w = (maxX - minX) * scaleX;
+    const h = (maxY - minY) * scaleY;
+
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId: '',
+      vibeId,
+      x: parentElement.x + 20 + (minX - vb[0]) * scaleX,
+      y: parentElement.y + 20 + (minY - vb[1]) * scaleY,
+      width: Math.max(w, 30),
+      height: Math.max(h, 30),
+      rotation: 0,
+      clipPathD: section.path,
+    }]);
+  }, []);
+
+  const handleDetachStencilSection = useCallback((vibeId: string, sectionId: string, parentElement: TableElement) => {
+    const vibe = allStencilVibesForDesk.find((v: any) => v.id === vibeId);
+    if (!vibe) return;
+    const section = vibe.sections.find((s: any) => s.id === sectionId);
+    if (!section) return;
+
+    const vb = vibe.viewBox.split(' ').map(Number);
+    const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (let i = 0; i < nums.length - 1; i += 2) {
+      minX = Math.min(minX, nums[i]);
+      maxX = Math.max(maxX, nums[i]);
+      minY = Math.min(minY, nums[i + 1]);
+      maxY = Math.max(maxY, nums[i + 1]);
+    }
+    const scaleX = parentElement.width / vb[2];
+    const scaleY = parentElement.height / vb[3];
+    const w = (maxX - minX) * scaleX;
+    const h = (maxY - minY) * scaleY;
+
+    // Create detached piece on desk
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId: '',
+      vibeId,
+      x: parentElement.x + (minX - vb[0]) * scaleX,
+      y: parentElement.y + (minY - vb[1]) * scaleY,
+      width: Math.max(w, 30),
+      height: Math.max(h, 30),
+      rotation: parentElement.rotation,
+      clipPathD: section.path,
+    }]);
+  }, []);
 
   // Selected table element for editing
   const [selectedTableElId, setSelectedTableElId] = useState<string | null>(null);
@@ -416,6 +490,8 @@ const Index = () => {
               onStencilTableDrop={handleStencilTableDrop}
               onSelectTableElement={setSelectedTableElId}
               selectedTableElementId={selectedTableElId}
+              onDuplicateStencilSection={handleDuplicateStencilSection}
+              onDetachStencilSection={handleDetachStencilSection}
               canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
               onWallFrameStyleChange={studio.setWallFrameStyle}
               isPremium={isPremium}

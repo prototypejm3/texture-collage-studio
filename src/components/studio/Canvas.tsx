@@ -68,6 +68,8 @@ interface Props {
   onStencilTableDrop?: (vibeId: string, x: number, y: number) => void;
   onSelectTableElement?: (id: string | null) => void;
   selectedTableElementId?: string | null;
+  onDuplicateStencilSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
+  onDetachStencilSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   onWallFrameStyleChange?: (style: FrameStyle) => void;
   isPremium?: boolean;
@@ -118,6 +120,8 @@ export function Canvas({
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
+  onDuplicateStencilSection,
+  onDetachStencilSection,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedTableId = selectedTableElementId ?? null;
@@ -361,6 +365,8 @@ export function Canvas({
             onSelect={() => { setSelectedTableId(tel.id); onSelect(null); }}
             onUpdate={(updates) => onTableElementUpdate(tel.id, updates)}
             onDelete={() => onTableElementDelete(tel.id)}
+            onDuplicateSection={onDuplicateStencilSection}
+            onDetachSection={onDetachStencilSection}
           />
         );
       })}
@@ -689,7 +695,7 @@ export function Canvas({
 }
 
 // ── Table Swatch Component ──
-import { X } from 'lucide-react';
+import { X, Copy, Scissors } from 'lucide-react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 
@@ -702,11 +708,14 @@ interface TableSwatchProps {
   onSelect: () => void;
   onUpdate: (updates: Partial<TableElement>) => void;
   onDelete: () => void;
+  onDuplicateSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
+  onDetachSection?: (vibeId: string, sectionId: string, parentElement: TableElement) => void;
 }
 
-function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelete }: TableSwatchProps) {
+function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelete, onDuplicateSection, onDetachSection }: TableSwatchProps) {
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -732,14 +741,20 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
     };
   }, [isDragging, onUpdate]);
 
-  // If this is a stencil element, render SVG outline
+  // If this is a stencil element, render SVG outline with clickable sections
   const vibe = element.vibeId ? allStencilVibes.find(v => v.id === element.vibeId) : null;
 
   if (vibe) {
+    // Single detached section piece
+    const isDetachedPiece = !!element.clipPathD;
+    const sectionsToRender = isDetachedPiece
+      ? vibe.sections.filter(s => s.path === element.clipPathD)
+      : vibe.sections;
+
     return (
       <div
         onMouseDown={handleMouseDown}
-        onClick={(e) => { e.stopPropagation(); onSelect(); }}
+        onClick={(e) => { e.stopPropagation(); onSelect(); setSelectedSection(null); }}
         className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''}`}
         style={{
           left: element.x,
@@ -761,17 +776,48 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
           </button>
         )}
         <svg viewBox={vibe.viewBox} className="w-full h-full">
-          {vibe.sections.map(section => (
+          {sectionsToRender.map(section => (
             <path
               key={section.id}
               d={section.path}
               fill={section.tone === 'dark' ? 'hsl(220, 20%, 25%)' : section.tone === 'light' ? 'hsl(40, 20%, 90%)' : section.tone === 'accent' ? 'hsl(24, 60%, 50%)' : 'hsl(220, 15%, 55%)'}
-              stroke="hsl(220, 15%, 40%)"
-              strokeWidth="1.5"
-              opacity={0.85}
+              stroke={!isDetachedPiece && selectedSection === section.id ? 'hsl(var(--primary))' : 'hsl(220, 15%, 40%)'}
+              strokeWidth={!isDetachedPiece && selectedSection === section.id ? 3 : 1.5}
+              opacity={!isDetachedPiece && selectedSection && selectedSection !== section.id ? 0.5 : 0.85}
+              className="cursor-pointer transition-opacity"
+              onClick={(e) => {
+                if (isDetachedPiece) return;
+                e.stopPropagation();
+                onSelect();
+                setSelectedSection(prev => prev === section.id ? null : section.id);
+              }}
             />
           ))}
         </svg>
+
+        {/* Section action toolbar — only for full stencils, not detached pieces */}
+        {!isDetachedPiece && isSelected && selectedSection && (
+          <div
+            className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-popover border border-border rounded-md shadow-lg p-0.5 z-50"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => { if (onDuplicateSection && element.vibeId) onDuplicateSection(element.vibeId, selectedSection, element); }}
+              className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Duplicate section"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
+            <button
+              onClick={() => { if (onDetachSection && element.vibeId) onDetachSection(element.vibeId, selectedSection, element); setSelectedSection(null); }}
+              className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              title="Cut / detach section"
+            >
+              <Scissors className="w-3 h-3" />
+            </button>
+          </div>
+        )}
       </div>
     );
   }
