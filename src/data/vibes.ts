@@ -1608,24 +1608,20 @@ const banana: Vibe = {
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
 
-// ── APPLE ──
+// ── APPLE (compact) ──
 const apple: Vibe = {
   id: 'apple', name: 'Apple', emoji: '🍎',
   description: 'Classic apple with stem and leaf',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ap-stem', label: 'Stem', tone: 'dark',
-      path: 'M232,82 Q228,55 232,35 Q238,22 245,22 Q252,28 255,48 Q258,72 252,92 Q248,102 242,98 Z' },
+      path: 'M236,132 Q233,110 236,95 Q240,85 244,85 Q248,90 250,105 Q252,125 248,138 Q245,145 240,142 Z' },
     { id: 'ap-leaf', label: 'Leaf', tone: 'dark',
-      path: 'M252,75 Q275,60 300,55 Q322,55 332,68 Q335,82 325,95 Q308,105 285,105 Q265,102 255,92 Z' },
-    { id: 'ap-body-left', label: 'Left Half', tone: 'accent',
-      path: 'M242,108 Q205,112 172,128 Q142,152 122,185 Q105,225 100,270 Q98,318 108,358 Q125,398 152,425 Q185,448 222,458 Q242,462 248,458 L248,108 Z' },
-    { id: 'ap-body-right', label: 'Right Half', tone: 'accent',
-      path: 'M248,108 L248,458 Q272,462 295,458 Q332,448 362,425 Q392,398 408,358 Q418,318 420,270 Q418,225 405,185 Q385,152 355,128 Q325,112 290,108 Q268,105 248,108 Z' },
-    { id: 'ap-indent', label: 'Top Indent', tone: 'dark',
-      path: 'M202,115 Q218,102 238,98 Q248,95 258,98 Q278,102 295,115 Q278,108 258,105 Q248,102 238,105 Q218,108 205,115 Z' },
+      path: 'M250,125 Q265,115 280,112 Q295,112 302,120 Q304,130 298,138 Q288,145 275,145 Q262,143 254,135 Z' },
+    { id: 'ap-body', label: 'Body', tone: 'accent',
+      path: 'M240,152 Q195,155 165,175 Q140,200 128,232 Q118,268 118,305 Q120,345 132,378 Q150,405 178,425 Q208,440 240,445 Q272,440 302,425 Q330,405 348,378 Q360,345 362,305 Q362,268 352,232 Q340,200 315,175 Q285,155 240,152 Z' },
     { id: 'ap-highlight', label: 'Highlight', tone: 'light',
-      path: 'M162,198 Q152,238 152,282 Q155,328 168,368 Q172,345 175,305 Q175,262 172,225 Q168,202 165,192 Z' },
+      path: 'M172,225 Q165,258 165,295 Q168,332 178,362 Q180,342 182,310 Q182,272 180,242 Q178,228 175,220 Z' },
   ],
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
 };
