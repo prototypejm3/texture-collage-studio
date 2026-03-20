@@ -18,6 +18,8 @@ interface Props {
   stencilsOpen?: boolean;
   tableSurface?: TableSurface;
   onTableSurfaceChange?: (surface: TableSurface) => void;
+  easelMode?: boolean;
+  onToggleEasel?: () => void;
 }
 
 // Color frames for Shadow menu
