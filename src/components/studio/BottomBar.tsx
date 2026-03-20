@@ -67,13 +67,6 @@ export function BottomBar({
 
   return (
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
-      {/* Canvas format label */}
-      <div className="flex items-center gap-1">
-        <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">12×12 Canvas</span>
-      </div>
-
-      <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
-
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
         <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Frame</span>
