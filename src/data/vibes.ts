@@ -973,6 +973,7 @@ const rabbit: Vibe = {
 const dinosaur: Vibe = {
   id: 'dinosaur', name: 'Dinosaur', emoji: '🦕',
   description: 'Friendly long-neck dino with spiky back',
+  category: 'Community', creator: 'Ty', baseLikes: 30, likesStartDate: '2026-03-04',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'dino-head', label: 'Head', tone: 'medium',
