@@ -71,6 +71,7 @@ export function RightSidebar({
   activeVibeId, isPremium, onSelectVibe, onShuffleVibeFills, onRequestUpgrade,
   onGenerateMood, isGeneratingMood,
   customTemplate, templateOpacity, onUploadTemplate, onClearTemplate, onTemplateOpacityChange,
+  compact = false,
 }: RightSidebarProps) {
   const templateInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('stencils');
