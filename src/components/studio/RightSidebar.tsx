@@ -361,9 +361,9 @@ export function RightSidebar({
               {/* Theme sections */}
               {themeSections.map(section => (
                 <div key={section.label}>
-                  <div className="flex items-center gap-2 mt-4 mb-2">
+                  <div className="flex items-center gap-1.5 mt-2 mb-1">
                     <div className="h-px flex-1 bg-border" />
-                    <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
                       {section.emoji} {section.label}
                     </span>
                     <div className="h-px flex-1 bg-border" />
