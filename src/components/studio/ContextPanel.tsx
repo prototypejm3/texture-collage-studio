@@ -140,6 +140,7 @@ export function ContextPanel(props: ContextPanelProps) {
                 isPremium={props.isPremium}
                 onSelectVibe={props.onSelectVibe}
                 onShuffleVibeFills={props.onShuffleVibeFills}
+                onPlaceStencil={props.onPlaceStencil}
                 onRequestUpgrade={props.onRequestUpgrade}
                 onGenerateMood={props.onGenerateMood}
                 isGeneratingMood={props.isGeneratingMood}
