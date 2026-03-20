@@ -315,7 +315,7 @@ export function RightSidebar({
       {saveDialogVibe && (
         <div className="absolute inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4">
           <div className="bg-popover border border-border rounded-xl p-4 w-64 shadow-xl">
-            <h3 className="text-sm font-semibold mb-3">Save Stencil</h3>
+            <h3 className="text-sm font-semibold mb-3">{kidMode ? 'Save Shape' : 'Save Stencil'}</h3>
             <input
               value={saveName}
               onChange={e => setSaveName(e.target.value)}
