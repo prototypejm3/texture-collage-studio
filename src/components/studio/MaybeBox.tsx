@@ -87,7 +87,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
             ? 'scale-110'
             : 'hover:scale-105'
         }`}
-        style={{ width: 72, height: 56 }}
+        style={{ width: 94, height: 73 }}
       >
         {/* Box body */}
         <div
