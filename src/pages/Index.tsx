@@ -287,10 +287,6 @@ const Index = () => {
 
       {/* Top bar with nav + focus toggle */}
       <TopToolbar
-        frameSize={studio.frameSize}
-        frameColor={studio.frameColor}
-        onFrameSizeChange={studio.setFrameSize}
-        onFrameColorChange={studio.setFrameColor}
         wallFrameStyle={studio.wallFrameStyle}
         onWallFrameStyleChange={studio.setWallFrameStyle}
         onClear={studio.clearCanvas}

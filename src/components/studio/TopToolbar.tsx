@@ -20,11 +20,7 @@ function useTheme() {
 }
 
 interface Props {
-  frameSize: FrameSize;
-  frameColor: FrameColor;
   wallFrameStyle: FrameStyle;
-  onFrameSizeChange: (size: FrameSize) => void;
-  onFrameColorChange: (color: FrameColor) => void;
   onWallFrameStyleChange: (style: FrameStyle) => void;
   onClear: () => void;
   onSave: () => void;
