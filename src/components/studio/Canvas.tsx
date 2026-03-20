@@ -167,13 +167,17 @@ export function Canvas({
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
       {/* Wood texture rotated 90° for horizontal grain */}
-      <div className="absolute inset-0 pointer-events-none" style={{
+      <div className="absolute pointer-events-none" style={{
         backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: '400px auto',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'center',
-        transform: 'rotate(90deg) scale(2.5)',
+        transform: 'rotate(90deg)',
         transformOrigin: 'center',
+        width: '300%',
+        height: '300%',
+        left: '-100%',
+        top: '-100%',
       }} />
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
