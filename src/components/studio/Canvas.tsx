@@ -175,27 +175,26 @@ export function Canvas({
         backgroundPosition: 'center',
       }} />
 
-      {/* Wood desk surface — sized to look like a desk on the floor */}
+      {/* Wood desk surface — fades into concrete floor */}
       {!easelMode && (
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: '5%',
-            right: '5%',
-            top: '3%',
-            bottom: '3%',
-            borderRadius: 6,
-            boxShadow: '0 8px 40px rgba(0,0,0,0.35), 0 2px 12px rgba(0,0,0,0.2)',
+            left: '8%',
+            right: '8%',
+            top: '5%',
+            bottom: '5%',
+            borderRadius: 8,
+            boxShadow: '0 12px 60px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: '5%',
-            right: '5%',
-            top: '3%',
-            bottom: '3%',
-            borderRadius: 4,
+            left: '8%',
+            right: '8%',
+            top: '5%',
+            bottom: '5%',
+            borderRadius: 6,
             overflow: 'hidden',
-            border: '2px solid rgba(0,0,0,0.08)',
           }}>
             {/* Wood grain texture */}
             <div style={{
@@ -211,12 +210,24 @@ export function Canvas({
               left: '-100%',
               top: '-100%',
             }} />
+            {/* Fade edges — wood blends into concrete */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              boxShadow: `
+                inset 40px 0 60px -20px rgba(139,139,139,0.7),
+                inset -40px 0 60px -20px rgba(139,139,139,0.7),
+                inset 0 40px 60px -20px rgba(139,139,139,0.6),
+                inset 0 -40px 60px -20px rgba(139,139,139,0.6)
+              `,
+              pointerEvents: 'none',
+            }} />
             {/* Desk edge highlight */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              borderRadius: 3,
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.1)',
+              borderRadius: 5,
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 4px rgba(0,0,0,0.08)',
               pointerEvents: 'none',
             }} />
           </div>
