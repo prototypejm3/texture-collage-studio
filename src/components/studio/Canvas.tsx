@@ -1038,7 +1038,7 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
         style={{
           left: element.x,
           top: element.y,
-          width: element.width,
+          touchAction: 'none',
           height: element.height,
           transform: `rotate(${element.rotation}deg)`,
           zIndex: 5,
