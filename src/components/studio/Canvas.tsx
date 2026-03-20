@@ -156,7 +156,7 @@ export function Canvas({
       ref={containerRef}
       className="flex-1 flex items-end justify-center p-0 relative"
       style={{
-        backgroundImage: 'url(/images/wood-table-bg.jpg)',
+        backgroundImage: `url(${surfaceImages[tableSurface]})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
