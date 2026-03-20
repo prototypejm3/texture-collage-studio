@@ -43,6 +43,7 @@ interface Props {
   onDuplicateSection: (sectionId: string) => void;
   onUpdateSectionTransform: (sectionId: string, updates: Partial<SectionTransform>) => void;
   onDeleteElement: (id: string) => void;
+  onMoveToTable: (id: string, x: number, y: number) => void;
   onTableDrop: (textureId: string, x: number, y: number) => void;
   onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
   onTableElementDelete: (id: string) => void;
@@ -83,7 +84,7 @@ export function Canvas({
   onSelect, onUpdate, onDrop,
   onSelectSection, onDropInSection, onDropAsSwatch, onDetachSection,
   onDeleteSection, onDuplicateSection, onUpdateSectionTransform,
-  onDeleteElement, onTableDrop, onTableElementUpdate, onTableElementDelete,
+  onDeleteElement, onMoveToTable, onTableDrop, onTableElementUpdate, onTableElementDelete,
   canvasRef,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
@@ -221,6 +222,14 @@ export function Canvas({
                 onSelect={() => onSelect(el.id)}
                 onUpdate={(updates) => onUpdate(el.id, updates)}
                 onDelete={() => onDeleteElement(el.id)}
+                onMoveToTable={(mouseX, mouseY) => {
+                  // Convert mouse position to table-relative coords
+                  if (containerRef.current) {
+                    const tableRect = containerRef.current.getBoundingClientRect();
+                    onMoveToTable(el.id, mouseX - tableRect.left - 40, mouseY - tableRect.top - 40);
+                  }
+                }}
+                canvasRef={canvasRef}
                 customTextures={customTextures}
               />
             ))}

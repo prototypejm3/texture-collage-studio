@@ -130,6 +130,22 @@ const Index = () => {
     setTableElements(prev => prev.filter(el => el.id !== id));
   }, []);
 
+  const handleMoveToTable = useCallback((elementId: string, x: number, y: number) => {
+    const el = studio.elements.find(e => e.id === elementId);
+    if (!el) return;
+    // Add to table
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId: el.textureId,
+      x, y,
+      width: el.width,
+      height: el.height,
+      rotation: el.rotation,
+    }]);
+    // Remove from canvas
+    studio.deleteElement(elementId);
+  }, [studio]);
+
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
   }, [studio]);
@@ -307,6 +323,7 @@ const Index = () => {
             onDuplicateSection={studio.duplicateSection}
             onUpdateSectionTransform={studio.updateSectionTransform}
             onDeleteElement={studio.deleteElement}
+            onMoveToTable={handleMoveToTable}
             onTableDrop={handleTableDrop}
             onTableElementUpdate={handleTableElementUpdate}
             onTableElementDelete={handleTableElementDelete}

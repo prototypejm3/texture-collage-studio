@@ -110,10 +110,12 @@ interface Props {
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
   onDelete?: () => void;
+  onMoveToTable?: (x: number, y: number) => void;
+  canvasRef?: React.RefObject<HTMLDivElement>;
   customTextures?: TextureSwatch[];
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, customTextures = [] }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
@@ -133,14 +135,25 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       const dy = e.clientY - dragStart.current.y;
       onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
     };
-    const handleUp = () => setIsDragging(false);
+    const handleUp = (e: MouseEvent) => {
+      setIsDragging(false);
+      // Check if released outside the canvas — promote to table element
+      if (onMoveToTable && canvasRef?.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const cx = e.clientX;
+        const cy = e.clientY;
+        if (cx < rect.left || cx > rect.right || cy < rect.top || cy > rect.bottom) {
+          onMoveToTable(e.clientX, e.clientY);
+        }
+      }
+    };
     window.addEventListener('mousemove', handleMove);
     window.addEventListener('mouseup', handleUp);
     return () => {
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('mouseup', handleUp);
     };
-  }, [isDragging, onUpdate]);
+  }, [isDragging, onUpdate, onMoveToTable, canvasRef]);
 
   const allTex = [...textures, ...customTextures];
   const texture = allTex.find(t => t.id === element.textureId);
