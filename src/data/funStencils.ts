@@ -243,6 +243,32 @@ const moonWindow: Vibe = {
   ],
 };
 
+// ── MS PAINT 🎨 ──
+const msPaint: Vibe = {
+  id: 'ms-paint', name: 'MS Paint', emoji: '🎨', category: 'For Fun',
+  description: 'Retro paint program interface',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'mp-frame', label: 'Outer Frame', tone: 'medium',
+      path: 'M40,40 L440,40 Q450,40 450,50 L450,440 Q450,450 440,450 L40,450 Q30,450 30,440 L30,50 Q30,40 40,40 Z M50,60 L430,60 L430,430 L50,430 Z' },
+    { id: 'mp-topbar', label: 'Top Bar', tone: 'dark',
+      path: 'M50,60 L430,60 L430,95 L50,95 Z' },
+    { id: 'mp-toolbar', label: 'Left Toolbar', tone: 'medium',
+      path: 'M50,95 L115,95 L115,400 L50,400 Z' },
+    { id: 'mp-tool-square', label: 'Brush Tool', tone: 'light',
+      path: 'M60,108 L105,108 L105,153 L60,153 Z' },
+    { id: 'mp-tool-circle', label: 'Fill Tool', tone: 'accent',
+      path: 'M82,175 A20,20 0 1,1 81.99,175 Z' },
+    { id: 'mp-tool-triangle', label: 'Eraser Tool', tone: 'light',
+      path: 'M82,210 L105,255 L60,255 Z' },
+    { id: 'mp-canvas', label: 'Canvas Area', tone: 'light',
+      path: 'M115,95 L430,95 L430,400 L115,400 Z' },
+    { id: 'mp-bottombar', label: 'Bottom Bar', tone: 'dark',
+      path: 'M50,400 L430,400 L430,430 L50,430 Z' },
+  ],
+};
+
 export const funStencils: Vibe[] = [
-  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles, streetLamp, moonWindow,
+  martiniGlass, wineGlass, tarotCard, candle, lipstick, discoBall, cheeseBoard, zodiacWheel, messageBubbles, streetLamp, moonWindow, msPaint,
 ];
