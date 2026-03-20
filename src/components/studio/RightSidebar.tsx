@@ -17,6 +17,7 @@ interface RightSidebarProps {
   onSelectVibe: (vibe: Vibe) => void;
   onShuffleVibeFills: () => void;
   onPlaceStencil: () => void;
+  onReplaceStencil?: (vibe: Vibe) => void;
   onRequestUpgrade: () => void;
   onGenerateMood: (prompt: string) => void;
   isGeneratingMood: boolean;
