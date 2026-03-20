@@ -328,16 +328,16 @@ export function TextureLibrary({
               <PenTool className="w-3 h-3" />
               {kidMode ? 'Draw' : ''}
             </button>
-            {kidMode && onToggleCrayonMode && (
+            {onToggleCrayonMode && (
               <button
                 onClick={onToggleCrayonMode}
-                className={`flex items-center gap-1 px-2 py-0.5 text-[12px] font-semibold rounded-full transition-colors ${
+                className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-semibold rounded-full transition-colors ${
                   crayonMode
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                🖍️ Crayon
+                {kidMode ? '🖍️ Crayon' : '🖊️ Pen'}
               </button>
             )}
             {crayonMode && crayonTextureId && (
@@ -366,7 +366,7 @@ export function TextureLibrary({
         {crayonMode && !crayonTextureId && (
           <div className="mt-1 px-1.5 py-1 rounded bg-primary/10 border border-primary/20">
             <p className={`${kidMode ? 'text-[11px]' : 'text-[9px]'} text-primary font-medium`}>
-              🖍️ {kidMode ? 'Pick a color to draw with!' : 'Select a texture, then draw with it as a crayon.'}
+              {kidMode ? '🖍️' : '🖊️'} {kidMode ? 'Pick a color to draw with!' : 'Select a texture, then draw with it as a pen.'}
             </p>
           </div>
         )}
