@@ -6,6 +6,7 @@ import { Vibe } from '@/types/studio';
 const letterA: Vibe = {
   id: 'letter-a', name: 'A', emoji: '🔤', category: 'Letters',
   description: 'Letter A stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'la-outer', label: 'Letter A', tone: 'medium' as const,
@@ -16,6 +17,7 @@ const letterA: Vibe = {
 const letterB: Vibe = {
   id: 'letter-b', name: 'B', emoji: '🔤', category: 'Letters',
   description: 'Letter B stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lb-outer', label: 'Letter B', tone: 'medium' as const,
@@ -26,6 +28,7 @@ const letterB: Vibe = {
 const letterC: Vibe = {
   id: 'letter-c', name: 'C', emoji: '🔤', category: 'Letters',
   description: 'Letter C stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lc-outer', label: 'Letter C', tone: 'medium' as const,
@@ -36,6 +39,7 @@ const letterC: Vibe = {
 const letterD: Vibe = {
   id: 'letter-d', name: 'D', emoji: '🔤', category: 'Letters',
   description: 'Letter D stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ld-outer', label: 'Letter D', tone: 'medium' as const,
@@ -46,6 +50,7 @@ const letterD: Vibe = {
 const letterE: Vibe = {
   id: 'letter-e', name: 'E', emoji: '🔤', category: 'Letters',
   description: 'Letter E stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'le-outer', label: 'Letter E', tone: 'medium' as const,
@@ -56,6 +61,7 @@ const letterE: Vibe = {
 const letterF: Vibe = {
   id: 'letter-f', name: 'F', emoji: '🔤', category: 'Letters',
   description: 'Letter F stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lf-outer', label: 'Letter F', tone: 'medium' as const,
@@ -66,6 +72,7 @@ const letterF: Vibe = {
 const letterG: Vibe = {
   id: 'letter-g', name: 'G', emoji: '🔤', category: 'Letters',
   description: 'Letter G stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lg-outer', label: 'Letter G', tone: 'medium' as const,
@@ -76,6 +83,7 @@ const letterG: Vibe = {
 const letterH: Vibe = {
   id: 'letter-h', name: 'H', emoji: '🔤', category: 'Letters',
   description: 'Letter H stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lh-outer', label: 'Letter H', tone: 'medium' as const,
@@ -86,6 +94,7 @@ const letterH: Vibe = {
 const letterI: Vibe = {
   id: 'letter-i', name: 'I', emoji: '🔤', category: 'Letters',
   description: 'Letter I stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'li-outer', label: 'Letter I', tone: 'medium' as const,
@@ -96,6 +105,7 @@ const letterI: Vibe = {
 const letterJ: Vibe = {
   id: 'letter-j', name: 'J', emoji: '🔤', category: 'Letters',
   description: 'Letter J stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lj-outer', label: 'Letter J', tone: 'medium' as const,
@@ -106,6 +116,7 @@ const letterJ: Vibe = {
 const letterK: Vibe = {
   id: 'letter-k', name: 'K', emoji: '🔤', category: 'Letters',
   description: 'Letter K stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lk-outer', label: 'Letter K', tone: 'medium' as const,
@@ -116,6 +127,7 @@ const letterK: Vibe = {
 const letterL: Vibe = {
   id: 'letter-l', name: 'L', emoji: '🔤', category: 'Letters',
   description: 'Letter L stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'll-outer', label: 'Letter L', tone: 'medium' as const,
@@ -126,6 +138,7 @@ const letterL: Vibe = {
 const letterM: Vibe = {
   id: 'letter-m', name: 'M', emoji: '🔤', category: 'Letters',
   description: 'Letter M stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lm-outer', label: 'Letter M', tone: 'medium' as const,
@@ -136,6 +149,7 @@ const letterM: Vibe = {
 const letterN: Vibe = {
   id: 'letter-n', name: 'N', emoji: '🔤', category: 'Letters',
   description: 'Letter N stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ln-outer', label: 'Letter N', tone: 'medium' as const,
@@ -146,6 +160,7 @@ const letterN: Vibe = {
 const letterO: Vibe = {
   id: 'letter-o', name: 'O', emoji: '🔤', category: 'Letters',
   description: 'Letter O stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lo-outer', label: 'Letter O', tone: 'medium' as const,
@@ -156,6 +171,7 @@ const letterO: Vibe = {
 const letterP: Vibe = {
   id: 'letter-p', name: 'P', emoji: '🔤', category: 'Letters',
   description: 'Letter P stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lp-outer', label: 'Letter P', tone: 'medium' as const,
@@ -166,6 +182,7 @@ const letterP: Vibe = {
 const letterQ: Vibe = {
   id: 'letter-q', name: 'Q', emoji: '🔤', category: 'Letters',
   description: 'Letter Q stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lq-outer', label: 'Letter Q', tone: 'medium' as const,
@@ -176,6 +193,7 @@ const letterQ: Vibe = {
 const letterR: Vibe = {
   id: 'letter-r', name: 'R', emoji: '🔤', category: 'Letters',
   description: 'Letter R stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lr-outer', label: 'Letter R', tone: 'medium' as const,
@@ -186,6 +204,7 @@ const letterR: Vibe = {
 const letterS: Vibe = {
   id: 'letter-s', name: 'S', emoji: '🔤', category: 'Letters',
   description: 'Letter S stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ls-outer', label: 'Letter S', tone: 'medium' as const,
@@ -196,6 +215,7 @@ const letterS: Vibe = {
 const letterT: Vibe = {
   id: 'letter-t', name: 'T', emoji: '🔤', category: 'Letters',
   description: 'Letter T stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lt-outer', label: 'Letter T', tone: 'medium' as const,
@@ -206,6 +226,7 @@ const letterT: Vibe = {
 const letterU: Vibe = {
   id: 'letter-u', name: 'U', emoji: '🔤', category: 'Letters',
   description: 'Letter U stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lu-outer', label: 'Letter U', tone: 'medium' as const,
@@ -216,6 +237,7 @@ const letterU: Vibe = {
 const letterV: Vibe = {
   id: 'letter-v', name: 'V', emoji: '🔤', category: 'Letters',
   description: 'Letter V stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lv-outer', label: 'Letter V', tone: 'medium' as const,
@@ -226,6 +248,7 @@ const letterV: Vibe = {
 const letterW: Vibe = {
   id: 'letter-w', name: 'W', emoji: '🔤', category: 'Letters',
   description: 'Letter W stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lw-outer', label: 'Letter W', tone: 'medium' as const,
@@ -236,6 +259,7 @@ const letterW: Vibe = {
 const letterX: Vibe = {
   id: 'letter-x', name: 'X', emoji: '🔤', category: 'Letters',
   description: 'Letter X stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lx-outer', label: 'Letter X', tone: 'medium' as const,
@@ -246,6 +270,7 @@ const letterX: Vibe = {
 const letterY: Vibe = {
   id: 'letter-y', name: 'Y', emoji: '🔤', category: 'Letters',
   description: 'Letter Y stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'ly-outer', label: 'Letter Y', tone: 'medium' as const,
@@ -256,6 +281,7 @@ const letterY: Vibe = {
 const letterZ: Vibe = {
   id: 'letter-z', name: 'Z', emoji: '🔤', category: 'Letters',
   description: 'Letter Z stencil',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'lz-outer', label: 'Letter Z', tone: 'medium' as const,
