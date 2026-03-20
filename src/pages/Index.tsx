@@ -321,6 +321,8 @@ const Index = () => {
             sectionTransforms={studio.sectionTransforms}
             tableElements={tableElements}
             tableSurface={tableSurface}
+            workstationName={workstationName}
+            onWorkstationNameChange={handleWorkstationNameChange}
             onSelect={studio.setSelectedId}
             onUpdate={studio.updateElement}
             onDrop={handleDrop}
