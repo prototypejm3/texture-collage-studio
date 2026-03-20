@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
+import { X } from 'lucide-react';
 import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
@@ -108,10 +109,11 @@ interface Props {
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<CanvasElementType>) => void;
+  onDelete?: () => void;
   customTextures?: TextureSwatch[];
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, customTextures = [] }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
@@ -179,6 +181,20 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             : undefined,
       }}
     >
+      {/* Remove button */}
+      {isSelected && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="absolute -top-2.5 -right-2.5 z-50 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform pointer-events-auto"
+          title="Remove"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
+
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
       <div
         className="w-full h-full"

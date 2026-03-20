@@ -104,6 +104,32 @@ const Index = () => {
     studio.addElement(textureId, x, y);
   }, [studio]);
 
+  // ── Table elements (swatches on the wood table outside the frame) ──
+  const [tableElements, setTableElements] = useState<Array<{
+    id: string; textureId: string; x: number; y: number;
+    width: number; height: number; rotation: number;
+  }>>([]);
+  const tableIdRef = useRef(1);
+
+  const handleTableDrop = useCallback((textureId: string, x: number, y: number) => {
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId,
+      x, y,
+      width: 80,
+      height: 80,
+      rotation: Math.floor(Math.random() * 20) - 10,
+    }]);
+  }, []);
+
+  const handleTableElementUpdate = useCallback((id: string, updates: any) => {
+    setTableElements(prev => prev.map(el => el.id === id ? { ...el, ...updates } : el));
+  }, []);
+
+  const handleTableElementDelete = useCallback((id: string) => {
+    setTableElements(prev => prev.filter(el => el.id !== id));
+  }, []);
+
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
   }, [studio]);
@@ -269,6 +295,7 @@ const Index = () => {
             customTextures={customTextures}
             backgroundTextureId={studio.backgroundTextureId}
             sectionTransforms={studio.sectionTransforms}
+            tableElements={tableElements}
             onSelect={studio.setSelectedId}
             onUpdate={studio.updateElement}
             onDrop={handleDrop}
@@ -279,6 +306,10 @@ const Index = () => {
             onDeleteSection={studio.deleteSection}
             onDuplicateSection={studio.duplicateSection}
             onUpdateSectionTransform={studio.updateSectionTransform}
+            onDeleteElement={studio.deleteElement}
+            onTableDrop={handleTableDrop}
+            onTableElementUpdate={handleTableElementUpdate}
+            onTableElementDelete={handleTableElementDelete}
             canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
             drawMode={studio.drawMode}
             onFinishDraw={studio.addCustomSection}
