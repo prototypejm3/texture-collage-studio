@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
