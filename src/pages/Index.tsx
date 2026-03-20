@@ -313,6 +313,7 @@ const Index = () => {
             backgroundTextureId={studio.backgroundTextureId}
             sectionTransforms={studio.sectionTransforms}
             tableElements={tableElements}
+            tableSurface={tableSurface}
             onSelect={studio.setSelectedId}
             onUpdate={studio.updateElement}
             onDrop={handleDrop}
