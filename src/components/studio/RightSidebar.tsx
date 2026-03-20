@@ -445,7 +445,7 @@ export function RightSidebar({
                         : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    {section.emoji} {section.label}
+                    {kidMode ? section.vibes[0] && themeGroups.find(g => g.label === section.label)?.kidLabel || `${section.emoji} ${section.label}` : `${section.emoji} ${section.label}`}
                   </button>
                 ))}
               </div>
