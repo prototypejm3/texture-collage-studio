@@ -437,111 +437,108 @@ export function Canvas({
         </button>
       </div>
 
-      {/* Desk Nameplate — only in desk (non-easel) mode */}
+      {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && (
         <div
           className="absolute z-20"
           style={{
-            top: 'calc(3% + 12px)',
+            top: 'calc(5% + 16px)',
             left: '50%',
             transform: 'translateX(-50%)',
+            perspective: '400px',
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Nameplate container with perspective */}
-          <div style={{
-            width: 200,
-            perspective: '600px',
-          }}>
-            {/* Shadow under the whole nameplate */}
+          <div style={{ width: 200 }}>
+            {/* Shadow cast on desk */}
             <div style={{
               position: 'absolute',
-              bottom: -4,
-              left: 8,
-              right: 8,
-              height: 12,
-              background: 'rgba(0,0,0,0.12)',
+              bottom: -6,
+              left: 4,
+              right: 4,
+              height: 14,
+              background: 'rgba(0,0,0,0.18)',
               borderRadius: '50%',
-              filter: 'blur(8px)',
+              filter: 'blur(10px)',
               pointerEvents: 'none',
             }} />
 
-            {/* Front face — tilted backward */}
+            {/* Nameplate body — tilted outward toward the viewer */}
             <div style={{
-              background: '#1F1F1F',
-              padding: '8px 14px 6px',
+              transform: 'rotateX(-15deg)',
               transformOrigin: 'bottom center',
-              transform: 'rotateX(11deg)',
-              borderRadius: '2px 2px 0 0',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 2px rgba(0,0,0,0.3)',
-              position: 'relative',
             }}>
-              {/* Subtle top edge highlight */}
+              {/* Front face */}
               <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 1,
-                background: 'rgba(255,255,255,0.08)',
+                background: 'linear-gradient(180deg, #2A2A2A 0%, #1F1F1F 100%)',
+                padding: '9px 16px 7px',
                 borderRadius: '2px 2px 0 0',
-              }} />
-              {/* Editable name + "'s Desk" on one line */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                justifyContent: 'center',
-                gap: 0,
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 2px rgba(0,0,0,0.4), 0 -2px 8px rgba(0,0,0,0.15)',
+                position: 'relative',
               }}>
-                <input
-                  type="text"
-                  value={workstationName}
-                  onChange={(e) => onWorkstationNameChange(e.target.value)}
-                  className="bg-transparent outline-none border-none text-center"
-                  style={{
-                    color: '#EAEAEA',
+                {/* Top edge shine */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 1,
+                  background: 'rgba(255,255,255,0.1)',
+                  borderRadius: '2px 2px 0 0',
+                }} />
+                {/* Editable name + "'s Desk" */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'center',
+                  gap: 0,
+                }}>
+                  <input
+                    type="text"
+                    value={workstationName}
+                    onChange={(e) => onWorkstationNameChange(e.target.value)}
+                    className="bg-transparent outline-none border-none text-center"
+                    style={{
+                      color: '#EAEAEA',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: '0.04em',
+                      fontFamily: "'Inter', 'system-ui', sans-serif",
+                      width: workstationName.length > 0 ? `${Math.max(workstationName.length * 7, 40)}px` : '60px',
+                      maxWidth: 120,
+                      padding: 0,
+                      margin: 0,
+                    }}
+                    placeholder="Your Name"
+                  />
+                  <span style={{
+                    color: 'rgba(234,234,234,0.45)',
                     fontSize: 11,
                     fontWeight: 600,
                     letterSpacing: '0.04em',
+                    whiteSpace: 'nowrap',
+                    userSelect: 'none',
                     fontFamily: "'Inter', 'system-ui', sans-serif",
-                    width: workstationName.length > 0 ? `${Math.max(workstationName.length * 7, 40)}px` : '60px',
-                    maxWidth: 120,
-                    padding: 0,
-                    margin: 0,
-                  }}
-                  placeholder="Your Name"
-                />
-                <span style={{
-                  color: 'rgba(234,234,234,0.5)',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.04em',
-                  whiteSpace: 'nowrap',
-                  userSelect: 'none',
-                  fontFamily: "'Inter', 'system-ui', sans-serif",
-                }}>'s Desk</span>
+                  }}>'s Desk</span>
+                </div>
               </div>
+
+              {/* Base strip */}
+              <div style={{
+                background: '#2A2A2A',
+                height: 5,
+                borderRadius: '0 0 2px 2px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              }} />
             </div>
 
-            {/* Base — flat on table */}
+            {/* Thickness edge visible from the tilt */}
             <div style={{
-              background: '#2A2A2A',
-              height: 4,
-              borderRadius: '0 0 2px 2px',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-            }} />
-
-            {/* Thickness edge */}
-            <div style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
               height: 3,
-              background: '#252525',
+              background: '#181818',
               borderRadius: '0 0 2px 2px',
-              transform: 'translateY(100%)',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
+              marginTop: -1,
             }} />
           </div>
         </div>
