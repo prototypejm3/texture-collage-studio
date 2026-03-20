@@ -375,7 +375,6 @@ const Index = () => {
             />
           )}
         </div>
-
         {/* ── Canvas/Frame bar ── */}
         {!isMobile && (
           <BottomBar
@@ -390,7 +389,6 @@ const Index = () => {
             onTableSurfaceChange={setTableSurface}
           />
         )}
-
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
         {!isMobile && (
           <div className="flex border-t border-border" style={{ height: '35%' }}>
