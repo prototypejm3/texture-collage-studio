@@ -102,26 +102,7 @@ export function Canvas({
   drawMode = false, onFinishDraw, onCancelDraw,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState({ width: 800, height: 600 });
-
-  // Measure container and fit canvas with padding
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(entries => {
-      const { width, height } = entries[0].contentRect;
-      setContainerSize({ width, height });
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  // Canvas fits within container with generous padding — same feel in desk & easel mode
-  const padding = 80;
-  const maxDim = Math.min(containerSize.width - padding * 2, containerSize.height - padding * 2);
-  const canvasSize = Math.max(200, Math.min(maxDim, 480)); // max 480 to keep wood visible
-  const w = canvasSize;
-  const h = canvasSize;
+  const { w, h } = frameSizeMap[frameSize];
 
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
