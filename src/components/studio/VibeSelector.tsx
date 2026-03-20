@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
