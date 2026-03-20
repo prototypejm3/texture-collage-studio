@@ -295,6 +295,7 @@ const Index = () => {
             customTextures={customTextures}
             backgroundTextureId={studio.backgroundTextureId}
             sectionTransforms={studio.sectionTransforms}
+            tableElements={tableElements}
             onSelect={studio.setSelectedId}
             onUpdate={studio.updateElement}
             onDrop={handleDrop}
@@ -305,6 +306,10 @@ const Index = () => {
             onDeleteSection={studio.deleteSection}
             onDuplicateSection={studio.duplicateSection}
             onUpdateSectionTransform={studio.updateSectionTransform}
+            onDeleteElement={studio.deleteElement}
+            onTableDrop={handleTableDrop}
+            onTableElementUpdate={handleTableElementUpdate}
+            onTableElementDelete={handleTableElementDelete}
             canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
             drawMode={studio.drawMode}
             onFinishDraw={studio.addCustomSection}
