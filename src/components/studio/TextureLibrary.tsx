@@ -130,6 +130,7 @@ export function TextureLibrary({
     window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: kidMode }));
   }, [kidMode]);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
+  const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleFav = useCallback((id: string) => {
