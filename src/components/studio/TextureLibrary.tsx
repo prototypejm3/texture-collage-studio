@@ -3,14 +3,50 @@ import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
 import { motion } from 'framer-motion';
-import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool } from 'lucide-react';
+import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool, RectangleHorizontal, Minus } from 'lucide-react';
+
+function ShapeIcon({ shape }: { shape: ElementShape }) {
+  const size = 14;
+  switch (shape) {
+    case 'soft-square':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <rect x="1" y="1" width="18" height="18" rx="3" fill="currentColor" opacity={0.8} />
+        </svg>
+      );
+    case 'rectangle':
+      return <RectangleHorizontal className="w-3.5 h-3.5" />;
+    case 'circle':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="9" fill="currentColor" opacity={0.8} />
+        </svg>
+      );
+    case 'strip':
+      return <Minus className="w-3.5 h-3.5" />;
+    case 'torn-edge':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="0.5,0 4,1 7,0 10,1 13,0 16,1 19.5,0 20,4 19,7 20,10 19,13 20,16 19,20 16,19 13,20 10,19 7,20 4,19 0,20 1,16 0,13 1,10 0,7 1,4" fill="currentColor" opacity={0.8} />
+        </svg>
+      );
+    case 'blob':
+      return (
+        <svg width={size} height={size} viewBox="0 0 20 20">
+          <polygon points="7,0.5 12,0 16,1 19,4 20,8 20,13 18,17 14,19 10,20 6,19 3,17 1,13 0,9 1,5 3,2" fill="currentColor" opacity={0.8} />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
 const shapes: { value: ElementShape; label: string }[] = [
-  { value: 'soft-square', label: 'Soft Square' },
-  { value: 'rectangle', label: 'Rectangle' },
+  { value: 'soft-square', label: 'Soft Sq' },
+  { value: 'rectangle', label: 'Rect' },
   { value: 'circle', label: 'Circle' },
   { value: 'strip', label: 'Strip' },
-  { value: 'torn-edge', label: 'Torn Edge' },
+  { value: 'torn-edge', label: 'Torn' },
   { value: 'blob', label: 'Blob' },
 ];
 
