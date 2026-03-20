@@ -518,7 +518,7 @@ export function RightSidebar({
                       whileTap={{ scale: 0.98 }}
                       className="group relative cursor-pointer opacity-60 hover:opacity-100"
                     >
-                      <button onClick={() => onSelectVibe(vibe)} className="w-full">
+                      <button onClick={() => handleStencilSelect(vibe)} className="w-full">
                         <div className={`aspect-square rounded overflow-hidden border shadow-sm border-border/50`}>
                           <VibePreviewSVG vibe={vibe} />
                         </div>
