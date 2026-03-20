@@ -4,6 +4,17 @@ import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const FREE_EXPORT_LIMIT = 1;
+const EXPORT_COUNT_KEY = 'free-export-count';
+
+function getFreeExportCount(): number {
+  try { return parseInt(localStorage.getItem(EXPORT_COUNT_KEY) || '0', 10); } catch { return 0; }
+}
+
+function incrementFreeExportCount(): void {
+  try { localStorage.setItem(EXPORT_COUNT_KEY, String(getFreeExportCount() + 1)); } catch {}
+}
+
 interface Props {
   wallFrameStyle: FrameStyle;
   onWallFrameStyleChange: (style: FrameStyle) => void;
