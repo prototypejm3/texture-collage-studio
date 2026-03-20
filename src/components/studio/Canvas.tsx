@@ -143,12 +143,6 @@ export function Canvas({
     try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
   }, [boxItems]);
 
-  const isOverBox = useCallback((clientX: number, clientY: number) => {
-    if (!boxRef.current || !kidMode) return false;
-    const rect = boxRef.current.getBoundingClientRect();
-    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
-  }, [kidMode]);
-
   // Kid mode — synced from TextureLibrary
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
@@ -158,6 +152,12 @@ export function Canvas({
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
+
+  const isOverBox = useCallback((clientX: number, clientY: number) => {
+    if (!boxRef.current || !kidMode) return false;
+    const rect = boxRef.current.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+  }, [kidMode]);
 
   // Check if a mouse position is over the trash zone
   const isOverTrash = useCallback((clientX: number, clientY: number) => {
