@@ -175,6 +175,12 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     <div
       ref={ref}
       onMouseDown={handleMouseDown}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onSelect();
+        if (onDelete) onDelete();
+      }}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
