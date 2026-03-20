@@ -41,13 +41,13 @@ function ShapeIcon({ shape }: { shape: ElementShape }) {
   }
 }
 
-const shapes: { value: ElementShape; label: string }[] = [
-  { value: 'soft-square', label: 'Soft Sq' },
-  { value: 'rectangle', label: 'Rect' },
-  { value: 'circle', label: 'Circle' },
-  { value: 'strip', label: 'Strip' },
-  { value: 'torn-edge', label: 'Torn' },
-  { value: 'blob', label: 'Blob' },
+const shapes: { value: ElementShape; label: string; kidLabel: string }[] = [
+  { value: 'soft-square', label: 'Soft Sq', kidLabel: '⬜ Square' },
+  { value: 'rectangle', label: 'Rect', kidLabel: '▬ Long' },
+  { value: 'circle', label: 'Circle', kidLabel: '⚫ Circle' },
+  { value: 'strip', label: 'Strip', kidLabel: '➖ Thin' },
+  { value: 'torn-edge', label: 'Torn', kidLabel: '💥 Ripped' },
+  { value: 'blob', label: 'Blob', kidLabel: '💧 Blob' },
 ];
 
 interface TextureGroup {
