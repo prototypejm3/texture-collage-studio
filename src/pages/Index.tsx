@@ -49,6 +49,9 @@ const Index = () => {
   const isMobile = useIsMobile();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
+  const [stencilsCollapsed, setStencilsCollapsed] = useState(() => {
+    try { return localStorage.getItem('stencils-collapsed') === 'true'; } catch { return false; }
+  });
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
