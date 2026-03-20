@@ -40,11 +40,21 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'none', label: 'None' },
 ];
 
-const hangingStyles: { value: HangingStyle; label: string; emoji: string }[] = [
-  { value: 'floating', label: 'Floating', emoji: '✨' },
-  { value: 'string', label: 'String', emoji: '🧵' },
-  { value: 'hook', label: 'Hook', emoji: '🪝' },
-  { value: 'shelf', label: 'Shelf', emoji: '🪵' },
+const hangingStyles: { value: HangingStyle; label: string; emoji: string; group?: string }[] = [
+  { value: 'floating', label: 'Floating', emoji: '✨', group: 'Style' },
+  { value: 'string', label: 'String', emoji: '🧵', group: 'String' },
+  { value: 'lighted-string', label: 'Lighted', emoji: '💡', group: 'String' },
+  { value: 'metal-wire', label: 'Metal', emoji: '🔗', group: 'String' },
+  { value: 'hemp', label: 'Hemp', emoji: '🌿', group: 'String' },
+  { value: 'white-string', label: 'White', emoji: '🤍', group: 'String' },
+  { value: 'braided', label: 'Braided', emoji: '🪢', group: 'String' },
+  { value: 'pink-yarn', label: 'Pink Yarn', emoji: '🩷', group: 'String' },
+  { value: 'beaded', label: 'Beaded', emoji: '📿', group: 'String' },
+  { value: 'hook', label: 'Hook', emoji: '🪝', group: 'Style' },
+  { value: 'shelf', label: 'Shelf', emoji: '🪵', group: 'Style' },
+  { value: 'silver-screw', label: 'Silver Screw', emoji: '🔩', group: 'Nail' },
+  { value: 'red-tack', label: 'Red Tack', emoji: '📌', group: 'Nail' },
+  { value: 'cork-tack', label: 'Cork Tack', emoji: '🟤', group: 'Nail' },
 ];
 
 const lightingPresets: { value: LightingPreset; label: string; emoji: string }[] = [
