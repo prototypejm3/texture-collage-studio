@@ -31,158 +31,241 @@ export function StepBackMode({ isOpen, onClose, children, wallClassName, wallSty
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-[100] overflow-hidden"
-          style={{ background: '#1a1a1a' }}
+          style={{ background: '#111' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          {/* Room container with perspective */}
+          {/* Full scene with perspective — camera looking slightly down at the wall */}
           <div
-            className="absolute inset-0 flex flex-col"
-            style={{ perspective: '1800px' }}
+            className="absolute inset-0"
+            style={{ perspective: '2200px', perspectiveOrigin: '50% 35%' }}
           >
-            {/* Ceiling hint — subtle dark gradient at top */}
+            {/* Scene container — everything tilts together for realism */}
             <div
-              className="absolute top-0 left-0 right-0 h-[8%] pointer-events-none z-[2]"
-              style={{
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.08) 40%, transparent 100%)',
-              }}
-            />
-
-            {/* Wall surface — takes up ~75% of screen, has subtle perspective tilt */}
-            <motion.div
-              className="relative flex-1"
+              className="absolute inset-0 flex flex-col"
               style={{
                 transformStyle: 'preserve-3d',
-                transformOrigin: 'center bottom',
-                transform: 'rotateX(1.5deg) scale(0.92)',
               }}
-              initial={{ scale: 1.05, rotateX: 0 }}
-              animate={{ scale: 0.92, rotateX: 1.5 }}
-              exit={{ scale: 1.05, rotateX: 0 }}
-              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              {/* Wall background texture */}
+              {/* ═══ CEILING ZONE ═══ */}
               <div
-                className={`absolute inset-0 ${wallClassName}`}
-                style={{
-                  ...wallStyle,
-                  borderRadius: '0 0 2px 2px',
-                }}
-              />
-
-              {/* Wall gradient — lighter center, darker edges */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `
-                    radial-gradient(ellipse 70% 60% at 50% 45%, transparent 30%, rgba(0,0,0,0.12) 100%)
-                  `,
-                }}
-              />
-
-              {/* Top gallery light wash — subtle downward illumination */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(255,252,240,0.06) 0%, transparent 25%)',
-                }}
-              />
-
-              {/* Wall content — the frames */}
-              <div className="absolute inset-0 flex items-center justify-center overflow-auto p-8 md:p-12">
-                <div className="max-w-5xl w-full">
-                  {children}
-                </div>
+                className="relative flex-shrink-0 pointer-events-none"
+                style={{ height: '6%' }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(0,0%,8%) 0%, hsl(0,0%,14%) 100%)',
+                  }}
+                />
+                {/* Ceiling-wall edge — subtle shadow line */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[2px]"
+                  style={{
+                    background: 'linear-gradient(90deg, rgba(0,0,0,0.3), rgba(0,0,0,0.15), rgba(0,0,0,0.3))',
+                  }}
+                />
               </div>
 
-              {/* Bottom edge shadow — where wall meets baseboard */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-[3px] pointer-events-none"
+              {/* ═══ WALL ZONE — the main surface ═══ */}
+              <motion.div
+                className="relative flex-1"
                 style={{
-                  background: 'linear-gradient(180deg, transparent, rgba(0,0,0,0.2))',
+                  transformStyle: 'preserve-3d',
+                  transformOrigin: 'center 60%',
                 }}
-              />
-            </motion.div>
+                initial={{ rotateX: 0, scale: 1.02 }}
+                animate={{ rotateX: 2, scale: 0.94 }}
+                exit={{ rotateX: 0, scale: 1.02 }}
+                transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {/* Wall background texture */}
+                <div
+                  className={`absolute inset-0 ${wallClassName}`}
+                  style={wallStyle}
+                />
 
-            {/* Baseboard / wall-floor junction */}
-            <div
-              className="relative flex-shrink-0 pointer-events-none"
-              style={{ height: '12px' }}
-            >
-              {/* Baseboard trim */}
+                {/* Wall lighting — center brighter, edges darker (gallery spotlighting) */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: `
+                      radial-gradient(ellipse 65% 55% at 50% 42%, transparent 25%, rgba(0,0,0,0.18) 100%)
+                    `,
+                  }}
+                />
+
+                {/* Top-down gallery light wash */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(255,252,240,0.08) 0%, rgba(255,252,240,0.02) 20%, transparent 40%)',
+                  }}
+                />
+
+                {/* Wall content — the frames */}
+                <div className="absolute inset-0 flex items-center justify-center overflow-auto p-8 md:p-12">
+                  <div className="max-w-5xl w-full">
+                    {children}
+                  </div>
+                </div>
+
+                {/* Bottom edge contact shadow — wall meets baseboard */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[4px] pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(180deg, transparent, rgba(0,0,0,0.25))',
+                  }}
+                />
+              </motion.div>
+
+              {/* ═══ BASEBOARD ═══ */}
               <div
-                className="absolute inset-0"
+                className="relative flex-shrink-0 pointer-events-none"
+                style={{ height: '14px' }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(180deg, hsl(30,12%,32%) 0%, hsl(28,10%,25%) 50%, hsl(25,8%,20%) 100%)',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 3px 8px rgba(0,0,0,0.4)',
+                  }}
+                />
+                {/* Baseboard top molding highlight */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-[2px]"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0.05), transparent)',
+                  }}
+                />
+                {/* Baseboard bottom groove */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[1px]"
+                  style={{ background: 'rgba(0,0,0,0.3)' }}
+                />
+              </div>
+
+              {/* ═══ FLOOR — polished concrete ═══ */}
+              <motion.div
+                className="relative flex-shrink-0 pointer-events-none"
                 style={{
-                  background: 'linear-gradient(180deg, hsl(30, 15%, 35%) 0%, hsl(30, 12%, 28%) 60%, hsl(30, 10%, 22%) 100%)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.3)',
+                  height: '22%',
+                  transformStyle: 'preserve-3d',
+                  transformOrigin: 'center top',
                 }}
-              />
-              {/* Baseboard top highlight */}
-              <div
-                className="absolute top-0 left-0 right-0 h-px"
-                style={{ background: 'rgba(255,255,255,0.06)' }}
-              />
+                initial={{ opacity: 0, rotateX: 0 }}
+                animate={{ opacity: 1, rotateX: -4 }}
+                exit={{ opacity: 0, rotateX: 0 }}
+                transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {/* Concrete base color */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: `
+                      linear-gradient(180deg,
+                        hsl(210, 3%, 28%) 0%,
+                        hsl(210, 2%, 24%) 30%,
+                        hsl(210, 2%, 20%) 60%,
+                        hsl(210, 2%, 15%) 100%
+                      )
+                    `,
+                  }}
+                />
+
+                {/* Concrete speckle texture — layered noise-like gradients */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `
+                      radial-gradient(circle 1px at 15% 20%, rgba(255,255,255,0.04) 0%, transparent 100%),
+                      radial-gradient(circle 1px at 45% 35%, rgba(255,255,255,0.03) 0%, transparent 100%),
+                      radial-gradient(circle 2px at 72% 15%, rgba(255,255,255,0.04) 0%, transparent 100%),
+                      radial-gradient(circle 1px at 28% 60%, rgba(0,0,0,0.06) 0%, transparent 100%),
+                      radial-gradient(circle 2px at 85% 45%, rgba(255,255,255,0.03) 0%, transparent 100%),
+                      radial-gradient(circle 1px at 55% 75%, rgba(0,0,0,0.05) 0%, transparent 100%),
+                      radial-gradient(circle 1.5px at 10% 80%, rgba(255,255,255,0.03) 0%, transparent 100%),
+                      radial-gradient(circle 1px at 90% 70%, rgba(0,0,0,0.04) 0%, transparent 100%)
+                    `,
+                  }}
+                />
+
+                {/* Concrete aggregate / micro-variation pattern */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `
+                      repeating-conic-gradient(
+                        rgba(255,255,255,0.015) 0deg, transparent 3deg, transparent 90deg
+                      )
+                    `,
+                    backgroundSize: '80px 80px',
+                  }}
+                />
+
+                {/* Subtle surface imperfections — light patches */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: `
+                      radial-gradient(ellipse 30% 40% at 25% 30%, rgba(255,255,255,0.03) 0%, transparent 100%),
+                      radial-gradient(ellipse 25% 35% at 70% 50%, rgba(255,255,255,0.025) 0%, transparent 100%),
+                      radial-gradient(ellipse 20% 30% at 50% 20%, rgba(0,0,0,0.03) 0%, transparent 100%)
+                    `,
+                  }}
+                />
+
+                {/* Floor reflection of the wall — very subtle mirror */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 30%, transparent 60%)',
+                  }}
+                />
+
+                {/* Perspective fade — floor recedes into darkness */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.5) 100%)',
+                  }}
+                />
+
+                {/* Contact shadow at baseboard-floor junction */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-[6px]"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 100%)',
+                  }}
+                />
+              </motion.div>
             </div>
-
-            {/* Floor — subtle perspective plane */}
-            <motion.div
-              className="relative flex-shrink-0 pointer-events-none"
-              style={{
-                height: '18%',
-                transformStyle: 'preserve-3d',
-                transformOrigin: 'center top',
-                transform: 'rotateX(-2deg)',
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              {/* Floor surface — hardwood feel */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: `
-                    linear-gradient(180deg, 
-                      hsl(25, 18%, 22%) 0%, 
-                      hsl(25, 15%, 18%) 40%,
-                      hsl(25, 12%, 14%) 100%
-                    )
-                  `,
-                }}
-              />
-              {/* Floor reflection — very subtle */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 50%)',
-                }}
-              />
-              {/* Floor fade to darkness */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.4) 100%)',
-                }}
-              />
-            </motion.div>
           </div>
 
-          {/* Vignette — darkened edges, brighter center */}
+          {/* Vignette — cinematic darkened edges */}
           <div
             className="absolute inset-0 pointer-events-none z-[3]"
             style={{
               background: `
-                radial-gradient(ellipse 80% 70% at 50% 40%, transparent 40%, rgba(0,0,0,0.3) 100%)
+                radial-gradient(ellipse 75% 65% at 50% 38%, transparent 35%, rgba(0,0,0,0.35) 100%)
               `,
+            }}
+          />
+
+          {/* Side wall hints — very subtle edge shadows suggesting depth */}
+          <div
+            className="absolute inset-0 pointer-events-none z-[2]"
+            style={{
+              boxShadow: 'inset 60px 0 80px -30px rgba(0,0,0,0.2), inset -60px 0 80px -30px rgba(0,0,0,0.2)',
             }}
           />
 
           {/* Close button */}
           <motion.button
             onClick={onClose}
-            className="absolute top-6 right-6 z-20 p-3 rounded-full bg-background/10 backdrop-blur-md text-foreground/40 hover:text-foreground/70 hover:bg-background/20 transition-all"
+            className="absolute top-6 right-6 z-20 p-3 rounded-full bg-popover/80 text-muted-foreground hover:text-foreground hover:bg-popover transition-all border border-border shadow-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.5 }}
