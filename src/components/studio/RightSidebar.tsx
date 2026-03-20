@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+import { funStencils } from '@/data/funStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp } from 'lucide-react';
