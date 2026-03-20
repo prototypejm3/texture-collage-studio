@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useCallback, useState, useEffect, useMemo } from 'react';
 import { toPng } from 'html-to-image';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
@@ -6,7 +6,7 @@ import { useCustomTextures } from '@/hooks/useCustomTextures';
 import { useCustomTemplate } from '@/hooks/useCustomTemplate';
 import { useWall } from '@/hooks/useWall';
 import { useUserTier } from '@/hooks/useUserTier';
-import { Canvas, TableSurface } from '@/components/studio/Canvas';
+import { Canvas, TableSurface, TableElement } from '@/components/studio/Canvas';
 import { TopToolbar } from '@/components/studio/TopToolbar';
 import { BottomBar } from '@/components/studio/BottomBar';
 import { BuildPanel } from '@/components/studio/BuildPanel';
@@ -114,10 +114,7 @@ const Index = () => {
   }, [studio]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
-  const [tableElements, setTableElements] = useState<Array<{
-    id: string; textureId: string; x: number; y: number;
-    width: number; height: number; rotation: number; clipPathD?: string;
-  }>>([]);
+  const [tableElements, setTableElements] = useState<TableElement[]>([]);
   const tableIdRef = useRef(1);
 
   const handleTableDrop = useCallback((textureId: string, x: number, y: number) => {
@@ -128,6 +125,18 @@ const Index = () => {
       width: 80,
       height: 80,
       rotation: Math.floor(Math.random() * 20) - 10,
+    }]);
+  }, []);
+
+  const handleStencilTableDrop = useCallback((vibeId: string, x: number, y: number) => {
+    setTableElements(prev => [...prev, {
+      id: `table-${tableIdRef.current++}`,
+      textureId: '',
+      vibeId,
+      x, y,
+      width: 100,
+      height: 100,
+      rotation: Math.floor(Math.random() * 10) - 5,
     }]);
   }, []);
 
@@ -155,6 +164,12 @@ const Index = () => {
     // Remove from canvas
     studio.deleteElement(elementId);
   }, [studio]);
+
+  // Selected table element for editing
+  const [selectedTableElId, setSelectedTableElId] = useState<string | null>(null);
+  const selectedTableElement = useMemo(() => 
+    tableElements.find(el => el.id === selectedTableElId) || null
+  , [tableElements, selectedTableElId]);
 
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
@@ -321,6 +336,47 @@ const Index = () => {
             </div>
           )}
 
+          {/* ── Left panel: Edit Table Element (desktop only) ── */}
+          {!isMobile && !studio.selectedId && selectedTableElement && (
+            <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
+              <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Desk Item</span>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                <FloatingToolbar
+                  element={{
+                    id: selectedTableElement.id,
+                    textureId: selectedTableElement.textureId,
+                    x: selectedTableElement.x,
+                    y: selectedTableElement.y,
+                    width: selectedTableElement.width,
+                    height: selectedTableElement.height,
+                    rotation: selectedTableElement.rotation,
+                    shape: selectedTableElement.shape || 'soft-square',
+                    zIndex: 5,
+                    effects: selectedTableElement.effects || { bleachFade: 0, edgeStyle: 'clean', wrinkle: 'none', grainBoost: 0, shadowDepth: 'flat' },
+                    clipPathD: selectedTableElement.clipPathD,
+                  }}
+                  onUpdate={(updates) => handleTableElementUpdate(selectedTableElId!, updates)}
+                  onUpdateEffects={(effects) => {
+                    const el = tableElements.find(e => e.id === selectedTableElId);
+                    if (el) handleTableElementUpdate(selectedTableElId!, { effects: { ...(el.effects || { bleachFade: 0, edgeStyle: 'clean', wrinkle: 'none', grainBoost: 0, shadowDepth: 'flat' }), ...effects } });
+                  }}
+                  onDuplicate={() => {
+                    if (!selectedTableElement) return;
+                    setTableElements(prev => [...prev, {
+                      ...selectedTableElement,
+                      id: `table-${tableIdRef.current++}`,
+                      x: selectedTableElement.x + 20,
+                      y: selectedTableElement.y + 20,
+                    }]);
+                  }}
+                  onDelete={() => { handleTableElementDelete(selectedTableElId!); setSelectedTableElId(null); }}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex-1 relative overflow-hidden min-h-0">
             <Canvas
               easelMode={easelMode}
@@ -357,6 +413,9 @@ const Index = () => {
               onTableDrop={handleTableDrop}
               onTableElementUpdate={handleTableElementUpdate}
               onTableElementDelete={handleTableElementDelete}
+              onStencilTableDrop={handleStencilTableDrop}
+              onSelectTableElement={setSelectedTableElId}
+              selectedTableElementId={selectedTableElId}
               canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
               onWallFrameStyleChange={studio.setWallFrameStyle}
               isPremium={isPremium}

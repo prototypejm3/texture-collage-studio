@@ -1,5 +1,5 @@
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react';
-import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, ElementShape, MaterialEffects, defaultEffects } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
 import { VibeOutline } from './VibeOutline';
@@ -16,7 +16,7 @@ const surfaceImages: Record<TableSurface, string> = {
   'walnut': '/walls/wood-walnut-wall.png',
 };
 
-interface TableElement {
+export interface TableElement {
   id: string;
   textureId: string;
   x: number;
@@ -25,6 +25,9 @@ interface TableElement {
   height: number;
   rotation: number;
   clipPathD?: string;
+  vibeId?: string;
+  shape?: ElementShape;
+  effects?: MaterialEffects;
 }
 
 interface Props {
@@ -62,6 +65,9 @@ interface Props {
   onTableDrop: (textureId: string, x: number, y: number) => void;
   onTableElementUpdate: (id: string, updates: Partial<TableElement>) => void;
   onTableElementDelete: (id: string) => void;
+  onStencilTableDrop?: (vibeId: string, x: number, y: number) => void;
+  onSelectTableElement?: (id: string | null) => void;
+  selectedTableElementId?: string | null;
   canvasRef: React.RefObject<HTMLDivElement>;
   onWallFrameStyleChange?: (style: FrameStyle) => void;
   isPremium?: boolean;
@@ -109,9 +115,15 @@ export function Canvas({
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
   drawMode = false, onFinishDraw, onCancelDraw,
+  onStencilTableDrop,
+  onSelectTableElement,
+  selectedTableElementId,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const selectedTableId = selectedTableElementId ?? null;
+  const setSelectedTableId = useCallback((id: string | null) => {
+    onSelectTableElement?.(id);
+  }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
 
   // Keyboard delete for selected element
@@ -203,16 +215,26 @@ export function Canvas({
   }, []);
 
   const handleTableDrop = useCallback((e: React.DragEvent) => {
-    // Only handle drops on the table itself, not the canvas
-    const textureId = e.dataTransfer.getData('textureId');
-    if (!textureId || !containerRef.current) return;
     e.preventDefault();
     e.stopPropagation();
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - 40;
     const y = e.clientY - rect.top - 40;
-    onTableDrop(textureId, x, y);
-  }, [onTableDrop]);
+
+    // Check for stencil (vibe) drag
+    const vibeId = e.dataTransfer.getData('vibeId');
+    if (vibeId && onStencilTableDrop) {
+      onStencilTableDrop(vibeId, x, y);
+      return;
+    }
+
+    // Texture drag
+    const textureId = e.dataTransfer.getData('textureId');
+    if (textureId) {
+      onTableDrop(textureId, x, y);
+    }
+  }, [onTableDrop, onStencilTableDrop]);
 
   // selectedTableId moved above
   // easelMode is now a prop
@@ -328,13 +350,13 @@ export function Canvas({
       )}
       {/* Table elements (swatches on the wood table) */}
       {tableElements.map(tel => {
-        const tex = allTextures.find(t => t.id === tel.textureId);
-        if (!tex) return null;
+        const tex = tel.vibeId ? null : allTextures.find(t => t.id === tel.textureId);
+        if (!tex && !tel.vibeId) return null;
         return (
           <TableSwatch
             key={tel.id}
             element={tel}
-            texture={tex}
+            texture={tex || null}
             isSelected={selectedTableId === tel.id}
             onSelect={() => { setSelectedTableId(tel.id); onSelect(null); }}
             onUpdate={(updates) => onTableElementUpdate(tel.id, updates)}
@@ -668,10 +690,14 @@ export function Canvas({
 
 // ── Table Swatch Component ──
 import { X } from 'lucide-react';
+import { vibes } from '@/data/vibes';
+import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+
+const allStencilVibes = [...vibes, ...letterStencils, ...numberSymbolStencils];
 
 interface TableSwatchProps {
   element: TableElement;
-  texture: TextureSwatch;
+  texture: TextureSwatch | null;
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<TableElement>) => void;
@@ -706,6 +732,51 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
     };
   }, [isDragging, onUpdate]);
 
+  // If this is a stencil element, render SVG outline
+  const vibe = element.vibeId ? allStencilVibes.find(v => v.id === element.vibeId) : null;
+
+  if (vibe) {
+    return (
+      <div
+        onMouseDown={handleMouseDown}
+        onClick={(e) => { e.stopPropagation(); onSelect(); }}
+        className={`absolute cursor-move ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded' : ''}`}
+        style={{
+          left: element.x,
+          top: element.y,
+          width: element.width,
+          height: element.height,
+          transform: `rotate(${element.rotation}deg)`,
+          zIndex: 5,
+          filter: 'drop-shadow(0 3px 6px hsla(220, 20%, 12%, 0.25))',
+        }}
+      >
+        {isSelected && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+            className="absolute -top-2.5 -right-2.5 z-50 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+            title="Remove"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        )}
+        <svg viewBox={vibe.viewBox} className="w-full h-full">
+          {vibe.sections.map(section => (
+            <path
+              key={section.id}
+              d={section.path}
+              fill={section.tone === 'dark' ? 'hsl(220, 20%, 25%)' : section.tone === 'light' ? 'hsl(40, 20%, 90%)' : section.tone === 'accent' ? 'hsl(24, 60%, 50%)' : 'hsl(220, 15%, 55%)'}
+              stroke="hsl(220, 15%, 40%)"
+              strokeWidth="1.5"
+              opacity={0.85}
+            />
+          ))}
+        </svg>
+      </div>
+    );
+  }
+
+  // Regular texture swatch
   const clipStyle = element.clipPathD
     ? `path('${element.clipPathD}')`
     : 'polygon(3% 1%, 48% 0%, 97% 2%, 99% 48%, 98% 97%, 52% 99%, 2% 98%, 0% 52%)';
@@ -736,13 +807,15 @@ function TableSwatch({ element, texture, isSelected, onSelect, onUpdate, onDelet
           <X className="w-3 h-3" />
         </button>
       )}
-      <div
-        className="w-full h-full"
-        style={{
-          background: texture.cssBackground,
-          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
-        }}
-      />
+      {texture && (
+        <div
+          className="w-full h-full"
+          style={{
+            background: texture.cssBackground,
+            backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+          }}
+        />
+      )}
     </div>
   );
 }
