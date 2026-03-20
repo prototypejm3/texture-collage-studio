@@ -253,7 +253,7 @@ const Index = () => {
 
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* ── Canvas area ── */}
-        <div className="flex-1 relative overflow-hidden">
+        <div className="flex-1 relative overflow-hidden min-h-0">
           <Canvas
             elements={studio.elements}
             selectedId={studio.selectedId}

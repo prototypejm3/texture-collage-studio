@@ -75,7 +75,7 @@ export function TextureLibrary({
   drawMode, onToggleDrawMode, nextShape, onSetNextShape,
 }: TextureLibraryProps) {
   const [activeGroup, setActiveGroup] = useState<string>('All');
-  const [kidMode, setKidMode] = useState(false);
+  const [kidMode, setKidMode] = useState(true);
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
   const [swatchView, setSwatchView] = useState<'swatch' | 'tiled'>('swatch');
   const fileInputRef = useRef<HTMLInputElement>(null);
