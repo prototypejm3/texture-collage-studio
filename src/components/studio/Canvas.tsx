@@ -166,7 +166,7 @@ export function Canvas({
           backgroundImage: `url(${surfaceImages[tableSurface]})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transform: 'rotate(90deg) scale(1.5)',
+          transform: 'rotate(90deg) scale(3)',
         }}
       />
       {/* Table elements (swatches on the wood table) */}
