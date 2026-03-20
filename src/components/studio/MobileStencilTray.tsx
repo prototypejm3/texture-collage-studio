@@ -56,7 +56,7 @@ export function StencilTray(props: StencilTrayProps) {
 
   return (
     <motion.div
-      className={`absolute bottom-0 left-0 right-0 z-40 bg-popover border-t border-border shadow-md rounded-t-lg overflow-hidden ${focusClass}`}
+      className={`absolute bottom-0 left-0 ${isMobile ? 'right-0' : 'w-1/2'} z-40 bg-popover border-t border-border shadow-md rounded-t-lg overflow-hidden ${focusClass}`}
       animate={{ height: heights[state] }}
       transition={{ type: 'spring', stiffness: 320, damping: 32 }}
     >
