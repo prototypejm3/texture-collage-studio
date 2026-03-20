@@ -137,11 +137,19 @@ export function Canvas({
   });
   const [boxHover, setBoxHover] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
+  const [boxPos, setBoxPos] = useState(() => {
+    try { const raw = localStorage.getItem('kid-box-pos'); return raw ? JSON.parse(raw) : { x: 44, y: -1 }; } catch { return { x: 44, y: -1 }; }
+  });
+  const boxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isBoxDragging, setIsBoxDragging] = useState(false);
 
-  // Persist box items
+  // Persist box items & position
   useEffect(() => {
     try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
   }, [boxItems]);
+  useEffect(() => {
+    try { localStorage.setItem('kid-box-pos', JSON.stringify(boxPos)); } catch {}
+  }, [boxPos]);
 
   // Kid mode — synced from TextureLibrary
   const [kidMode, setKidMode] = useState(() => {
