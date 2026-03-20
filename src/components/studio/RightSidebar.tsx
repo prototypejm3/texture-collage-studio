@@ -161,13 +161,13 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...letterStencils, ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
+  const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
-    { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -176,6 +176,8 @@ export function RightSidebar({
     { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
     { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
     { label: 'Music', emoji: '🎵', ids: new Set([]) },
+    { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: 'Letters', emoji: '🔤', ids: letterIds },
   ];
 
   const themedIds = new Set<string>();

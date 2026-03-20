@@ -97,8 +97,8 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
 
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
+  const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
-    { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -106,10 +106,12 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Food & Fruit', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
     { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
     { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
-    { label: 'Music', emoji: '🎵', ids: new Set([]) }, // category-based
+    { label: 'Music', emoji: '🎵', ids: new Set([]) },
+    { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: 'Letters', emoji: '🔤', ids: letterIds },
   ];
 
-  const allVibes = [...vibes, ...letterStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
