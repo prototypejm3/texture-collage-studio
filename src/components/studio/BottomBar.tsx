@@ -67,6 +67,59 @@ export function BottomBar({
 
   return (
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
+      {/* Frame picker */}
+      <div className="flex items-center gap-0.5">
+        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Frame</span>
+        {specialFrames.map(f => {
+          const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+          return (
+            <div key={f.id} className="relative">
+              <button
+                onClick={() => handleSpecialSelect(f.id)}
+                className={`px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                }`}
+              >
+                {f.label}
+              </button>
+              {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2">
+                    <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-1.5 text-center">Color</p>
+                    <div className="flex items-center gap-1.5">
+                      {colorFrames.map(cf => {
+                        const locked = !cf.free && !isPremium;
+                        return (
+                          <button
+                            key={cf.id}
+                            onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                            className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                              wallFrameStyle === cf.id
+                                ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110'
+                                : 'hover:scale-110'
+                            } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
+                              locked ? 'opacity-40 cursor-not-allowed' : ''
+                            }`}
+                            style={{ background: cf.color }}
+                            title={locked ? 'Premium' : cf.label}
+                          >
+                            {locked && <Lock className="w-1.5 h-1.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
       {/* Surface selector */}
       {onTableSurfaceChange && (
         <div className="flex items-center gap-0.5">
