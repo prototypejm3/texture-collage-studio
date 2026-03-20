@@ -1536,8 +1536,9 @@ const tomato: Vibe = {
 
 // ── BROCCOLI ──
 const broccoli: Vibe = {
-  id: 'broccoli', name: 'Broccoli', emoji: '🥦',
+  id: 'broccoli', name: 'Little Tree', emoji: '🥦',
   description: 'Fluffy broccoli floret tree',
+  category: 'Community', creator: 'Yuck', baseLikes: 16, likesStartDate: '2026-03-14',
   viewBox: '0 0 480 480',
   sections: [
     { id: 'br-crown', label: 'Crown', tone: 'dark',
