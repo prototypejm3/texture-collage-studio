@@ -80,7 +80,7 @@ export function BottomBar({
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
-        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Frame</span>
+        <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Border' : 'Frame'}</span>
         {specialFrames.map(f => {
           const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
           return (
