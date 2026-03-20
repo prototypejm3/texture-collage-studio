@@ -152,6 +152,7 @@ export function Canvas({
   }, [onTableDrop]);
 
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const [easelMode, setEaselMode] = useState(false);
 
   return (
     <div
