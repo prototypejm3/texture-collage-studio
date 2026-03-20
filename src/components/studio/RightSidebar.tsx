@@ -290,15 +290,15 @@ export function RightSidebar({
                 onClick={handleReplaceConfirm}
                 className="w-full px-3 py-2 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
               >
-                <span className="font-semibold">Replace</span>
-                <span className="block text-[9px] text-muted-foreground mt-0.5">Remove current stencil and use the new one</span>
+                <span className="font-semibold">{kidMode ? 'Swap It' : 'Replace'}</span>
+                <span className="block text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Take away the old one, use the new one' : 'Remove current stencil and use the new one'}</span>
               </button>
               <button
                 onClick={handleLayerConfirm}
                 className="w-full px-3 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
               >
-                <span className="font-semibold">Layer</span>
-                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">Stamp current stencil down and add the new one on top</span>
+                <span className="font-semibold">{kidMode ? 'Stack It' : 'Layer'}</span>
+                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">{kidMode ? 'Keep the old one and put the new one on top' : 'Stamp current stencil down and add the new one on top'}</span>
               </button>
               <button
                 onClick={() => setPendingVibe(null)}
