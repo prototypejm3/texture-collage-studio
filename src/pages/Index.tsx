@@ -251,20 +251,62 @@ const Index = () => {
         onToggleFocusMode={() => setFocusMode(prev => !prev)}
       />
 
-      <div className="flex-1 flex relative overflow-hidden">
-        {/* ── Left sidebar: BuildPanel (desktop only) ── */}
-        {!isMobile && (
-          <div className="w-64 shrink-0 border-r border-border overflow-hidden">
-            <BuildPanel
-              drawMode={studio.drawMode}
-              onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
-              nextShape={studio.nextShape}
-              onSetNextShape={studio.setNextShape}
+      <div className="flex-1 flex flex-col relative overflow-hidden">
+        {/* ── Canvas area ── */}
+        <div className="flex-1 relative overflow-hidden">
+          <Canvas
+            elements={studio.elements}
+            selectedId={studio.selectedId}
+            frameSize={studio.frameSize}
+            frameColor={studio.frameColor}
+            wallFrameStyle={studio.wallFrameStyle}
+            activeVibe={studio.activeVibe}
+            vibeFills={studio.vibeFills}
+            selectedSectionId={studio.selectedSectionId}
+            customTemplate={customTemplate}
+            templateOpacity={templateOpacity}
+            customTextures={customTextures}
+            backgroundTextureId={studio.backgroundTextureId}
+            sectionTransforms={studio.sectionTransforms}
+            onSelect={studio.setSelectedId}
+            onUpdate={studio.updateElement}
+            onDrop={handleDrop}
+            onSelectSection={studio.selectSection}
+            onDropInSection={studio.fillSection}
+            onDropAsSwatch={handleDrop}
+            onDetachSection={studio.detachSection}
+            onDeleteSection={studio.deleteSection}
+            onDuplicateSection={studio.duplicateSection}
+            onUpdateSectionTransform={studio.updateSectionTransform}
+            canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
+            drawMode={studio.drawMode}
+            onFinishDraw={studio.addCustomSection}
+            onCancelDraw={() => studio.setDrawMode(false)}
+          />
+
+          {/* ── Mobile: Texture Tray (top overlay) ── */}
+          {isMobile && (
+            <TextureTray
+              onDragStart={handleDragStartLib}
+              onTextureClick={handleTextureClick}
+              activeSectionId={studio.selectedSectionId}
+              customTextures={customTextures}
+              onUploadTexture={handleUploadTexture}
+              onRemoveCustomTexture={removeCustomTexture}
               isPremium={isPremium}
               onRequestUpgrade={() => setShowPaywall(true)}
+              focusMode={focusMode}
+            />
+          )}
+
+          {/* ── Stencil Tray (floating, when popped out on desktop or always on mobile) ── */}
+          {(isMobile || stencilsPoppedOut) && (
+            <StencilTray
               activeVibeId={studio.activeVibe?.id ?? null}
+              isPremium={isPremium}
               onSelectVibe={handleSelectVibe}
               onShuffleVibeFills={studio.shuffleVibeFills}
+              onRequestUpgrade={() => setShowPaywall(true)}
               onGenerateMood={handleGenerateMood}
               isGeneratingMood={vibeGen.isGenerating}
               customTemplate={customTemplate}
@@ -272,84 +314,17 @@ const Index = () => {
               onUploadTemplate={handleUploadTemplate}
               onClearTemplate={clearTemplate}
               onTemplateOpacityChange={setTemplateOpacity}
-              stencilsPoppedOut={stencilsPoppedOut}
-              onPopOutStencils={() => setStencilsPoppedOut(true)}
+              focusMode={focusMode}
+              onDockBack={!isMobile ? () => setStencilsPoppedOut(false) : undefined}
             />
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* ── Canvas + Textures column ── */}
-        <div className="flex-1 flex flex-col relative overflow-hidden">
-          <div className="flex-1 relative overflow-hidden">
-            <Canvas
-              elements={studio.elements}
-              selectedId={studio.selectedId}
-              frameSize={studio.frameSize}
-              frameColor={studio.frameColor}
-              wallFrameStyle={studio.wallFrameStyle}
-              activeVibe={studio.activeVibe}
-              vibeFills={studio.vibeFills}
-              selectedSectionId={studio.selectedSectionId}
-              customTemplate={customTemplate}
-              templateOpacity={templateOpacity}
-              customTextures={customTextures}
-              backgroundTextureId={studio.backgroundTextureId}
-              sectionTransforms={studio.sectionTransforms}
-              onSelect={studio.setSelectedId}
-              onUpdate={studio.updateElement}
-              onDrop={handleDrop}
-              onSelectSection={studio.selectSection}
-              onDropInSection={studio.fillSection}
-              onDropAsSwatch={handleDrop}
-              onDetachSection={studio.detachSection}
-              onDeleteSection={studio.deleteSection}
-              onDuplicateSection={studio.duplicateSection}
-              onUpdateSectionTransform={studio.updateSectionTransform}
-              canvasRef={canvasRef as React.RefObject<HTMLDivElement>}
-              drawMode={studio.drawMode}
-              onFinishDraw={studio.addCustomSection}
-              onCancelDraw={() => studio.setDrawMode(false)}
-            />
-
-            {/* ── Mobile: Texture Tray (top overlay) ── */}
-            {isMobile && (
-              <TextureTray
-                onDragStart={handleDragStartLib}
-                onTextureClick={handleTextureClick}
-                activeSectionId={studio.selectedSectionId}
-                customTextures={customTextures}
-                onUploadTexture={handleUploadTexture}
-                onRemoveCustomTexture={removeCustomTexture}
-                isPremium={isPremium}
-                onRequestUpgrade={() => setShowPaywall(true)}
-                focusMode={focusMode}
-              />
-            )}
-
-            {/* ── Stencil Tray (floating, when popped out on desktop or always on mobile) ── */}
-            {(isMobile || stencilsPoppedOut) && (
-              <StencilTray
-                activeVibeId={studio.activeVibe?.id ?? null}
-                isPremium={isPremium}
-                onSelectVibe={handleSelectVibe}
-                onShuffleVibeFills={studio.shuffleVibeFills}
-                onRequestUpgrade={() => setShowPaywall(true)}
-                onGenerateMood={handleGenerateMood}
-                isGeneratingMood={vibeGen.isGenerating}
-                customTemplate={customTemplate}
-                templateOpacity={templateOpacity}
-                onUploadTemplate={handleUploadTemplate}
-                onClearTemplate={clearTemplate}
-                onTemplateOpacityChange={setTemplateOpacity}
-                focusMode={focusMode}
-                onDockBack={!isMobile ? () => setStencilsPoppedOut(false) : undefined}
-              />
-            )}
-          </div>
-
-          {/* ── Texture Library under canvas (desktop only) ── */}
-          {!isMobile && (
-            <div className="overflow-hidden" style={{ height: '30%' }}>
+        {/* ── Bottom panel: Textures (left) + Build tools (right) ── */}
+        {!isMobile && (
+          <div className="flex border-t border-border" style={{ height: '35%' }}>
+            {/* Left half: Textures */}
+            <div className="flex-1 overflow-hidden border-r border-border">
               <TextureLibrary
                 onDragStart={handleDragStartLib}
                 onTextureClick={handleTextureClick}
@@ -363,6 +338,32 @@ const Index = () => {
                 onApplyModeChange={setTextureApplyMode}
                 backgroundTextureId={studio.backgroundTextureId}
               />
+            </div>
+            {/* Right half: Build + Stencils */}
+            <div className="flex-1 overflow-hidden">
+              <BuildPanel
+                drawMode={studio.drawMode}
+                onToggleDrawMode={() => studio.setDrawMode(!studio.drawMode)}
+                nextShape={studio.nextShape}
+                onSetNextShape={studio.setNextShape}
+                isPremium={isPremium}
+                onRequestUpgrade={() => setShowPaywall(true)}
+                activeVibeId={studio.activeVibe?.id ?? null}
+                onSelectVibe={handleSelectVibe}
+                onShuffleVibeFills={studio.shuffleVibeFills}
+                onGenerateMood={handleGenerateMood}
+                isGeneratingMood={vibeGen.isGenerating}
+                customTemplate={customTemplate}
+                templateOpacity={templateOpacity}
+                onUploadTemplate={handleUploadTemplate}
+                onClearTemplate={clearTemplate}
+                onTemplateOpacityChange={setTemplateOpacity}
+                stencilsPoppedOut={stencilsPoppedOut}
+                onPopOutStencils={() => setStencilsPoppedOut(true)}
+              />
+            </div>
+          </div>
+        )}
             </div>
           )}
         </div>
