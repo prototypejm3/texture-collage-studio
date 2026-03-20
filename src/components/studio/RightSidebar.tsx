@@ -345,7 +345,7 @@ export function RightSidebar({
 
             {/* Mood generator — shown after a stencil is selected */}
             {activeVibeId && (
-              <div className="px-2 py-1.5 border-b border-border bg-accent/10">
+              <div className="px-2 py-1.5 border-b border-border bg-accent/10 max-w-xs">
                 <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                   <Sparkles className="w-3 h-3 text-accent-foreground" />
                   AI Mood <span className="px-1 py-0 text-[7px] font-bold uppercase tracking-wider rounded bg-primary/15 text-primary">Beta</span>
