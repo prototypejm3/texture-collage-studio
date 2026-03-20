@@ -28,6 +28,8 @@ interface TableElement {
 }
 
 interface Props {
+  easelMode: boolean;
+  onToggleEasel: () => void;
   elements: CanvasElement[];
   selectedId: string | null;
   frameSize: FrameSize;
