@@ -42,32 +42,33 @@ function ShapeIcon({ shape }: { shape: ElementShape }) {
 }
 
 const shapes: { value: ElementShape; label: string; kidLabel: string }[] = [
-  { value: 'soft-square', label: 'Soft Sq', kidLabel: '⬜ Square' },
-  { value: 'rectangle', label: 'Rect', kidLabel: '▬ Long' },
-  { value: 'circle', label: 'Circle', kidLabel: '⚫ Circle' },
-  { value: 'strip', label: 'Strip', kidLabel: '➖ Thin' },
-  { value: 'torn-edge', label: 'Torn', kidLabel: '💥 Ripped' },
-  { value: 'blob', label: 'Blob', kidLabel: '💧 Blob' },
+  { value: 'soft-square', label: 'Soft Sq', kidLabel: 'Square' },
+  { value: 'rectangle', label: 'Rect', kidLabel: 'Long' },
+  { value: 'circle', label: 'Circle', kidLabel: 'Circle' },
+  { value: 'strip', label: 'Strip', kidLabel: 'Thin' },
+  { value: 'torn-edge', label: 'Torn', kidLabel: 'Ripped' },
+  { value: 'blob', label: 'Blob', kidLabel: 'Blob' },
 ];
 
 interface TextureGroup {
   label: string;
+  kidLabel: string;
   categories: TextureCategory[];
 }
 
 const groups: TextureGroup[] = [
-  { label: 'Velvet', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
-  { label: 'Linen', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Durable', categories: ['Sunbrella', 'Key Largo'] },
-  { label: 'Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Textured', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Cotton & Felt', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
-  { label: 'Leather', categories: ['Leather'] },
-  { label: 'Hard', categories: ['Wood', 'Marble', 'Concrete'] },
-  { label: 'Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+  { label: 'Velvet', kidLabel: '🧸 Soft & Fancy', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
+  { label: 'Soft', kidLabel: '☁️ Super Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Linen', kidLabel: '🧵 Cloth', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Durable', kidLabel: '💪 Tough', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Woven', kidLabel: '🧶 Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
+  { label: 'Textured', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Cotton & Felt', kidLabel: '🧤 Cozy', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Leather', kidLabel: '🐄 Leather', categories: ['Leather'] },
+  { label: 'Hard', kidLabel: '🪵 Hard Stuff', categories: ['Wood', 'Marble', 'Concrete'] },
+  { label: 'Patterns', kidLabel: '🌈 Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Signature', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
@@ -293,7 +294,7 @@ export function TextureLibrary({
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              {group.label}
+              {kidMode ? group.kidLabel : group.label}
             </button>
           ))}
         </div>
