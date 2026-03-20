@@ -32,11 +32,11 @@ export function NavBar() {
         Swatchbox Studio
       </span>
       {/* Desktop nav links */}
-      <div className="hidden md:flex items-center gap-6">
+      <div className="hidden md:flex items-center gap-2">
         <Link
           to="/"
-          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-            isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
+            isStudio ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
           }`}
         >
           <Brush className="w-4 h-4" />
@@ -45,8 +45,8 @@ export function NavBar() {
         <Link
           to="/wall"
           data-nav="wall"
-          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-            isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
+            isWall ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
           }`}
         >
           <Grid2x2 className="w-4 h-4" />
@@ -55,8 +55,8 @@ export function NavBar() {
         <Link
           to="/gallery"
           data-nav="gallery"
-          className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
-            isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
+            isGallery ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent'
           }`}
         >
           <Landmark className="w-4 h-4" />
