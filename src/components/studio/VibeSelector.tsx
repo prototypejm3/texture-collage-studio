@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
+import { funStencils } from '@/data/funStencils';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag, Heart } from 'lucide-react';
@@ -98,7 +99,9 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
+  const funIds = new Set(funStencils.map(f => f.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string> }[] = [
+    { label: 'For Fun', emoji: '✨', ids: funIds },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     { label: 'Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
     { label: 'Insects & Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
@@ -111,7 +114,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Letters', emoji: '🔤', ids: letterIds },
   ];
 
-  const allVibes = [...vibes, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...funStencils, ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
