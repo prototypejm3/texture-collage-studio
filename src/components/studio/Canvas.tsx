@@ -180,20 +180,20 @@ export function Canvas({
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: '3%',
-            right: '3%',
-            top: '3%',
-            bottom: '3%',
-            borderRadius: 8,
+            left: 8,
+            right: 8,
+            top: 8,
+            bottom: 8,
+            borderRadius: 6,
             boxShadow: '0 12px 60px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: '3%',
-            right: '3%',
-            top: '3%',
-            bottom: '3%',
-            borderRadius: 6,
+            left: 8,
+            right: 8,
+            top: 8,
+            bottom: 8,
+            borderRadius: 4,
             overflow: 'hidden',
           }}>
             {/* Wood grain texture */}
@@ -442,8 +442,8 @@ export function Canvas({
         <div
           className="absolute z-20"
           style={{
-            bottom: 'calc(3% + 20px)',
-            left: 'calc(3% + 24px)',
+            bottom: 28,
+            left: 32,
             perspective: '400px',
           }}
           onClick={(e) => e.stopPropagation()}
