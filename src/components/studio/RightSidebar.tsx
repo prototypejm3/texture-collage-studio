@@ -477,13 +477,15 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleHidden, onDelete, onReport }: {
+function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, onSelect, onToggleHidden, onToggleFav, onDelete, onReport }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
+  isFavorited: boolean;
   isLoggedIn: boolean;
   onSelect: () => void;
   onToggleHidden: () => void;
+  onToggleFav: () => void;
   onDelete: () => void;
   onReport: () => void;
 }) {
@@ -517,7 +519,22 @@ function StencilCard({ vibe, isActive, isHidden, isLoggedIn, onSelect, onToggleH
         {vibe.emoji} {vibe.name}
       </p>
 
-      {/* Action buttons on hover — matches texture favorite star positioning */}
+      {/* Fav heart button — bottom-right on hover */}
+      {isLoggedIn && !isAiGenerated && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
+          className={`absolute bottom-5 right-0.5 p-0.5 rounded-full transition-all ${
+            isFavorited
+              ? 'text-rose-500 opacity-100'
+              : 'text-muted-foreground opacity-0 group-hover:opacity-100 bg-background/80'
+          }`}
+          title={isFavorited ? 'Unfavorite' : 'Favorite'}
+        >
+          <Heart className={`w-2.5 h-2.5 ${isFavorited ? 'fill-current' : ''}`} />
+        </button>
+      )}
+
+      {/* Hide button — top-left on hover */}
       {(isLoggedIn || isAiGenerated) && (
         <button
           onClick={(e) => { e.stopPropagation(); onToggleHidden(); }}
