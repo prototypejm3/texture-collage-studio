@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils } from '@/data/letterStencils';
 import { Vibe } from '@/types/studio';
@@ -107,6 +107,22 @@ export function RightSidebar({
     onSelectVibe(pendingVibe);
     setPendingVibe(null);
   };
+
+  const handleLayerConfirm = () => {
+
+  // Hide stencil and switch to hidden tab
+  const handleHideStencil = useCallback((vibeId: string) => {
+    const wasHidden = social.hiddenIds.has(vibeId);
+    social.toggleHidden(vibeId);
+    if (!wasHidden) {
+      // Just hidden — switch to hidden tab so user sees it moved there
+      setActiveTab('hidden');
+      // If this was the active stencil, deselect it
+      if (activeVibeId === vibeId) {
+        onSelectVibe({ id: '', name: '', emoji: '', description: '', viewBox: '', sections: [], lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [] } as any);
+      }
+    }
+  }, [social, activeVibeId, onSelectVibe]);
 
   const handleLayerConfirm = () => {
     if (!pendingVibe) return;
@@ -439,7 +455,7 @@ export function RightSidebar({
                       isFavorited={social.favoritedIds.has(vibe.id)}
                       isLoggedIn={!!user}
                       onSelect={() => handleStencilSelect(vibe)}
-                      onToggleHidden={() => social.toggleHidden(vibe.id)}
+                      onToggleHidden={() => handleHideStencil(vibe.id)}
                       onToggleFav={() => social.toggleFavorite(vibe.id)}
                       onDelete={async () => {
                         setAiGeneratedVibes(prev => prev.filter(v => v.id !== vibe.id));
