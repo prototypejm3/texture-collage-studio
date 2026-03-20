@@ -508,8 +508,17 @@ export function Canvas({
           ref={boxRef}
           className="absolute z-30"
           style={{
-            bottom: 44,
-            left: 44,
+            left: boxPos.x,
+            ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
+          }}
+          onMouseDown={(e) => {
+            // Only start box drag from the box itself, not from items inside
+            if ((e.target as HTMLElement).closest('button')) return;
+            e.stopPropagation();
+            e.preventDefault();
+            setIsBoxDragging(true);
+            const currentTop = boxRef.current ? boxRef.current.getBoundingClientRect().top - (containerRef.current?.getBoundingClientRect().top || 0) : 0;
+            boxDragStart.current = { mx: e.clientX, my: e.clientY, bx: boxPos.x, by: currentTop };
           }}
           onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
           onDragLeave={() => setBoxHover(false)}
@@ -518,10 +527,7 @@ export function Canvas({
             e.stopPropagation();
             setBoxHover(false);
             const fromBox = e.dataTransfer.getData('fromBox');
-            if (fromBox) {
-              // Dragged from box to desk — handled by onDragOutItem
-              return;
-            }
+            if (fromBox) return;
             const textureId = e.dataTransfer.getData('textureId');
             if (textureId) {
               setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
@@ -533,10 +539,9 @@ export function Canvas({
             onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
             onDragOutItem={(item) => {
               setBoxItems(prev => prev.filter(i => i.id !== item.id));
-              // Put it on the desk near the box
               if (containerRef.current) {
                 const rect = containerRef.current.getBoundingClientRect();
-                onTableDrop(item.textureId, 120, rect.height - 160);
+                onTableDrop(item.textureId, boxPos.x + 100, boxPos.y < 0 ? rect.height - 160 : boxPos.y);
               }
             }}
             isHovered={boxHover}
