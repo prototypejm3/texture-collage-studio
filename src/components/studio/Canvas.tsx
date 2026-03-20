@@ -835,8 +835,8 @@ export function Canvas({
       )}
       </div>
 
-      {/* Easel/Desk toggle — large button under the canvas */}
-      {onToggleEasel && (
+      {/* Easel/Desk toggle — only in kid mode */}
+      {onToggleEasel && kidMode && (
         <button
           onClick={(e) => { e.stopPropagation(); onToggleEasel(); }}
           className={`z-20 flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all shadow-md mt-2 ${
@@ -862,10 +862,7 @@ export function Canvas({
               <line x1="16" y1="22" x2="20" y2="22" />
             </svg>
           )}
-          {kidMode
-            ? (easelMode ? '🪑 Sit Down' : '🧍 Stand Up')
-            : (easelMode ? 'Desk Mode' : 'Easel Mode')
-          }
+          {easelMode ? '🪑 Sit Down' : '🧍 Stand Up'}
         </button>
       )}
 
