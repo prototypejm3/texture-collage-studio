@@ -705,7 +705,7 @@ export function Canvas({
           >
             {/* Expanded tools */}
             {toolboxOpen && (
-              <div className="mb-1.5 rounded-xl p-2 grid grid-cols-3 gap-1.5"
+              <div className="mb-1.5 rounded-xl p-2"
                 style={{
                   background: 'linear-gradient(180deg, hsl(15, 60%, 35%) 0%, hsl(15, 50%, 28%) 100%)',
                   border: '2px solid hsla(15, 40%, 20%, 0.5)',
@@ -713,6 +713,38 @@ export function Canvas({
                   minWidth: 170,
                 }}
               >
+                {/* Shape row */}
+                <div className="flex items-center gap-1 mb-1.5 px-0.5">
+                  <span className="text-[7px] font-bold text-amber-100/60 uppercase tracking-wider">Shape</span>
+                  <div className="flex gap-1 flex-1 justify-end">
+                    {([
+                      { shape: 'soft-square' as ElementShape, label: '⬜', title: 'Square' },
+                      { shape: 'rectangle' as ElementShape, label: '📐', title: 'Long' },
+                      { shape: 'strip' as ElementShape, label: '➖', title: 'Thin' },
+                      { shape: 'circle' as ElementShape, label: '⚪', title: 'Circle' },
+                      { shape: 'torn-edge' as ElementShape, label: '📜', title: 'Ripped' },
+                      { shape: 'blob' as ElementShape, label: '💧', title: 'Blob' },
+                    ]).map(s => (
+                      <button
+                        key={s.shape}
+                        data-toolbox-btn
+                        onClick={(e) => { e.stopPropagation(); onUpdateElement(selectedId!, { shape: s.shape }); }}
+                        className={`w-7 h-7 rounded-md flex items-center justify-center text-sm transition-all hover:scale-110 active:scale-95 ${
+                          el.shape === s.shape
+                            ? 'ring-1.5 ring-amber-300 bg-amber-100/25'
+                            : ''
+                        }`}
+                        style={{ background: el.shape === s.shape ? undefined : 'hsla(30,30%,90%,0.1)', border: '1px solid hsla(30,30%,80%,0.15)' }}
+                        title={s.title}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tools grid */}
+                <div className="grid grid-cols-3 gap-1.5">
                 {tools.map(tool => (
                   <button
                     key={tool.id}
@@ -747,6 +779,7 @@ export function Canvas({
                   <span className="text-lg leading-none">🗑️</span>
                   <span className="text-[8px] font-bold text-red-200/90">Toss</span>
                 </button>
+                </div>
               </div>
             )}
 
