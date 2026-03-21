@@ -539,7 +539,7 @@ export function RightSidebar({
                         : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    🎪 Made By Us
+                    🎪 Made By Friends
                   </button>
                 )}
               </div>
