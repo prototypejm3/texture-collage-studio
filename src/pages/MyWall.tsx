@@ -477,7 +477,7 @@ const MyWall = () => {
                           onClick={() => { handleViewMode(); setShowControls(false); }}
                           className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
                         >
-                          <Expand className="w-3 h-3" /> View Mode
+                          <Expand className="w-3 h-3" /> {kidMode ? '👀 Look!' : 'View Mode'}
                         </button>
                         {isPremium && (
                           <button
