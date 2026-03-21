@@ -58,9 +58,11 @@ export function VibeOutline({
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [resizingId, setResizingId] = useState<string | null>(null);
+  const [rotatingId, setRotatingId] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const dragStart = useRef<{ mx: number; my: number; tx: number; ty: number }>({ mx: 0, my: 0, tx: 0, ty: 0 });
   const resizeStart = useRef<{ mx: number; my: number; scale: number }>({ mx: 0, my: 0, scale: 1 });
+  const rotateStart = useRef<{ startAngle: number; rotation: number }>({ startAngle: 0, rotation: 0 });
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
@@ -166,6 +168,46 @@ export function VibeOutline({
     const t = sectionTransforms[sectionId] || defaultSectionTransform;
     onUpdateSectionTransform(sectionId, { rotation: t.rotation + delta });
   }, [sectionTransforms, onUpdateSectionTransform]);
+
+  // ── Drag-to-rotate handler ──
+  const handleRotateStart = useCallback((e: React.MouseEvent, sectionId: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setRotatingId(sectionId);
+    const section = vibe.sections.find(s => s.id === sectionId);
+    if (!section || !svgRef.current) return;
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    const { cx, cy } = getPathCenter(section.path);
+    const rect = svgRef.current.getBoundingClientRect();
+    const screenCx = rect.left + ((cx + t.x) / vbW) * rect.width;
+    const screenCy = rect.top + ((cy + t.y) / vbH) * rect.height;
+    const startAngle = Math.atan2(e.clientY - screenCy, e.clientX - screenCx) * (180 / Math.PI);
+    rotateStart.current = { startAngle, rotation: t.rotation };
+  }, [sectionTransforms, vibe.sections, vbW, vbH]);
+
+  useEffect(() => {
+    if (!rotatingId) return;
+    const section = vibe.sections.find(s => s.id === rotatingId);
+    if (!section || !svgRef.current) return;
+    const t = sectionTransforms[rotatingId] || defaultSectionTransform;
+    const { cx, cy } = getPathCenter(section.path);
+    const rect = svgRef.current.getBoundingClientRect();
+    const screenCx = rect.left + ((cx + t.x) / vbW) * rect.width;
+    const screenCy = rect.top + ((cy + t.y) / vbH) * rect.height;
+
+    const handleMove = (e: MouseEvent) => {
+      const currentAngle = Math.atan2(e.clientY - screenCy, e.clientX - screenCx) * (180 / Math.PI);
+      const delta = currentAngle - rotateStart.current.startAngle;
+      onUpdateSectionTransform(rotatingId, { rotation: Math.round(rotateStart.current.rotation + delta) });
+    };
+    const handleUp = () => setRotatingId(null);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [rotatingId, sectionTransforms, vibe.sections, vbW, vbH, onUpdateSectionTransform]);
 
   return (
     <>
@@ -325,6 +367,49 @@ export function VibeOutline({
                     className="pointer-events-auto cursor-nwse-resize hover:opacity-100 transition-opacity"
                     onMouseDown={(e) => handleResizeStart(e, section.id)}
                   />
+                );
+              })()}
+
+              {/* Rotate handle — bottom center of bounding box */}
+              {isSelected && minX !== Infinity && (() => {
+                const midX = (minX + maxX) / 2;
+                const handleY = maxY + 12;
+                return (
+                  <g
+                    className="pointer-events-auto cursor-grab active:cursor-grabbing"
+                    onMouseDown={(e) => handleRotateStart(e, section.id)}
+                  >
+                    {/* Line from bottom edge to handle */}
+                    <line
+                      x1={midX * t.scale + t.x}
+                      y1={maxY * t.scale + t.y}
+                      x2={midX * t.scale + t.x}
+                      y2={handleY * t.scale + t.y}
+                      stroke="hsl(var(--primary))"
+                      strokeWidth={1.5}
+                      opacity={0.5}
+                    />
+                    <circle
+                      cx={midX * t.scale + t.x}
+                      cy={handleY * t.scale + t.y}
+                      r={6}
+                      fill="hsl(var(--primary))"
+                      stroke="hsl(var(--primary-foreground))"
+                      strokeWidth={1}
+                      opacity={0.85}
+                      className="hover:opacity-100 transition-opacity"
+                    />
+                    {/* Rotate icon — small arrow */}
+                    <text
+                      x={midX * t.scale + t.x}
+                      y={handleY * t.scale + t.y + 0.5}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize="7"
+                      fill="hsl(var(--primary-foreground))"
+                      className="pointer-events-none select-none"
+                    >↻</text>
+                  </g>
                 );
               })()}
             </g>
