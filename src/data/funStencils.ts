@@ -42,7 +42,7 @@ const wineGlass: Vibe = {
 
 // ── TAROT CARD 🔮 ──
 const tarotCard: Vibe = {
-  id: 'tarot-card', name: 'Tarot Card', emoji: '🔮', category: 'For Fun',
+  id: 'tarot-card', name: 'Tarot Card', emoji: '🔮', category: 'Community DIY',
   description: 'Mystical tarot card with moon & star',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
@@ -153,7 +153,7 @@ const cheeseBoard: Vibe = {
 
 // ── ZODIAC WHEEL ♈ ──
 const zodiacWheel: Vibe = {
-  id: 'zodiac-wheel', name: 'Zodiac Wheel', emoji: '♈', category: 'For Fun',
+  id: 'zodiac-wheel', name: 'Zodiac Wheel', emoji: '♈', category: 'Community DIY',
   description: 'Mystical zodiac wheel with radial segments',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
@@ -197,7 +197,7 @@ const messageBubbles: Vibe = {
 
 // ── STREET LAMP 🏮 ──
 const streetLamp: Vibe = {
-  id: 'street-lamp', name: 'Street Lamp', emoji: '🏮', category: 'For Fun',
+  id: 'street-lamp', name: 'Street Lamp', emoji: '🏮', category: 'Community DIY',
   description: 'Elegant street lamp with glow',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',

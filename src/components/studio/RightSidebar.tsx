@@ -213,6 +213,7 @@ export function RightSidebar({
     { label: 'Numbers & Symbols', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
+    { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']) },
   ];
 
   const themedIds = new Set<string>();
