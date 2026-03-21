@@ -368,6 +368,10 @@ export function useKidSounds() {
     setTimeout(() => play('reward', 0), 150);
   }, [play]);
   const playError = useCallback(() => play('error', 500), [play]);
+  const playToolCut = useCallback(() => play('tool_cut', 100), [play]);
+  const playToolCrumple = useCallback(() => play('tool_crumple', 100), [play]);
+  const playToolGrow = useCallback(() => play('tool_grow', 100), [play]);
+  const playToolShrink = useCallback(() => play('tool_shrink', 100), [play]);
 
   const shapeToSound: Record<string, SoundType> = {
     'soft-square': 'shape_square',
