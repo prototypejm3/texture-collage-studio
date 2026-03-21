@@ -228,6 +228,7 @@ export function NavBar() {
               </span>
               <button
                 onClick={() => signOut()}
+                title="Sign out of your account"
                 className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
