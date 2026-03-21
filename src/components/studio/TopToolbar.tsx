@@ -309,8 +309,8 @@ export function TopToolbar({
           </div>
         )}
 
-        {/* Undo/Redo — adult mode only */}
-        {!kidMode && onUndo && onRedo && (
+        {/* Undo/Redo */}
+        {onUndo && onRedo && (
           <>
             <div className="w-px h-3 bg-border hidden sm:block" />
             <button
