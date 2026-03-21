@@ -103,27 +103,30 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
       <div className="flex items-center gap-2.5">
         {/* Layout picker — grid is free, others are premium */}
-        <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
-          {layouts.map(l => {
-            const locked = l.value !== 'grid' && !isPremium;
-            return (
-              <button
-                key={l.value}
-                onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
-                className={`relative p-2 rounded-full border shadow-sm transition-colors ${
-                  settings.layout === l.value
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : locked
-                      ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
-                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-                }`}
-                title={locked ? 'Premium — unlock to use' : l.label}
-              >
-                {l.icon}
-                {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-              </button>
-            );
-          })}
+        <div className="flex flex-col items-center gap-0.5">
+          <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
+            {layouts.map(l => {
+              const locked = l.value !== 'grid' && !isPremium;
+              return (
+                <button
+                  key={l.value}
+                  onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
+                  className={`relative p-2 rounded-full border shadow-sm transition-colors ${
+                    settings.layout === l.value
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : locked
+                        ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
+                        : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                  }`}
+                  title={locked ? 'Premium — unlock to use' : l.label}
+                >
+                  {l.icon}
+                  {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Layout</span>
         </div>
 
         {/* Apply frame to all */}
