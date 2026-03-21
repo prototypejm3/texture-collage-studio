@@ -68,7 +68,7 @@ interface OverlayProps {
 const confettiEmojis = ['🎨', '✨', '🌟', '🎉', '💛', '⭐'];
 
 const stepConfig: Record<string, { emoji: string; title: string; sub: string }> = {
-  pick: { emoji: '👇', title: 'Pick a color!', sub: 'Drag a swatch up to the canvas' },
+  pick: { emoji: '👇', title: 'Pick a color or a stencil!', sub: 'Drag a swatch or stencil onto the canvas' },
   move: { emoji: '👆', title: 'Move it!', sub: 'Drag the shape around' },
   tool: { emoji: '✂️', title: 'Try a tool!', sub: 'Tap a tool on the shape' },
   save: { emoji: '📦', title: 'Save it!', sub: 'Drag it to the box' },
