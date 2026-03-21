@@ -107,7 +107,8 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   // Theme groupings for organized display
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
-  const funIds = new Set(funStencils.map(f => f.id));
+  const communityDiyIds = new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']);
+  const funIds = new Set(funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id));
   const themeGroups: { label: string; emoji: string; ids: Set<string>; adultOnly?: boolean }[] = [
     { label: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Nature & Scenery', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
@@ -120,6 +121,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Music', emoji: '🎵', ids: new Set([]) },
     { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', emoji: '🔤', ids: letterIds },
+    { label: 'Community DIY', emoji: '🛠️', ids: communityDiyIds },
   ];
 
   const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
