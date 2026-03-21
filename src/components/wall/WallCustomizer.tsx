@@ -80,6 +80,14 @@ const ambientSounds: { value: AmbientSound; label: string; emoji: string }[] = [
 export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, onRequestUpgrade, isPremium }: WallCustomizerProps) {
   const [showFrameMenu, setShowFrameMenu] = useState(false);
   const [showHangingMenu, setShowHangingMenu] = useState(false);
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
   const [showLightingMenu, setShowLightingMenu] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
 
