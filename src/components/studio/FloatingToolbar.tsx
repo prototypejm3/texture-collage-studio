@@ -195,18 +195,8 @@ const shadowOptions: { value: ShadowDepth; label: string; kidLabel: string }[] =
   { value: 'floating', label: 'Floating', kidLabel: 'Floating!' },
 ];
 
-const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
-  { value: 'none', label: 'None', kidLabel: 'Flat' },
-  { value: 'light', label: 'Light', kidLabel: 'A Little' },
-  { value: 'medium', label: 'Medium', kidLabel: 'Crunchy' },
-  { value: 'heavy', label: 'Heavy', kidLabel: 'Super Wrinkly' },
-];
 
-const shadowOptions: { value: ShadowDepth; label: string; kidLabel: string }[] = [
-  { value: 'flat', label: 'Flat', kidLabel: 'Flat' },
-  { value: 'lifted', label: 'Lifted', kidLabel: 'Peeling Up' },
-  { value: 'floating', label: 'Floating', kidLabel: 'Floating!' },
-];
+
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(true);
