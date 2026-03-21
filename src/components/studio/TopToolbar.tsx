@@ -254,6 +254,38 @@ export function TopToolbar({
           </div>
         )}
 
+        {/* Kid Sound Effects toggle — only visible in kid mode */}
+        {kidMode && onKidSoundsToggle && (
+          <div className="relative">
+            <button
+              onClick={() => onKidSoundsToggle(!kidSoundsEnabled)}
+              className={`p-1.5 rounded-md transition-colors ${
+                kidSoundsEnabled
+                  ? 'bg-primary/15 text-primary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+              title={kidSoundsEnabled ? 'Sound effects on' : 'Sound effects off'}
+            >
+              {kidSoundsEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </button>
+            {kidSoundsEnabled && onKidSoundsVolume && (
+              <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
+                <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={5}
+                  value={Math.round((kidSoundsVolume || 0.4) * 100)}
+                  onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)}
+                  className="w-full h-1 accent-primary"
+                />
+                <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="w-px h-3 bg-border hidden sm:block" />
         {user ? (
           <>
