@@ -9,6 +9,11 @@ import { Sparkles, Frame, Image, Layers } from 'lucide-react';
 
 type ContextMode = 'templates' | 'element' | 'frame' | 'canvas';
 
+const canvasBgPresets = [
+  { id: null as string | null, label: 'White', color: 'hsl(0,0%,98%)' },
+  { id: 'rainbow-bg' as string | null, label: 'Rainbow', color: 'linear-gradient(135deg, hsl(0,80%,70%), hsl(40,90%,65%), hsl(60,90%,65%), hsl(120,60%,55%), hsl(200,80%,60%), hsl(270,70%,65%))' },
+];
+
 interface ContextPanelProps {
   // Selection state
   selectedElement: CanvasElement | null;
