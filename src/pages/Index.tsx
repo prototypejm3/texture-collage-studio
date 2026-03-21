@@ -787,6 +787,7 @@ const Index = () => {
         </defs>
       </svg>
       <OnboardingTutorial page="studio" />
+      {sounds.kidMode && <CelebrationOverlay toasts={celebration.toasts} />}
       <KidOnboardingOverlay
         step={kidOnboarding.step}
         active={kidOnboarding.active}
