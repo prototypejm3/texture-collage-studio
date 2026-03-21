@@ -31,6 +31,11 @@ interface Props {
   onAmbientSoundChange?: (sound: AmbientSound) => void;
   focusMode?: boolean;
   onToggleFocusMode?: () => void;
+  // Kid sound settings
+  kidSoundsEnabled?: boolean;
+  kidSoundsVolume?: number;
+  onKidSoundsToggle?: (enabled: boolean) => void;
+  onKidSoundsVolume?: (vol: number) => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
