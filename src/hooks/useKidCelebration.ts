@@ -32,7 +32,7 @@ const MILESTONE_MESSAGES = [
 const CONTEXT_MESSAGES: Record<string, string[]> = {
   stencil: ['Cute choice!', 'Nice stencil! ✨', 'Ooo fancy shape!'],
   bright: ['So colorful!', 'Bright pick!', 'Love those colors!'],
-  large: ['Big move!', 'Going BIG! 💪', 'Wow, that's a big one!'],
+  large: ['Big move!', 'Going BIG!', 'Wow, that is a big one!'],
 };
 
 export interface CelebrationToast {
