@@ -461,9 +461,9 @@ export function WallCard({
         </div>
       )}
 
-      {/* ── Edit Panel (opens on pencil click) ── */}
+      {/* ── Edit Panel (opens on pencil click) — adult only ── */}
       <AnimatePresence>
-        {editPanelOpen && (
+        {!kidMode && editPanelOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setEditPanelOpen(false); }} />
             <motion.div
