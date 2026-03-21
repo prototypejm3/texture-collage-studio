@@ -144,7 +144,11 @@ const Index = () => {
     sounds.playPop();
     sounds.trackAction();
     kidOnboarding.notifyPick();
-  }, [studio, sounds, kidOnboarding]);
+    if (sounds.kidMode && canvasRef.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+    }
+  }, [studio, sounds, kidOnboarding, celebration]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
