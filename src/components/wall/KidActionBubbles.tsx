@@ -15,61 +15,103 @@ interface ActionBubblesProps {
   mode?: 'kid' | 'adult';
 }
 
-// Web Audio pop sound
-function playBubbleSound(type: 'pop' | 'spin' | 'grow' | 'poof' | 'sparkle') {
+type BubbleSoundType = 'pop' | 'spin' | 'grow' | 'poof' | 'sparkle';
+
+function playBubbleSound(type: BubbleSoundType, isKid: boolean) {
   try {
     const ctx = new AudioContext();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
     gain.connect(ctx.destination);
+    const t = ctx.currentTime;
 
-    switch (type) {
-      case 'pop':
-        osc.frequency.setValueAtTime(600, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.15);
-        break;
-      case 'spin':
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.2);
-        break;
-      case 'grow':
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(300, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.18);
-        break;
-      case 'poof':
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(500, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.25);
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.3);
-        break;
-      case 'sparkle':
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1200, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1600, ctx.currentTime + 0.08);
-        osc.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.25);
-        break;
+    if (isKid) {
+      // Kid sounds — bouncy & playful
+      switch (type) {
+        case 'pop':
+          osc.frequency.setValueAtTime(600, t);
+          osc.frequency.exponentialRampToValueAtTime(900, t + 0.06);
+          gain.gain.setValueAtTime(0.12, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+          osc.start(t); osc.stop(t + 0.15); break;
+        case 'spin':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, t);
+          osc.frequency.exponentialRampToValueAtTime(800, t + 0.12);
+          gain.gain.setValueAtTime(0.1, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+          osc.start(t); osc.stop(t + 0.2); break;
+        case 'grow':
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(300, t);
+          osc.frequency.exponentialRampToValueAtTime(600, t + 0.1);
+          gain.gain.setValueAtTime(0.12, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+          osc.start(t); osc.stop(t + 0.18); break;
+        case 'poof':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(500, t);
+          osc.frequency.exponentialRampToValueAtTime(100, t + 0.25);
+          gain.gain.setValueAtTime(0.1, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+          osc.start(t); osc.stop(t + 0.3); break;
+        case 'sparkle':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1200, t);
+          osc.frequency.exponentialRampToValueAtTime(1600, t + 0.08);
+          osc.frequency.exponentialRampToValueAtTime(1800, t + 0.15);
+          gain.gain.setValueAtTime(0.1, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+          osc.start(t); osc.stop(t + 0.25); break;
+      }
+    } else {
+      // Adult sounds — meditative & zen
+      switch (type) {
+        case 'pop':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(528, t); // Solfeggio healing frequency
+          gain.gain.setValueAtTime(0.06, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+          osc.start(t); osc.stop(t + 0.6); break;
+        case 'spin':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(396, t);
+          osc.frequency.exponentialRampToValueAtTime(528, t + 0.3);
+          gain.gain.setValueAtTime(0.05, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+          osc.start(t); osc.stop(t + 0.5); break;
+        case 'grow':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(396, t);
+          osc.frequency.exponentialRampToValueAtTime(639, t + 0.35);
+          gain.gain.setValueAtTime(0.05, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+          osc.start(t); osc.stop(t + 0.5); break;
+        case 'poof':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(396, t);
+          osc.frequency.exponentialRampToValueAtTime(174, t + 0.5);
+          gain.gain.setValueAtTime(0.05, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+          osc.start(t); osc.stop(t + 0.6); break;
+        case 'sparkle':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(528, t);
+          gain.gain.setValueAtTime(0.06, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+          osc.start(t); osc.stop(t + 0.7);
+          // Harmonic overtone
+          const osc2 = ctx.createOscillator();
+          const g2 = ctx.createGain();
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(639, t + 0.1);
+          g2.gain.setValueAtTime(0.04, t + 0.1);
+          g2.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+          osc2.connect(g2).connect(ctx.destination);
+          osc2.start(t + 0.1); osc2.stop(t + 0.6);
+          break;
+      }
     }
   } catch {}
 }
@@ -117,7 +159,7 @@ export function KidActionBubbles({
   const handleAction = (actionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const action = actions.find(a => a.id === actionId);
-    if (action) playBubbleSound(action.sound);
+    if (action) playBubbleSound(action.sound, isKid);
 
     switch (actionId) {
       case 'grow':
