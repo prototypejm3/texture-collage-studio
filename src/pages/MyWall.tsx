@@ -436,26 +436,25 @@ const MyWall = () => {
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold text-muted-foreground">🏠 Room:</span>
                 {[
-                  { value: 'white-brick' as const, label: '🤍', color: '#f5f5f5' },
-                  { value: 'sky-blue' as const, label: '☁️', color: '#87CEEB' },
-                  { value: 'mint' as const, label: '🌿', color: '#98D8C8' },
-                  { value: 'blush' as const, label: '🌸', color: '#F8C8D4' },
-                  { value: 'red' as const, label: '🔴', color: '#E53935' },
-                  { value: 'green' as const, label: '🟢', color: '#2E7D32' },
-                  { value: 'wood-birch-wall' as const, label: '🪵', color: '#D4B896' },
+                  { value: 'white-brick' as const, label: '🤍', img: '/walls/white-brick.png' },
+                  { value: 'sky-blue' as const, label: '☁️', img: '/walls/sky-blue-wall.png' },
+                  { value: 'mint' as const, label: '🌿', img: '/walls/mint-wall.png' },
+                  { value: 'blush' as const, label: '🌸', img: '/walls/blush-wall.png' },
+                  { value: 'red' as const, label: '🔴', img: '/walls/red-wall.png' },
+                  { value: 'green' as const, label: '🟢', img: '/walls/green-wall.png' },
+                  { value: 'wood-birch-wall' as const, label: '🪵', img: '/walls/wood-birch-wall.png' },
                 ].map(bg => (
                   <button
                     key={bg.value}
                     onClick={() => handleUpdateSettings({ background: bg.value })}
-                    className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 flex items-center justify-center text-lg ${
+                    className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 overflow-hidden ${
                       currentSettings.background === bg.value
                         ? 'border-primary scale-110 shadow-md ring-2 ring-primary/30'
                         : 'border-border/40'
                     }`}
-                    style={{ backgroundColor: bg.color }}
                     title={bg.label}
                   >
-                    {bg.label}
+                    <img src={bg.img} alt={bg.label} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
