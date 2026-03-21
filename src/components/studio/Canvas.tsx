@@ -656,6 +656,7 @@ export function Canvas({
         ];
 
         const handleTool = (toolId: string) => {
+          onToolSound?.(toolId);
           switch (toolId) {
             case 'grow':
               onUpdateElement(selectedId!, { width: Math.min(el.width + 20, 300), height: el.shape === 'strip' ? el.height : Math.min(el.height + 20, 300) });
@@ -666,11 +667,6 @@ export function Canvas({
             case 'cut': {
               const idx = edgeCycle.indexOf(el.effects.edgeStyle);
               onUpdateEffects(selectedId!, { edgeStyle: edgeCycle[(idx + 1) % edgeCycle.length] });
-              break;
-            }
-            case 'blob': {
-              const idx = shapeCycle.indexOf(el.shape);
-              onUpdateElement(selectedId!, { shape: shapeCycle[(idx + 1) % shapeCycle.length] });
               break;
             }
             case 'fade': {
