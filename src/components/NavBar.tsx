@@ -67,7 +67,7 @@ export function NavBar() {
               className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md"
               style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)' }}
             >
-              🧒 Kids Mode → 👵
+              🧒 Kids Mode → 🥦👵
             </motion.button>
           </div>
 
