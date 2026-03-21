@@ -194,6 +194,14 @@
   background: url('/walls/blush-wall.png') center/cover no-repeat;
 }
 
+.wall-bg-red {
+  background: url('/walls/red-wall.png') center/cover no-repeat;
+}
+
+.wall-bg-green {
+  background: url('/walls/green-wall.png') center/cover no-repeat;
+}
+
 /* Safe area for mobile bottom nav */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
