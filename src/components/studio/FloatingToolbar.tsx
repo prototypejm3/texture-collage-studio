@@ -295,6 +295,31 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
           );
         })}
       </div>
+
+      {/* Shape row */}
+      <div>
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-1 block">Shape</span>
+        <div className="flex flex-wrap gap-1.5">
+          {kidShapes.map(shape => {
+            const isActive = element.shape === shape.id;
+            return (
+              <motion.button
+                key={shape.id}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => onUpdate({ shape: shape.id })}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-bold transition-all ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30'
+                    : 'bg-secondary text-foreground border border-border hover:bg-accent'
+                }`}
+              >
+                <span className="text-xs">{shape.emoji}</span>
+                {shape.label}
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
