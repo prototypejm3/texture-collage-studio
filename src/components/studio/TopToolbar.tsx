@@ -36,6 +36,11 @@ interface Props {
   kidSoundsVolume?: number;
   onKidSoundsToggle?: (enabled: boolean) => void;
   onKidSoundsVolume?: (vol: number) => void;
+  // Undo/Redo
+  onUndo?: () => void;
+  onRedo?: () => void;
+  canUndo?: boolean;
+  canRedo?: boolean;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
