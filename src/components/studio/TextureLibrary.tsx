@@ -281,7 +281,7 @@ export function TextureLibrary({
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
             }`}
           >
-            <Star className="w-2.5 h-2.5" /> Favs
+            {kidMode ? '📦 My Box' : <><Star className="w-2.5 h-2.5" /> Favs</>}
             {favIds.size > 0 && (
               <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
             )}
