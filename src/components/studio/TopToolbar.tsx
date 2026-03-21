@@ -60,6 +60,7 @@ export function TopToolbar({
   kidSoundsEnabled, kidSoundsVolume, onKidSoundsToggle, onKidSoundsVolume,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
+  const [showSfxVolume, setShowSfxVolume] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
   const [showAiWelcome, setShowAiWelcome] = useState(false);
