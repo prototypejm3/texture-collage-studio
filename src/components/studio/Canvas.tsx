@@ -902,16 +902,6 @@ export function Canvas({
           cursor: onWallFrameStyleChange ? 'pointer' : undefined,
         }}
       >
-        {/* Kid mode art frame overlay — hidden in plain/white mode */}
-        {kidMode && kidCanvasStyle === 'rainbow' && (
-          <div className="absolute pointer-events-none" style={{
-            inset: -24,
-            backgroundImage: `url(${kidArtFrame})`,
-            backgroundSize: '100% 100%',
-            backgroundRepeat: 'no-repeat',
-            zIndex: 30,
-          }} />
-        )}
         {/* Frame style picker popover */}
         {showFramePicker && onWallFrameStyleChange && (
           <>
