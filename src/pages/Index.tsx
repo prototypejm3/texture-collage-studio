@@ -404,6 +404,10 @@ const Index = () => {
         onAmbientSoundChange={setAmbientSound}
         focusMode={focusMode}
         onToggleFocusMode={() => setFocusMode(prev => !prev)}
+        kidSoundsEnabled={sounds.enabled}
+        kidSoundsVolume={sounds.volume}
+        onKidSoundsToggle={sounds.setEnabled}
+        onKidSoundsVolume={sounds.setVolume}
       />
 
       <div className="flex-1 flex flex-col relative overflow-hidden">
