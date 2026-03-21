@@ -99,7 +99,7 @@ export function BottomBar({
     <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
-        <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5 ${kidMode ? 'text-[10px] font-semibold' : 'text-[8px]'}`}>{kidMode ? '🖼️ Frame' : 'Frame'}</span>
+        <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5 ${kidMode ? 'text-[10px] font-semibold' : 'text-[8px]'}`}>{kidMode ? '🖼️' : 'Frame'}</span>
 
         {/* Kid mode: simple circles for Black, White, None + locked premium circle */}
         {kidMode ? (
@@ -218,23 +218,24 @@ export function BottomBar({
       {/* Surface selector */}
       {onTableSurfaceChange && (
         <div className="flex items-center gap-0.5">
-          <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">{kidMode ? 'Desk' : 'Wood'}</span>
+          {kidMode ? <span className="text-xs">🪵</span> : <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Wood</span>}
           {([
-            { id: 'birch' as TableSurface, bg: 'linear-gradient(145deg, hsl(40,30%,75%), hsl(38,25%,65%))', label: 'Birch' },
-            { id: 'oak' as TableSurface, bg: 'linear-gradient(145deg, hsl(30,40%,55%), hsl(28,35%,42%))', label: 'Oak' },
-            { id: 'walnut' as TableSurface, bg: 'linear-gradient(145deg, hsl(20,35%,35%), hsl(18,30%,25%))', label: 'Walnut' },
+            { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
+            { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
+            { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
           ]).map(s => (
             <button
               key={s.id}
               onClick={() => onTableSurfaceChange(s.id)}
-              className={`w-5 h-5 rounded-full transition-all flex-shrink-0 border ${
+              className={`w-6 h-6 rounded-full transition-all flex-shrink-0 border overflow-hidden ${
                 tableSurface === s.id
                   ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
                   : 'border-border/40 hover:scale-110'
               }`}
-              style={{ background: s.bg }}
               title={s.label}
-            />
+            >
+              <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+            </button>
           ))}
         </div>
       )}
