@@ -94,17 +94,19 @@ export function BottomBar({
         <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5 ${kidMode ? 'text-[10px] font-semibold' : 'text-[8px]'}`}>{kidMode ? '🖼️ Frame' : 'Frame'}</span>
         {specialFrames.map(f => {
           const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+          const locked = f.premium && !isPremium;
           return (
             <div key={f.id} className="relative">
               <button
-                onClick={() => handleSpecialSelect(f.id)}
+                onClick={() => locked ? onRequestUpgrade?.() : handleSpecialSelect(f.id)}
                 className={`px-1.5 py-0.5 rounded-md transition-colors ${kidMode ? 'text-[11px] font-semibold' : 'text-[9px]'} ${
                   isActive
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                }`}
+                } ${locked ? 'opacity-50' : ''}`}
               >
                 {kidMode ? f.kidLabel : f.label}
+                {locked && <Lock className="w-2 h-2 inline-block ml-0.5 -mt-0.5" />}
               </button>
               {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
                 <>
