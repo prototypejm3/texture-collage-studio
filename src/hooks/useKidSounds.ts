@@ -408,6 +408,10 @@ export function useKidSounds() {
     playBoxOpen,
     playSave,
     playError,
+    playToolCut,
+    playToolCrumple,
+    playToolGrow,
+    playToolShrink,
     playShapeSelect,
     trackAction,
   };
