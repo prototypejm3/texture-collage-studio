@@ -108,18 +108,102 @@ const wrinkleCycle: WrinkleLevel[] = ['none', 'light', 'medium', 'heavy'];
 
 interface ToolDef {
   id: string;
-  emoji: string;
   label: string;
 }
 
 const kidTools: ToolDef[] = [
-  { id: 'grow',    emoji: '➕', label: 'Grow' },
-  { id: 'shrink',  emoji: '➖', label: 'Shrink' },
-  { id: 'cut',     emoji: '✂️', label: 'Cut' },
-  { id: 'blob',    emoji: '🌀', label: 'Blob' },
-  { id: 'fade',    emoji: '🌫️', label: 'Fade' },
-  { id: 'crumple', emoji: '🧻', label: 'Crumple' },
+  { id: 'grow',    label: 'Grow' },
+  { id: 'shrink',  label: 'Shrink' },
+  { id: 'cut',     label: 'Cut' },
+  { id: 'blob',    label: 'Blob' },
+  { id: 'fade',    label: 'Fade' },
+  { id: 'crumple', label: 'Crumple' },
 ];
+
+// SVG tool icons — visually distinct, kid-friendly
+function ToolIcon({ id, size = 32 }: { id: string; size?: number }) {
+  switch (id) {
+    case 'grow':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          <rect x="13" y="6" width="6" height="20" rx="1.5" fill="currentColor" opacity={0.7} />
+          <rect x="6" y="13" width="20" height="6" rx="1.5" fill="currentColor" opacity={0.7} />
+        </svg>
+      );
+    case 'shrink':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          <rect x="6" y="13" width="20" height="6" rx="1.5" fill="currentColor" opacity={0.7} />
+        </svg>
+      );
+    case 'cut':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          {/* Scissors */}
+          <circle cx="10" cy="24" r="4" fill="none" stroke="hsl(0, 70%, 55%)" strokeWidth="1.8" />
+          <circle cx="22" cy="24" r="4" fill="none" stroke="hsl(0, 70%, 55%)" strokeWidth="1.8" />
+          <line x1="12" y1="21" x2="20" y2="8" stroke="hsl(220, 10%, 50%)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="20" y1="21" x2="12" y2="8" stroke="hsl(220, 10%, 50%)" strokeWidth="2" strokeLinecap="round" />
+          {/* Screw */}
+          <circle cx="16" cy="15" r="1.5" fill="hsl(220, 10%, 60%)" />
+        </svg>
+      );
+    case 'blob':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          <path
+            d="M16,4 C22,4 28,8 27,14 C26,20 30,22 26,26 C22,30 18,28 14,28 C10,28 4,30 4,24 C4,18 6,20 6,14 C6,8 10,4 16,4 Z"
+            fill="hsl(240, 60%, 60%)"
+            opacity={0.7}
+          />
+        </svg>
+      );
+    case 'fade':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          <defs>
+            <linearGradient id="fade-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0.05" />
+            </linearGradient>
+          </defs>
+          <rect x="4" y="4" width="24" height="24" rx="4" fill="url(#fade-grad)" />
+          {/* Fog lines */}
+          <line x1="7" y1="12" x2="25" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" strokeLinecap="round" />
+          <line x1="9" y1="16" x2="23" y2="16" stroke="currentColor" strokeWidth="1" opacity="0.2" strokeLinecap="round" />
+          <line x1="11" y1="20" x2="21" y2="20" stroke="currentColor" strokeWidth="1" opacity="0.1" strokeLinecap="round" />
+        </svg>
+      );
+    case 'crumple':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          {/* Crumpled paper ball */}
+          <path d="M10,8 L22,6 L26,12 L28,22 L22,28 L12,26 L6,20 L8,12 Z" fill="hsl(40, 20%, 85%)" stroke="hsl(30, 15%, 65%)" strokeWidth="1" />
+          {/* Crumple creases */}
+          <line x1="12" y1="10" x2="18" y2="18" stroke="hsl(30, 15%, 60%)" strokeWidth="0.8" opacity="0.6" />
+          <line x1="20" y1="10" x2="14" y2="22" stroke="hsl(30, 15%, 60%)" strokeWidth="0.8" opacity="0.5" />
+          <line x1="10" y1="16" x2="22" y2="14" stroke="hsl(30, 15%, 60%)" strokeWidth="0.8" opacity="0.4" />
+          <line x1="16" y1="22" x2="24" y2="18" stroke="hsl(30, 15%, 60%)" strokeWidth="0.6" opacity="0.3" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+// Friendly edge name for kids
+function edgeDisplayName(edge: EdgeStyle): string {
+  const names: Record<EdgeStyle, string> = {
+    clean: 'Smooth',
+    'soft-fray': 'Fuzzy',
+    'rough-torn': 'Ripped',
+    pinking: 'Zigzag',
+    scallop: 'Wavy',
+    zigzag: 'Zappy',
+    wave: 'Swirly',
+  };
+  return names[edge] || edge;
+}
 
 function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const handleToolTap = (toolId: string) => {
@@ -163,6 +247,17 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
     }
   };
 
+  // Subtitle for each tool showing current state
+  const getSubtitle = (toolId: string): string | null => {
+    switch (toolId) {
+      case 'cut': return edgeDisplayName(element.effects.edgeStyle);
+      case 'blob': return element.shape === 'blob' ? 'Blobby!' : element.shape === 'circle' ? 'Round' : element.shape === 'torn-edge' ? 'Ripped' : 'Square';
+      case 'fade': return element.effects.bleachFade > 0 ? `${element.effects.bleachFade}%` : null;
+      case 'crumple': return element.effects.wrinkle !== 'none' ? element.effects.wrinkle : null;
+      default: return null;
+    }
+  };
+
   return (
     <div className="p-3 space-y-3">
       <div className="flex items-center justify-between">
@@ -178,33 +273,24 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
       </div>
 
       <div className="grid grid-cols-3 gap-2">
-        {kidTools.map(tool => (
-          <motion.button
-            key={tool.id}
-            whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => handleToolTap(tool.id)}
-            className="flex flex-col items-center justify-center gap-1 rounded-xl p-3 min-h-[64px] transition-colors border border-border bg-secondary hover:bg-accent"
-          >
-            <span className="text-2xl leading-none">{tool.emoji}</span>
-            <span className="text-[10px] font-semibold text-foreground">{tool.label}</span>
-          </motion.button>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap gap-1.5 px-1">
-        <span className="text-[9px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-          ✂️ {element.effects.edgeStyle}
-        </span>
-        <span className="text-[9px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-          🌫️ {element.effects.bleachFade}%
-        </span>
-        <span className="text-[9px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-          🧻 {element.effects.wrinkle}
-        </span>
-        <span className="text-[9px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-          🌀 {element.shape}
-        </span>
+        {kidTools.map(tool => {
+          const subtitle = getSubtitle(tool.id);
+          return (
+            <motion.button
+              key={tool.id}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => handleToolTap(tool.id)}
+              className="flex flex-col items-center justify-center gap-0.5 rounded-xl p-3 min-h-[72px] transition-colors border border-border bg-secondary hover:bg-accent"
+            >
+              <ToolIcon id={tool.id} size={32} />
+              <span className="text-[10px] font-semibold text-foreground">{tool.label}</span>
+              {subtitle && (
+                <span className="text-[8px] text-muted-foreground -mt-0.5">{subtitle}</span>
+              )}
+            </motion.button>
+          );
+        })}
       </div>
     </div>
   );
