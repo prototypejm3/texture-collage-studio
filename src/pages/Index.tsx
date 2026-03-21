@@ -456,6 +456,33 @@ const Index = () => {
                   onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
                   onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
                 />
+
+                {/* Canvas Background */}
+                <div className="px-3 py-3 border-t border-border">
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Canvas Background</p>
+                  <div className="flex items-center gap-1">
+                    {[
+                      { id: null as string | null, label: 'White', color: 'hsl(0,0%,98%)' },
+                      { id: 'rainbow-bg' as string | null, label: 'Rainbow', color: 'linear-gradient(135deg, hsl(0,80%,70%), hsl(40,90%,65%), hsl(60,90%,65%), hsl(120,60%,55%), hsl(200,80%,60%), hsl(270,70%,65%))' },
+                    ].map(preset => {
+                      const isActive = preset.id === null ? !studio.backgroundTextureId : studio.backgroundTextureId === preset.id;
+                      return (
+                        <button
+                          key={preset.label}
+                          onClick={() => studio.setBackgroundTextureId(preset.id)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded-md transition-colors text-[10px] ${
+                            isActive
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                          }`}
+                        >
+                          <span className="w-3.5 h-3.5 rounded-sm border border-border/40 flex-shrink-0" style={{ background: preset.color }} />
+                          {preset.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           )}
