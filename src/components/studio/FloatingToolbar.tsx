@@ -362,13 +362,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ edgeStyle: o.value })}
-                        className={`text-[10px] py-1.5 px-2 rounded-md transition-colors ${
+                        className={`flex items-center gap-1 text-[10px] py-1.5 px-2 rounded-md transition-colors ${
                           element.effects.edgeStyle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <EdgeIcon edge={o.value} size={16} />
+                        <span className="hidden sm:inline">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
@@ -384,13 +386,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ wrinkle: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${
                           element.effects.wrinkle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <WrinkleIcon level={o.value} size={16} />
+                        <span className="text-[8px]">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
@@ -423,13 +427,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ shadowDepth: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${
                           element.effects.shadowDepth === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <ShadowIcon depth={o.value} size={16} />
+                        <span className="text-[8px]">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
