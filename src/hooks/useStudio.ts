@@ -5,6 +5,49 @@ import { textures } from '@/data/textures';
 
 let nextId = 1;
 
+/**
+ * Normalize an SVG path so all coordinates are relative to the element's
+ * bounding box (0,0 → width,height). This allows clip-path elements to be
+ * positioned and moved like regular elements.
+ */
+function normalizeSvgPath(
+  pathD: string,
+  originX: number,
+  originY: number,
+  origW: number,
+  origH: number,
+  targetW: number,
+  targetH: number,
+): string {
+  // Replace every number pair in the path, translating by -originX/-originY
+  // and scaling to target dimensions
+  const scaleX = targetW / origW;
+  const scaleY = targetH / origH;
+  let idx = 0;
+  const nums = pathD.match(/-?\d+(\.\d+)?/g) || [];
+  let result = '';
+  let numIdx = 0;
+  let i = 0;
+  while (i < pathD.length) {
+    const match = pathD.slice(i).match(/^-?\d+(\.\d+)?/);
+    if (match) {
+      const val = parseFloat(match[0]);
+      // Determine if x or y coordinate based on pair position
+      if (numIdx % 2 === 0) {
+        result += String(Math.round((val - originX) * scaleX * 100) / 100);
+      } else {
+        result += String(Math.round((val - originY) * scaleY * 100) / 100);
+      }
+      numIdx++;
+      i += match[0].length;
+    } else {
+      result += pathD[i];
+      i++;
+    }
+  }
+  return result;
+}
+
 function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
