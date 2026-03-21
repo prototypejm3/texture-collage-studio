@@ -247,6 +247,19 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         </button>
       )}
 
+      {/* Rotate handle */}
+      {isSelected && (
+        <div
+          onPointerDown={handleRotatePointerDown}
+          onPointerMove={handleRotatePointerMove}
+          onPointerUp={handleRotatePointerUp}
+          className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 z-50 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing hover:scale-110 transition-transform pointer-events-auto"
+          title="Drag to rotate"
+        >
+          <RotateCw className="w-3 h-3" />
+        </div>
+      )}
+
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
       <div
         className="w-full h-full"
