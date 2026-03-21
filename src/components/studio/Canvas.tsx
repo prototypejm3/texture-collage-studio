@@ -223,6 +223,7 @@ export function Canvas({
             setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: tel.textureId, vibeId: tel.vibeId }]);
             onTableElementDelete(selectedTableId);
             setSelectedTableId(null);
+            onBoxSave?.();
           }
         } else if (selectedId) {
           const el = elements.find(e => e.id === selectedId);
