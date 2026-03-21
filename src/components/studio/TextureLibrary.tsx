@@ -394,6 +394,7 @@ export function TextureLibrary({
               viewMode={swatchView}
               kidMode={kidMode}
               isActiveBackground={backgroundTextureId === tex.id}
+              activeShape={nextShape}
             />
           ))}
         </div>
