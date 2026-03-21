@@ -165,8 +165,8 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
             >
               <span className="text-3xl">👇</span>
               <div>
-                <p className="text-lg font-bold leading-tight">Pick a color!</p>
-                <p className="text-xs opacity-80">Drag a swatch up to the canvas</p>
+                <p className="text-lg font-bold leading-tight">Pick a stencil or a color!</p>
+                <p className="text-xs opacity-80">Drag a swatch or stencil onto the canvas</p>
               </div>
             </motion.div>
 
