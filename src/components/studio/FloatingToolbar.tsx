@@ -115,9 +115,18 @@ const kidTools: ToolDef[] = [
   { id: 'grow',    label: 'Grow' },
   { id: 'shrink',  label: 'Shrink' },
   { id: 'cut',     label: 'Cut' },
-  { id: 'blob',    label: 'Blob' },
+  { id: 'twin',    label: 'Twin' },
   { id: 'fade',    label: 'Fade' },
   { id: 'crumple', label: 'Crumple' },
+];
+
+const kidShapes: { id: ElementShape; label: string; emoji: string }[] = [
+  { id: 'soft-square', label: 'Square', emoji: '🟧' },
+  { id: 'rectangle',   label: 'Long',   emoji: '▭' },
+  { id: 'circle',      label: 'Circle', emoji: '⚫' },
+  { id: 'strip',       label: 'Thin',   emoji: '➖' },
+  { id: 'torn-edge',   label: 'Ripped', emoji: '🧩' },
+  { id: 'blob',        label: 'Blob',   emoji: '🫧' },
 ];
 
 // SVG tool icons — visually distinct, kid-friendly
