@@ -296,23 +296,42 @@ export function WallCard({
           </button>
           {menuOpen && menuBtnRef.current && (() => {
             const btnRect = menuBtnRef.current!.getBoundingClientRect();
-            const menuWidth = 160;
+            const menuWidth = 180;
+            const menuHeight = 420;
             const spaceRight = window.innerWidth - btnRect.right;
             const spaceBelow = window.innerHeight - btnRect.bottom;
-            const openLeft = spaceRight < menuWidth + 16;
-            const openUp = spaceBelow < 300;
+            const spaceLeft = btnRect.left;
+            const openLeft = spaceRight < menuWidth + 16 && spaceLeft > menuWidth + 16;
+            const openUp = spaceBelow < menuHeight;
+            
+            let top: number | undefined;
+            let bottom: number | undefined;
+            if (openUp) {
+              bottom = Math.max(8, window.innerHeight - btnRect.top + 4);
+              // ensure it doesn't go off top
+              if (window.innerHeight - bottom - menuHeight < 8) {
+                bottom = undefined;
+                top = 8;
+              }
+            } else {
+              top = btnRect.bottom + 4;
+              // ensure it doesn't go off bottom
+              if (top + menuHeight > window.innerHeight - 8) {
+                top = Math.max(8, window.innerHeight - menuHeight - 8);
+              }
+            }
+            
             return (
               <>
                 <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
                 <div
-                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[150px] max-h-[70vh] overflow-y-auto"
+                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[170px] max-w-[200px] max-h-[80vh] overflow-y-auto"
                   style={{
                     ...(openLeft
-                      ? { right: window.innerWidth - btnRect.left + 4 }
-                      : { left: btnRect.right + 4 }),
-                    ...(openUp
-                      ? { bottom: window.innerHeight - btnRect.bottom }
-                      : { top: btnRect.top }),
+                      ? { right: Math.max(8, window.innerWidth - btnRect.left + 4) }
+                      : { left: Math.min(btnRect.right + 4, window.innerWidth - menuWidth - 8) }),
+                    ...(top !== undefined ? { top } : {}),
+                    ...(bottom !== undefined ? { bottom } : {}),
                   }}
                 >
                 <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
