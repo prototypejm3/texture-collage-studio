@@ -582,6 +582,7 @@ export function Canvas({
             const textureId = e.dataTransfer.getData('textureId');
             if (textureId) {
               setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
+              onBoxSave?.();
             }
           }}
         >
