@@ -225,31 +225,34 @@ export function TopToolbar({
             <>
               <Link
                 to="/"
-                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-                  isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                title="Open the creative studio"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors ${
+                  isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
                 }`}
               >
-                <Brush className="w-3 h-3" />
+                <Brush className="w-3.5 h-3.5" />
                 Create
               </Link>
               <Link
                 to="/wall"
                 data-nav="wall"
-                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-                  isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                title="View and arrange your artwork"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors ${
+                  isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
                 }`}
               >
-                <Grid2x2 className="w-3 h-3" />
+                <Grid2x2 className="w-3.5 h-3.5" />
                 My Wall
               </Link>
               <Link
                 to="/gallery"
                 data-nav="gallery"
-                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-                  isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                title="Browse community artwork"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors ${
+                  isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
                 }`}
               >
-                <Landmark className="w-3 h-3" />
+                <Landmark className="w-3.5 h-3.5" />
                 Gallery
               </Link>
             </>
