@@ -284,6 +284,7 @@ export function RightSidebar({
     <div className="flex flex-col h-full bg-card">
       {/* Tab switcher */}
       {/* Filter pills — matches texture category pills */}
+      {!kidMode && (
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex flex-wrap gap-1">
           {tabs.map(tab => (
@@ -305,6 +306,7 @@ export function RightSidebar({
           ))}
         </div>
       </div>
+      )}
 
       {/* Replace vs Layer dialog */}
       {pendingVibe && (
