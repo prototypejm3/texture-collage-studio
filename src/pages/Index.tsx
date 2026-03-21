@@ -52,6 +52,7 @@ const Index = () => {
   const isMobile = useIsMobile();
   const sounds = useKidSounds();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
+  const kidOnboarding = useKidOnboarding(sounds.kidMode);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [stencilsCollapsed, setStencilsCollapsed] = useState(() => {
     try { return localStorage.getItem('stencils-collapsed') === 'true'; } catch { return false; }
