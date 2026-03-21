@@ -513,5 +513,10 @@ export function useStudio() {
     // Serialization
     getState,
     loadState,
+    // Undo/Redo
+    undo,
+    redo,
+    canUndo,
+    canRedo,
   };
 }
