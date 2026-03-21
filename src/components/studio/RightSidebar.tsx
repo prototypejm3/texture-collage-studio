@@ -274,7 +274,7 @@ export function RightSidebar({
 
   const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
     { id: 'stencils', label: kidMode ? 'Shapes' : 'Templates', icon: Palette },
-    { id: 'community', label: kidMode ? 'By Friends' : 'Community', icon: Globe },
+    { id: 'community', label: kidMode ? '👫 Friends' : 'Community', icon: kidMode ? undefined : Globe },
     ...(!kidMode ? [{ id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length }] : []),
   ];
 
