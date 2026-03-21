@@ -826,6 +826,12 @@ export function Canvas({
               onFinishDraw={onFinishDraw}
               onCancel={onCancelDraw}
               crayonMode={crayonMode}
+              canUndo={elements.length > 0}
+              onUndoLast={() => {
+                // Delete the most recently added element
+                const lastEl = elements[elements.length - 1];
+                if (lastEl) onDeleteElement(lastEl.id);
+              }}
             />
           )}
         </div>
