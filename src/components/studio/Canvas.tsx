@@ -308,8 +308,8 @@ export function Canvas({
     if (!containerSize.width || !containerSize.height) return baseSize;
     const aspect = baseSize.w / baseSize.h;
     // Mobile: use more of the screen; Desktop: cap at 55%
-    const widthFraction = isMobileCanvas ? 0.88 : 0.55;
-    const heightFraction = isMobileCanvas ? 0.65 : 0.7;
+    const widthFraction = isMobileCanvas ? 0.85 : 0.45;
+    const heightFraction = isMobileCanvas ? 0.60 : 0.62;
     const maxW = Math.min(containerSize.width * widthFraction, baseSize.w);
     const maxH = Math.min(containerSize.height * heightFraction, baseSize.h);
     let w = maxW;
