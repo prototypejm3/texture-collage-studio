@@ -511,7 +511,7 @@ export function RightSidebar({
 
             {/* Stencil Grid — flat, filtered by category */}
             <div className="p-1.5">
-              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
+              <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-5 sm:grid-cols-6 md:grid-cols-8'}`}>
                 {(() => {
                   const displayVibes = activeCategory === 'All'
                     ? [...uncategorizedVibes, ...themeSections.flatMap(s => s.vibes)]
