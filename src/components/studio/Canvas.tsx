@@ -83,6 +83,10 @@ interface Props {
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
   onBoxSave?: () => void;
+  // Kid toolbox on desk
+  onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
+  onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
+  onDuplicateElement?: (id: string) => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
