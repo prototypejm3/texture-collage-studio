@@ -84,7 +84,7 @@ interface BubbleAction {
 }
 
 const kidBubbleActions: BubbleAction[] = [
-  { id: 'grow',   emoji: '➕', label: 'Grow',   angle: -90,  sound: 'grow' },
+  { id: 'grow',   emoji: '🔲', label: 'Size',   angle: -90,  sound: 'grow' },
   { id: 'cut',    emoji: '✂️', label: 'Frame',  angle: -45,  sound: 'pop' },
   { id: 'spin',   emoji: '🔄', label: 'Spin',   angle: 0,    sound: 'spin' },
   { id: 'save',   emoji: '📦', label: 'Box',    angle: 45,   sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
