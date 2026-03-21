@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles, Volume2, VolumeX, Undo2, Redo2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
