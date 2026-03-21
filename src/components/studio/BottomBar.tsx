@@ -137,6 +137,17 @@ export function BottomBar({
               style={{ background: 'transparent' }}
               title="None"
             />
+            {/* Rainbow */}
+            <button
+              onClick={() => onWallFrameStyleChange('rainbow')}
+              className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
+                wallFrameStyle === 'rainbow'
+                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: 'conic-gradient(hsl(0,80%,65%), hsl(40,90%,60%), hsl(60,90%,60%), hsl(120,60%,50%), hsl(200,80%,55%), hsl(270,70%,60%), hsl(0,80%,65%))' }}
+              title="Rainbow"
+            />
             {/* Premium colors — single locked circle */}
             <button
               onClick={() => onRequestUpgrade?.()}

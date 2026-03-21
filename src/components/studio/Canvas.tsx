@@ -110,6 +110,7 @@ const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: 
   polaroid: { bg: 'hsl(0, 0%, 98%)', border: '2px solid hsl(0, 0%, 90%)', shadow: 'hsla(0, 0%, 0%, 0.12)', innerBg: 'hsl(0, 0%, 99%)', padding: 12, borderRadius: 2 },
   black: { bg: 'linear-gradient(135deg, hsl(0, 0%, 15%), hsl(0, 0%, 8%), hsl(0, 0%, 18%))', border: '3px solid hsl(0, 0%, 5%)', shadow: 'hsla(0, 0%, 0%, 0.3)', innerBg: 'hsl(0, 0%, 99%)', padding: 14, borderRadius: 2 },
   none: { bg: 'transparent', border: 'none', shadow: 'hsla(0, 0%, 0%, 0)', innerBg: 'hsl(40, 20%, 97%)', padding: 0, borderRadius: 0 },
+  rainbow: { bg: 'linear-gradient(135deg, hsl(0,80%,65%), hsl(40,90%,60%), hsl(60,90%,60%), hsl(120,60%,50%), hsl(200,80%,55%), hsl(270,70%,60%))', border: '3px solid hsl(270,50%,50%)', shadow: 'hsla(270, 50%, 30%, 0.3)', innerBg: 'hsl(0, 0%, 99%)', padding: 14, borderRadius: 4 },
 };
 
 export function Canvas({
