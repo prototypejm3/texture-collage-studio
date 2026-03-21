@@ -338,14 +338,25 @@ serve(async (req) => {
         model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a simple, recognizable cartoon silhouette of "${prompt}" that a child could easily identify at first glance.
+          { role: "user", content: `Create a simple, clean, cartoon-style stencil of a ${prompt}.
 
 Requirements:
-1. SILHOUETTE FIRST: Draw a single, clear, iconic outline. What 3-4 key features make this instantly identifiable? Include ALL of them.
-2. CARTOON STYLE: Slightly exaggerated proportions — bigger head, simpler limbs, bold shapes. NOT abstract, NOT realistic.
-3. POSITION: Center on the 480×480 canvas, filling 70-85% of the space. Use the most recognizable pose/angle.
-4. DIVIDE: Slice into exactly 4-6 LARGE sections along natural anatomical/structural boundaries. Each section must be big enough to easily tap and fill.
-5. VERIFY: The sections must tile back together perfectly to recreate the original silhouette. No gaps, no overlaps. Shared edges use identical coordinates.
+- bold outline
+- clear recognizable silhouette
+- no small details
+- no textures or shading
+
+Structure:
+- divide into 4–6 large fillable sections
+- each section must be clearly separated
+
+Style:
+- flat
+- minimal
+- child-friendly
+- easy to color
+
+The object must be instantly recognizable at first glance.
 
 Generate the stencil with clean, bold SVG paths. Every section must be large and clearly bounded.` },
         ],
