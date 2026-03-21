@@ -583,6 +583,7 @@ const MyWall = () => {
                 isPremium={isPremium}
                 showTitleCards={currentSettings.showTitleCards}
                 isDark={isDark}
+                kidMode={kidMode}
                 onOpen={handleOpen}
                 onDuplicate={handleDuplicate}
                 onDelete={handleDelete}
