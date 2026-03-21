@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Brush, Grid2x2, LogIn, LogOut, User, Landmark, Moon, Sun } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
+import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
@@ -26,11 +27,42 @@ export function NavBar() {
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
 
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  const handleToggleKidMode = () => {
+    if (kidMode) {
+      setShowGrownUpCheck(true);
+    } else {
+      setKidMode(true);
+      localStorage.setItem('kid-mode', 'true');
+      window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: true }));
+    }
+  };
+
   return (
+    <>
     <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
-      <span className="text-sm font-bold tracking-tight text-foreground mr-4">
-        Swatchbox Studio
-      </span>
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-bold tracking-tight text-foreground">
+          Swatchbox Studio
+        </span>
+        <button
+          onClick={handleToggleKidMode}
+          className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all ${kidMode ? 'bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30 scale-105' : 'bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary'}`}
+          title={kidMode ? 'Switch to adult mode' : 'Switch to kids mode'}
+        >
+          {kidMode ? '🧒 Kids Mode!' : '👵 Grandma'}
+        </button>
+      </div>
       {/* Desktop nav links */}
       <div className="hidden md:flex items-center gap-1">
         <Link
@@ -96,5 +128,16 @@ export function NavBar() {
         )}
       </div>
     </nav>
+    <GrownUpCheckModal
+      isOpen={showGrownUpCheck}
+      onClose={() => setShowGrownUpCheck(false)}
+      onSuccess={() => {
+        setShowGrownUpCheck(false);
+        setKidMode(false);
+        localStorage.setItem('kid-mode', 'false');
+        window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: false }));
+      }}
+    />
+    </>
   );
 }
