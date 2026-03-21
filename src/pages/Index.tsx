@@ -346,6 +346,8 @@ const Index = () => {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     } else if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
+      sounds.playDrop();
+      sounds.trackAction();
     }
     // In 'swatch' mode with no section selected, clicking does nothing (drag to add)
   }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode]);
