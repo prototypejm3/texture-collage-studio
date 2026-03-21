@@ -157,7 +157,7 @@ export function NavBar() {
     );
   }
 
-  // ── Adult Mode Nav ──
+  // ── Granny Mode Nav ──
   return (
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
