@@ -379,7 +379,7 @@ export function TextureLibrary({
         )}
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-2">
-        <div className={`grid ${kidMode ? 'grid-cols-5 sm:grid-cols-5 gap-1' : 'grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1.5'}`} style={kidMode ? { fontSize: '86%' } : undefined}>
+        <div className={`grid ${kidMode ? 'grid-cols-6 sm:grid-cols-6 gap-1' : 'grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1.5'}`}>
           {filtered.map(tex => (
             <SwatchItem
               key={tex.id}
