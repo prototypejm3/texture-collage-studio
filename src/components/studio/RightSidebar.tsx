@@ -526,6 +526,19 @@ export function RightSidebar({
                     {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
                   </button>
                 ))}
+                {/* Kid mode: community as a category filter */}
+                {kidMode && communityVibes.length > 0 && (
+                  <button
+                    onClick={() => setActiveCategory('Community')}
+                    className={`rounded-full transition-colors font-semibold px-3 py-1.5 text-xs ${
+                      activeCategory === 'Community'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    }`}
+                  >
+                    🎪 Made By Us
+                  </button>
+                )}
               </div>
             </div>
 
