@@ -526,7 +526,17 @@ const Index = () => {
               onUpdate={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
               onDrop={handleDrop}
               onSelectSection={studio.selectSection}
-              onDropInSection={studio.fillSection}
+              onDropInSection={(sectionId, textureId) => {
+                studio.fillSection(sectionId, textureId);
+                if (sounds.kidMode && canvasRef.current) {
+                  const rect = canvasRef.current.getBoundingClientRect();
+                  celebration.celebrateDrop(rect.left + rect.width / 2, rect.top + rect.height / 2, 'stencil');
+                  // Check milestone
+                  const filled = Object.keys(studio.vibeFills).length + 1;
+                  const total = studio.activeVibe?.sections.length || 0;
+                  celebration.checkMilestone(filled, total, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 3 });
+                }
+              }}
               onDropAsSwatch={handleDrop}
               onDetachSection={studio.detachSection}
               onDeleteSection={studio.deleteSection}
