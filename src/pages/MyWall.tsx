@@ -35,6 +35,8 @@ const bgStyles: Record<WallBackground, string> = {
   'sky-blue': 'wall-bg-sky-blue',
   'mint': 'wall-bg-mint',
   'blush': 'wall-bg-blush',
+  'red': 'wall-bg-red',
+  'green': 'wall-bg-green',
   'custom': '',
 };
 
@@ -438,6 +440,8 @@ const MyWall = () => {
                   { value: 'sky-blue' as const, label: '☁️', color: '#87CEEB' },
                   { value: 'mint' as const, label: '🌿', color: '#98D8C8' },
                   { value: 'blush' as const, label: '🌸', color: '#F8C8D4' },
+                  { value: 'red' as const, label: '🔴', color: '#E53935' },
+                  { value: 'green' as const, label: '🟢', color: '#2E7D32' },
                   { value: 'wood-birch-wall' as const, label: '🪵', color: '#D4B896' },
                 ].map(bg => (
                   <button
