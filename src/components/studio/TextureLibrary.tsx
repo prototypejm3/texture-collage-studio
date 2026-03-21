@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool, RectangleHorizontal, Minus } from 'lucide-react';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 
-function ShapeIcon({ shape }: { shape: ElementShape }) {
+export function ShapeIcon({ shape }: { shape: ElementShape }) {
   const size = 14;
   switch (shape) {
     case 'soft-square':
