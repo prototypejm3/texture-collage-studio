@@ -55,23 +55,24 @@ export function NavBar() {
     return (
       <>
         <nav className="h-14 border-b-2 border-primary/20 bg-gradient-to-r from-primary/5 via-background to-primary/5 flex items-center px-4 gap-4 flex-shrink-0">
-          {/* Brand */}
+          {/* Brand — bear is the mode toggle */}
           <div className="flex items-center gap-2">
-            <img src={logoImg} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleToggleKidMode}
+              className="relative group"
+              title="Back to Granny Land?"
+            >
+              <img src={logoImg} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
+              <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold bg-primary text-primary-foreground px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none z-50">
+                Back to Granny Land? 👵
+              </span>
+            </motion.button>
             <span className="text-sm font-extrabold tracking-tight text-foreground">
               Swatchbox Studio
             </span>
           </div>
-
-          {/* Mode toggle — prominent in kid mode */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleToggleKidMode}
-            className="px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30"
-            title="Switch to Granny Mode"
-          >
-            🧒 Kids Mode!
-          </motion.button>
 
           {/* Desktop nav links — playful */}
           <div className="hidden md:flex items-center gap-1.5">
