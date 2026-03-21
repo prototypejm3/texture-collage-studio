@@ -157,14 +157,12 @@ function ToolIcon({ id, size = 32 }: { id: string; size?: number }) {
           <circle cx="16" cy="15" r="1.5" fill="hsl(220, 10%, 60%)" />
         </svg>
       );
-    case 'blob':
+    case 'twin':
       return (
         <svg width={size} height={size} viewBox="0 0 32 32">
-          <path
-            d="M16,4 C22,4 28,8 27,14 C26,20 30,22 26,26 C22,30 18,28 14,28 C10,28 4,30 4,24 C4,18 6,20 6,14 C6,8 10,4 16,4 Z"
-            fill="hsl(240, 60%, 60%)"
-            opacity={0.7}
-          />
+          {/* Two overlapping papers */}
+          <rect x="4" y="6" width="16" height="20" rx="2" fill="hsl(200, 50%, 70%)" opacity={0.6} />
+          <rect x="10" y="4" width="16" height="20" rx="2" fill="hsl(200, 50%, 55%)" opacity={0.8} />
         </svg>
       );
     case 'fade':
