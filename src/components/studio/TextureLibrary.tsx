@@ -433,7 +433,34 @@ export function TextureLibrary({
   );
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false, isActiveBackground = false }: {
+function getSwatchClipPath(shape?: ElementShape): string | undefined {
+  switch (shape) {
+    case 'circle': return '50%';
+    default: return undefined;
+  }
+}
+
+function getSwatchBorderRadius(shape?: ElementShape): string {
+  switch (shape) {
+    case 'circle': return '50%';
+    case 'blob': return '42% 58% 62% 38% / 45% 55% 45% 55%';
+    case 'torn-edge': return '8% 12% 6% 14% / 10% 8% 12% 6%';
+    case 'soft-square': return '0.5rem';
+    case 'rectangle': return '0.375rem';
+    case 'strip': return '0.375rem';
+    default: return '0.5rem';
+  }
+}
+
+function getSwatchAspect(shape?: ElementShape): string {
+  switch (shape) {
+    case 'strip': return '3/1';
+    case 'rectangle': return '3/2';
+    default: return '1/1';
+  }
+}
+
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false, isActiveBackground = false, activeShape }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
@@ -443,6 +470,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   viewMode?: 'swatch' | 'tiled';
   kidMode?: boolean;
   isActiveBackground?: boolean;
+  activeShape?: ElementShape;
 }) {
   const isCustom = tex.id.startsWith('custom-');
   const isImage = isCustom || tex.cssBackground.startsWith('url(');
@@ -450,6 +478,9 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
     ? (isImage ? '60px 60px' : '40px 40px')
     : 'cover';
   const displayName = kidMode ? (kidTextureNames[tex.id] || tex.name) : tex.name;
+
+  const borderRadius = getSwatchBorderRadius(activeShape);
+  const aspectRatio = getSwatchAspect(activeShape);
 
   return (
     <motion.div
@@ -464,10 +495,12 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
       className="cursor-grab active:cursor-grabbing group relative"
     >
       <div
-        className={`aspect-square rounded-lg overflow-hidden border shadow-sm ${isActiveBackground ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'}`}
+        className={`overflow-hidden border shadow-sm transition-all duration-200 ${isActiveBackground ? 'border-primary ring-2 ring-primary/40' : 'border-border/50'}`}
         style={{
           background: tex.cssBackground,
           backgroundSize: bgSize,
+          borderRadius,
+          aspectRatio,
         }}
       />
       <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
