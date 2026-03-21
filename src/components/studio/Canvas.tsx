@@ -302,7 +302,23 @@ export function Canvas({
     };
   }, [isBoxDragging]);
 
-  const baseSize = frameSizeMap[frameSize];
+  // Toolbox dragging
+  useEffect(() => {
+    if (!isToolboxDragging) return;
+    const handleMove = (e: PointerEvent) => {
+      const dx = e.clientX - toolboxDragStart.current.mx;
+      const dy = e.clientY - toolboxDragStart.current.my;
+      setToolboxPos({ x: toolboxDragStart.current.bx + dx, y: toolboxDragStart.current.by + dy });
+    };
+    const handleUp = () => setIsToolboxDragging(false);
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
+    };
+  }, [isToolboxDragging]);
+
 
   // Dynamically size canvas to fit container, capped at base size
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
