@@ -432,44 +432,95 @@ export function TextureLibrary({
   );
 }
 
-// Kid emoji helper — picks emoji based on name keywords
+// Kid emoji helper — precise per-name mapping for best visual match
+const kidEmojiMap: Record<string, string> = {
+  // Velvet / Royale
+  'Cotton Candy': '🍭', 'Stormy Cloud': '🌧️', 'Dinosaur Green': '🦕', 'Frog Belly': '🐸',
+  'Cinnamon Swirl': '🍩', 'Mermaid Tail': '🧜‍♀️', 'Rocket Blue': '🚀', 'Elephant Ear': '🐘',
+  'Tree Fort': '🌳', 'Grape Juice': '🍇', 'Sandcastle': '🏖️', 'Turtle Shell': '🐢',
+  // Banks
+  'Teddy Bear': '🧸', 'Cherry Jam': '🍒', 'Cookie Dough': '🍪', 'Goldfish': '🐟',
+  // Bentley
+  'Lemonade': '🍋', 'Midnight Sky': '🌙', 'Robot Silver': '🤖',
+  // Cody
+  'Blueberry Ice': '🫐', 'Peanut Butter': '🥜', 'Ocean Wave': '🌊',
+  // Sunbrella
+  'Foggy Morning': '🌫️', 'Swimming Pool': '🏊', 'Unicorn Purple': '🦄',
+  'Lily Pad': '🐸', 'Snowflake': '❄️', 'Marshmallow': '☁️',
+  // Bubbly
+  'Pickle Green': '🥒', 'Gingerbread': '🏠', 'Cream Puff': '🧁',
+  // Karina
+  'Cloud Puff': '☁️', 'Mermaid Scale': '🧜‍♀️',
+  // Crave
+  'Bubblegum': '🫧', 'Hot Cocoa': '☕', 'Milk Chocolate': '🍫', 'Ginger Snap': '🍪',
+  'Raspberry': '🫐', 'Fern Leaf': '🌿', 'Volcano Rock': '🌋', 'Caramel Swirl': '🍯',
+  // Flat Silk
+  'Banana Cream': '🍌', 'Golden Star': '⭐', 'Chipmunk': '🐿️', 'Fairy Wing': '🧚',
+  'Starry Night': '🌌',
+  // Checker
+  'Checkerboard': '♟️', 'Berry Waffle': '🧇',
+  // Singles
+  'Fluffy Cloud': '☁️', 'Parrot Feather': '🦜', 'Sea Glass': '🪸',
+  'Pine Tree': '🌲', 'Fairy Dust': '✨', 'Beach Sand': '🏖️',
+  'Caterpillar': '🐛', 'Snowball': '⛄', 'Mermaid Green': '🧜‍♀️',
+  'Bunny Gray': '🐰', 'Silver Coin': '🪙', 'Dove Feather': '🕊️', 'Sky Blue': '🩵',
+  'Pickle Jar': '🥒', 'Ink Splash': '🖋️', 'Sandy Toes': '👣', 'Brownie': '🟫',
+  'Seashell': '🐚', 'Rainy Day': '🌧️', 'Cotton Ball': '☁️',
+  'Crystal Blue': '💎', 'Peach Gummy': '🍑', 'Feather Soft': '🪶',
+  'River Rock': '🪨', 'Peacock Feather': '🦚', 'Silk Ribbon': '🎀', 'Pillow White': '🤍',
+  // Leather
+  'Honey Bear': '🍯', 'Dark Chocolate': '🍫', 'Cinnamon Toast': '🥐',
+  'Maple Syrup': '🍁', 'Cocoa Bean': '🫘', 'Graham Cracker': '🧇',
+  // Wood
+  'Treehouse': '🏡', 'Acorn': '🌰', 'Birch Bark': '🪵',
+  // Marble
+  'Ice Cream Swirl': '🍦', 'Licorice': '🖤', 'Strawberry Milk': '🍓', 'Mint Chip': '🍨',
+  // Concrete
+  'Sidewalk': '🛤️', 'Moon Rock': '🌕', 'Fossil': '🦴',
+  // Stripe
+  'Zebra Stripe': '🦓', 'Candy Stripe': '🍭', 'Rainbow Weave': '🌈',
+  // Grid
+  'Blueberry Waffle': '🧇', 'Vanilla Waffle': '🧇', 'Tic-Tac-Toe': '⭕', 'Window Frost': '🪟',
+  // Animal
+  'Cheetah Spots': '🐆', 'Snow Leopard': '❄️', 'Cow Spots': '🐄', 'Zebra Stripes': '🦓',
+  // Ripple
+  'Vanilla Pudding': '🍮', 'Blackberry Jam': '🫐', 'Paper Bag': '📦',
+  'Waffle Cone': '🍦', 'Treasure Map': '🗺️',
+  // Speckle
+  'Robin Egg': '🥚', 'Cookies & Cream': '🍪',
+  // Tie-dye
+  'Pink Swirl': '🌀', 'Cinnamon Roll': '🍩', 'Rainbow Swirl': '🌈',
+  // Maze
+  'Maze Game': '🧩',
+  // Felt
+  'Sandy Beach': '🏖️', 'Chocolate Milk': '🥛', 'Turtle Green': '🐢', 'Deep Ocean': '🐋',
+  // Cotton
+  'Coconut Flake': '🥥', 'Oatmeal Cookie': '🍪',
+  // Yarn
+  'Vanilla Ice Cream': '🍦', 'Cinnamon Sugar': '🍩', 'Pencil Lead': '✏️',
+  // Corduroy
+  'Sandy Lines': '〰️', 'Chocolate Bar': '🍫', 'Caterpillar Lines': '🐛',
+  'Whale Blue': '🐳', "S'more": '🔥', 'Leaf Pile': '🍂',
+  'Nighttime': '🌙', 'Sand Dollar': '🐚', 'Teddy Paw': '🐾',
+  'Herb Garden': '🌱', 'Deep Space': '🪐',
+  // Signature
+  'Rose Petal': '🌹', 'Pink Lollipop': '🍭', 'Hot Pink': '💗',
+  'Orange Candy': '🍊', 'Plum Pudding': '🍑', 'Grape Popsicle': '🍇',
+  'Clay Pot': '🏺', 'Berry Blast': '🫐', 'Sage Leaf': '🌿', 'Sand Dune': '🏜️',
+  'Midnight Blue': '🌃', 'Forest Floor': '🌲', 'Cherry Cola': '🥤',
+  'Starry Painting': '🖼️', 'Army Camo': '🪖', 'Tiger Stripe': '🐅',
+  'Beach Day': '🏄', 'Sparkle Dots': '✨', 'Bird Feather': '🪶',
+  'Fairy Garden': '🧚', 'Magic Swirl': '🔮', 'Twin Stars': '⭐',
+  'Happy Chat': '💬', 'Blueberry Kiss': '💋', 'Sunny Puppy': '🐶',
+};
+
 function getKidTextureEmoji(id: string, name: string): string {
-  const n = name.toLowerCase();
-  if (n.includes('candy') || n.includes('bubblegum') || n.includes('cotton candy')) return '🍬';
-  if (n.includes('cloud') || n.includes('sky') || n.includes('midnight')) return '☁️';
-  if (n.includes('dino') || n.includes('frog') || n.includes('turtle') || n.includes('lizard')) return '🦎';
-  if (n.includes('bear') || n.includes('teddy')) return '🧸';
-  if (n.includes('cherry') || n.includes('berry') || n.includes('grape') || n.includes('jam')) return '🍇';
-  if (n.includes('cookie') || n.includes('oat') || n.includes('cinnamon') || n.includes('toast')) return '🍪';
-  if (n.includes('gold') || n.includes('sunshine') || n.includes('sun') || n.includes('lemon')) return '🌟';
-  if (n.includes('ocean') || n.includes('sea') || n.includes('wave') || n.includes('mermaid')) return '🌊';
-  if (n.includes('rocket') || n.includes('space') || n.includes('robot')) return '🚀';
-  if (n.includes('flower') || n.includes('petal') || n.includes('rose') || n.includes('garden')) return '🌸';
-  if (n.includes('tree') || n.includes('forest') || n.includes('moss') || n.includes('leaf')) return '🌿';
-  if (n.includes('sand') || n.includes('castle') || n.includes('beach')) return '🏖️';
-  if (n.includes('snow') || n.includes('ice') || n.includes('frost')) return '❄️';
-  if (n.includes('fire') || n.includes('flame') || n.includes('lava')) return '🔥';
-  if (n.includes('rainbow') || n.includes('unicorn')) return '🌈';
-  if (n.includes('star') || n.includes('sparkle') || n.includes('glitter')) return '✨';
-  if (n.includes('elephant') || n.includes('hippo')) return '🐘';
-  if (n.includes('pup') || n.includes('puppy') || n.includes('dog')) return '🐶';
-  if (n.includes('cat') || n.includes('kitty')) return '🐱';
-  if (n.includes('fish') || n.includes('aqua')) return '🐠';
-  if (n.includes('blue')) return '💙';
-  if (n.includes('pink') || n.includes('blush')) return '💗';
-  if (n.includes('red') || n.includes('scarlet')) return '❤️';
-  if (n.includes('green')) return '💚';
-  if (n.includes('purple') || n.includes('violet') || n.includes('lavender')) return '💜';
-  if (n.includes('orange') || n.includes('peach') || n.includes('apricot')) return '🧡';
-  if (n.includes('yellow') || n.includes('butter')) return '💛';
-  if (n.includes('brown') || n.includes('chocolate') || n.includes('cocoa')) return '🤎';
-  if (n.includes('gray') || n.includes('grey') || n.includes('silver') || n.includes('ash')) return '🩶';
-  if (n.includes('black') || n.includes('dark') || n.includes('night')) return '🖤';
-  if (n.includes('white') || n.includes('cream') || n.includes('vanilla')) return '🤍';
-  // Category-based fallback
+  if (kidEmojiMap[name]) return kidEmojiMap[name];
+  // Fallback by category
   if (id.includes('leather')) return '🧤';
-  if (id.includes('wood') || id.includes('cork')) return '🪵';
+  if (id.includes('wood')) return '🪵';
   if (id.includes('marble') || id.includes('concrete')) return '🪨';
+  if (id.includes('cord-')) return '〰️';
   return '🎨';
 }
 
