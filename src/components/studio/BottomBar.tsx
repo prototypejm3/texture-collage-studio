@@ -31,7 +31,14 @@ interface Props {
   onTableSurfaceChange?: (surface: TableSurface) => void;
   easelMode?: boolean;
   onToggleEasel?: () => void;
+  backgroundTextureId?: string | null;
+  onBackgroundChange?: (id: string | null) => void;
 }
+
+const canvasBgPresets = [
+  { id: null, label: 'White', kidLabel: 'White', color: 'hsl(0,0%,98%)', emoji: '⬜' },
+  { id: 'rainbow-bg', label: 'Rainbow', kidLabel: 'Rainbow', color: 'linear-gradient(135deg, hsl(0,80%,70%), hsl(40,90%,65%), hsl(60,90%,65%), hsl(120,60%,55%), hsl(200,80%,60%), hsl(270,70%,65%))', emoji: '🌈' },
+];
 
 // Color frames for Shadow menu
 const colorFrames: { id: FrameStyle; color: string; label: string; free?: boolean }[] = [
