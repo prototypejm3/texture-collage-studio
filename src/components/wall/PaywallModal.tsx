@@ -6,6 +6,7 @@ import { toast } from '@/hooks/use-toast';
 const VALID_PROMO_CODES: Record<string, { tier: string; durationDays: number }> = {
   'BYPASS': { tier: 'premium', durationDays: 36500 },
   'SNACKCLUB': { tier: 'premium', durationDays: 30 },
+  'FRIEND': { tier: 'premium', durationDays: 36500 },
 };
 
 interface PaywallModalProps {
