@@ -607,6 +607,8 @@ const Index = () => {
             onTableSurfaceChange={setTableSurface}
             easelMode={easelMode}
             onToggleEasel={() => setEaselMode(prev => !prev)}
+            backgroundTextureId={studio.backgroundTextureId}
+            onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
           />
         )}
         {/* ── Bottom panel: Textures (left) + Stencils (right) ── */}
