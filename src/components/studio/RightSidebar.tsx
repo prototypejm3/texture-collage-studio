@@ -546,6 +546,26 @@ export function RightSidebar({
             <div className="p-1.5">
               <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-5 sm:grid-cols-6 md:grid-cols-8'}`}>
                 {(() => {
+                  // Kid mode "Made By Us" shows community vibes
+                  if (kidMode && activeCategory === 'Community') {
+                    return communityVibes.map(vibe => {
+                      const record = social.publicStencils.find(s => s.id === vibe.id);
+                      const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
+                      return (
+                        <CommunityStencilCard
+                          key={vibe.id}
+                          vibe={vibe}
+                          isActive={activeVibeId === vibe.id}
+                          favCount={record?.fav_count ?? 0}
+                          isFavorited={social.favoritedIds.has(vibe.id)}
+                          isLoggedIn={!!user}
+                          onSelect={() => handleStencilSelect(vibe)}
+                          onToggleFav={() => social.toggleFavorite(vibe.id)}
+                          creator={creator}
+                        />
+                      );
+                    });
+                  }
                   const displayVibes = activeCategory === 'All'
                     ? [...uncategorizedVibes, ...themeSections.flatMap(s => s.vibes)]
                     : themeSections.find(s => s.label === activeCategory)?.vibes || [];
