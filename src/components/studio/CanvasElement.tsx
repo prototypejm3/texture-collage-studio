@@ -120,7 +120,9 @@ interface Props {
 export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [] }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
+  const rotateStart = useRef({ angle: 0, startAngle: 0 });
 
   // Unified pointer handler for both mouse and touch
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -133,11 +135,12 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   }, [element.x, element.y, onSelect]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (isRotating) return;
     if (!isDragging) return;
     const dx = e.clientX - dragStart.current.x;
     const dy = e.clientY - dragStart.current.y;
     onUpdate({ x: dragStart.current.elX + dx, y: dragStart.current.elY + dy });
-  }, [isDragging, onUpdate]);
+  }, [isDragging, isRotating, onUpdate]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
@@ -151,6 +154,36 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       }
     }
   }, [isDragging, onMoveToTable, canvasRef]);
+
+  // Rotation handler
+  const handleRotatePointerDown = useCallback((e: React.PointerEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(true);
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const startAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+      rotateStart.current = { angle: element.rotation, startAngle };
+    }
+  }, [element.rotation]);
+
+  const handleRotatePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isRotating || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+    const delta = currentAngle - rotateStart.current.startAngle;
+    onUpdate({ rotation: Math.round(rotateStart.current.angle + delta) });
+  }, [isRotating, onUpdate]);
+
+  const handleRotatePointerUp = useCallback(() => {
+    setIsRotating(false);
+  }, []);
 
   const allTex = [...textures, ...customTextures];
   const texture = allTex.find(t => t.id === element.textureId);
