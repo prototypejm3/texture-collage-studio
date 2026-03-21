@@ -396,7 +396,7 @@ const Index = () => {
         });
       }
       if (result.frameChoice) {
-        const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
+        const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none', 'rainbow'];
         if (validFrameStyles.includes(result.frameChoice)) {
           studio.setWallFrameStyle(result.frameChoice as any);
         }
