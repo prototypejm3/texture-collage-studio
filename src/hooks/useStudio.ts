@@ -22,7 +22,45 @@ function pickTextureForTone(vibe: Vibe, tone: 'light' | 'medium' | 'dark' | 'acc
 }
 
 export function useStudio() {
-  const [elements, setElements] = useState<CanvasElement[]>([]);
+  const [elements, _setElements] = useState<CanvasElement[]>([]);
+  const historyRef = useRef<CanvasElement[][]>([[]]);
+  const historyIndexRef = useRef(0);
+  const maxHistory = 50;
+
+  const pushHistory = useCallback((next: CanvasElement[]) => {
+    const idx = historyIndexRef.current;
+    const newHistory = historyRef.current.slice(0, idx + 1);
+    newHistory.push(next);
+    if (newHistory.length > maxHistory) newHistory.shift();
+    historyRef.current = newHistory;
+    historyIndexRef.current = newHistory.length - 1;
+  }, []);
+
+  const setElements: typeof _setElements = useCallback((action) => {
+    _setElements(prev => {
+      const next = typeof action === 'function' ? action(prev) : action;
+      pushHistory(next);
+      return next;
+    });
+  }, [pushHistory]);
+
+  const undo = useCallback(() => {
+    const idx = historyIndexRef.current;
+    if (idx <= 0) return;
+    historyIndexRef.current = idx - 1;
+    _setElements(historyRef.current[idx - 1]);
+  }, []);
+
+  const redo = useCallback(() => {
+    const idx = historyIndexRef.current;
+    if (idx >= historyRef.current.length - 1) return;
+    historyIndexRef.current = idx + 1;
+    _setElements(historyRef.current[idx + 1]);
+  }, []);
+
+  const canUndo = historyIndexRef.current > 0;
+  const canRedo = historyIndexRef.current < historyRef.current.length - 1;
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
   const [frameColor, setFrameColor] = useState<FrameColor>('white');
