@@ -650,9 +650,8 @@ export function Canvas({
           { id: 'grow', label: 'Grow', emoji: '➕' },
           { id: 'shrink', label: 'Shrink', emoji: '➖' },
           { id: 'cut', label: 'Cut', emoji: '✂️' },
-          { id: 'blob', label: 'Blob', emoji: '🫧' },
           { id: 'fade', label: 'Fade', emoji: '🌫️' },
-          { id: 'crumple', label: 'Crumple', emoji: '📄' },
+          { id: 'crumple', label: 'Crumple', emoji: '🤜' },
         ];
 
         const handleTool = (toolId: string) => {
