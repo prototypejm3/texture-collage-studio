@@ -10,7 +10,8 @@ function getCtx(): AudioContext {
   return audioCtx;
 }
 
-type SoundType = 'pop' | 'whoosh' | 'drop' | 'delete' | 'box_open' | 'save' | 'reward' | 'error';
+type SoundType = 'pop' | 'whoosh' | 'drop' | 'delete' | 'box_open' | 'save' | 'reward' | 'error'
+  | 'shape_square' | 'shape_rectangle' | 'shape_circle' | 'shape_strip' | 'shape_torn' | 'shape_blob';
 
 function synthPop(ctx: AudioContext, volume: number) {
   const now = ctx.currentTime;
