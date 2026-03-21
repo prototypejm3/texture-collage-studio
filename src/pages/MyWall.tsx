@@ -56,6 +56,14 @@ const MyWall = () => {
   const [gallerySubmitId, setGallerySubmitId] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
   const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
 
   const filtered = activeTab === 'all'
