@@ -569,9 +569,11 @@ export function RightSidebar({
                       );
                     });
                   }
-                  const displayVibes = activeCategory === 'All'
+                  const communityIds = new Set(communityVibes.map(v => v.id));
+                  const allVibes = activeCategory === 'All'
                     ? [...uncategorizedVibes, ...themeSections.flatMap(s => s.vibes)]
                     : themeSections.find(s => s.label === activeCategory)?.vibes || [];
+                  const displayVibes = kidMode ? allVibes.filter(v => !communityIds.has(v.id)) : allVibes;
                   return displayVibes.map(vibe => (
                     <StencilCard
                       key={vibe.id}
