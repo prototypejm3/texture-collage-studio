@@ -12,6 +12,7 @@ interface WallGridProps {
   isPremium: boolean;
   showTitleCards?: boolean;
   isDark?: boolean;
+  kidMode?: boolean;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -24,7 +25,7 @@ interface WallGridProps {
   onSubmitToGallery?: (id: string) => void;
 }
 
-export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
+export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, kidMode, onOpen, onDuplicate, onDelete, onTogglePin, onToggleIRL, onToggleHide, onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery }: WallGridProps) {
   const cardProps = (d: SavedDesign, size: DesignSize = d.displaySize || 'medium') => ({
     key: d.id,
     design: d,
