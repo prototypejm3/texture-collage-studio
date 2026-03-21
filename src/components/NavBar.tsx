@@ -165,14 +165,13 @@ export function NavBar() {
           <span className="text-sm font-bold tracking-tight text-foreground">
             Swatchbox Studio
           </span>
-          <motion.button
-            whileTap={{ scale: 0.93 }}
+          <button
             onClick={handleToggleKidMode}
             title="Switch to Kids Mode"
-            className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md bg-gradient-to-r from-emerald-700 to-teal-600 hover:from-emerald-600 hover:to-teal-500 transition-all"
+            className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
           >
-            🥦👵 Granny Mode → 🧒
-          </motion.button>
+            → 🧒
+          </button>
         </div>
 
         {/* Desktop nav links — clean & minimal */}
