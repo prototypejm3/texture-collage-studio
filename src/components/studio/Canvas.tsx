@@ -122,7 +122,7 @@ export function Canvas({
   canvasRef,
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
-  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground,
+  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground, onBoxSave,
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
