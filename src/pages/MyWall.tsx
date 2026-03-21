@@ -484,7 +484,7 @@ const MyWall = () => {
                             onClick={() => { handleExportWall(); setShowControls(false); }}
                             className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
                           >
-                            <Download className="w-3 h-3" /> Export Wall
+                            <Download className="w-3 h-3" /> {kidMode ? '📸 Save Picture' : 'Export Wall'}
                           </button>
                         )}
                       </div>
