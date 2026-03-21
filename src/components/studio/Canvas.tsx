@@ -110,6 +110,7 @@ const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: 
   polaroid: { bg: 'hsl(0, 0%, 98%)', border: '2px solid hsl(0, 0%, 90%)', shadow: 'hsla(0, 0%, 0%, 0.12)', innerBg: 'hsl(0, 0%, 99%)', padding: 12, borderRadius: 2 },
   black: { bg: 'linear-gradient(135deg, hsl(0, 0%, 15%), hsl(0, 0%, 8%), hsl(0, 0%, 18%))', border: '3px solid hsl(0, 0%, 5%)', shadow: 'hsla(0, 0%, 0%, 0.3)', innerBg: 'hsl(0, 0%, 99%)', padding: 14, borderRadius: 2 },
   none: { bg: 'transparent', border: 'none', shadow: 'hsla(0, 0%, 0%, 0)', innerBg: 'hsl(40, 20%, 97%)', padding: 0, borderRadius: 0 },
+  rainbow: { bg: 'linear-gradient(135deg, hsl(0,80%,65%), hsl(40,90%,60%), hsl(60,90%,60%), hsl(120,60%,50%), hsl(200,80%,55%), hsl(270,70%,60%))', border: '3px solid hsl(270,50%,50%)', shadow: 'hsla(270, 50%, 30%, 0.3)', innerBg: 'hsl(0, 0%, 99%)', padding: 14, borderRadius: 4 },
 };
 
 export function Canvas({
@@ -901,43 +902,6 @@ export function Canvas({
           cursor: onWallFrameStyleChange ? 'pointer' : undefined,
         }}
       >
-        {/* Kid mode art frame overlay — hidden in plain/white mode */}
-        {kidMode && kidCanvasStyle === 'rainbow' && (
-          <div className="absolute pointer-events-none" style={{
-            inset: -24,
-            backgroundImage: `url(${kidArtFrame})`,
-            backgroundSize: '100% 100%',
-            backgroundRepeat: 'no-repeat',
-            zIndex: 30,
-          }} />
-        )}
-        {/* Kid mode canvas style toggle */}
-        {kidMode && (
-          <div className="absolute top-1 right-1 z-[35] flex gap-0.5">
-            <button
-              onClick={() => setKidCanvasStyle('rainbow')}
-              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                kidCanvasStyle === 'rainbow'
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
-              }`}
-              title="Rainbow paper"
-            >
-              🌈 Rainbow
-            </button>
-            <button
-              onClick={() => setKidCanvasStyle('plain')}
-              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                kidCanvasStyle === 'plain'
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
-              }`}
-              title="White paper"
-            >
-              ⬜ White
-            </button>
-          </div>
-        )}
         {/* Frame style picker popover */}
         {showFramePicker && onWallFrameStyleChange && (
           <>
@@ -1004,9 +968,7 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: kidMode && kidCanvasStyle === 'rainbow' && !bgTextureUrl
-              ? 'linear-gradient(135deg, hsl(0 85% 85%), hsl(30 90% 85%), hsl(55 90% 85%), hsl(120 70% 85%), hsl(200 80% 85%), hsl(270 75% 88%), hsl(320 80% 87%))'
-              : bgTextureUrl || frameStyle.innerBg,
+            background: bgTextureUrl || frameStyle.innerBg,
             backgroundSize: bgTextureUrl ? 'cover' : undefined,
             boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}

@@ -396,7 +396,7 @@ const Index = () => {
         });
       }
       if (result.frameChoice) {
-        const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
+        const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none', 'rainbow'];
         if (validFrameStyles.includes(result.frameChoice)) {
           studio.setWallFrameStyle(result.frameChoice as any);
         }
@@ -735,7 +735,7 @@ const Index = () => {
             studio.selectVibe(vibe);
             if (vibeGen.generatedVibe.frameChoice) {
               const fc = vibeGen.generatedVibe.frameChoice as any;
-              const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none'];
+              const validFrameStyles = ['gold', 'chrome', 'copper', 'silver', 'minimal', 'shadow-box', 'wood', 'floating', 'polaroid', 'none', 'rainbow'];
               if (validFrameStyles.includes(fc)) {
                 studio.setWallFrameStyle(fc);
               }
