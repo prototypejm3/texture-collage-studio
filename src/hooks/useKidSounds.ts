@@ -10,7 +10,8 @@ function getCtx(): AudioContext {
   return audioCtx;
 }
 
-type SoundType = 'pop' | 'whoosh' | 'drop' | 'delete' | 'box_open' | 'save' | 'reward' | 'error';
+type SoundType = 'pop' | 'whoosh' | 'drop' | 'delete' | 'box_open' | 'save' | 'reward' | 'error'
+  | 'shape_square' | 'shape_rectangle' | 'shape_circle' | 'shape_strip' | 'shape_torn' | 'shape_blob';
 
 function synthPop(ctx: AudioContext, volume: number) {
   const now = ctx.currentTime;
@@ -155,6 +156,74 @@ function synthError(ctx: AudioContext, volume: number) {
   });
 }
 
+// Shape sounds — each shape gets a unique, short, friendly tone
+function synthShapeSquare(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'square'; osc.frequency.setValueAtTime(440, now);
+  gain.gain.setValueAtTime(volume * 0.2, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.12);
+}
+
+function synthShapeRectangle(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'square'; osc.frequency.setValueAtTime(330, now);
+  osc.frequency.linearRampToValueAtTime(440, now + 0.1);
+  gain.gain.setValueAtTime(volume * 0.2, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.15);
+}
+
+function synthShapeCircle(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sine'; osc.frequency.setValueAtTime(700, now);
+  osc.frequency.exponentialRampToValueAtTime(900, now + 0.08);
+  osc.frequency.exponentialRampToValueAtTime(700, now + 0.16);
+  gain.gain.setValueAtTime(volume * 0.3, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.2);
+}
+
+function synthShapeStrip(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sawtooth'; osc.frequency.setValueAtTime(1200, now);
+  osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+  gain.gain.setValueAtTime(volume * 0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.1);
+}
+
+function synthShapeTorn(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  // Ripping noise burst
+  const bufSize = ctx.sampleRate * 0.12;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) d[i] = (Math.random() * 2 - 1) * 0.4;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 3000; bp.Q.value = 2;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(volume * 0.18, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  src.connect(bp).connect(gain).connect(ctx.destination); src.start(now); src.stop(now + 0.12);
+}
+
+function synthShapeBlob(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(300, now);
+  osc.frequency.exponentialRampToValueAtTime(500, now + 0.06);
+  osc.frequency.exponentialRampToValueAtTime(250, now + 0.18);
+  gain.gain.setValueAtTime(volume * 0.3, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.22);
+}
+
 const synthMap: Record<SoundType, (ctx: AudioContext, vol: number) => void> = {
   pop: synthPop,
   whoosh: synthWhoosh,
@@ -164,6 +233,12 @@ const synthMap: Record<SoundType, (ctx: AudioContext, vol: number) => void> = {
   save: synthSave,
   reward: synthReward,
   error: synthError,
+  shape_square: synthShapeSquare,
+  shape_rectangle: synthShapeRectangle,
+  shape_circle: synthShapeCircle,
+  shape_strip: synthShapeStrip,
+  shape_torn: synthShapeTorn,
+  shape_blob: synthShapeBlob,
 };
 
 export function useKidSounds() {
@@ -224,6 +299,19 @@ export function useKidSounds() {
   }, [play]);
   const playError = useCallback(() => play('error', 500), [play]);
 
+  const shapeToSound: Record<string, SoundType> = {
+    'soft-square': 'shape_square',
+    'rectangle': 'shape_rectangle',
+    'circle': 'shape_circle',
+    'strip': 'shape_strip',
+    'torn-edge': 'shape_torn',
+    'blob': 'shape_blob',
+  };
+  const playShapeSelect = useCallback((shape: string) => {
+    const s = shapeToSound[shape];
+    if (s) play(s, 100);
+  }, [play]);
+
   // Track actions for micro-rewards
   const trackAction = useCallback(() => {
     if (!enabled || !kidMode) return;
@@ -246,6 +334,7 @@ export function useKidSounds() {
     playBoxOpen,
     playSave,
     playError,
+    playShapeSelect,
     trackAction,
   };
 }
