@@ -645,7 +645,7 @@ export function Canvas({
         const el = elements.find(e => e.id === selectedId)!;
         const edgeCycle: import('@/types/studio').EdgeStyle[] = ['clean', 'soft-fray', 'rough-torn', 'pinking', 'scallop', 'zigzag', 'wave'];
         const wrinkleCycle: import('@/types/studio').WrinkleLevel[] = ['none', 'light', 'medium', 'heavy'];
-        const shapeCycle: ElementShape[] = ['soft-square', 'blob', 'circle', 'torn-edge'];
+        const shapeCycle: ElementShape[] = ['soft-square', 'circle', 'torn-edge'];
 
         const tools = [
           { id: 'grow', label: 'Grow', emoji: '➕' },
