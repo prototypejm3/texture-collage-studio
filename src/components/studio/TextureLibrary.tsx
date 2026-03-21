@@ -65,7 +65,7 @@ const adultGroups: TextureGroup[] = [
   { label: 'Linen', kidLabel: '', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
   { label: 'Durable', kidLabel: '', categories: ['Sunbrella', 'Key Largo'] },
   { label: 'Woven', kidLabel: '', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Textured', kidLabel: '', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Textured', kidLabel: '', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento', 'Sunbrella', 'Key Largo'] },
   { label: 'Smooth', kidLabel: '', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
   { label: 'Cotton & Felt', kidLabel: '', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
   { label: 'Leather', kidLabel: '', categories: ['Leather'] },
