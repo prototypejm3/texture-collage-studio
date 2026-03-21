@@ -158,6 +158,19 @@ export function Canvas({
     try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
 
+  // Kid Toolbox on desk
+  const [toolboxOpen, setToolboxOpen] = useState(false);
+  const toolboxRef = useRef<HTMLDivElement>(null);
+  const [toolboxPos, setToolboxPos] = useState(() => {
+    try { const raw = localStorage.getItem('kid-toolbox-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+  });
+  const toolboxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isToolboxDragging, setIsToolboxDragging] = useState(false);
+
+  useEffect(() => {
+    try { localStorage.setItem('kid-toolbox-pos', JSON.stringify(toolboxPos)); } catch {}
+  }, [toolboxPos]);
+
   // Persist box items & position
   useEffect(() => {
     try { localStorage.setItem('kid-maybe-box', JSON.stringify(boxItems)); } catch {}
