@@ -63,6 +63,7 @@ export function TopToolbar({
   ambientSound, onAmbientSoundChange,
   focusMode, onToggleFocusMode,
   kidSoundsEnabled, kidSoundsVolume, onKidSoundsToggle, onKidSoundsVolume,
+  onUndo, onRedo, canUndo, canRedo,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSfxVolume, setShowSfxVolume] = useState(false);
