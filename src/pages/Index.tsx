@@ -138,7 +138,9 @@ const Index = () => {
       height: 80,
       rotation: Math.floor(Math.random() * 20) - 10,
     }]);
-  }, []);
+    sounds.playPop();
+    sounds.trackAction();
+  }, [sounds]);
 
   const handleStencilTableDrop = useCallback((vibeId: string, x: number, y: number) => {
     setTableElements(prev => [...prev, {
