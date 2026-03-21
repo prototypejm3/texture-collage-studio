@@ -402,7 +402,7 @@ const Index = () => {
           {!isMobile && studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
             <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
               <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Play w/ Elements</span>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
@@ -420,7 +420,7 @@ const Index = () => {
           {!isMobile && !studio.selectedId && selectedTableElement && (
             <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
               <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Desk Item</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Play w/ Elements</span>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
