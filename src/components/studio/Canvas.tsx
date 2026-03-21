@@ -911,33 +911,6 @@ export function Canvas({
             zIndex: 30,
           }} />
         )}
-        {/* Kid mode canvas style toggle */}
-        {kidMode && (
-          <div className="absolute top-1 right-1 z-[35] flex gap-0.5">
-            <button
-              onClick={() => setKidCanvasStyle('rainbow')}
-              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                kidCanvasStyle === 'rainbow'
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
-              }`}
-              title="Rainbow paper"
-            >
-              🌈 Rainbow
-            </button>
-            <button
-              onClick={() => setKidCanvasStyle('plain')}
-              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                kidCanvasStyle === 'plain'
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'bg-background/80 text-muted-foreground hover:text-foreground'
-              }`}
-              title="White paper"
-            >
-              ⬜ White
-            </button>
-          </div>
-        )}
         {/* Frame style picker popover */}
         {showFramePicker && onWallFrameStyleChange && (
           <>
