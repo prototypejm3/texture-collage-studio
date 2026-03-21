@@ -319,6 +319,7 @@ export function Canvas({
     };
   }, [isToolboxDragging]);
 
+  const baseSize = frameSizeMap[frameSize];
 
   // Dynamically size canvas to fit container, capped at base size
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
