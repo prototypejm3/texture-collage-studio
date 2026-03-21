@@ -891,8 +891,8 @@ export function Canvas({
             }}
           >
             <div className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold shadow-lg border border-border/30 bg-popover text-foreground pointer-events-none select-none">
-              {easelMode ? '🖥️' : '🧍'}
-              <span>{easelMode ? 'Sit Down' : 'Stand Up'}</span>
+              {kidMode ? (easelMode ? '🪑' : '🧍') : (easelMode ? '🖥️' : '🧍')}
+              <span>{kidMode ? (easelMode ? 'Sit Down' : 'Stand Up') : (easelMode ? 'Sit Down' : 'Stand Up')}</span>
             </div>
           </div>
         );
