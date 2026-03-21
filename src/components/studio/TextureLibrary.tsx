@@ -432,6 +432,47 @@ export function TextureLibrary({
   );
 }
 
+// Kid emoji helper — picks emoji based on name keywords
+function getKidTextureEmoji(id: string, name: string): string {
+  const n = name.toLowerCase();
+  if (n.includes('candy') || n.includes('bubblegum') || n.includes('cotton candy')) return '🍬';
+  if (n.includes('cloud') || n.includes('sky') || n.includes('midnight')) return '☁️';
+  if (n.includes('dino') || n.includes('frog') || n.includes('turtle') || n.includes('lizard')) return '🦎';
+  if (n.includes('bear') || n.includes('teddy')) return '🧸';
+  if (n.includes('cherry') || n.includes('berry') || n.includes('grape') || n.includes('jam')) return '🍇';
+  if (n.includes('cookie') || n.includes('oat') || n.includes('cinnamon') || n.includes('toast')) return '🍪';
+  if (n.includes('gold') || n.includes('sunshine') || n.includes('sun') || n.includes('lemon')) return '🌟';
+  if (n.includes('ocean') || n.includes('sea') || n.includes('wave') || n.includes('mermaid')) return '🌊';
+  if (n.includes('rocket') || n.includes('space') || n.includes('robot')) return '🚀';
+  if (n.includes('flower') || n.includes('petal') || n.includes('rose') || n.includes('garden')) return '🌸';
+  if (n.includes('tree') || n.includes('forest') || n.includes('moss') || n.includes('leaf')) return '🌿';
+  if (n.includes('sand') || n.includes('castle') || n.includes('beach')) return '🏖️';
+  if (n.includes('snow') || n.includes('ice') || n.includes('frost')) return '❄️';
+  if (n.includes('fire') || n.includes('flame') || n.includes('lava')) return '🔥';
+  if (n.includes('rainbow') || n.includes('unicorn')) return '🌈';
+  if (n.includes('star') || n.includes('sparkle') || n.includes('glitter')) return '✨';
+  if (n.includes('elephant') || n.includes('hippo')) return '🐘';
+  if (n.includes('pup') || n.includes('puppy') || n.includes('dog')) return '🐶';
+  if (n.includes('cat') || n.includes('kitty')) return '🐱';
+  if (n.includes('fish') || n.includes('aqua')) return '🐠';
+  if (n.includes('blue')) return '💙';
+  if (n.includes('pink') || n.includes('blush')) return '💗';
+  if (n.includes('red') || n.includes('scarlet')) return '❤️';
+  if (n.includes('green')) return '💚';
+  if (n.includes('purple') || n.includes('violet') || n.includes('lavender')) return '💜';
+  if (n.includes('orange') || n.includes('peach') || n.includes('apricot')) return '🧡';
+  if (n.includes('yellow') || n.includes('butter')) return '💛';
+  if (n.includes('brown') || n.includes('chocolate') || n.includes('cocoa')) return '🤎';
+  if (n.includes('gray') || n.includes('grey') || n.includes('silver') || n.includes('ash')) return '🩶';
+  if (n.includes('black') || n.includes('dark') || n.includes('night')) return '🖤';
+  if (n.includes('white') || n.includes('cream') || n.includes('vanilla')) return '🤍';
+  // Category-based fallback
+  if (id.includes('leather')) return '🧤';
+  if (id.includes('wood') || id.includes('cork')) return '🪵';
+  if (id.includes('marble') || id.includes('concrete')) return '🪨';
+  return '🎨';
+}
+
 function getSwatchClipPath(shape?: ElementShape): string | undefined {
   switch (shape) {
     case 'circle': return '50%';
