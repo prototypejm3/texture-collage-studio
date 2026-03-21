@@ -6,6 +6,8 @@ interface Props {
   onFinishDraw: (pathD: string) => void;
   onCancel: () => void;
   crayonMode?: boolean;
+  onUndoLast?: () => void;
+  canUndo?: boolean;
 }
 
 /**
