@@ -274,7 +274,7 @@ export function RightSidebar({
 
   const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
     { id: 'stencils', label: kidMode ? 'Shapes' : 'Templates', icon: Palette },
-    { id: 'community', label: kidMode ? 'By Friends' : 'Community', icon: Globe },
+    { id: 'community', label: kidMode ? '👫 Friends' : 'Community', icon: kidMode ? undefined : Globe },
     ...(!kidMode ? [{ id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length }] : []),
   ];
 
@@ -294,7 +294,7 @@ export function RightSidebar({
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              <tab.icon className="w-2.5 h-2.5" />
+              {tab.icon && <tab.icon className="w-2.5 h-2.5" />}
               {tab.label}
               {tab.count !== undefined && tab.count > 0 && (
                 <span className="text-[8px] ml-0.5 opacity-70">{tab.count}</span>
