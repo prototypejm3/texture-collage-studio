@@ -100,55 +100,107 @@ export function BottomBar({
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
         <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5 ${kidMode ? 'text-[10px] font-semibold' : 'text-[8px]'}`}>{kidMode ? '🖼️ Frame' : 'Frame'}</span>
-        {specialFrames.map(f => {
-          const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
-          const locked = f.premium && !isPremium;
-          return (
-            <div key={f.id} className="relative">
-              <button
-                onClick={() => locked ? onRequestUpgrade?.() : handleSpecialSelect(f.id)}
-                className={`px-1.5 py-0.5 rounded-md transition-colors ${kidMode ? 'text-[11px] font-semibold' : 'text-[9px]'} ${
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                } ${locked ? 'opacity-50' : ''}`}
-              >
-                {kidMode ? f.kidLabel : f.label}
-                {locked && <Lock className="w-2 h-2 inline-block ml-0.5 -mt-0.5" />}
-              </button>
-              {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                  <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2">
-                    <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-1.5 text-center">Color</p>
-                    <div className="flex items-center gap-1.5">
-                      {colorFrames.map(cf => {
-                        const locked = !cf.free && !isPremium;
-                        return (
-                          <button
-                            key={cf.id}
-                            onClick={() => locked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
-                            className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
-                              wallFrameStyle === cf.id
-                                ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110'
-                                : 'hover:scale-110'
-                            } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
-                              locked ? 'opacity-40 cursor-not-allowed' : ''
-                            }`}
-                            style={{ background: cf.color }}
-                            title={locked ? 'Premium' : cf.label}
-                          >
-                            {locked && <Lock className="w-1.5 h-1.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
+
+        {/* Kid mode: simple circles for Black, White, None + locked premium circle */}
+        {kidMode ? (
+          <div className="flex items-center gap-1.5">
+            {/* Black */}
+            <button
+              onClick={() => onWallFrameStyleChange('black')}
+              className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
+                wallFrameStyle === 'black'
+                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: 'linear-gradient(145deg, hsl(0,0%,18%), hsl(0,0%,8%))' }}
+              title="Black"
+            />
+            {/* White */}
+            <button
+              onClick={() => onWallFrameStyleChange('minimal')}
+              className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
+                wallFrameStyle === 'minimal'
+                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))' }}
+              title="White"
+            />
+            {/* None */}
+            <button
+              onClick={() => onWallFrameStyleChange('none')}
+              className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border border-dashed ${
+                wallFrameStyle === 'none'
+                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: 'transparent' }}
+              title="None"
+            />
+            {/* Premium colors — single locked circle */}
+            <button
+              onClick={() => onRequestUpgrade?.()}
+              className="relative w-6 h-6 rounded-full transition-all flex-shrink-0 border border-border/40 opacity-50 cursor-not-allowed hover:scale-110"
+              style={{ background: 'conic-gradient(hsl(43,74%,55%), hsl(20,60%,50%), hsl(220,8%,65%), hsl(0,0%,80%), hsl(30,40%,50%), hsl(43,74%,55%))' }}
+              title="Premium Colors"
+            >
+              <Lock className="w-2.5 h-2.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white drop-shadow-sm" />
+            </button>
+          </div>
+        ) : (
+          /* Adult mode: pill buttons with shadow color popover */
+          <>
+            {specialFrames.map(f => {
+              const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+              const locked = f.premium && !isPremium;
+              return (
+                <div key={f.id} className="relative">
+                  <button
+                    onClick={() => locked ? onRequestUpgrade?.() : handleSpecialSelect(f.id)}
+                    className={`px-1.5 py-0.5 rounded-md transition-colors text-[9px] ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    } ${locked ? 'opacity-50' : ''}`}
+                  >
+                    {f.label}
+                    {locked && <Lock className="w-2 h-2 inline-block ml-0.5 -mt-0.5" />}
+                  </button>
+                  {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2">
+                        <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-1.5 text-center">Color</p>
+                        <div className="flex items-center gap-1.5">
+                          {colorFrames.map(cf => {
+                            const cfLocked = !cf.free && !isPremium;
+                            return (
+                              <button
+                                key={cf.id}
+                                onClick={() => cfLocked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                                className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                                  wallFrameStyle === cf.id
+                                    ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110'
+                                    : 'hover:scale-110'
+                                } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
+                                  cfLocked ? 'opacity-40 cursor-not-allowed' : ''
+                                }`}
+                                style={{ background: cf.color }}
+                                title={cfLocked ? 'Premium' : cf.label}
+                              >
+                                {cfLocked && <Lock className="w-1.5 h-1.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </>
+        )}
       </div>
 
       <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
