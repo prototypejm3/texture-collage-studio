@@ -553,6 +553,7 @@ export function Canvas({
       {kidMode && (
         <div
           ref={boxRef}
+          data-kid-box
           className="absolute z-30"
           style={{
             left: boxPos.x,
