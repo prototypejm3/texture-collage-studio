@@ -3,10 +3,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Frame, Mail, Lock, User } from 'lucide-react';
+import { Frame, Mail, Lock, User, Palette, Brush } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function AuthPage() {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [step, setStep] = useState<'form' | 'pick-mode'>('form');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -34,11 +36,70 @@ export default function AuthPage() {
       if (error) {
         setError(error.message);
       } else {
-        navigate('/');
+        setStep('pick-mode');
       }
     }
     setLoading(false);
   };
+
+  const handlePickMode = (isKid: boolean) => {
+    localStorage.setItem('kid-mode', String(isKid));
+    window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: isKid }));
+    navigate('/');
+  };
+
+  if (step === 'pick-mode') {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-sm"
+        >
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Frame className="w-7 h-7 text-primary" />
+            <h1 className="text-2xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              Welcome!
+            </h1>
+          </div>
+
+          <div className="bg-popover border border-border rounded-2xl p-6 shadow-lg text-center">
+            <p className="text-sm text-muted-foreground mb-6">Who's creating today?</p>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => handlePickMode(true)}
+                className="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-border bg-secondary/30 hover:border-primary hover:bg-primary/5 transition-all group"
+              >
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <span className="text-3xl">🧒</span>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Kids Mode</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Simple & fun</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handlePickMode(false)}
+                className="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-border bg-secondary/30 hover:border-primary hover:bg-primary/5 transition-all group"
+              >
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <span className="text-3xl">👵</span>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Adult Mode</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Full controls</p>
+                </div>
+              </button>
+            </div>
+
+            <p className="text-[10px] text-muted-foreground mt-4">You can switch anytime in the studio</p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
