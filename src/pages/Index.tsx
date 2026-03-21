@@ -309,6 +309,7 @@ const Index = () => {
       } else {
         wall.addDesign(dataUrl, name, vibeName, studioState, stencilCreator);
       }
+      sounds.playSave();
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
