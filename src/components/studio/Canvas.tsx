@@ -83,6 +83,7 @@ interface Props {
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
   onBoxSave?: () => void;
+  onToolSound?: (tool: string) => void;
   // Kid toolbox on desk
   onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
   onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
@@ -126,7 +127,7 @@ export function Canvas({
   canvasRef,
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
-  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground, onBoxSave,
+  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground, onBoxSave, onToolSound,
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
@@ -644,18 +645,18 @@ export function Canvas({
         const el = elements.find(e => e.id === selectedId)!;
         const edgeCycle: import('@/types/studio').EdgeStyle[] = ['clean', 'soft-fray', 'rough-torn', 'pinking', 'scallop', 'zigzag', 'wave'];
         const wrinkleCycle: import('@/types/studio').WrinkleLevel[] = ['none', 'light', 'medium', 'heavy'];
-        const shapeCycle: ElementShape[] = ['soft-square', 'blob', 'circle', 'torn-edge'];
+        const shapeCycle: ElementShape[] = ['soft-square', 'circle', 'torn-edge'];
 
         const tools = [
           { id: 'grow', label: 'Grow', emoji: '➕' },
           { id: 'shrink', label: 'Shrink', emoji: '➖' },
           { id: 'cut', label: 'Cut', emoji: '✂️' },
-          { id: 'blob', label: 'Blob', emoji: '🫧' },
           { id: 'fade', label: 'Fade', emoji: '🌫️' },
-          { id: 'crumple', label: 'Crumple', emoji: '📄' },
+          { id: 'crumple', label: 'Crumple', emoji: '🤜' },
         ];
 
         const handleTool = (toolId: string) => {
+          onToolSound?.(toolId);
           switch (toolId) {
             case 'grow':
               onUpdateElement(selectedId!, { width: Math.min(el.width + 20, 300), height: el.shape === 'strip' ? el.height : Math.min(el.height + 20, 300) });
@@ -666,11 +667,6 @@ export function Canvas({
             case 'cut': {
               const idx = edgeCycle.indexOf(el.effects.edgeStyle);
               onUpdateEffects(selectedId!, { edgeStyle: edgeCycle[(idx + 1) % edgeCycle.length] });
-              break;
-            }
-            case 'blob': {
-              const idx = shapeCycle.indexOf(el.shape);
-              onUpdateElement(selectedId!, { shape: shapeCycle[(idx + 1) % shapeCycle.length] });
               break;
             }
             case 'fade': {
@@ -736,8 +732,8 @@ export function Canvas({
                   className="flex flex-col items-center justify-center gap-0.5 rounded-lg p-2 min-h-[52px] transition-all hover:scale-105 active:scale-95"
                   style={{ background: 'hsla(30, 30%, 90%, 0.15)', border: '1px solid hsla(30, 30%, 80%, 0.2)' }}
                 >
-                  <span className="text-lg leading-none">📋</span>
-                  <span className="text-[8px] font-bold text-amber-100/90">Copy</span>
+                  <span className="text-lg leading-none">📄📄</span>
+                  <span className="text-[8px] font-bold text-amber-100/90">Twin</span>
                 </button>
                 <button
                   data-toolbox-btn

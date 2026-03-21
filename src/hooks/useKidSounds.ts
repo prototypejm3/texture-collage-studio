@@ -11,7 +11,8 @@ function getCtx(): AudioContext {
 }
 
 type SoundType = 'pop' | 'whoosh' | 'drop' | 'delete' | 'box_open' | 'save' | 'reward' | 'error'
-  | 'shape_square' | 'shape_rectangle' | 'shape_circle' | 'shape_strip' | 'shape_torn' | 'shape_blob';
+  | 'shape_square' | 'shape_rectangle' | 'shape_circle' | 'shape_strip' | 'shape_torn' | 'shape_blob'
+  | 'tool_cut' | 'tool_crumple' | 'tool_grow' | 'tool_shrink';
 
 function synthPop(ctx: AudioContext, volume: number) {
   const now = ctx.currentTime;
@@ -224,6 +225,71 @@ function synthShapeBlob(ctx: AudioContext, volume: number) {
   osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.22);
 }
 
+// Tool sounds
+function synthToolCut(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  // Scissor snip — quick high-pitched noise burst
+  const bufSize = ctx.sampleRate * 0.08;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) d[i] = (Math.random() * 2 - 1) * 0.5;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 4000;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(volume * 0.25, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+  src.connect(hp).connect(gain).connect(ctx.destination); src.start(now); src.stop(now + 0.08);
+  // Metallic click layer
+  const osc = ctx.createOscillator(); const g2 = ctx.createGain();
+  osc.type = 'square'; osc.frequency.setValueAtTime(3000, now);
+  osc.frequency.exponentialRampToValueAtTime(1500, now + 0.04);
+  g2.gain.setValueAtTime(volume * 0.15, now);
+  g2.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+  osc.connect(g2).connect(ctx.destination); osc.start(now); osc.stop(now + 0.06);
+}
+
+function synthToolCrumple(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  // Paper crumple — filtered noise with crinkly texture
+  const bufSize = ctx.sampleRate * 0.2;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) {
+    d[i] = (Math.random() * 2 - 1) * (0.3 + Math.random() * 0.2) * Math.sin(i / bufSize * Math.PI);
+  }
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2500; bp.Q.value = 0.8;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(volume * 0.2, now);
+  gain.gain.linearRampToValueAtTime(volume * 0.3, now + 0.08);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  src.connect(bp).connect(gain).connect(ctx.destination); src.start(now); src.stop(now + 0.2);
+}
+
+function synthToolGrow(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  // Ascending "boing" — rising pitch
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(300, now);
+  osc.frequency.exponentialRampToValueAtTime(800, now + 0.15);
+  gain.gain.setValueAtTime(volume * 0.3, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.2);
+}
+
+function synthToolShrink(ctx: AudioContext, volume: number) {
+  const now = ctx.currentTime;
+  // Descending "squish" — falling pitch
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(800, now);
+  osc.frequency.exponentialRampToValueAtTime(300, now + 0.15);
+  gain.gain.setValueAtTime(volume * 0.3, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(gain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.2);
+}
+
 const synthMap: Record<SoundType, (ctx: AudioContext, vol: number) => void> = {
   pop: synthPop,
   whoosh: synthWhoosh,
@@ -239,6 +305,10 @@ const synthMap: Record<SoundType, (ctx: AudioContext, vol: number) => void> = {
   shape_strip: synthShapeStrip,
   shape_torn: synthShapeTorn,
   shape_blob: synthShapeBlob,
+  tool_cut: synthToolCut,
+  tool_crumple: synthToolCrumple,
+  tool_grow: synthToolGrow,
+  tool_shrink: synthToolShrink,
 };
 
 export function useKidSounds() {
@@ -298,6 +368,10 @@ export function useKidSounds() {
     setTimeout(() => play('reward', 0), 150);
   }, [play]);
   const playError = useCallback(() => play('error', 500), [play]);
+  const playToolCut = useCallback(() => play('tool_cut', 100), [play]);
+  const playToolCrumple = useCallback(() => play('tool_crumple', 100), [play]);
+  const playToolGrow = useCallback(() => play('tool_grow', 100), [play]);
+  const playToolShrink = useCallback(() => play('tool_shrink', 100), [play]);
 
   const shapeToSound: Record<string, SoundType> = {
     'soft-square': 'shape_square',
@@ -334,6 +408,10 @@ export function useKidSounds() {
     playBoxOpen,
     playSave,
     playError,
+    playToolCut,
+    playToolCrumple,
+    playToolGrow,
+    playToolShrink,
     playShapeSelect,
     trackAction,
   };
