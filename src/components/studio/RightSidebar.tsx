@@ -208,7 +208,7 @@ export function RightSidebar({
     { label: 'Sea Life', kidLabel: '🐟 Ocean', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
     { label: 'Food & Fruit', kidLabel: '🍕 Food', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
     { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
-    { label: 'Art & Pattern', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
+    { label: 'Art & Pattern', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
     { label: 'Numbers & Symbols', kidLabel: '🔢 Numbers', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
