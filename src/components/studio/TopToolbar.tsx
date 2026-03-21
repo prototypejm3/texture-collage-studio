@@ -153,9 +153,9 @@ export function TopToolbar({
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1.5">
           {kidMode ? (
-            <span className="text-base">🎨</span>
+            <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
           ) : (
-            <Frame className="w-4 h-4 text-primary" />
+            <img src={logoImg} alt="Swatchbox Studio" className="w-6 h-6 object-contain" />
           )}
           <span className={`font-bold tracking-tight text-foreground ${kidMode ? 'text-sm' : 'text-xs'}`}>
             Swatchbox Studio
