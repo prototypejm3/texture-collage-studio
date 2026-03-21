@@ -297,7 +297,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 }
 
 /* ─── Premium icon button with lock badge ─── */
-function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, children }: {
+function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, label, children }: {
   icon: React.ReactNode;
   isPremium: boolean;
   isOpen: boolean;
@@ -305,14 +305,16 @@ function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconCla
   onClose: () => void;
   iconClass: string;
   title: string;
+  label?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative">
+    <div className="relative flex flex-col items-center gap-0.5">
       <button onClick={onToggle} className={iconClass} title={isPremium ? title : 'Premium — unlock to use'}>
         {icon}
         {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
       </button>
+      {label && <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{label}</span>}
       {isOpen && isPremium && (
         <>
           <div className="fixed inset-0 z-40" onClick={onClose} />
