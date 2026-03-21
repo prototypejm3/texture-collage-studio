@@ -298,7 +298,8 @@ export function TextureLibrary({
               ✨ Mine
             </button>
           )}
-          {(kidMode ? kidGroups : adultGroups).map(group => {
+          {/* Category filters — adult mode only */}
+          {!kidMode && (kidMode ? kidGroups : adultGroups).map(group => {
             const label = kidMode ? group.kidLabel : group.label;
             const emoji = group.kidLabel.match(/^[^\s]+/)?.[0] || '';
             const mobileLabel = kidMode ? emoji : group.label.slice(0, 3);
