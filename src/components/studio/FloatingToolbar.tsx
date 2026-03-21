@@ -235,13 +235,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
         onUpdateEffects({ edgeStyle: nextEdge });
         break;
       }
-      case 'blob': {
-        const shapeCycle: ElementShape[] = ['soft-square', 'blob', 'circle', 'torn-edge'];
-        const currentShapeIdx = shapeCycle.indexOf(element.shape);
-        const nextShape = shapeCycle[(currentShapeIdx + 1) % shapeCycle.length];
-        onUpdate({ shape: nextShape });
+      case 'twin':
+        onDuplicate();
         break;
-      }
       case 'fade': {
         const nextFade = element.effects.bleachFade >= 100 ? 0 : element.effects.bleachFade + 25;
         onUpdateEffects({ bleachFade: nextFade });
@@ -256,11 +252,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
     }
   };
 
-  // Subtitle for each tool showing current state
   const getSubtitle = (toolId: string): string | null => {
     switch (toolId) {
       case 'cut': return edgeDisplayName(element.effects.edgeStyle);
-      case 'blob': return element.shape === 'blob' ? 'Blobby!' : element.shape === 'circle' ? 'Round' : element.shape === 'torn-edge' ? 'Ripped' : 'Square';
       case 'fade': return element.effects.bleachFade > 0 ? `${element.effects.bleachFade}%` : null;
       case 'crumple': return element.effects.wrinkle !== 'none' ? element.effects.wrinkle : null;
       default: return null;
