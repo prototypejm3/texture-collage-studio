@@ -231,6 +231,7 @@ export function Canvas({
             setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: el.textureId }]);
             onDeleteElement(selectedId);
             onSelect(null);
+            onBoxSave?.();
           }
         }
         setBoxHover(false);
