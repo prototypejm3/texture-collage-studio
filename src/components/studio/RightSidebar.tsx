@@ -210,7 +210,7 @@ export function RightSidebar({
     { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
     { label: 'Art & Pattern', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
-    { label: 'Numbers & Symbols', kidLabel: '🔢 Numbers', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: 'Numbers & Symbols', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
   ];
