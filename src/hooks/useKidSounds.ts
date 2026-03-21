@@ -299,6 +299,19 @@ export function useKidSounds() {
   }, [play]);
   const playError = useCallback(() => play('error', 500), [play]);
 
+  const shapeToSound: Record<string, SoundType> = {
+    'soft-square': 'shape_square',
+    'rectangle': 'shape_rectangle',
+    'circle': 'shape_circle',
+    'strip': 'shape_strip',
+    'torn-edge': 'shape_torn',
+    'blob': 'shape_blob',
+  };
+  const playShapeSelect = useCallback((shape: string) => {
+    const s = shapeToSound[shape];
+    if (s) play(s, 100);
+  }, [play]);
+
   // Track actions for micro-rewards
   const trackAction = useCallback(() => {
     if (!enabled || !kidMode) return;
@@ -321,6 +334,7 @@ export function useKidSounds() {
     playBoxOpen,
     playSave,
     playError,
+    playShapeSelect,
     trackAction,
   };
 }
