@@ -166,7 +166,7 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
     >
       {/* Instructions */}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[51] px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium shadow-lg flex items-center gap-2">
-        {crayonMode ? '🧵 Sew a shape — nice and easy' : '✏️ Draw a shape — it will auto-close'}
+        {crayonMode ? (localStorage.getItem('kid-mode') !== 'false' ? '🖍️ Draw with your crayon!' : '🧵 Sew a shape — nice and easy') : '✏️ Draw a shape — it will auto-close'}
         {canUndo && onUndoLast && (
           <button
             onClick={(e) => { e.stopPropagation(); onUndoLast(); }}
