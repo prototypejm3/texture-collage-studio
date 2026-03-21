@@ -968,9 +968,7 @@ export function Canvas({
           style={{
             width: w,
             height: h,
-            background: kidMode && kidCanvasStyle === 'rainbow' && !bgTextureUrl
-              ? 'linear-gradient(135deg, hsl(0 85% 85%), hsl(30 90% 85%), hsl(55 90% 85%), hsl(120 70% 85%), hsl(200 80% 85%), hsl(270 75% 88%), hsl(320 80% 87%))'
-              : bgTextureUrl || frameStyle.innerBg,
+            background: bgTextureUrl || frameStyle.innerBg,
             backgroundSize: bgTextureUrl ? 'cover' : undefined,
             boxShadow: `inset 0 1px 4px ${frameStyle.shadow}`,
           }}
