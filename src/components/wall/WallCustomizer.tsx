@@ -27,6 +27,8 @@ const backgrounds: { value: WallBackground; label: string; kidLabel?: string; pr
   { value: 'sky-blue', label: 'Sky Blue', kidLabel: '☁️ Sky Blue', preview: '/walls/sky-blue-wall.png' },
   { value: 'mint', label: 'Mint', kidLabel: '🌿 Mint', preview: '/walls/mint-wall.png' },
   { value: 'blush', label: 'Blush', kidLabel: '🌸 Blush', preview: '/walls/blush-wall.png' },
+  { value: 'red', label: 'Red', kidLabel: '🔴 Red', preview: '/walls/red-wall.png' },
+  { value: 'green', label: 'Green', kidLabel: '🟢 Green', preview: '/walls/green-wall.png' },
 ];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
