@@ -273,25 +273,28 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </div>
         )}
 
-        {/* Background picker — premium */}
+        {/* Background picker — free for kids, premium for adults */}
         <div className="flex items-center gap-1.5">
-          {backgrounds.map(bg => (
-            <button
-              key={bg.value}
-              onClick={() => isPremium ? onUpdate({ background: bg.value }) : onRequestUpgrade?.()}
-              className={`relative w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden ${
-                settings.background === bg.value ? 'border-primary scale-110 shadow-md' : 'border-border/40'
-              }`}
-              title={isPremium ? bg.label : 'Premium — unlock to use'}
-            >
-              {bg.preview ? (
-                <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
-              ) : (
-                <span className="block w-full h-full" style={{ backgroundColor: bg.previewColor }} />
-              )}
-              {!isPremium && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-background/80 drop-shadow-sm" />}
-            </button>
-          ))}
+          {backgrounds.map(bg => {
+            const isFree = kidMode || isPremium;
+            return (
+              <button
+                key={bg.value}
+                onClick={() => isFree ? onUpdate({ background: bg.value }) : onRequestUpgrade?.()}
+                className={`relative w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden ${
+                  settings.background === bg.value ? 'border-primary scale-110 shadow-md' : 'border-border/40'
+                }`}
+                title={isFree ? (kidMode && bg.kidLabel ? bg.kidLabel : bg.label) : 'Premium — unlock to use'}
+              >
+                {bg.preview ? (
+                  <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="block w-full h-full" style={{ backgroundColor: bg.previewColor }} />
+                )}
+                {!isFree && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-background/80 drop-shadow-sm" />}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
