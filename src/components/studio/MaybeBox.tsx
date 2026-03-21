@@ -68,6 +68,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
                   />
                 )}
                 <button
+                  data-box-item-remove
                   onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }}
                   className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 >
@@ -80,7 +81,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
       )}
 
       {/* The box itself */}
-      <button
+      <div
         onClick={() => setIsOpen(!isOpen)}
         className={`relative flex flex-col items-center justify-end transition-all duration-200 select-none cursor-grab active:cursor-grabbing ${
           isHovered
@@ -139,7 +140,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
         <span className="absolute bottom-1 text-[7px] font-bold text-amber-200/80 tracking-wider uppercase pointer-events-none">
           📦 My Box
         </span>
-      </button>
+      </div>
     </div>
   );
 }

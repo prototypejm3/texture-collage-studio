@@ -559,8 +559,8 @@ export function Canvas({
             ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
           }}
           onMouseDown={(e) => {
-            // Only start box drag from the box itself, not from items inside
-            if ((e.target as HTMLElement).closest('button')) return;
+            // Allow drag from anywhere on the box — only skip tiny remove buttons inside items
+            if ((e.target as HTMLElement).closest('[data-box-item-remove]')) return;
             e.stopPropagation();
             e.preventDefault();
             setIsBoxDragging(true);
