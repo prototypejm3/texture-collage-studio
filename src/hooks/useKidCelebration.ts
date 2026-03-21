@@ -31,7 +31,7 @@ const MILESTONE_MESSAGES = [
 // Context-aware overrides
 const CONTEXT_MESSAGES: Record<string, string[]> = {
   stencil: ['Cute choice!', 'Nice stencil! ✨', 'Ooo fancy shape!'],
-  bright: ['So colorful!', '🌈 Bright pick!', 'Love those colors!'],
+  bright: ['So colorful!', 'Bright pick!', 'Love those colors!'],
   large: ['Big move!', 'Going BIG! 💪', 'Wow, that's a big one!'],
 };
 
