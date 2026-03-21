@@ -496,7 +496,7 @@ const Index = () => {
               workstationName={workstationName}
               onWorkstationNameChange={handleWorkstationNameChange}
               onSelect={studio.setSelectedId}
-              onUpdate={studio.updateElement}
+              onUpdate={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
               onDrop={handleDrop}
               onSelectSection={studio.selectSection}
               onDropInSection={studio.fillSection}
