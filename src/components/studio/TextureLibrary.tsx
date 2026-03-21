@@ -58,19 +58,30 @@ interface TextureGroup {
   categories: TextureCategory[];
 }
 
-const groups: TextureGroup[] = [
-  { label: 'Velvet', kidLabel: '🧸 Soft & Fancy', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Soft', kidLabel: '☁️ Super Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
-  { label: 'Linen', kidLabel: '🧵 Cloth', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Durable', kidLabel: '🛡️ Tough Stuff', categories: ['Sunbrella', 'Key Largo'] },
-  { label: 'Woven', kidLabel: '🧶 Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Textured', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Cotton & Felt', kidLabel: '🧤 Cozy', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
-  { label: 'Leather', kidLabel: '🐄 Leather', categories: ['Leather'] },
-  { label: 'Hard', kidLabel: '🪵 Hard Stuff', categories: ['Wood', 'Marble', 'Concrete'] },
+// Adult mode: 12 detailed groups
+const adultGroups: TextureGroup[] = [
+  { label: 'Velvet', kidLabel: '', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
+  { label: 'Soft', kidLabel: '', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Linen', kidLabel: '', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Durable', kidLabel: '', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Woven', kidLabel: '', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
+  { label: 'Textured', kidLabel: '', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Smooth', kidLabel: '', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Cotton & Felt', kidLabel: '', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Leather', kidLabel: '', categories: ['Leather'] },
+  { label: 'Hard', kidLabel: '', categories: ['Wood', 'Marble', 'Concrete'] },
+  { label: 'Patterns', kidLabel: '', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Signature', kidLabel: '', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+];
+
+// Kid mode: 6 simplified mega-groups
+const kidGroups: TextureGroup[] = [
+  { label: 'Soft', kidLabel: '🧸 Soft & Cozy', categories: ['Royale', 'Banks', 'Prime', 'Kenley', 'Crave', 'Bentley', 'Lucky', 'Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico', 'Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Bumpy', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento', 'Cody', 'Bubbly', 'Synergy', 'Checker', 'Sunbrella', 'Key Largo'] },
+  { label: 'Tough', kidLabel: '🛡️ Tough', categories: ['Leather', 'Wood', 'Marble', 'Concrete'] },
   { label: 'Patterns', kidLabel: '🌈 Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+  { label: 'Special', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
@@ -153,7 +164,7 @@ export function TextureLibrary({
       ? ['Custom' as TextureCategory]
       : activeGroup === 'Favorites'
         ? null
-        : groups.find(g => g.label === activeGroup)?.categories ?? null;
+        : (kidMode ? kidGroups : adultGroups).find(g => g.label === activeGroup)?.categories ?? null;
 
   let filtered = activeCategories
     ? allTextures.filter(t => activeCategories.includes(t.category))
@@ -287,23 +298,24 @@ export function TextureLibrary({
               ✨ Mine
             </button>
           )}
-          {groups.map(group => {
-            // On mobile: kid mode shows just emoji, adult mode shows short label
-            const kidLabel = group.kidLabel;
-            const emoji = kidLabel.match(/^[^\s]+/)?.[0] || '';
+          {(kidMode ? kidGroups : adultGroups).map(group => {
+            const label = kidMode ? group.kidLabel : group.label;
+            const emoji = group.kidLabel.match(/^[^\s]+/)?.[0] || '';
             const mobileLabel = kidMode ? emoji : group.label.slice(0, 3);
             return (
               <button
                 key={group.label}
                 onClick={() => setActiveGroup(group.label)}
-                className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
-                  activeGroup === group.label
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                className={`rounded-full transition-colors font-semibold ${kidMode
+                  ? 'px-3 py-1.5 text-xs'
+                  : 'px-1.5 py-0.5 text-[10px]'
+                } ${activeGroup === group.label
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
-                title={kidMode ? kidLabel : group.label}
+                title={kidMode ? group.kidLabel : group.label}
               >
-                {isMobile ? mobileLabel : (kidMode ? kidLabel : group.label)}
+                {isMobile ? mobileLabel : label}
               </button>
             );
           })}

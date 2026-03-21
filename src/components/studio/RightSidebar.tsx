@@ -481,26 +481,30 @@ export function RightSidebar({
             )}
 
             {/* Category filter pills */}
-            <div className="px-2 py-1 border-b border-border bg-secondary/20">
-              <div className="flex flex-wrap gap-1">
+            <div className={`px-2 border-b border-border bg-secondary/20 ${kidMode ? 'py-1.5' : 'py-1'}`}>
+              <div className={`flex flex-wrap ${kidMode ? 'gap-1.5' : 'gap-1'}`}>
                 <button
                   onClick={() => setActiveCategory('All')}
-                  className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
-                    activeCategory === 'All'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                  className={`rounded-full transition-colors font-semibold ${kidMode
+                    ? 'px-3 py-1.5 text-xs'
+                    : 'px-1.5 py-0.5 text-[10px]'
+                  } ${activeCategory === 'All'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
                   }`}
                 >
-                  All
+                  {kidMode ? '🌟 All' : 'All'}
                 </button>
                 {themeSections.map(section => (
                   <button
                     key={section.label}
                     onClick={() => setActiveCategory(section.label)}
-                    className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
-                      activeCategory === section.label
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    className={`rounded-full transition-colors font-semibold ${kidMode
+                      ? 'px-3 py-1.5 text-xs'
+                      : 'px-1.5 py-0.5 text-[10px]'
+                    } ${activeCategory === section.label
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
                     {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
