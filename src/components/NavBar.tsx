@@ -179,6 +179,7 @@ export function NavBar() {
         <div className="hidden md:flex items-center gap-1">
           <Link
             to="/"
+            title="Open the creative studio"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
@@ -189,6 +190,7 @@ export function NavBar() {
           <Link
             to="/wall"
             data-nav="wall"
+            title="View and arrange your artwork"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
@@ -199,6 +201,7 @@ export function NavBar() {
           <Link
             to="/gallery"
             data-nav="gallery"
+            title="Browse community artwork"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
