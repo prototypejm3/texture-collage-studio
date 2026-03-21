@@ -4,7 +4,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
-import logoImg from '@/assets/logo.png';
+import logoKid from '@/assets/logo.png';
+import logoGranny from '@/assets/logo-granny.png';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
