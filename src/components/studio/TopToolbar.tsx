@@ -261,16 +261,7 @@ export function TopToolbar({
 
       {/* Right */}
       <div className="flex items-center gap-1">
-        {/* Kid Mode Toggle — only in adult mode (kid mode shows it on the left) */}
-        {!kidMode && (
-          <button
-            onClick={handleKidToggle}
-            className="p-1.5 rounded-md transition-colors text-muted-foreground hover:text-foreground hover:bg-secondary"
-            title="Kids Mode (off)"
-          >
-            <span className="text-sm leading-none">🧸</span>
-          </button>
-        )}
+        {/* Kid mode toggle moved to left side next to brand */}
 
         {/* AI Toggle */}
         <button
