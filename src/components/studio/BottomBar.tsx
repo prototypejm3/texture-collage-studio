@@ -217,30 +217,90 @@ export function BottomBar({
       </div>
 
       <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
-      {/* Surface selector */}
-      {onTableSurfaceChange && (
-        <div className="flex items-center gap-0.5">
-          {kidMode ? <span className="text-xs">🪵</span> : <span className="text-[8px] uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5">Wood</span>}
-          {([
-            { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
-            { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
-            { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
-          ]).map(s => (
+      {/* Surface selector — hidden behind reveal in Granny mode */}
+      {onTableSurfaceChange && (() => {
+        if (kidMode) {
+          // Kids: always visible
+          return (
+            <div className="flex items-center gap-0.5">
+              <span className="text-xs">🪵</span>
+              {([
+                { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
+                { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
+                { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
+              ]).map(s => (
+                <button
+                  key={s.id}
+                  onClick={() => onTableSurfaceChange(s.id)}
+                  className={`w-6 h-6 rounded-full transition-all flex-shrink-0 border overflow-hidden ${
+                    tableSurface === s.id
+                      ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                      : 'border-border/40 hover:scale-110'
+                  }`}
+                  title={s.label}
+                >
+                  <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          );
+        }
+        // Granny mode: hidden behind a reveal button
+        return (
+          <div className="relative">
             <button
-              key={s.id}
-              onClick={() => onTableSurfaceChange(s.id)}
-              className={`w-6 h-6 rounded-full transition-all flex-shrink-0 border overflow-hidden ${
-                tableSurface === s.id
-                  ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
-                  : 'border-border/40 hover:scale-110'
+              onClick={() => setShowColorMenu(prev => prev === 'wood' ? null : 'wood')}
+              className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+                showColorMenu === 'wood'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
-              title={s.label}
             >
-              <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+              Pick Your Wood
             </button>
-          ))}
-        </div>
-      )}
+            <AnimatePresence>
+              {showColorMenu === 'wood' && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2.5"
+                  >
+                    <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Choose a Finish</p>
+                    <div className="flex items-center gap-2">
+                      {([
+                        { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
+                        { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
+                        { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
+                      ]).map(s => (
+                        <button
+                          key={s.id}
+                          onClick={() => { onTableSurfaceChange(s.id); setShowColorMenu(null); }}
+                          className={`flex flex-col items-center gap-1 transition-all ${
+                            tableSurface === s.id ? 'scale-110' : 'hover:scale-105'
+                          }`}
+                        >
+                          <div className={`w-8 h-8 rounded-full border overflow-hidden ${
+                            tableSurface === s.id
+                              ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover border-primary/40'
+                              : 'border-border/40'
+                          }`}>
+                            <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+                          </div>
+                          <span className="text-[8px] text-muted-foreground">{s.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })()}
 
       {/* Easel / Desk toggle */}
       {onToggleEasel && (
