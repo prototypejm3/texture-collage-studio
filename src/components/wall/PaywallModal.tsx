@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lock, Replace, Sparkles, Tag } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-const VALID_PROMO_CODES: Record<string, string> = {
-  'BYPASS': 'premium',
+const VALID_PROMO_CODES: Record<string, { tier: string; durationDays: number }> = {
+  'BYPASS': { tier: 'premium', durationDays: 36500 },
+  'SNACKCLUB': { tier: 'premium', durationDays: 30 },
 };
 
 interface PaywallModalProps {
@@ -22,8 +23,15 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
 
   const handleApplyPromo = () => {
     const code = promoCode.trim().toUpperCase();
-    if (VALID_PROMO_CODES[code]) {
-      toast({ title: '🎉 Code accepted!', description: 'Welcome to premium — enjoy all features!' });
+    const promo = VALID_PROMO_CODES[code];
+    if (promo) {
+      // Store expiration date
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + promo.durationDays);
+      localStorage.setItem('premium-expiry', expiry.toISOString());
+      localStorage.setItem('promo-code-used', code);
+      const durationLabel = promo.durationDays >= 365 ? 'lifetime' : `${promo.durationDays} days`;
+      toast({ title: '🎉 Code accepted!', description: `You've unlocked premium for ${durationLabel}!` });
       onUnlock();
       setPromoCode('');
       setShowPromo(false);
