@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
@@ -31,6 +31,11 @@ interface Props {
   onAmbientSoundChange?: (sound: AmbientSound) => void;
   focusMode?: boolean;
   onToggleFocusMode?: () => void;
+  // Kid sound settings
+  kidSoundsEnabled?: boolean;
+  kidSoundsVolume?: number;
+  onKidSoundsToggle?: (enabled: boolean) => void;
+  onKidSoundsVolume?: (vol: number) => void;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -52,8 +57,10 @@ export function TopToolbar({
   onClear, onSave, onSaveToWall,
   ambientSound, onAmbientSoundChange,
   focusMode, onToggleFocusMode,
+  kidSoundsEnabled, kidSoundsVolume, onKidSoundsToggle, onKidSoundsVolume,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
+  const [showSfxVolume, setShowSfxVolume] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showGrownUpCheck, setShowGrownUpCheck] = useState(false);
   const [showAiWelcome, setShowAiWelcome] = useState(false);
@@ -242,6 +249,54 @@ export function TopToolbar({
                       <span>{emoji}</span> {label}
                     </button>
                   ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Kid Sound Effects toggle — only visible in kid mode */}
+        {kidMode && onKidSoundsToggle && (
+          <div className="relative">
+            <button
+              onClick={() => {
+                if (kidSoundsEnabled) {
+                  setShowSfxVolume(v => !v);
+                } else {
+                  onKidSoundsToggle(true);
+                }
+              }}
+              onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
+              className={`p-1.5 rounded-md transition-colors ${
+                kidSoundsEnabled
+                  ? 'bg-primary/15 text-primary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+              title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
+            >
+              {kidSoundsEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </button>
+            {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
+                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
+                  <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={Math.round((kidSoundsVolume || 0.4) * 100)}
+                    onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)}
+                    className="w-full h-1 accent-primary"
+                  />
+                  <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
+                  <button
+                    onClick={() => { onKidSoundsToggle(false); setShowSfxVolume(false); }}
+                    className="w-full mt-1 text-[9px] text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    🔇 Mute
+                  </button>
                 </div>
               </>
             )}

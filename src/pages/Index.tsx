@@ -26,6 +26,7 @@ import { Monitor, X } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useKidSounds } from '@/hooks/useKidSounds';
 import { TextureTray } from '@/components/studio/MobileTextureTray';
 import { StencilTray } from '@/components/studio/MobileStencilTray';
 
@@ -48,6 +49,7 @@ const Index = () => {
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
+  const sounds = useKidSounds();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [stencilsCollapsed, setStencilsCollapsed] = useState(() => {
@@ -119,7 +121,9 @@ const Index = () => {
 
   const handleDrop = useCallback((textureId: string, x: number, y: number) => {
     studio.addElement(textureId, x, y);
-  }, [studio]);
+    sounds.playPop();
+    sounds.trackAction();
+  }, [studio, sounds]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
@@ -134,7 +138,9 @@ const Index = () => {
       height: 80,
       rotation: Math.floor(Math.random() * 20) - 10,
     }]);
-  }, []);
+    sounds.playPop();
+    sounds.trackAction();
+  }, [sounds]);
 
   const handleStencilTableDrop = useCallback((vibeId: string, x: number, y: number) => {
     setTableElements(prev => [...prev, {
@@ -154,7 +160,9 @@ const Index = () => {
 
   const handleTableElementDelete = useCallback((id: string) => {
     setTableElements(prev => prev.filter(el => el.id !== id));
-  }, []);
+    sounds.playDelete();
+    sounds.trackAction();
+  }, [sounds]);
 
   const handleMoveToTable = useCallback((elementId: string, x: number, y: number) => {
     const el = studio.elements.find(e => e.id === elementId);
@@ -301,6 +309,7 @@ const Index = () => {
       } else {
         wall.addDesign(dataUrl, name, vibeName, studioState, stencilCreator);
       }
+      sounds.playSave();
       toast({ title: 'Saved to Wall!', description: 'Your design has been added to My Wall.' });
     } catch {
       toast({ title: 'Error', description: 'Failed to save design.', variant: 'destructive' });
@@ -337,6 +346,8 @@ const Index = () => {
       studio.setBackgroundTextureId(studio.backgroundTextureId === textureId ? null : textureId);
     } else if (studio.selectedSectionId) {
       studio.fillSection(studio.selectedSectionId, textureId);
+      sounds.playDrop();
+      sounds.trackAction();
     }
     // In 'swatch' mode with no section selected, clicking does nothing (drag to add)
   }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode]);
@@ -393,6 +404,10 @@ const Index = () => {
         onAmbientSoundChange={setAmbientSound}
         focusMode={focusMode}
         onToggleFocusMode={() => setFocusMode(prev => !prev)}
+        kidSoundsEnabled={sounds.enabled}
+        kidSoundsVolume={sounds.volume}
+        onKidSoundsToggle={sounds.setEnabled}
+        onKidSoundsVolume={sounds.setVolume}
       />
 
       <div className="flex-1 flex flex-col relative overflow-hidden">
@@ -410,7 +425,7 @@ const Index = () => {
                   onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
                   onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
                   onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                  onDelete={() => studio.deleteElement(studio.selectedId!)}
+                  onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
                 />
               </div>
             </div>
