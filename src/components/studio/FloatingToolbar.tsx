@@ -52,6 +52,117 @@ function StencilIcon({ shape, active }: { shape: ElementShape; active: boolean }
   }
 }
 
+// Edge style icons — small SVG preview of each edge pattern
+function EdgeIcon({ edge, size = 20 }: { edge: EdgeStyle; size?: number }) {
+  const s = size;
+  switch (edge) {
+    case 'clean':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <rect x="2" y="2" width="16" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case 'soft-fray':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <polygon points="2,1 6,2 10,0.5 14,2 18,1 19,5 18,9 19,13 18,17 19,19 14,18 10,19 6,18 2,19 1,15 2,11 1,7 2,3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      );
+    case 'rough-torn':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <polygon points="3,0 7,3 11,0 15,4 19,1 20,6 17,10 20,14 18,19 14,17 10,20 6,17 2,20 0,15 3,11 0,7 2,3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      );
+    case 'pinking':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <polygon points="0,3 3,0 6,3 9,0 12,3 15,0 18,3 20,3 20,6 17,9 20,12 17,15 20,18 18,20 15,17 12,20 9,17 6,20 3,17 0,18 0,15 3,12 0,9 3,6" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+      );
+    case 'scallop':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <path d="M3,1 Q5,4 7,1 Q9,4 11,1 Q13,4 15,1 Q17,4 19,2 Q20,5 17,7 Q20,9 17,11 Q20,13 17,15 Q20,17 18,19 Q15,17 13,19 Q11,17 9,19 Q7,17 5,19 Q3,17 1,18 Q0,15 3,13 Q0,11 3,9 Q0,7 3,5 Q0,3 2,1 Z" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+      );
+    case 'zigzag':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <polygon points="0,4 4,0 8,4 12,0 16,4 20,0 20,4 16,8 20,12 16,16 20,20 16,20 12,16 8,20 4,16 0,20 0,16 4,12 0,8 4,4" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+      );
+    case 'wave':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <path d="M2,2 Q5,-1 8,2 Q11,5 14,2 Q17,-1 19,2 Q22,5 19,8 Q16,11 19,14 Q22,17 19,18 Q16,21 13,18 Q10,15 7,18 Q4,21 2,18 Q-1,15 2,14 Q5,11 2,8 Q-1,5 2,2 Z" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+// Wrinkle level icons
+function WrinkleIcon({ level, size = 20 }: { level: WrinkleLevel; size?: number }) {
+  const s = size;
+  switch (level) {
+    case 'none':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <rect x="2" y="6" width="16" height="8" rx="1" fill="currentColor" opacity="0.6" />
+        </svg>
+      );
+    case 'light':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <path d="M2,10 Q5,7 8,10 Q11,13 14,10 Q17,7 18,10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case 'medium':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <path d="M1,10 Q3,5 5,10 Q7,15 9,10 Q11,5 13,10 Q15,15 17,10 Q19,5 20,10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case 'heavy':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <path d="M0,10 Q1.5,3 3,10 Q4.5,17 6,10 Q7.5,3 9,10 Q10.5,17 12,10 Q13.5,3 15,10 Q16.5,17 18,10 Q19.5,3 20,10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    default: return null;
+  }
+}
+
+// Shadow depth icons
+function ShadowIcon({ depth, size = 20 }: { depth: ShadowDepth; size?: number }) {
+  const s = size;
+  switch (depth) {
+    case 'flat':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <rect x="3" y="5" width="14" height="10" rx="2" fill="currentColor" opacity="0.6" />
+        </svg>
+      );
+    case 'lifted':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <rect x="5" y="9" width="12" height="6" rx="1" fill="currentColor" opacity="0.15" />
+          <rect x="3" y="4" width="14" height="10" rx="2" fill="currentColor" opacity="0.6" />
+        </svg>
+      );
+    case 'floating':
+      return (
+        <svg width={s} height={s} viewBox="0 0 20 20">
+          <rect x="6" y="12" width="12" height="5" rx="2" fill="currentColor" opacity="0.1" />
+          <rect x="3" y="2" width="14" height="10" rx="2" fill="currentColor" opacity="0.6" />
+        </svg>
+      );
+    default: return null;
+  }
+}
+
 const shapeOptions: { value: ElementShape; label: string; kidLabel: string }[] = [
   { value: 'soft-square', label: 'Soft Square', kidLabel: 'Squishy' },
   { value: 'torn-edge', label: 'Torn Edge', kidLabel: 'Ripped' },
@@ -65,10 +176,10 @@ const edgeOptions: { value: EdgeStyle; label: string; kidLabel: string }[] = [
   { value: 'clean', label: 'Clean', kidLabel: 'Smooth' },
   { value: 'soft-fray', label: 'Soft Fray', kidLabel: 'Fuzzy' },
   { value: 'rough-torn', label: 'Rough Torn', kidLabel: 'Ripped' },
-  { value: 'pinking', label: 'Pinking', kidLabel: 'Zigzag Cut' },
-  { value: 'scallop', label: 'Scallop', kidLabel: 'Wavy Cut' },
-  { value: 'zigzag', label: 'Zigzag', kidLabel: 'Zappy Cut' },
-  { value: 'wave', label: 'Wave', kidLabel: 'Swirly Cut' },
+  { value: 'pinking', label: 'Pinking', kidLabel: '✂️ Zigzag' },
+  { value: 'scallop', label: 'Scallop', kidLabel: '✂️ Wavy' },
+  { value: 'zigzag', label: 'Zigzag', kidLabel: '⚡ Zappy' },
+  { value: 'wave', label: 'Wave', kidLabel: '🌊 Swirly' },
 ];
 
 const wrinkleOptions: { value: WrinkleLevel; label: string; kidLabel: string }[] = [
@@ -83,6 +194,9 @@ const shadowOptions: { value: ShadowDepth; label: string; kidLabel: string }[] =
   { value: 'lifted', label: 'Lifted', kidLabel: 'Peeling Up' },
   { value: 'floating', label: 'Floating', kidLabel: 'Floating!' },
 ];
+
+
+
 
 export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
   const [showEffects, setShowEffects] = useState(true);
@@ -248,13 +362,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ edgeStyle: o.value })}
-                        className={`text-[10px] py-1.5 px-2 rounded-md transition-colors ${
+                        className={`flex items-center gap-1 text-[10px] py-1.5 px-2 rounded-md transition-colors ${
                           element.effects.edgeStyle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <EdgeIcon edge={o.value} size={16} />
+                        <span className="hidden sm:inline">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
@@ -270,13 +386,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ wrinkle: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${
                           element.effects.wrinkle === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <WrinkleIcon level={o.value} size={16} />
+                        <span className="text-[8px]">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
@@ -309,13 +427,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                       <button
                         key={o.value}
                         onClick={() => onUpdateEffects({ shadowDepth: o.value })}
-                        className={`flex-1 text-[10px] py-1.5 rounded-md transition-colors ${
+                        className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${
                           element.effects.shadowDepth === o.value
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground hover:bg-accent'
                         }`}
+                        title={o.label}
                       >
-                        {kidMode ? o.kidLabel : o.label}
+                        <ShadowIcon depth={o.value} size={16} />
+                        <span className="text-[8px]">{kidMode ? o.kidLabel : o.label}</span>
                       </button>
                     ))}
                   </div>
