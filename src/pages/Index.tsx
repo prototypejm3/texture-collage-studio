@@ -160,7 +160,9 @@ const Index = () => {
 
   const handleTableElementDelete = useCallback((id: string) => {
     setTableElements(prev => prev.filter(el => el.id !== id));
-  }, []);
+    sounds.playDelete();
+    sounds.trackAction();
+  }, [sounds]);
 
   const handleMoveToTable = useCallback((elementId: string, x: number, y: number) => {
     const el = studio.elements.find(e => e.id === elementId);
