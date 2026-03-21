@@ -83,6 +83,7 @@ interface Props {
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
   onBoxSave?: () => void;
+  onToolSound?: (tool: string) => void;
   // Kid toolbox on desk
   onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
   onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
