@@ -169,9 +169,9 @@ export function NavBar() {
           <button
             onClick={handleToggleKidMode}
             className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
-            title="Switch to kids mode"
+            title="Switch to Kids Mode"
           >
-            🧒 Kids Mode
+            👵 Granny Mode
           </button>
         </div>
 
