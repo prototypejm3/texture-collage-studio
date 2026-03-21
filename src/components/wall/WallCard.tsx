@@ -192,6 +192,7 @@ export function WallCard({
   onUpdate, onFrameStyleChange, onSizeChange, onSubmitToGallery, isPremium, isDark, size = 'medium',
 }: WallCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [kidBubblesOpen, setKidBubblesOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [editPanelOpen, setEditPanelOpen] = useState(false);
@@ -203,6 +204,15 @@ export function WallCard({
   const [editEdition, setEditEdition] = useState(design.edition || '');
   const [editMaterials, setEditMaterials] = useState(design.materials || '');
   const nameRef = useRef<HTMLInputElement>(null);
+
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
 
   const handleOpenEditPanel = (e: React.MouseEvent) => {
     e.stopPropagation();
