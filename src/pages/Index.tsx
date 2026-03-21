@@ -424,8 +424,8 @@ const Index = () => {
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
                   element={studio.elements.find(e => e.id === studio.selectedId)!}
-                  onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                  onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                  onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
+                  onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
                   onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
                   onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
                 />
