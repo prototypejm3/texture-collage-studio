@@ -666,21 +666,21 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
       <div
         className={`aspect-square rounded overflow-hidden border shadow-sm ${
           isActive ? 'border-primary ring-1 ring-primary/40' : 'border-border/50'
-        }`}
+        } ${kidMode ? 'rounded-xl border-2' : ''}`}
       >
         <VibePreviewSVG vibe={vibe} />
         {isActive && (
-          <div className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
-            <Check className="w-1.5 h-1.5 text-primary-foreground" />
+          <div className={`absolute top-0.5 right-0.5 rounded-full bg-primary flex items-center justify-center ${kidMode ? 'w-4 h-4' : 'w-3 h-3'}`}>
+            <Check className={kidMode ? 'w-2.5 h-2.5 text-primary-foreground' : 'w-1.5 h-1.5 text-primary-foreground'} />
           </div>
         )}
         {isAiGenerated && (
-          <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground text-[5px] font-bold uppercase tracking-wider">
+          <div className={`absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground font-bold uppercase tracking-wider ${kidMode ? 'text-[7px]' : 'text-[5px]'}`}>
             AI
           </div>
         )}
       </div>
-      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">
+      <p className={`text-muted-foreground mt-0.5 truncate text-center ${kidMode ? 'text-[10px] font-medium' : 'text-[8px]'}`}>
         {vibe.emoji} {vibe.name}
       </p>
 
