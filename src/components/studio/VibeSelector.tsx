@@ -145,7 +145,8 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
   const communityVibes = allVibes.filter(v => v.category === 'Community' && !themedIds.has(v.id));
   
   // Any remaining stencils that don't belong to a theme
-  const uncategorized = allVibes.filter(v => !themedIds.has(v.id) && v.category !== 'Community');
+  const adultOnlyIds = new Set(themeGroups.filter(g => g.adultOnly).flatMap(g => [...g.ids]));
+  const uncategorized = allVibes.filter(v => !themedIds.has(v.id) && v.category !== 'Community' && !(kidMode && adultOnlyIds.has(v.id)));
 
   const renderVibeCard = (vibe: Vibe) => {
     const isActive = activeVibeId === vibe.id;
