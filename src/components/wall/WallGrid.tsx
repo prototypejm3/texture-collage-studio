@@ -52,6 +52,7 @@ export function WallGrid({ designs, layout, isPremium, showTitleCards, isDark, k
         isPremium={isPremium}
         isDark={isDark}
         showTitleCards={showTitleCards}
+        kidMode={kidMode}
         onOpen={onOpen}
         onDuplicate={onDuplicate}
         onDelete={onDelete}
