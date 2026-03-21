@@ -418,7 +418,7 @@ const MyWall = () => {
                       onClick={() => { handleAddWall(); setShowWallPicker(false); }}
                       className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-1.5 text-foreground"
                     >
-                      <Plus className="w-3 h-3" /> New Wall {!isPremium && '🔒'}
+                      <Plus className="w-3 h-3" /> {kidMode ? 'New Room' : 'New Wall'} {!isPremium && '🔒'}
                     </button>
                   </div>
                 </>
