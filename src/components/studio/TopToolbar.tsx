@@ -152,7 +152,7 @@ export function TopToolbar({
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1.5">
           {kidMode ? (
-            <span className="text-base">🧸</span>
+            <span className="text-base">🎨</span>
           ) : (
             <Frame className="w-4 h-4 text-primary" />
           )}
