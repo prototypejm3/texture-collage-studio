@@ -143,45 +143,107 @@ export function TopToolbar({
 
   return (
     <>
-    <div className="flex items-center justify-between px-2 md:px-4 py-1 md:py-1.5 bg-background border-b border-border relative">
+    <div className={`flex items-center justify-between px-2 md:px-4 py-1 md:py-1.5 relative ${
+      kidMode
+        ? 'bg-gradient-to-r from-primary/5 via-background to-primary/5 border-b-2 border-primary/20'
+        : 'bg-background border-b border-border'
+    }`}>
       {/* Left: Logo + Nav */}
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1.5">
-          <Frame className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold tracking-tight text-foreground">
-            {kidMode ? '🧸 Swatchbox Studio' : 'Swatchbox Studio'}
+          {kidMode ? (
+            <span className="text-base">🧸</span>
+          ) : (
+            <Frame className="w-4 h-4 text-primary" />
+          )}
+          <span className={`font-bold tracking-tight text-foreground ${kidMode ? 'text-sm' : 'text-xs'}`}>
+            Swatchbox Studio
           </span>
         </div>
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/"
-            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-              isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-            }`}
+
+        {/* Kid Mode Toggle — next to brand */}
+        {kidMode && (
+          <button
+            onClick={handleKidToggle}
+            className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30"
+            title="Switch to adult mode"
           >
-            <Brush className="w-3 h-3" />
-            {kidMode ? 'Create' : 'Studio'}
-          </Link>
-          <Link
-            to="/wall"
-            data-nav="wall"
-            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-              isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <Grid2x2 className="w-3 h-3" />
-            {kidMode ? 'My Room' : 'My Wall'}
-          </Link>
-          <Link
-            to="/gallery"
-            data-nav="gallery"
-            className={`flex items-center gap-1 text-xs font-medium transition-colors ${
-              isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <Landmark className="w-3 h-3" />
-            {kidMode ? 'Show & Tell' : 'Gallery'}
-          </Link>
+            🧒 Kids Mode!
+          </button>
+        )}
+
+        <div className="hidden md:flex items-center gap-1.5">
+          {kidMode ? (
+            <>
+              <Link
+                to="/"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
+                  isStudio
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+                }`}
+              >
+                <span className="text-sm">🖍️</span>
+                Create
+              </Link>
+              <Link
+                to="/wall"
+                data-nav="wall"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
+                  isWall
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+                }`}
+              >
+                <span className="text-sm">🏠</span>
+                My Room
+              </Link>
+              <Link
+                to="/gallery"
+                data-nav="gallery"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
+                  isGallery
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+                }`}
+              >
+                <span className="text-sm">🎪</span>
+                Show & Tell
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/"
+                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
+                  isStudio ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Brush className="w-3 h-3" />
+                Studio
+              </Link>
+              <Link
+                to="/wall"
+                data-nav="wall"
+                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
+                  isWall ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Grid2x2 className="w-3 h-3" />
+                My Wall
+              </Link>
+              <Link
+                to="/gallery"
+                data-nav="gallery"
+                className={`flex items-center gap-1 text-xs font-medium transition-colors ${
+                  isGallery ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Landmark className="w-3 h-3" />
+                Gallery
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
