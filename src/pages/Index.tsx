@@ -544,6 +544,9 @@ const Index = () => {
               onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
               onFillBackground={(textureId) => studio.setBackgroundTextureId(textureId)}
               onBoxSave={kidOnboarding.notifySave}
+              onUpdateElement={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
+              onUpdateEffects={(id, effects) => { studio.updateEffects(id, effects); kidOnboarding.notifyToolUse(); }}
+              onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}
