@@ -424,7 +424,7 @@ export function useStudio() {
     if (!section || !textureId) return;
 
     // Parse path to compute bounding box
-    const nums = section.path.match(/-?\d+/g)?.map(Number) || [];
+    const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
     let minX = 480, minY = 480, maxX = 0, maxY = 0;
     for (let i = 0; i < nums.length - 1; i += 2) {
       minX = Math.min(minX, nums[i]);
@@ -432,8 +432,9 @@ export function useStudio() {
       minY = Math.min(minY, nums[i + 1]);
       maxY = Math.max(maxY, nums[i + 1]);
     }
-    const w = maxX - minX;
-    const h = maxY - minY;
+    const w = Math.max(maxX - minX, 20);
+    const h = Math.max(maxY - minY, 20);
+    const normalizedPath = normalizeSvgPath(section.path, minX, minY, w, h, w, h);
 
     const id = `el-${nextId++}`;
     const newEl: CanvasElement = {
@@ -448,7 +449,7 @@ export function useStudio() {
       zIndex: nextId,
       effects: { ...defaultEffects },
       sectionId,
-      clipPathD: section.path,
+      clipPathD: normalizedPath,
     };
     setElements(prev => [...prev, newEl]);
     setSelectedId(id);
