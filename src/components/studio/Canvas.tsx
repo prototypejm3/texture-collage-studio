@@ -732,8 +732,8 @@ export function Canvas({
                   className="flex flex-col items-center justify-center gap-0.5 rounded-lg p-2 min-h-[52px] transition-all hover:scale-105 active:scale-95"
                   style={{ background: 'hsla(30, 30%, 90%, 0.15)', border: '1px solid hsla(30, 30%, 80%, 0.2)' }}
                 >
-                  <span className="text-lg leading-none">📋</span>
-                  <span className="text-[8px] font-bold text-amber-100/90">Copy</span>
+                  <span className="text-lg leading-none">📄📄</span>
+                  <span className="text-[8px] font-bold text-amber-100/90">Twin</span>
                 </button>
                 <button
                   data-toolbox-btn
