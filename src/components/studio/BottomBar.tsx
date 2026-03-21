@@ -148,15 +148,17 @@ export function BottomBar({
               style={{ background: 'conic-gradient(hsl(0,80%,65%), hsl(40,90%,60%), hsl(60,90%,60%), hsl(120,60%,50%), hsl(200,80%,55%), hsl(270,70%,60%), hsl(0,80%,65%))' }}
               title="Rainbow"
             />
-            {/* Premium colors — single locked circle */}
+            {/* Shadow Box */}
             <button
-              onClick={() => onRequestUpgrade?.()}
-              className="relative w-6 h-6 rounded-full transition-all flex-shrink-0 border border-border/40 opacity-50 cursor-not-allowed hover:scale-110"
-              style={{ background: 'conic-gradient(hsl(43,74%,55%), hsl(20,60%,50%), hsl(220,8%,65%), hsl(0,0%,80%), hsl(30,40%,50%), hsl(43,74%,55%))' }}
-              title="Premium Colors"
-            >
-              <Lock className="w-2.5 h-2.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white drop-shadow-sm" />
-            </button>
+              onClick={() => onWallFrameStyleChange('shadow-box')}
+              className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
+                wallFrameStyle === 'shadow-box'
+                  ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                  : 'border-border/40 hover:scale-110'
+              }`}
+              style={{ background: 'linear-gradient(145deg, hsl(0,0%,45%), hsl(0,0%,30%))' }}
+              title="Shadow Box"
+            />
           </div>
         ) : (
           /* Adult mode: pill buttons with shadow color popover */
