@@ -83,6 +83,10 @@ interface Props {
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
   onBoxSave?: () => void;
+  // Kid toolbox on desk
+  onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
+  onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
+  onDuplicateElement?: (id: string) => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -128,6 +132,9 @@ export function Canvas({
   selectedTableElementId,
   onDuplicateStencilSection,
   onDetachStencilSection,
+  onUpdateElement,
+  onUpdateEffects,
+  onDuplicateElement,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedTableId = selectedTableElementId ?? null;
@@ -150,6 +157,19 @@ export function Canvas({
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
     try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
+
+  // Kid Toolbox on desk
+  const [toolboxOpen, setToolboxOpen] = useState(false);
+  const toolboxRef = useRef<HTMLDivElement>(null);
+  const [toolboxPos, setToolboxPos] = useState(() => {
+    try { const raw = localStorage.getItem('kid-toolbox-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+  });
+  const toolboxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isToolboxDragging, setIsToolboxDragging] = useState(false);
+
+  useEffect(() => {
+    try { localStorage.setItem('kid-toolbox-pos', JSON.stringify(toolboxPos)); } catch {}
+  }, [toolboxPos]);
 
   // Persist box items & position
   useEffect(() => {
@@ -281,6 +301,23 @@ export function Canvas({
       window.removeEventListener('pointerup', handleUp);
     };
   }, [isBoxDragging]);
+
+  // Toolbox dragging
+  useEffect(() => {
+    if (!isToolboxDragging) return;
+    const handleMove = (e: PointerEvent) => {
+      const dx = e.clientX - toolboxDragStart.current.mx;
+      const dy = e.clientY - toolboxDragStart.current.my;
+      setToolboxPos({ x: toolboxDragStart.current.bx + dx, y: toolboxDragStart.current.by + dy });
+    };
+    const handleUp = () => setIsToolboxDragging(false);
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
+    };
+  }, [isToolboxDragging]);
 
   const baseSize = frameSizeMap[frameSize];
 
@@ -601,6 +638,181 @@ export function Canvas({
           />
         </div>
       )}
+
+      {/* Kid Toolbox on desk — only when element selected */}
+      {kidMode && selectedId && elements.find(e => e.id === selectedId) && onUpdateElement && onUpdateEffects && onDuplicateElement && (() => {
+        const el = elements.find(e => e.id === selectedId)!;
+        const edgeCycle: import('@/types/studio').EdgeStyle[] = ['clean', 'soft-fray', 'rough-torn', 'pinking', 'scallop', 'zigzag', 'wave'];
+        const wrinkleCycle: import('@/types/studio').WrinkleLevel[] = ['none', 'light', 'medium', 'heavy'];
+        const shapeCycle: ElementShape[] = ['soft-square', 'blob', 'circle', 'torn-edge'];
+
+        const tools = [
+          { id: 'grow', label: 'Grow', emoji: '➕' },
+          { id: 'shrink', label: 'Shrink', emoji: '➖' },
+          { id: 'cut', label: 'Cut', emoji: '✂️' },
+          { id: 'blob', label: 'Blob', emoji: '🫧' },
+          { id: 'fade', label: 'Fade', emoji: '🌫️' },
+          { id: 'crumple', label: 'Crumple', emoji: '📄' },
+        ];
+
+        const handleTool = (toolId: string) => {
+          switch (toolId) {
+            case 'grow':
+              onUpdateElement(selectedId!, { width: Math.min(el.width + 20, 300), height: el.shape === 'strip' ? el.height : Math.min(el.height + 20, 300) });
+              break;
+            case 'shrink':
+              onUpdateElement(selectedId!, { width: Math.max(el.width - 20, 30), height: el.shape === 'strip' ? el.height : Math.max(el.height - 20, 30) });
+              break;
+            case 'cut': {
+              const idx = edgeCycle.indexOf(el.effects.edgeStyle);
+              onUpdateEffects(selectedId!, { edgeStyle: edgeCycle[(idx + 1) % edgeCycle.length] });
+              break;
+            }
+            case 'blob': {
+              const idx = shapeCycle.indexOf(el.shape);
+              onUpdateElement(selectedId!, { shape: shapeCycle[(idx + 1) % shapeCycle.length] });
+              break;
+            }
+            case 'fade': {
+              const next = el.effects.bleachFade >= 100 ? 0 : el.effects.bleachFade + 25;
+              onUpdateEffects(selectedId!, { bleachFade: next });
+              break;
+            }
+            case 'crumple': {
+              const idx = wrinkleCycle.indexOf(el.effects.wrinkle);
+              onUpdateEffects(selectedId!, { wrinkle: wrinkleCycle[(idx + 1) % wrinkleCycle.length] });
+              break;
+            }
+          }
+        };
+
+        const tbx = toolboxPos.x < 0 ? (containerRef.current ? containerRef.current.clientWidth - 130 : 200) : toolboxPos.x;
+        const tby = toolboxPos.y < 0 ? 80 : toolboxPos.y;
+
+        return (
+          <div
+            ref={toolboxRef}
+            data-kid-toolbox
+            className="absolute z-30 select-none"
+            style={{ left: tbx, top: tby }}
+            onMouseDown={(e) => {
+              if ((e.target as HTMLElement).closest('[data-toolbox-btn]')) return;
+              e.stopPropagation();
+              e.preventDefault();
+              setIsToolboxDragging(true);
+              const currentTop = toolboxRef.current ? toolboxRef.current.getBoundingClientRect().top - (containerRef.current?.getBoundingClientRect().top || 0) : 0;
+              toolboxDragStart.current = { mx: e.clientX, my: e.clientY, bx: tbx, by: currentTop };
+            }}
+          >
+            {/* Expanded tools */}
+            {toolboxOpen && (
+              <div className="mb-1.5 rounded-xl p-2 grid grid-cols-3 gap-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, hsl(15, 60%, 35%) 0%, hsl(15, 50%, 28%) 100%)',
+                  border: '2px solid hsla(15, 40%, 20%, 0.5)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 hsla(15, 60%, 50%, 0.3)',
+                  minWidth: 170,
+                }}
+              >
+                {tools.map(tool => (
+                  <button
+                    key={tool.id}
+                    data-toolbox-btn
+                    onClick={(e) => { e.stopPropagation(); handleTool(tool.id); }}
+                    className="flex flex-col items-center justify-center gap-0.5 rounded-lg p-2 min-h-[52px] transition-all hover:scale-105 active:scale-95"
+                    style={{
+                      background: 'hsla(30, 30%, 90%, 0.15)',
+                      border: '1px solid hsla(30, 30%, 80%, 0.2)',
+                    }}
+                  >
+                    <span className="text-lg leading-none">{tool.emoji}</span>
+                    <span className="text-[8px] font-bold text-amber-100/90">{tool.label}</span>
+                  </button>
+                ))}
+                {/* Duplicate & Delete */}
+                <button
+                  data-toolbox-btn
+                  onClick={(e) => { e.stopPropagation(); onDuplicateElement(selectedId!); }}
+                  className="flex flex-col items-center justify-center gap-0.5 rounded-lg p-2 min-h-[52px] transition-all hover:scale-105 active:scale-95"
+                  style={{ background: 'hsla(30, 30%, 90%, 0.15)', border: '1px solid hsla(30, 30%, 80%, 0.2)' }}
+                >
+                  <span className="text-lg leading-none">📋</span>
+                  <span className="text-[8px] font-bold text-amber-100/90">Copy</span>
+                </button>
+                <button
+                  data-toolbox-btn
+                  onClick={(e) => { e.stopPropagation(); onDeleteElement(selectedId!); onSelect(null); }}
+                  className="flex flex-col items-center justify-center gap-0.5 rounded-lg p-2 min-h-[52px] transition-all hover:scale-105 active:scale-95"
+                  style={{ background: 'hsla(0, 50%, 40%, 0.3)', border: '1px solid hsla(0, 40%, 50%, 0.3)' }}
+                >
+                  <span className="text-lg leading-none">🗑️</span>
+                  <span className="text-[8px] font-bold text-red-200/90">Toss</span>
+                </button>
+              </div>
+            )}
+
+            {/* The toolbox itself */}
+            <div
+              onClick={(e) => { e.stopPropagation(); setToolboxOpen(!toolboxOpen); }}
+              className="relative flex flex-col items-center justify-end cursor-grab active:cursor-grabbing hover:scale-105 transition-transform"
+              style={{ width: 100, height: 56 }}
+            >
+              {/* Toolbox body */}
+              <div
+                style={{
+                  width: '100%',
+                  height: 38,
+                  background: 'linear-gradient(180deg, hsl(0, 70%, 42%) 0%, hsl(0, 65%, 35%) 100%)',
+                  borderRadius: '0 0 6px 6px',
+                  border: '2px solid hsla(0, 50%, 25%, 0.6)',
+                  borderTop: 'none',
+                  boxShadow: '0 3px 10px rgba(0,0,0,0.35), inset 0 -3px 6px rgba(0,0,0,0.15)',
+                  position: 'relative',
+                }}
+              >
+                {/* Metal clasp */}
+                <div style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: 4,
+                  transform: 'translateX(-50%)',
+                  width: 20,
+                  height: 6,
+                  background: 'linear-gradient(180deg, hsl(40, 10%, 75%), hsl(40, 10%, 60%))',
+                  borderRadius: 2,
+                  border: '1px solid hsla(40, 10%, 50%, 0.5)',
+                }} />
+              </div>
+
+              {/* Lid */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: toolboxOpen ? -16 : -4,
+                  left: -2,
+                  width: 'calc(100% + 4px)',
+                  height: 18,
+                  background: toolboxOpen
+                    ? 'linear-gradient(180deg, hsl(0, 70%, 50%) 0%, hsl(0, 65%, 42%) 100%)'
+                    : 'linear-gradient(180deg, hsl(0, 70%, 45%) 0%, hsl(0, 65%, 38%) 100%)',
+                  borderRadius: '4px 4px 0 0',
+                  border: '2px solid hsla(0, 50%, 25%, 0.6)',
+                  borderBottom: 'none',
+                  transform: toolboxOpen ? 'rotateX(-50deg)' : 'rotateX(-15deg)',
+                  transformOrigin: 'bottom center',
+                  boxShadow: '0 -2px 6px rgba(0,0,0,0.15)',
+                }}
+              />
+
+              {/* Label */}
+              <span className="absolute bottom-1 text-[7px] font-bold tracking-wider uppercase pointer-events-none"
+                style={{ color: 'hsla(0, 0%, 100%, 0.7)' }}>
+                🧰 Tools
+              </span>
+            </div>
+          </div>
+        );
+      })()}
 
       <div style={{
         display: 'flex',

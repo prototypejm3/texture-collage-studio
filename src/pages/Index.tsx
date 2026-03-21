@@ -434,11 +434,11 @@ const Index = () => {
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* ── Canvas area ── */}
         <div className="flex-1 relative overflow-hidden min-h-0 flex">
-          {/* ── Left panel: Edit Element (desktop only) ── */}
-          {!isMobile && studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
+          {/* ── Left panel: Edit Element (desktop only, adult mode only) ── */}
+          {!isMobile && !sounds.kidMode && studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
             <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
               <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Play w/ Elements</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
@@ -452,11 +452,11 @@ const Index = () => {
             </div>
           )}
 
-          {/* ── Left panel: Edit Table Element (desktop only) ── */}
-          {!isMobile && !studio.selectedId && selectedTableElement && (
+          {/* ── Left panel: Edit Table Element (desktop only, adult mode only) ── */}
+          {!isMobile && !sounds.kidMode && !studio.selectedId && selectedTableElement && (
             <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
               <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Play w/ Elements</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
@@ -544,6 +544,9 @@ const Index = () => {
               onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
               onFillBackground={(textureId) => studio.setBackgroundTextureId(textureId)}
               onBoxSave={kidOnboarding.notifySave}
+              onUpdateElement={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
+              onUpdateEffects={(id, effects) => { studio.updateEffects(id, effects); kidOnboarding.notifyToolUse(); }}
+              onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}
