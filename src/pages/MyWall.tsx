@@ -426,38 +426,110 @@ const MyWall = () => {
             </div>
           </div>
 
-          <WallCustomizer
-            settings={currentSettings}
-            onUpdate={handleUpdateSettings}
-            onApplyFrameToAll={handleApplyFrameToAll}
-            onApplyHangingToAll={handleApplyHangingToAll}
-            onAutoCurate={handleAutoCurate}
-            onStepBack={() => setStepBackMode(true)}
-            onRequestUpgrade={() => setShowPaywall(true)}
-            isPremium={isPremium}
-          />
+          {/* Kid mode: simplified controls. Adult mode: full customizer */}
+          {kidMode ? (
+            <div className="flex flex-wrap items-center gap-3 px-1">
+              <div className="mr-auto" />
+              {/* Wall background circles */}
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-muted-foreground">🏠 Room:</span>
+                {[
+                  { value: 'white-brick' as const, label: '🤍', color: '#f5f5f5' },
+                  { value: 'sky-blue' as const, label: '☁️', color: '#87CEEB' },
+                  { value: 'mint' as const, label: '🌿', color: '#98D8C8' },
+                  { value: 'blush' as const, label: '🌸', color: '#F8C8D4' },
+                  { value: 'wood-birch-wall' as const, label: '🪵', color: '#D4B896' },
+                ].map(bg => (
+                  <button
+                    key={bg.value}
+                    onClick={() => handleUpdateSettings({ background: bg.value })}
+                    className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 flex items-center justify-center text-lg ${
+                      currentSettings.background === bg.value
+                        ? 'border-primary scale-110 shadow-md ring-2 ring-primary/30'
+                        : 'border-border/40'
+                    }`}
+                    style={{ backgroundColor: bg.color }}
+                    title={bg.label}
+                  >
+                    {bg.label}
+                  </button>
+                ))}
+              </div>
+              {/* Magic arrange */}
+              <button
+                onClick={handleAutoCurate}
+                className="px-3 py-2 rounded-full bg-primary text-primary-foreground font-bold text-xs shadow-md hover:scale-105 transition-transform flex items-center gap-1.5"
+              >
+                ✨ Magic!
+              </button>
+              {/* Step back / view */}
+              <button
+                onClick={() => setStepBackMode(true)}
+                className="px-3 py-2 rounded-full bg-popover text-foreground font-semibold text-xs border border-border shadow-sm hover:scale-105 transition-transform flex items-center gap-1.5"
+              >
+                👀 Look!
+              </button>
+            </div>
+          ) : (
+            <WallCustomizer
+              settings={currentSettings}
+              onUpdate={handleUpdateSettings}
+              onApplyFrameToAll={handleApplyFrameToAll}
+              onApplyHangingToAll={handleApplyHangingToAll}
+              onAutoCurate={handleAutoCurate}
+              onStepBack={() => setStepBackMode(true)}
+              onRequestUpgrade={() => setShowPaywall(true)}
+              isPremium={isPremium}
+            />
+          )}
 
           {/* Tabs + controls */}
           <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-6 md:mt-8 mb-6 md:mb-8">
             <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
-              {([
-                ['all', kidMode ? '🎨 All' : 'All'],
-                ['display', kidMode ? '⭐ Showing' : 'Display'],
-                ['hidden', kidMode ? '🙈 Put Away' : 'Hidden'],
-                ['draft', kidMode ? '📝 Working On' : 'Draft'],
-              ] as const).map(([val, label]) => (
-                <button
-                  key={val}
-                  onClick={() => setActiveTab(val)}
-                  className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
-                    activeTab === val
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
+              {kidMode ? (
+                // Kid-simplified tabs
+                <>
+                  {([
+                    ['all', '🎨 My Art'],
+                    ['display', '⭐ On Wall'],
+                    ['hidden', '📦 In Box'],
+                  ] as const).map(([val, label]) => (
+                    <button
+                      key={val}
+                      onClick={() => setActiveTab(val)}
+                      className={`px-4 py-2 text-sm font-bold rounded-full border-2 shadow-sm transition-all hover:scale-105 ${
+                        activeTab === val
+                          ? 'bg-primary text-primary-foreground border-primary scale-105'
+                          : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </>
+              ) : (
+                // Adult tabs
+                <>
+                  {([
+                    ['all', 'All'],
+                    ['display', 'Display'],
+                    ['hidden', 'Hidden'],
+                    ['draft', 'Draft'],
+                  ] as const).map(([val, label]) => (
+                    <button
+                      key={val}
+                      onClick={() => setActiveTab(val)}
+                      className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
+                        activeTab === val
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </>
+              )}
             </div>
 
             <div className="ml-auto relative">
@@ -511,6 +583,7 @@ const MyWall = () => {
                 isPremium={isPremium}
                 showTitleCards={currentSettings.showTitleCards}
                 isDark={isDark}
+                kidMode={kidMode}
                 onOpen={handleOpen}
                 onDuplicate={handleDuplicate}
                 onDelete={handleDelete}
