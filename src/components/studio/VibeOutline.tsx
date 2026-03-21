@@ -169,6 +169,46 @@ export function VibeOutline({
     onUpdateSectionTransform(sectionId, { rotation: t.rotation + delta });
   }, [sectionTransforms, onUpdateSectionTransform]);
 
+  // ── Drag-to-rotate handler ──
+  const handleRotateStart = useCallback((e: React.MouseEvent, sectionId: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setRotatingId(sectionId);
+    const section = vibe.sections.find(s => s.id === sectionId);
+    if (!section || !svgRef.current) return;
+    const t = sectionTransforms[sectionId] || defaultSectionTransform;
+    const { cx, cy } = getPathCenter(section.path);
+    const rect = svgRef.current.getBoundingClientRect();
+    const screenCx = rect.left + ((cx + t.x) / vbW) * rect.width;
+    const screenCy = rect.top + ((cy + t.y) / vbH) * rect.height;
+    const startAngle = Math.atan2(e.clientY - screenCy, e.clientX - screenCx) * (180 / Math.PI);
+    rotateStart.current = { startAngle, rotation: t.rotation };
+  }, [sectionTransforms, vibe.sections, vbW, vbH]);
+
+  useEffect(() => {
+    if (!rotatingId) return;
+    const section = vibe.sections.find(s => s.id === rotatingId);
+    if (!section || !svgRef.current) return;
+    const t = sectionTransforms[rotatingId] || defaultSectionTransform;
+    const { cx, cy } = getPathCenter(section.path);
+    const rect = svgRef.current.getBoundingClientRect();
+    const screenCx = rect.left + ((cx + t.x) / vbW) * rect.width;
+    const screenCy = rect.top + ((cy + t.y) / vbH) * rect.height;
+
+    const handleMove = (e: MouseEvent) => {
+      const currentAngle = Math.atan2(e.clientY - screenCy, e.clientX - screenCx) * (180 / Math.PI);
+      const delta = currentAngle - rotateStart.current.startAngle;
+      onUpdateSectionTransform(rotatingId, { rotation: Math.round(rotateStart.current.rotation + delta) });
+    };
+    const handleUp = () => setRotatingId(null);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [rotatingId, sectionTransforms, vibe.sections, vbW, vbH, onUpdateSectionTransform]);
+
   return (
     <>
       <svg
