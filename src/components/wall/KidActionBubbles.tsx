@@ -100,8 +100,8 @@ export function KidActionBubbles({
         break;
       }
       case 'cut': {
-        // Cycle frame styles (simplified for kids)
-        const kidFrames = ['shadow-box', 'gold', 'wood', 'black', 'none'] as const;
+        // Cycle kid-friendly frame styles
+        const kidFrames = ['black', 'none', 'rainbow'] as const;
         const currentIdx = kidFrames.indexOf(design.frameStyle as any);
         const nextFrame = kidFrames[(currentIdx + 1) % kidFrames.length];
         onUpdate(design.id, { frameStyle: nextFrame } as any);
@@ -112,7 +112,10 @@ export function KidActionBubbles({
         break;
       }
       case 'save': {
-        onUpdate(design.id, { status: design.status === 'hidden' ? 'display' : 'hidden', hidden: design.status !== 'hidden' });
+        // Toggle between display and hidden (put in / take out of box)
+        const newStatus = design.status === 'hidden' ? 'display' : 'hidden';
+        onUpdate(design.id, { status: newStatus, hidden: newStatus === 'hidden' });
+        onClose();
         break;
       }
       case 'open': {
