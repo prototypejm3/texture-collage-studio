@@ -163,13 +163,22 @@ export function TopToolbar({
         </div>
 
         {/* Kid Mode Toggle — next to brand */}
-        {kidMode && (
+        {kidMode ? (
           <button
             onClick={handleKidToggle}
-            className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30"
-            title="Switch to adult mode"
+            className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md"
+            style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)' }}
+            title="Switch to Granny Mode"
           >
-            🧒 Kids Mode!
+            🧒 Kids Mode → 🥦👵
+          </button>
+        ) : (
+          <button
+            onClick={handleKidToggle}
+            title="Switch to Kids Mode"
+            className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
+          >
+            → 🧒
           </button>
         )}
 
@@ -252,16 +261,7 @@ export function TopToolbar({
 
       {/* Right */}
       <div className="flex items-center gap-1">
-        {/* Kid Mode Toggle — only in adult mode (kid mode shows it on the left) */}
-        {!kidMode && (
-          <button
-            onClick={handleKidToggle}
-            className="p-1.5 rounded-md transition-colors text-muted-foreground hover:text-foreground hover:bg-secondary"
-            title="Kids Mode (off)"
-          >
-            <span className="text-sm leading-none">🧸</span>
-          </button>
-        )}
+        {/* Kid mode toggle moved to left side next to brand */}
 
         {/* AI Toggle */}
         <button
