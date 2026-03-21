@@ -375,7 +375,7 @@ export function BottomBar({
         </button>
         {onSaveToWall && (
           <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-foreground hover:bg-secondary rounded-md transition-colors">
-            <Save className="w-3 h-3" /> <span className="hidden sm:inline">Save</span>
+            <Save className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Save' : 'Keep Safe'}</span>
           </button>
         )}
         <button
