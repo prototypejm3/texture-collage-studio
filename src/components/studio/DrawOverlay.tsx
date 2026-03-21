@@ -167,6 +167,14 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
       {/* Instructions */}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[51] px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium shadow-lg flex items-center gap-2">
         {crayonMode ? '🖍️ Draw with your crayon!' : '✏️ Draw a shape — it will auto-close'}
+        {crayonMode && canUndo && onUndoLast && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onUndoLast(); }}
+            className="ml-1 px-1.5 py-0.5 rounded bg-destructive/80 hover:bg-destructive text-destructive-foreground text-[10px] transition-colors"
+          >
+            🗑️ Undo Last
+          </button>
+        )}
         <button
           onClick={(e) => { e.stopPropagation(); onCancel(); }}
           className="ml-1 px-1.5 py-0.5 rounded bg-primary-foreground/20 hover:bg-primary-foreground/30 text-[10px] transition-colors"
