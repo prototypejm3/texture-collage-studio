@@ -652,10 +652,29 @@ export function Canvas({
         const wrinkleCycle: import('@/types/studio').WrinkleLevel[] = ['none', 'light', 'medium', 'heavy'];
         const shapeCycle: ElementShape[] = ['soft-square', 'circle', 'torn-edge'];
 
+        const edgeEmojis: Record<string, string> = {
+          'clean': '✂️',
+          'soft-fray': '🧵',
+          'rough-torn': '📜',
+          'pinking': '🔱',
+          'scallop': '🌊',
+          'zigzag': '⚡',
+          'wave': '〰️',
+        };
+        const edgeLabels: Record<string, string> = {
+          'clean': 'Cut',
+          'soft-fray': 'Fray',
+          'rough-torn': 'Torn',
+          'pinking': 'Pinking',
+          'scallop': 'Scallop',
+          'zigzag': 'Zigzag',
+          'wave': 'Wave',
+        };
+
         const tools = [
           { id: 'grow', label: 'Grow', emoji: '➕' },
           { id: 'shrink', label: 'Shrink', emoji: '➖' },
-          { id: 'cut', label: 'Cut', emoji: '✂️' },
+          { id: 'cut', label: edgeLabels[el.effects.edgeStyle] || 'Cut', emoji: edgeEmojis[el.effects.edgeStyle] || '✂️' },
           { id: 'fade', label: 'Fade', emoji: '🌫️' },
           { id: 'crumple', label: 'Crumple', emoji: '🤜' },
         ];
