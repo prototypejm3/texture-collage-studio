@@ -159,7 +159,7 @@ export function KidActionBubbles({
   const handleAction = (actionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const action = actions.find(a => a.id === actionId);
-    if (action) playBubbleSound(action.sound);
+    if (action) playBubbleSound(action.sound, isKid);
 
     switch (actionId) {
       case 'grow':
