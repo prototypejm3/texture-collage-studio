@@ -115,9 +115,18 @@ const kidTools: ToolDef[] = [
   { id: 'grow',    label: 'Grow' },
   { id: 'shrink',  label: 'Shrink' },
   { id: 'cut',     label: 'Cut' },
-  { id: 'blob',    label: 'Blob' },
+  { id: 'twin',    label: 'Twin' },
   { id: 'fade',    label: 'Fade' },
   { id: 'crumple', label: 'Crumple' },
+];
+
+const kidShapes: { id: ElementShape; label: string; emoji: string }[] = [
+  { id: 'soft-square', label: 'Square', emoji: '🟧' },
+  { id: 'rectangle',   label: 'Long',   emoji: '▭' },
+  { id: 'circle',      label: 'Circle', emoji: '⚫' },
+  { id: 'strip',       label: 'Thin',   emoji: '➖' },
+  { id: 'torn-edge',   label: 'Ripped', emoji: '🧩' },
+  { id: 'blob',        label: 'Blob',   emoji: '🫧' },
 ];
 
 // SVG tool icons — visually distinct, kid-friendly
@@ -148,14 +157,12 @@ function ToolIcon({ id, size = 32 }: { id: string; size?: number }) {
           <circle cx="16" cy="15" r="1.5" fill="hsl(220, 10%, 60%)" />
         </svg>
       );
-    case 'blob':
+    case 'twin':
       return (
         <svg width={size} height={size} viewBox="0 0 32 32">
-          <path
-            d="M16,4 C22,4 28,8 27,14 C26,20 30,22 26,26 C22,30 18,28 14,28 C10,28 4,30 4,24 C4,18 6,20 6,14 C6,8 10,4 16,4 Z"
-            fill="hsl(240, 60%, 60%)"
-            opacity={0.7}
-          />
+          {/* Two overlapping papers */}
+          <rect x="4" y="6" width="16" height="20" rx="2" fill="hsl(200, 50%, 70%)" opacity={0.6} />
+          <rect x="10" y="4" width="16" height="20" rx="2" fill="hsl(200, 50%, 55%)" opacity={0.8} />
         </svg>
       );
     case 'fade':
@@ -226,13 +233,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
         onUpdateEffects({ edgeStyle: nextEdge });
         break;
       }
-      case 'blob': {
-        const shapeCycle: ElementShape[] = ['soft-square', 'blob', 'circle', 'torn-edge'];
-        const currentShapeIdx = shapeCycle.indexOf(element.shape);
-        const nextShape = shapeCycle[(currentShapeIdx + 1) % shapeCycle.length];
-        onUpdate({ shape: nextShape });
+      case 'twin':
+        onDuplicate();
         break;
-      }
       case 'fade': {
         const nextFade = element.effects.bleachFade >= 100 ? 0 : element.effects.bleachFade + 25;
         onUpdateEffects({ bleachFade: nextFade });
@@ -247,11 +250,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
     }
   };
 
-  // Subtitle for each tool showing current state
   const getSubtitle = (toolId: string): string | null => {
     switch (toolId) {
       case 'cut': return edgeDisplayName(element.effects.edgeStyle);
-      case 'blob': return element.shape === 'blob' ? 'Blobby!' : element.shape === 'circle' ? 'Round' : element.shape === 'torn-edge' ? 'Ripped' : 'Square';
       case 'fade': return element.effects.bleachFade > 0 ? `${element.effects.bleachFade}%` : null;
       case 'crumple': return element.effects.wrinkle !== 'none' ? element.effects.wrinkle : null;
       default: return null;
@@ -291,6 +292,31 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
             </motion.button>
           );
         })}
+      </div>
+
+      {/* Shape row */}
+      <div>
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-1 block">Shape</span>
+        <div className="flex flex-wrap gap-1.5">
+          {kidShapes.map(shape => {
+            const isActive = element.shape === shape.id;
+            return (
+              <motion.button
+                key={shape.id}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => onUpdate({ shape: shape.id })}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-bold transition-all ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30'
+                    : 'bg-secondary text-foreground border border-border hover:bg-accent'
+                }`}
+              >
+                <span className="text-xs">{shape.emoji}</span>
+                {shape.label}
+              </motion.button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
