@@ -103,27 +103,30 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
       <div className="flex items-center gap-2.5">
         {/* Layout picker — grid is free, others are premium */}
-        <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
-          {layouts.map(l => {
-            const locked = l.value !== 'grid' && !isPremium;
-            return (
-              <button
-                key={l.value}
-                onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
-                className={`relative p-2 rounded-full border shadow-sm transition-colors ${
-                  settings.layout === l.value
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : locked
-                      ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
-                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-                }`}
-                title={locked ? 'Premium — unlock to use' : l.label}
-              >
-                {l.icon}
-                {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-              </button>
-            );
-          })}
+        <div className="flex flex-col items-center gap-0.5">
+          <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
+            {layouts.map(l => {
+              const locked = l.value !== 'grid' && !isPremium;
+              return (
+                <button
+                  key={l.value}
+                  onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
+                  className={`relative p-2 rounded-full border shadow-sm transition-colors ${
+                    settings.layout === l.value
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : locked
+                        ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
+                        : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                  }`}
+                  title={locked ? 'Premium — unlock to use' : l.label}
+                >
+                  {l.icon}
+                  {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Layout</span>
         </div>
 
         {/* Apply frame to all */}
@@ -135,6 +138,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           onClose={() => setShowFrameMenu(false)}
           iconClass={iconClass(false, !isPremium)}
           title="Apply frame to all"
+          label="Frames"
         >
           <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
           {allFrameStyles.map(fs => (
@@ -157,6 +161,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           onClose={() => setShowHangingMenu(false)}
           iconClass={iconClass(settings.defaultHangingStyle !== 'floating', !isPremium)}
           title="Hanging style"
+          label="Hanging"
         >
           {['Style', 'String', 'Nail'].map(group => {
             const items = hangingStyles.filter(h => h.group === group);
@@ -194,6 +199,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           onClose={() => setShowLightingMenu(false)}
           iconClass={iconClass(settings.lightingPreset !== 'none', !isPremium)}
           title="Lighting"
+          label="Lighting"
         >
           <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
           {lightingPresets.map(lp => (
@@ -216,6 +222,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           onClose={() => setShowSoundMenu(false)}
           iconClass={iconClass(settings.ambientSound !== 'none', !isPremium)}
           title="Ambient sound"
+          label="Sound"
         >
           <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
           {ambientSounds.map(as => (
@@ -230,29 +237,38 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         </PremiumIconButton>
 
         {/* Title cards toggle */}
-        <button
-          onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
-          className={iconClass(settings.showTitleCards, false)}
-          title="Museum labels"
-        >
-          <Tag className="w-3.5 h-3.5" />
-        </button>
+        <div className="flex flex-col items-center gap-0.5">
+          <button
+            onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
+            className={iconClass(settings.showTitleCards, false)}
+            title="Museum labels"
+          >
+            <Tag className="w-3.5 h-3.5" />
+          </button>
+          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Labels</span>
+        </div>
 
         {/* Auto-curate */}
-        <button
-          onClick={() => handlePremiumClick(() => onAutoCurate?.())}
-          className={iconClass(false, !isPremium)}
-          title={isPremium ? 'Arrange Nicely' : 'Premium — unlock to use'}
-        >
-          <Wand2 className="w-3.5 h-3.5" />
-          {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-        </button>
+        <div className="flex flex-col items-center gap-0.5">
+          <button
+            onClick={() => handlePremiumClick(() => onAutoCurate?.())}
+            className={iconClass(false, !isPremium)}
+            title={isPremium ? 'Arrange Nicely' : 'Premium — unlock to use'}
+          >
+            <Wand2 className="w-3.5 h-3.5" />
+            {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
+          </button>
+          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Curate</span>
+        </div>
 
         {/* Step back — free for everyone */}
         {onStepBack && (
-          <button onClick={onStepBack} className={iconClass()} title="Step back">
-            <Eye className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex flex-col items-center gap-0.5">
+            <button onClick={onStepBack} className={iconClass()} title="Step back">
+              <Eye className="w-3.5 h-3.5" />
+            </button>
+            <span className="text-[8px] text-muted-foreground uppercase tracking-wider">View</span>
+          </div>
         )}
 
         {/* Background picker — premium */}
@@ -281,7 +297,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 }
 
 /* ─── Premium icon button with lock badge ─── */
-function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, children }: {
+function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, label, children }: {
   icon: React.ReactNode;
   isPremium: boolean;
   isOpen: boolean;
@@ -289,14 +305,16 @@ function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconCla
   onClose: () => void;
   iconClass: string;
   title: string;
+  label?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative">
+    <div className="relative flex flex-col items-center gap-0.5">
       <button onClick={onToggle} className={iconClass} title={isPremium ? title : 'Premium — unlock to use'}>
         {icon}
         {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
       </button>
+      {label && <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{label}</span>}
       {isOpen && isPremium && (
         <>
           <div className="fixed inset-0 z-40" onClick={onClose} />
