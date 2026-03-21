@@ -116,7 +116,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Sea Life', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
     { label: 'Food & Fruit', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
     { label: 'Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
-    { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']) },
+    { label: 'Art & Pattern', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', emoji: '🎵', ids: new Set([]) },
     { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', emoji: '🔤', ids: letterIds },
