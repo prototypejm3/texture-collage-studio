@@ -164,7 +164,7 @@ export function NavBar() {
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
         <div className="flex items-center gap-2.5">
           <span className="text-sm font-bold tracking-tight text-foreground flex items-center gap-1.5">
-            <span className="text-base">🎨</span>
+            <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
             Swatchbox Studio
           </span>
           <button
