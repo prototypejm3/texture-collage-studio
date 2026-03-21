@@ -82,6 +82,7 @@ interface Props {
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
+  onBoxSave?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
