@@ -161,7 +161,7 @@ export function NavBar() {
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <img src={logoGranny} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
+          <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
           <span className="text-sm font-bold tracking-tight text-foreground">
             Swatchbox Studio
           </span>
