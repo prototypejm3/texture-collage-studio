@@ -168,6 +168,7 @@ export function NavBar() {
           <motion.button
             whileTap={{ scale: 0.93 }}
             onClick={handleToggleKidMode}
+            title="Switch to Kids Mode"
             className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md bg-gradient-to-r from-emerald-700 to-teal-600 hover:from-emerald-600 hover:to-teal-500 transition-all"
           >
             🥦👵 Granny Mode → 🧒
