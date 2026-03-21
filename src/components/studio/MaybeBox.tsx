@@ -68,6 +68,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
                   />
                 )}
                 <button
+                  data-box-item-remove
                   onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }}
                   className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 >
