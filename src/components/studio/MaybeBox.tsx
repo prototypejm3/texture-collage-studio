@@ -81,7 +81,7 @@ export function MaybeBox({ items, onRemoveItem, onDragOutItem, isHovered, custom
       )}
 
       {/* The box itself */}
-      <button
+      <div
         onClick={() => setIsOpen(!isOpen)}
         className={`relative flex flex-col items-center justify-end transition-all duration-200 select-none cursor-grab active:cursor-grabbing ${
           isHovered
