@@ -5,6 +5,49 @@ import { textures } from '@/data/textures';
 
 let nextId = 1;
 
+/**
+ * Normalize an SVG path so all coordinates are relative to the element's
+ * bounding box (0,0 → width,height). This allows clip-path elements to be
+ * positioned and moved like regular elements.
+ */
+function normalizeSvgPath(
+  pathD: string,
+  originX: number,
+  originY: number,
+  origW: number,
+  origH: number,
+  targetW: number,
+  targetH: number,
+): string {
+  // Replace every number pair in the path, translating by -originX/-originY
+  // and scaling to target dimensions
+  const scaleX = targetW / origW;
+  const scaleY = targetH / origH;
+  let idx = 0;
+  const nums = pathD.match(/-?\d+(\.\d+)?/g) || [];
+  let result = '';
+  let numIdx = 0;
+  let i = 0;
+  while (i < pathD.length) {
+    const match = pathD.slice(i).match(/^-?\d+(\.\d+)?/);
+    if (match) {
+      const val = parseFloat(match[0]);
+      // Determine if x or y coordinate based on pair position
+      if (numIdx % 2 === 0) {
+        result += String(Math.round((val - originX) * scaleX * 100) / 100);
+      } else {
+        result += String(Math.round((val - originY) * scaleY * 100) / 100);
+      }
+      numIdx++;
+      i += match[0].length;
+    } else {
+      result += pathD[i];
+      i++;
+    }
+  }
+  return result;
+}
+
 function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -228,6 +271,7 @@ export function useStudio() {
   const placeStencil = useCallback(() => {
     if (!activeVibe) return;
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
+    const newElements: CanvasElement[] = [];
     sections.forEach(section => {
       const textureId = vibeFills[section.id] || textures[Math.floor(Math.random() * textures.length)].id;
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
@@ -238,27 +282,27 @@ export function useStudio() {
         minY = Math.min(minY, nums[i + 1]);
         maxY = Math.max(maxY, nums[i + 1]);
       }
-      const w = Math.max(maxX - minX, 20) * 0.5;
-      const h = Math.max(maxY - minY, 20) * 0.5;
-      // Center the scaled-down element at the original center
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
+      const rawW = Math.max(maxX - minX, 20);
+      const rawH = Math.max(maxY - minY, 20);
+      // Normalize the SVG path so coordinates are relative to 0,0 of the element
+      const normalizedPath = normalizeSvgPath(section.path, minX, minY, rawW, rawH, rawW, rawH);
       const id = `el-${nextId++}`;
-      setElements(prev => [...prev, {
+      newElements.push({
         id,
         textureId,
-        x: centerX - w / 2,
-        y: centerY - h / 2,
-        width: w,
-        height: h,
+        x: minX,
+        y: minY,
+        width: rawW,
+        height: rawH,
         rotation: 0,
         shape: 'soft-square' as const,
         zIndex: nextId,
         effects: { ...defaultEffects },
         sectionId: section.id,
-        clipPathD: section.path,
-      }]);
+        clipPathD: normalizedPath,
+      });
     });
+    setElements(prev => [...prev, ...newElements]);
     setActiveVibe(null);
     setVibeFills({});
     setSelectedSectionId(null);
@@ -380,7 +424,7 @@ export function useStudio() {
     if (!section || !textureId) return;
 
     // Parse path to compute bounding box
-    const nums = section.path.match(/-?\d+/g)?.map(Number) || [];
+    const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
     let minX = 480, minY = 480, maxX = 0, maxY = 0;
     for (let i = 0; i < nums.length - 1; i += 2) {
       minX = Math.min(minX, nums[i]);
@@ -388,8 +432,9 @@ export function useStudio() {
       minY = Math.min(minY, nums[i + 1]);
       maxY = Math.max(maxY, nums[i + 1]);
     }
-    const w = maxX - minX;
-    const h = maxY - minY;
+    const w = Math.max(maxX - minX, 20);
+    const h = Math.max(maxY - minY, 20);
+    const normalizedPath = normalizeSvgPath(section.path, minX, minY, w, h, w, h);
 
     const id = `el-${nextId++}`;
     const newEl: CanvasElement = {
@@ -404,7 +449,7 @@ export function useStudio() {
       zIndex: nextId,
       effects: { ...defaultEffects },
       sectionId,
-      clipPathD: section.path,
+      clipPathD: normalizedPath,
     };
     setElements(prev => [...prev, newEl]);
     setSelectedId(id);

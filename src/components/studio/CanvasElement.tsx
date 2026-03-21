@@ -219,10 +219,10 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       }}
       className={`absolute cursor-move pointer-events-auto ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} active:scale-[0.98] transition-transform`}
       style={{
-        left: element.clipPathD ? 0 : element.x,
-        top: element.clipPathD ? 0 : element.y,
-        width: element.clipPathD ? '100%' : element.width,
-        height: element.clipPathD ? '100%' : element.height,
+        left: element.x,
+        top: element.y,
+        width: element.width,
+        height: element.height,
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
         touchAction: 'none',
