@@ -298,149 +298,168 @@ export function WallCard({
         </div>
       )}
 
-      {/* Hover actions */}
-      <div className={`absolute bottom-2 right-2 flex items-center gap-1 transition-opacity duration-200 z-10 ${menuOpen || editPanelOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-        <div className="relative">
-          <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
-            <MoreHorizontal className="w-3 h-3" />
-          </button>
-          {menuOpen && menuBtnRef.current && (() => {
-            const btnRect = menuBtnRef.current!.getBoundingClientRect();
-            const menuWidth = 180;
-            const menuHeight = 420;
-            const spaceRight = window.innerWidth - btnRect.right;
-            const spaceBelow = window.innerHeight - btnRect.bottom;
-            const spaceLeft = btnRect.left;
-            const openLeft = spaceRight < menuWidth + 16 && spaceLeft > menuWidth + 16;
-            const openUp = spaceBelow < menuHeight;
-            
-            let top: number | undefined;
-            let bottom: number | undefined;
-            if (openUp) {
-              bottom = Math.max(8, window.innerHeight - btnRect.top + 4);
-              // ensure it doesn't go off top
-              if (window.innerHeight - bottom - menuHeight < 8) {
-                bottom = undefined;
-                top = 8;
+      {/* Kid Mode: tap to show action bubbles */}
+      {kidMode && (
+        <>
+          <div
+            className={`absolute inset-0 z-10 cursor-pointer ${kidBubblesOpen ? '' : ''}`}
+            onClick={(e) => { e.stopPropagation(); setKidBubblesOpen(!kidBubblesOpen); }}
+          />
+          <KidActionBubbles
+            design={design}
+            isOpen={kidBubblesOpen}
+            onClose={() => setKidBubblesOpen(false)}
+            onSizeChange={onSizeChange}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+            onOpen={onOpen}
+          />
+        </>
+      )}
+
+      {/* Adult Mode: Hover actions */}
+      {!kidMode && (
+        <div className={`absolute bottom-2 right-2 flex items-center gap-1 transition-opacity duration-200 z-10 ${menuOpen || editPanelOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+          <div className="relative">
+            <button ref={menuBtnRef} onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); setFrameExpanded(false); }} className="p-1.5 rounded-full bg-popover text-muted-foreground hover:text-foreground transition-colors shadow-md border border-border">
+              <MoreHorizontal className="w-3 h-3" />
+            </button>
+            {menuOpen && menuBtnRef.current && (() => {
+              const btnRect = menuBtnRef.current!.getBoundingClientRect();
+              const menuWidth = 180;
+              const menuHeight = 420;
+              const spaceRight = window.innerWidth - btnRect.right;
+              const spaceBelow = window.innerHeight - btnRect.bottom;
+              const spaceLeft = btnRect.left;
+              const openLeft = spaceRight < menuWidth + 16 && spaceLeft > menuWidth + 16;
+              const openUp = spaceBelow < menuHeight;
+              
+              let top: number | undefined;
+              let bottom: number | undefined;
+              if (openUp) {
+                bottom = Math.max(8, window.innerHeight - btnRect.top + 4);
+                if (window.innerHeight - bottom - menuHeight < 8) {
+                  bottom = undefined;
+                  top = 8;
+                }
+              } else {
+                top = btnRect.bottom + 4;
+                if (top + menuHeight > window.innerHeight - 8) {
+                  top = Math.max(8, window.innerHeight - menuHeight - 8);
+                }
               }
-            } else {
-              top = btnRect.bottom + 4;
-              // ensure it doesn't go off bottom
-              if (top + menuHeight > window.innerHeight - 8) {
-                top = Math.max(8, window.innerHeight - menuHeight - 8);
-              }
-            }
-            
-            return (
-              <>
-                <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
-                <div
-                  className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[170px] max-w-[200px] max-h-[80vh] overflow-y-auto"
-                  style={{
-                    ...(openLeft
-                      ? { right: Math.max(8, window.innerWidth - btnRect.left + 4) }
-                      : { left: Math.min(btnRect.right + 4, window.innerWidth - menuWidth - 8) }),
-                    ...(top !== undefined ? { top } : {}),
-                    ...(bottom !== undefined ? { bottom } : {}),
-                  }}
-                >
-                <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                  <FolderOpen className="w-3 h-3" /> Open in Studio
-                </button>
-                <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                  <Copy className="w-3 h-3" /> Duplicate
-                </button>
-                <div className="border-t border-border my-1" />
-                <button onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                  {design.pinned ? <PinOff className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
-                  {design.pinned ? 'Unpin' : 'Pin to top'}
-                </button>
-                <button onClick={(e) => { e.stopPropagation(); onToggleIRL(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                  <Hammer className="w-3 h-3" />
-                  {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
-                </button>
-                <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { isHero: !design.isHero }); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                  ⭐ {design.isHero ? 'Remove Hero' : 'Make Hero Piece'}
-                </button>
-                <div className="border-t border-border my-1" />
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Status</p>
-                <div className="flex items-center gap-1 px-3 py-1.5">
-                  {statusOptions.map(opt => (
-                    <button
-                      key={opt.value}
-                      onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { status: opt.value }); }}
-                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.status === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-                <div className="border-t border-border my-1" />
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
-                <div className="flex items-center gap-1 px-3 py-1.5">
-                  {sizeOptions.map(opt => (
-                    <button
-                      key={opt.value}
-                      onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, opt.value); }}
-                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.displaySize === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-                <div className="border-t border-border my-1" />
-                <button
-                  onClick={(e) => { e.stopPropagation(); setFrameExpanded(!frameExpanded); }}
-                  className="w-full text-left px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest flex items-center gap-1 hover:text-foreground transition-colors"
-                >
-                  Frame
-                  {frameExpanded ? <ChevronUp className="w-2.5 h-2.5 ml-auto" /> : <ChevronDown className="w-2.5 h-2.5 ml-auto" />}
-                </button>
-                {frameExpanded && (
-                <div className="flex flex-wrap gap-1 px-3 py-1.5">
-                  {frameStyleList.map(f => (
-                    <button
-                      key={f.value}
-                      onClick={(e) => { e.stopPropagation(); onFrameStyleChange(design.id, f.value); }}
-                      className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.frameStyle === f.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-                )}
-                {onSubmitToGallery && !design.gallerySubmissionId && (
-                  <>
-                    <div className="border-t border-border my-1" />
-                    <button onClick={(e) => { e.stopPropagation(); onSubmitToGallery(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
-                      <Send className="w-3 h-3" /> Submit to Gallery
-                    </button>
-                  </>
-                )}
-                <div className="border-t border-border my-1" />
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
-                <div className="flex items-center gap-1 px-3 py-1.5">
-                  <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate left">
-                    <RotateCcw className="w-3 h-3" />
+              
+              return (
+                <>
+                  <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setMenuOpen(false); }} />
+                  <div
+                    className="fixed z-[9999] bg-popover border border-border rounded-lg shadow-xl py-1 min-w-[170px] max-w-[200px] max-h-[80vh] overflow-y-auto"
+                    style={{
+                      ...(openLeft
+                        ? { right: Math.max(8, window.innerWidth - btnRect.left + 4) }
+                        : { left: Math.min(btnRect.right + 4, window.innerWidth - menuWidth - 8) }),
+                      ...(top !== undefined ? { top } : {}),
+                      ...(bottom !== undefined ? { bottom } : {}),
+                    }}
+                  >
+                  <button onClick={(e) => { e.stopPropagation(); onOpen(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                    <FolderOpen className="w-3 h-3" /> Open in Studio
                   </button>
-                  <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
-                  <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate right">
-                    <RotateCw className="w-3 h-3" />
+                  <button onClick={(e) => { e.stopPropagation(); onDuplicate(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                    <Copy className="w-3 h-3" /> Duplicate
                   </button>
-                  {(design.rotation || 0) !== 0 && (
-                    <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }} className="ml-1 text-[10px] text-muted-foreground hover:text-foreground">Reset</button>
+                  <div className="border-t border-border my-1" />
+                  <button onClick={(e) => { e.stopPropagation(); onTogglePin(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                    {design.pinned ? <PinOff className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
+                    {design.pinned ? 'Unpin' : 'Pin to top'}
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); onToggleIRL(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                    <Hammer className="w-3 h-3" />
+                    {design.builtIRL ? 'Unmark IRL' : 'Built IRL'}
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { isHero: !design.isHero }); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                    ⭐ {design.isHero ? 'Remove Hero' : 'Make Hero Piece'}
+                  </button>
+                  <div className="border-t border-border my-1" />
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Status</p>
+                  <div className="flex items-center gap-1 px-3 py-1.5">
+                    {statusOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { status: opt.value }); }}
+                        className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.status === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="border-t border-border my-1" />
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Size</p>
+                  <div className="flex items-center gap-1 px-3 py-1.5">
+                    {sizeOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        onClick={(e) => { e.stopPropagation(); onSizeChange(design.id, opt.value); }}
+                        className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.displaySize === opt.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="border-t border-border my-1" />
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setFrameExpanded(!frameExpanded); }}
+                    className="w-full text-left px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest flex items-center gap-1 hover:text-foreground transition-colors"
+                  >
+                    Frame
+                    {frameExpanded ? <ChevronUp className="w-2.5 h-2.5 ml-auto" /> : <ChevronDown className="w-2.5 h-2.5 ml-auto" />}
+                  </button>
+                  {frameExpanded && (
+                  <div className="flex flex-wrap gap-1 px-3 py-1.5">
+                    {frameStyleList.map(f => (
+                      <button
+                        key={f.value}
+                        onClick={(e) => { e.stopPropagation(); onFrameStyleChange(design.id, f.value); }}
+                        className={`px-2 py-0.5 rounded text-[10px] transition-colors ${design.frameStyle === f.value ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary text-foreground'}`}
+                      >
+                        {f.label}
+                      </button>
+                    ))}
+                  </div>
                   )}
+                  {onSubmitToGallery && !design.gallerySubmissionId && (
+                    <>
+                      <div className="border-t border-border my-1" />
+                      <button onClick={(e) => { e.stopPropagation(); onSubmitToGallery(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground">
+                        <Send className="w-3 h-3" /> Submit to Gallery
+                      </button>
+                    </>
+                  )}
+                  <div className="border-t border-border my-1" />
+                  <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Rotate</p>
+                  <div className="flex items-center gap-1 px-3 py-1.5">
+                    <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) - 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate left">
+                      <RotateCcw className="w-3 h-3" />
+                    </button>
+                    <span className="text-[10px] text-muted-foreground min-w-[32px] text-center">{design.rotation || 0}°</span>
+                    <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: (design.rotation || 0) + 2 }); }} className="p-1 rounded hover:bg-secondary text-foreground" title="Rotate right">
+                      <RotateCw className="w-3 h-3" />
+                    </button>
+                    {(design.rotation || 0) !== 0 && (
+                      <button onClick={(e) => { e.stopPropagation(); onUpdate(design.id, { rotation: 0 }); }} className="ml-1 text-[10px] text-muted-foreground hover:text-foreground">Reset</button>
+                    )}
+                  </div>
+                  <div className="border-t border-border my-1" />
+                  <button onClick={(e) => { e.stopPropagation(); onDelete(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-destructive">
+                    <Trash2 className="w-3 h-3" /> Delete
+                  </button>
                 </div>
-                <div className="border-t border-border my-1" />
-                <button onClick={(e) => { e.stopPropagation(); onDelete(design.id); setMenuOpen(false); }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-destructive">
-                  <Trash2 className="w-3 h-3" /> Delete
-                </button>
-              </div>
-            </>
-            );
-          })()}
+              </>
+              );
+            })()}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Edit Panel (opens on pencil click) ── */}
       <AnimatePresence>
