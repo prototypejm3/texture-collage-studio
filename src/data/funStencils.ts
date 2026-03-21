@@ -42,7 +42,7 @@ const wineGlass: Vibe = {
 
 // ── TAROT CARD 🔮 ──
 const tarotCard: Vibe = {
-  id: 'tarot-card', name: 'Tarot Card', emoji: '🔮', category: 'For Fun',
+  id: 'tarot-card', name: 'Tarot Card', emoji: '🔮', category: 'Community DIY',
   description: 'Mystical tarot card with moon & star',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
