@@ -16,7 +16,7 @@ const DROP_MESSAGES = [
 
 // ── 50% milestone messages ──
 const MILESTONE_MESSAGES = [
-  'Wow… that's looking really cool',
+  'Wow... that looks really cool',
   'Ooo I like where this is going',
   'This is getting fun!',
   'Your picture is coming together!',
