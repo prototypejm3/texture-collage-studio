@@ -164,7 +164,7 @@ export function TextureLibrary({
       ? ['Custom' as TextureCategory]
       : activeGroup === 'Favorites'
         ? null
-        : groups.find(g => g.label === activeGroup)?.categories ?? null;
+        : (kidMode ? kidGroups : adultGroups).find(g => g.label === activeGroup)?.categories ?? null;
 
   let filtered = activeCategories
     ? allTextures.filter(t => activeCategories.includes(t.category))
