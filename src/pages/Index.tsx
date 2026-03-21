@@ -28,6 +28,8 @@ import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useKidSounds } from '@/hooks/useKidSounds';
+import { useKidCelebration } from '@/hooks/useKidCelebration';
+import { CelebrationOverlay } from '@/components/studio/CelebrationToast';
 import { TextureTray } from '@/components/studio/MobileTextureTray';
 import { StencilTray } from '@/components/studio/MobileStencilTray';
 
@@ -51,6 +53,7 @@ const Index = () => {
   const [ambientSound, setAmbientSound] = useState<AmbientSoundType>('none');
   const isMobile = useIsMobile();
   const sounds = useKidSounds();
+  const celebration = useKidCelebration();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const kidOnboarding = useKidOnboarding(sounds.kidMode);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
@@ -141,7 +144,11 @@ const Index = () => {
     sounds.playPop();
     sounds.trackAction();
     kidOnboarding.notifyPick();
-  }, [studio, sounds, kidOnboarding]);
+    if (sounds.kidMode && canvasRef.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+    }
+  }, [studio, sounds, kidOnboarding, celebration]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
@@ -519,7 +526,17 @@ const Index = () => {
               onUpdate={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
               onDrop={handleDrop}
               onSelectSection={studio.selectSection}
-              onDropInSection={studio.fillSection}
+              onDropInSection={(sectionId, textureId) => {
+                studio.fillSection(sectionId, textureId);
+                if (sounds.kidMode && canvasRef.current) {
+                  const rect = canvasRef.current.getBoundingClientRect();
+                  celebration.celebrateDrop(rect.left + rect.width / 2, rect.top + rect.height / 2, 'stencil');
+                  // Check milestone
+                  const filled = Object.keys(studio.vibeFills).length + 1;
+                  const total = studio.activeVibe?.sections.length || 0;
+                  celebration.checkMilestone(filled, total, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 3 });
+                }
+              }}
               onDropAsSwatch={handleDrop}
               onDetachSection={studio.detachSection}
               onDeleteSection={studio.deleteSection}
@@ -770,6 +787,7 @@ const Index = () => {
         </defs>
       </svg>
       <OnboardingTutorial page="studio" />
+      {sounds.kidMode && <CelebrationOverlay toasts={celebration.toasts} />}
       <KidOnboardingOverlay
         step={kidOnboarding.step}
         active={kidOnboarding.active}
