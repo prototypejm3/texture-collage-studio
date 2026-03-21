@@ -228,6 +228,7 @@ export function useStudio() {
   const placeStencil = useCallback(() => {
     if (!activeVibe) return;
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
+    const newElements: CanvasElement[] = [];
     sections.forEach(section => {
       const textureId = vibeFills[section.id] || textures[Math.floor(Math.random() * textures.length)].id;
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
@@ -238,27 +239,27 @@ export function useStudio() {
         minY = Math.min(minY, nums[i + 1]);
         maxY = Math.max(maxY, nums[i + 1]);
       }
-      const w = Math.max(maxX - minX, 20) * 0.5;
-      const h = Math.max(maxY - minY, 20) * 0.5;
-      // Center the scaled-down element at the original center
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
+      const rawW = Math.max(maxX - minX, 20);
+      const rawH = Math.max(maxY - minY, 20);
+      // Normalize the SVG path so coordinates are relative to 0,0 of the element
+      const normalizedPath = normalizeSvgPath(section.path, minX, minY, rawW, rawH, rawW, rawH);
       const id = `el-${nextId++}`;
-      setElements(prev => [...prev, {
+      newElements.push({
         id,
         textureId,
-        x: centerX - w / 2,
-        y: centerY - h / 2,
-        width: w,
-        height: h,
+        x: minX,
+        y: minY,
+        width: rawW,
+        height: rawH,
         rotation: 0,
         shape: 'soft-square' as const,
         zIndex: nextId,
         effects: { ...defaultEffects },
         sectionId: section.id,
-        clipPathD: section.path,
-      }]);
+        clipPathD: normalizedPath,
+      });
     });
+    setElements(prev => [...prev, ...newElements]);
     setActiveVibe(null);
     setVibeFills({});
     setSelectedSectionId(null);
