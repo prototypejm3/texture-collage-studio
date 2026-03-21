@@ -486,24 +486,50 @@ const MyWall = () => {
           {/* Tabs + controls */}
           <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-6 md:mt-8 mb-6 md:mb-8">
             <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
-              {([
-                ['all', kidMode ? '🎨 All' : 'All'],
-                ['display', kidMode ? '⭐ Showing' : 'Display'],
-                ['hidden', kidMode ? '🙈 Put Away' : 'Hidden'],
-                ['draft', kidMode ? '📝 Working On' : 'Draft'],
-              ] as const).map(([val, label]) => (
-                <button
-                  key={val}
-                  onClick={() => setActiveTab(val)}
-                  className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
-                    activeTab === val
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
+              {kidMode ? (
+                // Kid-simplified tabs
+                <>
+                  {([
+                    ['all', '🎨 My Art'],
+                    ['display', '⭐ On Wall'],
+                    ['hidden', '📦 In Box'],
+                  ] as const).map(([val, label]) => (
+                    <button
+                      key={val}
+                      onClick={() => setActiveTab(val)}
+                      className={`px-4 py-2 text-sm font-bold rounded-full border-2 shadow-sm transition-all hover:scale-105 ${
+                        activeTab === val
+                          ? 'bg-primary text-primary-foreground border-primary scale-105'
+                          : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </>
+              ) : (
+                // Adult tabs
+                <>
+                  {([
+                    ['all', 'All'],
+                    ['display', 'Display'],
+                    ['hidden', 'Hidden'],
+                    ['draft', 'Draft'],
+                  ] as const).map(([val, label]) => (
+                    <button
+                      key={val}
+                      onClick={() => setActiveTab(val)}
+                      className={`px-3 md:px-4 py-1.5 text-[11px] md:text-xs font-semibold rounded-full border shadow-sm transition-all ${
+                        activeTab === val
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </>
+              )}
             </div>
 
             <div className="ml-auto relative">
