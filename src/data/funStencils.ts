@@ -153,7 +153,7 @@ const cheeseBoard: Vibe = {
 
 // ── ZODIAC WHEEL ♈ ──
 const zodiacWheel: Vibe = {
-  id: 'zodiac-wheel', name: 'Zodiac Wheel', emoji: '♈', category: 'For Fun',
+  id: 'zodiac-wheel', name: 'Zodiac Wheel', emoji: '♈', category: 'Community DIY',
   description: 'Mystical zodiac wheel with radial segments',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
