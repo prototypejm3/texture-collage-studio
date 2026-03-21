@@ -814,6 +814,7 @@ export function Canvas({
         );
       })()}
 
+      <div style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
