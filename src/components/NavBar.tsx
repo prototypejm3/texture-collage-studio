@@ -4,7 +4,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
-import logoImg from '@/assets/logo.png';
+import logoKid from '@/assets/logo.png';
+import logoGranny from '@/assets/logo-granny.png';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
@@ -57,7 +58,7 @@ export function NavBar() {
         <nav className="h-14 border-b-2 border-primary/20 bg-gradient-to-r from-primary/5 via-background to-primary/5 flex items-center px-4 gap-4 flex-shrink-0">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <img src={logoImg} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
+            <img src={logoKid} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
             <span className="text-sm font-extrabold tracking-tight text-foreground">
               Swatchbox Studio
             </span>
@@ -161,7 +162,7 @@ export function NavBar() {
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
+          <img src={logoGranny} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
           <span className="text-sm font-bold tracking-tight text-foreground">
             Swatchbox Studio
           </span>
