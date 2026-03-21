@@ -272,16 +272,19 @@ export function RightSidebar({
   // Hidden stencils: built-in vibes that are hidden
   const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
 
-  const tabs: { id: Tab; label: string; icon: any; count?: number }[] = [
-    { id: 'stencils', label: kidMode ? 'Shapes' : 'Templates', icon: Palette },
-    { id: 'community', label: kidMode ? '👫 Friends' : 'Community', icon: kidMode ? undefined : Globe },
-    ...(!kidMode ? [{ id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length }] : []),
-  ];
+  const tabs: { id: Tab; label: string; icon: any; count?: number }[] = kidMode
+    ? [{ id: 'stencils', label: 'Shapes', icon: Palette }]
+    : [
+        { id: 'stencils', label: 'Templates', icon: Palette },
+        { id: 'community', label: 'Community', icon: Globe },
+        ...(hiddenVibes.length > 0 ? [{ id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length }] : []),
+      ];
 
   return (
     <div className="flex flex-col h-full bg-card">
       {/* Tab switcher */}
       {/* Filter pills — matches texture category pills */}
+      {!kidMode && (
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex flex-wrap gap-1">
           {tabs.map(tab => (
@@ -303,6 +306,7 @@ export function RightSidebar({
           ))}
         </div>
       </div>
+      )}
 
       {/* Replace vs Layer dialog */}
       {pendingVibe && (
@@ -524,6 +528,19 @@ export function RightSidebar({
                     {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
                   </button>
                 ))}
+                {/* Kid mode: community as a category filter */}
+                {kidMode && communityVibes.length > 0 && (
+                  <button
+                    onClick={() => setActiveCategory('Community')}
+                    className={`rounded-full transition-colors font-semibold px-3 py-1.5 text-xs ${
+                      activeCategory === 'Community'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                    }`}
+                  >
+                    🎪 Made By Us
+                  </button>
+                )}
               </div>
             </div>
 
@@ -531,6 +548,26 @@ export function RightSidebar({
             <div className="p-1.5">
               <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-5 sm:grid-cols-6 md:grid-cols-8'}`}>
                 {(() => {
+                  // Kid mode "Made By Us" shows community vibes
+                  if (kidMode && activeCategory === 'Community') {
+                    return communityVibes.map(vibe => {
+                      const record = social.publicStencils.find(s => s.id === vibe.id);
+                      const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
+                      return (
+                        <CommunityStencilCard
+                          key={vibe.id}
+                          vibe={vibe}
+                          isActive={activeVibeId === vibe.id}
+                          favCount={record?.fav_count ?? 0}
+                          isFavorited={social.favoritedIds.has(vibe.id)}
+                          isLoggedIn={!!user}
+                          onSelect={() => handleStencilSelect(vibe)}
+                          onToggleFav={() => social.toggleFavorite(vibe.id)}
+                          creator={creator}
+                        />
+                      );
+                    });
+                  }
                   const displayVibes = activeCategory === 'All'
                     ? [...uncategorizedVibes, ...themeSections.flatMap(s => s.vibes)]
                     : themeSections.find(s => s.label === activeCategory)?.vibes || [];
