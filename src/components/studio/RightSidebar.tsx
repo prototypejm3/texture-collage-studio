@@ -294,7 +294,7 @@ export function RightSidebar({
                   : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              <tab.icon className="w-2.5 h-2.5" />
+              {tab.icon && <tab.icon className="w-2.5 h-2.5" />}
               {tab.label}
               {tab.count !== undefined && tab.count > 0 && (
                 <span className="text-[8px] ml-0.5 opacity-70">{tab.count}</span>
