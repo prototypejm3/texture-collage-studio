@@ -23,9 +23,11 @@ function getClipPath(shape: CanvasElementType['shape']): string | undefined {
       // Organic curved blob shape
       return 'polygon(35% 2%, 55% 0%, 75% 5%, 90% 15%, 97% 30%, 100% 50%, 96% 70%, 88% 85%, 72% 95%, 55% 100%, 38% 98%, 20% 92%, 8% 80%, 2% 65%, 0% 45%, 3% 28%, 10% 14%, 22% 5%)';
     case 'strip':
-      return undefined; // strips just use dimensions
+      // Long horizontal strip with slightly uneven edges
+      return 'polygon(1% 5%, 15% 0%, 35% 3%, 55% 0%, 75% 4%, 92% 1%, 99% 8%, 100% 40%, 99% 70%, 100% 92%, 98% 100%, 82% 96%, 62% 100%, 42% 97%, 22% 100%, 5% 96%, 0% 92%, 1% 60%, 0% 30%)';
     case 'rectangle':
-      return undefined;
+      // Slightly imperfect rectangle
+      return 'polygon(2% 1%, 50% 0%, 98% 2%, 100% 50%, 99% 98%, 50% 100%, 1% 99%, 0% 50%)';
     default:
       return undefined;
   }
