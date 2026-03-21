@@ -169,7 +169,7 @@ export function NavBar() {
             onClick={handleToggleKidMode}
             className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
           >
-            🥦 Granny Mode → 🧒
+            🥦👵 Granny Mode → 🧒
           </button>
         </div>
 
