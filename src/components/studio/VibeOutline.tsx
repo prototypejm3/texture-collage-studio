@@ -58,9 +58,11 @@ export function VibeOutline({
   const [dropChoice, setDropChoice] = useState<DropChoice | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [resizingId, setResizingId] = useState<string | null>(null);
+  const [rotatingId, setRotatingId] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const dragStart = useRef<{ mx: number; my: number; tx: number; ty: number }>({ mx: 0, my: 0, tx: 0, ty: 0 });
   const resizeStart = useRef<{ mx: number; my: number; scale: number }>({ mx: 0, my: 0, scale: 1 });
+  const rotateStart = useRef<{ startAngle: number; rotation: number }>({ startAngle: 0, rotation: 0 });
   const allTextures = useMemo(() => [...textures, ...customTextures], [customTextures]);
 
   const handleDrop = useCallback((e: React.DragEvent, sectionId: string) => {
