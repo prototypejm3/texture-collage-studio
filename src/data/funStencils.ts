@@ -197,7 +197,7 @@ const messageBubbles: Vibe = {
 
 // ── STREET LAMP 🏮 ──
 const streetLamp: Vibe = {
-  id: 'street-lamp', name: 'Street Lamp', emoji: '🏮', category: 'For Fun',
+  id: 'street-lamp', name: 'Street Lamp', emoji: '🏮', category: 'Community DIY',
   description: 'Elegant street lamp with glow',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
