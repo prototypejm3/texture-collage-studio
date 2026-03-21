@@ -298,23 +298,24 @@ export function TextureLibrary({
               ✨ Mine
             </button>
           )}
-          {groups.map(group => {
-            // On mobile: kid mode shows just emoji, adult mode shows short label
-            const kidLabel = group.kidLabel;
-            const emoji = kidLabel.match(/^[^\s]+/)?.[0] || '';
+          {(kidMode ? kidGroups : adultGroups).map(group => {
+            const label = kidMode ? group.kidLabel : group.label;
+            const emoji = group.kidLabel.match(/^[^\s]+/)?.[0] || '';
             const mobileLabel = kidMode ? emoji : group.label.slice(0, 3);
             return (
               <button
                 key={group.label}
                 onClick={() => setActiveGroup(group.label)}
-                className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
-                  activeGroup === group.label
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                className={`rounded-full transition-colors font-semibold ${kidMode
+                  ? 'px-3 py-1.5 text-xs'
+                  : 'px-1.5 py-0.5 text-[10px]'
+                } ${activeGroup === group.label
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
-                title={kidMode ? kidLabel : group.label}
+                title={kidMode ? group.kidLabel : group.label}
               >
-                {isMobile ? mobileLabel : (kidMode ? kidLabel : group.label)}
+                {isMobile ? mobileLabel : label}
               </button>
             );
           })}
