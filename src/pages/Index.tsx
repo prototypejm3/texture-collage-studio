@@ -28,6 +28,8 @@ import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useKidSounds } from '@/hooks/useKidSounds';
+import { useKidCelebration } from '@/hooks/useKidCelebration';
+import { CelebrationOverlay } from '@/components/studio/CelebrationToast';
 import { TextureTray } from '@/components/studio/MobileTextureTray';
 import { StencilTray } from '@/components/studio/MobileStencilTray';
 
