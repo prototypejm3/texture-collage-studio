@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { SavedDesign } from '@/types/wall';
+import { SavedDesign, FrameStyle } from '@/types/wall';
 
-interface KidActionBubblesProps {
+interface ActionBubblesProps {
   design: SavedDesign;
   isOpen: boolean;
   onClose: () => void;
@@ -9,6 +9,10 @@ interface KidActionBubblesProps {
   onUpdate: (id: string, updates: Partial<SavedDesign>) => void;
   onDelete: (id: string) => void;
   onOpen: (id: string) => void;
+  onDuplicate?: (id: string) => void;
+  onTogglePin?: (id: string) => void;
+  onSubmitToGallery?: (id: string) => void;
+  mode?: 'kid' | 'adult';
 }
 
 // Web Audio pop sound
@@ -70,29 +74,54 @@ function playBubbleSound(type: 'pop' | 'spin' | 'grow' | 'poof' | 'sparkle') {
   } catch {}
 }
 
-const edgeCycle = ['clean', 'pinking', 'scallop', 'zigzag', 'wave', 'soft-fray', 'rough-torn'] as const;
+interface BubbleAction {
+  id: string;
+  emoji: string;
+  label: string;
+  angle: number;
+  sound: 'pop' | 'spin' | 'grow' | 'poof' | 'sparkle';
+  color?: string;
+}
 
-const bubbleActions = [
-  { id: 'grow',    emoji: '➕', angle: -90,  sound: 'grow' as const },
-  { id: 'cut',     emoji: '✂️', angle: -45,  sound: 'pop' as const },
-  { id: 'spin',    emoji: '🔄', angle: 0,    sound: 'spin' as const },
-  { id: 'save',    emoji: '📦', angle: 45,   sound: 'sparkle' as const },
-  { id: 'open',    emoji: '🖍️', angle: 90,   sound: 'pop' as const },
-  { id: 'delete',  emoji: '🗑️', angle: 135,  sound: 'poof' as const },
+const kidBubbleActions: BubbleAction[] = [
+  { id: 'grow',   emoji: '➕', label: 'Grow',   angle: -90,  sound: 'grow' },
+  { id: 'cut',    emoji: '✂️', label: 'Frame',  angle: -45,  sound: 'pop' },
+  { id: 'spin',   emoji: '🔄', label: 'Spin',   angle: 0,    sound: 'spin' },
+  { id: 'save',   emoji: '📦', label: 'Box',    angle: 45,   sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
+  { id: 'open',   emoji: '🖍️', label: 'Open',   angle: 90,   sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
+  { id: 'delete', emoji: '🗑️', label: 'Delete', angle: 135,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
 ];
+
+const adultBubbleActions: BubbleAction[] = [
+  { id: 'resize',    emoji: '↕️',  label: 'Resize',    angle: -108, sound: 'grow' },
+  { id: 'frame',     emoji: '🖼️', label: 'Frame',     angle: -60,  sound: 'pop' },
+  { id: 'rotate',    emoji: '🔄', label: 'Rotate',    angle: -12,  sound: 'spin' },
+  { id: 'duplicate', emoji: '📋', label: 'Duplicate', angle: 36,   sound: 'sparkle' },
+  { id: 'pin',       emoji: '📌', label: 'Pin',       angle: 84,   sound: 'pop' },
+  { id: 'open',      emoji: '✏️', label: 'Edit',      angle: 132,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
+  { id: 'hide',      emoji: '👁️', label: 'Hide',      angle: 168,  sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
+  { id: 'delete',    emoji: '🗑️', label: 'Delete',    angle: 210,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
+];
+
+const adultFrameCycle: FrameStyle[] = ['shadow-box', 'gold', 'chrome', 'copper', 'silver', 'black', 'wood', 'minimal', 'floating', 'polaroid', 'none'];
 
 export function KidActionBubbles({
   design, isOpen, onClose, onSizeChange, onUpdate, onDelete, onOpen,
-}: KidActionBubblesProps) {
-  const radius = 70; // distance from center
+  onDuplicate, onTogglePin, onSubmitToGallery,
+  mode = 'kid',
+}: ActionBubblesProps) {
+  const isKid = mode === 'kid';
+  const actions = isKid ? kidBubbleActions : adultBubbleActions;
+  const radius = isKid ? 70 : 85;
 
   const handleAction = (actionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const action = bubbleActions.find(a => a.id === actionId);
+    const action = actions.find(a => a.id === actionId);
     if (action) playBubbleSound(action.sound);
 
     switch (actionId) {
-      case 'grow': {
+      case 'grow':
+      case 'resize': {
         const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
         const currentIdx = sizes.indexOf(design.displaySize || 'medium');
         const nextSize = sizes[(currentIdx + 1) % sizes.length];
@@ -100,22 +129,41 @@ export function KidActionBubbles({
         break;
       }
       case 'cut': {
-        // Cycle kid-friendly frame styles
         const kidFrames = ['black', 'none', 'rainbow'] as const;
         const currentIdx = kidFrames.indexOf(design.frameStyle as any);
         const nextFrame = kidFrames[(currentIdx + 1) % kidFrames.length];
         onUpdate(design.id, { frameStyle: nextFrame } as any);
         break;
       }
-      case 'spin': {
+      case 'frame': {
+        const currentIdx = adultFrameCycle.indexOf(design.frameStyle);
+        const nextFrame = adultFrameCycle[(currentIdx + 1) % adultFrameCycle.length];
+        onUpdate(design.id, { frameStyle: nextFrame });
+        break;
+      }
+      case 'spin':
+      case 'rotate': {
         onUpdate(design.id, { rotation: ((design.rotation || 0) + 15) % 360 });
         break;
       }
       case 'save': {
-        // Toggle between display and hidden (put in / take out of box)
         const newStatus = design.status === 'hidden' ? 'display' : 'hidden';
         onUpdate(design.id, { status: newStatus, hidden: newStatus === 'hidden' });
         onClose();
+        break;
+      }
+      case 'hide': {
+        const newStatus = design.status === 'hidden' ? 'display' : 'hidden';
+        onUpdate(design.id, { status: newStatus, hidden: newStatus === 'hidden' });
+        break;
+      }
+      case 'duplicate': {
+        onDuplicate?.(design.id);
+        onClose();
+        break;
+      }
+      case 'pin': {
+        onTogglePin?.(design.id);
         break;
       }
       case 'open': {
@@ -129,6 +177,18 @@ export function KidActionBubbles({
         break;
       }
     }
+  };
+
+  const getBubbleColor = (action: BubbleAction) => {
+    if (action.color) return action.color;
+    return isKid ? 'hsl(var(--secondary))' : 'hsl(var(--popover))';
+  };
+
+  const getLabel = (action: BubbleAction) => {
+    // For adult hide bubble, show current state
+    if (action.id === 'hide') return design.hidden ? 'Show' : 'Hide';
+    if (action.id === 'pin') return design.pinned ? 'Unpin' : 'Pin';
+    return action.label;
   };
 
   return (
@@ -155,7 +215,7 @@ export function KidActionBubbles({
           {/* Floating action bubbles */}
           <div className="absolute inset-0 z-[10000] pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              {bubbleActions.map((action, i) => {
+              {actions.map((action, i) => {
                 const angleRad = (action.angle * Math.PI) / 180;
                 const x = Math.cos(angleRad) * radius;
                 const y = Math.sin(angleRad) * radius;
@@ -163,23 +223,14 @@ export function KidActionBubbles({
                 return (
                   <motion.button
                     key={action.id}
-                    className="pointer-events-auto absolute w-14 h-14 -ml-7 -mt-7 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/80 bg-background hover:scale-110 active:scale-90 transition-transform"
-                    style={{
-                      background: action.id === 'delete'
-                        ? 'hsl(0, 70%, 92%)'
-                        : action.id === 'save'
-                          ? 'hsl(45, 80%, 90%)'
-                          : action.id === 'open'
-                            ? 'hsl(200, 70%, 90%)'
-                            : 'hsl(var(--secondary))',
-                    }}
+                    className={`pointer-events-auto absolute rounded-full flex flex-col items-center justify-center shadow-lg border-2 border-white/80 hover:scale-110 active:scale-90 transition-transform ${
+                      isKid
+                        ? 'w-14 h-14 -ml-7 -mt-7 text-2xl'
+                        : 'w-12 h-12 -ml-6 -mt-6 text-lg'
+                    }`}
+                    style={{ background: getBubbleColor(action) }}
                     initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-                    animate={{
-                      opacity: 1,
-                      x,
-                      y,
-                      scale: 1,
-                    }}
+                    animate={{ opacity: 1, x, y, scale: 1 }}
                     exit={{ opacity: 0, x: 0, y: 0, scale: 0 }}
                     transition={{
                       type: 'spring',
@@ -188,9 +239,14 @@ export function KidActionBubbles({
                       delay: i * 0.04,
                     }}
                     onClick={(e) => handleAction(action.id, e)}
-                    title={action.id}
+                    title={getLabel(action)}
                   >
-                    {action.emoji}
+                    <span>{action.emoji}</span>
+                    {!isKid && (
+                      <span className="text-[7px] font-medium text-foreground/70 leading-none mt-0.5">
+                        {getLabel(action)}
+                      </span>
+                    )}
                   </motion.button>
                 );
               })}
