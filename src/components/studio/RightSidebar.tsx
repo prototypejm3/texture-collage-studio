@@ -637,12 +637,13 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, onSelect, onToggleHidden, onToggleFav, onDelete, onReport }: {
+function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMode = false, onSelect, onToggleHidden, onToggleFav, onDelete, onReport }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
   isFavorited: boolean;
   isLoggedIn: boolean;
+  kidMode?: boolean;
   onSelect: () => void;
   onToggleHidden: () => void;
   onToggleFav: () => void;
