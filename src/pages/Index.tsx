@@ -140,7 +140,8 @@ const Index = () => {
     studio.addElement(textureId, x, y);
     sounds.playPop();
     sounds.trackAction();
-  }, [studio, sounds]);
+    kidOnboarding.notifyPick();
+  }, [studio, sounds, kidOnboarding]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
@@ -606,7 +607,7 @@ const Index = () => {
         {!isMobile && (
           <div className="flex border-t border-border shrink-0" style={{ height: '30%', minHeight: 180 }}>
             {/* Left half: Textures */}
-            <div className="flex-1 overflow-hidden border-r border-border">
+            <div className="flex-1 overflow-hidden border-r border-border" data-texture-panel>
               <TextureLibrary
                 onDragStart={handleDragStartLib}
                 onTextureClick={handleTextureClick}
