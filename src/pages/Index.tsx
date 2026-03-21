@@ -16,6 +16,7 @@ import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
+import { useKidOnboarding, KidOnboardingOverlay } from '@/components/studio/KidOnboarding';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 
