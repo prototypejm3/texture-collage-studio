@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { X, RotateCw } from 'lucide-react';
 import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
 import { textures } from '@/data/textures';
 
