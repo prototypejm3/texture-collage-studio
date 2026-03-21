@@ -46,13 +46,17 @@ export function useStudio() {
 
   const addElement = useCallback((textureId: string, x: number, y: number) => {
     const id = `el-${nextId++}`;
+    // Set dimensions based on shape
+    let w = 100, h = 100;
+    if (nextShape === 'strip') { w = 180; h = 40; }
+    else if (nextShape === 'rectangle') { w = 150; h = 100; }
     const newEl: CanvasElement = {
       id,
       textureId,
       x,
       y,
-      width: 100,
-      height: 100,
+      width: w,
+      height: h,
       rotation: 0,
       shape: nextShape,
       zIndex: nextId,
