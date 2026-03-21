@@ -396,7 +396,7 @@ export function BottomBar({
           }`}
           title={isPremium ? 'Export as PNG' : getFreeExportCount() < FREE_EXPORT_LIMIT ? 'Export (1 free)' : 'Premium'}
         >
-          <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Export'}</span>
+          <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Take Home'}</span>
           {!isPremium && getFreeExportCount() >= FREE_EXPORT_LIMIT && <Lock className="w-2 h-2 ml-0.5" />}
         </button>
       </div>
