@@ -369,6 +369,9 @@ export function Canvas({
   // Resolve background texture image
   const bgTextureUrl = useMemo(() => {
     if (!backgroundTextureId) return null;
+    if (backgroundTextureId === 'rainbow-bg') {
+      return 'linear-gradient(135deg, hsl(0,80%,70%), hsl(40,90%,65%), hsl(60,90%,65%), hsl(120,60%,55%), hsl(200,80%,60%), hsl(270,70%,65%))';
+    }
     const tex = allTextures.find(t => t.id === backgroundTextureId);
     return tex?.cssBackground || null;
   }, [backgroundTextureId, allTextures]);
