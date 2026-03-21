@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
 import { useMultiWall } from '@/hooks/useMultiWall';
@@ -56,6 +56,14 @@ const MyWall = () => {
   const [gallerySubmitId, setGallerySubmitId] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
+  const [kidMode, setKidMode] = useState(() => {
+    try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
+    window.addEventListener('kid-mode-change', handler);
+    return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
   const wallDesigns = wall.designs.filter(d => (d.wallId || 'wall-default') === multiWall.activeWallId);
 
   const filtered = activeTab === 'all'
@@ -410,7 +418,7 @@ const MyWall = () => {
                       onClick={() => { handleAddWall(); setShowWallPicker(false); }}
                       className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-1.5 text-foreground"
                     >
-                      <Plus className="w-3 h-3" /> New Wall {!isPremium && '🔒'}
+                      <Plus className="w-3 h-3" /> {kidMode ? 'New Room' : 'New Wall'} {!isPremium && '🔒'}
                     </button>
                   </div>
                 </>
@@ -432,7 +440,12 @@ const MyWall = () => {
           {/* Tabs + controls */}
           <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-6 md:mt-8 mb-6 md:mb-8">
             <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
-              {([['all', 'All'], ['display', 'Display'], ['hidden', 'Hidden'], ['draft', 'Draft']] as const).map(([val, label]) => (
+              {([
+                ['all', kidMode ? '🎨 All' : 'All'],
+                ['display', kidMode ? '⭐ Showing' : 'Display'],
+                ['hidden', kidMode ? '🙈 Put Away' : 'Hidden'],
+                ['draft', kidMode ? '📝 Working On' : 'Draft'],
+              ] as const).map(([val, label]) => (
                 <button
                   key={val}
                   onClick={() => setActiveTab(val)}
@@ -464,14 +477,14 @@ const MyWall = () => {
                           onClick={() => { handleViewMode(); setShowControls(false); }}
                           className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
                         >
-                          <Expand className="w-3 h-3" /> View Mode
+                          <Expand className="w-3 h-3" /> {kidMode ? '👀 Look!' : 'View Mode'}
                         </button>
                         {isPremium && (
                           <button
                             onClick={() => { handleExportWall(); setShowControls(false); }}
                             className="w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 text-foreground"
                           >
-                            <Download className="w-3 h-3" /> Export Wall
+                            <Download className="w-3 h-3" /> {kidMode ? '📸 Save Picture' : 'Export Wall'}
                           </button>
                         )}
                       </div>

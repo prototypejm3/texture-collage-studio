@@ -143,7 +143,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
               }`}
             >
               <Grid2x2 className="w-5 h-5" />
-              <span className="text-[10px] font-medium">My Room</span>
+              <span className="text-[10px] font-medium">My Wall</span>
             </Link>
             <Link
               to="/gallery"
@@ -152,7 +152,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
               }`}
             >
               <Landmark className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Show & Tell</span>
+              <span className="text-[10px] font-medium">Gallery</span>
             </Link>
           </>
         )}
