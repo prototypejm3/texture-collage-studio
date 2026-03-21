@@ -259,7 +259,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
   };
 
   return (
-    <div className="p-3 space-y-3">
+    <div className="p-3 space-y-3" data-kid-toolbox>
       <div className="flex items-center justify-between">
         <span className="text-xs font-bold text-foreground">🧰 Tool Box</span>
         <div className="flex gap-1">

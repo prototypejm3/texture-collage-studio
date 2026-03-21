@@ -16,6 +16,7 @@ import { FloatingToolbar } from '@/components/studio/FloatingToolbar';
 import { GenerateVibeModal } from '@/components/studio/GenerateVibeModal';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
+import { useKidOnboarding, KidOnboardingOverlay } from '@/components/studio/KidOnboarding';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 
@@ -51,6 +52,7 @@ const Index = () => {
   const isMobile = useIsMobile();
   const sounds = useKidSounds();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
+  const kidOnboarding = useKidOnboarding(sounds.kidMode);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
   const [stencilsCollapsed, setStencilsCollapsed] = useState(() => {
     try { return localStorage.getItem('stencils-collapsed') === 'true'; } catch { return false; }
@@ -422,8 +424,8 @@ const Index = () => {
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
                   element={studio.elements.find(e => e.id === studio.selectedId)!}
-                  onUpdate={(updates) => studio.updateElement(studio.selectedId!, updates)}
-                  onUpdateEffects={(effects) => studio.updateEffects(studio.selectedId!, effects)}
+                  onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
+                  onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
                   onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
                   onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
                 />
@@ -494,7 +496,7 @@ const Index = () => {
               workstationName={workstationName}
               onWorkstationNameChange={handleWorkstationNameChange}
               onSelect={studio.setSelectedId}
-              onUpdate={studio.updateElement}
+              onUpdate={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
               onDrop={handleDrop}
               onSelectSection={studio.selectSection}
               onDropInSection={studio.fillSection}
@@ -522,6 +524,7 @@ const Index = () => {
               onFinishDraw={studio.addCustomSection}
               onCancelDraw={() => { studio.setDrawMode(false); if (!studio.crayonMode) { studio.setCrayonTextureId(null); } }}
               onFillBackground={(textureId) => studio.setBackgroundTextureId(textureId)}
+              onBoxSave={kidOnboarding.notifySave}
             />
 
             {/* ── Mobile: Texture Tray (top overlay) ── */}
@@ -736,6 +739,12 @@ const Index = () => {
         </defs>
       </svg>
       <OnboardingTutorial page="studio" />
+      <KidOnboardingOverlay
+        step={kidOnboarding.step}
+        active={kidOnboarding.active}
+        onSkip={kidOnboarding.skip}
+        onAdvance={kidOnboarding.advanceTo}
+      />
     </div>
   );
 };

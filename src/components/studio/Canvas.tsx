@@ -82,6 +82,7 @@ interface Props {
   onFinishDraw?: (pathD: string) => void;
   onCancelDraw?: () => void;
   onFillBackground?: (textureId: string) => void;
+  onBoxSave?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -121,7 +122,7 @@ export function Canvas({
   canvasRef,
   onWallFrameStyleChange, isPremium = false, onRequestUpgrade,
   customTextures = [],
-  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground,
+  drawMode = false, crayonMode = false, onFinishDraw, onCancelDraw, onFillBackground, onBoxSave,
   onStencilTableDrop,
   onSelectTableElement,
   selectedTableElementId,
@@ -222,6 +223,7 @@ export function Canvas({
             setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: tel.textureId, vibeId: tel.vibeId }]);
             onTableElementDelete(selectedTableId);
             setSelectedTableId(null);
+            onBoxSave?.();
           }
         } else if (selectedId) {
           const el = elements.find(e => e.id === selectedId);
@@ -229,6 +231,7 @@ export function Canvas({
             setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId: el.textureId }]);
             onDeleteElement(selectedId);
             onSelect(null);
+            onBoxSave?.();
           }
         }
         setBoxHover(false);
@@ -553,6 +556,7 @@ export function Canvas({
       {kidMode && (
         <div
           ref={boxRef}
+          data-kid-box
           className="absolute z-30"
           style={{
             left: boxPos.x,
@@ -578,6 +582,7 @@ export function Canvas({
             const textureId = e.dataTransfer.getData('textureId');
             if (textureId) {
               setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
+              onBoxSave?.();
             }
           }}
         >
