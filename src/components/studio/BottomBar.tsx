@@ -201,7 +201,6 @@ export function BottomBar({
             })}
           </>
         )}
-        })}
       </div>
 
       <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
