@@ -131,6 +131,33 @@ export function ContextPanel(props: ContextPanelProps) {
                     ))}
                   </div>
                 </div>
+
+                {/* Canvas Background */}
+                <div className="px-3 py-3 border-t border-border">
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Canvas Background</p>
+                  <div className="flex items-center gap-1">
+                    {canvasBgPresets.map(preset => {
+                      const isActive = preset.id === null ? !props.backgroundTextureId : props.backgroundTextureId === preset.id;
+                      return (
+                        <button
+                          key={preset.label}
+                          onClick={() => props.onBackgroundChange?.(preset.id)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded-md transition-colors text-[10px] ${
+                            isActive
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                          }`}
+                        >
+                          <span
+                            className="w-3.5 h-3.5 rounded-sm border border-border/40 flex-shrink-0"
+                            style={{ background: preset.color }}
+                          />
+                          {preset.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             )}
 

@@ -336,8 +336,8 @@ export function BottomBar({
         </>
       )}
 
-      {/* Canvas background presets */}
-      {onBackgroundChange && (
+      {/* Canvas background presets — kid mode only (adults use left panel) */}
+      {onBackgroundChange && kidMode && (
         <>
           <div className="w-px h-4 bg-border mx-0.5" />
           <div className="flex items-center gap-0.5">
@@ -347,17 +347,17 @@ export function BottomBar({
                 <button
                   key={preset.label}
                   onClick={() => onBackgroundChange(preset.id)}
-                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md transition-colors ${kidMode ? 'text-[11px] font-semibold' : 'text-[9px]'} ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                  }`}
+                  className="flex items-center gap-1 px-1.5 py-0.5 rounded-md transition-colors text-[11px] font-semibold"
+                  style={{
+                    background: isActive ? 'hsl(var(--primary))' : 'hsl(var(--secondary))',
+                    color: isActive ? 'hsl(var(--primary-foreground))' : 'hsl(var(--secondary-foreground))',
+                  }}
                 >
                   <span
                     className="w-3.5 h-3.5 rounded-sm border border-border/40 flex-shrink-0"
                     style={{ background: preset.color }}
                   />
-                  {kidMode ? preset.kidLabel : preset.label}
+                  {preset.kidLabel}
                 </button>
               );
             })}
