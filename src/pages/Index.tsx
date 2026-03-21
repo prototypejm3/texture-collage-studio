@@ -597,7 +597,7 @@ const Index = () => {
                 drawMode={studio.drawMode}
                 onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
                 nextShape={studio.nextShape}
-                onSetNextShape={studio.setNextShape}
+                onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
                 crayonMode={studio.crayonMode}
                 crayonTextureId={studio.crayonTextureId}
                 onToggleCrayonMode={() => {
