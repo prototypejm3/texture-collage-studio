@@ -314,17 +314,30 @@ export function RightSidebar({
             <div className="flex flex-col gap-2">
               <button
                 onClick={handleReplaceConfirm}
-                className="w-full px-3 py-2 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-accent transition-colors text-left"
               >
-                <span className="font-semibold">{kidMode ? 'Swap It' : 'Replace'}</span>
-                <span className="block text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Take away the old one, use the new one' : 'Remove current stencil and use the new one'}</span>
+                <svg width="28" height="28" viewBox="0 0 28 28" className="shrink-0">
+                  <rect x="2" y="6" width="10" height="10" rx="2" fill="currentColor" opacity="0.3" strokeDasharray="2 2" stroke="currentColor" strokeWidth="1" />
+                  <rect x="14" y="10" width="12" height="12" rx="2" fill="currentColor" opacity="0.7" />
+                  <path d="M10,8 L14,12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+                </svg>
+                <div>
+                  <span className="font-semibold">{kidMode ? '🔄 Swap It' : 'Replace'}</span>
+                  <span className="block text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Take away the old one, use the new one' : 'Remove current stencil and use the new one'}</span>
+                </div>
               </button>
               <button
                 onClick={handleLayerConfirm}
-                className="w-full px-3 py-2 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-xs rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-left"
               >
-                <span className="font-semibold">{kidMode ? 'Stack It' : 'Layer'}</span>
-                <span className="block text-[9px] text-primary-foreground/70 mt-0.5">{kidMode ? 'Keep the old one and put the new one on top' : 'Stamp current stencil down and add the new one on top'}</span>
+                <svg width="28" height="28" viewBox="0 0 28 28" className="shrink-0">
+                  <rect x="4" y="10" width="12" height="12" rx="2" fill="currentColor" opacity="0.4" />
+                  <rect x="10" y="4" width="12" height="12" rx="2" fill="currentColor" opacity="0.8" />
+                </svg>
+                <div>
+                  <span className="font-semibold">{kidMode ? '📚 Stack It' : 'Layer'}</span>
+                  <span className="block text-[9px] text-primary-foreground/70 mt-0.5">{kidMode ? 'Keep the old one and put the new one on top' : 'Stamp current stencil down and add the new one on top'}</span>
+                </div>
               </button>
               <button
                 onClick={() => setPendingVibe(null)}
