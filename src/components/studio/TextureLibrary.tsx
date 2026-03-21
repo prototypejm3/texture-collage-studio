@@ -345,7 +345,7 @@ export function TextureLibrary({
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
               >
-                {kidMode ? '🖍️ Crayon' : '🖊️ Pen'}
+                {kidMode ? '🖍️ Crayon' : '🧵 Sew'}
               </button>
             )}
             {crayonMode && crayonTextureId && (
