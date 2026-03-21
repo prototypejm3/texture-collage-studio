@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lock, Replace, Sparkles, Tag } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-const VALID_PROMO_CODES: Record<string, string> = {
-  'BYPASS': 'premium',
+const VALID_PROMO_CODES: Record<string, { tier: string; durationDays: number }> = {
+  'BYPASS': { tier: 'premium', durationDays: 36500 },
+  'SNACKCLUB': { tier: 'premium', durationDays: 30 },
 };
 
 interface PaywallModalProps {
