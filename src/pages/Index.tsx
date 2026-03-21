@@ -140,7 +140,8 @@ const Index = () => {
     studio.addElement(textureId, x, y);
     sounds.playPop();
     sounds.trackAction();
-  }, [studio, sounds]);
+    kidOnboarding.notifyPick();
+  }, [studio, sounds, kidOnboarding]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
