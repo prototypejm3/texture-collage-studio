@@ -93,7 +93,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
     );
   }
 
-  // ── Adult Mode Mobile Nav ──
+  // ── Granny Mode Mobile Nav ──
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-background border-t border-border safe-area-bottom">
       <div className="flex items-center justify-around h-14">

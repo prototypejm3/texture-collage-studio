@@ -67,7 +67,7 @@ export function NavBar() {
             whileTap={{ scale: 0.95 }}
             onClick={handleToggleKidMode}
             className="px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-primary-foreground shadow-md ring-2 ring-primary/30"
-            title="Switch to adult mode"
+            title="Switch to Granny Mode"
           >
             🧒 Kids Mode!
           </motion.button>
@@ -157,7 +157,7 @@ export function NavBar() {
     );
   }
 
-  // ── Adult Mode Nav ──
+  // ── Granny Mode Nav ──
   return (
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
@@ -169,9 +169,9 @@ export function NavBar() {
           <button
             onClick={handleToggleKidMode}
             className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
-            title="Switch to kids mode"
+            title="Switch to Kids Mode"
           >
-            🧒 Kids Mode
+            👵 Granny Mode
           </button>
         </div>
 
