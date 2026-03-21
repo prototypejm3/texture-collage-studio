@@ -204,7 +204,7 @@ export function NavBar() {
             }`}
           >
             <Landmark className="w-4 h-4" />
-            Show & Tell
+            Gallery
           </Link>
         </div>
 
