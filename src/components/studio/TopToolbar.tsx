@@ -396,22 +396,26 @@ export function TopToolbar({
         {user ? (
           <>
             <span className="text-[10px] text-muted-foreground items-center gap-0.5 hidden sm:flex">
-              <User className="w-2.5 h-2.5" />
+              {kidMode ? <span className="text-sm">👤</span> : <User className="w-2.5 h-2.5" />}
               {user.email?.split('@')[0]}
             </span>
             <button
               onClick={() => signOut()}
               className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
             >
-              <LogOut className="w-2.5 h-2.5" /> <span className="hidden sm:inline">Out</span>
+              <LogOut className="w-2.5 h-2.5" /> <span className="hidden sm:inline">{kidMode ? 'Bye!' : 'Out'}</span>
             </button>
           </>
         ) : (
           <Link
             to="/auth"
-            className="flex items-center gap-0.5 px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            className={`flex items-center gap-1 transition-colors ${
+              kidMode
+                ? 'px-3 py-1.5 text-xs font-bold rounded-full bg-primary text-primary-foreground hover:bg-primary/90'
+                : 'px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90'
+            }`}
           >
-            <LogIn className="w-2.5 h-2.5" /> Sign In
+            {kidMode ? '✨ Join' : <><LogIn className="w-2.5 h-2.5" /> Sign In</>}
           </Link>
         )}
       </div>
