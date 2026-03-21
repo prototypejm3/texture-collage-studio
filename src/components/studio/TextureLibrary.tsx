@@ -476,7 +476,9 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   const bgSize = viewMode === 'tiled'
     ? (isImage ? '60px 60px' : '40px 40px')
     : 'cover';
-  const displayName = kidMode ? (kidTextureNames[tex.id] || tex.name) : tex.name;
+  const kidName = kidTextureNames[tex.id] || tex.name;
+  const kidEmoji = getKidTextureEmoji(tex.id, kidName);
+  const displayName = kidMode ? `${kidEmoji} ${kidName}` : tex.name;
 
   const borderRadius = getSwatchBorderRadius(activeShape);
   const aspectRatio = getSwatchAspect(activeShape);
