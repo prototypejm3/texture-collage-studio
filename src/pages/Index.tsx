@@ -606,7 +606,7 @@ const Index = () => {
         {!isMobile && (
           <div className="flex border-t border-border shrink-0" style={{ height: '30%', minHeight: 180 }}>
             {/* Left half: Textures */}
-            <div className="flex-1 overflow-hidden border-r border-border">
+            <div className="flex-1 overflow-hidden border-r border-border" data-texture-panel>
               <TextureLibrary
                 onDragStart={handleDragStartLib}
                 onTextureClick={handleTextureClick}
