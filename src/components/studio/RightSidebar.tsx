@@ -223,7 +223,8 @@ export function RightSidebar({
     if (items.length > 0) themeSections.push({ label: group.label, kidLabel: group.kidLabel, emoji: group.emoji, vibes: items });
     items.forEach(v => themedIds.add(v.id));
   }
-  const uncategorizedVibes = allVibes.filter(v => !themedIds.has(v.id));
+  const adultOnlyIds = new Set(themeGroups.filter(g => g.adultOnly).flatMap(g => [...g.ids]));
+  const uncategorizedVibes = allVibes.filter(v => !themedIds.has(v.id) && !(kidMode && adultOnlyIds.has(v.id)));
 
   // Community stencils: built-in featured + public from DB
   const builtInCommunityVibes: (Vibe & { creator: string })[] = [
