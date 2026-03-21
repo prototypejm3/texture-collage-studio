@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWall } from '@/hooks/useWall';
 import { useMultiWall } from '@/hooks/useMultiWall';
