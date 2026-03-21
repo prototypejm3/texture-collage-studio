@@ -121,7 +121,9 @@ const Index = () => {
 
   const handleDrop = useCallback((textureId: string, x: number, y: number) => {
     studio.addElement(textureId, x, y);
-  }, [studio]);
+    sounds.playPop();
+    sounds.trackAction();
+  }, [studio, sounds]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
