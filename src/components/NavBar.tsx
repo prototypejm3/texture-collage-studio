@@ -58,7 +58,7 @@ export function NavBar() {
         <nav className="h-14 border-b-2 border-primary/20 bg-gradient-to-r from-primary/5 via-background to-primary/5 flex items-center px-4 gap-4 flex-shrink-0">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <img src={logoImg} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
+            <img src={logoKid} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
             <span className="text-sm font-extrabold tracking-tight text-foreground">
               Swatchbox Studio
             </span>
