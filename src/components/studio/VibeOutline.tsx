@@ -369,6 +369,49 @@ export function VibeOutline({
                   />
                 );
               })()}
+
+              {/* Rotate handle — bottom center of bounding box */}
+              {isSelected && minX !== Infinity && (() => {
+                const midX = (minX + maxX) / 2;
+                const handleY = maxY + 12;
+                return (
+                  <g
+                    className="pointer-events-auto cursor-grab active:cursor-grabbing"
+                    onMouseDown={(e) => handleRotateStart(e, section.id)}
+                  >
+                    {/* Line from bottom edge to handle */}
+                    <line
+                      x1={midX * t.scale + t.x}
+                      y1={maxY * t.scale + t.y}
+                      x2={midX * t.scale + t.x}
+                      y2={handleY * t.scale + t.y}
+                      stroke="hsl(var(--primary))"
+                      strokeWidth={1.5}
+                      opacity={0.5}
+                    />
+                    <circle
+                      cx={midX * t.scale + t.x}
+                      cy={handleY * t.scale + t.y}
+                      r={6}
+                      fill="hsl(var(--primary))"
+                      stroke="hsl(var(--primary-foreground))"
+                      strokeWidth={1}
+                      opacity={0.85}
+                      className="hover:opacity-100 transition-opacity"
+                    />
+                    {/* Rotate icon — small arrow */}
+                    <text
+                      x={midX * t.scale + t.x}
+                      y={handleY * t.scale + t.y + 0.5}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize="7"
+                      fill="hsl(var(--primary-foreground))"
+                      className="pointer-events-none select-none"
+                    >↻</text>
+                  </g>
+                );
+              })()}
             </g>
           );
         })}
