@@ -434,11 +434,11 @@ const Index = () => {
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* ── Canvas area ── */}
         <div className="flex-1 relative overflow-hidden min-h-0 flex">
-          {/* ── Left panel: Edit Element (desktop only) ── */}
-          {!isMobile && studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
+          {/* ── Left panel: Edit Element (desktop only, adult mode only) ── */}
+          {!isMobile && !sounds.kidMode && studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
             <div className="w-56 shrink-0 border-r border-border bg-popover flex flex-col overflow-hidden">
               <div className="flex items-center gap-1.5 px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Play w/ Elements</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Edit Element</span>
               </div>
               <div className="flex-1 overflow-y-auto">
                 <FloatingToolbar
