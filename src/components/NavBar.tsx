@@ -168,6 +168,7 @@ export function NavBar() {
           <motion.button
             whileTap={{ scale: 0.93 }}
             onClick={handleToggleKidMode}
+            title="Switch to Kids Mode"
             className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md bg-gradient-to-r from-emerald-700 to-teal-600 hover:from-emerald-600 hover:to-teal-500 transition-all"
           >
             🥦👵 Granny Mode → 🧒
@@ -178,6 +179,7 @@ export function NavBar() {
         <div className="hidden md:flex items-center gap-1">
           <Link
             to="/"
+            title="Open the creative studio"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
@@ -188,6 +190,7 @@ export function NavBar() {
           <Link
             to="/wall"
             data-nav="wall"
+            title="View and arrange your artwork"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
@@ -198,6 +201,7 @@ export function NavBar() {
           <Link
             to="/gallery"
             data-nav="gallery"
+            title="Browse community artwork"
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
               isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
@@ -224,6 +228,7 @@ export function NavBar() {
               </span>
               <button
                 onClick={() => signOut()}
+                title="Sign out of your account"
                 className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
@@ -232,6 +237,7 @@ export function NavBar() {
           ) : (
             <Link
               to="/auth"
+              title="Sign in or create an account"
               className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               <LogIn className="w-3 h-3" /> Sign In
