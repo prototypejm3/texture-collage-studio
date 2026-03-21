@@ -43,6 +43,7 @@ interface ContextPanelProps {
   onTemplateOpacityChange: (val: number) => void;
   // Canvas background
   backgroundTextureId: string | null;
+  onBackgroundChange?: (id: string | null) => void;
 }
 
 // Frame sizes kept internally for potential future use
