@@ -230,7 +230,7 @@ export function TopToolbar({
                 }`}
               >
                 <Brush className="w-3 h-3" />
-                Studio
+                Create
               </Link>
               <Link
                 to="/wall"
