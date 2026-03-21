@@ -410,6 +410,10 @@ const Index = () => {
         kidSoundsVolume={sounds.volume}
         onKidSoundsToggle={sounds.setEnabled}
         onKidSoundsVolume={sounds.setVolume}
+        onUndo={studio.undo}
+        onRedo={studio.redo}
+        canUndo={studio.canUndo}
+        canRedo={studio.canRedo}
       />
 
       <div className="flex-1 flex flex-col relative overflow-hidden">
