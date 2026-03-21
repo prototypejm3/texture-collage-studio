@@ -68,16 +68,31 @@ const Index = () => {
     localStorage.setItem('workstationName', name);
   }, []);
 
-  // Keyboard shortcut for focus mode
+  // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'f' && !e.metaKey && !e.ctrlKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'f' && !e.metaKey && !e.ctrlKey) {
         setFocusMode(prev => !prev);
+      }
+      // Undo: Ctrl+Z / Cmd+Z
+      if (e.key === 'z' && (e.ctrlKey || e.metaKey) && !e.shiftKey) {
+        e.preventDefault();
+        studio.undo();
+      }
+      // Redo: Ctrl+Shift+Z / Cmd+Shift+Z or Ctrl+Y
+      if ((e.key === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey) || (e.key === 'y' && (e.ctrlKey || e.metaKey))) {
+        e.preventDefault();
+        studio.redo();
+      }
+      // Delete selected element
+      if ((e.key === 'Delete' || e.key === 'Backspace') && studio.selectedId) {
+        studio.deleteElement(studio.selectedId);
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, []);
+  }, [studio.undo, studio.redo, studio.selectedId, studio.deleteElement]);
 
   // Load design state when editing from wall
   useEffect(() => {
@@ -410,6 +425,10 @@ const Index = () => {
         kidSoundsVolume={sounds.volume}
         onKidSoundsToggle={sounds.setEnabled}
         onKidSoundsVolume={sounds.setVolume}
+        onUndo={studio.undo}
+        onRedo={studio.redo}
+        canUndo={studio.canUndo}
+        canRedo={studio.canRedo}
       />
 
       <div className="flex-1 flex flex-col relative overflow-hidden">

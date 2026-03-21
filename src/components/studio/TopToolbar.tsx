@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
-import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, LogIn, LogOut, User, Moon, Sun, Ear, Sparkles, Volume2, VolumeX, Undo2, Redo2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
@@ -36,6 +36,11 @@ interface Props {
   kidSoundsVolume?: number;
   onKidSoundsToggle?: (enabled: boolean) => void;
   onKidSoundsVolume?: (vol: number) => void;
+  // Undo/Redo
+  onUndo?: () => void;
+  onRedo?: () => void;
+  canUndo?: boolean;
+  canRedo?: boolean;
 }
 
 const frameStyleList: { id: FrameStyle; label: string }[] = [
@@ -58,6 +63,7 @@ export function TopToolbar({
   ambientSound, onAmbientSoundChange,
   focusMode, onToggleFocusMode,
   kidSoundsEnabled, kidSoundsVolume, onKidSoundsToggle, onKidSoundsVolume,
+  onUndo, onRedo, canUndo, canRedo,
 }: Props) {
   const [framePanelOpen, setFramePanelOpen] = useState(false);
   const [showSfxVolume, setShowSfxVolume] = useState(false);
@@ -301,6 +307,29 @@ export function TopToolbar({
               </>
             )}
           </div>
+        )}
+
+        {/* Undo/Redo — adult mode only */}
+        {!kidMode && onUndo && onRedo && (
+          <>
+            <div className="w-px h-3 bg-border hidden sm:block" />
+            <button
+              onClick={onUndo}
+              disabled={!canUndo}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none"
+              title="Undo (Ctrl+Z)"
+            >
+              <Undo2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={onRedo}
+              disabled={!canRedo}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none"
+              title="Redo (Ctrl+Shift+Z)"
+            >
+              <Redo2 className="w-4 h-4" />
+            </button>
+          </>
         )}
 
         <div className="w-px h-3 bg-border hidden sm:block" />
