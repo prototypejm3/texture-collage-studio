@@ -58,19 +58,30 @@ interface TextureGroup {
   categories: TextureCategory[];
 }
 
-const groups: TextureGroup[] = [
-  { label: 'Velvet', kidLabel: '🧸 Soft & Fancy', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Soft', kidLabel: '☁️ Super Soft', categories: ['Crave', 'Bentley', 'Lucky'] },
-  { label: 'Linen', kidLabel: '🧵 Cloth', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
-  { label: 'Durable', kidLabel: '🛡️ Tough Stuff', categories: ['Sunbrella', 'Key Largo'] },
-  { label: 'Woven', kidLabel: '🧶 Woven', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
-  { label: 'Textured', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
-  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Cotton & Felt', kidLabel: '🧤 Cozy', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
-  { label: 'Leather', kidLabel: '🐄 Leather', categories: ['Leather'] },
-  { label: 'Hard', kidLabel: '🪵 Hard Stuff', categories: ['Wood', 'Marble', 'Concrete'] },
+// Adult mode: 12 detailed groups
+const adultGroups: TextureGroup[] = [
+  { label: 'Velvet', kidLabel: '', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
+  { label: 'Soft', kidLabel: '', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Linen', kidLabel: '', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Durable', kidLabel: '', categories: ['Sunbrella', 'Key Largo'] },
+  { label: 'Woven', kidLabel: '', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
+  { label: 'Textured', kidLabel: '', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento'] },
+  { label: 'Smooth', kidLabel: '', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Cotton & Felt', kidLabel: '', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Leather', kidLabel: '', categories: ['Leather'] },
+  { label: 'Hard', kidLabel: '', categories: ['Wood', 'Marble', 'Concrete'] },
+  { label: 'Patterns', kidLabel: '', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
+  { label: 'Signature', kidLabel: '', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+];
+
+// Kid mode: 6 simplified mega-groups
+const kidGroups: TextureGroup[] = [
+  { label: 'Soft', kidLabel: '🧸 Soft & Cozy', categories: ['Royale', 'Banks', 'Prime', 'Kenley', 'Crave', 'Bentley', 'Lucky', 'Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Smooth', kidLabel: '✨ Smooth', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico', 'Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
+  { label: 'Bumpy', kidLabel: '🪨 Bumpy', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento', 'Cody', 'Bubbly', 'Synergy', 'Checker', 'Sunbrella', 'Key Largo'] },
+  { label: 'Tough', kidLabel: '🛡️ Tough', categories: ['Leather', 'Wood', 'Marble', 'Concrete'] },
   { label: 'Patterns', kidLabel: '🌈 Patterns', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+  { label: 'Special', kidLabel: '⭐ Special', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
 ];
 
 const FAV_KEY = 'texture-favorites';
