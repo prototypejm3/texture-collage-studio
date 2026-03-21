@@ -739,6 +739,12 @@ const Index = () => {
         </defs>
       </svg>
       <OnboardingTutorial page="studio" />
+      <KidOnboardingOverlay
+        step={kidOnboarding.step}
+        active={kidOnboarding.active}
+        onSkip={kidOnboarding.skip}
+        onAdvance={kidOnboarding.advanceTo}
+      />
     </div>
   );
 };
