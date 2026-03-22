@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SavedDesign, FrameStyle } from '@/types/wall';
+import { SavedDesign, FrameStyle, HangingStyle } from '@/types/wall';
 
 interface ActionBubblesProps {
   design: SavedDesign;
