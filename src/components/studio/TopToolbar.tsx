@@ -260,12 +260,13 @@ export function TopToolbar({
         ) : (
           <button
             onClick={handleAiToggle}
-            className={`p-1.5 rounded-md transition-colors ${
+            className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-colors ${
               aiEnabled ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             }`}
             title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
           >
             <Sparkles className="w-4 h-4" />
+            <span className="hidden sm:inline">AI Mode</span>
           </button>
         )}
 
