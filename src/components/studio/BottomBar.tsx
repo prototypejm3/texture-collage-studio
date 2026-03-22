@@ -183,7 +183,7 @@ export function BottomBar({
                   {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-2 bg-popover border border-border rounded-xl shadow-xl p-3">
                         <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center font-semibold">Color</p>
                         <div className="flex items-center gap-2">
                           {colorFrames.map(cf => {
