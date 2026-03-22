@@ -148,6 +148,32 @@ export function useStudio() {
     return id;
   }, [nextShape]);
 
+  const addTextElement = useCallback((text: string, x: number, y: number, opts?: { fontFamily?: string; fontSize?: number; fontWeight?: number; textColor?: string; textAlign?: 'left' | 'center' | 'right' }) => {
+    const id = `el-${nextId++}`;
+    const newEl: CanvasElement = {
+      id,
+      textureId: '__text__',
+      x,
+      y,
+      width: 200,
+      height: 60,
+      rotation: 0,
+      shape: 'soft-square',
+      zIndex: nextId,
+      effects: { ...defaultEffects },
+      type: 'text',
+      text,
+      fontFamily: opts?.fontFamily || 'system-ui',
+      fontSize: opts?.fontSize || 24,
+      fontWeight: opts?.fontWeight || 500,
+      textColor: opts?.textColor || '#3d3530',
+      textAlign: opts?.textAlign || 'center',
+    };
+    setElements(prev => [...prev, newEl]);
+    setSelectedId(id);
+    return id;
+  }, []);
+
   const updateElement = useCallback((id: string, updates: Partial<CanvasElement>) => {
     setElements(prev => prev.map(el => el.id === id ? { ...el, ...updates } : el));
   }, []);
