@@ -97,6 +97,14 @@ const Index = () => {
     }
   }, [searchParams, upgradeToPremium, navigate]);
 
+  // Trigger intro tutorial for kids on first visit
+  useEffect(() => {
+    if (sounds.kidMode) {
+      const timer = setTimeout(() => kidTutorial.triggerIntro(), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [sounds.kidMode]);
+
   // Auto-open tools box when an element is selected in adult mode
   useEffect(() => {
     if (studio.selectedId && !sounds.kidMode) {
