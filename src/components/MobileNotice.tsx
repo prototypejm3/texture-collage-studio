@@ -8,7 +8,7 @@ export function MobileNotice() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 640 && 'ontouchstart' in window;
     const dismissed = localStorage.getItem(DISMISSED_KEY);
     if (isMobile && !dismissed) {
       setShow(true);
