@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SavedDesign, FrameStyle } from '@/types/wall';
+import { SavedDesign, FrameStyle, HangingStyle } from '@/types/wall';
 
 interface ActionBubblesProps {
   design: SavedDesign;
@@ -126,13 +127,16 @@ interface BubbleAction {
 }
 
 const kidBubbleActions: BubbleAction[] = [
-  { id: 'grow',   emoji: '🔲', label: 'Size',   angle: -90,  sound: 'grow' },
-  { id: 'cut',    emoji: '✂️', label: 'Frame',  angle: -45,  sound: 'pop' },
-  { id: 'spin',   emoji: '🔄', label: 'Spin',   angle: 0,    sound: 'spin' },
-  { id: 'save',   emoji: '📦', label: 'Box',    angle: 45,   sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
-  { id: 'open',   emoji: '🖍️', label: 'Open',   angle: 90,   sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
-  { id: 'delete', emoji: '🗑️', label: 'Delete', angle: 135,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
+  { id: 'grow',   emoji: '±',  label: 'Size',   angle: -108, sound: 'grow' },
+  { id: 'cut',    emoji: '🖼️', label: 'Frame',  angle: -60,  sound: 'pop' },
+  { id: 'hang',   emoji: '📌', label: 'Hang',   angle: -12,  sound: 'pop' },
+  { id: 'spin',   emoji: '🔄', label: 'Spin',   angle: 36,   sound: 'spin' },
+  { id: 'save',   emoji: '📦', label: 'Box',    angle: 84,   sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
+  { id: 'open',   emoji: '🖍️', label: 'Open',   angle: 132,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
+  { id: 'delete', emoji: '🗑️', label: 'Delete', angle: 180,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
 ];
+
+const kidHangCycle: HangingStyle[] = ['red-tack', 'cork-tack', 'string', 'floating'];
 
 const adultBubbleActions: BubbleAction[] = [
   { id: 'resize',    emoji: '↕️',  label: 'Resize',    angle: -108, sound: 'grow' },
@@ -181,6 +185,12 @@ export function KidActionBubbles({
         const currentIdx = adultFrameCycle.indexOf(design.frameStyle);
         const nextFrame = adultFrameCycle[(currentIdx + 1) % adultFrameCycle.length];
         onUpdate(design.id, { frameStyle: nextFrame });
+        break;
+      }
+      case 'hang': {
+        const currentIdx = kidHangCycle.indexOf((design.hangingStyle || 'floating') as HangingStyle);
+        const nextHang = kidHangCycle[(currentIdx + 1) % kidHangCycle.length];
+        onUpdate(design.id, { hangingStyle: nextHang } as any);
         break;
       }
       case 'spin':
