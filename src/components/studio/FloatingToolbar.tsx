@@ -351,7 +351,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
 
 // ── Main Export ──
 
-export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
+export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount }: Props) {
   const [showEffects, setShowEffects] = useState(true);
   const [showShapes, setShowShapes] = useState(true);
 
@@ -365,11 +365,33 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
   }, []);
 
   if (kidMode) {
-    return <KidToolBox element={element} onUpdate={onUpdate} onUpdateEffects={onUpdateEffects} onDuplicate={onDuplicate} onDelete={onDelete} />;
+    return <KidToolBox element={element} onUpdate={onUpdate} onUpdateEffects={onUpdateEffects} onDuplicate={onDuplicate} onDelete={onDelete} onUndo={onUndo} onRedo={onRedo} canUndo={canUndo} canRedo={canRedo} />;
   }
 
   return (
     <div className="p-3 space-y-2">
+      {/* Header with undo/redo/delete */}
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+          {elementCount !== undefined ? `${elementCount} element${elementCount !== 1 ? 's' : ''}` : 'Element'}
+        </span>
+        <div className="flex gap-0.5">
+          {onUndo && (
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-7 w-7 p-0" title="Undo">
+              <Undo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          {onRedo && (
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-7 w-7 p-0" title="Redo">
+              <Redo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          <Button size="sm" variant="ghost" onClick={onDelete} className="h-7 w-7 p-0 text-destructive hover:text-destructive" title="Delete">
+            <Trash2 className="w-3.5 h-3.5" />
+          </Button>
+        </div>
+      </div>
+
       <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1">
         Elements
         {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
