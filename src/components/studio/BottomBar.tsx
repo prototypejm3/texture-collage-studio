@@ -306,13 +306,13 @@ export function BottomBar({
       {/* Easel / Desk toggle */}
       {onToggleEasel && (
         <>
-          <div className="w-px h-4 bg-border mx-0.5" />
+          <div className="w-px h-5 bg-border mx-1" />
           <button
             onClick={onToggleEasel}
-            className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium rounded-full transition-colors border ${
               easelMode
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                ? 'bg-[#f97316] text-white border-[#f97316]'
+                : 'bg-secondary text-foreground border-border hover:bg-accent'
             }`}
             title={easelMode ? 'Switch to flat desk' : 'Switch to easel'}
           >
