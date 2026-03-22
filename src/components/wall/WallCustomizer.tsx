@@ -538,10 +538,6 @@ function AdultBackgroundPicker({ settings, onUpdate, isPremium, onRequestUpgrade
     </div>
   );
 }
-      </div>
-    </div>
-  );
-}
 
 /* ─── Premium icon button with lock badge ─── */
 function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, label, children }: {
