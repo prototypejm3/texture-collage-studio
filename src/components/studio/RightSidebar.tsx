@@ -196,7 +196,7 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...sportsStencils, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
