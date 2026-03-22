@@ -333,10 +333,27 @@ const Index = () => {
     studio.selectVibe(vibe);
   }, [studio]);
 
-  const handleClearAll = useCallback(() => {
+  // Auto-save to Room Box before clearing (kids never lose work)
+  const handleClearAll = useCallback(async () => {
+    if (sounds.kidMode && canvasRef.current && studio.elements.length > 0) {
+      try {
+        const dataUrl = await toPng(canvasRef.current, { pixelRatio: 1 });
+        const name = studio.activeVibe?.name || 'My Creation';
+        const studioState = studio.getState();
+        // Save as hidden "box" item — lives in Room but not on wall
+        wall.addDesign(dataUrl, name, studio.activeVibe?.name, studioState, studio.activeVibe?.creator);
+        // Mark it as box-only (hidden, not displayed on wall)
+        const designs = wall.designs;
+        const newest = designs[0];
+        if (newest) {
+          wall.updateDesign(newest.id, { status: 'draft' as any, hidden: true });
+        }
+        toast({ title: '📦 Saved to your Room Box!', description: "Don't worry, your creation is safe!" });
+      } catch { /* silent */ }
+    }
     studio.clearCanvas();
     clearTemplate();
-  }, [studio, clearTemplate]);
+  }, [studio, clearTemplate, sounds.kidMode, wall]);
 
   const handleExport = useCallback(async () => {
     if (!canvasRef.current) return;
@@ -367,7 +384,9 @@ const Index = () => {
         return;
       }
 
-      if (!canSave(wall.designs.length)) {
+      // Only count displayed (wall-hung) designs against free limit
+      const displayedCount = wall.designs.filter(d => d.status === 'display' && !d.hidden).length;
+      if (!canSave(displayedCount)) {
         setPendingSave({ preview: dataUrl, name, vibeName, stencilCreator });
         setShowPaywall(true);
         return;
