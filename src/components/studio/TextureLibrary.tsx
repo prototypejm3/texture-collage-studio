@@ -173,6 +173,15 @@ export function TextureLibrary({
       ? allTextures.filter(t => favIds.has(t.id))
       : allTextures;
 
+  // In kid mode, sort by color rainbow order
+  if (kidMode && activeGroup !== 'Favorites') {
+    filtered = [...filtered].sort((a, b) => {
+      const oa = kidColorOrder[a.id] ?? 999;
+      const ob = kidColorOrder[b.id] ?? 999;
+      return oa - ob;
+    });
+  }
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
