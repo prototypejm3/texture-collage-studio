@@ -131,31 +131,28 @@ const tennisBall: Vibe = {
   ],
 };
 
-// ── VOLLEYBALL 🏐 ── Proper swirl/pinwheel panels
+// ── VOLLEYBALL 🏐 ── Curved wrapped bands like real volleyball
 const volleyball: Vibe = {
   id: 'volleyball', name: 'Volleyball', emoji: '🏐', category: 'Sports',
-  description: 'Swirl panel volleyball with curved seams',
+  description: 'Curved wrapped band volleyball',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
-    // Panel 1: top, curving right
-    { id: 'vb-panel1', label: 'Panel 1', tone: 'light',
-      path: `M240,40 A200,200 0 0,1 410,145 Q340,180 280,220 Q250,240 240,240 Q180,160 200,100 Q215,60 240,40 Z` },
-    // Panel 2: right, curving down
-    { id: 'vb-panel2', label: 'Panel 2', tone: 'medium',
-      path: `M410,145 A200,200 0 0,1 410,335 Q370,280 320,260 Q260,245 240,240 Q280,220 340,180 Q380,160 410,145 Z` },
-    // Panel 3: bottom-right, curving left
-    { id: 'vb-panel3', label: 'Panel 3', tone: 'light',
-      path: `M410,335 A200,200 0 0,1 240,440 Q260,380 260,320 Q255,265 240,240 Q260,245 320,260 Q370,280 410,335 Z` },
-    // Panel 4: bottom-left, curving up
-    { id: 'vb-panel4', label: 'Panel 4', tone: 'medium',
-      path: `M240,440 A200,200 0 0,1 70,335 Q140,300 200,260 Q230,245 240,240 Q255,265 260,320 Q260,380 240,440 Z` },
-    // Panel 5: left, curving up
-    { id: 'vb-panel5', label: 'Panel 5', tone: 'light',
-      path: `M70,335 A200,200 0 0,1 70,145 Q110,200 160,220 Q220,235 240,240 Q230,245 200,260 Q140,300 70,335 Z` },
-    // Panel 6: top-left
-    { id: 'vb-panel6', label: 'Panel 6', tone: 'medium',
-      path: `M70,145 A200,200 0 0,1 240,40 Q215,60 200,100 Q180,160 240,240 Q220,235 160,220 Q110,200 70,145 Z` },
+    // Background ball
+    { id: 'vb-bg', label: 'Ball', tone: 'light',
+      path: circle(240, 240, 200) },
+    // Vertical curved band (center, slightly curved right)
+    { id: 'vb-band-v', label: 'Center Band', tone: 'medium',
+      path: 'M220,42 Q210,120 215,240 Q210,360 220,438 L260,438 Q270,360 265,240 Q270,120 260,42 Z' },
+    // Horizontal curved band (wraps across middle)
+    { id: 'vb-band-h', label: 'Cross Band', tone: 'medium',
+      path: 'M42,220 Q120,210 240,215 Q360,210 438,220 L438,260 Q360,270 240,265 Q120,270 42,260 Z' },
+    // Diagonal band top-left to bottom-right
+    { id: 'vb-band-d1', label: 'Diagonal Band', tone: 'medium',
+      path: 'M85,75 Q160,130 220,215 L240,240 L260,265 Q320,350 395,405 L375,425 Q300,365 245,275 L240,240 L235,205 Q180,120 65,95 Z' },
+    // Diagonal band top-right to bottom-left
+    { id: 'vb-band-d2', label: 'Cross Diagonal', tone: 'medium',
+      path: 'M395,75 Q320,130 260,215 L240,240 L220,265 Q160,350 85,405 L105,425 Q180,365 235,275 L240,240 L245,205 Q300,120 415,95 Z' },
   ],
 };
 
