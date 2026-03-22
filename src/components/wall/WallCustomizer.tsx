@@ -399,36 +399,145 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         )}
 
         {/* Background picker */}
-        <div className="flex items-center gap-4">
-          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>
-            {kidMode ? '🎨 Wall:' : 'Wall Color'}
-          </span>
-          {backgrounds.map(bg => {
-            const isFree = kidMode || isPremium;
-            const isSelected = settings.background === bg.value;
-            const IconComp = wallIcons[bg.value];
-            return (
-              <button
-                key={bg.value}
-                onClick={() => isFree ? onUpdate({ background: bg.value }) : onRequestUpgrade?.()}
-                className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
-                style={kidMode ? {
-                  width: 68, height: 68,
-                  backgroundColor: bg.fill,
-                  border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
-                } : {
-                  width: 40, height: 40,
-                  backgroundColor: bg.fill,
-                  border: `${isSelected ? '2px' : '1px'} solid ${isSelected ? '#c4956a' : bg.borderColor}`,
-                }}
-                title={isFree ? (kidMode && bg.kidLabel ? bg.kidLabel : bg.label) : 'Premium — unlock to use'}
-              >
-                {kidMode && IconComp && <IconComp />}
-                {!isFree && <Lock className="w-3 h-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/40 drop-shadow-sm" />}
-              </button>
-            );
-          })}
+        {kidMode ? (
+          /* Kid mode: cute circle icons */
+          <div className="flex items-center gap-4">
+            <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>🎨 Wall:</span>
+            {kidBackgrounds.map(bg => {
+              const isSelected = settings.background === bg.value;
+              const IconComp = wallIcons[bg.value];
+              return (
+                <button
+                  key={bg.value}
+                  onClick={() => onUpdate({ background: bg.value })}
+                  className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                  style={{
+                    width: 68, height: 68,
+                    backgroundColor: bg.fill,
+                    border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                  }}
+                  title={bg.kidLabel}
+                >
+                  {IconComp && <IconComp />}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          /* Adult mode: grouped background picker with color picker + upload */
+          <AdultBackgroundPicker
+            settings={settings}
+            onUpdate={onUpdate}
+            isPremium={isPremium}
+            onRequestUpgrade={onRequestUpgrade}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Adult Background Picker ─── */
+function AdultBackgroundPicker({ settings, onUpdate, isPremium, onRequestUpgrade }: {
+  settings: WallSettings;
+  onUpdate: (updates: Partial<WallSettings>) => void;
+  isPremium: boolean;
+  onRequestUpgrade?: () => void;
+}) {
+  const [showPicker, setShowPicker] = useState(false);
+  const [customColor, setCustomColor] = useState('#f5f0e8');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleColorChange = (color: string) => {
+    setCustomColor(color);
+    // Store color in customWallImage as a color value
+    onUpdate({ background: 'custom', customWallImage: color });
+  };
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      onUpdate({ background: 'custom', customWallImage: dataUrl });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Wall</span>
+
+      <div className="flex items-center gap-1.5 flex-wrap">
+        {adultBgGroups.map(group => (
+          <div key={group.label} className="flex items-center gap-1">
+            <span className="text-[8px] text-muted-foreground uppercase tracking-wider mr-0.5">{group.label}</span>
+            {group.items.map(bg => {
+              const isSelected = settings.background === bg.value;
+              return (
+                <button
+                  key={bg.value}
+                  onClick={() => onUpdate({ background: bg.value })}
+                  className={`rounded-full flex-shrink-0 transition-all hover:scale-110 ${isSelected ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+                  style={{
+                    width: 28, height: 28,
+                    background: bg.gradient || bg.fill,
+                    border: `1px solid hsl(var(--border))`,
+                  }}
+                  title={bg.label}
+                />
+              );
+            })}
+            <div className="w-px h-5 bg-border mx-1" />
+          </div>
+        ))}
+
+        {/* Color picker */}
+        <div className="relative flex items-center">
+          <button
+            onClick={() => setShowPicker(!showPicker)}
+            className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center ${settings.background === 'custom' && settings.customWallImage?.startsWith('#') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+            style={{
+              width: 28, height: 28,
+              background: 'conic-gradient(hsl(0,70%,60%), hsl(60,70%,60%), hsl(120,70%,60%), hsl(180,70%,60%), hsl(240,70%,60%), hsl(300,70%,60%), hsl(360,70%,60%))',
+              border: '1px solid hsl(var(--border))',
+            }}
+            title="Color Picker"
+          >
+            <Palette className="w-3 h-3 text-white drop-shadow-sm" />
+          </button>
+          {showPicker && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setShowPicker(false)} />
+              <div className="absolute bottom-full left-0 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
+                <input
+                  type="color"
+                  value={customColor}
+                  onChange={(e) => handleColorChange(e.target.value)}
+                  className="w-32 h-32 cursor-pointer border-none rounded-md"
+                  style={{ padding: 0 }}
+                />
+                <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
+              </div>
+            </>
+          )}
         </div>
+
+        {/* Upload custom */}
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center bg-secondary ${settings.background === 'custom' && settings.customWallImage?.startsWith('data:') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+          style={{ width: 28, height: 28, border: '1px solid hsl(var(--border))' }}
+          title="Upload Background"
+        >
+          <Upload className="w-3 h-3 text-muted-foreground" />
+        </button>
+        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+      </div>
+    </div>
+  );
+}
       </div>
     </div>
   );
