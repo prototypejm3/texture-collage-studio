@@ -586,7 +586,7 @@ const Index = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-                  className="overflow-hidden"
+589:                   className="overflow-visible relative"
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 320,
