@@ -537,9 +537,40 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ── BOX BUTTONS on the table below canvas ── */}
-        <div className="relative shrink-0 bg-popover border-t border-border overflow-visible" style={{ minHeight: 64 }}>
-          <div className="flex items-center justify-center gap-3 py-2 px-4">
+        {/* ── BOX BUTTONS in a wooden tray on the table ── */}
+        <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
+          <div
+            className="relative flex items-center justify-center gap-3 px-5 py-3"
+            style={{
+              background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
+              borderRadius: '0 0 10px 10px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
+              border: '2px solid rgba(0,0,0,0.15)',
+              borderTop: 'none',
+            }}
+          >
+            {/* Wood grain overlay */}
+            <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
+              background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
+              borderRadius: '0 0 10px 10px',
+            }} />
+            {/* Lid / flap */}
+            <div
+              className="absolute pointer-events-none"
+              style={{
+                top: -14,
+                left: -2,
+                width: 'calc(100% + 4px)',
+                height: 18,
+                background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
+                borderRadius: '6px 6px 0 0',
+                border: '2px solid rgba(0,0,0,0.12)',
+                borderBottom: 'none',
+                transform: 'rotateX(-20deg)',
+                transformOrigin: 'bottom center',
+                boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
+              }}
+            />
             <BoxButton
               id="mybox"
               icon="📦"
