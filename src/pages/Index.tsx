@@ -177,11 +177,15 @@ const Index = () => {
     sounds.playPop();
     sounds.trackAction();
     kidOnboarding.notifyPick();
-    if (sounds.kidMode && canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect();
-      celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+    if (sounds.kidMode) {
+      kidTutorial.triggerDrag();
+      voiceEncouragement.maybeSayEncouragement();
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+      }
     }
-  }, [studio, sounds, kidOnboarding, celebration]);
+  }, [studio, sounds, kidOnboarding, celebration, kidTutorial, voiceEncouragement]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
