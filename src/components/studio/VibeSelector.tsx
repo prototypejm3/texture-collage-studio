@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
+import { sportsStencils } from '@/data/sportsStencils';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag, Heart } from 'lucide-react';
