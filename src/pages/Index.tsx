@@ -893,6 +893,9 @@ const Index = () => {
                 )}
               </div>
               <div className="flex items-center gap-2">
+                <button onClick={handleClearAll} className="flex items-center gap-1 px-2 py-1.5 text-[11px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors" title="Reset">
+                  <Trash2 className="w-3.5 h-3.5" /> Reset
+                </button>
                 <button onClick={handleSaveToWall} className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium text-foreground hover:bg-secondary rounded-lg transition-colors">
                   <Save className="w-3.5 h-3.5" /> Save
                 </button>

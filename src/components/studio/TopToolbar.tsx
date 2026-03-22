@@ -375,24 +375,7 @@ export function TopToolbar({
         {/* Divider */}
         <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: 'hsl(var(--toybox-border))' } : undefined} />
 
-        {/* Start Over / Save / Download — kid mode uses BottomBar instead */}
-        {!kidMode && (
-          <>
-            <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Reset">
-              <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Reset</span>
-            </button>
-
-            {onSaveToWall && (
-              <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-foreground hover:bg-secondary rounded-md transition-colors" title="Save">
-                <Save className="w-3 h-3" /> <span className="hidden sm:inline">Save</span>
-              </button>
-            )}
-
-            <button onClick={onSave} className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors" title="Download">
-              <Download className="w-3 h-3" /> <span className="hidden sm:inline">Download</span>
-            </button>
-          </>
-        )}
+        {/* Start Over / Save / Download moved to bottom bar for adult mode */}
 
         {/* Undo/Redo */}
         {onUndo && onRedo && (
