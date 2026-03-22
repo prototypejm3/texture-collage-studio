@@ -13,5 +13,9 @@ export function useActiveBox() {
     setActiveBox(null);
   }, []);
 
-  return { activeBox, toggleBox, closeBox };
+  const openBox = useCallback((id: BoxId) => {
+    setActiveBox(id);
+  }, []);
+
+  return { activeBox, toggleBox, closeBox, openBox };
 }
