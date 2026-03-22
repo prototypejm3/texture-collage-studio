@@ -32,6 +32,9 @@ import { useKidCelebration } from '@/hooks/useKidCelebration';
 import { CelebrationOverlay } from '@/components/studio/CelebrationToast';
 import { TextureTray } from '@/components/studio/MobileTextureTray';
 import { StencilTray } from '@/components/studio/MobileStencilTray';
+import { useActiveBox } from '@/hooks/useActiveBox';
+import { BoxButton } from '@/components/studio/BoxButton';
+import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 
 const Index = () => {
   const navigate = useNavigate();
