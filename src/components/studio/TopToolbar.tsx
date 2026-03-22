@@ -149,33 +149,29 @@ export function TopToolbar({
 
   return (
     <>
-    <div className={`flex items-center justify-between px-2 md:px-4 py-1 md:py-1.5 relative ${
+    <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
-        ? 'bg-gradient-to-r from-primary/5 via-background to-primary/5 border-b-2 border-primary/20'
-        : 'bg-background border-b border-border'
-    }`}>
-      {/* Left: Logo + Nav */}
-      <div className="flex items-center gap-2 md:gap-4">
-        <div className="flex items-center gap-1.5">
-          {kidMode ? (
-            <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
-          ) : (
-            <img src={logoImg} alt="Swatchbox Studio" className="w-6 h-6 object-contain" />
-          )}
-          <span className={`font-bold tracking-tight text-foreground ${kidMode ? 'text-sm' : 'text-xs'}`}>
-            Swatchbox Studio
-          </span>
-        </div>
-
-        {/* Kid Mode Toggle — next to brand */}
+        ? 'h-[64px] border-b border-[#e8ddd0]'
+        : 'py-1 md:py-1.5 bg-background border-b border-border'
+    }`}
+    style={kidMode ? { backgroundColor: '#fdf6ee' } : undefined}
+    >
+      {/* Left: Mode toggle + Create + Nav */}
+      <div className="flex items-center gap-1.5 md:gap-3">
+        {/* Kid Mode Toggle */}
         {kidMode ? (
           <button
             onClick={handleKidToggle}
-            className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md"
-            style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)' }}
+            className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
+            style={{
+              background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            }}
             title="Switch to Granny Mode"
           >
-            🧒 Kids → 🥦👵
+            <KidCrownIcon />
+            <span className="text-white text-xs font-bold mx-0.5">→</span>
+            <GrannyIcon />
           </button>
         ) : (
           <button
@@ -187,85 +183,76 @@ export function TopToolbar({
           </button>
         )}
 
-        <div className="hidden md:flex items-center gap-1.5">
-          {kidMode ? (
-            <>
-              <Link
-                to="/"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
-                  isStudio
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
-                }`}
-              >
-                <span className="text-sm">🖍️</span>
-                Create
+        {kidMode && (
+          <>
+            {/* Create button */}
+            <Link
+              to="/"
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95 ${
+                isStudio ? 'ring-2 ring-white/40' : ''
+              }`}
+              style={{ backgroundColor: '#f97316' }}
+            >
+              <PencilIcon />
+              Create
+            </Link>
+
+            {/* Divider */}
+            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: '#e8ddd0' }} />
+
+            {/* My Room */}
+            <Link
+              to="/wall"
+              data-nav="wall"
+              className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
+                isWall ? 'ring-2 ring-[#c4956a]/40' : ''
+              }`}
+              style={isWall ? { backgroundColor: '#f7f0e8' } : undefined}
+            >
+              <HouseIcon />
+              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>My Room</span>
+            </Link>
+
+            {/* Divider */}
+            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: '#e8ddd0' }} />
+
+            {/* Show & Tell */}
+            <Link
+              to="/gallery"
+              data-nav="gallery"
+              className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
+                isGallery ? 'ring-2 ring-[#c4956a]/40' : ''
+              }`}
+              style={isGallery ? { backgroundColor: '#f7f0e8' } : undefined}
+            >
+              <TentIcon />
+              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Show & Tell</span>
+            </Link>
+          </>
+        )}
+
+        {!kidMode && (
+          <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5">
+              <img src={logoImg} alt="Swatchbox Studio" className="w-6 h-6 object-contain" />
+              <span className="font-bold tracking-tight text-foreground text-xs">Swatchbox Studio</span>
+            </div>
+            <div className="hidden md:flex items-center gap-1.5">
+              <Link to="/" title="Open the creative studio" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+                <Brush className="w-4 h-4" /> Create
               </Link>
-              <Link
-                to="/wall"
-                data-nav="wall"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
-                  isWall
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
-                }`}
-              >
-                <span className="text-sm">🏠</span>
-                My Room
+              <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+                <Grid2x2 className="w-4 h-4" /> My Wall
               </Link>
-              <Link
-                to="/gallery"
-                data-nav="gallery"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all ${
-                  isGallery
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
-                }`}
-              >
-                <span className="text-sm">🎪</span>
-                Show & Tell
+              <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+                <Landmark className="w-4 h-4" /> Gallery
               </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/"
-                title="Open the creative studio"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-                  isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                }`}
-              >
-                <Brush className="w-4 h-4" />
-                Create
-              </Link>
-              <Link
-                to="/wall"
-                data-nav="wall"
-                title="View and arrange your artwork"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-                  isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                }`}
-              >
-                <Grid2x2 className="w-4 h-4" />
-                My Wall
-              </Link>
-              <Link
-                to="/gallery"
-                data-nav="gallery"
-                title="Browse community artwork"
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-                  isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                }`}
-              >
-                <Landmark className="w-4 h-4" />
-                Gallery
-              </Link>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div />
+      <div className="flex-1" />
 
       {/* Right */}
       <div className="flex items-center gap-1">
