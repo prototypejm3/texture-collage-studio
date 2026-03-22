@@ -371,35 +371,69 @@ export function BottomBar({
 
       {/* Actions */}
       <div className="flex items-center gap-1">
-        <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
-          <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Start Over' : 'Reset'}</span>
-        </button>
-        {onSaveToWall && (
-          <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-foreground hover:bg-secondary rounded-md transition-colors">
-            <Save className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Save' : 'Keep Safe'}</span>
-          </button>
+        {kidMode ? (
+          <>
+            <button onClick={onClear} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Start Over">
+              <TrashCanIcon />
+              <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
+            </button>
+            {onSaveToWall && (
+              <button onClick={onSaveToWall} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Save">
+                <SaveBoxIcon />
+                <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (isPremium) {
+                  onSave();
+                } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
+                  incrementFreeExportCount();
+                  onSave();
+                } else {
+                  onRequestUpgrade?.();
+                }
+              }}
+              className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95"
+              title="Download"
+            >
+              <DownloadTrayIcon />
+              <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
+              <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Reset</span>
+            </button>
+            {onSaveToWall && (
+              <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] text-foreground hover:bg-secondary rounded-md transition-colors">
+                <Save className="w-3 h-3" /> <span className="hidden sm:inline">Keep Safe</span>
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (isPremium) {
+                  onSave();
+                } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
+                  incrementFreeExportCount();
+                  onSave();
+                } else {
+                  onRequestUpgrade?.();
+                }
+              }}
+              className={`relative flex items-center gap-0.5 px-2 py-0.5 text-[9px] font-medium rounded-md transition-colors ${
+                isPremium || getFreeExportCount() < FREE_EXPORT_LIMIT
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-muted text-muted-foreground cursor-not-allowed'
+              }`}
+              title={isPremium ? 'Export as PNG' : getFreeExportCount() < FREE_EXPORT_LIMIT ? 'Export (1 free)' : 'Premium'}
+            >
+              <Download className="w-3 h-3" /> <span className="hidden sm:inline">Take Home</span>
+              {!isPremium && getFreeExportCount() >= FREE_EXPORT_LIMIT && <Lock className="w-2 h-2 ml-0.5" />}
+            </button>
+          </>
         )}
-        <button
-          onClick={() => {
-            if (isPremium) {
-              onSave();
-            } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
-              incrementFreeExportCount();
-              onSave();
-            } else {
-              onRequestUpgrade?.();
-            }
-          }}
-          className={`relative flex items-center gap-0.5 px-2 py-0.5 text-[9px] font-medium rounded-md transition-colors ${
-            isPremium || getFreeExportCount() < FREE_EXPORT_LIMIT
-              ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-              : 'bg-muted text-muted-foreground cursor-not-allowed'
-          }`}
-          title={isPremium ? 'Export as PNG' : getFreeExportCount() < FREE_EXPORT_LIMIT ? 'Export (1 free)' : 'Premium'}
-        >
-          <Download className="w-3 h-3" /> <span className="hidden sm:inline">{kidMode ? 'Download' : 'Take Home'}</span>
-          {!isPremium && getFreeExportCount() >= FREE_EXPORT_LIMIT && <Lock className="w-2 h-2 ml-0.5" />}
-        </button>
       </div>
     </div>
   );
