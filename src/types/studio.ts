@@ -54,6 +54,7 @@ export interface CanvasElement {
   fontWeight?: number;
   textColor?: string;
   textAlign?: 'left' | 'center' | 'right';
+  stencilMode?: StencilMode; // 'outline' = editable stencil, 'filled' = sticker
 }
 
 export interface MaterialEffects {
