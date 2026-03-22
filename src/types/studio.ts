@@ -41,6 +41,8 @@ export interface CanvasElement {
   shape: ElementShape;
   zIndex: number;
   effects: MaterialEffects;
+  opacity?: number; // 0-100, default 100
+  blendMode?: BlendMode; // CSS mix-blend-mode
   sectionId?: string;
   clipPathD?: string; // SVG path d for custom section clip
   // Text element properties

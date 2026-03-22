@@ -608,5 +608,34 @@ export function useStudio() {
     redo,
     canUndo,
     canRedo,
+    // Layer ordering
+    bringForward: useCallback((id: string) => {
+      setElements(prev => {
+        const sorted = [...prev].sort((a, b) => a.zIndex - b.zIndex);
+        const idx = sorted.findIndex(e => e.id === id);
+        if (idx < 0 || idx >= sorted.length - 1) return prev;
+        const myZ = sorted[idx].zIndex;
+        const aboveZ = sorted[idx + 1].zIndex;
+        return prev.map(e => {
+          if (e.id === id) return { ...e, zIndex: aboveZ };
+          if (e.id === sorted[idx + 1].id) return { ...e, zIndex: myZ };
+          return e;
+        });
+      });
+    }, []),
+    sendBackward: useCallback((id: string) => {
+      setElements(prev => {
+        const sorted = [...prev].sort((a, b) => a.zIndex - b.zIndex);
+        const idx = sorted.findIndex(e => e.id === id);
+        if (idx <= 0) return prev;
+        const myZ = sorted[idx].zIndex;
+        const belowZ = sorted[idx - 1].zIndex;
+        return prev.map(e => {
+          if (e.id === id) return { ...e, zIndex: belowZ };
+          if (e.id === sorted[idx - 1].id) return { ...e, zIndex: myZ };
+          return e;
+        });
+      });
+    }, []),
   };
 }
