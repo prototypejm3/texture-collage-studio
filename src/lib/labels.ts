@@ -43,7 +43,7 @@ export const LABELS = {
   },
 } as const;
 
-export type ModeLabels = typeof LABELS.kids;
+export type ModeLabels = { [K in keyof typeof LABELS.kids]: string };
 
 export function getLabels(kidMode: boolean): ModeLabels {
   return kidMode ? LABELS.kids : LABELS.adult;
