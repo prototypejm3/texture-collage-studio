@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
-import logoImg from '@/assets/logo.png';
+import { SwatchboxLogo } from '@/components/SwatchboxLogo';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
   HouseIcon, TentIcon,
