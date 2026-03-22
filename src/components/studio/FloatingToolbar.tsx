@@ -451,7 +451,41 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         <div className="w-px h-6 bg-border mx-1" />
         <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Duplicate"><Copy className="w-3.5 h-3.5" /></Button>
         <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Delete"><Trash2 className="w-3.5 h-3.5" /></Button>
+        {onBringForward && (
+          <Button size="sm" variant="ghost" onClick={onBringForward} className="h-8 w-8 p-0" title="Bring Forward"><ArrowUp className="w-3.5 h-3.5" /></Button>
+        )}
+        {onSendBackward && (
+          <Button size="sm" variant="ghost" onClick={onSendBackward} className="h-8 w-8 p-0" title="Send Backward"><ArrowDown className="w-3.5 h-3.5" /></Button>
+        )}
       </div>
+
+      {/* Opacity & Blend Mode */}
+      <button onClick={() => setShowBlending(!showBlending)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
+        Opacity & Blending
+        {showBlending ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+      </button>
+
+      {showBlending && (
+        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden">
+          <div className="space-y-3 pt-2 px-1">
+            <div>
+              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Opacity — {element.opacity ?? 100}%</label>
+              <Slider value={[element.opacity ?? 100]} onValueChange={([v]) => onUpdate({ opacity: v })} min={5} max={100} step={1} className="w-full" />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Blend Mode</label>
+              <div className="flex flex-wrap gap-1">
+                {blendModeOptions.map(bm => (
+                  <button key={bm.value} onClick={() => onUpdate({ blendMode: bm.value })}
+                    className={`text-[10px] py-1 px-2 rounded-md transition-colors ${(element.blendMode || 'normal') === bm.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`}>
+                    {bm.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <button onClick={() => setShowEffects(!showEffects)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
         Material Effects
