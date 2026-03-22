@@ -23,7 +23,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
-import { Monitor, X, Trash2, Save, Download } from 'lucide-react';
+import { Monitor, X } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -39,7 +39,7 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
-import { SewingTin } from '@/components/studio/SewingTin';
+
 
 const Index = () => {
   const navigate = useNavigate();
@@ -591,31 +591,60 @@ const Index = () => {
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 360,
-                    borderRadius: 8,
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
-                    border: '1px solid rgba(139,94,60,0.4)',
+                    ...(sounds.kidMode ? {
+                      borderRadius: 8,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                      border: '1px solid rgba(139,94,60,0.4)',
+                    } : {
+                      borderRadius: 16,
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      border: '1px solid #e8ddd0',
+                      background: '#f5ede0',
+                    }),
                   }}
                 >
-                  {/* Thin header */}
-                  <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
-                    style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
-                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
-                      {activeBox === 'text' && 'Text'}
-                    </span>
-                    <button
-                      onClick={closeBox}
-                      className="p-0.5 rounded hover:bg-white/10 transition-colors"
-                      style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
+                  {/* Header */}
+                  {sounds.kidMode ? (
+                    <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
+                      style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                      <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
+                        {activeBox === 'textures' && '🎨 Colors'}
+                        {activeBox === 'stencils' && '🧸 Shapes'}
+                        {activeBox === 'tools' && '🖼️ Frame'}
+                        {activeBox === 'text' && 'Text'}
+                      </span>
+                      <button
+                        onClick={closeBox}
+                        className="p-0.5 rounded hover:bg-white/10 transition-colors"
+                        style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between px-3 py-2"
+                      style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
+                        {activeBox === 'textures' && 'Colors'}
+                        {activeBox === 'stencils' && 'Elements'}
+                        {activeBox === 'tools' && 'Frame'}
+                        {activeBox === 'text' && 'Text'}
+                      </span>
+                      <button
+                        onClick={closeBox}
+                        className="p-1 rounded-lg hover:bg-black/5 transition-colors"
+                      >
+                        <X className="w-3.5 h-3.5" style={{ color: '#3d3530' }} />
+                      </button>
+                    </div>
+                  )}
 
                   {/* Content */}
-                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 28px)' : 336 }}>
+                  <div className="overflow-y-auto overflow-x-visible" style={{
+                    maxHeight: isMobile ? 'calc(45vh - 28px)' : 336,
+                    background: sounds.kidMode ? 'hsl(var(--popover))' : '#f5ede0',
+                    borderRadius: sounds.kidMode ? undefined : '0 0 16px 16px',
+                  }}>
                     {activeBox === 'textures' && (
                       <TextureLibrary
                         onDragStart={handleDragStartLib}
@@ -648,7 +677,6 @@ const Index = () => {
                         onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
                       />
                     )}
-
 
                     {activeBox === 'tools' && (
                       <div className="p-3">
@@ -786,37 +814,16 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: sewing tin on left, tools center, actions right */
-            <div className="flex items-center justify-between w-full px-4 py-2">
-              <SewingTin
-                isOpen={activeBox === 'mybox'}
-                onToggle={() => toggleBox('mybox')}
-                itemCount={wall.designs.length}
-              />
-              <div className="flex items-center gap-4">
-                <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
-                  onClick={() => toggleBox('textures')} kidMode={false} />
-                <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
-                  onClick={() => toggleBox('tools')} kidMode={false} />
-                <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
-                  onClick={() => toggleBox('stencils')} kidMode={false} />
-                <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
-                  onClick={() => toggleBox('text')} kidMode={false} />
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={handleClearAll} className="flex items-center gap-1 px-2 py-1 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
-                  <Trash2 className="w-3 h-3" /> Reset
-                </button>
-                <button onClick={handleSaveToWall} className="flex items-center gap-1 px-2 py-1 text-[10px] text-foreground hover:bg-secondary rounded-md transition-colors">
-                  <Save className="w-3 h-3" /> Keep Safe
-                </button>
-                <button
-                  onClick={handleExport}
-                  className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  <Download className="w-3 h-3" /> Take Home
-                </button>
-              </div>
+            /* Adult mode: 4 clean buttons centered */
+            <div className="flex items-center justify-center w-full px-4 py-2 gap-6">
+              <BoxButton id="textures" icon="" label="Colors" isActive={activeBox === 'textures'}
+                onClick={() => toggleBox('textures')} kidMode={false} />
+              <BoxButton id="tools" icon="" label="Frame" isActive={activeBox === 'tools'}
+                onClick={() => toggleBox('tools')} kidMode={false} />
+              <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
+                onClick={() => toggleBox('stencils')} kidMode={false} />
+              <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
+                onClick={() => toggleBox('text')} kidMode={false} />
             </div>
           )}
         </div>
