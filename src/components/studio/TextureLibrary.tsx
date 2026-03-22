@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
+import { kidColorOrder } from '@/data/textures/kidColorOrder';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool, RectangleHorizontal, Minus } from 'lucide-react';
