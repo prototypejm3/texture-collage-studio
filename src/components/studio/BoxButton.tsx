@@ -113,8 +113,91 @@ const kidSvgIcons: Record<string, React.FC> = {
   stencils: ShapesIcon,
 };
 
+/* ─── Adult / Granny mode icons ─── */
+
+function AdultColorsIcon() {
+  const colors = [
+    ['#e88c8c', '#d4a854', '#6db87a'],
+    ['#5ba0d4', '#9b82c8', '#d48a5c'],
+    ['#c4956a', '#8a9aaa', '#d4a0b8'],
+  ];
+  const size = 12;
+  const gap = 2.5;
+  const startX = 24 - (size * 3 + gap * 2) / 2;
+  const startY = 24 - (size * 3 + gap * 2) / 2;
+  return (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      {colors.map((row, ri) =>
+        row.map((color, ci) => (
+          <rect
+            key={`${ri}-${ci}`}
+            x={startX + ci * (size + gap)}
+            y={startY + ri * (size + gap)}
+            width={size}
+            height={size}
+            rx={3.5}
+            fill={color}
+          />
+        ))
+      )}
+    </svg>
+  );
+}
+
+function AdultFrameIcon() {
+  return (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      {/* Outer frame */}
+      <rect x="8" y="8" width="32" height="32" rx="3" fill="#c4956a" stroke="#a0713a" strokeWidth="1.5" />
+      {/* Inner mat */}
+      <rect x="12" y="12" width="24" height="24" rx="2" fill="#e8ddd0" />
+      {/* Canvas area with dashed border */}
+      <rect x="15" y="15" width="18" height="18" rx="1" fill="#f7f0e8" stroke="#c4956a" strokeWidth="1" strokeDasharray="3 2" />
+      {/* Small center square */}
+      <rect x="20" y="20" width="8" height="8" rx="1" fill="none" stroke="#c4956a" strokeWidth="0.8" opacity="0.5" />
+    </svg>
+  );
+}
+
+function AdultElementsIcon() {
+  return (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      {/* Triangle behind */}
+      <polygon points="24,8 38,34 10,34" fill="#d9a97c" />
+      {/* Circle in front */}
+      <circle cx="24" cy="28" r="12" fill="#c4956a" />
+      {/* Subtle highlight */}
+      <ellipse cx="21" cy="24" rx="4" ry="3" fill="#d9a97c" opacity="0.4" />
+    </svg>
+  );
+}
+
+function AdultTextIcon() {
+  return (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      {/* T letterform */}
+      <rect x="14" y="12" width="20" height="4" rx="1.5" fill="#c4956a" />
+      <rect x="22" y="12" width="4" height="26" rx="1.5" fill="#c4956a" />
+      {/* Serif feet */}
+      <rect x="18" y="35" width="12" height="2.5" rx="1" fill="#c4956a" />
+      {/* Underline decorations */}
+      <line x1="14" y1="42" x2="34" y2="42" stroke="#d9a97c" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="17" y1="45" x2="31" y2="45" stroke="#d9a97c" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+    </svg>
+  );
+}
+
+const adultSvgIcons: Record<string, React.FC> = {
+  mybox: AdultTextIcon,
+  textures: AdultColorsIcon,
+  tools: AdultFrameIcon,
+  stencils: AdultElementsIcon,
+};
+
 export function BoxButton({ id, icon, label, isActive, onClick, kidMode, className = '' }: BoxButtonProps) {
   const KidIcon = kidMode ? kidSvgIcons[id] : undefined;
+  const AdultIcon = !kidMode ? adultSvgIcons[id] : undefined;
+  const SvgIcon = KidIcon || AdultIcon;
 
   return (
     <motion.button
@@ -124,36 +207,36 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
       className={`
         relative flex flex-col items-center justify-center select-none
         transition-all duration-200 ease-out
-        ${kidMode
-          ? `w-20 h-20 rounded-[18px] shadow-lg ${
-              isActive
-                ? 'scale-105 shadow-xl ring-2 ring-primary/40'
-                : 'hover:shadow-xl hover:scale-105'
-            }`
-          : `w-[52px] h-[52px] rounded-xl text-[22px] shadow-md ${
-              isActive
-                ? 'bg-primary text-primary-foreground shadow-lg'
-                : 'bg-card text-card-foreground border border-border hover:bg-secondary'
-            }`
+        w-20 h-20 rounded-[18px] shadow-lg
+        ${isActive
+          ? 'scale-105 shadow-xl ring-2 ring-primary/40'
+          : 'hover:shadow-xl hover:scale-105'
         }
         ${className}
       `}
-      style={kidMode ? {
-        backgroundColor: isActive ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))',
+      style={{
+        backgroundColor: isActive
+          ? (kidMode ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))')
+          : 'hsl(var(--toybox-card))',
         borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: isActive ? 'hsl(var(--toybox-wood))' : 'hsl(var(--toybox-border))',
-      } : undefined}
+        borderColor: isActive
+          ? (kidMode ? 'hsl(var(--toybox-wood))' : 'hsl(var(--primary))')
+          : 'hsl(var(--toybox-border))',
+      }}
       title={label}
     >
-      {KidIcon ? (
-        <KidIcon />
+      {SvgIcon ? (
+        <SvgIcon />
       ) : (
-        <span className="leading-none">{icon}</span>
+        <span className="leading-none text-[22px]">{icon}</span>
       )}
-      {kidMode && (
-        <span className="text-[11px] font-medium leading-none -mt-1" style={{ color: 'hsl(var(--toybox-text))' }}>{label}</span>
-      )}
+      <span
+        className="text-[11px] font-medium leading-none -mt-1"
+        style={{ color: 'hsl(var(--toybox-text))' }}
+      >
+        {label}
+      </span>
     </motion.button>
   );
 }
