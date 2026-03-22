@@ -595,20 +595,21 @@ const Index = () => {
                     border: '1px solid rgba(139,94,60,0.4)',
                   }}
                 >
-                  {/* Header */}
-                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
-                    <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Colors')}
-                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Frame')}
-                      {activeBox === 'text' && '✏️ Text'}
+                  {/* Thin header */}
+                  <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
+                    style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
+                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
+                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Elements')}
+                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
+                      {activeBox === 'text' && 'Text'}
                     </span>
                     <button
                       onClick={closeBox}
-                      className="p-1 rounded-md hover:bg-amber-700/40 transition-colors"
-                      style={{ color: 'hsla(35, 80%, 85%, 0.8)' }}
+                      className="p-0.5 rounded hover:bg-white/10 transition-colors"
+                      style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
                     >
-                      ✕
+                      <X className="w-3 h-3" />
                     </button>
                   </div>
 
