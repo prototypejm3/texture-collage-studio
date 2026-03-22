@@ -420,6 +420,35 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         </div>
       </div>
 
+      {/* Stencil mode toggle — convert between outline and filled */}
+      {element.clipPathD && (
+        <div className="flex items-center gap-1.5 px-1 mb-1">
+          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Mode</span>
+          <button
+            onClick={() => onUpdate({ stencilMode: 'outline', textureId: '' })}
+            className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+              (!element.stencilMode || element.stencilMode === 'outline')
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-foreground hover:bg-accent'
+            }`}
+          >
+            <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="16" height="16" rx="3" /></svg>
+            Outline
+          </button>
+          <button
+            onClick={() => onUpdate({ stencilMode: 'filled' })}
+            className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+              element.stencilMode === 'filled'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-foreground hover:bg-accent'
+            }`}
+          >
+            <svg width="10" height="10" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="3" fill="currentColor" /></svg>
+            Filled
+          </button>
+        </div>
+      )}
+
       <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1">
         Elements
         {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
