@@ -236,7 +236,7 @@ export function TopToolbar({
                 <Grid2x2 className="w-4 h-4" /> My Studio
               </Link>
               <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Landmark className="w-4 h-4" /> Gallery
+                <Landmark className="w-4 h-4" /> Showcase
               </Link>
             </div>
           </div>
