@@ -221,7 +221,7 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
             ? 'text-[11px] font-semibold'
             : 'text-[11px] font-medium'
         }`}
-        style={{ color: kidMode ? 'hsl(var(--toybox-text))' : '#3d3530' }}
+        style={{ color: kidMode ? 'hsl(var(--toybox-text))' : 'hsl(var(--foreground))' }}
       >
         {label}
       </span>
