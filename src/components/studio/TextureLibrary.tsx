@@ -137,6 +137,7 @@ export function TextureLibrary({
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
   const [favIds, setFavIds] = useState<Set<string>>(loadFavs);
+  const [showShapeSelector, setShowShapeSelector] = useState(false);
 
   // Sync kidMode to localStorage and broadcast to other components
   useEffect(() => {
