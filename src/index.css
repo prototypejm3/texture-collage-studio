@@ -95,6 +95,15 @@
     --toolbar-bg: 220 30% 20%;
     --terracotta: 16 55% 55%;
     --terracotta-foreground: 16 45% 75%;
+
+    /* Toybox kid-mode palette — dark */
+    --toybox-bg: 220 30% 18%;
+    --toybox-border: 220 20% 28%;
+    --toybox-text: 33 30% 82%;
+    --toybox-card: 220 25% 22%;
+    --toybox-orange: 24 90% 55%;
+    --toybox-wood: 27 30% 55%;
+    --toybox-sfx-bg: 0 40% 25%;
   }
 }
 
