@@ -716,14 +716,16 @@ const Index = () => {
                 boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
               }}
             />
-            <BoxButton
-              id="mybox"
-              icon="📦"
-              label={sounds.kidMode ? 'Keep It!' : 'Save'}
-              isActive={activeBox === 'mybox'}
-              onClick={() => toggleBox('mybox')}
-              kidMode={sounds.kidMode}
-            />
+            {sounds.kidMode && (
+              <BoxButton
+                id="mybox"
+                icon="📦"
+                label="Keep It!"
+                isActive={activeBox === 'mybox'}
+                onClick={() => toggleBox('mybox')}
+                kidMode={true}
+              />
+            )}
             <BoxButton
               id="textures"
               icon="🎨"
