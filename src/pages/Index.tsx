@@ -538,7 +538,7 @@ const Index = () => {
         </div>
 
         {/* ── BOX BUTTONS on the table below canvas ── */}
-        <div className="relative shrink-0 bg-popover border-t border-border" style={{ minHeight: 64 }}>
+        <div className="relative shrink-0 bg-popover border-t border-border overflow-visible" style={{ minHeight: 64 }}>
           <div className="flex items-center justify-center gap-3 py-2 px-4">
             <BoxButton
               id="mybox"
