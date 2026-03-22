@@ -391,8 +391,8 @@ export function TextureLibrary({
           })}
         </div>
 
-        {/* Shape & Draw tools */}
-        {onToggleDrawMode && onSetNextShape && nextShape && (
+        {/* Shape & Draw tools — only inline in kid mode */}
+        {kidMode && onToggleDrawMode && onSetNextShape && nextShape && (
           <div className="flex items-center gap-1 mt-1 flex-wrap">
             <button
               onClick={onToggleDrawMode}
