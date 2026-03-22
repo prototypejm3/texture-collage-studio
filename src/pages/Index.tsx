@@ -651,8 +651,8 @@ const Index = () => {
           <ExpandableDrawer
             isOpen={activeBox === 'tools'}
             onClose={closeBox}
-            title={sounds.kidMode ? 'My Tool Box' : 'Tools'}
-            icon="🧰"
+            title={sounds.kidMode ? 'My Tool Box' : 'Frame'}
+            icon="🖼️"
             direction="up"
             kidMode={sounds.kidMode}
             className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[50vh]' : 'bottom-full left-1/2 -translate-x-1/2 w-[380px] max-h-[55vh]'}`}
