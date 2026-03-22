@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FrameStyle } from '@/types/wall';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
+import { TrashCanIcon, SaveBoxIcon, DownloadTrayIcon } from './ToyboxIcons';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FREE_EXPORT_LIMIT = 1;
