@@ -6,7 +6,7 @@ import { Trash2, Download, Frame, Save, ChevronDown, Brush, Grid2x2, Landmark, L
 import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
-import logoImg from '@/assets/logo.png';
+import { SwatchboxLogo } from '@/components/SwatchboxLogo';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
   HouseIcon, TentIcon,
