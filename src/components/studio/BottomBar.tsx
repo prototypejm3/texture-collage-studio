@@ -96,7 +96,7 @@ export function BottomBar({
   const isShadowColor = colorFrames.some(f => f.id === wallFrameStyle) || wallFrameStyle === 'shadow-box';
 
   return (
-    <div className="flex items-center px-2 md:px-4 py-1 bg-popover relative gap-1.5">
+    <div className="flex flex-wrap items-center px-2 md:px-4 py-2 bg-popover relative gap-1.5">
       {/* Frame picker */}
       <div className="flex items-center gap-0.5">
         <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-0.5 ${kidMode ? 'text-[10px] font-semibold' : 'text-[8px]'}`}>{kidMode ? '🖼️' : 'Frame'}</span>
