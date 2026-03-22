@@ -126,6 +126,16 @@ const kidTools: ToolDef[] = [
   { id: 'toss',    label: 'Toss' },
 ];
 
+const adultTools: ToolDef[] = [
+  { id: 'grow',    label: 'Scale Up' },
+  { id: 'shrink',  label: 'Scale Down' },
+  { id: 'cut',     label: 'Edge Style' },
+  { id: 'twin',    label: 'Duplicate' },
+  { id: 'fade',    label: 'Opacity' },
+  { id: 'crumple', label: 'Distort' },
+  { id: 'toss',    label: 'Delete' },
+];
+
 const kidShapes: { id: ElementShape; label: string; emoji: string }[] = [
   { id: 'soft-square', label: 'Square', emoji: '🟧' },
   { id: 'rectangle',   label: 'Long',   emoji: '▭' },
