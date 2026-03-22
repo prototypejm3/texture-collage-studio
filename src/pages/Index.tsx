@@ -611,14 +611,14 @@ const Index = () => {
         {activeBox && (
           <div
             data-box-drawer
-            className="absolute z-40 bottom-0 left-0 right-0"
+            className="absolute z-40 bottom-3 left-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-center px-4 pb-1">
+            <div className="flex justify-start">
               <div
-                className="w-full overflow-hidden"
+                className="overflow-hidden"
                 style={{
-                  maxWidth: isMobile ? '100%' : 520,
+                  width: isMobile ? 320 : 360,
                   maxHeight: isMobile ? '40vh' : 260,
                   background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
                   borderRadius: '10px 10px 0 0',
