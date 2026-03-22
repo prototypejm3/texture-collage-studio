@@ -157,6 +157,7 @@ const adultSvgIcons: Record<string, React.FC> = {
   textures: AdultColorsIcon,
   tools: AdultFrameIcon,
   stencils: AdultElementsIcon,
+  text: AdultTextIcon,
 };
 
 /* ─── BoxButton ─── */
