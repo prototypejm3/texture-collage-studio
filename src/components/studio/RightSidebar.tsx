@@ -410,9 +410,9 @@ export function RightSidebar({
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
                     {kidMode ? '✨ Magic Shape' : 'AI Stencil'}
-                    {isPremium && (
+                    {aiCredits.isPremium && (
                       <span className="ml-auto text-[8px] text-muted-foreground/70">
-                        {aiCredits.dailyInfo.remaining}/{aiCredits.dailyInfo.max} today
+                        {aiCredits.totalRemaining} left
                       </span>
                     )}
                     {kidMode && (
