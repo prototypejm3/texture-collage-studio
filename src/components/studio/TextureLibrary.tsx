@@ -457,7 +457,10 @@ export function TextureLibrary({
               isFav={favIds.has(tex.id)}
               onToggleFav={() => toggleFav(tex.id)}
               onDragStart={onDragStart}
-              onTextureClick={onTextureClick}
+              onTextureClick={(id) => {
+                if (!kidMode && onSetNextShape) setShowShapeSelector(true);
+                onTextureClick?.(id);
+              }}
               onRemoveCustomTexture={onRemoveCustomTexture}
               viewMode={swatchView}
               kidMode={kidMode}
