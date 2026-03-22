@@ -341,9 +341,26 @@ const fireBall: Vibe = {
   ],
 };
 
+// ── SHELLY'S VOLLEYBALL 🏐💜 ── Magenta themed volleyball
+const shellysVolleyball: Vibe = {
+  id: 'shellys-volleyball', name: "Shelly's Volleyball", emoji: '🏐', category: 'Sports',
+  description: "Shelly's signature magenta volleyball",
+  lightTextures: ['magenta-mrstik'], mediumTextures: ['magenta-mrstik'], darkTextures: ['magenta-mrstik'], accentTextures: ['magenta-mrstik'],
+  viewBox: '0 0 480 480',
+  sections: [
+    { id: 'sv-bg', label: 'Ball', tone: 'light', path: circle(240, 240, 200) },
+    { id: 'sv-band-1', label: 'Swirl Band 1', tone: 'medium',
+      path: 'M75,110 Q140,180 200,280 Q250,370 340,430 L365,405 Q275,350 225,260 Q165,160 100,90 Z' },
+    { id: 'sv-band-2', label: 'Swirl Band 2', tone: 'medium',
+      path: 'M115,60 Q180,130 235,240 Q290,340 380,400 L400,375 Q315,320 260,220 Q205,115 140,45 Z' },
+    { id: 'sv-band-3', label: 'Cross Band', tone: 'dark',
+      path: 'M75,370 Q150,310 220,240 Q290,170 400,110 L380,85 Q275,150 210,220 Q140,290 55,345 Z' },
+  ],
+};
+
 export const sportsStencils: Vibe[] = [
   soccerBall, basketball, football, baseball,
-  tennisBall, volleyball, volleyballSide, volleyballTop,
+  tennisBall, volleyball, volleyballSide, volleyballTop, shellysVolleyball,
   rugbyBall, billiardsBall,
   softball, cricketBall,
   starBall, smileBall, rainbowBall, fireBall,
