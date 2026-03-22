@@ -704,17 +704,9 @@ const Index = () => {
               }}
             />
             <BoxButton
-              id="mybox"
-              icon="📦"
-              label={sounds.kidMode ? 'Save' : 'Save'}
-              isActive={activeBox === 'mybox'}
-              onClick={() => toggleBox('mybox')}
-              kidMode={sounds.kidMode}
-            />
-            <BoxButton
               id="textures"
               icon="🎨"
-              label={sounds.kidMode ? 'Colors' : 'Textures'}
+              label="Colors"
               isActive={activeBox === 'textures'}
               onClick={() => toggleBox('textures')}
               kidMode={sounds.kidMode}
@@ -722,7 +714,7 @@ const Index = () => {
             <BoxButton
               id="tools"
               icon="🖼️"
-              label={sounds.kidMode ? 'Frame' : 'Studio'}
+              label="Frame"
               isActive={activeBox === 'tools'}
               onClick={() => toggleBox('tools')}
               kidMode={sounds.kidMode}
@@ -733,6 +725,14 @@ const Index = () => {
               label={sounds.kidMode ? 'Shapes' : 'Elements'}
               isActive={activeBox === 'stencils'}
               onClick={() => toggleBox('stencils')}
+              kidMode={sounds.kidMode}
+            />
+            <BoxButton
+              id="mybox"
+              icon="📦"
+              label={sounds.kidMode ? 'Save' : 'Text'}
+              isActive={activeBox === 'mybox'}
+              onClick={() => toggleBox('mybox')}
               kidMode={sounds.kidMode}
             />
           </div>
