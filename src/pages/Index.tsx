@@ -602,6 +602,41 @@ const Index = () => {
               onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
+            {/* Stencil mode picker — inline above canvas */}
+            {showStencilModePicker && studio.activeVibe && !sounds.kidMode && (
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50" data-box-drawer onClick={e => e.stopPropagation()}>
+                <div
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-lg"
+                  style={{ background: '#f5ede0', border: '1px solid #e8ddd0' }}
+                >
+                  <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: '#3d3530' }}>
+                    Place as:
+                  </span>
+                  <button
+                    onClick={() => handlePlaceStencilMode('outline')}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors border border-border hover:bg-accent"
+                    style={{ color: '#3d3530' }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#3d3530" strokeWidth="1.5"><rect x="2" y="2" width="16" height="16" rx="3" /></svg>
+                    Outline
+                  </button>
+                  <button
+                    onClick={() => handlePlaceStencilMode('filled')}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="3" fill="currentColor" /></svg>
+                    Filled
+                  </button>
+                  <button
+                    onClick={() => setShowStencilModePicker(false)}
+                    className="p-1 rounded-lg hover:bg-black/5 ml-1"
+                  >
+                    <X className="w-3 h-3" style={{ color: '#3d3530' }} />
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
             {activeBox && activeBox !== 'mybox' && (
               <div
