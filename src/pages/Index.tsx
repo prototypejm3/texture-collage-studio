@@ -589,7 +589,7 @@ const Index = () => {
                 <div
                   className="overflow-visible relative"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : 340),
+                    width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340),
                     maxHeight: isMobile ? '45vh' : 360,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
@@ -625,10 +625,11 @@ const Index = () => {
                     <div className="flex items-center justify-between px-3 py-2"
                       style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}>
                       <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
-                        {activeBox === 'textures' && 'Colors'}
-                        {activeBox === 'stencils' && 'Elements'}
-                        {activeBox === 'tools' && 'Frame'}
+                        {activeBox === 'textures' && 'Swatches'}
+                        {activeBox === 'stencils' && 'Stencils'}
+                        {activeBox === 'tools' && 'Display'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'toolbox' && 'Tool Box'}
                       </span>
                       <button
                         onClick={closeBox}
@@ -767,6 +768,43 @@ const Index = () => {
                         onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
                       />
                     )}
+
+                    {activeBox === 'toolbox' && studio.elements.length > 0 && (
+                      <div className="p-3">
+                        <FloatingToolbar
+                          element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
+                          onUpdate={(updates) => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) { studio.updateElement(targetId, updates); kidOnboarding.notifyMove(); }
+                          }}
+                          onUpdateEffects={(effects) => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) { studio.updateEffects(targetId, effects); kidOnboarding.notifyToolUse(); }
+                          }}
+                          onDuplicate={() => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) studio.duplicateElement(targetId);
+                          }}
+                          onDelete={() => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) { studio.deleteElement(targetId); sounds.playDelete(); sounds.trackAction(); }
+                          }}
+                          onUndo={studio.undo}
+                          onRedo={studio.redo}
+                          canUndo={studio.canUndo}
+                          canRedo={studio.canRedo}
+                          elementCount={studio.elements.length}
+                          onBringForward={() => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) studio.bringForward(targetId);
+                          }}
+                          onSendBackward={() => {
+                            const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                            if (targetId) studio.sendBackward(targetId);
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -814,16 +852,20 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: 4 clean buttons centered */
+            /* Adult mode: clean buttons centered, Tool Box appears when canvas has content */
             <div className="flex items-center justify-center w-full px-4 py-2 gap-6">
-              <BoxButton id="textures" icon="" label="Colors" isActive={activeBox === 'textures'}
+              <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
                 onClick={() => toggleBox('textures')} kidMode={false} />
-              <BoxButton id="tools" icon="" label="Frame" isActive={activeBox === 'tools'}
+              <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
                 onClick={() => toggleBox('tools')} kidMode={false} />
-              <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
+              <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
                 onClick={() => toggleBox('stencils')} kidMode={false} />
               <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
                 onClick={() => toggleBox('text')} kidMode={false} />
+              {studio.elements.length > 0 && (
+                <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
+                  onClick={() => toggleBox('toolbox')} kidMode={false} />
+              )}
             </div>
           )}
         </div>
