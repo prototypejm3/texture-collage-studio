@@ -1,8 +1,14 @@
 export const LABELS = {
   kids: {
+    // Nav
     myRoom: "My Room",
     showAndTell: "Show & Tell",
+    // Toolbar
+    save: "Keep It!",
+    colors: "Colors",
+    frame: "Frame",
     shapes: "Shapes",
+    // Panel
     shapePanel: "SHAPE",
     grow: "Grow",
     shrink: "Shrink",
@@ -11,19 +17,29 @@ export const LABELS = {
     crumple: "Crumple",
     twin: "Twin",
     toss: "Toss",
-    swatchBox: "My Swatch Box",
-    sitDown: "Sit Down",
-    standUp: "Stand Up",
+    // General
+    myBox: "My Treasure Box",
+    stencils: "Stencils",
+    assets: "My Stuff",
+    fun: "Fun",
+    kidsGallery: "Gallery",
     startOver: "Start Over",
     trash: "Trash",
-    gallery: "Show & Tell",
-    wall: "My Room",
-    myBox: "My Box",
+    sitDown: "Sit Down",
+    standUp: "Stand Up",
+    layers: "Stack",
+    tools: "Magic Tools",
   },
   adult: {
+    // Nav
     myRoom: "My Studio",
     showAndTell: "Showcase",
+    // Toolbar
+    save: "Save",
+    colors: "Colors",
+    frame: "Frame",
     shapes: "Elements",
+    // Panel
     shapePanel: "ELEMENT",
     grow: "Scale Up",
     shrink: "Scale Down",
@@ -32,14 +48,18 @@ export const LABELS = {
     crumple: "Distort",
     twin: "Duplicate",
     toss: "Remove",
-    swatchBox: "My Collection",
-    sitDown: "Exit Canvas",
-    standUp: "Stand Up",
+    // General
+    myBox: "Library",
+    stencils: "Templates",
+    assets: "Assets",
+    fun: "Explore",
+    kidsGallery: "Kids Gallery",
     startOver: "Reset",
     trash: "Delete",
-    gallery: "Showcase",
-    wall: "My Studio",
-    myBox: "My Collection",
+    sitDown: "Exit Canvas",
+    standUp: "Stand Up",
+    layers: "Layers",
+    tools: "Tools",
   },
 } as const;
 
