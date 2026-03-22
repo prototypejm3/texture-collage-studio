@@ -118,6 +118,7 @@ const kidTools: ToolDef[] = [
   { id: 'twin',    label: 'Twin' },
   { id: 'fade',    label: 'Fade' },
   { id: 'crumple', label: 'Crumple' },
+  { id: 'toss',    label: 'Toss' },
 ];
 
 const kidShapes: { id: ElementShape; label: string; emoji: string }[] = [
