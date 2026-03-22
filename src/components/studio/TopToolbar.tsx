@@ -392,8 +392,8 @@ export function TopToolbar({
             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
           </button>
         ) : (
-          <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Start Over">
-            <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Start Over</span>
+          <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Reset">
+            <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Reset</span>
           </button>
         )}
 
