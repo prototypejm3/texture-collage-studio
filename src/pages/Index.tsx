@@ -94,7 +94,7 @@ const Index = () => {
   // Auto-open tools box when an element is selected in adult mode
   useEffect(() => {
     if (studio.selectedId && !sounds.kidMode) {
-      toggleBox('tools');
+      openBox('tools');
     }
   }, [studio.selectedId]);
 
