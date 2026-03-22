@@ -368,9 +368,10 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
 
 // ── Main Export ──
 
-export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount }: Props) {
+export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount, onBringForward, onSendBackward }: Props) {
   const [showEffects, setShowEffects] = useState(true);
   const [showShapes, setShowShapes] = useState(true);
+  const [showBlending, setShowBlending] = useState(false);
 
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
