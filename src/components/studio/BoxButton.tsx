@@ -13,7 +13,8 @@ interface BoxButtonProps {
 export function BoxButton({ icon, label, isActive, onClick, kidMode, className = '' }: BoxButtonProps) {
   return (
     <motion.button
-      onClick={onClick}
+      data-box-btn
+      onClick={(e) => { e.stopPropagation(); onClick(); }}
       whileTap={{ scale: 0.92 }}
       className={`
         relative flex flex-col items-center justify-center select-none

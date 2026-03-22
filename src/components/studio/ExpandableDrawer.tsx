@@ -57,6 +57,8 @@ export function ExpandableDrawer({
           exit="exit"
           variants={variants}
           transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+          data-box-drawer
+          onClick={(e) => e.stopPropagation()}
           className={`
             bg-popover border border-border rounded-xl shadow-2xl overflow-hidden
             flex flex-col z-40
