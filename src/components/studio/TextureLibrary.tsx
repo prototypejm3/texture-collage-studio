@@ -497,6 +497,7 @@ export function TextureLibrary({
           setKidMode(false);
         }}
       />
+      </div>{/* end flex-col wrapper */}
     </div>
   );
 }
