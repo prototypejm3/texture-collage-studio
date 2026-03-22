@@ -148,38 +148,31 @@ export function TopToolbar({
 
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
+  // ── Adult Mode SVG Icons ──
+  const NavDivider = () => <div className="w-px h-10 flex-shrink-0" style={{ backgroundColor: '#e2ddd6' }} />;
+
+  const pressStyle = "transition-transform duration-150 ease-out active:scale-[0.96]";
+
   return (
     <>
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
         ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
-        : 'py-1 md:py-1.5 bg-background border-b border-border'
+        : 'h-[72px] border-b'
     }`}
+    style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
-      {/* Left: Mode toggle + Create + Nav */}
-      <div className="flex items-center gap-1.5 md:gap-3">
-        {/* Kid Mode Toggle */}
-        {kidMode ? (
-          <button
-            onClick={handleKidToggle}
-            className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
-            title="Switch to Granny Mode"
-          >
-            <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
-          </button>
-        ) : (
-          <button
-            onClick={handleKidToggle}
-            title="Switch to Kids Mode"
-            className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all ring-[2px] ring-blue-400/60"
-          >
-            → 🧒
-          </button>
-        )}
-
-        {kidMode && (
-          <>
-            {/* Logo link */}
+      {kidMode ? (
+        /* ── Kid Mode Nav (unchanged) ── */
+        <>
+          <div className="flex items-center gap-1.5 md:gap-3">
+            <button
+              onClick={handleKidToggle}
+              className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
+              title="Switch to Granny Mode"
+            >
+              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
+            </button>
             <Link
               to="/"
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
@@ -189,14 +182,8 @@ export function TopToolbar({
             >
               <SwatchboxLogo height={32} />
             </Link>
-
-            {/* Divider */}
             <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-
-            {/* My Room */}
-            <Link
-              to="/wall"
-              data-nav="wall"
+            <Link to="/wall" data-nav="wall"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
                 isWall ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
@@ -205,14 +192,8 @@ export function TopToolbar({
               <HouseIcon />
               <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>My Room</span>
             </Link>
-
-            {/* Divider */}
             <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-
-            {/* Show & Tell */}
-            <Link
-              to="/gallery"
-              data-nav="gallery"
+            <Link to="/gallery" data-nav="gallery"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
                 isGallery ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
@@ -221,200 +202,361 @@ export function TopToolbar({
               <TentIcon />
               <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Show & Tell</span>
             </Link>
-          </>
-        )}
-
-        {!kidMode && (
-          <div className="flex items-center gap-1.5">
-            <SwatchboxLogo height={28} />
-            <div className="hidden md:flex items-center gap-1.5">
-              <Link to="/" title="Open the creative studio" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Brush className="w-4 h-4" /> Create
-              </Link>
-              <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Grid2x2 className="w-4 h-4" /> My Studio
-              </Link>
-              <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Landmark className="w-4 h-4" /> Showcase
-              </Link>
-            </div>
           </div>
-        )}
-      </div>
-
-      <div className="flex-1" />
-
-      {/* Right side */}
-      <div className={`flex items-center ${kidMode ? 'gap-3' : 'gap-1'}`}>
-        {/* AI Toggle - Adult mode only */}
-        {!kidMode && (
-          <button
-            onClick={handleAiToggle}
-            className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-colors ${
-              aiEnabled ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-            title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
-          >
-            <Sparkles className="w-4 h-4" />
-            <span className="hidden sm:inline">AI Mode</span>
-          </button>
-        )}
-
-        {/* Light/Dark Toggle */}
-        {kidMode ? (
-          <button
-            onClick={toggle}
-            className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
-            style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}
-            title={dark ? 'Light mode' : 'Dark mode'}
-          >
-            <ToyMoonIcon />
-            <ToySunIcon />
-          </button>
-        ) : (
-          <button
-            onClick={toggle}
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-            title={dark ? 'Light mode' : 'Dark mode'}
-          >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-        )}
-
-        {/* Music */}
-        {onAmbientSoundChange && (
-          <div className="relative">
-            {kidMode ? (
-              <button
-                onClick={() => setShowSoundMenu(!showSoundMenu)}
-                className={`p-1 rounded-lg transition-all hover:scale-110 active:scale-90 ${
-                  ambientSound && ambientSound !== 'none' ? 'opacity-100' : 'opacity-50'
-                }`}
-                title="Music"
-              >
-                <MusicNoteIcon />
-              </button>
-            ) : (
-              <button
-                onClick={() => setShowSoundMenu(!showSoundMenu)}
-                className={`p-1.5 rounded-md transition-colors ${
-                  ambientSound && ambientSound !== 'none'
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                }`}
-                title="Ambient sound"
-              >
-                <Ear className="w-4 h-4" />
-              </button>
-            )}
-            {showSoundMenu && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
-                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
-                  <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">{kidMode ? 'Music' : 'Ambiance'}</p>
-                  {(kidMode
-                    ? ([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const)
-                    : ([['none', 'Off', ''], ['gallery', 'Gallery', ''], ['loft', 'Lofi', ''], ['home', 'Chill', '']] as const)
-                  ).map(([value, label, emoji]) => (
-                    <button
-                      key={value}
-                      onClick={() => { onAmbientSoundChange(value as AmbientSound); setShowSoundMenu(false); }}
-                      className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary flex items-center gap-1.5 ${
-                        ambientSound === value ? 'text-primary font-medium' : 'text-foreground'
-                      }`}
-                    >
-                      <span>{emoji}</span> {label}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        )}
-
-        {/* Sound FX - Kid mode only */}
-        {kidMode && onKidSoundsToggle && (
-          <div className="relative">
-            <button
-              onClick={() => {
-                if (kidSoundsEnabled) {
-                  setShowSfxVolume(v => !v);
-                } else {
-                  onKidSoundsToggle(true);
-                }
-              }}
-              onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
-              className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
-              style={{ backgroundColor: kidSoundsEnabled ? 'hsl(var(--toybox-sfx-bg))' : 'transparent' }}
-              title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
+          <div className="flex-1" />
+          <div className="flex items-center gap-3">
+            <button onClick={toggle}
+              className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
+              style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}
+              title={dark ? 'Light mode' : 'Dark mode'}
             >
-              <SpeakerIcon />
+              <ToyMoonIcon /><ToySunIcon />
             </button>
-            {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
+            {onAmbientSoundChange && (
+              <div className="relative">
+                <button onClick={() => setShowSoundMenu(!showSoundMenu)}
+                  className={`p-1 rounded-lg transition-all hover:scale-110 active:scale-90 ${ambientSound && ambientSound !== 'none' ? 'opacity-100' : 'opacity-50'}`}
+                  title="Music"
+                ><MusicNoteIcon /></button>
+                {showSoundMenu && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                      <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Music</p>
+                      {([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const).map(([value, label, emoji]) => (
+                        <button key={value}
+                          onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
+                          className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary flex items-center gap-1.5 ${ambientSound === value ? 'text-primary font-medium' : 'text-foreground'}`}
+                        ><span>{emoji}</span> {label}</button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+            {onKidSoundsToggle && (
+              <div className="relative">
+                <button
+                  onClick={() => { if (kidSoundsEnabled) setShowSfxVolume(v => !v); else onKidSoundsToggle(true); }}
+                  onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
+                  className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
+                  style={{ backgroundColor: kidSoundsEnabled ? 'hsl(var(--toybox-sfx-bg))' : 'transparent' }}
+                  title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
+                ><SpeakerIcon /></button>
+                {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
+                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
+                      <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
+                      <input type="range" min={0} max={100} step={5} value={Math.round((kidSoundsVolume || 0.4) * 100)}
+                        onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)} className="w-full h-1 accent-primary" />
+                      <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
+                      <button onClick={() => { onKidSoundsToggle(false); setShowSfxVolume(false); }}
+                        className="w-full mt-1 text-[9px] text-muted-foreground hover:text-foreground transition-colors">🔇 Mute</button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+            <div className="w-px h-6 hidden sm:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
+            {onUndo && onRedo && (
               <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
-                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
-                  <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
-                  <input type="range" min={0} max={100} step={5}
-                    value={Math.round((kidSoundsVolume || 0.4) * 100)}
-                    onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)}
-                    className="w-full h-1 accent-primary" />
-                  <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
-                  <button
-                    onClick={() => { onKidSoundsToggle(false); setShowSfxVolume(false); }}
-                    className="w-full mt-1 text-[9px] text-muted-foreground hover:text-foreground transition-colors"
+                <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Undo (Ctrl+Z)">
+                  <Undo2 className="w-4 h-4" />
+                </button>
+                <button onClick={onRedo} disabled={!canRedo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Redo (Ctrl+Y)">
+                  <Redo2 className="w-4 h-4" />
+                </button>
+              </>
+            )}
+            {user ? (
+              <>
+                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: 'hsl(var(--toybox-text))' }}>
+                  <span className="text-sm">👤</span>{user.email?.split('@')[0]}
+                </span>
+                <button onClick={() => signOut()}
+                  className="flex items-center gap-1 px-2 py-1 text-xs transition-colors"
+                  style={{ color: 'hsl(var(--toybox-text))' }}
+                ><LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Bye!</span></button>
+              </>
+            ) : (
+              <Link to="/auth"
+                className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90 transition-colors"
+                style={{ backgroundColor: 'hsl(var(--toybox-orange))' }}
+              >✨ Join</Link>
+            )}
+          </div>
+        </>
+      ) : (
+        /* ── Adult Mode Nav ── */
+        <>
+          <div className="flex items-center gap-3">
+            {/* 1. Logo */}
+            <Link to="/" className={pressStyle} title="Swatchbox Studio">
+              <svg width="140" height="46" viewBox="0 0 360 120">
+                <rect x="0" y="0" width="360" height="120" rx="24" fill="#fdf6ee" stroke="#e8ddd0" strokeWidth="1.5"/>
+                <rect x="12" y="16" width="88" height="88" rx="16" fill="#c4956a"/>
+                <line x1="24" y1="16" x2="21" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
+                <line x1="36" y1="16" x2="33" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
+                <line x1="48" y1="16" x2="45" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
+                <line x1="60" y1="16" x2="57" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
+                <line x1="72" y1="16" x2="69" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
+                <line x1="84" y1="16" x2="81" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
+                <rect x="22" y="26" width="68" height="68" rx="10" fill="#f5ede0"/>
+                <ellipse cx="56" cy="86" rx="24" ry="18" fill="#c4956a"/>
+                <ellipse cx="56" cy="88" rx="14" ry="13" fill="#d9a97c"/>
+                <circle cx="56" cy="58" r="22" fill="#c4956a"/>
+                <ellipse cx="50" cy="50" rx="8" ry="5" fill="#d9a97c" opacity="0.45"/>
+                <circle cx="40" cy="42" r="10" fill="#c4956a"/>
+                <circle cx="40" cy="42" r="6" fill="#d9a97c"/>
+                <circle cx="72" cy="42" r="10" fill="#c4956a"/>
+                <circle cx="72" cy="42" r="6" fill="#d9a97c"/>
+                <circle cx="18" cy="22" r="4" fill="#b07d52"/>
+                <circle cx="94" cy="22" r="4" fill="#b07d52"/>
+                <circle cx="18" cy="98" r="4" fill="#b07d52"/>
+                <circle cx="94" cy="98" r="4" fill="#b07d52"/>
+                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Swatchbox</text>
+                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Studio</text>
+                <circle cx="116" cy="100" r="6" fill="#f87171"/>
+                <circle cx="134" cy="100" r="6" fill="#fbbf24"/>
+                <circle cx="152" cy="100" r="6" fill="#4ade80"/>
+                <circle cx="170" cy="100" r="6" fill="#38bdf8"/>
+                <circle cx="188" cy="100" r="6" fill="#a78bfa"/>
+                <circle cx="206" cy="100" r="6" fill="#f97316"/>
+              </svg>
+            </Link>
+
+            {/* 2. Mode Toggle Pill */}
+            <button
+              onClick={handleKidToggle}
+              className={`${pressStyle} flex items-center h-12 rounded-3xl overflow-hidden`}
+              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 112 }}
+              title="Switch to Kids Mode"
+            >
+              {/* Kid face */}
+              <div className="flex items-center justify-center w-1/2 h-full">
+                <svg width="28" height="28" viewBox="0 0 28 28">
+                  <circle cx="14" cy="16" r="10" fill="white"/>
+                  <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
+                  <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
+                  <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
+                  <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
+                  <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
+                  <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
+                </svg>
+              </div>
+              {/* Divider */}
+              <div className="w-px h-8" style={{ backgroundColor: '#e2ddd6' }} />
+              {/* Grandma face */}
+              <div className="flex items-center justify-center w-1/2 h-full" style={{ backgroundColor: '#f0ebe3' }}>
+                <svg width="28" height="28" viewBox="0 0 28 28">
+                  <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
+                  <ellipse cx="14" cy="7" rx="10" ry="5" fill="#c4c4c4"/>
+                  <circle cx="14" cy="4" r="4" fill="#b0b0b0"/>
+                  <circle cx="10" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
+                  <circle cx="18" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
+                  <circle cx="10" cy="15" r="1" fill="#5a4a3a"/>
+                  <circle cx="18" cy="15" r="1" fill="#5a4a3a"/>
+                  <path d="M12 19 Q14 21 16 19" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
+                  <circle cx="7" cy="17" r="2" fill="#f9a8d4" opacity="0.4"/>
+                  <circle cx="21" cy="17" r="2" fill="#f9a8d4" opacity="0.4"/>
+                </svg>
+              </div>
+            </button>
+
+            {/* 3. Create */}
+            <Link to="/"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-4 py-2 rounded-[20px] text-white font-bold text-[13px]`}
+              style={{ backgroundColor: '#5a8a6a' }}
+              title="Create"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+              </svg>
+              Create
+            </Link>
+
+            <NavDivider />
+
+            {/* 5. Workspace */}
+            <Link to="/wall" data-nav="wall"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-2 py-1`}
+              title="Workspace"
+            >
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2.5" fill="none"/>
+                <rect x="1" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="14" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="1" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="5" y="5" width="10" height="10" fill="white"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
+            </Link>
+
+            <NavDivider />
+
+            {/* 7. Gallery */}
+            <Link to="/gallery" data-nav="gallery"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-2 py-1`}
+              title="Gallery"
+            >
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <polygon points="10,1 1,7 19,7" fill="#5a8a6a"/>
+                <rect x="1" y="7" width="18" height="2" fill="#3d6a4a"/>
+                <rect x="3" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="7" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="11" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
+            </Link>
+          </div>
+
+          <div className="flex-1" />
+
+          {/* Right side */}
+          <div className="flex items-center gap-2.5">
+            {/* 9. AI Mode */}
+            <button onClick={handleAiToggle}
+              className={`${pressStyle} hidden sm:flex items-center gap-1 px-2 py-1 rounded-md`}
+              style={{ backgroundColor: aiEnabled ? 'rgba(90,138,106,0.12)' : 'transparent' }}
+              title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#5a8a6a"/>
+                <circle cx="12" cy="3" r="1" fill="#5a8a6a" opacity="0.5"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI Mode</span>
+            </button>
+
+            <NavDivider />
+
+            {/* 11. Light/Dark Toggle */}
+            <button onClick={toggle}
+              className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden`}
+              style={{ width: 36, height: 20, backgroundColor: '#3d3530' }}
+              title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {/* Moon */}
+              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
+                <circle cx="6" cy="6" r="5" fill="#5a4a3a"/>
+                <circle cx="8" cy="4" r="4" fill="#faf8f5"/>
+              </svg>
+              {/* Sun */}
+              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute right-1.5 top-1/2 -translate-y-1/2">
+                <circle cx="6" cy="6" r="3.5" fill="#fbbf24"/>
+              </svg>
+              {/* Indicator */}
+              <div className="absolute w-4 h-4 rounded-full bg-white/90 shadow-sm transition-all duration-200 top-0.5"
+                style={{ left: dark ? 2 : 18 }}
+              />
+            </button>
+
+            <NavDivider />
+
+            {/* 13. Sound */}
+            {onAmbientSoundChange && (
+              <>
+                <div className="relative">
+                  <button onClick={() => setShowSoundMenu(!showSoundMenu)}
+                    className={pressStyle}
+                    title="Ambient sound"
                   >
-                    🔇 Mute
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <polygon points="1,6 1,10 4,10 8,14 8,2 4,6" fill="#94a3b8"/>
+                      <path d="M10 5C11.5 6.5 11.5 9.5 10 11" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                      <path d="M12 3C14.5 5.5 14.5 10.5 12 13" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                    </svg>
                   </button>
+                  {showSoundMenu && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+                      <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                        <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+                        {([['none', 'Off'], ['gallery', 'Gallery'], ['loft', 'Lofi'], ['home', 'Chill']] as const).map(([value, label]) => (
+                          <button key={value}
+                            onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
+                            className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium' : ''}`}
+                            style={{ color: ambientSound === value ? '#5a8a6a' : '#3d3530' }}
+                          >{label}</button>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
+                <NavDivider />
+              </>
+            )}
+
+            {/* 15. Reset */}
+            <button onClick={onClear} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Reset">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+              <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
+            </button>
+
+            <NavDivider />
+
+            {/* 17. Save */}
+            {onSaveToWall && (
+              <button onClick={onSaveToWall} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Save">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <rect x="2" y="2" width="12" height="12" rx="2" fill="#5a8a6a"/>
+                  <rect x="2" y="2" width="12" height="4" rx="1" fill="#7aaa8a"/>
+                  <rect x="5" y="4" width="6" height="1.5" rx="0.5" fill="#d4edda"/>
+                </svg>
+                <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Save</span>
+              </button>
+            )}
+
+            {/* 18. Download */}
+            <button onClick={onSave}
+              className={`${pressStyle} flex items-center gap-1.5 px-4 py-2 rounded-[20px] text-white font-bold text-[13px]`}
+              style={{ backgroundColor: '#5a8a6a' }}
+              title="Download"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="12" width="12" height="2" rx="1" fill="white"/>
+                <path d="M8 2V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                <polyline points="5,8 8,11 11,8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+              Download
+            </button>
+
+            {/* Auth */}
+            {user ? (
+              <>
+                <NavDivider />
+                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: '#3d3530', fontFamily: 'system-ui,sans-serif' }}>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
+                    <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
+                  </svg>
+                  {user.email?.split('@')[0]}
+                </span>
+                <button onClick={() => signOut()} title="Sign out"
+                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`}
+                  style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
+                >
+                  <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <NavDivider />
+                <Link to="/auth" title="Sign in"
+                  className={`${pressStyle} flex items-center gap-1 px-3 py-1.5 text-[12px] font-medium rounded-[20px] text-white`}
+                  style={{ backgroundColor: '#5a8a6a' }}
+                >Sign In</Link>
               </>
             )}
           </div>
-        )}
-
-        {/* Divider */}
-        <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: 'hsl(var(--toybox-border))' } : undefined} />
-
-        {/* Start Over / Save / Download moved to bottom bar for adult mode */}
-
-        {/* Undo/Redo */}
-        {onUndo && onRedo && (
-          <>
-            <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: 'hsl(var(--toybox-border))' } : undefined} />
-            <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Undo (Ctrl+Z)">
-              <Undo2 className="w-4 h-4" />
-            </button>
-            <button onClick={onRedo} disabled={!canRedo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Redo (Ctrl+Shift+Z)">
-              <Redo2 className="w-4 h-4" />
-            </button>
-          </>
-        )}
-
-        {!kidMode && <div className="w-px h-3 bg-border hidden sm:block" />}
-        {user ? (
-          <>
-            <span className="text-[10px] text-muted-foreground items-center gap-0.5 hidden sm:flex">
-              {kidMode ? <span className="text-sm">👤</span> : <User className="w-2.5 h-2.5" />}
-              {user.email?.split('@')[0]}
-            </span>
-            <button onClick={() => signOut()} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors">
-              <LogOut className="w-2.5 h-2.5" /> <span className="hidden sm:inline">{kidMode ? 'Bye!' : 'Out'}</span>
-            </button>
-          </>
-        ) : (
-          <Link
-            to="/auth"
-            className={`flex items-center gap-1 transition-colors ${
-              kidMode
-                ? 'px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90'
-                : 'px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90'
-            }`}
-            style={kidMode ? { backgroundColor: 'hsl(var(--toybox-orange))' } : undefined}
-          >
-            {kidMode ? '✨ Join' : <><LogIn className="w-2.5 h-2.5" /> Sign In</>}
-          </Link>
-        )}
-      </div>
+        </>
+      )}
     </div>
 
     <GrownUpCheckModal
