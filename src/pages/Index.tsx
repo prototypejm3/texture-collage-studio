@@ -625,10 +625,11 @@ const Index = () => {
                     <div className="flex items-center justify-between px-3 py-2"
                       style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}>
                       <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
-                        {activeBox === 'textures' && 'Colors'}
-                        {activeBox === 'stencils' && 'Elements'}
-                        {activeBox === 'tools' && 'Frame'}
+                        {activeBox === 'textures' && 'Swatches'}
+                        {activeBox === 'stencils' && 'Stencils'}
+                        {activeBox === 'tools' && 'Display'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'toolbox' && 'Tool Box'}
                       </span>
                       <button
                         onClick={closeBox}
