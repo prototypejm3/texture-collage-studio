@@ -692,7 +692,7 @@ const Index = () => {
           <ExpandableDrawer
             isOpen={activeBox === 'mybox'}
             onClose={closeBox}
-            title={sounds.kidMode ? 'My Box' : 'Saved'}
+            title={sounds.kidMode ? 'My Swatch Box' : 'Save'}
             icon="📦"
             direction="right"
             kidMode={sounds.kidMode}
