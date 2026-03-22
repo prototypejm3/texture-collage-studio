@@ -591,31 +591,60 @@ const Index = () => {
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 360,
-                    borderRadius: 8,
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
-                    border: '1px solid rgba(139,94,60,0.4)',
+                    ...(sounds.kidMode ? {
+                      borderRadius: 8,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                      border: '1px solid rgba(139,94,60,0.4)',
+                    } : {
+                      borderRadius: 16,
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                      border: '1px solid #e8ddd0',
+                      background: '#f5ede0',
+                    }),
                   }}
                 >
-                  {/* Thin header */}
-                  <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
-                    style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
-                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
-                      {activeBox === 'text' && 'Text'}
-                    </span>
-                    <button
-                      onClick={closeBox}
-                      className="p-0.5 rounded hover:bg-white/10 transition-colors"
-                      style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
+                  {/* Header */}
+                  {sounds.kidMode ? (
+                    <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
+                      style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                      <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
+                        {activeBox === 'textures' && '🎨 Colors'}
+                        {activeBox === 'stencils' && '🧸 Shapes'}
+                        {activeBox === 'tools' && '🖼️ Frame'}
+                        {activeBox === 'text' && 'Text'}
+                      </span>
+                      <button
+                        onClick={closeBox}
+                        className="p-0.5 rounded hover:bg-white/10 transition-colors"
+                        style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between px-3 py-2"
+                      style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
+                        {activeBox === 'textures' && 'Colors'}
+                        {activeBox === 'stencils' && 'Elements'}
+                        {activeBox === 'tools' && 'Frame'}
+                        {activeBox === 'text' && 'Text'}
+                      </span>
+                      <button
+                        onClick={closeBox}
+                        className="p-1 rounded-lg hover:bg-black/5 transition-colors"
+                      >
+                        <X className="w-3.5 h-3.5" style={{ color: '#3d3530' }} />
+                      </button>
+                    </div>
+                  )}
 
                   {/* Content */}
-                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 28px)' : 336 }}>
+                  <div className="overflow-y-auto overflow-x-visible" style={{
+                    maxHeight: isMobile ? 'calc(45vh - 28px)' : 336,
+                    background: sounds.kidMode ? 'hsl(var(--popover))' : '#f5ede0',
+                    borderRadius: sounds.kidMode ? undefined : '0 0 16px 16px',
+                  }}>
                     {activeBox === 'textures' && (
                       <TextureLibrary
                         onDragStart={handleDragStartLib}
@@ -648,7 +677,6 @@ const Index = () => {
                         onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
                       />
                     )}
-
 
                     {activeBox === 'tools' && (
                       <div className="p-3">
