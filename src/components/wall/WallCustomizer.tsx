@@ -370,9 +370,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </div>
         )}
 
-        {/* Background picker — illustrated icons */}
+        {/* Background picker */}
         <div className="flex items-center gap-4">
-          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>🎨 Wall:</span>
+          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>
+            {kidMode ? '🎨 Wall:' : 'Wall Color'}
+          </span>
           {backgrounds.map(bg => {
             const isFree = kidMode || isPremium;
             const isSelected = settings.background === bg.value;
@@ -382,14 +384,18 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                 key={bg.value}
                 onClick={() => isFree ? onUpdate({ background: bg.value }) : onRequestUpgrade?.()}
                 className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
-                style={{
+                style={kidMode ? {
                   width: 68, height: 68,
                   backgroundColor: bg.fill,
                   border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                } : {
+                  width: 40, height: 40,
+                  backgroundColor: bg.fill,
+                  border: `${isSelected ? '2px' : '1px'} solid ${isSelected ? '#c4956a' : bg.borderColor}`,
                 }}
                 title={isFree ? (kidMode && bg.kidLabel ? bg.kidLabel : bg.label) : 'Premium — unlock to use'}
               >
-                {IconComp && <IconComp />}
+                {kidMode && IconComp && <IconComp />}
                 {!isFree && <Lock className="w-3 h-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/40 drop-shadow-sm" />}
               </button>
             );
