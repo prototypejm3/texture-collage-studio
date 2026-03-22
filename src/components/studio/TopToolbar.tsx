@@ -179,16 +179,15 @@ export function TopToolbar({
 
         {kidMode && (
           <>
-            {/* Create button */}
+            {/* Logo link */}
             <Link
               to="/"
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95 ${
-                isStudio ? 'ring-2 ring-white/40' : ''
+              className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
+                isStudio ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={{ backgroundColor: 'hsl(var(--toybox-orange))' }}
+              style={isStudio ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
-              <PencilIcon />
-              Create
+              <SwatchboxLogo height={32} />
             </Link>
 
             {/* Divider */}
