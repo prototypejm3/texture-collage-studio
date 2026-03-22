@@ -152,6 +152,18 @@ function AdultElementsIcon() {
   );
 }
 
+function AdultTextIcon() {
+  return (
+    <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
+      <rect x="14" y="12" width="36" height="6" rx="2" fill="#c4956a"/>
+      <rect x="29" y="12" width="6" height="40" rx="2" fill="#c4956a"/>
+      <rect x="23" y="48" width="18" height="4" rx="1.5" fill="#c4956a"/>
+      <line x1="16" y1="58" x2="48" y2="58" stroke="#d9a97c" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="20" y1="62" x2="44" y2="62" stroke="#d9a97c" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+    </svg>
+  );
+}
+
 const adultSvgIcons: Record<string, React.FC> = {
   mybox: AdultSaveIcon,
   textures: AdultColorsIcon,
