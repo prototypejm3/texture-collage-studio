@@ -347,6 +347,14 @@ const Index = () => {
 
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
+    if (!sounds.kidMode) {
+      setShowStencilModePicker(true);
+    }
+  }, [studio, sounds.kidMode]);
+
+  const handlePlaceStencilMode = useCallback((mode: StencilMode) => {
+    studio.placeStencil(mode);
+    setShowStencilModePicker(false);
   }, [studio]);
 
   // Auto-save to Room Box before clearing (kids never lose work)
