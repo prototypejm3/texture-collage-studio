@@ -94,7 +94,9 @@ export interface Vibe {
   category?: string;
   creator?: string;
   baseLikes?: number;
-  likesStartDate?: string; // ISO date string — likes grow by 3/day from this date
+  likesStartDate?: string;
+  kidSvg?: string;
+  adultSvg?: string;
 }
 
 export type VibeFills = Record<string, string>;
