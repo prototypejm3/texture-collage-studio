@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
 import logoImg from '@/assets/logo.png';
+import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
-  KidCrownIcon, GrannyIcon, HouseIcon, TentIcon,
+  HouseIcon, TentIcon,
   SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon,
 } from '@/components/studio/ToyboxIcons';
 
@@ -66,16 +67,10 @@ export function NavBar() {
           <motion.button
             whileTap={{ scale: 0.93 }}
             onClick={handleToggleKidMode}
-            className="flex items-center gap-0.5 px-2 py-1 rounded-full"
-            style={{
-              background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
-            }}
+            className="rounded-full overflow-hidden transition-all hover:scale-105"
             title="Switch to Granny Mode"
           >
-            <KidCrownIcon />
-            <span className="text-white text-xs font-bold mx-0.5">→</span>
-            <GrannyIcon />
+            <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
           </motion.button>
 
           {/* Desktop nav links */}
