@@ -195,7 +195,65 @@ export function TextureLibrary({
   const showCustomTab = customTextures.length > 0;
 
   return (
-    <div className="h-full flex flex-col bg-card">
+    <div className="h-full flex bg-card relative">
+      {/* Adult mode: shape selector panel slides out to the left */}
+      {!kidMode && showShapeSelector && onSetNextShape && nextShape && (
+        <div
+          className="absolute right-full top-0 mr-2 z-50 bg-popover border border-border rounded-lg shadow-lg p-3 w-48"
+          style={{ minHeight: 120 }}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[10px] font-bold uppercase tracking-wide text-foreground">Elements</h3>
+            <button onClick={() => setShowShapeSelector(false)} className="p-0.5 rounded hover:bg-accent text-muted-foreground">
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="flex flex-col gap-1">
+            {shapes.map(shape => (
+              <button
+                key={shape.value}
+                onClick={() => onSetNextShape(shape.value)}
+                className={`flex items-center gap-2 px-2 py-1.5 text-[11px] rounded-lg transition-colors ${
+                  nextShape === shape.value
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-foreground hover:bg-accent'
+                }`}
+              >
+                <ShapeIcon shape={shape.value} />
+                {shape.label}
+              </button>
+            ))}
+          </div>
+          {onToggleDrawMode && (
+            <div className="mt-2 pt-2 border-t border-border flex flex-col gap-1">
+              <button
+                onClick={onToggleDrawMode}
+                className={`flex items-center gap-2 px-2 py-1.5 text-[11px] rounded-lg transition-colors ${
+                  drawMode && !crayonMode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-foreground hover:bg-accent'
+                }`}
+              >
+                <PenTool className="w-3 h-3" />
+                Freehand
+              </button>
+              {onToggleCrayonMode && (
+                <button
+                  onClick={onToggleCrayonMode}
+                  className={`flex items-center gap-2 px-2 py-1.5 text-[11px] rounded-lg transition-colors ${
+                    crayonMode
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-foreground hover:bg-accent'
+                  }`}
+                >
+                  🧵 Sew
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+      <div className="h-full flex flex-col flex-1 min-w-0">
 
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
         <div className="flex items-center justify-between mb-1">
