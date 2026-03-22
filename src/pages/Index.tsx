@@ -688,15 +688,15 @@ const Index = () => {
             </div>
           </ExpandableDrawer>
 
-          {/* 📦 My Box Drawer */}
+          {/* 📦 My Box Drawer — opens to the side, not over canvas */}
           <ExpandableDrawer
             isOpen={activeBox === 'mybox'}
             onClose={closeBox}
             title={sounds.kidMode ? 'My Box' : 'Saved'}
             icon="📦"
-            direction="up"
+            direction="right"
             kidMode={sounds.kidMode}
-            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[60vh]' : 'bottom-full left-2 w-[320px] max-h-[60vh]'}`}
+            className={`absolute z-40 ${isMobile ? 'bottom-0 left-full ml-2 w-[260px] max-h-[300px]' : 'bottom-0 left-full ml-2 w-[320px] max-h-[400px]'}`}
           >
             <div className="p-4 text-center text-muted-foreground">
               <p className="text-sm">{sounds.kidMode ? '📦 Your saved creations will appear here!' : 'Your saved designs will appear here.'}</p>
