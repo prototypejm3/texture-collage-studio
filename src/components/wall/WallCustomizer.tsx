@@ -19,17 +19,106 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'single', label: 'List', icon: <AlignJustify className="w-3.5 h-3.5" /> },
 ];
 
-const backgrounds: { value: WallBackground; label: string; kidLabel?: string; preview?: string; previewColor?: string }[] = [
-  { value: 'white-brick', label: 'White Brick', kidLabel: 'White Brick', preview: '/walls/white-brick.png' },
-  { value: 'wood-birch-wall', label: 'Birch', kidLabel: 'Light Wood', preview: '/walls/wood-birch-wall.png' },
-  { value: 'wood-oak-wall', label: 'Oak', kidLabel: 'Medium Wood', preview: '/walls/wood-oak-wall.png' },
-  { value: 'wood-walnut-wall', label: 'Walnut', kidLabel: 'Dark Wood', preview: '/walls/wood-walnut-wall.png' },
-  { value: 'sky-blue', label: 'Sky Blue', kidLabel: '☁️ Sky Blue', preview: '/walls/sky-blue-wall.png' },
-  { value: 'mint', label: 'Mint', kidLabel: '🌿 Mint', preview: '/walls/mint-wall.png' },
-  { value: 'blush', label: 'Blush', kidLabel: '🌸 Blush', preview: '/walls/blush-wall.png' },
-  { value: 'red', label: 'Red', kidLabel: '🔴 Red', preview: '/walls/red-wall.png' },
-  { value: 'green', label: 'Green', kidLabel: '🟢 Green', preview: '/walls/green-wall.png' },
+const backgrounds: { value: WallBackground; label: string; kidLabel?: string; fill: string; borderColor: string }[] = [
+  { value: 'white-brick', label: 'Cloud', kidLabel: '☁️ Cloud', fill: '#f5f5f0', borderColor: '#e2ddd6' },
+  { value: 'wood-birch-wall', label: 'Sunset', kidLabel: '☀️ Sunset', fill: '#fef3e8', borderColor: '#e2ddd6' },
+  { value: 'mint', label: 'Sage', kidLabel: '🌿 Sage', fill: '#edf4ed', borderColor: '#e2ddd6' },
+  { value: 'blush', label: 'Blush', kidLabel: '💕 Blush', fill: '#fdf0f0', borderColor: '#e2ddd6' },
+  { value: 'red', label: 'Apple', kidLabel: '🍎 Apple', fill: '#fdf0f0', borderColor: '#e2ddd6' },
+  { value: 'green', label: 'Forest', kidLabel: '🌲 Forest', fill: '#e8f4e8', borderColor: '#e2ddd6' },
+  { value: 'wood-oak-wall', label: 'Linen', kidLabel: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6' },
 ];
+
+function WallIconCloud() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <ellipse cx="15" cy="22" rx="7" ry="5" fill="white"/>
+      <ellipse cx="22" cy="19" rx="8" ry="6" fill="white"/>
+      <ellipse cx="28" cy="22" rx="6" ry="4.5" fill="white"/>
+      <line x1="8" y1="30" x2="32" y2="30" stroke="#e2ddd6" strokeWidth="1"/>
+    </svg>
+  );
+}
+
+function WallIconSunset() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <circle cx="20" cy="20" r="7" fill="#fbbf24"/>
+      <line x1="20" y1="7" x2="20" y2="11" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="20" y1="29" x2="20" y2="33" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="9" y1="14" x2="12" y2="17" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="28" y1="23" x2="31" y2="26" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="28" y1="14" x2="31" y2="11" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function WallIconSage() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <rect x="15" y="26" width="10" height="8" rx="2" fill="#c4956a"/>
+      <line x1="20" y1="12" x2="20" y2="26" stroke="#6b8a5e" strokeWidth="1.5"/>
+      <ellipse cx="16" cy="18" rx="4" ry="3" fill="#22c55e" transform="rotate(-20 16 18)"/>
+      <ellipse cx="24" cy="16" rx="4" ry="3" fill="#4ade80" transform="rotate(20 24 16)"/>
+      <ellipse cx="20" cy="13" rx="3.5" ry="2.5" fill="#22c55e"/>
+    </svg>
+  );
+}
+
+function WallIconBlush() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <path d="M20 30 C20 30, 8 20, 8 15 C8 10, 13 8, 20 14 C27 8, 32 10, 32 15 C32 20, 20 30, 20 30Z" fill="#f9a8d4"/>
+      <path d="M14 10 C14 10, 10 7, 10 5.5 C10 4, 12 3, 14 5 C16 3, 18 4, 18 5.5 C18 7, 14 10, 14 10Z" fill="#f472b6"/>
+      <path d="M27 9 C27 9, 24.5 7, 24.5 6 C24.5 5, 25.5 4.5, 27 5.5 C28.5 4.5, 29.5 5, 29.5 6 C29.5 7, 27 9, 27 9Z" fill="#f472b6"/>
+    </svg>
+  );
+}
+
+function WallIconApple() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <path d="M20 10 C14 10, 10 15, 10 22 C10 29, 15 33, 20 33 C25 33, 30 29, 30 22 C30 15, 26 10, 20 10Z" fill="#e05c5c"/>
+      <ellipse cx="16" cy="18" rx="3" ry="4" fill="white" opacity="0.3"/>
+      <line x1="20" y1="10" x2="20" y2="7" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round"/>
+      <ellipse cx="23" cy="8" rx="3" ry="2" fill="#22c55e" transform="rotate(30 23 8)"/>
+    </svg>
+  );
+}
+
+function WallIconForest() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <polygon points="20,6 10,28 30,28" fill="#22c55e"/>
+      <rect x="18" y="28" width="4" height="6" fill="#c4956a"/>
+      <polygon points="20,8 22,8 20,6" fill="#fbbf24"/>
+      <circle cx="20" cy="7" r="2" fill="#fbbf24"/>
+    </svg>
+  );
+}
+
+function WallIconLinen() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-full h-full">
+      <ellipse cx="20" cy="24" rx="10" ry="11" fill="#c4956a"/>
+      <ellipse cx="20" cy="27" rx="6" ry="7" fill="#d9a97c"/>
+      <circle cx="14" cy="14" r="4" fill="#c4956a"/>
+      <circle cx="26" cy="14" r="4" fill="#c4956a"/>
+      <circle cx="14" cy="14" r="2" fill="#d9a97c"/>
+      <circle cx="26" cy="14" r="2" fill="#d9a97c"/>
+    </svg>
+  );
+}
+
+const wallIcons: Record<string, React.FC> = {
+  'white-brick': WallIconCloud,
+  'wood-birch-wall': WallIconSunset,
+  'mint': WallIconSage,
+  'blush': WallIconBlush,
+  'red': WallIconApple,
+  'green': WallIconForest,
+  'wood-oak-wall': WallIconLinen,
+};
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'shadow-box', label: 'Shadow Box' },
