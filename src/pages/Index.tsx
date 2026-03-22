@@ -22,7 +22,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 
 const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
-import { Vibe } from '@/types/studio';
+import { Vibe, StencilMode } from '@/types/studio';
 import { Monitor, X, Save, Download } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
