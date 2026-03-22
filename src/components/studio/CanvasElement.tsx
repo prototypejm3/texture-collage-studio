@@ -288,6 +288,23 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             {element.text || ''}
           </span>
         </div>
+      ) : element.clipPathD && isOutlineOnly ? (
+        /* SVG stroke outline for stencil mode — shows actual shape outlines */
+        <svg
+          className="w-full h-full"
+          viewBox={`0 0 ${element.width} ${element.height}`}
+          preserveAspectRatio="none"
+          style={{ filter }}
+        >
+          <path
+            d={element.clipPathD}
+            fill="none"
+            stroke="hsl(var(--foreground) / 0.7)"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </svg>
       ) : (
         <div
           className="w-full h-full"
@@ -311,6 +328,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             } : {}),
           }}
         />
+      )}
       )}
     </div>
   );
