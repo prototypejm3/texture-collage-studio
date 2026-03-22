@@ -511,54 +511,39 @@ export function RightSidebar({
             )}
 
             {/* Category filter pills */}
-            <div className={`px-2 border-b border-border bg-secondary/20 ${activeCategory !== 'All' ? 'py-0.5' : kidMode ? 'py-1.5' : 'py-1'}`}>
-              <div className={`flex flex-wrap ${activeCategory !== 'All' ? 'gap-0.5' : kidMode ? 'gap-1.5' : 'gap-1'}`}>
+            <div className="px-2 py-0.5 border-b border-border bg-secondary/20">
+              <div className="flex flex-wrap gap-0.5">
                 <button
                   onClick={() => setActiveCategory('All')}
-                  className={`rounded-full transition-all font-semibold ${
-                    activeCategory !== 'All'
-                      ? 'px-1.5 py-0.5 text-[9px]'
-                      : kidMode ? 'px-3 py-1.5 text-xs' : 'px-1.5 py-0.5 text-[10px]'
-                  } ${activeCategory === 'All'
+                  className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === 'All'
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-accent'
                   }`}
                 >
-                  {activeCategory !== 'All' ? '← All' : kidMode ? '🌟 All' : 'All'}
+                  {kidMode ? '🌟 All' : 'All'}
                 </button>
                 {themeSections.map(section => (
                   <button
                     key={section.label}
                     onClick={() => setActiveCategory(section.label)}
-                    className={`rounded-full transition-all font-semibold ${
-                      activeCategory !== 'All'
-                        ? 'px-1.5 py-0.5 text-[9px]'
-                        : kidMode ? 'px-3 py-1.5 text-xs' : 'px-1.5 py-0.5 text-[10px]'
-                    } ${activeCategory === section.label
+                    className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === section.label
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    {activeCategory !== 'All'
-                      ? (activeCategory === section.label ? (kidMode ? section.kidLabel : `${section.emoji} ${section.label}`) : (kidMode ? section.kidLabel : section.label))
-                      : (kidMode ? section.kidLabel : `${section.emoji} ${section.label}`)}
+                    {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
                   </button>
                 ))}
-                {/* Kid mode: community as a category filter */}
                 {kidMode && communityVibes.length > 0 && (
                   <button
                     onClick={() => setActiveCategory('Community')}
-                    className={`rounded-full transition-all font-semibold ${
-                      activeCategory !== 'All'
-                        ? 'px-1.5 py-0.5 text-[9px]'
-                        : 'px-3 py-1.5 text-xs'
-                    } ${
+                    className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${
                       activeCategory === 'Community'
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    {activeCategory !== 'All' && activeCategory !== 'Community' ? 'Friends' : '🎪 Made By Friends'}
+                    🎪 Friends
                   </button>
                 )}
               </div>
