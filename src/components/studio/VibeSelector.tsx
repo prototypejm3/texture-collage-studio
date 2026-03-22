@@ -123,6 +123,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Numbers & Symbols', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Community DIY', emoji: '🛠️', ids: communityDiyIds },
+    { label: 'Sports Balls', emoji: '⚽', ids: new Set(sportsStencils.map(s => s.id)) },
   ];
 
   const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
