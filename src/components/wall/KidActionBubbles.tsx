@@ -187,6 +187,12 @@ export function KidActionBubbles({
         onUpdate(design.id, { frameStyle: nextFrame });
         break;
       }
+      case 'hang': {
+        const currentIdx = kidHangCycle.indexOf((design.hangingStyle || 'floating') as HangingStyle);
+        const nextHang = kidHangCycle[(currentIdx + 1) % kidHangCycle.length];
+        onUpdate(design.id, { hangingStyle: nextHang } as any);
+        break;
+      }
       case 'spin':
       case 'rotate': {
         onUpdate(design.id, { rotation: ((design.rotation || 0) + 15) % 360 });
