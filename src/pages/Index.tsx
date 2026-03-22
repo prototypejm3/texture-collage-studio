@@ -105,12 +105,12 @@ const Index = () => {
     }
   }, [sounds.kidMode]);
 
-  // Auto-open tools box when an element is selected in adult mode
+  // Auto-open tools box when elements exist on canvas
   useEffect(() => {
-    if (studio.selectedId && !sounds.kidMode) {
+    if (studio.elements.length > 0 && activeBox !== 'tools') {
       openBox('tools');
     }
-  }, [studio.selectedId]);
+  }, [studio.elements.length]);
 
   // Keyboard shortcuts
   useEffect(() => {
