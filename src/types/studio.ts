@@ -16,6 +16,7 @@ export type TextureCategory =
 
 export type ElementType = 'shape' | 'image' | 'text';
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
+export type BlendMode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'soft-light' | 'hard-light' | 'darken' | 'lighten';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scallop' | 'zigzag' | 'wave';
 export type WrinkleLevel = 'none' | 'light' | 'medium' | 'heavy';
 export type ShadowDepth = 'flat' | 'lifted' | 'floating';
