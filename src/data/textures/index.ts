@@ -281,4 +281,10 @@ export const textures: TextureSwatch[] = [
 
   // ── Sunny Pup ──
   { id: 'sunny-pup', name: 'Sunny Pup', category: 'Sunny Pup', cssBackground: img('novelty-sunny-pup.png') },
+
+  // ── Magenta Mrstik ──
+  { id: 'magenta-mrstik', name: 'Magenta Mrstik', category: 'Magenta Mrstik', cssBackground: img('novelty-magenta-mrstik.png') },
+
+  // ── Shelly's Volleyball ──
+  { id: 'shellys-volleyball', name: "Shelly's Volleyball", category: "Shelly's Volleyball", cssBackground: img('novelty-shellys-volleyball.png') },
 ];
