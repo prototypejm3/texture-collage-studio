@@ -445,7 +445,28 @@ export function TextureLibrary({
               {label}
             </button>
           );
-        })}
+      </div>
+
+      {/* Texture grid */}
+      <div className="flex-1 overflow-y-auto texture-panel p-2">
+        <div className={`grid ${kidMode ? 'grid-cols-8 sm:grid-cols-8 gap-0.5' : 'grid-cols-8 sm:grid-cols-10 md:grid-cols-12 lg:grid-cols-14 gap-1'}`}>
+          {filtered.map(tex => (
+            <SwatchItem
+              key={tex.id}
+              tex={tex}
+              isFav={favIds.has(tex.id)}
+              onToggleFav={() => toggleFav(tex.id)}
+              onDragStart={onDragStart}
+              onTextureClick={(id) => {
+                if (!kidMode && onSetNextShape) setShowShapeSelector(true);
+                onTextureClick?.(id);
+              }}
+              onRemoveCustomTexture={onRemoveCustomTexture}
+              viewMode={swatchView}
+              kidMode={kidMode}
+              isActiveBackground={backgroundTextureId === tex.id}
+              activeShape={nextShape}
+            />
           ))}
         </div>
 
