@@ -61,6 +61,8 @@ const Index = () => {
   const isMobile = useIsMobile();
   const sounds = useKidSounds();
   const celebration = useKidCelebration();
+  const kidTutorial = useKidTutorial();
+  const voiceEncouragement = useVoiceEncouragement();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const kidOnboarding = useKidOnboarding(sounds.kidMode);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
