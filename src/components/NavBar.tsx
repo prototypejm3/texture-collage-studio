@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
 import logoImg from '@/assets/logo.png';
+import {
+  KidCrownIcon, GrannyIcon, HouseIcon, TentIcon,
+  SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon,
+} from '@/components/studio/ToyboxIcons';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
@@ -54,80 +58,86 @@ export function NavBar() {
   if (kidMode) {
     return (
       <>
-        <nav className="h-14 border-b-2 border-primary/20 bg-gradient-to-r from-primary/5 via-background to-primary/5 flex items-center px-4 gap-4 flex-shrink-0">
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            <img src={logoImg} alt="Swatchbox Studio" className="w-8 h-8 object-contain" />
-            <span className="text-sm font-extrabold tracking-tight text-foreground">
-              Swatchbox Studio
-            </span>
-            <motion.button
-              whileTap={{ scale: 0.93 }}
-              onClick={handleToggleKidMode}
-              className="px-3.5 py-1.5 rounded-full text-sm font-bold text-white shadow-md"
-              style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)' }}
-            >
-              🧒 Kids Mode → 🥦👵
-            </motion.button>
-          </div>
+        <nav
+          className="h-16 flex items-center px-4 gap-3 flex-shrink-0"
+          style={{ backgroundColor: '#fdf6ee', borderBottom: '1.5px solid #e8ddd0' }}
+        >
+          {/* Mode toggle pill */}
+          <motion.button
+            whileTap={{ scale: 0.93 }}
+            onClick={handleToggleKidMode}
+            className="flex items-center gap-0.5 px-2 py-1 rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            }}
+            title="Switch to Granny Mode"
+          >
+            <KidCrownIcon />
+            <span className="text-white text-xs font-bold mx-0.5">→</span>
+            <GrannyIcon />
+          </motion.button>
 
-          {/* Desktop nav links — playful */}
+          {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1.5">
+            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
             <Link
               to="/"
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-bold rounded-full transition-all ${
-                isStudio
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+              className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
+                isStudio ? 'ring-2 ring-[#c4956a]/40' : ''
               }`}
+              style={isStudio ? { backgroundColor: '#f7f0e8' } : undefined}
             >
-              <span className="text-base">🖍️</span>
-              Create
+              <HouseIcon />
+              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Create</span>
             </Link>
+            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
             <Link
               to="/wall"
               data-nav="wall"
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-bold rounded-full transition-all ${
-                isWall
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+              className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
+                isWall ? 'ring-2 ring-[#c4956a]/40' : ''
               }`}
+              style={isWall ? { backgroundColor: '#f7f0e8' } : undefined}
             >
-              <span className="text-base">🏠</span>
-              My Room
+              <HouseIcon />
+              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>My Room</span>
             </Link>
+            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
             <Link
               to="/gallery"
               data-nav="gallery"
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-bold rounded-full transition-all ${
-                isGallery
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-primary/10'
+              className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
+                isGallery ? 'ring-2 ring-[#c4956a]/40' : ''
               }`}
+              style={isGallery ? { backgroundColor: '#f7f0e8' } : undefined}
             >
-              <span className="text-base">🎪</span>
-              Show & Tell
+              <TentIcon />
+              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Show & Tell</span>
             </Link>
           </div>
 
           <div className="ml-auto flex items-center gap-2">
             <button
               onClick={toggle}
-              className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
+              style={{ backgroundColor: dark ? '#3a3020' : '#f7f0e8', border: '1.5px solid #e8ddd0' }}
               title={dark ? 'Light mode' : 'Dark mode'}
             >
-              {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <ToyMoonIcon />
+              <ToySunIcon />
             </button>
 
             {user ? (
               <>
-                <span className="text-xs text-muted-foreground items-center gap-1 hidden sm:flex">
+                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: '#6b4c2a' }}>
                   <span className="text-sm">👤</span>
                   {user.email?.split('@')[0]}
                 </span>
                 <button
                   onClick={() => signOut()}
-                  className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1 px-2 py-1 text-xs transition-colors"
+                  style={{ color: '#6b4c2a' }}
                 >
                   <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Bye!</span>
                 </button>
@@ -135,7 +145,8 @@ export function NavBar() {
             ) : (
               <Link
                 to="/auth"
-                className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90 transition-colors"
+                style={{ backgroundColor: '#f97316' }}
               >
                 ✨ Join
               </Link>
@@ -174,71 +185,33 @@ export function NavBar() {
           </button>
         </div>
 
-        {/* Desktop nav links — clean & minimal */}
         <div className="hidden md:flex items-center gap-1">
-          <Link
-            to="/"
-            title="Open the creative studio"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-              isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-          >
-            <Brush className="w-4 h-4" />
-            Create
+          <Link to="/" title="Open the creative studio" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+            <Brush className="w-4 h-4" /> Create
           </Link>
-          <Link
-            to="/wall"
-            data-nav="wall"
-            title="View and arrange your artwork"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-              isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-          >
-            <Grid2x2 className="w-4 h-4" />
-            My Wall
+          <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+            <Grid2x2 className="w-4 h-4" /> My Wall
           </Link>
-          <Link
-            to="/gallery"
-            data-nav="gallery"
-            title="Browse community artwork"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
-              isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-            }`}
-          >
-            <Landmark className="w-4 h-4" />
-            Gallery
+          <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
+            <Landmark className="w-4 h-4" /> Gallery
           </Link>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
-          <button
-            onClick={toggle}
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
+          <button onClick={toggle} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors" title={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-
           {user ? (
             <>
               <span className="text-xs text-muted-foreground items-center gap-1 hidden sm:flex">
-                <User className="w-3 h-3" />
-                {user.email?.split('@')[0]}
+                <User className="w-3 h-3" /> {user.email?.split('@')[0]}
               </span>
-              <button
-                onClick={() => signOut()}
-                title="Sign out of your account"
-                className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <button onClick={() => signOut()} title="Sign out" className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
                 <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
               </button>
             </>
           ) : (
-            <Link
-              to="/auth"
-              title="Sign in or create an account"
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-            >
+            <Link to="/auth" title="Sign in" className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
               <LogIn className="w-3 h-3" /> Sign In
             </Link>
           )}
