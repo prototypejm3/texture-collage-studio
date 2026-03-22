@@ -730,7 +730,7 @@ const Index = () => {
             <BoxButton
               id="stencils"
               icon="🧸"
-              label={sounds.kidMode ? 'Shapes' : 'Stencils'}
+              label={sounds.kidMode ? 'Shapes' : 'Elements'}
               isActive={activeBox === 'stencils'}
               onClick={() => toggleBox('stencils')}
               kidMode={sounds.kidMode}
