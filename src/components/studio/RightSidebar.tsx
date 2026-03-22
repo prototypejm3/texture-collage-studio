@@ -496,7 +496,7 @@ export function RightSidebar({
                               : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
                           }`}
                         >
-                          {!isPremium ? (
+                          {!aiCredits.isPremium ? (
                             <Lock className="w-2.5 h-2.5" />
                           ) : isGeneratingMood ? (
                             <Loader2 className="w-2.5 h-2.5 animate-spin" />
