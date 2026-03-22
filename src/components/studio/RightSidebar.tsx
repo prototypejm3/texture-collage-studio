@@ -165,8 +165,8 @@ export function RightSidebar({
   };
 
   const handleGenerate = async () => {
-    if (!isPremium) { aiCredits.guardFreeUser(); return; }
-    if (aiCredits.guardAiAction()) return;
+    if (!aiCredits.isPremium) { aiCredits.openPremiumPaywall(); return; }
+    if (aiCredits.totalRemaining === 0) { aiCredits.openPurchaseModal(); return; }
     const vibe = await generateStencil(aiPrompt);
     if (vibe) {
       setAiGeneratedVibes(prev => [...prev, vibe]);
