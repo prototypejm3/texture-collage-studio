@@ -226,6 +226,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         transform: `rotate(${element.rotation}deg)`,
         zIndex: element.zIndex,
         touchAction: 'none',
+        opacity: element.opacity != null ? element.opacity / 100 : 1,
+        mixBlendMode: (element.blendMode && element.blendMode !== 'normal' ? element.blendMode : undefined) as any,
         filter: element.effects.shadowDepth === 'lifted'
           ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
           : element.effects.shadowDepth === 'floating'

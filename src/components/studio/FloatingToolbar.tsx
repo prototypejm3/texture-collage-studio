@@ -1,7 +1,7 @@
-import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, MaterialEffects } from '@/types/studio';
+import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, MaterialEffects, BlendMode } from '@/types/studio';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp, Undo2, Redo2 } from 'lucide-react';
+import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp, Undo2, Redo2, ArrowUp, ArrowDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -16,6 +16,8 @@ interface Props {
   canUndo?: boolean;
   canRedo?: boolean;
   elementCount?: number;
+  onBringForward?: () => void;
+  onSendBackward?: () => void;
 }
 
 // Stencil shape icons as tiny SVG previews
@@ -104,6 +106,16 @@ const shadowOptions: { value: ShadowDepth; label: string }[] = [
   { value: 'flat', label: 'Flat' },
   { value: 'lifted', label: 'Lifted' },
   { value: 'floating', label: 'Floating' },
+];
+
+const blendModeOptions: { value: BlendMode; label: string }[] = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'multiply', label: 'Multiply' },
+  { value: 'screen', label: 'Screen' },
+  { value: 'overlay', label: 'Overlay' },
+  { value: 'soft-light', label: 'Soft Light' },
+  { value: 'darken', label: 'Darken' },
+  { value: 'lighten', label: 'Lighten' },
 ];
 
 // ── Kid Mode Tool Box ──
@@ -345,15 +357,31 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
           })}
         </div>
       </div>
+
+      {/* Lighter / Darker slider (kid-friendly opacity) */}
+      <div>
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-1 block">
+          {(element.opacity ?? 100) < 50 ? '🌫️ Lighter' : '✨ Darker'}
+        </span>
+        <Slider
+          value={[element.opacity ?? 100]}
+          onValueChange={([v]) => onUpdate({ opacity: v })}
+          min={5}
+          max={100}
+          step={5}
+          className="w-full"
+        />
+      </div>
     </div>
   );
 }
 
 // ── Main Export ──
 
-export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount }: Props) {
+export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount, onBringForward, onSendBackward }: Props) {
   const [showEffects, setShowEffects] = useState(true);
   const [showShapes, setShowShapes] = useState(true);
+  const [showBlending, setShowBlending] = useState(false);
 
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
@@ -433,7 +461,41 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         <div className="w-px h-6 bg-border mx-1" />
         <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Duplicate"><Copy className="w-3.5 h-3.5" /></Button>
         <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Delete"><Trash2 className="w-3.5 h-3.5" /></Button>
+        {onBringForward && (
+          <Button size="sm" variant="ghost" onClick={onBringForward} className="h-8 w-8 p-0" title="Bring Forward"><ArrowUp className="w-3.5 h-3.5" /></Button>
+        )}
+        {onSendBackward && (
+          <Button size="sm" variant="ghost" onClick={onSendBackward} className="h-8 w-8 p-0" title="Send Backward"><ArrowDown className="w-3.5 h-3.5" /></Button>
+        )}
       </div>
+
+      {/* Opacity & Blend Mode */}
+      <button onClick={() => setShowBlending(!showBlending)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
+        Opacity & Blending
+        {showBlending ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
+      </button>
+
+      {showBlending && (
+        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden">
+          <div className="space-y-3 pt-2 px-1">
+            <div>
+              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Opacity — {element.opacity ?? 100}%</label>
+              <Slider value={[element.opacity ?? 100]} onValueChange={([v]) => onUpdate({ opacity: v })} min={5} max={100} step={1} className="w-full" />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Blend Mode</label>
+              <div className="flex flex-wrap gap-1">
+                {blendModeOptions.map(bm => (
+                  <button key={bm.value} onClick={() => onUpdate({ blendMode: bm.value })}
+                    className={`text-[10px] py-1 px-2 rounded-md transition-colors ${(element.blendMode || 'normal') === bm.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`}>
+                    {bm.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       <button onClick={() => setShowEffects(!showEffects)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
         Material Effects
