@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection, SectionTransform, SectionTransforms, defaultSectionTransform, BlendMode } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection, SectionTransform, SectionTransforms, defaultSectionTransform, BlendMode, StencilMode } from '@/types/studio';
 import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
