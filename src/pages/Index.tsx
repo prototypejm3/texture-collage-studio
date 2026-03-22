@@ -786,8 +786,13 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: icons without box containers + actions on right */
+            /* Adult mode: sewing tin on left, tools center, actions right */
             <div className="flex items-center justify-between w-full px-4 py-2">
+              <SewingTin
+                isOpen={activeBox === 'mybox'}
+                onToggle={() => toggleBox('mybox')}
+                itemCount={wall.designs.length}
+              />
               <div className="flex items-center gap-4">
                 <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
                   onClick={() => toggleBox('textures')} kidMode={false} />
