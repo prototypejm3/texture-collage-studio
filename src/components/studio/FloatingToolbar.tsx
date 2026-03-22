@@ -344,7 +344,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
   return (
     <div className="p-3 space-y-2">
       <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1">
-        Shapes
+        Elements
         {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
       </button>
 

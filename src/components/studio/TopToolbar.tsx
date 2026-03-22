@@ -233,10 +233,10 @@ export function TopToolbar({
                 <Brush className="w-4 h-4" /> Create
               </Link>
               <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Grid2x2 className="w-4 h-4" /> My Wall
+                <Grid2x2 className="w-4 h-4" /> My Studio
               </Link>
               <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-                <Landmark className="w-4 h-4" /> Gallery
+                <Landmark className="w-4 h-4" /> Showcase
               </Link>
             </div>
           </div>
@@ -392,8 +392,8 @@ export function TopToolbar({
             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
           </button>
         ) : (
-          <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Start Over">
-            <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Start Over</span>
+          <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Reset">
+            <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Reset</span>
           </button>
         )}
 

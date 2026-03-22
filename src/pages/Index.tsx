@@ -563,7 +563,7 @@ const Index = () => {
                   <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
                     <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
                       {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Textures')}
-                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Stencils')}
+                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Elements')}
                       {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Studio')}
                     </span>
                     <button
@@ -730,7 +730,7 @@ const Index = () => {
             <BoxButton
               id="stencils"
               icon="🧸"
-              label={sounds.kidMode ? 'Shapes' : 'Stencils'}
+              label={sounds.kidMode ? 'Shapes' : 'Elements'}
               isActive={activeBox === 'stencils'}
               onClick={() => toggleBox('stencils')}
               kidMode={sounds.kidMode}
