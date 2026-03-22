@@ -245,19 +245,9 @@ export function TopToolbar({
       <div className="flex-1" />
 
       {/* Right side */}
-      <div className="flex items-center gap-1">
-        {/* AI Toggle - Sparkle */}
-        {kidMode ? (
-          <button
-            onClick={handleAiToggle}
-            className={`p-1 rounded-lg transition-all hover:scale-110 active:scale-90 ${
-              aiEnabled ? 'opacity-100' : 'opacity-40'
-            }`}
-            title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
-          >
-            <SparkleIcon />
-          </button>
-        ) : (
+      <div className={`flex items-center ${kidMode ? 'gap-3' : 'gap-1'}`}>
+        {/* AI Toggle - Adult mode only */}
+        {!kidMode && (
           <button
             onClick={handleAiToggle}
             className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-medium transition-colors ${
