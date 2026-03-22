@@ -182,7 +182,7 @@ export function NavBar() {
             <Brush className="w-4 h-4" /> Create
           </Link>
           <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-            <Grid2x2 className="w-4 h-4" /> My Wall
+            <Grid2x2 className="w-4 h-4" /> My Studio
           </Link>
           <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
             <Landmark className="w-4 h-4" /> Gallery
