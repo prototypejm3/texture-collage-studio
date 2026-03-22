@@ -651,7 +651,7 @@ const Index = () => {
           <ExpandableDrawer
             isOpen={activeBox === 'tools'}
             onClose={closeBox}
-            title="Tools"
+            title={sounds.kidMode ? 'My Tool Box' : 'Tools'}
             icon="🧰"
             direction="up"
             kidMode={sounds.kidMode}
