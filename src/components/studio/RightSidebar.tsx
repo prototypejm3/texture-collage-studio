@@ -91,8 +91,10 @@ export function RightSidebar({
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const aiCredits = useAiCredits();
   const { generateStencil, isGenerating } = useGenerateStencil({
-    onCreditsError: (msg, status) => aiCredits.recordFailure(msg, status),
-    onSuccess: () => aiCredits.recordSuccess(),
+    onCreditsUpdate: (data) => aiCredits.updateFromResponse(data),
+    onNoPremium: () => aiCredits.openPremiumPaywall(),
+    onNoCredits: () => aiCredits.openPurchaseModal(),
+    onSuccess: () => {},
   });
   const { user } = useAuth();
   const social = useStencilSocial();
