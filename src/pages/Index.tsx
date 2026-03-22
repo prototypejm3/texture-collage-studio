@@ -782,26 +782,16 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: clean minimal pills */
-            <div className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
-              {[
-                { id: 'textures' as const, label: 'Swatches' },
-                { id: 'tools' as const, label: 'Display' },
-                { id: 'stencils' as const, label: 'Elements' },
-                { id: 'text' as const, label: 'Text' },
-              ].map(btn => (
-                <button
-                  key={btn.id}
-                  onClick={() => toggleBox(btn.id)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-full transition-colors ${
-                    activeBox === btn.id
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  }`}
-                >
-                  {btn.label}
-                </button>
-              ))}
+            /* Adult mode: icons without box containers */
+            <div className="flex items-center gap-4 px-4 py-2">
+              <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
+                onClick={() => toggleBox('textures')} kidMode={false} />
+              <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
+                onClick={() => toggleBox('tools')} kidMode={false} />
+              <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
+                onClick={() => toggleBox('stencils')} kidMode={false} />
+              <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
+                onClick={() => toggleBox('text')} kidMode={false} />
             </div>
           )}
         </div>
