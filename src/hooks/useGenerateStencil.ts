@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Vibe } from '@/types/studio';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { checkGenerationLimit, recordGeneration } from '@/hooks/useGenerationLimit';
 import { checkContentFilter } from '@/lib/contentFilter';
 
 interface UseGenerateStencilOptions {
-  onCreditsError?: (message?: string, status?: number) => void;
+  onCreditsUpdate?: (data: any) => void;
+  onNoPremium?: () => void;
+  onNoCredits?: () => void;
   onSuccess?: () => void;
 }
 
@@ -19,15 +20,15 @@ export function useGenerateStencil(options?: UseGenerateStencilOptions) {
       return null;
     }
 
-    const filter = checkContentFilter(prompt);
-    if (!filter.allowed) {
-      toast({ title: '🚫 Nope!', description: filter.message, variant: 'destructive' });
+    // Offline check
+    if (!navigator.onLine) {
+      toast({ title: 'AI requires a connection', variant: 'destructive' });
       return null;
     }
 
-    const limit = checkGenerationLimit();
-    if (!limit.allowed) {
-      toast({ title: 'Daily limit reached', description: `You've used all ${limit.max} AI generations for today. Come back tomorrow!`, variant: 'destructive' });
+    const filter = checkContentFilter(prompt);
+    if (!filter.allowed) {
+      toast({ title: '🚫 Nope!', description: filter.message, variant: 'destructive' });
       return null;
     }
 
@@ -39,38 +40,60 @@ export function useGenerateStencil(options?: UseGenerateStencilOptions) {
 
       if (error) {
         console.error('Generate stencil error:', error);
-        const msg = error.message || 'Could not generate stencil.';
-        // Check for credits/rate errors from edge function
+        const msg = (error as any)?.message || 'Could not generate stencil.';
         const status = (error as any)?.status;
-        if (status === 402 || status === 429 || /quota|limit|credit|rate|insufficient|payment/i.test(msg)) {
-          options?.onCreditsError?.(msg, status);
+        
+        // Try to parse error body
+        let errorBody: any = null;
+        try {
+          if (typeof msg === 'string' && msg.startsWith('{')) errorBody = JSON.parse(msg);
+        } catch {}
+
+        const errorCode = errorBody?.error || data?.error;
+
+        if (errorCode === 'PREMIUM_REQUIRED' || status === 403) {
+          options?.onNoPremium?.();
           return null;
         }
-        options?.onCreditsError?.(msg, status); // track consecutive failures
+        if (errorCode === 'NO_CREDITS' || status === 402) {
+          options?.onNoCredits?.();
+          return null;
+        }
+        if (errorCode === 'GENERATION_FAILED') {
+          toast({ title: 'Something went wrong', description: 'Credit not used.', variant: 'destructive' });
+          return null;
+        }
         toast({ title: 'Generation failed', description: msg, variant: 'destructive' });
         return null;
       }
 
       if (data?.error) {
-        const dataError = data.error as string;
-        if (/quota|limit|credit|rate|insufficient|payment|429|402/i.test(dataError)) {
-          options?.onCreditsError?.(dataError);
+        if (data.error === 'PREMIUM_REQUIRED') {
+          options?.onNoPremium?.();
           return null;
         }
-        options?.onCreditsError?.(dataError);
-        toast({ title: 'Generation failed', description: dataError, variant: 'destructive' });
+        if (data.error === 'NO_CREDITS') {
+          options?.onNoCredits?.();
+          return null;
+        }
+        if (data.error === 'GENERATION_FAILED') {
+          toast({ title: 'Something went wrong', description: 'Credit not used.', variant: 'destructive' });
+          return null;
+        }
+        toast({ title: 'Generation failed', description: data.message || data.error, variant: 'destructive' });
         return null;
       }
 
-      recordGeneration();
+      // Success — update credits from response
+      options?.onCreditsUpdate?.(data);
       options?.onSuccess?.();
-      toast({ title: `${data.emoji} ${data.name}`, description: 'AI stencil generated!' });
+      
+      const remaining = data.totalRemaining;
+      toast({ title: `${data.emoji} ${data.name}`, description: `Nice — ${remaining} left` });
       return data as Vibe;
     } catch (e) {
       console.error('Generate stencil error:', e);
-      const msg = e instanceof Error ? e.message : 'Failed to generate stencil. Try again.';
-      options?.onCreditsError?.(msg);
-      toast({ title: 'Error', description: 'Failed to generate stencil. Try again.', variant: 'destructive' });
+      toast({ title: 'Something went wrong', description: 'Credit not used.', variant: 'destructive' });
       return null;
     } finally {
       setIsGenerating(false);
