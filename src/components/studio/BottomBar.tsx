@@ -163,7 +163,7 @@ export function BottomBar({
           </div>
         ) : (
           /* Adult mode: pill buttons with shadow color popover */
-          <>
+          <div className="flex items-center gap-1.5">
             {specialFrames.map(f => {
               const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
               const locked = f.premium && !isPremium;
@@ -171,38 +171,38 @@ export function BottomBar({
                 <div key={f.id} className="relative">
                   <button
                     onClick={() => locked ? onRequestUpgrade?.() : handleSpecialSelect(f.id)}
-                    className={`px-1.5 py-0.5 rounded-md transition-colors text-[9px] ${
+                    className={`px-3 py-1.5 rounded-full transition-colors text-[11px] font-medium ${
                       isActive
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                        ? 'bg-[#f97316] text-white shadow-sm'
+                        : 'bg-secondary text-foreground border border-border hover:bg-accent'
                     } ${locked ? 'opacity-50' : ''}`}
                   >
                     {f.label}
-                    {locked && <Lock className="w-2 h-2 inline-block ml-0.5 -mt-0.5" />}
+                    {locked && <Lock className="w-2.5 h-2.5 inline-block ml-1 -mt-0.5" />}
                   </button>
                   {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2">
-                        <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-1.5 text-center">Color</p>
-                        <div className="flex items-center gap-1.5">
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-xl p-3">
+                        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center font-semibold">Color</p>
+                        <div className="flex items-center gap-2">
                           {colorFrames.map(cf => {
                             const cfLocked = !cf.free && !isPremium;
                             return (
                               <button
                                 key={cf.id}
                                 onClick={() => cfLocked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
-                                className={`relative w-5 h-5 rounded-full transition-all flex-shrink-0 ${
+                                className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
                                   wallFrameStyle === cf.id
-                                    ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110'
+                                    ? 'ring-2 ring-[#f97316] ring-offset-2 ring-offset-popover scale-110'
                                     : 'hover:scale-110'
-                                } ${cf.id === 'none' ? 'border border-border border-dashed' : 'border border-border/40'} ${
+                                } ${cf.id === 'none' ? 'border-2 border-dashed border-border' : 'border border-border/40'} ${
                                   cfLocked ? 'opacity-40 cursor-not-allowed' : ''
                                 }`}
                                 style={{ background: cf.color }}
                                 title={cfLocked ? 'Premium' : cf.label}
                               >
-                                {cfLocked && <Lock className="w-1.5 h-1.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                                {cfLocked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
                               </button>
                             );
                           })}
@@ -213,7 +213,7 @@ export function BottomBar({
                 </div>
               );
             })}
-          </>
+          </div>
         )}
       </div>
 
