@@ -91,8 +91,10 @@ export function RightSidebar({
   const [aiGeneratedVibes, setAiGeneratedVibes] = useState<Vibe[]>([]);
   const aiCredits = useAiCredits();
   const { generateStencil, isGenerating } = useGenerateStencil({
-    onCreditsError: (msg, status) => aiCredits.recordFailure(msg, status),
-    onSuccess: () => aiCredits.recordSuccess(),
+    onCreditsUpdate: (data) => aiCredits.updateFromResponse(data),
+    onNoPremium: () => aiCredits.openPremiumPaywall(),
+    onNoCredits: () => aiCredits.openPurchaseModal(),
+    onSuccess: () => {},
   });
   const { user } = useAuth();
   const social = useStencilSocial();
@@ -163,8 +165,8 @@ export function RightSidebar({
   };
 
   const handleGenerate = async () => {
-    if (!isPremium) { aiCredits.guardFreeUser(); return; }
-    if (aiCredits.guardAiAction()) return;
+    if (!aiCredits.isPremium) { aiCredits.openPremiumPaywall(); return; }
+    if (aiCredits.totalRemaining === 0) { aiCredits.openPurchaseModal(); return; }
     const vibe = await generateStencil(aiPrompt);
     if (vibe) {
       setAiGeneratedVibes(prev => [...prev, vibe]);
@@ -186,8 +188,8 @@ export function RightSidebar({
   };
 
   const handleGenerateMood = () => {
-    if (!isPremium) { aiCredits.guardFreeUser(); return; }
-    if (aiCredits.guardAiAction()) return;
+    if (!aiCredits.isPremium) { aiCredits.openPremiumPaywall(); return; }
+    if (aiCredits.totalRemaining === 0) { aiCredits.openPurchaseModal(); return; }
     if (moodPrompt.trim()) {
       onGenerateMood(moodPrompt.trim());
       setMoodPrompt('');
@@ -408,9 +410,9 @@ export function RightSidebar({
                   <div className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground mb-1">
                     <Sparkles className="w-3 h-3 text-primary" />
                     {kidMode ? '✨ Magic Shape' : 'AI Stencil'}
-                    {isPremium && (
+                    {aiCredits.isPremium && (
                       <span className="ml-auto text-[8px] text-muted-foreground/70">
-                        {aiCredits.dailyInfo.remaining}/{aiCredits.dailyInfo.max} today
+                        {aiCredits.totalRemaining} left
                       </span>
                     )}
                     {kidMode && (
@@ -437,21 +439,21 @@ export function RightSidebar({
                         onKeyDown={e => e.key === 'Enter' && !isGenerating && handleGenerate()}
                         placeholder={kidMode ? 'dragon, cat…' : 'flower, castle…'}
                         maxLength={12}
-                        className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${kidMode ? 'text-xs py-1.5' : ''} ${!isPremium ? 'opacity-60' : ''}`}
-                        disabled={isGenerating || aiCredits.limitReached || !isPremium}
+                        className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${kidMode ? 'text-xs py-1.5' : ''} ${!aiCredits.isPremium ? 'opacity-60' : ''}`}
+                        disabled={isGenerating || aiCredits.totalRemaining === 0 || !aiCredits.isPremium}
                       />
                       <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{aiPrompt.length}/12</span>
                     </div>
                     <button
                       onClick={handleGenerate}
-                      disabled={isGenerating || !aiPrompt.trim() || aiCredits.limitReached}
+                      disabled={isGenerating || !aiPrompt.trim() || aiCredits.totalRemaining === 0}
                       className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded transition-colors ${kidMode ? 'px-3 py-1.5' : ''} ${
-                        !isPremium
+                        !aiCredits.isPremium
                           ? 'bg-secondary/50 text-muted-foreground/60 cursor-pointer'
                           : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
                       }`}
                     >
-                      {!isPremium ? (
+                      {!aiCredits.isPremium ? (
                         <Lock className="w-2.5 h-2.5" />
                       ) : isGenerating ? (
                         <Loader2 className="w-2.5 h-2.5 animate-spin" />
@@ -480,21 +482,21 @@ export function RightSidebar({
                             onKeyDown={e => e.key === 'Enter' && !isGeneratingMood && handleGenerateMood()}
                             placeholder="cozy, tropical…"
                             maxLength={12}
-                            className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${!isPremium ? 'opacity-60' : ''}`}
-                            disabled={isGeneratingMood || aiCredits.limitReached || !isPremium}
+                            className={`w-full px-2 py-1 text-[10px] rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 pr-8 ${!aiCredits.isPremium ? 'opacity-60' : ''}`}
+                            disabled={isGeneratingMood || aiCredits.totalRemaining === 0 || !aiCredits.isPremium}
                           />
                           <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] text-muted-foreground/50">{moodPrompt.length}/12</span>
                         </div>
                         <button
                           onClick={handleGenerateMood}
-                          disabled={isGeneratingMood || !moodPrompt.trim() || aiCredits.limitReached}
+                          disabled={isGeneratingMood || !moodPrompt.trim() || aiCredits.totalRemaining === 0}
                           className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded transition-colors ${
-                            !isPremium
+                            !aiCredits.isPremium
                               ? 'bg-secondary/50 text-muted-foreground/60 cursor-pointer'
                               : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
                           }`}
                         >
-                          {!isPremium ? (
+                          {!aiCredits.isPremium ? (
                             <Lock className="w-2.5 h-2.5" />
                           ) : isGeneratingMood ? (
                             <Loader2 className="w-2.5 h-2.5 animate-spin" />
@@ -681,20 +683,27 @@ export function RightSidebar({
         )}
       </div>
 
-      {/* AI Credits Banner — only for premium users at limit */}
-      {isPremium && aiCredits.limitReached && (
+      {/* AI Credits Counter — shown when premium and running low */}
+      {aiCredits.isPremium && aiCredits.totalRemaining <= 3 && aiCredits.totalRemaining > 0 && (
+        <AiCreditsBanner
+          type="warning"
+          visible={true}
+          onDismiss={() => {}}
+        />
+      )}
+      {aiCredits.isPremium && aiCredits.totalRemaining === 0 && (
         <AiCreditsBanner
           type="limit"
           visible={true}
-          onDismiss={aiCredits.dismissModal}
+          onDismiss={() => {}}
         />
       )}
 
-      {/* Daily limit modal — premium users */}
-      <AiLowCreditsModal isOpen={aiCredits.showModal} onClose={aiCredits.dismissModal} />
+      {/* Purchase modal — out of credits */}
+      <AiLowCreditsModal isOpen={aiCredits.showPurchaseModal} onClose={aiCredits.closePurchaseModal} />
 
       {/* Premium upsell modal — free users */}
-      <AiPremiumUpsellModal isOpen={aiCredits.showPremiumModal} onClose={aiCredits.dismissPremiumModal} onUpgrade={onRequestUpgrade} />
+      <AiPremiumUpsellModal isOpen={aiCredits.showPremiumPaywall} onClose={aiCredits.closePremiumPaywall} onUpgrade={onRequestUpgrade} />
     </div>
   );
 }

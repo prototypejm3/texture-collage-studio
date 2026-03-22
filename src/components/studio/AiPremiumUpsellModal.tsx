@@ -25,11 +25,24 @@ export function AiPremiumUpsellModal({ isOpen, onClose, onUpgrade }: AiPremiumUp
             </div>
 
             <h3 className="text-center text-sm font-semibold text-foreground mb-1">
-              AI is part of Studio Premium ✨
+              ✦ Unlock AI Stencils
             </h3>
             <p className="text-center text-xs text-muted-foreground mb-5 leading-relaxed">
-              Unlock to create your own custom designs with AI-powered stencils and moods.
+              Generate custom stencils with AI
             </p>
+
+            <ul className="space-y-2 mb-5">
+              {[
+                '10 generations / month',
+                'Buy more packs anytime (10 for $2)',
+                'Credits never expire',
+              ].map(item => (
+                <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Sparkles className="w-3 h-3 text-primary flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
 
             <div className="flex flex-col gap-2">
               <button

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "npm:@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -300,9 +301,76 @@ serve(async (req) => {
       );
     }
 
+    // Authenticate user
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "PREMIUM_REQUIRED", message: "Authentication required" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(
+        JSON.stringify({ error: "PREMIUM_REQUIRED", message: "Invalid authentication" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const userId = claimsData.claims.sub;
+
+    // Fetch profile
+    const { data: profile, error: profileError } = await supabaseClient
+      .from("profiles")
+      .select("is_premium, monthly_credits, monthly_used, purchased_credits, credits_reset_at")
+      .eq("id", userId)
+      .single();
+
+    if (profileError || !profile) {
+      return new Response(
+        JSON.stringify({ error: "PREMIUM_REQUIRED", message: "Profile not found" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Gate 1: Premium check
+    if (!profile.is_premium) {
+      return new Response(
+        JSON.stringify({ error: "PREMIUM_REQUIRED", message: "Premium subscription required for AI stencils" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Gate 2: Credits check
+    const remainingMonthly = Math.max(0, profile.monthly_credits - profile.monthly_used);
+    const totalRemaining = remainingMonthly + profile.purchased_credits;
+
+    if (totalRemaining === 0) {
+      return new Response(
+        JSON.stringify({
+          error: "NO_CREDITS",
+          message: "You're out of AI stencil credits",
+          remainingMonthly: 0,
+          purchasedCredits: profile.purchased_credits,
+          creditsResetAt: profile.credits_reset_at,
+        }),
+        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Check for curated match first (doesn't cost a credit)
     const curated = getCuratedStencil(prompt);
+    let vibe;
+
     if (curated) {
-      const vibe = {
+      vibe = {
         id: `ai-${Date.now()}`,
         name: curated.name,
         emoji: curated.emoji,
@@ -314,145 +382,151 @@ serve(async (req) => {
         darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
         accentTextures: ["boucle-blush", "linen-dusty-rose", "velvet-emerald"],
       };
+    } else {
+      // AI generation
+      const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+      if (!LOVABLE_API_KEY) {
+        return new Response(
+          JSON.stringify({ error: "GENERATION_FAILED", message: "AI service not configured" }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
 
-      return new Response(JSON.stringify(vibe), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      return new Response(
-        JSON.stringify({ error: "LOVABLE_API_KEY not configured" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-pro",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `Create a simple, clean, cartoon-style stencil of a ${prompt}.
-
-Requirements:
-- bold outline
-- clear recognizable silhouette
-- no small details
-- no textures or shading
-
-Structure:
-- divide into 4–6 large fillable sections
-- each section must be clearly separated
-
-Style:
-- flat
-- minimal
-- child-friendly
-- easy to color
-
-The object must be instantly recognizable at first glance.
-
-Generate the stencil with clean, bold SVG paths. Every section must be large and clearly bounded.` },
-        ],
-        tools: [
-          {
-            type: "function",
-            function: {
-              name: "generate_stencil",
-              description: "Generate an SVG stencil with labeled sections that tile together",
-              parameters: {
-                type: "object",
-                properties: {
-                  name: { type: "string", description: "Short name for the stencil (1-2 words)" },
-                  emoji: { type: "string", description: "A single emoji representing the stencil" },
-                  description: { type: "string", description: "Brief description of the stencil" },
-                  sections: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        id: { type: "string", description: "Unique kebab-case id like 'flower-petals'" },
-                        label: { type: "string", description: "Short human label like 'Petals'" },
-                        tone: { type: "string", enum: ["light", "medium", "dark", "accent"] },
-                        path: { type: "string", description: "SVG path d attribute — must be closed (Z), use curves (Q/C), be chunky and bold" },
+      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-pro",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: `Create a simple, clean, cartoon-style stencil of a ${prompt}.\n\nRequirements:\n- bold outline\n- clear recognizable silhouette\n- no small details\n- no textures or shading\n\nStructure:\n- divide into 4–6 large fillable sections\n- each section must be clearly separated\n\nStyle:\n- flat\n- minimal\n- child-friendly\n- easy to color\n\nThe object must be instantly recognizable at first glance.\n\nGenerate the stencil with clean, bold SVG paths. Every section must be large and clearly bounded.` },
+          ],
+          tools: [
+            {
+              type: "function",
+              function: {
+                name: "generate_stencil",
+                description: "Generate an SVG stencil with labeled sections that tile together",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    name: { type: "string", description: "Short name for the stencil (1-2 words)" },
+                    emoji: { type: "string", description: "A single emoji representing the stencil" },
+                    description: { type: "string", description: "Brief description of the stencil" },
+                    sections: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: { type: "string", description: "Unique kebab-case id like 'flower-petals'" },
+                          label: { type: "string", description: "Short human label like 'Petals'" },
+                          tone: { type: "string", enum: ["light", "medium", "dark", "accent"] },
+                          path: { type: "string", description: "SVG path d attribute — must be closed (Z), use curves (Q/C), be chunky and bold" },
+                        },
+                        required: ["id", "label", "tone", "path"],
+                        additionalProperties: false,
                       },
-                      required: ["id", "label", "tone", "path"],
-                      additionalProperties: false,
+                      minItems: 4,
+                      maxItems: 8,
                     },
-                    minItems: 4,
-                    maxItems: 8,
                   },
+                  required: ["name", "emoji", "description", "sections"],
+                  additionalProperties: false,
                 },
-                required: ["name", "emoji", "description", "sections"],
-                additionalProperties: false,
               },
             },
-          },
-        ],
-        tool_choice: { type: "function", function: { name: "generate_stencil" } },
-      }),
-    });
+          ],
+          tool_choice: { type: "function", function: { name: "generate_stencil" } },
+        }),
+      });
 
-    if (!response.ok) {
-      const status = response.status;
-      if (status === 429) {
+      if (!response.ok) {
+        const status = response.status;
+        if (status === 429) {
+          return new Response(
+            JSON.stringify({ error: "GENERATION_FAILED", message: "Rate limit exceeded. Please try again in a moment." }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        if (status === 402) {
+          return new Response(
+            JSON.stringify({ error: "GENERATION_FAILED", message: "AI service temporarily unavailable." }),
+            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        const text = await response.text();
+        console.error("AI gateway error:", status, text);
         return new Response(
-          JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
-          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          JSON.stringify({ error: "GENERATION_FAILED", message: "Something went wrong. Credit not used." }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      if (status === 402) {
+
+      const data = await response.json();
+      const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+      if (!toolCall?.function?.arguments) {
+        console.error("No tool call in response:", JSON.stringify(data));
         return new Response(
-          JSON.stringify({ error: "AI credits exhausted. Please add funds." }),
-          { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          JSON.stringify({ error: "GENERATION_FAILED", message: "Something went wrong. Credit not used." }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      const text = await response.text();
-      console.error("AI gateway error:", status, text);
-      return new Response(
-        JSON.stringify({ error: "AI generation failed" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+
+      const stencil = JSON.parse(toolCall.function.arguments);
+      vibe = {
+        id: `ai-${Date.now()}`,
+        name: stencil.name,
+        emoji: stencil.emoji,
+        description: stencil.description,
+        viewBox: "0 0 480 480",
+        sections: stencil.sections,
+        lightTextures: ["linen-white", "linen-natural", "boucle-cream", "boucle-ivory"],
+        mediumTextures: ["suede-camel", "leather-tan", "linen-mustard", "boucle-taupe"],
+        darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
+        accentTextures: ["boucle-blush", "linen-dusty-rose", "velvet-emerald"],
+      };
     }
 
-    const data = await response.json();
-    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
-    if (!toolCall?.function?.arguments) {
-      console.error("No tool call in response:", JSON.stringify(data));
-      return new Response(
-        JSON.stringify({ error: "AI did not return a valid stencil" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+    // Deduct credit — monthly first (use service role for update)
+    const adminClient = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      { auth: { persistSession: false } }
+    );
+
+    if (remainingMonthly > 0) {
+      await adminClient
+        .from("profiles")
+        .update({ monthly_used: profile.monthly_used + 1 })
+        .eq("id", userId);
+    } else {
+      await adminClient
+        .from("profiles")
+        .update({ purchased_credits: profile.purchased_credits - 1 })
+        .eq("id", userId);
     }
 
-    const stencil = JSON.parse(toolCall.function.arguments);
+    // Calculate new remaining
+    const newRemainingMonthly = remainingMonthly > 0 ? remainingMonthly - 1 : 0;
+    const newPurchasedCredits = remainingMonthly > 0 ? profile.purchased_credits : profile.purchased_credits - 1;
+    const newTotalRemaining = newRemainingMonthly + newPurchasedCredits;
 
-    const vibe = {
-      id: `ai-${Date.now()}`,
-      name: stencil.name,
-      emoji: stencil.emoji,
-      description: stencil.description,
-      viewBox: "0 0 480 480",
-      sections: stencil.sections,
-      lightTextures: ["linen-white", "linen-natural", "boucle-cream", "boucle-ivory"],
-      mediumTextures: ["suede-camel", "leather-tan", "linen-mustard", "boucle-taupe"],
-      darkTextures: ["suede-terracotta", "leather-cognac", "velvet-rust", "wood-walnut"],
-      accentTextures: ["boucle-blush", "linen-dusty-rose", "velvet-emerald"],
-    };
-
-    return new Response(JSON.stringify(vibe), {
+    return new Response(JSON.stringify({
+      ...vibe,
+      remainingMonthly: newRemainingMonthly,
+      purchasedCredits: newPurchasedCredits,
+      totalRemaining: newTotalRemaining,
+      creditsResetAt: profile.credits_reset_at,
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
     console.error("generate-stencil error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: "GENERATION_FAILED", message: e instanceof Error ? e.message : "Unknown error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

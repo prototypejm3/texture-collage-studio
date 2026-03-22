@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, Zap } from 'lucide-react';
+import { X, Sparkles, Zap, ShoppingCart } from 'lucide-react';
+import { useAiCredits } from '@/hooks/useAiCredits';
 
 interface AiCreditsBannerProps {
   type: 'limit' | 'warning';
@@ -8,6 +9,8 @@ interface AiCreditsBannerProps {
 }
 
 export function AiCreditsBanner({ type, visible, onDismiss }: AiCreditsBannerProps) {
+  const { totalRemaining, handlePurchase } = useAiCredits();
+
   return (
     <AnimatePresence>
       {visible && (
@@ -26,17 +29,21 @@ export function AiCreditsBanner({ type, visible, onDismiss }: AiCreditsBannerPro
               {type === 'limit' ? (
                 <>
                   <Sparkles className="w-3 h-3" />
-                  AI is taking a little break ✨
+                  You're out of AI stencil credits
                 </>
               ) : (
                 <>
                   <Zap className="w-3 h-3" />
-                  Studio magic running low ⚡
+                  Almost out — {totalRemaining} left
                 </>
               )}
             </span>
-            <button onClick={onDismiss} className="p-0.5 rounded hover:bg-foreground/10 transition-colors">
-              <X className="w-3 h-3" />
+            <button
+              onClick={handlePurchase}
+              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium rounded bg-primary/10 hover:bg-primary/20 transition-colors"
+            >
+              <ShoppingCart className="w-2.5 h-2.5" />
+              Get 10 more for $2
             </button>
           </div>
         </motion.div>

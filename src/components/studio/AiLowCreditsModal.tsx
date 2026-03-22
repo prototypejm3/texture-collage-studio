@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Palette } from 'lucide-react';
+import { Sparkles, ShoppingCart } from 'lucide-react';
+import { useAiCredits } from '@/hooks/useAiCredits';
 
 interface AiLowCreditsModalProps {
   isOpen: boolean;
@@ -7,6 +8,12 @@ interface AiLowCreditsModalProps {
 }
 
 export function AiLowCreditsModal({ isOpen, onClose }: AiLowCreditsModalProps) {
+  const { handlePurchase, remainingMonthly, purchasedCredits, creditsResetAt } = useAiCredits();
+
+  const resetDate = creditsResetAt ? new Date(creditsResetAt) : null;
+  const nextReset = resetDate ? new Date(resetDate.getFullYear(), resetDate.getMonth() + 1, 1) : null;
+  const resetLabel = nextReset ? nextReset.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -19,30 +26,39 @@ export function AiLowCreditsModal({ isOpen, onClose }: AiLowCreditsModalProps) {
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
             className="relative bg-popover border border-border rounded-2xl p-6 w-full max-w-xs shadow-2xl"
           >
-            <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-amber-100 dark:bg-amber-900/30">
-              <Sparkles className="w-7 h-7 text-amber-500" />
+            <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-primary/15">
+              <Sparkles className="w-7 h-7 text-primary" />
             </div>
 
-            <p className="text-center text-sm leading-relaxed text-foreground mb-1">
-              We used up today's magic ✨
-            </p>
-            <p className="text-center text-xs text-muted-foreground mb-5">
-              AI is taking a break — explore the other features for now 💛
-            </p>
+            <h3 className="text-center text-sm font-semibold text-foreground mb-1">
+              Get More AI Stencils
+            </h3>
+
+            <div className="text-center mb-4">
+              <div className="text-2xl font-bold text-foreground">10 generations</div>
+              <div className="text-lg font-semibold text-primary">$2.00</div>
+              <p className="text-[11px] text-muted-foreground mt-1">Credits never expire</p>
+            </div>
+
+            <div className="text-[10px] text-muted-foreground text-center mb-4 bg-secondary/50 rounded-lg px-3 py-2">
+              <div>Monthly: {remainingMonthly} left</div>
+              <div>Extra: {purchasedCredits} left</div>
+              {resetLabel && <div className="mt-1">or wait until {resetLabel}</div>}
+            </div>
 
             <div className="flex flex-col gap-2">
               <button
-                onClick={onClose}
-                className="w-full px-4 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                onClick={() => { handlePurchase(); onClose(); }}
+                className="w-full px-4 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-1.5"
               >
-                <Palette className="w-4 h-4 inline mr-1.5 -mt-0.5" />
-                Keep Creating
+                <ShoppingCart className="w-4 h-4" />
+                Buy for $2
               </button>
               <button
                 onClick={onClose}
                 className="w-full px-3 py-2 text-xs rounded-xl bg-secondary text-secondary-foreground hover:bg-accent transition-colors"
               >
-                Got it
+                Cancel
               </button>
             </div>
           </motion.div>
