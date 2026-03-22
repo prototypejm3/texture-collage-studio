@@ -35,6 +35,7 @@ import { StencilTray } from '@/components/studio/MobileStencilTray';
 import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
+import { TextPanel } from '@/components/studio/TextPanel';
 
 const Index = () => {
   const navigate = useNavigate();
