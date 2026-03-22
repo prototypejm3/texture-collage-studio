@@ -586,7 +586,7 @@ const Index = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-                  className="overflow-hidden"
+className="overflow-visible relative"
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 320,
@@ -614,7 +614,7 @@ const Index = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="overflow-y-auto bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 36px)' : 284 }}>
+                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 36px)' : 284 }}>
                     {activeBox === 'textures' && (
                       <TextureLibrary
                         onDragStart={handleDragStartLib}
