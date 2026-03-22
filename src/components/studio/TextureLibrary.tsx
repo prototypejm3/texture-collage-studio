@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { textures } from '@/data/textures';
 import { kidTextureNames } from '@/data/textures/kidNames';
+import { kidColorOrder } from '@/data/textures/kidColorOrder';
 import { TextureCategory, TextureSwatch, ElementShape } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Upload, X, Lock, Star, Grid3X3, Maximize, PenTool, RectangleHorizontal, Minus } from 'lucide-react';
@@ -171,6 +172,15 @@ export function TextureLibrary({
     : activeGroup === 'Favorites'
       ? allTextures.filter(t => favIds.has(t.id))
       : allTextures;
+
+  // In kid mode, sort by color rainbow order
+  if (kidMode && activeGroup !== 'Favorites') {
+    filtered = [...filtered].sort((a, b) => {
+      const oa = kidColorOrder[a.id] ?? 999;
+      const ob = kidColorOrder[b.id] ?? 999;
+      return oa - ob;
+    });
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
