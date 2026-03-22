@@ -433,31 +433,35 @@ const MyWall = () => {
           {kidMode ? (
             <div className="flex flex-wrap items-center gap-3 px-1">
               <div className="mr-auto" />
-              {/* Wall background circles */}
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-muted-foreground">🏠 Room:</span>
-                {[
-                  { value: 'white-brick' as const, label: '🤍', img: '/walls/white-brick.png' },
-                  { value: 'sky-blue' as const, label: '☁️', img: '/walls/sky-blue-wall.png' },
-                  { value: 'mint' as const, label: '🌿', img: '/walls/mint-wall.png' },
-                  { value: 'blush' as const, label: '🌸', img: '/walls/blush-wall.png' },
-                  { value: 'red' as const, label: '🔴', img: '/walls/red-wall.png' },
-                  { value: 'green' as const, label: '🟢', img: '/walls/green-wall.png' },
-                  { value: 'wood-birch-wall' as const, label: '🪵', img: '/walls/wood-birch-wall.png' },
-                ].map(bg => (
-                  <button
-                    key={bg.value}
-                    onClick={() => handleUpdateSettings({ background: bg.value })}
-                    className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 overflow-hidden ${
-                      currentSettings.background === bg.value
-                        ? 'border-primary scale-110 shadow-md ring-2 ring-primary/30'
-                        : 'border-border/40'
-                    }`}
-                    title={bg.label}
-                  >
-                    <img src={bg.img} alt={bg.label} className="w-full h-full object-cover" />
-                  </button>
-                ))}
+              {/* Wall background circles — illustrated icons */}
+              <div className="flex items-center gap-2.5">
+                <span className="text-[13px] font-semibold" style={{ color: 'hsl(var(--toybox-text))' }}>🎨 Wall:</span>
+                {([
+                  { value: 'white-brick' as WallBackground, label: '☁️ Cloud', fill: '#f5f5f0', borderColor: '#e2ddd6', icon: 'cloud' },
+                  { value: 'wood-birch-wall' as WallBackground, label: '☀️ Sunset', fill: '#fef3e8', borderColor: '#e2ddd6', icon: 'sunset' },
+                  { value: 'mint' as WallBackground, label: '🌿 Sage', fill: '#edf4ed', borderColor: '#e2ddd6', icon: 'sage' },
+                  { value: 'blush' as WallBackground, label: '💕 Blush', fill: '#fdf0f0', borderColor: '#e2ddd6', icon: 'blush' },
+                  { value: 'red' as WallBackground, label: '🍎 Apple', fill: '#fdf0f0', borderColor: '#e2ddd6', icon: 'apple' },
+                  { value: 'green' as WallBackground, label: '🌲 Forest', fill: '#e8f4e8', borderColor: '#e2ddd6', icon: 'forest' },
+                  { value: 'wood-oak-wall' as WallBackground, label: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6', icon: 'linen' },
+                ] as const).map(bg => {
+                  const isSelected = currentSettings.background === bg.value;
+                  return (
+                    <button
+                      key={bg.value}
+                      onClick={() => handleUpdateSettings({ background: bg.value })}
+                      className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                      style={{
+                        width: 56, height: 56,
+                        backgroundColor: bg.fill,
+                        border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                      }}
+                      title={bg.label}
+                    >
+                      <KidWallIcon type={bg.icon} />
+                    </button>
+                  );
+                })}
               </div>
               {/* Magic arrange */}
               <button
