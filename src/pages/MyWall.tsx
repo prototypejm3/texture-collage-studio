@@ -37,6 +37,7 @@ const bgStyles: Record<WallBackground, string> = {
   'blush': 'wall-bg-blush',
   'red': 'wall-bg-red',
   'green': 'wall-bg-green',
+  'floral': 'wall-bg-floral',
   'custom': '',
 };
 
