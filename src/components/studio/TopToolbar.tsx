@@ -7,6 +7,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
 import logoImg from '@/assets/logo.png';
+import {
+  KidCrownIcon, GrannyIcon, HouseIcon, TentIcon,
+  SparkleIcon, SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon, MusicNoteIcon,
+  SpeakerIcon, TrashCanIcon, SaveBoxIcon, DownloadTrayIcon, PencilIcon,
+} from './ToyboxIcons';
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
