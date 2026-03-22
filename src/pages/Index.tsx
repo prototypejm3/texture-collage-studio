@@ -552,7 +552,7 @@ const Index = () => {
                 <div
                   className="overflow-hidden"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : 340),
+                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 320,
                     background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
                     borderRadius: 10,
