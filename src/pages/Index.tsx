@@ -606,7 +606,7 @@ const Index = () => {
             />
 
             {/* Stencil mode picker — inline above canvas */}
-            {showStencilModePicker && studio.activeVibe && !sounds.kidMode && (
+            {showStencilModePicker && studio.activeVibe && sounds.kidMode && (
               <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50" data-box-drawer onClick={e => e.stopPropagation()}>
                 <div
                   className="flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-lg"
