@@ -166,11 +166,7 @@ export function NavBar() {
   return (
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
-          <span className="text-sm font-bold tracking-tight text-foreground">
-            Swatchbox Studio
-          </span>
+          <SwatchboxLogo height={32} />
           <button
             onClick={handleToggleKidMode}
             title="Switch to Kids Mode"

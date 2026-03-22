@@ -227,10 +227,7 @@ export function TopToolbar({
 
         {!kidMode && (
           <div className="flex items-center gap-1.5">
-            <div className="flex items-center gap-1.5">
-              <img src={logoImg} alt="Swatchbox Studio" className="w-6 h-6 object-contain" />
-              <span className="font-bold tracking-tight text-foreground text-xs">Swatchbox Studio</span>
-            </div>
+            <SwatchboxLogo height={28} />
             <div className="hidden md:flex items-center gap-1.5">
               <Link to="/" title="Open the creative studio" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
                 <Brush className="w-4 h-4" /> Create
