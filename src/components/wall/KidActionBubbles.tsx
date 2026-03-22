@@ -247,9 +247,9 @@ export function KidActionBubbles({
   };
 
   const getLabel = (action: BubbleAction) => {
-    // For adult hide bubble, show current state
     if (action.id === 'hide') return design.hidden ? 'Show' : 'Hide';
     if (action.id === 'pin') return design.pinned ? 'Unpin' : 'Pin';
+    if (action.id === 'gallery') return design.gallerySubmissionId ? 'Submitted' : 'Gallery';
     return action.label;
   };
 
