@@ -91,18 +91,33 @@ export type Database = {
       profiles: {
         Row: {
           created_at: string
+          credits_reset_at: string
           display_name: string | null
           id: string
+          is_premium: boolean
+          monthly_credits: number
+          monthly_used: number
+          purchased_credits: number
         }
         Insert: {
           created_at?: string
+          credits_reset_at?: string
           display_name?: string | null
           id: string
+          is_premium?: boolean
+          monthly_credits?: number
+          monthly_used?: number
+          purchased_credits?: number
         }
         Update: {
           created_at?: string
+          credits_reset_at?: string
           display_name?: string | null
           id?: string
+          is_premium?: boolean
+          monthly_credits?: number
+          monthly_used?: number
+          purchased_credits?: number
         }
         Relationships: []
       }
