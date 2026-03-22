@@ -724,6 +724,8 @@ const Index = () => {
         </div>
       </div>
 
+      <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
+
       <GenerateVibeModal
         isOpen={showVibeModal}
         isGenerating={vibeGen.isGenerating}
