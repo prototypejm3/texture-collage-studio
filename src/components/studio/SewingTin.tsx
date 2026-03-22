@@ -53,7 +53,7 @@ export function SewingTin({ isOpen, onToggle, itemCount }: SewingTinProps) {
           </motion.span>
         )}
       </AnimatePresence>
-      <span className="text-[9px] text-muted-foreground mt-0.5 opacity-60">Keepsakes</span>
+      
     </motion.button>
   );
 }
