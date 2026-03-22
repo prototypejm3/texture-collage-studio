@@ -41,6 +41,26 @@ const bgStyles: Record<WallBackground, string> = {
   'custom': '',
 };
 
+function KidWallIcon({ type }: { type: string }) {
+  switch (type) {
+    case 'cloud':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><ellipse cx="15" cy="22" rx="7" ry="5" fill="white"/><ellipse cx="22" cy="19" rx="8" ry="6" fill="white"/><ellipse cx="28" cy="22" rx="6" ry="4.5" fill="white"/><line x1="8" y1="30" x2="32" y2="30" stroke="#e2ddd6" strokeWidth="1"/></svg>);
+    case 'sunset':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><circle cx="20" cy="20" r="7" fill="#fbbf24"/><line x1="20" y1="7" x2="20" y2="11" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/><line x1="20" y1="29" x2="20" y2="33" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/><line x1="9" y1="14" x2="12" y2="17" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/><line x1="28" y1="23" x2="31" y2="26" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/><line x1="28" y1="14" x2="31" y2="11" stroke="#fbbf24" strokeWidth="1.5" strokeLinecap="round"/></svg>);
+    case 'sage':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><rect x="15" y="26" width="10" height="8" rx="2" fill="#c4956a"/><line x1="20" y1="12" x2="20" y2="26" stroke="#6b8a5e" strokeWidth="1.5"/><ellipse cx="16" cy="18" rx="4" ry="3" fill="#22c55e" transform="rotate(-20 16 18)"/><ellipse cx="24" cy="16" rx="4" ry="3" fill="#4ade80" transform="rotate(20 24 16)"/><ellipse cx="20" cy="13" rx="3.5" ry="2.5" fill="#22c55e"/></svg>);
+    case 'blush':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><path d="M20 30 C20 30, 8 20, 8 15 C8 10, 13 8, 20 14 C27 8, 32 10, 32 15 C32 20, 20 30, 20 30Z" fill="#f9a8d4"/><path d="M14 10 C14 10, 10 7, 10 5.5 C10 4, 12 3, 14 5 C16 3, 18 4, 18 5.5 C18 7, 14 10, 14 10Z" fill="#f472b6"/><path d="M27 9 C27 9, 24.5 7, 24.5 6 C24.5 5, 25.5 4.5, 27 5.5 C28.5 4.5, 29.5 5, 29.5 6 C29.5 7, 27 9, 27 9Z" fill="#f472b6"/></svg>);
+    case 'apple':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><path d="M20 10 C14 10, 10 15, 10 22 C10 29, 15 33, 20 33 C25 33, 30 29, 30 22 C30 15, 26 10, 20 10Z" fill="#e05c5c"/><ellipse cx="16" cy="18" rx="3" ry="4" fill="white" opacity="0.3"/><line x1="20" y1="10" x2="20" y2="7" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round"/><ellipse cx="23" cy="8" rx="3" ry="2" fill="#22c55e" transform="rotate(30 23 8)"/></svg>);
+    case 'forest':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><polygon points="20,6 10,28 30,28" fill="#22c55e"/><rect x="18" y="28" width="4" height="6" fill="#c4956a"/><polygon points="20,8 22,8 20,6" fill="#fbbf24"/><circle cx="20" cy="7" r="2" fill="#fbbf24"/></svg>);
+    case 'linen':
+      return (<svg viewBox="0 0 40 40" className="w-full h-full"><ellipse cx="20" cy="24" rx="10" ry="11" fill="#c4956a"/><ellipse cx="20" cy="27" rx="6" ry="7" fill="#d9a97c"/><circle cx="14" cy="14" r="4" fill="#c4956a"/><circle cx="26" cy="14" r="4" fill="#c4956a"/><circle cx="14" cy="14" r="2" fill="#d9a97c"/><circle cx="26" cy="14" r="2" fill="#d9a97c"/></svg>);
+    default: return null;
+  }
+}
+
 const MyWall = () => {
   const navigate = useNavigate();
   const wall = useWall();
@@ -433,31 +453,35 @@ const MyWall = () => {
           {kidMode ? (
             <div className="flex flex-wrap items-center gap-3 px-1">
               <div className="mr-auto" />
-              {/* Wall background circles */}
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-muted-foreground">🏠 Room:</span>
-                {[
-                  { value: 'white-brick' as const, label: '🤍', img: '/walls/white-brick.png' },
-                  { value: 'sky-blue' as const, label: '☁️', img: '/walls/sky-blue-wall.png' },
-                  { value: 'mint' as const, label: '🌿', img: '/walls/mint-wall.png' },
-                  { value: 'blush' as const, label: '🌸', img: '/walls/blush-wall.png' },
-                  { value: 'red' as const, label: '🔴', img: '/walls/red-wall.png' },
-                  { value: 'green' as const, label: '🟢', img: '/walls/green-wall.png' },
-                  { value: 'wood-birch-wall' as const, label: '🪵', img: '/walls/wood-birch-wall.png' },
-                ].map(bg => (
-                  <button
-                    key={bg.value}
-                    onClick={() => handleUpdateSettings({ background: bg.value })}
-                    className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 overflow-hidden ${
-                      currentSettings.background === bg.value
-                        ? 'border-primary scale-110 shadow-md ring-2 ring-primary/30'
-                        : 'border-border/40'
-                    }`}
-                    title={bg.label}
-                  >
-                    <img src={bg.img} alt={bg.label} className="w-full h-full object-cover" />
-                  </button>
-                ))}
+              {/* Wall background circles — illustrated icons */}
+              <div className="flex items-center gap-2.5">
+                <span className="text-[13px] font-semibold" style={{ color: 'hsl(var(--toybox-text))' }}>🎨 Wall:</span>
+                {([
+                  { value: 'white-brick' as WallBackground, label: '☁️ Cloud', fill: '#f5f5f0', borderColor: '#e2ddd6', icon: 'cloud' },
+                  { value: 'wood-birch-wall' as WallBackground, label: '☀️ Sunset', fill: '#fef3e8', borderColor: '#e2ddd6', icon: 'sunset' },
+                  { value: 'mint' as WallBackground, label: '🌿 Sage', fill: '#edf4ed', borderColor: '#e2ddd6', icon: 'sage' },
+                  { value: 'blush' as WallBackground, label: '💕 Blush', fill: '#fdf0f0', borderColor: '#e2ddd6', icon: 'blush' },
+                  { value: 'red' as WallBackground, label: '🍎 Apple', fill: '#fdf0f0', borderColor: '#e2ddd6', icon: 'apple' },
+                  { value: 'green' as WallBackground, label: '🌲 Forest', fill: '#e8f4e8', borderColor: '#e2ddd6', icon: 'forest' },
+                  { value: 'wood-oak-wall' as WallBackground, label: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6', icon: 'linen' },
+                ] as const).map(bg => {
+                  const isSelected = currentSettings.background === bg.value;
+                  return (
+                    <button
+                      key={bg.value}
+                      onClick={() => handleUpdateSettings({ background: bg.value })}
+                      className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                      style={{
+                        width: 56, height: 56,
+                        backgroundColor: bg.fill,
+                        border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                      }}
+                      title={bg.label}
+                    >
+                      <KidWallIcon type={bg.icon} />
+                    </button>
+                  );
+                })}
               </div>
               {/* Magic arrange */}
               <button
