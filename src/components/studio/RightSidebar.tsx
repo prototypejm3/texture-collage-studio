@@ -683,20 +683,27 @@ export function RightSidebar({
         )}
       </div>
 
-      {/* AI Credits Banner — only for premium users at limit */}
-      {isPremium && aiCredits.limitReached && (
+      {/* AI Credits Counter — shown when premium and running low */}
+      {aiCredits.isPremium && aiCredits.totalRemaining <= 3 && aiCredits.totalRemaining > 0 && (
+        <AiCreditsBanner
+          type="warning"
+          visible={true}
+          onDismiss={() => {}}
+        />
+      )}
+      {aiCredits.isPremium && aiCredits.totalRemaining === 0 && (
         <AiCreditsBanner
           type="limit"
           visible={true}
-          onDismiss={aiCredits.dismissModal}
+          onDismiss={() => {}}
         />
       )}
 
-      {/* Daily limit modal — premium users */}
-      <AiLowCreditsModal isOpen={aiCredits.showModal} onClose={aiCredits.dismissModal} />
+      {/* Purchase modal — out of credits */}
+      <AiLowCreditsModal isOpen={aiCredits.showPurchaseModal} onClose={aiCredits.closePurchaseModal} />
 
       {/* Premium upsell modal — free users */}
-      <AiPremiumUpsellModal isOpen={aiCredits.showPremiumModal} onClose={aiCredits.dismissPremiumModal} onUpgrade={onRequestUpgrade} />
+      <AiPremiumUpsellModal isOpen={aiCredits.showPremiumPaywall} onClose={aiCredits.closePremiumPaywall} onUpgrade={onRequestUpgrade} />
     </div>
   );
 }
