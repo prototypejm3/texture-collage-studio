@@ -543,7 +543,7 @@ const Index = () => {
             <BoxButton
               id="mybox"
               icon="📦"
-              label={sounds.kidMode ? 'My Box' : 'Saved'}
+              label={sounds.kidMode ? 'My Swatch Box' : 'Save'}
               isActive={activeBox === 'mybox'}
               onClick={() => toggleBox('mybox')}
               kidMode={sounds.kidMode}
@@ -559,7 +559,7 @@ const Index = () => {
             <BoxButton
               id="tools"
               icon="🧰"
-              label="Tools"
+              label={sounds.kidMode ? 'My Tool Box' : 'Tools'}
               isActive={activeBox === 'tools'}
               onClick={() => toggleBox('tools')}
               kidMode={sounds.kidMode}
@@ -651,7 +651,7 @@ const Index = () => {
           <ExpandableDrawer
             isOpen={activeBox === 'tools'}
             onClose={closeBox}
-            title="Tools"
+            title={sounds.kidMode ? 'My Tool Box' : 'Tools'}
             icon="🧰"
             direction="up"
             kidMode={sounds.kidMode}
@@ -692,7 +692,7 @@ const Index = () => {
           <ExpandableDrawer
             isOpen={activeBox === 'mybox'}
             onClose={closeBox}
-            title={sounds.kidMode ? 'My Box' : 'Saved'}
+            title={sounds.kidMode ? 'My Swatch Box' : 'Save'}
             icon="📦"
             direction="right"
             kidMode={sounds.kidMode}
