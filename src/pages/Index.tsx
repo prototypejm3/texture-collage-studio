@@ -586,14 +586,13 @@ const Index = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-className="overflow-visible relative"
+                  className="overflow-visible relative"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
-                    maxHeight: isMobile ? '45vh' : 320,
-                    background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
-                    borderRadius: 10,
-                    boxShadow: '0 6px 24px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.12)',
-                    border: '2px solid rgba(0,0,0,0.15)',
+                    width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : 340),
+                    maxHeight: isMobile ? '45vh' : 360,
+                    borderRadius: 8,
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                    border: '1px solid rgba(139,94,60,0.4)',
                   }}
                 >
                   {/* Header */}
