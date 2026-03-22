@@ -186,8 +186,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   }, []);
 
   const allTex = [...textures, ...customTextures];
-  const texture = allTex.find(t => t.id === element.textureId);
-  if (!texture) return null;
+  const texture = element.textureId ? allTex.find(t => t.id === element.textureId) : null;
+  const isOutlineOnly = !texture;
 
   const clipPath = element.clipPathD ? `path('${element.clipPathD}')` : getClipPath(element.shape);
   const filter = getFilterStyles(element.effects);
