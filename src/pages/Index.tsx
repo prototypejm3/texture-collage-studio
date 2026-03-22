@@ -108,8 +108,8 @@ const Index = () => {
 
   // Auto-open tools box when elements exist on canvas
   useEffect(() => {
-    if (studio.elements.length > 0 && activeBox !== 'tools') {
-      openBox('tools');
+    if (studio.elements.length > 0 && activeBox !== 'toolbox') {
+      openBox('toolbox');
     }
   }, [studio.elements.length]);
 
