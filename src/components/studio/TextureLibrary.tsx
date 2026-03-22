@@ -596,7 +596,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
           aspectRatio,
         }}
       />
-      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center leading-tight">
         {displayName}
       </p>
       {/* Favorite star */}
