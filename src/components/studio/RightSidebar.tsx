@@ -446,9 +446,9 @@ export function RightSidebar({
                     </div>
                     <button
                       onClick={handleGenerate}
-                      disabled={isGenerating || !aiPrompt.trim() || aiCredits.limitReached}
+                      disabled={isGenerating || !aiPrompt.trim() || aiCredits.totalRemaining === 0}
                       className={`flex items-center justify-center px-2 py-1 text-[10px] font-medium rounded transition-colors ${kidMode ? 'px-3 py-1.5' : ''} ${
-                        !isPremium
+                        !aiCredits.isPremium
                           ? 'bg-secondary/50 text-muted-foreground/60 cursor-pointer'
                           : 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed'
                       }`}
