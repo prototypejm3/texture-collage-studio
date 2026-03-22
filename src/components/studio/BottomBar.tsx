@@ -251,10 +251,10 @@ export function BottomBar({
           <div className="relative">
             <button
               onClick={() => setShowColorMenu(prev => prev === 'wood' ? null : 'wood')}
-              className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] rounded-md transition-colors ${
+              className={`flex items-center gap-1 px-3 py-1.5 text-[11px] font-medium rounded-full transition-colors border ${
                 showColorMenu === 'wood'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                  ? 'bg-[#f97316] text-white border-[#f97316]'
+                  : 'bg-secondary text-foreground border-border hover:bg-accent'
               }`}
             >
               Pick Your Wood
