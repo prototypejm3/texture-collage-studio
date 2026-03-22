@@ -91,6 +91,13 @@ const Index = () => {
     }
   }, [searchParams, upgradeToPremium, navigate]);
 
+  // Auto-open tools box when an element is selected in adult mode
+  useEffect(() => {
+    if (studio.selectedId && !sounds.kidMode) {
+      toggleBox('tools');
+    }
+  }, [studio.selectedId]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
