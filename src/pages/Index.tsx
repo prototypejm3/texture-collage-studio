@@ -534,193 +534,180 @@ const Index = () => {
               onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
-            {/* ── EXPANDABLE BOX BUTTONS ── */}
-            {/* 📦 My Box — bottom-left (mobile) / left (desktop) */}
-            <div className={`absolute z-50 ${isMobile ? 'bottom-3 left-3' : 'bottom-3 left-3'}`}>
-              <BoxButton
-                id="mybox"
-                icon="📦"
-                label={sounds.kidMode ? 'My Box' : 'Saved'}
-                isActive={activeBox === 'mybox'}
-                onClick={() => toggleBox('mybox')}
-                kidMode={sounds.kidMode}
-              />
-            </div>
-
-            {/* ✂️ Stencils — bottom-right (mobile) / right-bottom (desktop) */}
-            <div className={`absolute z-50 ${isMobile ? 'bottom-3 right-3' : 'bottom-3 right-3'}`}>
-              <BoxButton
-                id="stencils"
-                icon="✂️"
-                label={sounds.kidMode ? 'Shapes' : 'Stencils'}
-                isActive={activeBox === 'stencils'}
-                onClick={() => toggleBox('stencils')}
-                kidMode={sounds.kidMode}
-              />
-            </div>
-
-            {/* 🧰 Tools — bottom-center */}
-            <div className={`absolute z-50 ${isMobile ? 'bottom-3 left-1/2 -translate-x-1/2' : 'bottom-3 left-1/2 -translate-x-1/2'}`}>
-              <BoxButton
-                id="tools"
-                icon="🧰"
-                label="Tools"
-                isActive={activeBox === 'tools'}
-                onClick={() => toggleBox('tools')}
-                kidMode={sounds.kidMode}
-              />
-            </div>
-
-            {/* 🎨 Textures — top-right */}
-            <div className={`absolute z-50 ${isMobile ? 'top-3 right-3' : 'top-3 right-3'}`}>
-              <BoxButton
-                id="textures"
-                icon="🎨"
-                label={sounds.kidMode ? 'Colors' : 'Textures'}
-                isActive={activeBox === 'textures'}
-                onClick={() => toggleBox('textures')}
-                kidMode={sounds.kidMode}
-              />
-            </div>
-
-            {/* ── EXPANDABLE DRAWERS ── */}
-
-            {/* 🎨 Textures Drawer — slides down from top-right */}
-            <ExpandableDrawer
-              isOpen={activeBox === 'textures'}
-              onClose={closeBox}
-              title={sounds.kidMode ? 'Colors' : 'Textures'}
-              icon="🎨"
-              direction="down"
-              kidMode={sounds.kidMode}
-              className={`absolute z-40 ${isMobile ? 'top-16 left-2 right-2 max-h-[60vh]' : 'top-14 right-2 w-[380px] max-h-[70vh]'}`}
-            >
-              <TextureLibrary
-                onDragStart={handleDragStartLib}
-                onTextureClick={handleTextureClick}
-                activeSectionId={studio.selectedSectionId}
-                customTextures={customTextures}
-                onUploadTexture={handleUploadTexture}
-                onRemoveCustomTexture={removeCustomTexture}
-                isPremium={isPremium}
-                onRequestUpgrade={() => setShowPaywall(true)}
-                applyMode={textureApplyMode}
-                onApplyModeChange={setTextureApplyMode}
-                backgroundTextureId={studio.backgroundTextureId}
-                drawMode={studio.drawMode}
-                onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
-                nextShape={studio.nextShape}
-                onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
-                crayonMode={studio.crayonMode}
-                crayonTextureId={studio.crayonTextureId}
-                onToggleCrayonMode={() => {
-                  const next = !studio.crayonMode;
-                  studio.setCrayonMode(next);
-                  if (next) {
-                    studio.setDrawMode(false);
-                  } else {
-                    studio.setDrawMode(false);
-                    studio.setCrayonTextureId(null);
-                  }
-                }}
-                onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
-              />
-            </ExpandableDrawer>
-
-            {/* ✂️ Stencils Drawer — slides up from bottom-right */}
-            <ExpandableDrawer
-              isOpen={activeBox === 'stencils'}
-              onClose={closeBox}
-              title={sounds.kidMode ? 'Shapes' : 'Stencils'}
-              icon="✂️"
-              direction="up"
-              kidMode={sounds.kidMode}
-              className={`absolute z-40 ${isMobile ? 'bottom-20 left-2 right-2 max-h-[60vh]' : 'bottom-16 right-2 w-[380px] max-h-[70vh]'}`}
-            >
-              <BuildPanel
-                isPremium={isPremium}
-                onRequestUpgrade={() => setShowPaywall(true)}
-                activeVibeId={studio.activeVibe?.id ?? null}
-                onSelectVibe={handleSelectVibe}
-                onShuffleVibeFills={studio.shuffleVibeFills}
-                onPlaceStencil={studio.placeStencil}
-                onGenerateMood={handleGenerateMood}
-                isGeneratingMood={vibeGen.isGenerating}
-                customTemplate={customTemplate}
-                templateOpacity={templateOpacity}
-                onUploadTemplate={handleUploadTemplate}
-                onClearTemplate={clearTemplate}
-                onTemplateOpacityChange={setTemplateOpacity}
-                stencilsPoppedOut={false}
-                onPopOutStencils={() => {}}
-              />
-            </ExpandableDrawer>
-
-            {/* 🧰 Tools Drawer — slides up from bottom-center */}
-            <ExpandableDrawer
-              isOpen={activeBox === 'tools'}
-              onClose={closeBox}
-              title="Tools"
-              icon="🧰"
-              direction="up"
-              kidMode={sounds.kidMode}
-              className={`absolute z-40 ${isMobile ? 'bottom-20 left-2 right-2 max-h-[50vh]' : 'bottom-16 left-1/2 -translate-x-1/2 w-[320px] max-h-[60vh]'}`}
-            >
-              <div className="p-3">
-                {/* Frame controls */}
-                <BottomBar
-                  wallFrameStyle={studio.wallFrameStyle}
-                  onWallFrameStyleChange={studio.setWallFrameStyle}
-                  onClear={handleClearAll}
-                  onSave={handleExport}
-                  onSaveToWall={handleSaveToWall}
-                  isPremium={isPremium}
-                  onRequestUpgrade={() => setShowPaywall(true)}
-                  tableSurface={tableSurface}
-                  onTableSurfaceChange={setTableSurface}
-                  easelMode={easelMode}
-                  onToggleEasel={() => setEaselMode(prev => !prev)}
-                  backgroundTextureId={studio.backgroundTextureId}
-                  onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
-                />
-                {/* Edit element controls when selected */}
-                {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
-                  <div className="mt-3 pt-3 border-t border-border">
-                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Edit Element</p>
-                    <FloatingToolbar
-                      element={studio.elements.find(e => e.id === studio.selectedId)!}
-                      onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
-                      onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
-                      onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                      onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
-                    />
-                  </div>
-                )}
-              </div>
-            </ExpandableDrawer>
-
-            {/* 📦 My Box Drawer — slides up from bottom-left */}
-            <ExpandableDrawer
-              isOpen={activeBox === 'mybox'}
-              onClose={closeBox}
-              title={sounds.kidMode ? 'My Box' : 'Saved'}
-              icon="📦"
-              direction="up"
-              kidMode={sounds.kidMode}
-              className={`absolute z-40 ${isMobile ? 'bottom-20 left-2 right-2 max-h-[60vh]' : 'bottom-16 left-2 w-[320px] max-h-[70vh]'}`}
-            >
-              <div className="p-4 text-center text-muted-foreground">
-                <p className="text-sm">{sounds.kidMode ? '📦 Your saved creations will appear here!' : 'Your saved designs will appear here.'}</p>
-                <button
-                  onClick={handleSaveToWall}
-                  className="mt-3 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
-                >
-                  {sounds.kidMode ? '💾 Save Current' : 'Save to Wall'}
-                </button>
-              </div>
-            </ExpandableDrawer>
-
           </div>
+        </div>
+
+        {/* ── BOX BUTTONS on the table below canvas ── */}
+        <div className="relative shrink-0 bg-popover border-t border-border" style={{ minHeight: 64 }}>
+          <div className="flex items-center justify-center gap-3 py-2 px-4">
+            <BoxButton
+              id="mybox"
+              icon="📦"
+              label={sounds.kidMode ? 'My Box' : 'Saved'}
+              isActive={activeBox === 'mybox'}
+              onClick={() => toggleBox('mybox')}
+              kidMode={sounds.kidMode}
+            />
+            <BoxButton
+              id="textures"
+              icon="🎨"
+              label={sounds.kidMode ? 'Colors' : 'Textures'}
+              isActive={activeBox === 'textures'}
+              onClick={() => toggleBox('textures')}
+              kidMode={sounds.kidMode}
+            />
+            <BoxButton
+              id="tools"
+              icon="🧰"
+              label="Tools"
+              isActive={activeBox === 'tools'}
+              onClick={() => toggleBox('tools')}
+              kidMode={sounds.kidMode}
+            />
+            <BoxButton
+              id="stencils"
+              icon="✂️"
+              label={sounds.kidMode ? 'Shapes' : 'Stencils'}
+              isActive={activeBox === 'stencils'}
+              onClick={() => toggleBox('stencils')}
+              kidMode={sounds.kidMode}
+            />
+          </div>
+
+          {/* ── EXPANDABLE DRAWERS (positioned above the button bar) ── */}
+
+          {/* 🎨 Textures Drawer */}
+          <ExpandableDrawer
+            isOpen={activeBox === 'textures'}
+            onClose={closeBox}
+            title={sounds.kidMode ? 'Colors' : 'Textures'}
+            icon="🎨"
+            direction="up"
+            kidMode={sounds.kidMode}
+            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[60vh]' : 'bottom-full left-1/2 -translate-x-1/2 w-[480px] max-h-[60vh]'}`}
+          >
+            <TextureLibrary
+              onDragStart={handleDragStartLib}
+              onTextureClick={handleTextureClick}
+              activeSectionId={studio.selectedSectionId}
+              customTextures={customTextures}
+              onUploadTexture={handleUploadTexture}
+              onRemoveCustomTexture={removeCustomTexture}
+              isPremium={isPremium}
+              onRequestUpgrade={() => setShowPaywall(true)}
+              applyMode={textureApplyMode}
+              onApplyModeChange={setTextureApplyMode}
+              backgroundTextureId={studio.backgroundTextureId}
+              drawMode={studio.drawMode}
+              onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
+              nextShape={studio.nextShape}
+              onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
+              crayonMode={studio.crayonMode}
+              crayonTextureId={studio.crayonTextureId}
+              onToggleCrayonMode={() => {
+                const next = !studio.crayonMode;
+                studio.setCrayonMode(next);
+                if (next) {
+                  studio.setDrawMode(false);
+                } else {
+                  studio.setDrawMode(false);
+                  studio.setCrayonTextureId(null);
+                }
+              }}
+              onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
+            />
+          </ExpandableDrawer>
+
+          {/* ✂️ Stencils Drawer */}
+          <ExpandableDrawer
+            isOpen={activeBox === 'stencils'}
+            onClose={closeBox}
+            title={sounds.kidMode ? 'Shapes' : 'Stencils'}
+            icon="✂️"
+            direction="up"
+            kidMode={sounds.kidMode}
+            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[60vh]' : 'bottom-full right-2 w-[420px] max-h-[60vh]'}`}
+          >
+            <BuildPanel
+              isPremium={isPremium}
+              onRequestUpgrade={() => setShowPaywall(true)}
+              activeVibeId={studio.activeVibe?.id ?? null}
+              onSelectVibe={handleSelectVibe}
+              onShuffleVibeFills={studio.shuffleVibeFills}
+              onPlaceStencil={studio.placeStencil}
+              onGenerateMood={handleGenerateMood}
+              isGeneratingMood={vibeGen.isGenerating}
+              customTemplate={customTemplate}
+              templateOpacity={templateOpacity}
+              onUploadTemplate={handleUploadTemplate}
+              onClearTemplate={clearTemplate}
+              onTemplateOpacityChange={setTemplateOpacity}
+              stencilsPoppedOut={false}
+              onPopOutStencils={() => {}}
+            />
+          </ExpandableDrawer>
+
+          {/* 🧰 Tools Drawer */}
+          <ExpandableDrawer
+            isOpen={activeBox === 'tools'}
+            onClose={closeBox}
+            title="Tools"
+            icon="🧰"
+            direction="up"
+            kidMode={sounds.kidMode}
+            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[50vh]' : 'bottom-full left-1/2 -translate-x-1/2 w-[380px] max-h-[55vh]'}`}
+          >
+            <div className="p-3">
+              <BottomBar
+                wallFrameStyle={studio.wallFrameStyle}
+                onWallFrameStyleChange={studio.setWallFrameStyle}
+                onClear={handleClearAll}
+                onSave={handleExport}
+                onSaveToWall={handleSaveToWall}
+                isPremium={isPremium}
+                onRequestUpgrade={() => setShowPaywall(true)}
+                tableSurface={tableSurface}
+                onTableSurfaceChange={setTableSurface}
+                easelMode={easelMode}
+                onToggleEasel={() => setEaselMode(prev => !prev)}
+                backgroundTextureId={studio.backgroundTextureId}
+                onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
+              />
+              {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
+                <div className="mt-3 pt-3 border-t border-border">
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Edit Element</p>
+                  <FloatingToolbar
+                    element={studio.elements.find(e => e.id === studio.selectedId)!}
+                    onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
+                    onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
+                    onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                    onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
+                  />
+                </div>
+              )}
+            </div>
+          </ExpandableDrawer>
+
+          {/* 📦 My Box Drawer */}
+          <ExpandableDrawer
+            isOpen={activeBox === 'mybox'}
+            onClose={closeBox}
+            title={sounds.kidMode ? 'My Box' : 'Saved'}
+            icon="📦"
+            direction="up"
+            kidMode={sounds.kidMode}
+            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[60vh]' : 'bottom-full left-2 w-[320px] max-h-[60vh]'}`}
+          >
+            <div className="p-4 text-center text-muted-foreground">
+              <p className="text-sm">{sounds.kidMode ? '📦 Your saved creations will appear here!' : 'Your saved designs will appear here.'}</p>
+              <button
+                onClick={handleSaveToWall}
+                className="mt-3 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                {sounds.kidMode ? '💾 Save Current' : 'Save to Wall'}
+              </button>
+            </div>
+          </ExpandableDrawer>
         </div>
       </div>
 
