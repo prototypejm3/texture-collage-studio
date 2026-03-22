@@ -380,7 +380,7 @@ export function TextureLibrary({
         )}
       </div>
       <div className="flex-1 overflow-y-auto texture-panel p-2">
-        <div className={`grid ${kidMode ? 'grid-cols-6 sm:grid-cols-6 gap-1' : 'grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-1.5'}`}>
+        <div className={`grid ${kidMode ? 'grid-cols-8 sm:grid-cols-8 gap-0.5' : 'grid-cols-8 sm:grid-cols-10 md:grid-cols-12 lg:grid-cols-14 gap-1'}`}>
           {filtered.map(tex => (
             <SwatchItem
               key={tex.id}
@@ -596,7 +596,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
           aspectRatio,
         }}
       />
-      <p className="text-[10px] text-muted-foreground mt-1 truncate text-center">
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center leading-tight">
         {displayName}
       </p>
       {/* Favorite star */}
