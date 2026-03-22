@@ -1,6 +1,6 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd, Palette, Upload } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 interface WallCustomizerProps {
   settings: WallSettings;
@@ -19,7 +19,8 @@ const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
   { value: 'single', label: 'List', icon: <AlignJustify className="w-3.5 h-3.5" /> },
 ];
 
-const backgrounds: { value: WallBackground; label: string; kidLabel?: string; fill: string; borderColor: string }[] = [
+// Kid mode backgrounds (cute icons)
+const kidBackgrounds: { value: WallBackground; label: string; kidLabel: string; fill: string; borderColor: string }[] = [
   { value: 'white-brick', label: 'Cloud', kidLabel: '☁️ Cloud', fill: '#f5f5f0', borderColor: '#e2ddd6' },
   { value: 'wood-birch-wall', label: 'Sunset', kidLabel: '☀️ Sunset', fill: '#fef3e8', borderColor: '#e2ddd6' },
   { value: 'mint', label: 'Sage', kidLabel: '🌿 Sage', fill: '#edf4ed', borderColor: '#e2ddd6' },
@@ -27,6 +28,33 @@ const backgrounds: { value: WallBackground; label: string; kidLabel?: string; fi
   { value: 'red', label: 'Apple', kidLabel: '🍎 Apple', fill: '#fdf0f0', borderColor: '#e2ddd6' },
   { value: 'green', label: 'Forest', kidLabel: '🌲 Forest', fill: '#e8f4e8', borderColor: '#e2ddd6' },
   { value: 'wood-oak-wall', label: 'Linen', kidLabel: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6' },
+];
+
+// Adult mode backgrounds (grouped)
+const adultBgGroups: { label: string; items: { value: WallBackground; label: string; fill: string; gradient?: string }[] }[] = [
+  {
+    label: 'Wood',
+    items: [
+      { value: 'wood-birch-wall', label: 'Birch', fill: '#e8d5b8', gradient: 'linear-gradient(145deg, hsl(35, 40%, 78%), hsl(30, 35%, 68%))' },
+      { value: 'wood-oak-wall', label: 'Oak', fill: '#c4956a', gradient: 'linear-gradient(145deg, hsl(28, 45%, 58%), hsl(25, 40%, 48%))' },
+      { value: 'wood-walnut-wall', label: 'Walnut', fill: '#6b4226', gradient: 'linear-gradient(145deg, hsl(20, 45%, 30%), hsl(18, 40%, 22%))' },
+    ],
+  },
+  {
+    label: 'Brick',
+    items: [
+      { value: 'white-brick', label: 'White Brick', fill: '#f5f5f0' },
+      { value: 'brick', label: 'Red Brick', fill: '#b8725a', gradient: 'linear-gradient(145deg, hsl(15, 40%, 52%), hsl(12, 35%, 42%))' },
+    ],
+  },
+  {
+    label: 'Wallpaper',
+    items: [
+      { value: 'floral', label: 'Floral', fill: '#f5ede5', gradient: 'radial-gradient(circle at 30% 40%, hsl(340,50%,80%) 3px, transparent 3px), radial-gradient(circle at 70% 60%, hsl(280,40%,75%) 3px, transparent 3px), linear-gradient(hsl(40,30%,95%), hsl(40,30%,95%))' },
+      { value: 'blush', label: 'Blush', fill: '#fdf0f0' },
+      { value: 'mint', label: 'Mint', fill: '#edf4ed' },
+    ],
+  },
 ];
 
 function WallIconCloud() {
