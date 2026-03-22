@@ -743,85 +743,67 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ── BOX BUTTONS in a wooden tray on the table ── */}
+        {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
-          <div
-            className="relative flex items-center justify-center gap-3 px-5 py-3"
-            style={{
-              background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
-              borderRadius: '0 0 10px 10px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
-              border: '2px solid rgba(0,0,0,0.15)',
-              borderTop: 'none',
-            }}
-          >
-            {/* Wood grain overlay */}
-            <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
-              background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
-              borderRadius: '0 0 10px 10px',
-            }} />
-            {/* Lid / flap */}
+          {sounds.kidMode ? (
+            /* Kid mode: wooden tray */
             <div
-              className="absolute pointer-events-none"
+              className="relative flex items-center justify-center gap-3 px-5 py-3"
               style={{
-                top: -14,
-                left: -2,
-                width: 'calc(100% + 4px)',
-                height: 18,
-                background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
-                borderRadius: '6px 6px 0 0',
-                border: '2px solid rgba(0,0,0,0.12)',
-                borderBottom: 'none',
-                transform: 'rotateX(-20deg)',
-                transformOrigin: 'bottom center',
-                boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
+                background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
+                borderRadius: '0 0 10px 10px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
+                border: '2px solid rgba(0,0,0,0.15)',
+                borderTop: 'none',
               }}
-            />
-            {sounds.kidMode && (
-              <BoxButton
-                id="mybox"
-                icon="📦"
-                label="Keep It!"
-                isActive={activeBox === 'mybox'}
-                onClick={() => { toggleBox('mybox'); if (sounds.kidMode) kidTutorial.triggerBox(); }}
-                kidMode={true}
+            >
+              <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
+                background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
+                borderRadius: '0 0 10px 10px',
+              }} />
+              <div
+                className="absolute pointer-events-none"
+                style={{
+                  top: -14, left: -2, width: 'calc(100% + 4px)', height: 18,
+                  background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
+                  borderRadius: '6px 6px 0 0',
+                  border: '2px solid rgba(0,0,0,0.12)', borderBottom: 'none',
+                  transform: 'rotateX(-20deg)', transformOrigin: 'bottom center',
+                  boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
+                }}
               />
-            )}
-            <BoxButton
-              id="textures"
-              icon="🎨"
-              label={sounds.kidMode ? "Colors" : "Swatches"}
-              isActive={activeBox === 'textures'}
-              onClick={() => { toggleBox('textures'); if (sounds.kidMode) kidTutorial.triggerColor(); }}
-              kidMode={sounds.kidMode}
-            />
-            <BoxButton
-              id="tools"
-              icon="🖼️"
-              label={sounds.kidMode ? "Frame" : "Display"}
-              isActive={activeBox === 'tools'}
-              onClick={() => { toggleBox('tools'); if (sounds.kidMode) kidTutorial.triggerFrame(); }}
-              kidMode={sounds.kidMode}
-            />
-            <BoxButton
-              id="stencils"
-              icon="🧸"
-              label={sounds.kidMode ? 'Shapes' : 'Elements'}
-              isActive={activeBox === 'stencils'}
-              onClick={() => toggleBox('stencils')}
-              kidMode={sounds.kidMode}
-            />
-            {!sounds.kidMode && (
-              <BoxButton
-                id="text"
-                icon="✏️"
-                label="Text"
-                isActive={activeBox === 'text'}
-                onClick={() => toggleBox('text')}
-                kidMode={false}
-              />
-            )}
-          </div>
+              <BoxButton id="mybox" icon="📦" label="Keep It!" isActive={activeBox === 'mybox'}
+                onClick={() => { toggleBox('mybox'); kidTutorial.triggerBox(); }} kidMode={true} />
+              <BoxButton id="textures" icon="🎨" label="Colors" isActive={activeBox === 'textures'}
+                onClick={() => { toggleBox('textures'); kidTutorial.triggerColor(); }} kidMode={true} />
+              <BoxButton id="tools" icon="🖼️" label="Frame" isActive={activeBox === 'tools'}
+                onClick={() => { toggleBox('tools'); kidTutorial.triggerFrame(); }} kidMode={true} />
+              <BoxButton id="stencils" icon="🧸" label="Shapes" isActive={activeBox === 'stencils'}
+                onClick={() => toggleBox('stencils')} kidMode={true} />
+            </div>
+          ) : (
+            /* Adult mode: clean minimal pills */
+            <div className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-secondary border border-border shadow-sm">
+              {[
+                { id: 'textures' as const, label: 'Swatches' },
+                { id: 'tools' as const, label: 'Display' },
+                { id: 'stencils' as const, label: 'Elements' },
+                { id: 'text' as const, label: 'Text' },
+              ].map(btn => (
+                <button
+                  key={btn.id}
+                  onClick={() => toggleBox(btn.id)}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-full transition-colors ${
+                    activeBox === btn.id
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                  }`}
+                >
+                  {btn.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
