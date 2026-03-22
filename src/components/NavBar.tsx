@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
 import logoImg from '@/assets/logo.png';
+import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
-  KidCrownIcon, GrannyIcon, HouseIcon, TentIcon,
+  HouseIcon, TentIcon,
   SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon,
 } from '@/components/studio/ToyboxIcons';
 
