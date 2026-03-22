@@ -1,7 +1,7 @@
 import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, MaterialEffects } from '@/types/studio';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp, Undo2, Redo2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -11,6 +11,11 @@ interface Props {
   onUpdateEffects: (effects: Partial<MaterialEffects>) => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  onUndo?: () => void;
+  onRedo?: () => void;
+  canUndo?: boolean;
+  canRedo?: boolean;
+  elementCount?: number;
 }
 
 // Stencil shape icons as tiny SVG previews
@@ -121,6 +126,16 @@ const kidTools: ToolDef[] = [
   { id: 'toss',    label: 'Toss' },
 ];
 
+const adultTools: ToolDef[] = [
+  { id: 'grow',    label: 'Scale Up' },
+  { id: 'shrink',  label: 'Scale Down' },
+  { id: 'cut',     label: 'Edge Style' },
+  { id: 'twin',    label: 'Duplicate' },
+  { id: 'fade',    label: 'Opacity' },
+  { id: 'crumple', label: 'Distort' },
+  { id: 'toss',    label: 'Delete' },
+];
+
 const kidShapes: { id: ElementShape; label: string; emoji: string }[] = [
   { id: 'soft-square', label: 'Square', emoji: '🟧' },
   { id: 'rectangle',   label: 'Long',   emoji: '▭' },
@@ -213,7 +228,7 @@ function edgeDisplayName(edge: EdgeStyle): string {
   return names[edge] || edge;
 }
 
-function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
+function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo }: Props) {
   const handleToolTap = (toolId: string) => {
     switch (toolId) {
       case 'grow':
@@ -248,6 +263,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
         onUpdateEffects({ wrinkle: nextWrinkle });
         break;
       }
+      case 'toss':
+        onDelete();
+        break;
     }
   };
 
@@ -262,12 +280,20 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
 
   return (
     <div className="p-3 space-y-3" data-kid-toolbox>
+      {/* Header with undo/redo */}
       <div className="flex items-center justify-between">
         <span className="text-xs font-bold text-foreground">🧰 Tool Box</span>
         <div className="flex gap-1">
-          <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Make a Copy">
-            <Copy className="w-4 h-4" />
-          </Button>
+          {onUndo && (
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-8 w-8 p-0" title="Undo">
+              <Undo2 className="w-4 h-4" />
+            </Button>
+          )}
+          {onRedo && (
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-8 w-8 p-0" title="Redo">
+              <Redo2 className="w-4 h-4" />
+            </Button>
+          )}
           <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Remove">
             <Trash2 className="w-4 h-4" />
           </Button>
@@ -325,7 +351,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
 
 // ── Main Export ──
 
-export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
+export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo, elementCount }: Props) {
   const [showEffects, setShowEffects] = useState(true);
   const [showShapes, setShowShapes] = useState(true);
 
@@ -339,11 +365,33 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
   }, []);
 
   if (kidMode) {
-    return <KidToolBox element={element} onUpdate={onUpdate} onUpdateEffects={onUpdateEffects} onDuplicate={onDuplicate} onDelete={onDelete} />;
+    return <KidToolBox element={element} onUpdate={onUpdate} onUpdateEffects={onUpdateEffects} onDuplicate={onDuplicate} onDelete={onDelete} onUndo={onUndo} onRedo={onRedo} canUndo={canUndo} canRedo={canRedo} />;
   }
 
   return (
     <div className="p-3 space-y-2">
+      {/* Header with undo/redo/delete */}
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+          {elementCount !== undefined ? `${elementCount} element${elementCount !== 1 ? 's' : ''}` : 'Element'}
+        </span>
+        <div className="flex gap-0.5">
+          {onUndo && (
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-7 w-7 p-0" title="Undo">
+              <Undo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          {onRedo && (
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-7 w-7 p-0" title="Redo">
+              <Redo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          <Button size="sm" variant="ghost" onClick={onDelete} className="h-7 w-7 p-0 text-destructive hover:text-destructive" title="Delete">
+            <Trash2 className="w-3.5 h-3.5" />
+          </Button>
+        </div>
+      </div>
+
       <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1">
         Elements
         {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
