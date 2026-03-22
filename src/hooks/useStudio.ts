@@ -272,10 +272,21 @@ export function useStudio() {
     if (!activeVibe) return;
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
+
+    // Parse viewBox to get stencil coordinate space
+    const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
+    const vbW = vbParts[2] || 480;
+    const vbH = vbParts[3] || 480;
+
+    // Scale stencil to fit nicely within the canvas (80% of canvas size)
+    const targetSize = 300;
+    const scaleFactor = targetSize / Math.max(vbW, vbH);
+
     sections.forEach(section => {
-      const textureId = vibeFills[section.id] || textures[Math.floor(Math.random() * textures.length)].id;
+      // Only use pre-assigned fill if user explicitly set one, otherwise leave blank (outline only)
+      const textureId = vibeFills[section.id] || '';
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
-      let minX = 480, minY = 480, maxX = 0, maxY = 0;
+      let minX = vbW, minY = vbH, maxX = 0, maxY = 0;
       for (let i = 0; i < nums.length - 1; i += 2) {
         minX = Math.min(minX, nums[i]);
         maxX = Math.max(maxX, nums[i]);
@@ -284,16 +295,23 @@ export function useStudio() {
       }
       const rawW = Math.max(maxX - minX, 20);
       const rawH = Math.max(maxY - minY, 20);
+
+      // Scale dimensions to fit canvas
+      const scaledW = Math.round(rawW * scaleFactor);
+      const scaledH = Math.round(rawH * scaleFactor);
+      const scaledX = Math.round(minX * scaleFactor);
+      const scaledY = Math.round(minY * scaleFactor);
+
       // Normalize the SVG path so coordinates are relative to 0,0 of the element
-      const normalizedPath = normalizeSvgPath(section.path, minX, minY, rawW, rawH, rawW, rawH);
+      const normalizedPath = normalizeSvgPath(section.path, minX, minY, rawW, rawH, scaledW, scaledH);
       const id = `el-${nextId++}`;
       newElements.push({
         id,
         textureId,
-        x: minX,
-        y: minY,
-        width: rawW,
-        height: rawH,
+        x: scaledX,
+        y: scaledY,
+        width: scaledW,
+        height: scaledH,
         rotation: 0,
         shape: 'soft-square' as const,
         zIndex: nextId,

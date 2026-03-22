@@ -186,8 +186,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   }, []);
 
   const allTex = [...textures, ...customTextures];
-  const texture = allTex.find(t => t.id === element.textureId);
-  if (!texture) return null;
+  const texture = element.textureId ? allTex.find(t => t.id === element.textureId) : null;
+  const isOutlineOnly = !texture;
 
   const clipPath = element.clipPathD ? `path('${element.clipPathD}')` : getClipPath(element.shape);
   const filter = getFilterStyles(element.effects);
@@ -264,8 +264,12 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       <div
         className="w-full h-full"
         style={{
-          background: texture.cssBackground,
-          backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+          background: isOutlineOnly
+            ? 'transparent'
+            : texture!.cssBackground,
+          backgroundSize: isOutlineOnly
+            ? undefined
+            : (texture!.cssBackground.startsWith('url(') ? 'cover' : '40px 40px'),
           clipPath: finalClipPath,
           borderRadius,
           filter,
@@ -273,6 +277,10 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
           WebkitMaskComposite: maskImage ? 'source-over' as any : undefined,
           maskImage,
           maskComposite: maskImage ? 'add' as any : undefined,
+          ...(isOutlineOnly ? {
+            border: '2px dashed hsl(var(--muted-foreground) / 0.5)',
+            boxShadow: 'inset 0 0 0 1px hsl(var(--border))',
+          } : {}),
         }}
       />
     </div>
