@@ -15,6 +15,7 @@ export type TextureCategory =
   | 'Custom';
 
 export type ElementType = 'shape' | 'image' | 'text';
+export type StencilMode = 'outline' | 'filled';
 export type ElementShape = 'soft-square' | 'rectangle' | 'circle' | 'strip' | 'torn-edge' | 'blob';
 export type BlendMode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'soft-light' | 'hard-light' | 'darken' | 'lighten';
 export type EdgeStyle = 'clean' | 'soft-fray' | 'rough-torn' | 'pinking' | 'scallop' | 'zigzag' | 'wave';
@@ -53,6 +54,7 @@ export interface CanvasElement {
   fontWeight?: number;
   textColor?: string;
   textAlign?: 'left' | 'center' | 'right';
+  stencilMode?: StencilMode; // 'outline' = editable stencil, 'filled' = sticker
 }
 
 export interface MaterialEffects {

@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
-import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection, SectionTransform, SectionTransforms, defaultSectionTransform, BlendMode } from '@/types/studio';
+import { CanvasElement, FrameSize, FrameColor, defaultEffects, MaterialEffects, ElementShape, Vibe, VibeFills, VibeSection, SectionTransform, SectionTransforms, defaultSectionTransform, BlendMode, StencilMode } from '@/types/studio';
 import { DesignSize, FrameStyle } from '@/types/wall';
 import { textures } from '@/data/textures';
 
@@ -293,24 +293,37 @@ export function useStudio() {
     setVibeFills(fills);
   }, [activeVibe]);
 
-  // Place current stencil as free elements on canvas, freeing the vibe slot for another
-  const placeStencil = useCallback(() => {
+  // Soft fill colors for 'filled' (sticker) mode - desaturated, warm tones
+  const filledModeColors: Record<string, string> = {
+    light: 'flat-silk-ivory',
+    medium: 'felt-sand',
+    dark: 'leather-espresso',
+    accent: 'cotton-terracotta',
+  };
+
+  // Place current stencil as free elements on canvas
+  const placeStencil = useCallback((mode: StencilMode = 'outline') => {
     if (!activeVibe) return;
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
 
-    // Parse viewBox to get stencil coordinate space
     const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
-
-    // Scale stencil to fit nicely within the canvas (80% of canvas size)
     const targetSize = 300;
     const scaleFactor = targetSize / Math.max(vbW, vbH);
 
     sections.forEach(section => {
-      // Only use pre-assigned fill if user explicitly set one, otherwise leave blank (outline only)
-      const textureId = vibeFills[section.id] || '';
+      let textureId: string;
+      if (mode === 'filled') {
+        // Auto-fill: use existing fill, tone-based default, or random
+        textureId = vibeFills[section.id] 
+          || pickTextureForTone(activeVibe, section.tone);
+      } else {
+        // Outline: only use if user explicitly set one
+        textureId = vibeFills[section.id] || '';
+      }
+
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
       let minX = vbW, minY = vbH, maxX = 0, maxY = 0;
       for (let i = 0; i < nums.length - 1; i += 2) {
@@ -321,14 +334,10 @@ export function useStudio() {
       }
       const rawW = Math.max(maxX - minX, 20);
       const rawH = Math.max(maxY - minY, 20);
-
-      // Scale dimensions to fit canvas
       const scaledW = Math.round(rawW * scaleFactor);
       const scaledH = Math.round(rawH * scaleFactor);
       const scaledX = Math.round(minX * scaleFactor);
       const scaledY = Math.round(minY * scaleFactor);
-
-      // Normalize the SVG path so coordinates are relative to 0,0 of the element
       const normalizedPath = normalizeSvgPath(section.path, minX, minY, rawW, rawH, scaledW, scaledH);
       const id = `el-${nextId++}`;
       newElements.push({
@@ -344,6 +353,7 @@ export function useStudio() {
         effects: { ...defaultEffects },
         sectionId: section.id,
         clipPathD: normalizedPath,
+        stencilMode: mode,
       });
     });
     setElements(prev => [...prev, ...newElements]);
