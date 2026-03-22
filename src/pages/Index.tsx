@@ -685,15 +685,32 @@ const Index = () => {
                           backgroundTextureId={studio.backgroundTextureId}
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                         />
-                        {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
+                        {/* Show tool panel when ANY element exists on canvas */}
+                        {studio.elements.length > 0 && (
                           <div className="mt-3 pt-3 border-t border-border">
-                            <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Edit Element</p>
                             <FloatingToolbar
-                              element={studio.elements.find(e => e.id === studio.selectedId)!}
-                              onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
-                              onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
-                              onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                              onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
+                              element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
+                              onUpdate={(updates) => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) { studio.updateElement(targetId, updates); kidOnboarding.notifyMove(); }
+                              }}
+                              onUpdateEffects={(effects) => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) { studio.updateEffects(targetId, effects); kidOnboarding.notifyToolUse(); }
+                              }}
+                              onDuplicate={() => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) studio.duplicateElement(targetId);
+                              }}
+                              onDelete={() => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) { studio.deleteElement(targetId); sounds.playDelete(); sounds.trackAction(); }
+                              }}
+                              onUndo={studio.undo}
+                              onRedo={studio.redo}
+                              canUndo={studio.canUndo}
+                              canRedo={studio.canRedo}
+                              elementCount={studio.elements.length}
                             />
                           </div>
                         )}
