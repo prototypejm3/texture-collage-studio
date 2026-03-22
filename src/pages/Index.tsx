@@ -711,6 +711,14 @@ const Index = () => {
                               canUndo={studio.canUndo}
                               canRedo={studio.canRedo}
                               elementCount={studio.elements.length}
+                              onBringForward={() => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) studio.bringForward(targetId);
+                              }}
+                              onSendBackward={() => {
+                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                                if (targetId) studio.sendBackward(targetId);
+                              }}
                             />
                           </div>
                         )}
