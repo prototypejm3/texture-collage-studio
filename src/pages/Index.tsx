@@ -543,7 +543,7 @@ const Index = () => {
             <BoxButton
               id="mybox"
               icon="📦"
-              label={sounds.kidMode ? 'My Swatch Box' : 'Save'}
+              label={sounds.kidMode ? 'Save' : 'Save'}
               isActive={activeBox === 'mybox'}
               onClick={() => toggleBox('mybox')}
               kidMode={sounds.kidMode}
@@ -559,7 +559,7 @@ const Index = () => {
             <BoxButton
               id="tools"
               icon="🖼️"
-              label={sounds.kidMode ? 'My Tool Box' : 'Studio'}
+              label={sounds.kidMode ? 'Frame' : 'Studio'}
               isActive={activeBox === 'tools'}
               onClick={() => toggleBox('tools')}
               kidMode={sounds.kidMode}
