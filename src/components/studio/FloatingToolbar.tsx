@@ -108,6 +108,16 @@ const shadowOptions: { value: ShadowDepth; label: string }[] = [
   { value: 'floating', label: 'Floating' },
 ];
 
+const blendModeOptions: { value: BlendMode; label: string }[] = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'multiply', label: 'Multiply' },
+  { value: 'screen', label: 'Screen' },
+  { value: 'overlay', label: 'Overlay' },
+  { value: 'soft-light', label: 'Soft Light' },
+  { value: 'darken', label: 'Darken' },
+  { value: 'lighten', label: 'Lighten' },
+];
+
 // ── Kid Mode Tool Box ──
 
 const edgeCycle: EdgeStyle[] = ['clean', 'pinking', 'scallop', 'zigzag', 'wave', 'soft-fray', 'rough-torn'];
