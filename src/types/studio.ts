@@ -42,6 +42,14 @@ export interface CanvasElement {
   effects: MaterialEffects;
   sectionId?: string;
   clipPathD?: string; // SVG path d for custom section clip
+  // Text element properties
+  type?: ElementType;
+  text?: string;
+  fontFamily?: string;
+  fontSize?: number;
+  fontWeight?: number;
+  textColor?: string;
+  textAlign?: 'left' | 'center' | 'right';
 }
 
 export interface MaterialEffects {

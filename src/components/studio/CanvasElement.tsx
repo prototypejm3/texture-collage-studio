@@ -261,28 +261,55 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       )}
 
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
-      <div
-        className="w-full h-full"
-        style={{
-          background: isOutlineOnly
-            ? 'transparent'
-            : texture!.cssBackground,
-          backgroundSize: isOutlineOnly
-            ? undefined
-            : (texture!.cssBackground.startsWith('url(') ? 'cover' : '40px 40px'),
-          clipPath: finalClipPath,
-          borderRadius,
-          filter,
-          WebkitMaskImage: maskImage,
-          WebkitMaskComposite: maskImage ? 'source-over' as any : undefined,
-          maskImage,
-          maskComposite: maskImage ? 'add' as any : undefined,
-          ...(isOutlineOnly ? {
-            border: '2px dashed hsl(var(--muted-foreground) / 0.5)',
-            boxShadow: 'inset 0 0 0 1px hsl(var(--border))',
-          } : {}),
-        }}
-      />
+      {element.type === 'text' ? (
+        <div
+          className="w-full h-full flex items-center justify-center p-2"
+          style={{
+            clipPath: finalClipPath,
+            borderRadius,
+            filter,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: element.fontFamily || 'system-ui',
+              fontSize: element.fontSize || 24,
+              fontWeight: element.fontWeight || 500,
+              color: element.textColor || '#3d3530',
+              textAlign: element.textAlign || 'center',
+              lineHeight: 1.2,
+              wordBreak: 'break-word',
+              display: 'block',
+              width: '100%',
+            }}
+          >
+            {element.text || ''}
+          </span>
+        </div>
+      ) : (
+        <div
+          className="w-full h-full"
+          style={{
+            background: isOutlineOnly
+              ? 'transparent'
+              : texture!.cssBackground,
+            backgroundSize: isOutlineOnly
+              ? undefined
+              : (texture!.cssBackground.startsWith('url(') ? 'cover' : '40px 40px'),
+            clipPath: finalClipPath,
+            borderRadius,
+            filter,
+            WebkitMaskImage: maskImage,
+            WebkitMaskComposite: maskImage ? 'source-over' as any : undefined,
+            maskImage,
+            maskComposite: maskImage ? 'add' as any : undefined,
+            ...(isOutlineOnly ? {
+              border: '2px dashed hsl(var(--muted-foreground) / 0.5)',
+              boxShadow: 'inset 0 0 0 1px hsl(var(--border))',
+            } : {}),
+          }}
+        />
+      )}
     </div>
   );
 }

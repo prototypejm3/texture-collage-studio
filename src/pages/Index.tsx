@@ -35,6 +35,7 @@ import { StencilTray } from '@/components/studio/MobileStencilTray';
 import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
+import { TextPanel } from '@/components/studio/TextPanel';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -551,7 +552,7 @@ const Index = () => {
                 <div
                   className="overflow-hidden"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : 340),
+                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
                     maxHeight: isMobile ? '45vh' : 320,
                     background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
                     borderRadius: 10,
@@ -562,9 +563,10 @@ const Index = () => {
                   {/* Header */}
                   <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
                     <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Textures')}
+                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Colors')}
                       {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Studio')}
+                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Frame')}
+                      {activeBox === 'text' && '✏️ Text'}
                     </span>
                     <button
                       onClick={closeBox}
@@ -661,6 +663,17 @@ const Index = () => {
                         )}
                       </div>
                     )}
+
+                    {activeBox === 'text' && (
+                      <TextPanel
+                        onAddText={(text, opts) => {
+                          studio.addTextElement(text, 150, 150, opts);
+                          closeBox();
+                        }}
+                        selectedElement={studio.selectedId ? studio.elements.find(e => e.id === studio.selectedId) : null}
+                        onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -735,6 +748,16 @@ const Index = () => {
               onClick={() => toggleBox('stencils')}
               kidMode={sounds.kidMode}
             />
+            {!sounds.kidMode && (
+              <BoxButton
+                id="text"
+                icon="✏️"
+                label="Text"
+                isActive={activeBox === 'text'}
+                onClick={() => toggleBox('text')}
+                kidMode={false}
+              />
+            )}
           </div>
         </div>
       </div>

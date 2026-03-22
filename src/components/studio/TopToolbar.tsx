@@ -162,7 +162,7 @@ export function TopToolbar({
         {kidMode ? (
           <button
             onClick={handleKidToggle}
-            className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden"
+            className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
             title="Switch to Granny Mode"
           >
             <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
@@ -171,7 +171,7 @@ export function TopToolbar({
           <button
             onClick={handleKidToggle}
             title="Switch to Kids Mode"
-            className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
+            className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all ring-[2px] ring-blue-400/60"
           >
             → 🧒
           </button>
