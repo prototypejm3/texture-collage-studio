@@ -586,35 +586,35 @@ const Index = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
-className="overflow-visible relative"
+                  className="overflow-visible relative"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 480 : activeBox === 'text' ? 360 : 340),
-                    maxHeight: isMobile ? '45vh' : 320,
-                    background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
-                    borderRadius: 10,
-                    boxShadow: '0 6px 24px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.12)',
-                    border: '2px solid rgba(0,0,0,0.15)',
+                    width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : 340),
+                    maxHeight: isMobile ? '45vh' : 360,
+                    borderRadius: 8,
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                    border: '1px solid rgba(139,94,60,0.4)',
                   }}
                 >
-                  {/* Header */}
-                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
-                    <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Colors')}
-                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Frame')}
-                      {activeBox === 'text' && '✏️ Text'}
+                  {/* Thin header */}
+                  <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
+                    style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
+                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
+                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Elements')}
+                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
+                      {activeBox === 'text' && 'Text'}
                     </span>
                     <button
                       onClick={closeBox}
-                      className="p-1 rounded-md hover:bg-amber-700/40 transition-colors"
-                      style={{ color: 'hsla(35, 80%, 85%, 0.8)' }}
+                      className="p-0.5 rounded hover:bg-white/10 transition-colors"
+                      style={{ color: 'hsla(35, 80%, 90%, 0.8)' }}
                     >
-                      ✕
+                      <X className="w-3 h-3" />
                     </button>
                   </div>
 
                   {/* Content */}
-                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 36px)' : 284 }}>
+                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 28px)' : 336 }}>
                     {activeBox === 'textures' && (
                       <TextureLibrary
                         onDragStart={handleDragStartLib}
