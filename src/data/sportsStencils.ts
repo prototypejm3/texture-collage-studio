@@ -102,23 +102,24 @@ const tennisBall: Vibe = {
   ],
 };
 
-// ── VOLLEYBALL 🏐 ── Front view: 3 soft curved swirl bands
+// ── VOLLEYBALL 🏐 ── Front view
 const volleyball: Vibe = {
   id: 'volleyball', name: 'Volleyball (Front)', emoji: '🏐', category: 'Sports',
-  description: 'Classic front-facing volleyball with curved swirl bands',
+  description: 'Classic front-facing volleyball with curved panel lines',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-  viewBox: '0 0 480 480',
+  viewBox: '0 0 100 100',
+  kidSvg: `<circle cx="50" cy="50" r="46" fill="#fef3c7" stroke="#1a1714" stroke-width="4"/><path d="M50 4 Q80 20 90 50" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/><path d="M90 50 Q80 80 50 96" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/><path d="M50 4 Q20 20 10 50" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/><path d="M10 50 Q20 80 50 96" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/><path d="M14 34 Q50 24 86 34" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/><path d="M14 66 Q50 76 86 66" fill="none" stroke="#1a1714" stroke-width="3.5" stroke-linecap="round"/>`,
+  adultSvg: `<defs><radialGradient id="vb-grad" cx="36%" cy="34%" r="60%"><stop offset="0%" stop-color="#fff" stop-opacity="0.2"/><stop offset="100%" stop-color="#000" stop-opacity="0.08"/></radialGradient></defs><circle cx="50" cy="50" r="44" fill="#f0e8d0"/><circle cx="50" cy="50" r="44" fill="url(#vb-grad)"/><path d="M50 6 Q78 20 88 50" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><path d="M88 50 Q78 80 50 94" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><path d="M50 6 Q22 20 12 50" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><path d="M12 50 Q22 80 50 94" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><path d="M15 34 Q50 25 85 34" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><path d="M15 66 Q50 75 85 66" fill="none" stroke="#8a7a60" stroke-width="1.8" stroke-linecap="round"/><circle cx="50" cy="50" r="44" fill="none" stroke="#1a1714" stroke-width="1.5"/>`,
   sections: [
-    { id: 'vb-bg', label: 'Ball', tone: 'light', path: circle(240, 240, 200) },
-    // Band 1: top-left to bottom-right (wide gentle curve)
-    { id: 'vb-band-1', label: 'Swirl Band 1', tone: 'medium',
-      path: 'M75,110 Q140,180 200,280 Q250,370 340,430 L365,405 Q275,350 225,260 Q165,160 100,90 Z' },
-    // Band 2: parallel to band 1, offset inward
-    { id: 'vb-band-2', label: 'Swirl Band 2', tone: 'medium',
-      path: 'M115,60 Q180,130 235,240 Q290,340 380,400 L400,375 Q315,320 260,220 Q205,115 140,45 Z' },
-    // Band 3: bottom-left to top-right (cross swirl)
-    { id: 'vb-band-3', label: 'Cross Band', tone: 'medium',
-      path: 'M75,370 Q150,310 220,240 Q290,170 400,110 L380,85 Q275,150 210,220 Q140,290 55,345 Z' },
+    { id: 'vb-bg', label: 'Ball', tone: 'light', path: circle(50, 50, 44) },
+    { id: 'vb-top-left', label: 'Top Left', tone: 'medium',
+      path: 'M6,50 A44,44 0 0,1 50,6 Q35,20 25,34 Q15,48 6,50 Z' },
+    { id: 'vb-top-right', label: 'Top Right', tone: 'light',
+      path: 'M50,6 A44,44 0 0,1 94,50 Q85,48 75,34 Q65,20 50,6 Z' },
+    { id: 'vb-bottom-left', label: 'Bottom Left', tone: 'light',
+      path: 'M6,50 Q15,52 25,66 Q35,80 50,94 A44,44 0 0,1 6,50 Z' },
+    { id: 'vb-bottom-right', label: 'Bottom Right', tone: 'medium',
+      path: 'M94,50 Q85,52 75,66 Q65,80 50,94 A44,44 0 0,1 94,50 Z' },
   ],
 };
 
