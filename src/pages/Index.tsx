@@ -23,7 +23,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe, StencilMode } from '@/types/studio';
-import { Monitor, X, Save, Download } from 'lucide-react';
+import { Monitor, X, Save, Download, Trash2 } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -893,6 +893,9 @@ const Index = () => {
                 )}
               </div>
               <div className="flex items-center gap-2">
+                <button onClick={handleClearAll} className="flex items-center gap-1 px-2 py-1.5 text-[11px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors" title="Reset">
+                  <Trash2 className="w-3.5 h-3.5" /> Reset
+                </button>
                 <button onClick={handleSaveToWall} className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium text-foreground hover:bg-secondary rounded-lg transition-colors">
                   <Save className="w-3.5 h-3.5" /> Save
                 </button>
