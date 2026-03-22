@@ -224,6 +224,15 @@ export function KidActionBubbles({
         onClose();
         break;
       }
+      case 'gallery': {
+        if (design.gallerySubmissionId) {
+          // Already submitted
+        } else {
+          onSubmitToGallery?.(design.id);
+        }
+        onClose();
+        break;
+      }
       case 'delete': {
         onDelete(design.id);
         onClose();
