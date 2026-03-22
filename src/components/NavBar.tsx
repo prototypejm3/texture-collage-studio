@@ -83,8 +83,8 @@ export function NavBar() {
               }`}
               style={isStudio ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
-              <img src={logoImg} alt="Create" className="h-6 w-6 object-contain" />
-              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Create</span>
+              <SwatchboxLogo height={32} />
+
             </Link>
             <div className="w-px h-8" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link
