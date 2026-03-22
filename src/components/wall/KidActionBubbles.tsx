@@ -139,14 +139,15 @@ const kidBubbleActions: BubbleAction[] = [
 const kidHangCycle: HangingStyle[] = ['red-tack', 'cork-tack', 'string', 'floating'];
 
 const adultBubbleActions: BubbleAction[] = [
-  { id: 'resize',    emoji: '↕️',  label: 'Resize',    angle: -108, sound: 'grow' },
-  { id: 'frame',     emoji: '🖼️', label: 'Frame',     angle: -60,  sound: 'pop' },
-  { id: 'rotate',    emoji: '🔄', label: 'Rotate',    angle: -12,  sound: 'spin' },
-  { id: 'duplicate', emoji: '📋', label: 'Duplicate', angle: 36,   sound: 'sparkle' },
-  { id: 'pin',       emoji: '📌', label: 'Pin',       angle: 84,   sound: 'pop' },
-  { id: 'open',      emoji: '✏️', label: 'Edit',      angle: 132,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
-  { id: 'hide',      emoji: '👁️', label: 'Hide',      angle: 168,  sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
-  { id: 'delete',    emoji: '🗑️', label: 'Delete',    angle: 210,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
+  { id: 'resize',    emoji: '↕️',  label: 'Resize',    angle: -120, sound: 'grow' },
+  { id: 'frame',     emoji: '🖼️', label: 'Frame',     angle: -80,  sound: 'pop' },
+  { id: 'rotate',    emoji: '🔄', label: 'Rotate',    angle: -40,  sound: 'spin' },
+  { id: 'duplicate', emoji: '📋', label: 'Duplicate', angle: 0,    sound: 'sparkle' },
+  { id: 'pin',       emoji: '📌', label: 'Pin',       angle: 40,   sound: 'pop' },
+  { id: 'gallery',   emoji: '🎨', label: 'Gallery',   angle: 80,   sound: 'sparkle', color: 'hsl(280, 60%, 90%)' },
+  { id: 'open',      emoji: '✏️', label: 'Edit',      angle: 120,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
+  { id: 'hide',      emoji: '👁️', label: 'Hide',      angle: 160,  sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
+  { id: 'delete',    emoji: '🗑️', label: 'Delete',    angle: 200,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
 ];
 
 const adultFrameCycle: FrameStyle[] = ['shadow-box', 'gold', 'chrome', 'copper', 'silver', 'black', 'wood', 'minimal', 'floating', 'polaroid', 'none'];
@@ -223,6 +224,15 @@ export function KidActionBubbles({
         onClose();
         break;
       }
+      case 'gallery': {
+        if (design.gallerySubmissionId) {
+          // Already submitted
+        } else {
+          onSubmitToGallery?.(design.id);
+        }
+        onClose();
+        break;
+      }
       case 'delete': {
         onDelete(design.id);
         onClose();
@@ -237,9 +247,9 @@ export function KidActionBubbles({
   };
 
   const getLabel = (action: BubbleAction) => {
-    // For adult hide bubble, show current state
     if (action.id === 'hide') return design.hidden ? 'Show' : 'Hide';
     if (action.id === 'pin') return design.pinned ? 'Unpin' : 'Pin';
+    if (action.id === 'gallery') return design.gallerySubmissionId ? 'Submitted' : 'Gallery';
     return action.label;
   };
 
