@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { GrownUpCheckModal } from '@/components/studio/GrownUpCheckModal';
 import { motion } from 'framer-motion';
-import logoImg from '@/assets/logo.png';
+import { SwatchboxLogo } from '@/components/SwatchboxLogo';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
   HouseIcon, TentIcon,
@@ -83,8 +83,8 @@ export function NavBar() {
               }`}
               style={isStudio ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
-              <img src={logoImg} alt="Create" className="h-6 w-6 object-contain" />
-              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Create</span>
+              <SwatchboxLogo height={32} />
+
             </Link>
             <div className="w-px h-8" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link
@@ -167,10 +167,7 @@ export function NavBar() {
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <img src={logoImg} alt="Swatchbox Studio" className="w-7 h-7 object-contain" />
-          <span className="text-sm font-bold tracking-tight text-foreground">
-            Swatchbox Studio
-          </span>
+          <SwatchboxLogo height={32} />
           <button
             onClick={handleToggleKidMode}
             title="Switch to Kids Mode"
