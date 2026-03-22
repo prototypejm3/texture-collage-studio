@@ -444,7 +444,8 @@ export function TextureLibrary({
             >
               {label}
             </button>
-          );
+        );
+        })}
       </div>
 
       {/* Texture grid */}
