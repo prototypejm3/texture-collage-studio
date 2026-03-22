@@ -228,7 +228,7 @@ function edgeDisplayName(edge: EdgeStyle): string {
   return names[edge] || edge;
 }
 
-function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete }: Props) {
+function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo }: Props) {
   const handleToolTap = (toolId: string) => {
     switch (toolId) {
       case 'grow':
@@ -263,6 +263,9 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
         onUpdateEffects({ wrinkle: nextWrinkle });
         break;
       }
+      case 'toss':
+        onDelete();
+        break;
     }
   };
 
@@ -277,12 +280,20 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete 
 
   return (
     <div className="p-3 space-y-3" data-kid-toolbox>
+      {/* Header with undo/redo */}
       <div className="flex items-center justify-between">
         <span className="text-xs font-bold text-foreground">🧰 Tool Box</span>
         <div className="flex gap-1">
-          <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Make a Copy">
-            <Copy className="w-4 h-4" />
-          </Button>
+          {onUndo && (
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-8 w-8 p-0" title="Undo">
+              <Undo2 className="w-4 h-4" />
+            </Button>
+          )}
+          {onRedo && (
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-8 w-8 p-0" title="Redo">
+              <Redo2 className="w-4 h-4" />
+            </Button>
+          )}
           <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Remove">
             <Trash2 className="w-4 h-4" />
           </Button>
