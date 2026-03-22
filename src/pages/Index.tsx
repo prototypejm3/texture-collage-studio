@@ -106,12 +106,26 @@ const Index = () => {
     }
   }, [sounds.kidMode]);
 
-  // Auto-open tools box when elements exist on canvas
+  // Auto-open Tool Box when elements exist on canvas
   useEffect(() => {
     if (studio.elements.length > 0 && activeBox !== 'toolbox') {
       openBox('toolbox');
     }
   }, [studio.elements.length]);
+
+  // When user taps/selects an element, open Tool Box
+  useEffect(() => {
+    if (studio.selectedId && !sounds.kidMode) {
+      openBox('toolbox');
+    }
+  }, [studio.selectedId]);
+
+  // When user taps/selects a stencil section, open Swatches so they can pick a color
+  useEffect(() => {
+    if (studio.selectedSectionId && !sounds.kidMode) {
+      openBox('textures');
+    }
+  }, [studio.selectedSectionId]);
 
   // Keyboard shortcuts
   useEffect(() => {
