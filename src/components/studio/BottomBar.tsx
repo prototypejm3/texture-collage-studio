@@ -269,7 +269,7 @@ export function BottomBar({
             ))}
           </div>
         </>
-      )
+      )}
 
       {/* Easel / Desk toggle */}
       {onToggleEasel && (
