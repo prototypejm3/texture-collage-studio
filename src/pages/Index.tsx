@@ -739,7 +739,7 @@ const Index = () => {
                 icon="📦"
                 label="Keep It!"
                 isActive={activeBox === 'mybox'}
-                onClick={() => toggleBox('mybox')}
+                onClick={() => { toggleBox('mybox'); if (sounds.kidMode) kidTutorial.triggerBox(); }}
                 kidMode={true}
               />
             )}
