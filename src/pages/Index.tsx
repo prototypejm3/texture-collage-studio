@@ -534,6 +534,131 @@ const Index = () => {
               onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
+            {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
+            {activeBox && activeBox !== 'mybox' && (
+              <div
+                data-box-drawer
+                className="absolute z-40 bottom-8 right-8"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    width: isMobile ? 300 : 340,
+                    maxHeight: isMobile ? '45vh' : 320,
+                    background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
+                    borderRadius: 10,
+                    boxShadow: '0 6px 24px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.12)',
+                    border: '2px solid rgba(0,0,0,0.15)',
+                  }}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
+                    <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
+                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Textures')}
+                      {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Stencils')}
+                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Studio')}
+                    </span>
+                    <button
+                      onClick={closeBox}
+                      className="p-1 rounded-md hover:bg-amber-700/40 transition-colors"
+                      style={{ color: 'hsla(35, 80%, 85%, 0.8)' }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Content */}
+                  <div className="overflow-y-auto bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 36px)' : 284 }}>
+                    {activeBox === 'textures' && (
+                      <TextureLibrary
+                        onDragStart={handleDragStartLib}
+                        onTextureClick={handleTextureClick}
+                        activeSectionId={studio.selectedSectionId}
+                        customTextures={customTextures}
+                        onUploadTexture={handleUploadTexture}
+                        onRemoveCustomTexture={removeCustomTexture}
+                        isPremium={isPremium}
+                        onRequestUpgrade={() => setShowPaywall(true)}
+                        applyMode={textureApplyMode}
+                        onApplyModeChange={setTextureApplyMode}
+                        backgroundTextureId={studio.backgroundTextureId}
+                        drawMode={studio.drawMode}
+                        onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
+                        nextShape={studio.nextShape}
+                        onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
+                        crayonMode={studio.crayonMode}
+                        crayonTextureId={studio.crayonTextureId}
+                        onToggleCrayonMode={() => {
+                          const next = !studio.crayonMode;
+                          studio.setCrayonMode(next);
+                          if (next) {
+                            studio.setDrawMode(false);
+                          } else {
+                            studio.setDrawMode(false);
+                            studio.setCrayonTextureId(null);
+                          }
+                        }}
+                        onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
+                      />
+                    )}
+
+                    {activeBox === 'stencils' && (
+                      <BuildPanel
+                        isPremium={isPremium}
+                        onRequestUpgrade={() => setShowPaywall(true)}
+                        activeVibeId={studio.activeVibe?.id ?? null}
+                        onSelectVibe={handleSelectVibe}
+                        onShuffleVibeFills={studio.shuffleVibeFills}
+                        onPlaceStencil={studio.placeStencil}
+                        onGenerateMood={handleGenerateMood}
+                        isGeneratingMood={vibeGen.isGenerating}
+                        customTemplate={customTemplate}
+                        templateOpacity={templateOpacity}
+                        onUploadTemplate={handleUploadTemplate}
+                        onClearTemplate={clearTemplate}
+                        onTemplateOpacityChange={setTemplateOpacity}
+                        stencilsPoppedOut={false}
+                        onPopOutStencils={() => {}}
+                      />
+                    )}
+
+                    {activeBox === 'tools' && (
+                      <div className="p-3">
+                        <BottomBar
+                          wallFrameStyle={studio.wallFrameStyle}
+                          onWallFrameStyleChange={studio.setWallFrameStyle}
+                          onClear={handleClearAll}
+                          onSave={handleExport}
+                          onSaveToWall={handleSaveToWall}
+                          isPremium={isPremium}
+                          onRequestUpgrade={() => setShowPaywall(true)}
+                          tableSurface={tableSurface}
+                          onTableSurfaceChange={setTableSurface}
+                          easelMode={easelMode}
+                          onToggleEasel={() => setEaselMode(prev => !prev)}
+                          backgroundTextureId={studio.backgroundTextureId}
+                          onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
+                        />
+                        {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
+                          <div className="mt-3 pt-3 border-t border-border">
+                            <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Edit Element</p>
+                            <FloatingToolbar
+                              element={studio.elements.find(e => e.id === studio.selectedId)!}
+                              onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
+                              onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
+                              onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
+                              onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
           </div>
         </div>
 
@@ -604,149 +729,7 @@ const Index = () => {
               kidMode={sounds.kidMode}
             />
           </div>
-
         </div>
-
-        {/* ── DRAWER opens on the table surface, like the kid toolbox ── */}
-        {activeBox && (
-          <div
-            data-box-drawer
-            className="absolute z-40 bottom-3 left-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-start">
-              <div
-                className="overflow-hidden"
-                style={{
-                  width: isMobile ? 320 : 360,
-                  maxHeight: isMobile ? '40vh' : 260,
-                  background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 50%, #7a5018 100%)',
-                  borderRadius: '10px 10px 0 0',
-                  boxShadow: '0 -4px 16px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.12)',
-                  border: '2px solid rgba(0,0,0,0.15)',
-                  borderBottom: 'none',
-                }}
-              >
-                {/* Header */}
-                <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
-                  <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
-                    {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Textures')}
-                    {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Stencils')}
-                    {activeBox === 'tools' && (sounds.kidMode ? '🖼️ My Tool Box' : '🖼️ Studio')}
-                    {activeBox === 'mybox' && (sounds.kidMode ? '📦 My Swatch Box' : '📦 Save')}
-                  </span>
-                  <button
-                    onClick={closeBox}
-                    className="p-1 rounded-md hover:bg-amber-700/40 transition-colors"
-                    style={{ color: 'hsla(35, 80%, 85%, 0.8)' }}
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                {/* Content */}
-                <div className="overflow-y-auto bg-popover" style={{ maxHeight: isMobile ? 'calc(40vh - 36px)' : 224 }}>
-                  {activeBox === 'textures' && (
-                    <TextureLibrary
-                      onDragStart={handleDragStartLib}
-                      onTextureClick={handleTextureClick}
-                      activeSectionId={studio.selectedSectionId}
-                      customTextures={customTextures}
-                      onUploadTexture={handleUploadTexture}
-                      onRemoveCustomTexture={removeCustomTexture}
-                      isPremium={isPremium}
-                      onRequestUpgrade={() => setShowPaywall(true)}
-                      applyMode={textureApplyMode}
-                      onApplyModeChange={setTextureApplyMode}
-                      backgroundTextureId={studio.backgroundTextureId}
-                      drawMode={studio.drawMode}
-                      onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
-                      nextShape={studio.nextShape}
-                      onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
-                      crayonMode={studio.crayonMode}
-                      crayonTextureId={studio.crayonTextureId}
-                      onToggleCrayonMode={() => {
-                        const next = !studio.crayonMode;
-                        studio.setCrayonMode(next);
-                        if (next) {
-                          studio.setDrawMode(false);
-                        } else {
-                          studio.setDrawMode(false);
-                          studio.setCrayonTextureId(null);
-                        }
-                      }}
-                      onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
-                    />
-                  )}
-
-                  {activeBox === 'stencils' && (
-                    <BuildPanel
-                      isPremium={isPremium}
-                      onRequestUpgrade={() => setShowPaywall(true)}
-                      activeVibeId={studio.activeVibe?.id ?? null}
-                      onSelectVibe={handleSelectVibe}
-                      onShuffleVibeFills={studio.shuffleVibeFills}
-                      onPlaceStencil={studio.placeStencil}
-                      onGenerateMood={handleGenerateMood}
-                      isGeneratingMood={vibeGen.isGenerating}
-                      customTemplate={customTemplate}
-                      templateOpacity={templateOpacity}
-                      onUploadTemplate={handleUploadTemplate}
-                      onClearTemplate={clearTemplate}
-                      onTemplateOpacityChange={setTemplateOpacity}
-                      stencilsPoppedOut={false}
-                      onPopOutStencils={() => {}}
-                    />
-                  )}
-
-                  {activeBox === 'tools' && (
-                    <div className="p-3">
-                      <BottomBar
-                        wallFrameStyle={studio.wallFrameStyle}
-                        onWallFrameStyleChange={studio.setWallFrameStyle}
-                        onClear={handleClearAll}
-                        onSave={handleExport}
-                        onSaveToWall={handleSaveToWall}
-                        isPremium={isPremium}
-                        onRequestUpgrade={() => setShowPaywall(true)}
-                        tableSurface={tableSurface}
-                        onTableSurfaceChange={setTableSurface}
-                        easelMode={easelMode}
-                        onToggleEasel={() => setEaselMode(prev => !prev)}
-                        backgroundTextureId={studio.backgroundTextureId}
-                        onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
-                      />
-                      {studio.selectedId && studio.elements.find(e => e.id === studio.selectedId) && (
-                        <div className="mt-3 pt-3 border-t border-border">
-                          <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Edit Element</p>
-                          <FloatingToolbar
-                            element={studio.elements.find(e => e.id === studio.selectedId)!}
-                            onUpdate={(updates) => { studio.updateElement(studio.selectedId!, updates); kidOnboarding.notifyMove(); }}
-                            onUpdateEffects={(effects) => { studio.updateEffects(studio.selectedId!, effects); kidOnboarding.notifyToolUse(); }}
-                            onDuplicate={() => studio.duplicateElement(studio.selectedId!)}
-                            onDelete={() => { studio.deleteElement(studio.selectedId!); sounds.playDelete(); sounds.trackAction(); }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {activeBox === 'mybox' && (
-                    <div className="p-4 text-center text-muted-foreground">
-                      <p className="text-sm">{sounds.kidMode ? '📦 Your saved creations will appear here!' : 'Your saved designs will appear here.'}</p>
-                      <button
-                        onClick={handleSaveToWall}
-                        className="mt-3 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
-                      >
-                        {sounds.kidMode ? '💾 Save Current' : 'Save to Wall'}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       <AmbientSoundPlayer sound={ambientSound} showControl={ambientSound !== 'none'} />
