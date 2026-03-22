@@ -117,10 +117,11 @@ function WallIconApple() {
 function WallIconForest() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
-      <polygon points="20,6 10,28 30,28" fill="#22c55e"/>
-      <rect x="18" y="28" width="4" height="6" fill="#c4956a"/>
-      <polygon points="20,8 22,8 20,6" fill="#fbbf24"/>
-      <circle cx="20" cy="7" r="2" fill="#fbbf24"/>
+      <ellipse cx="20" cy="14" rx="8" ry="7" fill="#22c55e"/>
+      <ellipse cx="15" cy="18" rx="5" ry="4" fill="#4ade80"/>
+      <ellipse cx="25" cy="18" rx="5" ry="4" fill="#4ade80"/>
+      <ellipse cx="20" cy="11" rx="5" ry="4" fill="#16a34a"/>
+      <rect x="18" y="24" width="4" height="8" rx="1" fill="#c4956a"/>
     </svg>
   );
 }
