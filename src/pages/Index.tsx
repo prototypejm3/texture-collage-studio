@@ -384,7 +384,9 @@ const Index = () => {
         return;
       }
 
-      if (!canSave(wall.designs.length)) {
+      // Only count displayed (wall-hung) designs against free limit
+      const displayedCount = wall.designs.filter(d => d.status === 'display' && !d.hidden).length;
+      if (!canSave(displayedCount)) {
         setPendingSave({ preview: dataUrl, name, vibeName, stencilCreator });
         setShowPaywall(true);
         return;
