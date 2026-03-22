@@ -347,8 +347,11 @@ const Index = () => {
 
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
-    if (!sounds.kidMode) {
+    if (sounds.kidMode) {
       setShowStencilModePicker(true);
+    } else {
+      // Adult mode: always place as outline stencil immediately
+      studio.placeStencil('outline');
     }
   }, [studio, sounds.kidMode]);
 

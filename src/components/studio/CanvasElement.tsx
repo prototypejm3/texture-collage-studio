@@ -327,9 +327,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
               boxShadow: 'inset 0 0 0 1px hsl(var(--border))',
             } : {}),
           }}
-        />
       )}
-      )}
+    </div>
     </div>
   );
 }
