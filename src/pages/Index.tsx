@@ -814,16 +814,20 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: 4 clean buttons centered */
+            /* Adult mode: clean buttons centered, Tool Box appears when canvas has content */
             <div className="flex items-center justify-center w-full px-4 py-2 gap-6">
-              <BoxButton id="textures" icon="" label="Colors" isActive={activeBox === 'textures'}
+              <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
                 onClick={() => toggleBox('textures')} kidMode={false} />
-              <BoxButton id="tools" icon="" label="Frame" isActive={activeBox === 'tools'}
+              <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
                 onClick={() => toggleBox('tools')} kidMode={false} />
-              <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
+              <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
                 onClick={() => toggleBox('stencils')} kidMode={false} />
               <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
                 onClick={() => toggleBox('text')} kidMode={false} />
+              {studio.elements.length > 0 && (
+                <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
+                  onClick={() => toggleBox('toolbox')} kidMode={false} />
+              )}
             </div>
           )}
         </div>
