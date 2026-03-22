@@ -578,6 +578,7 @@ export function useStudio() {
     nextShape,
     setNextShape,
     // Free-mode
+    addTextElement,
     addElement,
     updateElement,
     updateEffects,
