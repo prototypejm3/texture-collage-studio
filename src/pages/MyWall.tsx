@@ -37,6 +37,7 @@ const bgStyles: Record<WallBackground, string> = {
   'blush': 'wall-bg-blush',
   'red': 'wall-bg-red',
   'green': 'wall-bg-green',
+  'floral': 'wall-bg-floral',
   'custom': '',
 };
 
@@ -75,11 +76,11 @@ const MyWall = () => {
   const currentSettings = multiWall.activeWall.settings;
   const isDark = false;
   const wallBgClass = currentSettings.background !== 'custom' ? bgStyles[currentSettings.background] : '';
-  const wallBgStyle = currentSettings.background === 'custom' && currentSettings.customWallImage ? {
-    backgroundImage: `url(${currentSettings.customWallImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  } : undefined;
+  const wallBgStyle = currentSettings.background === 'custom' && currentSettings.customWallImage
+    ? currentSettings.customWallImage.startsWith('#') || currentSettings.customWallImage.startsWith('rgb')
+      ? { backgroundColor: currentSettings.customWallImage } as React.CSSProperties
+      : { backgroundImage: `url(${currentSettings.customWallImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } as React.CSSProperties
+    : undefined;
 
   const handleOpen = useCallback((id: string) => {
     navigate(`/create?edit=${id}`);
