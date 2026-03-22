@@ -748,7 +748,7 @@ const Index = () => {
               icon="🎨"
               label={sounds.kidMode ? "Colors" : "Swatches"}
               isActive={activeBox === 'textures'}
-              onClick={() => toggleBox('textures')}
+              onClick={() => { toggleBox('textures'); if (sounds.kidMode) kidTutorial.triggerColor(); }}
               kidMode={sounds.kidMode}
             />
             <BoxButton
@@ -756,7 +756,7 @@ const Index = () => {
               icon="🖼️"
               label={sounds.kidMode ? "Frame" : "Display"}
               isActive={activeBox === 'tools'}
-              onClick={() => toggleBox('tools')}
+              onClick={() => { toggleBox('tools'); if (sounds.kidMode) kidTutorial.triggerFrame(); }}
               kidMode={sounds.kidMode}
             />
             <BoxButton
