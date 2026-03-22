@@ -152,10 +152,9 @@ export function TopToolbar({
     <>
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
-        ? 'h-[64px] border-b border-[#e8ddd0]'
+        ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
         : 'py-1 md:py-1.5 bg-background border-b border-border'
     }`}
-    style={kidMode ? { backgroundColor: '#fdf6ee' } : undefined}
     >
       {/* Left: Mode toggle + Create + Nav */}
       <div className="flex items-center gap-1.5 md:gap-3">
