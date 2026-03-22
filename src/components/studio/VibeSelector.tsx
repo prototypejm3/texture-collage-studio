@@ -126,7 +126,7 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Sports Balls', emoji: '⚽', ids: new Set(sportsStencils.map(s => s.id)) },
   ];
 
-  const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...sportsStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
