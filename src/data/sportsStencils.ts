@@ -358,10 +358,163 @@ const shellysVolleyball: Vibe = {
   ],
 };
 
+// ═══════════════════════════════════════════
+// ANCHOR STENCILS — Snap to Edge
+// ═══════════════════════════════════════════
+
+// ── BASKETBALL HOOP 🏀 ──
+const basketballHoop: Vibe = {
+  id: 'basketball-hoop', name: 'Basketball Hoop', emoji: '🏀', category: 'Anchors',
+  description: 'Backboard, rim, and net — snap balls to the rim',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 360 480',
+  sections: [
+    // Backboard
+    { id: 'bh-backboard', label: 'Backboard', tone: 'light',
+      path: 'M60,30 L300,30 Q308,30 308,38 L308,186 Q308,194 300,194 L60,194 Q52,194 52,186 L52,38 Q52,30 60,30 Z' },
+    // Target box on backboard
+    { id: 'bh-target', label: 'Target Box', tone: 'accent',
+      path: 'M126,66 L234,66 L234,144 L126,144 Z' },
+    // Bracket arm
+    { id: 'bh-bracket', label: 'Bracket', tone: 'dark',
+      path: 'M170,194 L190,194 L190,225 L170,225 Z' },
+    // Rim (ellipse approximated as path)
+    { id: 'bh-rim', label: 'Rim', tone: 'accent',
+      path: 'M102,240 Q102,218 180,218 Q258,218 258,240 Q258,262 180,262 Q102,262 102,240 Z M114,240 Q114,226 180,226 Q246,226 246,240 Q246,254 180,254 Q114,254 114,240 Z' },
+    // Net (simplified trapezoid mesh)
+    { id: 'bh-net', label: 'Net', tone: 'medium',
+      path: 'M108,252 L132,354 L144,354 L120,258 Z M150,258 L156,354 L168,354 L162,258 Z M192,258 L198,354 L210,354 L204,258 Z M228,258 L252,354 L240,354 L216,258 Z' },
+  ],
+};
+
+// ── FOOTBALL GOAL POST 🏈 ──
+const footballGoalPost: Vibe = {
+  id: 'football-goal-post', name: 'Football Goal Post', emoji: '🏈', category: 'Anchors',
+  description: 'Classic Y-shaped goal post — kick through the uprights',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 360 600',
+  sections: [
+    // Base pole
+    { id: 'fg-base', label: 'Base Pole', tone: 'medium',
+      path: 'M168,540 L192,540 L192,330 L168,330 Z' },
+    // Crossbar
+    { id: 'fg-crossbar', label: 'Crossbar', tone: 'medium',
+      path: 'M60,318 L300,318 L300,342 L60,342 Z' },
+    // Left upright
+    { id: 'fg-left', label: 'Left Upright', tone: 'medium',
+      path: 'M52,60 L72,60 L72,342 L52,342 Z' },
+    // Right upright
+    { id: 'fg-right', label: 'Right Upright', tone: 'medium',
+      path: 'M288,60 L308,60 L308,342 L288,342 Z' },
+    // Left cap
+    { id: 'fg-cap-l', label: 'Left Cap', tone: 'accent',
+      path: circle(62, 54, 14) },
+    // Right cap
+    { id: 'fg-cap-r', label: 'Right Cap', tone: 'accent',
+      path: circle(298, 54, 14) },
+  ],
+};
+
+// ── SOCCER GOAL ⚽ ──
+const soccerGoal: Vibe = {
+  id: 'soccer-goal', name: 'Soccer Goal', emoji: '⚽', category: 'Anchors',
+  description: '3D soccer goal with net — shoot into the net',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 480 360',
+  sections: [
+    // Front frame (bold rectangle)
+    { id: 'sg-frame', label: 'Goal Frame', tone: 'light',
+      path: 'M30,60 L360,60 L360,270 L30,270 Z M42,72 L348,72 L348,258 L42,258 Z' },
+    // Depth lines (3D effect) — left side
+    { id: 'sg-depth-l', label: 'Left Depth', tone: 'medium',
+      path: 'M30,60 L90,30 L90,42 L42,66 Z M30,270 L90,300 L90,288 L42,264 Z' },
+    // Depth lines — right side
+    { id: 'sg-depth-r', label: 'Right Depth', tone: 'medium',
+      path: 'M360,60 L420,30 L420,42 L366,66 Z M360,270 L420,300 L420,288 L366,264 Z' },
+    // Back frame (dashed look via thin stroke)
+    { id: 'sg-back', label: 'Back Frame', tone: 'dark',
+      path: 'M90,30 L420,30 L420,300 L90,300 Z M96,36 L414,36 L414,294 L96,294 Z' },
+    // Net vertical lines
+    { id: 'sg-net', label: 'Net', tone: 'medium',
+      path: 'M140,72 L140,258 L146,258 L146,72 Z M248,72 L248,258 L254,258 L254,72 Z M42,162 L348,162 L348,168 L42,168 Z' },
+  ],
+};
+
+// ═══════════════════════════════════════════
+// WORLD STENCILS — Full Scene Backgrounds
+// ═══════════════════════════════════════════
+
+// ── VOLLEYBALL COURT 🏐 ──
+const volleyballCourt: Vibe = {
+  id: 'volleyball-court', name: 'Volleyball Court', emoji: '🏐', category: 'Worlds',
+  description: 'Top-down volleyball court with center net',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 600 390',
+  sections: [
+    // Court surface
+    { id: 'vc-court', label: 'Court Surface', tone: 'light',
+      path: 'M30,30 L570,30 Q576,30 576,36 L576,354 Q576,360 570,360 L30,360 Q24,360 24,354 L24,36 Q24,30 30,30 Z' },
+    // Court boundary line
+    { id: 'vc-boundary', label: 'Boundary', tone: 'dark',
+      path: 'M30,30 L570,30 L570,42 L42,42 L42,348 L570,348 L570,360 L30,360 L30,30 Z M558,42 L558,348 L570,348 L570,42 Z' },
+    // Center net (bold accent line)
+    { id: 'vc-net', label: 'Center Net', tone: 'accent',
+      path: 'M294,30 L306,30 L306,360 L294,360 Z' },
+    // Left attack line
+    { id: 'vc-attack-l', label: 'Attack Line Left', tone: 'medium',
+      path: 'M198,42 L204,42 L204,348 L198,348 Z' },
+    // Right attack line
+    { id: 'vc-attack-r', label: 'Attack Line Right', tone: 'medium',
+      path: 'M396,42 L402,42 L402,348 L396,348 Z' },
+  ],
+};
+
+// ── BASEBALL FIELD ⚾ ──
+const baseballField: Vibe = {
+  id: 'baseball-field', name: 'Baseball Field', emoji: '⚾', category: 'Worlds',
+  description: 'Top-down diamond with outfield arc',
+  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  viewBox: '0 0 600 540',
+  sections: [
+    // Outfield arc (green field)
+    { id: 'bf-outfield', label: 'Outfield', tone: 'light',
+      path: 'M60,480 Q300,60 540,480 Z' },
+    // Infield dirt (brown area)
+    { id: 'bf-infield', label: 'Infield', tone: 'medium',
+      path: 'M180,480 Q300,240 420,480 Z' },
+    // Diamond (the key shape)
+    { id: 'bf-diamond', label: 'Diamond', tone: 'accent',
+      path: 'M300,240 L390,345 L300,450 L210,345 Z M300,252 L378,345 L300,438 L222,345 Z' },
+    // Home plate (pentagon)
+    { id: 'bf-home', label: 'Home Plate', tone: 'dark',
+      path: 'M300,468 L324,450 L324,432 L276,432 L276,450 Z' },
+    // Pitcher's mound
+    { id: 'bf-mound', label: "Pitcher's Mound", tone: 'dark',
+      path: circle(300, 345, 21) },
+    // First base
+    { id: 'bf-1b', label: '1st Base', tone: 'accent',
+      path: 'M378,333 L390,345 L378,357 L366,345 Z' },
+    // Second base
+    { id: 'bf-2b', label: '2nd Base', tone: 'accent',
+      path: 'M288,228 L300,240 L288,252 L276,240 Z' },
+    // Third base
+    { id: 'bf-3b', label: '3rd Base', tone: 'accent',
+      path: 'M222,333 L234,345 L222,357 L210,345 Z' },
+  ],
+};
+
 export const sportsStencils: Vibe[] = [
   soccerBall, basketball, football, baseball,
   tennisBall, volleyball, volleyballSide, volleyballTop, shellysVolleyball,
   rugbyBall, billiardsBall,
   softball, cricketBall,
   starBall, smileBall, rainbowBall, fireBall,
+];
+
+export const anchorStencils: Vibe[] = [
+  basketballHoop, footballGoalPost, soccerGoal,
+];
+
+export const worldStencils: Vibe[] = [
+  volleyballCourt, baseballField,
 ];

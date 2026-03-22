@@ -3,7 +3,7 @@ import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
 import { grannyStencils } from '@/data/grannyStencils';
-import { sportsStencils } from '@/data/sportsStencils';
+import { sportsStencils, anchorStencils, worldStencils } from '@/data/sportsStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Palette, EyeOff, Eye, Globe, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp } from 'lucide-react';
@@ -196,7 +196,7 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...sportsStencils, ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...sportsStencils, ...anchorStencils, ...worldStencils, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
@@ -219,6 +219,8 @@ export function RightSidebar({
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: communityDiyIds },
     { label: 'Sports Balls', kidLabel: '⚽ Sports', emoji: '⚽', ids: new Set(sportsStencils.map(s => s.id)) },
+    { label: 'Anchors', kidLabel: '🎯 Goals', emoji: '🎯', ids: new Set(anchorStencils.map(s => s.id)) },
+    { label: 'Worlds', kidLabel: '🌍 Fields', emoji: '🌍', ids: new Set(worldStencils.map(s => s.id)) },
     // Granny Mode categories
     { label: 'Granny Tea', kidLabel: '☕ Tea & Table', emoji: '☕', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Tea').map(g => g.id)), grannyOnly: true },
     { label: 'Granny Sewing', kidLabel: '🧵 Sewing Drawer', emoji: '🧵', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Sewing').map(g => g.id)), grannyOnly: true },

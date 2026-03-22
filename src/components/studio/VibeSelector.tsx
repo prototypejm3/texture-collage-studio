@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
-import { sportsStencils } from '@/data/sportsStencils';
+import { sportsStencils, anchorStencils, worldStencils } from '@/data/sportsStencils';
 import { Vibe } from '@/types/studio';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, Sparkles, Loader2, Lock, Check, Trash2, Flag, Heart } from 'lucide-react';
@@ -124,9 +124,11 @@ export function VibeSelector({ isOpen, activeVibeId, isPremium, onClose, onSelec
     { label: 'Letters', emoji: '🔤', ids: letterIds },
     { label: 'Community DIY', emoji: '🛠️', ids: communityDiyIds },
     { label: 'Sports Balls', emoji: '⚽', ids: new Set(sportsStencils.map(s => s.id)) },
+    { label: 'Anchors', emoji: '🎯', ids: new Set(anchorStencils.map(s => s.id)) },
+    { label: 'Worlds', emoji: '🌍', ids: new Set(worldStencils.map(s => s.id)) },
   ];
 
-  const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...sportsStencils, ...aiGeneratedVibes];
+  const allVibes = [...vibes, ...(kidMode ? [] : funStencils), ...letterStencils, ...numberSymbolStencils, ...sportsStencils, ...anchorStencils, ...worldStencils, ...aiGeneratedVibes];
   
   // Collect IDs used in theme groups
   const themedIds = new Set<string>();
