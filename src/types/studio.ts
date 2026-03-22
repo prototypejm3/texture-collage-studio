@@ -11,7 +11,7 @@ export type TextureCategory =
   | 'Alix' | 'Corinne' | 'ShayShari' | 'Suede Ace' | 'Jayme'
   | 'Skott' | 'Kaplan' | 'Riviera'
   | 'Nicole' | 'Byrd' | 'JaymeLyn' | 'Claude' | 'Gemini' | 'Chat'
-  | 'Bisous' | 'Sunny Pup'
+  | 'Bisous' | 'Sunny Pup' | 'Magenta Mrstik' | "Shelly's Volleyball"
   | 'Custom';
 
 export type ElementType = 'shape' | 'image' | 'text';
