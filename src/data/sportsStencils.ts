@@ -131,58 +131,63 @@ const tennisBall: Vibe = {
   ],
 };
 
-// ── VOLLEYBALL 🏐 ── Front view (classic wrapped panels)
+// ── VOLLEYBALL 🏐 ── Front view: 3 soft curved swirl bands
 const volleyball: Vibe = {
   id: 'volleyball', name: 'Volleyball (Front)', emoji: '🏐', category: 'Sports',
-  description: 'Classic front-facing volleyball',
+  description: 'Classic front-facing volleyball with curved swirl bands',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'vb-bg', label: 'Ball', tone: 'light', path: circle(240, 240, 200) },
-    { id: 'vb-panel-1', label: 'Panel Left', tone: 'medium',
-      path: 'M130,55 Q100,140 110,240 Q100,340 130,425 L160,420 Q140,340 145,240 Q140,140 160,60 Z' },
-    { id: 'vb-panel-2', label: 'Panel Right', tone: 'medium',
-      path: 'M350,55 Q380,140 370,240 Q380,340 350,425 L320,420 Q340,340 335,240 Q340,140 320,60 Z' },
-    { id: 'vb-panel-3', label: 'Panel Center', tone: 'medium',
-      path: 'M42,225 Q120,200 240,205 Q360,200 438,225 L438,255 Q360,280 240,275 Q120,280 42,255 Z' },
+    // Band 1: top-left to bottom-right (wide gentle curve)
+    { id: 'vb-band-1', label: 'Swirl Band 1', tone: 'medium',
+      path: 'M75,110 Q140,180 200,280 Q250,370 340,430 L365,405 Q275,350 225,260 Q165,160 100,90 Z' },
+    // Band 2: parallel to band 1, offset inward
+    { id: 'vb-band-2', label: 'Swirl Band 2', tone: 'medium',
+      path: 'M115,60 Q180,130 235,240 Q290,340 380,400 L400,375 Q315,320 260,220 Q205,115 140,45 Z' },
+    // Band 3: bottom-left to top-right (cross swirl)
+    { id: 'vb-band-3', label: 'Cross Band', tone: 'medium',
+      path: 'M75,370 Q150,310 220,240 Q290,170 400,110 L380,85 Q275,150 210,220 Q140,290 55,345 Z' },
   ],
 };
 
-// ── VOLLEYBALL 🏐 ── Side view (rotated diagonal panels)
+// ── VOLLEYBALL 🏐 ── Side view: rotated swirl bands
 const volleyballSide: Vibe = {
   id: 'volleyball-side', name: 'Volleyball (Side)', emoji: '🏐', category: 'Sports',
-  description: 'Side-rotated volleyball panels',
+  description: 'Side-angled volleyball swirl bands',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'vbs-bg', label: 'Ball', tone: 'light', path: circle(240, 240, 200) },
-    { id: 'vbs-band-1', label: 'Diagonal Band', tone: 'medium',
-      path: 'M80,95 Q160,150 215,240 Q160,330 80,385 L110,410 Q190,340 240,255 L240,240 L240,225 Q290,140 370,70 L340,50 Q270,130 240,215 L240,240 Z' },
-    { id: 'vbs-band-2', label: 'Cross Band', tone: 'medium',
-      path: 'M400,95 Q320,150 265,240 Q320,330 400,385 L370,410 Q290,340 240,255 L240,240 L240,225 Q190,140 110,70 L140,50 Q210,130 240,215 L240,240 Z' },
-    { id: 'vbs-stripe', label: 'Center Stripe', tone: 'accent',
-      path: 'M225,42 Q232,140 235,240 Q232,340 225,438 L255,438 Q248,340 245,240 Q248,140 255,42 Z' },
+    // Band 1: top to bottom-left curve
+    { id: 'vbs-band-1', label: 'Swirl Band 1', tone: 'medium',
+      path: 'M240,42 Q200,130 150,220 Q100,310 60,370 L85,395 Q125,330 175,240 Q225,145 265,50 Z' },
+    // Band 2: top-right to bottom curve
+    { id: 'vbs-band-2', label: 'Swirl Band 2', tone: 'medium',
+      path: 'M370,65 Q320,140 280,230 Q250,320 240,438 L265,438 Q275,330 305,240 Q345,150 395,80 Z' },
+    // Band 3: left to right gentle arc
+    { id: 'vbs-band-3', label: 'Cross Band', tone: 'medium',
+      path: 'M42,200 Q130,220 220,260 Q310,300 420,310 L425,280 Q320,275 230,235 Q140,195 45,175 Z' },
   ],
 };
 
-// ── VOLLEYBALL 🏐 ── Top view (radial Y-seam)
+// ── VOLLEYBALL 🏐 ── Top view: swirl from above
 const volleyballTop: Vibe = {
   id: 'volleyball-top', name: 'Volleyball (Top)', emoji: '🏐', category: 'Sports',
-  description: 'Top-down volleyball with Y-seam',
+  description: 'Top-down volleyball swirl bands',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'vbt-bg', label: 'Ball', tone: 'light', path: circle(240, 240, 200) },
-    { id: 'vbt-seam-1', label: 'Top Seam', tone: 'medium',
-      path: 'M230,240 Q225,155 215,50 L265,50 Q255,155 250,240 Z' },
-    { id: 'vbt-seam-2', label: 'Left Seam', tone: 'medium',
-      path: 'M235,250 Q175,305 90,385 L120,415 Q195,330 250,260 Z' },
-    { id: 'vbt-seam-3', label: 'Right Seam', tone: 'medium',
-      path: 'M245,250 Q305,305 390,385 L360,415 Q285,330 230,260 Z' },
-    { id: 'vbt-panel-a', label: 'Right Panel', tone: 'accent',
-      path: 'M255,240 Q260,155 265,50 L350,75 Q400,130 430,200 L438,230 Q360,215 260,235 Z' },
-    { id: 'vbt-panel-b', label: 'Bottom Panel', tone: 'accent',
-      path: 'M250,260 Q285,330 360,415 L300,435 Q250,438 240,438 Q230,438 180,435 L120,415 Q195,330 230,260 Z' },
+    // Band 1: gentle clockwise curve
+    { id: 'vbt-band-1', label: 'Swirl Band 1', tone: 'medium',
+      path: 'M180,45 Q160,140 180,240 Q200,340 260,430 L285,420 Q225,330 205,240 Q185,150 205,55 Z' },
+    // Band 2: second clockwise curve offset
+    { id: 'vbt-band-2', label: 'Swirl Band 2', tone: 'medium',
+      path: 'M55,180 Q140,160 240,180 Q340,200 430,260 L420,285 Q330,225 240,205 Q150,185 65,205 Z' },
+    // Band 3: third completing the swirl
+    { id: 'vbt-band-3', label: 'Swirl Band 3', tone: 'medium',
+      path: 'M380,55 Q350,140 310,220 Q260,300 150,380 L170,405 Q280,320 330,240 Q370,155 400,70 Z' },
   ],
 };
 
