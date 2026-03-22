@@ -257,7 +257,7 @@ export function BottomBar({
                   : 'bg-secondary text-foreground border-border hover:bg-accent'
               }`}
             >
-              Pick Your Wood
+              Wood Finish
             </button>
             <AnimatePresence>
               {showColorMenu === 'wood' && (
