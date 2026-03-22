@@ -648,25 +648,6 @@ className="overflow-visible relative"
                       />
                     )}
 
-                    {activeBox === 'stencils' && (
-                      <BuildPanel
-                        isPremium={isPremium}
-                        onRequestUpgrade={() => setShowPaywall(true)}
-                        activeVibeId={studio.activeVibe?.id ?? null}
-                        onSelectVibe={handleSelectVibe}
-                        onShuffleVibeFills={studio.shuffleVibeFills}
-                        onPlaceStencil={studio.placeStencil}
-                        onGenerateMood={handleGenerateMood}
-                        isGeneratingMood={vibeGen.isGenerating}
-                        customTemplate={customTemplate}
-                        templateOpacity={templateOpacity}
-                        onUploadTemplate={handleUploadTemplate}
-                        onClearTemplate={clearTemplate}
-                        onTemplateOpacityChange={setTemplateOpacity}
-                        stencilsPoppedOut={false}
-                        onPopOutStencils={() => {}}
-                      />
-                    )}
 
                     {activeBox === 'tools' && (
                       <div className="p-3">
