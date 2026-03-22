@@ -71,6 +71,22 @@ const Index = () => {
     localStorage.setItem('workstationName', name);
   }, []);
 
+  // Handle Stripe payment success redirect
+  useEffect(() => {
+    if (searchParams.get('payment') === 'success') {
+      const expiry = new Date();
+      expiry.setFullYear(expiry.getFullYear() + 100);
+      localStorage.setItem('premium-expiry', expiry.toISOString());
+      localStorage.setItem('user-tier', 'premium');
+      upgradeToPremium();
+      toast({ title: '🎉 Payment successful!', description: 'You now have lifetime premium access!' });
+      // Clean up URL
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('payment');
+      navigate(`/${newParams.toString() ? `?${newParams}` : ''}`, { replace: true });
+    }
+  }, [searchParams, upgradeToPremium, navigate]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
