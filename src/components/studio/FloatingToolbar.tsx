@@ -312,7 +312,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-4 gap-1.5">
         {kidTools.map(tool => {
           const subtitle = getSubtitle(tool.id);
           return (
@@ -321,12 +321,12 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
               onClick={() => handleToolTap(tool.id)}
-              className="flex flex-col items-center justify-center gap-0.5 rounded-xl p-3 min-h-[72px] transition-colors border border-border bg-secondary hover:bg-accent"
+              className="flex flex-col items-center justify-center gap-0 rounded-lg p-1.5 min-h-[48px] transition-colors border border-border bg-secondary hover:bg-accent"
             >
-              <ToolIcon id={tool.id} size={32} />
-              <span className="text-[10px] font-semibold text-foreground">{tool.label}</span>
+              <ToolIcon id={tool.id} size={22} />
+              <span className="text-[9px] font-semibold text-foreground leading-tight">{tool.label}</span>
               {subtitle && (
-                <span className="text-[8px] text-muted-foreground -mt-0.5">{subtitle}</span>
+                <span className="text-[7px] text-muted-foreground leading-tight">{subtitle}</span>
               )}
             </motion.button>
           );
