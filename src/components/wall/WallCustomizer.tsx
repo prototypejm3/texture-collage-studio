@@ -370,25 +370,27 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </div>
         )}
 
-        {/* Background picker — free for kids, premium for adults */}
-        <div className="flex items-center gap-1.5">
+        {/* Background picker — illustrated icons */}
+        <div className="flex items-center gap-4">
+          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>🎨 Wall:</span>
           {backgrounds.map(bg => {
             const isFree = kidMode || isPremium;
+            const isSelected = settings.background === bg.value;
+            const IconComp = wallIcons[bg.value];
             return (
               <button
                 key={bg.value}
                 onClick={() => isFree ? onUpdate({ background: bg.value }) : onRequestUpgrade?.()}
-                className={`relative w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 overflow-hidden ${
-                  settings.background === bg.value ? 'border-primary scale-110 shadow-md' : 'border-border/40'
-                }`}
+                className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                style={{
+                  width: 68, height: 68,
+                  backgroundColor: bg.fill,
+                  border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                }}
                 title={isFree ? (kidMode && bg.kidLabel ? bg.kidLabel : bg.label) : 'Premium — unlock to use'}
               >
-                {bg.preview ? (
-                  <img src={bg.preview} alt={bg.label} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="block w-full h-full" style={{ backgroundColor: bg.previewColor }} />
-                )}
-                {!isFree && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-background/80 drop-shadow-sm" />}
+                {IconComp && <IconComp />}
+                {!isFree && <Lock className="w-3 h-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/40 drop-shadow-sm" />}
               </button>
             );
           })}
