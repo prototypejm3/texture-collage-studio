@@ -93,7 +93,7 @@ export function PaywallModal({ isOpen, onClose, onReplace, onUnlock }: PaywallMo
 
               <div className="flex flex-col gap-2.5">
                 <a
-                  href="https://buy.stripe.com/9B63cn69tfkC72u59OdQQ04"
+                  href={`https://buy.stripe.com/9B63cn69tfkC72u59OdQQ04?prefilled_promo_code=&success_url=${encodeURIComponent(window.location.origin + '/?payment=success')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
