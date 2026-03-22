@@ -179,33 +179,54 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
   const AdultIcon = !kidMode ? adultSvgIcons[id] : undefined;
   const SvgIcon = KidIcon || AdultIcon;
 
+  if (!kidMode) {
+    // Adult mode: no box, just icon + label
+    return (
+      <motion.button
+        data-box-btn
+        onClick={(e) => { e.stopPropagation(); onClick(); }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ duration: 0.15, ease: 'easeOut' }}
+        className={`
+          relative flex flex-col items-center justify-center select-none gap-1
+          w-16 h-16 rounded-lg
+          ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}
+          ${className}
+        `}
+        style={{ transition: 'opacity 150ms ease' }}
+        title={label}
+      >
+        {SvgIcon && <SvgIcon />}
+        <span
+          className="leading-none text-[10px] font-medium"
+          style={{ color: isActive ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground))' }}
+        >
+          {label}
+        </span>
+        {isActive && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-primary" />
+        )}
+      </motion.button>
+    );
+  }
+
   return (
     <motion.button
       data-box-btn
       onClick={(e) => { e.stopPropagation(); onClick(); }}
-      whileTap={{ scale: kidMode ? 0.93 : 0.97 }}
-      transition={kidMode
-        ? { type: 'spring', stiffness: 400, damping: 15 }
-        : { duration: 0.15, ease: 'easeOut' }
-      }
+      whileTap={{ scale: 0.93 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
       className={`
         relative flex flex-col items-center justify-center select-none
         w-20 h-20 rounded-[18px]
-        ${kidMode
-          ? `shadow-lg ${isActive ? 'scale-105 shadow-xl ring-2 ring-primary/40' : 'hover:shadow-xl hover:scale-105'}`
-          : `shadow-md ${isActive ? 'scale-[1.03] shadow-lg' : 'hover:shadow-lg hover:scale-[1.03]'}`
-        }
+        shadow-lg ${isActive ? 'scale-105 shadow-xl ring-2 ring-primary/40' : 'hover:shadow-xl hover:scale-105'}
         ${className}
       `}
       style={{
-        backgroundColor: isActive
-          ? (kidMode ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))')
-          : 'hsl(var(--toybox-card))',
+        backgroundColor: isActive ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))',
         borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: isActive
-          ? (kidMode ? 'hsl(var(--toybox-wood))' : '#c4956a')
-          : 'hsl(var(--toybox-border))',
+        borderColor: isActive ? 'hsl(var(--toybox-wood))' : 'hsl(var(--toybox-border))',
         transition: 'border-color 150ms ease, background-color 150ms ease',
       }}
       title={label}
@@ -216,12 +237,8 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
         <span className="leading-none text-[22px]">{icon}</span>
       )}
       <span
-        className={`leading-none -mt-1 ${
-          kidMode
-            ? 'text-[11px] font-semibold'
-            : 'text-[11px] font-medium'
-        }`}
-        style={{ color: kidMode ? 'hsl(var(--toybox-text))' : 'hsl(var(--foreground))' }}
+        className="leading-none -mt-1 text-[11px] font-semibold"
+        style={{ color: 'hsl(var(--toybox-text))' }}
       >
         {label}
       </span>
