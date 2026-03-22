@@ -196,6 +196,8 @@ const adultSvgIcons: Record<string, React.FC> = {
 
 export function BoxButton({ id, icon, label, isActive, onClick, kidMode, className = '' }: BoxButtonProps) {
   const KidIcon = kidMode ? kidSvgIcons[id] : undefined;
+  const AdultIcon = !kidMode ? adultSvgIcons[id] : undefined;
+  const SvgIcon = KidIcon || AdultIcon;
 
   return (
     <motion.button
@@ -205,36 +207,36 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
       className={`
         relative flex flex-col items-center justify-center select-none
         transition-all duration-200 ease-out
-        ${kidMode
-          ? `w-20 h-20 rounded-[18px] shadow-lg ${
-              isActive
-                ? 'scale-105 shadow-xl ring-2 ring-primary/40'
-                : 'hover:shadow-xl hover:scale-105'
-            }`
-          : `w-[52px] h-[52px] rounded-xl text-[22px] shadow-md ${
-              isActive
-                ? 'bg-primary text-primary-foreground shadow-lg'
-                : 'bg-card text-card-foreground border border-border hover:bg-secondary'
-            }`
+        w-20 h-20 rounded-[18px] shadow-lg
+        ${isActive
+          ? 'scale-105 shadow-xl ring-2 ring-primary/40'
+          : 'hover:shadow-xl hover:scale-105'
         }
         ${className}
       `}
-      style={kidMode ? {
-        backgroundColor: isActive ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))',
+      style={{
+        backgroundColor: isActive
+          ? (kidMode ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))')
+          : 'hsl(var(--toybox-card))',
         borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: isActive ? 'hsl(var(--toybox-wood))' : 'hsl(var(--toybox-border))',
-      } : undefined}
+        borderColor: isActive
+          ? (kidMode ? 'hsl(var(--toybox-wood))' : 'hsl(var(--primary))')
+          : 'hsl(var(--toybox-border))',
+      }}
       title={label}
     >
-      {KidIcon ? (
-        <KidIcon />
+      {SvgIcon ? (
+        <SvgIcon />
       ) : (
-        <span className="leading-none">{icon}</span>
+        <span className="leading-none text-[22px]">{icon}</span>
       )}
-      {kidMode && (
-        <span className="text-[11px] font-medium leading-none -mt-1" style={{ color: 'hsl(var(--toybox-text))' }}>{label}</span>
-      )}
+      <span
+        className="text-[11px] font-medium leading-none -mt-1"
+        style={{ color: 'hsl(var(--toybox-text))' }}
+      >
+        {label}
+      </span>
     </motion.button>
   );
 }
