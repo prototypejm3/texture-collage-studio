@@ -461,8 +461,8 @@ const Index = () => {
 
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* ── Canvas area ── */}
-        <div className="flex-1 relative overflow-hidden min-h-0 flex" onClick={closeBox}>
-          <div className="flex-1 relative overflow-hidden min-h-0">
+        <div className="flex-1 relative overflow-hidden min-h-0 flex">
+          <div className="flex-1 relative overflow-hidden min-h-0" onClick={(e) => { if ((e.target as HTMLElement).closest('[data-box-btn], [data-box-drawer]')) return; closeBox(); }}>
             <Canvas
               easelMode={easelMode}
               onToggleEasel={() => setEaselMode(prev => !prev)}
