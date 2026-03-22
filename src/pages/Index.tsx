@@ -684,9 +684,9 @@ const Index = () => {
             onClose={closeBox}
             title={sounds.kidMode ? 'My Tool Box' : 'Studio'}
             icon="🖼️"
-            direction="up"
+            direction="right"
             kidMode={sounds.kidMode}
-            className={`absolute z-40 ${isMobile ? 'bottom-full left-2 right-2 max-h-[50vh]' : 'bottom-full left-1/2 -translate-x-1/2 w-[380px] max-h-[55vh]'}`}
+            className={`absolute z-40 ${isMobile ? 'bottom-0 left-full ml-2 w-[300px] max-h-[60vh]' : 'bottom-0 left-full ml-2 w-[380px] max-h-[65vh]'}`}
           >
             <div className="p-3">
               <BottomBar
