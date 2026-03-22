@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export type BoxId = 'mybox' | 'stencils' | 'tools' | 'textures' | null;
+export type BoxId = 'mybox' | 'stencils' | 'tools' | 'textures' | 'text' | null;
 
 export function useActiveBox() {
   const [activeBox, setActiveBox] = useState<BoxId>(null);
