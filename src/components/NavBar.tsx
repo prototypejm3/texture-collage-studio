@@ -166,6 +166,7 @@ export function NavBar() {
   return (
     <>
       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
+        <div className="flex items-center gap-2.5">
           <SwatchboxLogo height={32} />
           <button
             onClick={handleToggleKidMode}
