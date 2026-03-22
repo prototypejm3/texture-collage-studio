@@ -45,9 +45,10 @@ export function useUserTier() {
     setTier('premium');
   }, []);
 
-  const canSave = useCallback((currentCount: number) => {
+  // canSave checks against wall-displayed count (not box/hidden items)
+  const canSave = useCallback((displayedCount: number) => {
     if (tier === 'premium') return true;
-    return currentCount < FREE_DESIGN_LIMIT;
+    return displayedCount < FREE_DESIGN_LIMIT;
   }, [tier]);
 
   const isPremium = tier === 'premium';

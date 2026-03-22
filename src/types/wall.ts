@@ -64,4 +64,4 @@ export const defaultWallSettings: WallSettings = {
   showTitleCards: false,
 };
 
-export const FREE_DESIGN_LIMIT = 1;
+export const FREE_DESIGN_LIMIT = 3;
