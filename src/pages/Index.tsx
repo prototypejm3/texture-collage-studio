@@ -558,15 +558,15 @@ const Index = () => {
             />
             <BoxButton
               id="tools"
-              icon="🧰"
-              label={sounds.kidMode ? 'My Tool Box' : 'Tools'}
+              icon="🖼️"
+              label={sounds.kidMode ? 'My Tool Box' : 'Frame'}
               isActive={activeBox === 'tools'}
               onClick={() => toggleBox('tools')}
               kidMode={sounds.kidMode}
             />
             <BoxButton
               id="stencils"
-              icon="✂️"
+              icon="🧸"
               label={sounds.kidMode ? 'Shapes' : 'Stencils'}
               isActive={activeBox === 'stencils'}
               onClick={() => toggleBox('stencils')}
