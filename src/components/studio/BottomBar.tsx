@@ -268,7 +268,7 @@ export function BottomBar({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1.5 bg-popover border border-border rounded-lg shadow-xl p-2.5"
+                    className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-1.5 bg-popover border border-border rounded-lg shadow-xl p-2.5"
                   >
                     <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Choose a Finish</p>
                     <div className="flex items-center gap-2">
