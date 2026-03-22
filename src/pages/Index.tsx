@@ -663,6 +663,17 @@ const Index = () => {
                         )}
                       </div>
                     )}
+
+                    {activeBox === 'text' && (
+                      <TextPanel
+                        onAddText={(text, opts) => {
+                          studio.addTextElement(text, 150, 150, opts);
+                          closeBox();
+                        }}
+                        selectedElement={studio.selectedId ? studio.elements.find(e => e.id === studio.selectedId) : null}
+                        onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
