@@ -23,7 +23,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 const allStencilVibesForDesk = [...vibes, ...letterStencils, ...numberSymbolStencils];
 import { useGenerateVibe } from '@/hooks/useGenerateVibe';
 import { Vibe } from '@/types/studio';
-import { Monitor, X } from 'lucide-react';
+import { Monitor, X, Save, Download } from 'lucide-react';
 import { AmbientSound as AmbientSoundType } from '@/types/wall';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -852,20 +852,33 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: clean buttons centered, Tool Box appears when canvas has content */
-            <div className="flex items-center justify-center w-full px-4 py-2 gap-6">
-              <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
-                onClick={() => toggleBox('textures')} kidMode={false} />
-              <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
-                onClick={() => toggleBox('tools')} kidMode={false} />
-              <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
-                onClick={() => toggleBox('stencils')} kidMode={false} />
-              <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
-                onClick={() => toggleBox('text')} kidMode={false} />
-              {studio.elements.length > 0 && (
-                <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
-                  onClick={() => toggleBox('toolbox')} kidMode={false} />
-              )}
+            /* Adult mode: tools left/center, save/download right */
+            <div className="flex items-center justify-between w-full px-4 py-2">
+              <div className="flex items-center gap-6">
+                <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
+                  onClick={() => toggleBox('textures')} kidMode={false} />
+                <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
+                  onClick={() => toggleBox('tools')} kidMode={false} />
+                <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
+                  onClick={() => toggleBox('stencils')} kidMode={false} />
+                <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
+                  onClick={() => toggleBox('text')} kidMode={false} />
+                {studio.elements.length > 0 && (
+                  <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
+                    onClick={() => toggleBox('toolbox')} kidMode={false} />
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={handleSaveToWall} className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-medium text-foreground hover:bg-secondary rounded-lg transition-colors">
+                  <Save className="w-3.5 h-3.5" /> Save
+                </button>
+                <button
+                  onClick={handleExport}
+                  className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" /> Download
+                </button>
+              </div>
             </div>
           )}
         </div>
