@@ -162,15 +162,18 @@ export function BottomBar({
             />
           </div>
         ) : (
-          /* Adult mode: pill buttons with shadow color popover */
-          <div className="flex items-center gap-1.5">
-            {specialFrames.map(f => {
-              const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
-              const locked = f.premium && !isPremium;
-              return (
-                <div key={f.id} className="relative">
+          /* Adult mode: everything visible inline, no popovers */
+          <div className="flex flex-col gap-3">
+            {/* Display type pills */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground mr-1">DISPLAY</span>
+              {specialFrames.map(f => {
+                const isActive = f.id === 'shadow-box' ? isShadowColor : wallFrameStyle === f.id;
+                const locked = f.premium && !isPremium;
+                return (
                   <button
-                    onClick={() => locked ? onRequestUpgrade?.() : handleSpecialSelect(f.id)}
+                    key={f.id}
+                    onClick={() => locked ? onRequestUpgrade?.() : onWallFrameStyleChange(f.id)}
                     className={`px-3 py-1.5 rounded-full transition-colors text-[11px] font-medium ${
                       isActive
                         ? 'bg-[#f97316] text-white shadow-sm'
@@ -180,128 +183,93 @@ export function BottomBar({
                     {f.label}
                     {locked && <Lock className="w-2.5 h-2.5 inline-block ml-1 -mt-0.5" />}
                   </button>
-                  {f.id === 'shadow-box' && showColorMenu === 'shadow' && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-2 bg-popover border border-border rounded-xl shadow-xl p-3">
-                        <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2 text-center font-semibold">Color</p>
-                        <div className="flex items-center gap-2">
-                          {colorFrames.map(cf => {
-                            const cfLocked = !cf.free && !isPremium;
-                            return (
-                              <button
-                                key={cf.id}
-                                onClick={() => cfLocked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
-                                className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
-                                  wallFrameStyle === cf.id
-                                    ? 'ring-2 ring-[#f97316] ring-offset-2 ring-offset-popover scale-110'
-                                    : 'hover:scale-110'
-                                } ${cf.id === 'none' ? 'border-2 border-dashed border-border' : 'border border-border/40'} ${
-                                  cfLocked ? 'opacity-40 cursor-not-allowed' : ''
-                                }`}
-                                style={{ background: cf.color }}
-                                title={cfLocked ? 'Premium' : cf.label}
-                              >
-                                {cfLocked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            {/* Shadow color circles — always visible */}
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground mr-1">Shadow</span>
+              {colorFrames.map(cf => {
+                const cfLocked = !cf.free && !isPremium;
+                return (
+                  <button
+                    key={cf.id}
+                    onClick={() => cfLocked ? onRequestUpgrade?.() : handleColorSelect(cf.id)}
+                    className={`relative w-7 h-7 rounded-full transition-all flex-shrink-0 ${
+                      wallFrameStyle === cf.id
+                        ? 'ring-2 ring-[#f97316] ring-offset-2 ring-offset-popover scale-110'
+                        : 'hover:scale-110'
+                    } ${cf.id === 'none' ? 'border-2 border-dashed border-border' : 'border border-border/40'} ${
+                      cfLocked ? 'opacity-40 cursor-not-allowed' : ''
+                    }`}
+                    style={{ background: cf.color }}
+                    title={cfLocked ? 'Premium' : cf.label}
+                  >
+                    {cfLocked && <Lock className="w-2 h-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/60" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Wood Finish circles — always visible */}
+            {onTableSurfaceChange && (
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground mr-1">Wood Finish</span>
+                {([
+                  { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
+                  { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
+                  { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
+                ]).map(s => (
+                  <button
+                    key={s.id}
+                    onClick={() => onTableSurfaceChange(s.id)}
+                    className={`flex flex-col items-center gap-1 transition-all ${
+                      tableSurface === s.id ? 'scale-110' : 'hover:scale-105'
+                    }`}
+                  >
+                    <div className={`w-7 h-7 rounded-full border overflow-hidden ${
+                      tableSurface === s.id
+                        ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover border-primary/40'
+                        : 'border-border/40'
+                    }`}>
+                      <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+                    </div>
+                    <span className="text-[8px] text-muted-foreground">{s.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
 
-      <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
-      {/* Surface selector — hidden behind reveal in Granny mode */}
-      {onTableSurfaceChange && (() => {
-        if (kidMode) {
-          // Kids: always visible
-          return (
-            <div className="flex items-center gap-0.5">
-              <span className="text-xs">🪵</span>
-              {([
-                { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
-                { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
-                { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
-              ]).map(s => (
-                <button
-                  key={s.id}
-                  onClick={() => onTableSurfaceChange(s.id)}
-                  className={`w-6 h-6 rounded-full transition-all flex-shrink-0 border overflow-hidden ${
-                    tableSurface === s.id
-                      ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
-                      : 'border-border/40 hover:scale-110'
-                  }`}
-                  title={s.label}
-                >
-                  <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          );
-        }
-        // Granny mode: hidden behind a reveal button
-        return (
-          <div className="relative">
-            <button
-              onClick={() => setShowColorMenu(prev => prev === 'wood' ? null : 'wood')}
-              className={`flex items-center gap-1 px-3 py-1.5 text-[11px] font-medium rounded-full transition-colors border ${
-                showColorMenu === 'wood'
-                  ? 'bg-[#f97316] text-white border-[#f97316]'
-                  : 'bg-secondary text-foreground border-border hover:bg-accent'
-              }`}
-            >
-              Wood Finish
-            </button>
-            <AnimatePresence>
-              {showColorMenu === 'wood' && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowColorMenu(null)} />
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-1.5 bg-popover border border-border rounded-lg shadow-xl p-2.5"
-                  >
-                    <p className="text-[8px] uppercase tracking-widest text-muted-foreground mb-2 text-center">Choose a Finish</p>
-                    <div className="flex items-center gap-2">
-                      {([
-                        { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
-                        { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
-                        { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
-                      ]).map(s => (
-                        <button
-                          key={s.id}
-                          onClick={() => { onTableSurfaceChange(s.id); setShowColorMenu(null); }}
-                          className={`flex flex-col items-center gap-1 transition-all ${
-                            tableSurface === s.id ? 'scale-110' : 'hover:scale-105'
-                          }`}
-                        >
-                          <div className={`w-8 h-8 rounded-full border overflow-hidden ${
-                            tableSurface === s.id
-                              ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover border-primary/40'
-                              : 'border-border/40'
-                          }`}>
-                            <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
-                          </div>
-                          <span className="text-[8px] text-muted-foreground">{s.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
+      {kidMode && onTableSurfaceChange && (
+        <>
+          <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
+          <div className="flex items-center gap-0.5">
+            <span className="text-xs">🪵</span>
+            {([
+              { id: 'birch' as TableSurface, img: '/walls/wood-birch-wall.png', label: 'Birch' },
+              { id: 'oak' as TableSurface, img: '/walls/wood-oak-wall.png', label: 'Oak' },
+              { id: 'walnut' as TableSurface, img: '/walls/wood-walnut-wall.png', label: 'Walnut' },
+            ]).map(s => (
+              <button
+                key={s.id}
+                onClick={() => onTableSurfaceChange(s.id)}
+                className={`w-6 h-6 rounded-full transition-all flex-shrink-0 border overflow-hidden ${
+                  tableSurface === s.id
+                    ? 'ring-1.5 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
+                    : 'border-border/40 hover:scale-110'
+                }`}
+                title={s.label}
+              >
+                <img src={s.img} alt={s.label} className="w-full h-full object-cover" />
+              </button>
+            ))}
           </div>
-        );
-      })()}
+        </>
+      )}
 
       {/* Easel / Desk toggle */}
       {onToggleEasel && (
