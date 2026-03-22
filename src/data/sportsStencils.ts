@@ -338,7 +338,8 @@ const fireBall: Vibe = {
 
 export const sportsStencils: Vibe[] = [
   soccerBall, basketball, football, baseball,
-  tennisBall, volleyball, rugbyBall, billiardsBall,
+  tennisBall, volleyball, volleyballSide, volleyballTop,
+  rugbyBall, billiardsBall,
   softball, cricketBall,
   starBall, smileBall, rainbowBall, fireBall,
 ];
