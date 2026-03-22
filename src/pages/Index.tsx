@@ -563,9 +563,10 @@ const Index = () => {
                   {/* Header */}
                   <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-900/30">
                     <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 85%, 0.9)' }}>
-                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Textures')}
+                      {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : '🎨 Colors')}
                       {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : '🧸 Elements')}
-                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Studio')}
+                      {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : '🖼️ Frame')}
+                      {activeBox === 'text' && '✏️ Text'}
                     </span>
                     <button
                       onClick={closeBox}
