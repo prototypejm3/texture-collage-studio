@@ -685,9 +685,31 @@ className="overflow-visible relative"
                           backgroundTextureId={studio.backgroundTextureId}
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                         />
-                        {/* Show tool panel when ANY element exists on canvas */}
+                      </div>
+                    )}
+
+                    {activeBox === 'stencils' && (
+                      <div>
+                        <BuildPanel
+                          isPremium={isPremium}
+                          onRequestUpgrade={() => setShowPaywall(true)}
+                          activeVibeId={studio.activeVibe?.id ?? null}
+                          onSelectVibe={handleSelectVibe}
+                          onShuffleVibeFills={studio.shuffleVibeFills}
+                          onPlaceStencil={studio.placeStencil}
+                          onGenerateMood={handleGenerateMood}
+                          isGeneratingMood={vibeGen.isGenerating}
+                          customTemplate={customTemplate}
+                          templateOpacity={templateOpacity}
+                          onUploadTemplate={handleUploadTemplate}
+                          onClearTemplate={clearTemplate}
+                          onTemplateOpacityChange={setTemplateOpacity}
+                          stencilsPoppedOut={false}
+                          onPopOutStencils={() => {}}
+                        />
+                        {/* Element tools when elements exist */}
                         {studio.elements.length > 0 && (
-                          <div className="mt-3 pt-3 border-t border-border">
+                          <div className="p-3 border-t border-border">
                             <FloatingToolbar
                               element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
                               onUpdate={(updates) => {
