@@ -729,7 +729,7 @@ const Index = () => {
             <BoxButton
               id="textures"
               icon="🎨"
-              label="Colors"
+              label={sounds.kidMode ? "Colors" : "Swatches"}
               isActive={activeBox === 'textures'}
               onClick={() => toggleBox('textures')}
               kidMode={sounds.kidMode}
