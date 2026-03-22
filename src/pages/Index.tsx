@@ -39,6 +39,7 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
+import { SewingTin } from '@/components/studio/SewingTin';
 
 const Index = () => {
   const navigate = useNavigate();
