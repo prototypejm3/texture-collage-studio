@@ -4,25 +4,40 @@ function circle(cx: number, cy: number, r: number): string {
   return `M${cx - r},${cy} A${r},${r} 0 1,1 ${cx + r},${cy} A${r},${r} 0 1,1 ${cx - r},${cy} Z`;
 }
 
-// ── SOCCER BALL ⚽ ──
+// ── SOCCER BALL ⚽ ── Full hex coverage
 const soccerBall: Vibe = {
   id: 'soccer-ball', name: 'Soccer Ball', emoji: '⚽', category: 'Sports',
   description: 'Classic hex-panel soccer ball',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
-    { id: 'soccer-outer', label: 'Ball', tone: 'light',
+    // White hex panels (background)
+    { id: 'soccer-bg', label: 'Ball', tone: 'light',
       path: circle(240, 240, 200) },
-    { id: 'soccer-center-pent', label: 'Center Pentagon', tone: 'dark',
-      path: 'M240,180 L275,200 L265,240 L215,240 L205,200 Z' },
-    { id: 'soccer-hex-top', label: 'Top Panel', tone: 'medium',
-      path: 'M240,180 L205,200 L180,160 L210,130 L270,130 L300,160 L275,200 Z' },
-    { id: 'soccer-hex-left', label: 'Left Panel', tone: 'medium',
-      path: 'M205,200 L215,240 L185,275 L150,260 L145,215 L180,160 Z' },
-    { id: 'soccer-hex-right', label: 'Right Panel', tone: 'medium',
-      path: 'M275,200 L300,160 L335,215 L330,260 L295,275 L265,240 Z' },
-    { id: 'soccer-hex-bottom', label: 'Bottom Panel', tone: 'accent',
-      path: 'M215,240 L265,240 L295,275 L270,310 L210,310 L185,275 Z' },
+    // Center pentagon (dark)
+    { id: 'soccer-pent-c', label: 'Center', tone: 'dark',
+      path: 'M240,175 L280,200 L268,245 L212,245 L200,200 Z' },
+    // Top pentagon
+    { id: 'soccer-pent-top', label: 'Top', tone: 'dark',
+      path: 'M240,55 L270,75 L260,110 L220,110 L210,75 Z' },
+    // Top-right pentagon
+    { id: 'soccer-pent-tr', label: 'Top Right', tone: 'dark',
+      path: 'M380,120 L400,150 L385,180 L355,175 L350,145 Z' },
+    // Bottom-right pentagon
+    { id: 'soccer-pent-br', label: 'Bottom Right', tone: 'dark',
+      path: 'M395,305 L400,340 L380,365 L350,355 L350,325 Z' },
+    // Bottom pentagon
+    { id: 'soccer-pent-bot', label: 'Bottom', tone: 'dark',
+      path: 'M240,395 L270,380 L280,410 L240,430 L200,410 L210,380 Z' },
+    // Bottom-left pentagon
+    { id: 'soccer-pent-bl', label: 'Bottom Left', tone: 'dark',
+      path: 'M85,305 L95,340 L85,365 L115,355 L115,325 Z' },
+    // Top-left pentagon
+    { id: 'soccer-pent-tl', label: 'Top Left', tone: 'dark',
+      path: 'M100,120 L115,145 L110,175 L80,180 L70,150 Z' },
+    // Hex band connectors (medium tone for visible structure)
+    { id: 'soccer-hex-ring', label: 'Hex Panels', tone: 'medium',
+      path: 'M220,110 L200,200 L212,245 L175,290 L115,325 L85,305 L70,150 L100,120 L210,75 L240,55 L270,75 L350,145 L380,120 L400,150 L385,180 L280,200 L268,245 L310,290 L350,325 L395,305 L400,340 L380,365 L270,380 L240,395 L210,380 L85,365 L95,340 L115,355 L175,290 M310,290 L350,355 M260,110 L280,200 M385,180 L350,145' },
   ],
 };
 
@@ -48,43 +63,53 @@ const basketball: Vibe = {
   ],
 };
 
-// ── FOOTBALL 🏈 ──
+// ── FOOTBALL 🏈 ── Proper pointed football shape
 const football: Vibe = {
   id: 'football', name: 'Football', emoji: '🏈', category: 'Sports',
-  description: 'American football with laces',
+  description: 'American football with pointed ends and laces',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
+    // Top half of pointed football
     { id: 'fb-top', label: 'Top Half', tone: 'medium',
-      path: 'M80,240 Q80,120 240,100 Q400,120 400,240 L80,240 Z' },
+      path: 'M50,240 Q50,160 130,120 Q200,95 240,90 Q280,95 350,120 Q430,160 430,240 L50,240 Z' },
+    // Bottom half
     { id: 'fb-bottom', label: 'Bottom Half', tone: 'dark',
-      path: 'M80,240 L400,240 Q400,360 240,380 Q80,360 80,240 Z' },
-    { id: 'fb-stripe-top', label: 'Top Stripe', tone: 'light',
-      path: 'M100,135 Q110,120 140,115 L140,145 Q115,150 100,160 Z' },
-    { id: 'fb-stripe-bottom', label: 'Bottom Stripe', tone: 'light',
-      path: 'M100,345 Q110,360 140,365 L140,335 Q115,330 100,320 Z' },
-    { id: 'fb-laces', label: 'Laces', tone: 'accent',
-      path: 'M200,215 L280,215 L280,225 L200,225 Z M210,200 L215,225 L220,200 Z M235,200 L240,225 L245,200 Z M260,200 L265,225 L270,200 Z' },
+      path: 'M50,240 L430,240 Q430,320 350,360 Q280,385 240,390 Q200,385 130,360 Q50,320 50,240 Z' },
+    // Left point tip
+    { id: 'fb-tip-left', label: 'Left Point', tone: 'accent',
+      path: 'M50,240 Q35,220 50,200 Q60,215 70,220 L70,260 Q60,265 50,280 Q35,260 50,240 Z' },
+    // Right point tip
+    { id: 'fb-tip-right', label: 'Right Point', tone: 'accent',
+      path: 'M430,240 Q445,220 430,200 Q420,215 410,220 L410,260 Q420,265 430,280 Q445,260 430,240 Z' },
+    // White stripes near tips
+    { id: 'fb-stripe-l', label: 'Left Stripe', tone: 'light',
+      path: 'M90,155 Q100,140 120,130 L125,150 Q108,158 98,170 Z' },
+    { id: 'fb-stripe-r', label: 'Right Stripe', tone: 'light',
+      path: 'M390,155 Q380,140 360,130 L355,150 Q372,158 382,170 Z' },
+    // Laces
+    { id: 'fb-laces', label: 'Laces', tone: 'light',
+      path: 'M195,218 L285,218 L285,228 L195,228 Z M210,205 L215,218 L220,205 Z M237,205 L242,218 L247,205 Z M264,205 L269,218 L274,205 Z' },
   ],
 };
 
-// ── BASEBALL ⚾ ──
+// ── BASEBALL ⚾ ── Slightly smaller (viewBox 0 0 440 440, r=175)
 const baseball: Vibe = {
   id: 'baseball', name: 'Baseball', emoji: '⚾', category: 'Sports',
   description: 'Classic stitching baseball',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
-  viewBox: '0 0 480 480',
+  viewBox: '0 0 440 440',
   sections: [
     { id: 'bb-main', label: 'Ball', tone: 'light',
-      path: circle(240, 240, 200) },
+      path: circle(220, 220, 175) },
     { id: 'bb-left-panel', label: 'Left Panel', tone: 'medium',
-      path: 'M100,100 Q180,180 180,240 Q180,300 100,380 L80,370 Q150,290 150,240 Q150,190 80,110 Z' },
+      path: 'M90,90 Q165,165 165,220 Q165,275 90,350 L70,340 Q140,270 140,220 Q140,170 70,100 Z' },
     { id: 'bb-right-panel', label: 'Right Panel', tone: 'medium',
-      path: 'M380,100 Q300,180 300,240 Q300,300 380,380 L400,370 Q330,290 330,240 Q330,190 400,110 Z' },
+      path: 'M350,90 Q275,165 275,220 Q275,275 350,350 L370,340 Q300,270 300,220 Q300,170 370,100 Z' },
     { id: 'bb-stitch-left', label: 'Left Stitch', tone: 'accent',
-      path: 'M95,105 Q175,185 175,240 Q175,295 95,375 L105,385 Q185,305 185,240 Q185,175 105,95 Z' },
+      path: 'M85,95 Q160,170 160,220 Q160,270 85,345 L95,355 Q175,280 175,220 Q175,160 95,85 Z' },
     { id: 'bb-stitch-right', label: 'Right Stitch', tone: 'accent',
-      path: 'M385,105 Q305,185 305,240 Q305,295 385,375 L375,385 Q295,305 295,240 Q295,175 375,95 Z' },
+      path: 'M355,95 Q280,170 280,220 Q280,270 355,345 L345,355 Q265,280 265,220 Q265,160 345,85 Z' },
   ],
 };
 
@@ -106,25 +131,31 @@ const tennisBall: Vibe = {
   ],
 };
 
-// ── VOLLEYBALL 🏐 ──
+// ── VOLLEYBALL 🏐 ── Proper swirl/pinwheel panels
 const volleyball: Vibe = {
   id: 'volleyball', name: 'Volleyball', emoji: '🏐', category: 'Sports',
-  description: 'Swirl panel volleyball',
+  description: 'Swirl panel volleyball with curved seams',
   lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
+    // Panel 1: top, curving right
     { id: 'vb-panel1', label: 'Panel 1', tone: 'light',
-      path: `M240,40 Q340,100 380,200 L240,240 Z` },
+      path: `M240,40 A200,200 0 0,1 410,145 Q340,180 280,220 Q250,240 240,240 Q180,160 200,100 Q215,60 240,40 Z` },
+    // Panel 2: right, curving down
     { id: 'vb-panel2', label: 'Panel 2', tone: 'medium',
-      path: `M380,200 Q420,320 340,420 L240,240 Z` },
+      path: `M410,145 A200,200 0 0,1 410,335 Q370,280 320,260 Q260,245 240,240 Q280,220 340,180 Q380,160 410,145 Z` },
+    // Panel 3: bottom-right, curving left
     { id: 'vb-panel3', label: 'Panel 3', tone: 'light',
-      path: `M340,420 Q240,460 140,420 L240,240 Z` },
+      path: `M410,335 A200,200 0 0,1 240,440 Q260,380 260,320 Q255,265 240,240 Q260,245 320,260 Q370,280 410,335 Z` },
+    // Panel 4: bottom-left, curving up
     { id: 'vb-panel4', label: 'Panel 4', tone: 'medium',
-      path: `M140,420 Q60,320 100,200 L240,240 Z` },
+      path: `M240,440 A200,200 0 0,1 70,335 Q140,300 200,260 Q230,245 240,240 Q255,265 260,320 Q260,380 240,440 Z` },
+    // Panel 5: left, curving up
     { id: 'vb-panel5', label: 'Panel 5', tone: 'light',
-      path: `M100,200 Q140,100 240,40 L240,240 Z` },
-    { id: 'vb-ring', label: 'Outer Ring', tone: 'dark',
-      path: `${circle(240, 240, 200)} ${circle(240, 240, 185)}` },
+      path: `M70,335 A200,200 0 0,1 70,145 Q110,200 160,220 Q220,235 240,240 Q230,245 200,260 Q140,300 70,335 Z` },
+    // Panel 6: top-left
+    { id: 'vb-panel6', label: 'Panel 6', tone: 'medium',
+      path: `M70,145 A200,200 0 0,1 240,40 Q215,60 200,100 Q180,160 240,240 Q220,235 160,220 Q110,200 70,145 Z` },
   ],
 };
 
@@ -166,11 +197,11 @@ const billiardsBall: Vibe = {
   ],
 };
 
-// ── SOFTBALL 🥎 ──
+// ── SOFTBALL 🥎 ── Full size (bigger than baseball), yellow-toned
 const softball: Vibe = {
   id: 'softball', name: 'Softball', emoji: '🥎', category: 'Sports',
-  description: 'Chunky stitching softball',
-  lightTextures: [], mediumTextures: [], darkTextures: [], accentTextures: [],
+  description: 'Chunky yellow softball',
+  lightTextures: ['bentley-daisey'], mediumTextures: ['bentley-daisey'], darkTextures: [], accentTextures: [],
   viewBox: '0 0 480 480',
   sections: [
     { id: 'sb-main', label: 'Ball', tone: 'light',
