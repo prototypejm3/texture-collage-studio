@@ -50,6 +50,15 @@
     --toolbar-bg: 0 0% 100%;
     --terracotta: 16 65% 45%;
     --terracotta-foreground: 16 40% 30%;
+
+    /* Toybox kid-mode palette */
+    --toybox-bg: 37 60% 96%;
+    --toybox-border: 33 30% 88%;
+    --toybox-text: 27 45% 28%;
+    --toybox-card: 33 40% 95%;
+    --toybox-orange: 24 95% 53%;
+    --toybox-wood: 27 40% 45%;
+    --toybox-sfx-bg: 0 70% 93%;
   }
 
   .dark {
@@ -86,6 +95,15 @@
     --toolbar-bg: 220 30% 20%;
     --terracotta: 16 55% 55%;
     --terracotta-foreground: 16 45% 75%;
+
+    /* Toybox kid-mode palette — dark */
+    --toybox-bg: 220 30% 18%;
+    --toybox-border: 220 20% 28%;
+    --toybox-text: 33 30% 82%;
+    --toybox-card: 220 25% 22%;
+    --toybox-orange: 24 90% 55%;
+    --toybox-wood: 27 30% 55%;
+    --toybox-sfx-bg: 0 40% 25%;
   }
 }
 

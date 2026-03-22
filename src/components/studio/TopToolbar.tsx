@@ -152,10 +152,9 @@ export function TopToolbar({
     <>
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
-        ? 'h-[64px] border-b border-[#e8ddd0]'
+        ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
         : 'py-1 md:py-1.5 bg-background border-b border-border'
     }`}
-    style={kidMode ? { backgroundColor: '#fdf6ee' } : undefined}
     >
       {/* Left: Mode toggle + Create + Nav */}
       <div className="flex items-center gap-1.5 md:gap-3">
@@ -186,42 +185,42 @@ export function TopToolbar({
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95 ${
                 isStudio ? 'ring-2 ring-white/40' : ''
               }`}
-              style={{ backgroundColor: '#f97316' }}
+              style={{ backgroundColor: 'hsl(var(--toybox-orange))' }}
             >
               <PencilIcon />
               Create
             </Link>
 
             {/* Divider */}
-            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: '#e8ddd0' }} />
+            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
 
             {/* My Room */}
             <Link
               to="/wall"
               data-nav="wall"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
-                isWall ? 'ring-2 ring-[#c4956a]/40' : ''
+                isWall ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={isWall ? { backgroundColor: '#f7f0e8' } : undefined}
+              style={isWall ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
               <HouseIcon />
-              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>My Room</span>
+              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>My Room</span>
             </Link>
 
             {/* Divider */}
-            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: '#e8ddd0' }} />
+            <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
 
             {/* Show & Tell */}
             <Link
               to="/gallery"
               data-nav="gallery"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
-                isGallery ? 'ring-2 ring-[#c4956a]/40' : ''
+                isGallery ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={isGallery ? { backgroundColor: '#f7f0e8' } : undefined}
+              style={isGallery ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
               <TentIcon />
-              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Show & Tell</span>
+              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Show & Tell</span>
             </Link>
           </>
         )}
@@ -279,7 +278,7 @@ export function TopToolbar({
           <button
             onClick={toggle}
             className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
-            style={{ backgroundColor: dark ? '#3a3020' : '#f7f0e8', border: '1.5px solid #e8ddd0' }}
+            style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}
             title={dark ? 'Light mode' : 'Dark mode'}
           >
             <ToyMoonIcon />
@@ -359,7 +358,7 @@ export function TopToolbar({
               }}
               onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
               className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
-              style={{ backgroundColor: kidSoundsEnabled ? '#fce4e4' : 'transparent' }}
+              style={{ backgroundColor: kidSoundsEnabled ? 'hsl(var(--toybox-sfx-bg))' : 'transparent' }}
               title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
             >
               <SpeakerIcon />
@@ -387,13 +386,13 @@ export function TopToolbar({
         )}
 
         {/* Divider */}
-        <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: '#e8ddd0' } : undefined} />
+        <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: 'hsl(var(--toybox-border))' } : undefined} />
 
         {/* Start Over */}
         {kidMode ? (
           <button onClick={onClear} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Start Over">
             <TrashCanIcon />
-            <span className="hidden sm:inline text-xs font-medium" style={{ color: '#6b4c2a' }}>Start Over</span>
+            <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
           </button>
         ) : (
           <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Start Over">
@@ -405,7 +404,7 @@ export function TopToolbar({
         {onSaveToWall && (kidMode ? (
           <button onClick={onSaveToWall} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Save">
             <SaveBoxIcon />
-            <span className="hidden sm:inline text-xs font-medium" style={{ color: '#6b4c2a' }}>Save</span>
+            <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
           </button>
         ) : (
           <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-foreground hover:bg-secondary rounded-md transition-colors" title="Save">
@@ -415,7 +414,7 @@ export function TopToolbar({
 
         {/* Download */}
         {kidMode ? (
-          <button onClick={onSave} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95" style={{ backgroundColor: '#f97316' }} title="Download">
+          <button onClick={onSave} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95" style={{ backgroundColor: 'hsl(var(--toybox-orange))' }} title="Download">
             <DownloadTrayIcon />
             <span className="hidden sm:inline">Download</span>
           </button>
@@ -428,7 +427,7 @@ export function TopToolbar({
         {/* Undo/Redo */}
         {onUndo && onRedo && (
           <>
-            <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: '#e8ddd0' } : undefined} />
+            <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: 'hsl(var(--toybox-border))' } : undefined} />
             <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Undo (Ctrl+Z)">
               <Undo2 className="w-4 h-4" />
             </button>
@@ -457,7 +456,7 @@ export function TopToolbar({
                 ? 'px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90'
                 : 'px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90'
             }`}
-            style={kidMode ? { backgroundColor: '#f97316' } : undefined}
+            style={kidMode ? { backgroundColor: 'hsl(var(--toybox-orange))' } : undefined}
           >
             {kidMode ? '✨ Join' : <><LogIn className="w-2.5 h-2.5" /> Sign In</>}
           </Link>

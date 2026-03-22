@@ -61,7 +61,7 @@ export function NavBar() {
       <>
         <nav
           className="h-16 flex items-center px-4 gap-3 flex-shrink-0"
-          style={{ backgroundColor: '#fdf6ee', borderBottom: '1.5px solid #e8ddd0' }}
+          style={{ backgroundColor: 'hsl(var(--toybox-bg))', borderBottom: '1.5px solid hsl(var(--toybox-border))' }}
         >
           {/* Mode toggle pill */}
           <motion.button
@@ -75,40 +75,40 @@ export function NavBar() {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1.5">
-            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
+            <div className="w-px h-8" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link
               to="/"
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
-                isStudio ? 'ring-2 ring-[#c4956a]/40' : ''
+                isStudio ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={isStudio ? { backgroundColor: '#f7f0e8' } : undefined}
+              style={isStudio ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
               <HouseIcon />
-              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Create</span>
+              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Create</span>
             </Link>
-            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
+            <div className="w-px h-8" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link
               to="/wall"
               data-nav="wall"
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
-                isWall ? 'ring-2 ring-[#c4956a]/40' : ''
+                isWall ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={isWall ? { backgroundColor: '#f7f0e8' } : undefined}
+              style={isWall ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
               <HouseIcon />
-              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>My Room</span>
+              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>My Room</span>
             </Link>
-            <div className="w-px h-8" style={{ backgroundColor: '#e8ddd0' }} />
+            <div className="w-px h-8" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link
               to="/gallery"
               data-nav="gallery"
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
-                isGallery ? 'ring-2 ring-[#c4956a]/40' : ''
+                isGallery ? 'ring-2 ring-[hsl(var(--toybox-wood))]/40' : ''
               }`}
-              style={isGallery ? { backgroundColor: '#f7f0e8' } : undefined}
+              style={isGallery ? { backgroundColor: 'hsl(var(--toybox-card))' } : undefined}
             >
               <TentIcon />
-              <span className="text-sm font-medium" style={{ color: '#6b4c2a' }}>Show & Tell</span>
+              <span className="text-sm font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Show & Tell</span>
             </Link>
           </div>
 
@@ -116,7 +116,7 @@ export function NavBar() {
             <button
               onClick={toggle}
               className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
-              style={{ backgroundColor: dark ? '#3a3020' : '#f7f0e8', border: '1.5px solid #e8ddd0' }}
+              style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}
               title={dark ? 'Light mode' : 'Dark mode'}
             >
               <ToyMoonIcon />
@@ -125,14 +125,14 @@ export function NavBar() {
 
             {user ? (
               <>
-                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: '#6b4c2a' }}>
+                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: 'hsl(var(--toybox-text))' }}>
                   <span className="text-sm">👤</span>
                   {user.email?.split('@')[0]}
                 </span>
                 <button
                   onClick={() => signOut()}
                   className="flex items-center gap-1 px-2 py-1 text-xs transition-colors"
-                  style={{ color: '#6b4c2a' }}
+                  style={{ color: 'hsl(var(--toybox-text))' }}
                 >
                   <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Bye!</span>
                 </button>
@@ -141,7 +141,7 @@ export function NavBar() {
               <Link
                 to="/auth"
                 className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90 transition-colors"
-                style={{ backgroundColor: '#f97316' }}
+                style={{ backgroundColor: 'hsl(var(--toybox-orange))' }}
               >
                 ✨ Join
               </Link>

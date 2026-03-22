@@ -139,10 +139,10 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
         ${className}
       `}
       style={kidMode ? {
-        backgroundColor: isActive ? '#efe5d8' : '#f7f0e8',
+        backgroundColor: isActive ? 'hsl(var(--toybox-border))' : 'hsl(var(--toybox-card))',
         borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: isActive ? '#c4956a' : '#e8ddd0',
+        borderColor: isActive ? 'hsl(var(--toybox-wood))' : 'hsl(var(--toybox-border))',
       } : undefined}
       title={label}
     >
@@ -152,7 +152,7 @@ export function BoxButton({ id, icon, label, isActive, onClick, kidMode, classNa
         <span className="leading-none">{icon}</span>
       )}
       {kidMode && (
-        <span className="text-[11px] font-medium leading-none -mt-1" style={{ color: '#6b4c2a' }}>{label}</span>
+        <span className="text-[11px] font-medium leading-none -mt-1" style={{ color: 'hsl(var(--toybox-text))' }}>{label}</span>
       )}
     </motion.button>
   );
