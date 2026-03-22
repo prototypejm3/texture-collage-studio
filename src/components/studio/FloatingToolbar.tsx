@@ -347,6 +347,21 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
           })}
         </div>
       </div>
+
+      {/* Lighter / Darker slider (kid-friendly opacity) */}
+      <div>
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-1 block">
+          {(element.opacity ?? 100) < 50 ? '🌫️ Lighter' : '✨ Darker'}
+        </span>
+        <Slider
+          value={[element.opacity ?? 100]}
+          onValueChange={([v]) => onUpdate({ opacity: v })}
+          min={5}
+          max={100}
+          step={5}
+          className="w-full"
+        />
+      </div>
     </div>
   );
 }
