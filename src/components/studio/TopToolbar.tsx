@@ -170,7 +170,7 @@ export function TopToolbar({
             style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6)' }}
             title="Switch to Granny Mode"
           >
-            🧒 Kids Mode → 🥦👵
+            🧒 Kids → 🥦👵
           </button>
         ) : (
           <button
