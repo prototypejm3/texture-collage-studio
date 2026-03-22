@@ -100,7 +100,7 @@ export function BottomBar({
     <div className="flex flex-wrap items-center px-2 md:px-4 py-2 bg-popover relative gap-2">
       {/* Frame picker */}
       <div className="flex items-center gap-1">
-        <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-1 ${kidMode ? 'text-[10px] font-semibold' : 'text-[9px] font-semibold'}`}>{kidMode ? '🖼️' : 'FRAME'}</span>
+        <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-1 ${kidMode ? 'text-[10px] font-semibold' : 'text-[9px] font-semibold'}`}>{kidMode ? '🖼️' : 'DISPLAY'}</span>
 
         {/* Kid mode: simple circles for Black, White, None + locked premium circle */}
         {kidMode ? (
