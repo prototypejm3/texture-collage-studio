@@ -36,8 +36,8 @@ export const LABELS = {
     showAndTell: "Showcase",
     // Toolbar
     save: "Save",
-    colors: "Colors",
-    frame: "Frame",
+    colors: "Swatches",
+    frame: "Display",
     shapes: "Elements",
     // Panel
     shapePanel: "ELEMENT",
