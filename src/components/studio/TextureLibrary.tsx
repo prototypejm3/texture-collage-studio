@@ -331,80 +331,22 @@ export function TextureLibrary({
           </div>
         )}
 
-        <div className="flex flex-wrap gap-1">
-          <button
-            onClick={() => setActiveGroup('All')}
-            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
-              activeGroup === 'All'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setActiveGroup('Favorites')}
-            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors flex items-center gap-0.5 ${
-              activeGroup === 'Favorites'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-accent'
-            }`}
-          >
-            {kidMode ? '📦 My Box' : <><Star className="w-2.5 h-2.5" /> My Collection</>}
-            {favIds.size > 0 && (
-              <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
-            )}
-          </button>
-          {showCustomTab && (
-            <button
-              onClick={() => setActiveGroup('Custom')}
-              className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
-                activeGroup === 'Custom'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              ✨ Mine
-            </button>
-          )}
-          {/* Category filters — adult mode only */}
-          {!kidMode && (kidMode ? kidGroups : adultGroups).map(group => {
-            const label = kidMode ? group.kidLabel : group.label;
-            const emoji = group.kidLabel.match(/^[^\s]+/)?.[0] || '';
-            const mobileLabel = kidMode ? emoji : group.label.slice(0, 3);
-            return (
+        {/* Shape selector — top row for both modes */}
+        {onSetNextShape && nextShape && (
+          <div className="flex items-center gap-1 flex-wrap">
+            {onToggleDrawMode && (
               <button
-                key={group.label}
-                onClick={() => setActiveGroup(group.label)}
-                className={`rounded-full transition-colors font-semibold ${kidMode
-                  ? 'px-3 py-1.5 text-xs'
-                  : 'px-1.5 py-0.5 text-[10px]'
-                } ${activeGroup === group.label
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                onClick={onToggleDrawMode}
+                className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-medium rounded-full transition-colors ${
+                  drawMode && !crayonMode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
                 }`}
-                title={kidMode ? group.kidLabel : group.label}
               >
-                {isMobile ? mobileLabel : label}
+                <PenTool className="w-3 h-3" />
+                {kidMode ? 'Draw' : ''}
               </button>
-            );
-          })}
-        </div>
-
-        {/* Shape & Draw tools — only inline in kid mode */}
-        {kidMode && onToggleDrawMode && onSetNextShape && nextShape && (
-          <div className="flex items-center gap-1 mt-1 flex-wrap">
-            <button
-              onClick={onToggleDrawMode}
-              className={`flex items-center gap-1 px-2 py-0.5 ${kidMode ? 'text-[12px]' : 'text-[10px]'} font-medium rounded-full transition-colors ${
-                drawMode && !crayonMode
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-accent'
-              }`}
-            >
-              <PenTool className="w-3 h-3" />
-              {kidMode ? 'Draw' : ''}
-            </button>
+            )}
             {onToggleCrayonMode && (
               <button
                 onClick={onToggleCrayonMode}
@@ -448,25 +390,62 @@ export function TextureLibrary({
           </div>
         )}
       </div>
-      <div className="flex-1 overflow-y-auto texture-panel p-2">
-        <div className={`grid ${kidMode ? 'grid-cols-8 sm:grid-cols-8 gap-0.5' : 'grid-cols-8 sm:grid-cols-10 md:grid-cols-12 lg:grid-cols-14 gap-1'}`}>
-          {filtered.map(tex => (
-            <SwatchItem
-              key={tex.id}
-              tex={tex}
-              isFav={favIds.has(tex.id)}
-              onToggleFav={() => toggleFav(tex.id)}
-              onDragStart={onDragStart}
-              onTextureClick={(id) => {
-                if (!kidMode && onSetNextShape) setShowShapeSelector(true);
-                onTextureClick?.(id);
-              }}
-              onRemoveCustomTexture={onRemoveCustomTexture}
-              viewMode={swatchView}
-              kidMode={kidMode}
-              isActiveBackground={backgroundTextureId === tex.id}
-              activeShape={nextShape}
-            />
+
+      {/* Category filter tabs — below header */}
+      <div className="px-2 py-1 border-b border-border flex flex-wrap gap-1">
+        <button
+          onClick={() => setActiveGroup('All')}
+          className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
+            activeGroup === 'All'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+          }`}
+        >
+          All
+        </button>
+        <button
+          onClick={() => setActiveGroup('Favorites')}
+          className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors flex items-center gap-0.5 ${
+            activeGroup === 'Favorites'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-secondary text-secondary-foreground hover:bg-accent'
+          }`}
+        >
+          {kidMode ? '📦 My Box' : <><Star className="w-2.5 h-2.5" /> My Collection</>}
+          {favIds.size > 0 && (
+            <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
+          )}
+        </button>
+        {showCustomTab && (
+          <button
+            onClick={() => setActiveGroup('Custom')}
+            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
+              activeGroup === 'Custom'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+            }`}
+          >
+            ✨ Mine
+          </button>
+        )}
+        {(kidMode ? kidGroups : adultGroups).map(group => {
+          const label = kidMode ? group.kidLabel : group.label;
+          return (
+            <button
+              key={group.label}
+              onClick={() => setActiveGroup(group.label)}
+              className={`rounded-full transition-colors ${kidMode
+                ? 'px-2 py-0.5 text-[11px] font-semibold'
+                : 'px-1.5 py-0.5 text-[10px]'
+              } ${activeGroup === group.label
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-secondary text-secondary-foreground hover:bg-accent'
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
           ))}
         </div>
 
