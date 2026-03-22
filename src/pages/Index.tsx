@@ -786,37 +786,16 @@ const Index = () => {
                 onClick={() => toggleBox('stencils')} kidMode={true} />
             </div>
           ) : (
-            /* Adult mode: sewing tin on left, tools center, actions right */
-            <div className="flex items-center justify-between w-full px-4 py-2">
-              <SewingTin
-                isOpen={activeBox === 'mybox'}
-                onToggle={() => toggleBox('mybox')}
-                itemCount={wall.designs.length}
-              />
-              <div className="flex items-center gap-4">
-                <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
-                  onClick={() => toggleBox('textures')} kidMode={false} />
-                <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
-                  onClick={() => toggleBox('tools')} kidMode={false} />
-                <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
-                  onClick={() => toggleBox('stencils')} kidMode={false} />
-                <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
-                  onClick={() => toggleBox('text')} kidMode={false} />
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={handleClearAll} className="flex items-center gap-1 px-2 py-1 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
-                  <Trash2 className="w-3 h-3" /> Reset
-                </button>
-                <button onClick={handleSaveToWall} className="flex items-center gap-1 px-2 py-1 text-[10px] text-foreground hover:bg-secondary rounded-md transition-colors">
-                  <Save className="w-3 h-3" /> Keep Safe
-                </button>
-                <button
-                  onClick={handleExport}
-                  className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  <Download className="w-3 h-3" /> Take Home
-                </button>
-              </div>
+            /* Adult mode: 4 clean buttons centered */
+            <div className="flex items-center justify-center w-full px-4 py-2 gap-6">
+              <BoxButton id="textures" icon="" label="Colors" isActive={activeBox === 'textures'}
+                onClick={() => toggleBox('textures')} kidMode={false} />
+              <BoxButton id="tools" icon="" label="Frame" isActive={activeBox === 'tools'}
+                onClick={() => toggleBox('tools')} kidMode={false} />
+              <BoxButton id="stencils" icon="" label="Elements" isActive={activeBox === 'stencils'}
+                onClick={() => toggleBox('stencils')} kidMode={false} />
+              <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
+                onClick={() => toggleBox('text')} kidMode={false} />
             </div>
           )}
         </div>
