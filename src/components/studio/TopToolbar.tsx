@@ -254,20 +254,220 @@ export function TopToolbar({
 
       <div className="flex-1" />
 
-      {/* Right */}
+      {/* Right side */}
       <div className="flex items-center gap-1">
-        {/* Kid mode toggle moved to left side next to brand */}
+        {/* AI Toggle - Sparkle */}
+        {kidMode ? (
+          <button
+            onClick={handleAiToggle}
+            className={`p-1 rounded-lg transition-all hover:scale-110 active:scale-90 ${
+              aiEnabled ? 'opacity-100' : 'opacity-40'
+            }`}
+            title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+          >
+            <SparkleIcon />
+          </button>
+        ) : (
+          <button
+            onClick={handleAiToggle}
+            className={`p-1.5 rounded-md transition-colors ${
+              aiEnabled ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+            }`}
+            title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+          >
+            <Sparkles className="w-4 h-4" />
+          </button>
+        )}
 
-        {/* AI Toggle */}
-        <button
-          onClick={handleAiToggle}
-          className={`p-1.5 rounded-md transition-colors ${
-            aiEnabled
-              ? 'bg-primary/15 text-primary'
-              : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-          }`}
-          title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
-        >
+        {/* Light/Dark Toggle */}
+        {kidMode ? (
+          <button
+            onClick={toggle}
+            className="flex items-center gap-0.5 px-2 py-1 rounded-full transition-all hover:scale-105 active:scale-95"
+            style={{ backgroundColor: dark ? '#3a3020' : '#f7f0e8', border: '1.5px solid #e8ddd0' }}
+            title={dark ? 'Light mode' : 'Dark mode'}
+          >
+            <ToyMoonIcon />
+            <ToySunIcon />
+          </button>
+        ) : (
+          <button
+            onClick={toggle}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            title={dark ? 'Light mode' : 'Dark mode'}
+          >
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+        )}
+
+        {/* Music */}
+        {onAmbientSoundChange && (
+          <div className="relative">
+            {kidMode ? (
+              <button
+                onClick={() => setShowSoundMenu(!showSoundMenu)}
+                className={`p-1 rounded-lg transition-all hover:scale-110 active:scale-90 ${
+                  ambientSound && ambientSound !== 'none' ? 'opacity-100' : 'opacity-50'
+                }`}
+                title="Music"
+              >
+                <MusicNoteIcon />
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowSoundMenu(!showSoundMenu)}
+                className={`p-1.5 rounded-md transition-colors ${
+                  ambientSound && ambientSound !== 'none'
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                }`}
+                title="Ambient sound"
+              >
+                <Ear className="w-4 h-4" />
+              </button>
+            )}
+            {showSoundMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                  <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">{kidMode ? 'Music' : 'Ambiance'}</p>
+                  {(kidMode
+                    ? ([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const)
+                    : ([['none', 'Off', ''], ['gallery', 'Gallery', ''], ['loft', 'Lofi', ''], ['home', 'Chill', '']] as const)
+                  ).map(([value, label, emoji]) => (
+                    <button
+                      key={value}
+                      onClick={() => { onAmbientSoundChange(value as AmbientSound); setShowSoundMenu(false); }}
+                      className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary flex items-center gap-1.5 ${
+                        ambientSound === value ? 'text-primary font-medium' : 'text-foreground'
+                      }`}
+                    >
+                      <span>{emoji}</span> {label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Sound FX - Kid mode only */}
+        {kidMode && onKidSoundsToggle && (
+          <div className="relative">
+            <button
+              onClick={() => {
+                if (kidSoundsEnabled) {
+                  setShowSfxVolume(v => !v);
+                } else {
+                  onKidSoundsToggle(true);
+                }
+              }}
+              onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
+              className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
+              style={{ backgroundColor: kidSoundsEnabled ? '#fce4e4' : 'transparent' }}
+              title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
+            >
+              <SpeakerIcon />
+            </button>
+            {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
+                <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
+                  <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
+                  <input type="range" min={0} max={100} step={5}
+                    value={Math.round((kidSoundsVolume || 0.4) * 100)}
+                    onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)}
+                    className="w-full h-1 accent-primary" />
+                  <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
+                  <button
+                    onClick={() => { onKidSoundsToggle(false); setShowSfxVolume(false); }}
+                    className="w-full mt-1 text-[9px] text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    🔇 Mute
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Divider */}
+        <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: '#e8ddd0' } : undefined} />
+
+        {/* Start Over */}
+        {kidMode ? (
+          <button onClick={onClear} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Start Over">
+            <TrashCanIcon />
+            <span className="hidden sm:inline text-xs font-medium" style={{ color: '#6b4c2a' }}>Start Over</span>
+          </button>
+        ) : (
+          <button onClick={onClear} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors" title="Start Over">
+            <Trash2 className="w-3 h-3" /> <span className="hidden sm:inline">Start Over</span>
+          </button>
+        )}
+
+        {/* Save */}
+        {onSaveToWall && (kidMode ? (
+          <button onClick={onSaveToWall} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Save">
+            <SaveBoxIcon />
+            <span className="hidden sm:inline text-xs font-medium" style={{ color: '#6b4c2a' }}>Save</span>
+          </button>
+        ) : (
+          <button onClick={onSaveToWall} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-foreground hover:bg-secondary rounded-md transition-colors" title="Save">
+            <Save className="w-3 h-3" /> <span className="hidden sm:inline">Save</span>
+          </button>
+        ))}
+
+        {/* Download */}
+        {kidMode ? (
+          <button onClick={onSave} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 active:scale-95" style={{ backgroundColor: '#f97316' }} title="Download">
+            <DownloadTrayIcon />
+            <span className="hidden sm:inline">Download</span>
+          </button>
+        ) : (
+          <button onClick={onSave} className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors" title="Download">
+            <Download className="w-3 h-3" /> <span className="hidden sm:inline">Download</span>
+          </button>
+        )}
+
+        {/* Undo/Redo */}
+        {onUndo && onRedo && (
+          <>
+            <div className={kidMode ? 'w-px h-6 hidden sm:block' : 'w-px h-3 bg-border hidden sm:block'} style={kidMode ? { backgroundColor: '#e8ddd0' } : undefined} />
+            <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Undo (Ctrl+Z)">
+              <Undo2 className="w-4 h-4" />
+            </button>
+            <button onClick={onRedo} disabled={!canRedo} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors disabled:opacity-30 disabled:pointer-events-none" title="Redo (Ctrl+Shift+Z)">
+              <Redo2 className="w-4 h-4" />
+            </button>
+          </>
+        )}
+
+        {!kidMode && <div className="w-px h-3 bg-border hidden sm:block" />}
+        {user ? (
+          <>
+            <span className="text-[10px] text-muted-foreground items-center gap-0.5 hidden sm:flex">
+              {kidMode ? <span className="text-sm">👤</span> : <User className="w-2.5 h-2.5" />}
+              {user.email?.split('@')[0]}
+            </span>
+            <button onClick={() => signOut()} className="flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-foreground transition-colors">
+              <LogOut className="w-2.5 h-2.5" /> <span className="hidden sm:inline">{kidMode ? 'Bye!' : 'Out'}</span>
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/auth"
+            className={`flex items-center gap-1 transition-colors ${
+              kidMode
+                ? 'px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90'
+                : 'px-2 py-1 text-[10px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90'
+            }`}
+            style={kidMode ? { backgroundColor: '#f97316' } : undefined}
+          >
+            {kidMode ? '✨ Join' : <><LogIn className="w-2.5 h-2.5" /> Sign In</>}
+          </Link>
+        )}
+      </div>
           <Sparkles className="w-4 h-4" />
         </button>
 
