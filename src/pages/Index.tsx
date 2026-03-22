@@ -614,7 +614,7 @@ const Index = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 36px)' : 284 }}>
+                  <div className="overflow-y-auto overflow-x-visible bg-popover" style={{ maxHeight: isMobile ? 'calc(45vh - 28px)' : 336 }}>
                     {activeBox === 'textures' && (
                       <TextureLibrary
                         onDragStart={handleDragStartLib}
