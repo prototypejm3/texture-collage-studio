@@ -718,43 +718,6 @@ const Index = () => {
                           stencilsPoppedOut={false}
                           onPopOutStencils={() => {}}
                         />
-                        {/* Element tools when elements exist */}
-                        {studio.elements.length > 0 && (
-                          <div className="p-3 border-t border-border">
-                            <FloatingToolbar
-                              element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
-                              onUpdate={(updates) => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) { studio.updateElement(targetId, updates); kidOnboarding.notifyMove(); }
-                              }}
-                              onUpdateEffects={(effects) => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) { studio.updateEffects(targetId, effects); kidOnboarding.notifyToolUse(); }
-                              }}
-                              onDuplicate={() => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) studio.duplicateElement(targetId);
-                              }}
-                              onDelete={() => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) { studio.deleteElement(targetId); sounds.playDelete(); sounds.trackAction(); }
-                              }}
-                              onUndo={studio.undo}
-                              onRedo={studio.redo}
-                              canUndo={studio.canUndo}
-                              canRedo={studio.canRedo}
-                              elementCount={studio.elements.length}
-                              onBringForward={() => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) studio.bringForward(targetId);
-                              }}
-                              onSendBackward={() => {
-                                const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
-                                if (targetId) studio.sendBackward(targetId);
-                              }}
-                            />
-                          </div>
-                        )}
                       </div>
                     )}
 
