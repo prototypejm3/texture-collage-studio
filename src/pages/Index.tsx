@@ -30,6 +30,9 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useKidSounds } from '@/hooks/useKidSounds';
 import { useKidCelebration } from '@/hooks/useKidCelebration';
 import { CelebrationOverlay } from '@/components/studio/CelebrationToast';
+import { useKidTutorial } from '@/hooks/useKidTutorial';
+import { useVoiceEncouragement } from '@/hooks/useVoiceEncouragement';
+import { GhostHand, TutorialReplayButton } from '@/components/studio/GhostHand';
 import { TextureTray } from '@/components/studio/MobileTextureTray';
 import { StencilTray } from '@/components/studio/MobileStencilTray';
 import { useActiveBox } from '@/hooks/useActiveBox';
@@ -58,6 +61,8 @@ const Index = () => {
   const isMobile = useIsMobile();
   const sounds = useKidSounds();
   const celebration = useKidCelebration();
+  const kidTutorial = useKidTutorial();
+  const voiceEncouragement = useVoiceEncouragement();
   const [showMobileBanner, setShowMobileBanner] = useState(true);
   const kidOnboarding = useKidOnboarding(sounds.kidMode);
   const [stencilsPoppedOut, setStencilsPoppedOut] = useState(false);
@@ -91,6 +96,14 @@ const Index = () => {
       navigate(`/${newParams.toString() ? `?${newParams}` : ''}`, { replace: true });
     }
   }, [searchParams, upgradeToPremium, navigate]);
+
+  // Trigger intro tutorial for kids on first visit
+  useEffect(() => {
+    if (sounds.kidMode) {
+      const timer = setTimeout(() => kidTutorial.triggerIntro(), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [sounds.kidMode]);
 
   // Auto-open tools box when an element is selected in adult mode
   useEffect(() => {
@@ -172,11 +185,15 @@ const Index = () => {
     sounds.playPop();
     sounds.trackAction();
     kidOnboarding.notifyPick();
-    if (sounds.kidMode && canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect();
-      celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+    if (sounds.kidMode) {
+      kidTutorial.triggerDrag();
+      voiceEncouragement.maybeSayEncouragement();
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        celebration.celebrateDrop(rect.left + x + 50, rect.top + y);
+      }
     }
-  }, [studio, sounds, kidOnboarding, celebration]);
+  }, [studio, sounds, kidOnboarding, celebration, kidTutorial, voiceEncouragement]);
 
   // ── Table elements (swatches on the wood table outside the frame) ──
   const [tableElements, setTableElements] = useState<TableElement[]>([]);
@@ -722,7 +739,7 @@ const Index = () => {
                 icon="📦"
                 label="Keep It!"
                 isActive={activeBox === 'mybox'}
-                onClick={() => toggleBox('mybox')}
+                onClick={() => { toggleBox('mybox'); if (sounds.kidMode) kidTutorial.triggerBox(); }}
                 kidMode={true}
               />
             )}
@@ -731,7 +748,7 @@ const Index = () => {
               icon="🎨"
               label={sounds.kidMode ? "Colors" : "Swatches"}
               isActive={activeBox === 'textures'}
-              onClick={() => toggleBox('textures')}
+              onClick={() => { toggleBox('textures'); if (sounds.kidMode) kidTutorial.triggerColor(); }}
               kidMode={sounds.kidMode}
             />
             <BoxButton
@@ -739,7 +756,7 @@ const Index = () => {
               icon="🖼️"
               label={sounds.kidMode ? "Frame" : "Display"}
               isActive={activeBox === 'tools'}
-              onClick={() => toggleBox('tools')}
+              onClick={() => { toggleBox('tools'); if (sounds.kidMode) kidTutorial.triggerFrame(); }}
               kidMode={sounds.kidMode}
             />
             <BoxButton
@@ -814,6 +831,8 @@ const Index = () => {
       </svg>
       <OnboardingTutorial page="studio" />
       {sounds.kidMode && <CelebrationOverlay toasts={celebration.toasts} />}
+      {sounds.kidMode && <GhostHand hint={kidTutorial.activeHint} />}
+      {sounds.kidMode && <TutorialReplayButton onReplay={kidTutorial.resetAll} />}
       <KidOnboardingOverlay
         step={kidOnboarding.step}
         active={kidOnboarding.active}
