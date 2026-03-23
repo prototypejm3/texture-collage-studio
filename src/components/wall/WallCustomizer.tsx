@@ -567,13 +567,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           <div className="relative">
             <ToolbarButton
               active={showLightingMenu || settings.lightingPreset !== 'none'}
-              onClick={() => isPremium ? setShowLightingMenu(!showLightingMenu) : onRequestUpgrade?.()}
+              onClick={() => setShowLightingMenu(!showLightingMenu)}
               icon={(c) => <LightingIcon color={c} />}
               label="Lighting"
-              locked={!isPremium}
-              onRequestUpgrade={onRequestUpgrade}
             />
-            <DropdownMenu isOpen={showLightingMenu && isPremium} onClose={() => setShowLightingMenu(false)}>
+            <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
               {lightingPresets.map(lp => (
                 <button key={lp.value}
@@ -588,13 +586,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           <div className="relative">
             <ToolbarButton
               active={showSoundMenu || settings.ambientSound !== 'none'}
-              onClick={() => isPremium ? setShowSoundMenu(!showSoundMenu) : onRequestUpgrade?.()}
+              onClick={() => setShowSoundMenu(!showSoundMenu)}
               icon={(c) => <SoundIcon color={c} />}
               label="Sound"
-              locked={!isPremium}
-              onRequestUpgrade={onRequestUpgrade}
             />
-            <DropdownMenu isOpen={showSoundMenu && isPremium} onClose={() => setShowSoundMenu(false)}>
+            <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               {ambientSounds.map(as => (
                 <button key={as.value}
