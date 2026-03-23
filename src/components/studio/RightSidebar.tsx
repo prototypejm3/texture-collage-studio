@@ -208,7 +208,6 @@ export function RightSidebar({
   const communityDiyIds = new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']);
   const funIds = new Set(funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id));
   const grannyIds = new Set(grannyStencils.map(g => g.id));
-  const grannyIds = new Set(grannyStencils.map(g => g.id));
   const animalBugSeaIds = new Set([
     ...['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face'],
     ...['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird'],
