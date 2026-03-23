@@ -965,6 +965,11 @@ const Index = () => {
                           backgroundTextureId={studio.backgroundTextureId}
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                         />
+                        {sounds.kidMode && (
+                          <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e8ddd0' }}>
+                            <RoomThemePicker theme={roomTheme} onThemeChange={setRoomTheme} />
+                          </div>
+                        )}
                       </div>
                     )}
 
