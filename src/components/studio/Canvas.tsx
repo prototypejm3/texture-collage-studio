@@ -203,6 +203,16 @@ export function Canvas({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // Room theme for kids mode
+  const [roomTheme, setRoomTheme] = useState<RoomTheme>(() => {
+    try { return (localStorage.getItem('kidsRoomTheme') as RoomTheme) || 'art-desk'; } catch { return 'art-desk'; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setRoomTheme((e as CustomEvent).detail as RoomTheme);
+    window.addEventListener('room-theme-change', handler);
+    return () => window.removeEventListener('room-theme-change', handler);
+  }, []);
+
   // Kid canvas style: rainbow or plain
   const [kidCanvasStyle, setKidCanvasStyle] = useState<'rainbow' | 'plain'>(() => {
     try { return (localStorage.getItem('kid-canvas-style') as 'rainbow' | 'plain') || 'rainbow'; } catch { return 'rainbow'; }
