@@ -219,7 +219,7 @@ export function RightSidebar({
   const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean; grannyOnly?: boolean }[] = [
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Portraits', kidLabel: 'Portraits', emoji: '👩', ids: portraitIds, adultOnly: true },
-    { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, grannyOnly: true },
+    { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, adultOnly: true },
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     // Adults: merged Animals & Bugs; Kids keep separate categories
     ...(kidMode ? [
