@@ -1,5 +1,5 @@
-import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { Lock, GripHorizontal, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
+import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound, SavedDesign } from '@/types/wall';
+import { Lock, GripHorizontal, ChevronUp, ChevronDown, ImagePlus, Pencil } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -13,6 +13,8 @@ interface WallCustomizerProps {
   onStepBack?: () => void;
   onRequestUpgrade?: () => void;
   isPremium: boolean;
+  kidDesigns?: SavedDesign[];
+  onEditDesign?: (id: string) => void;
 }
 
 // ── Kid mode backgrounds ──
