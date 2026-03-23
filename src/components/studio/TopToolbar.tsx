@@ -152,7 +152,7 @@ export function TopToolbar({
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   // ── Adult Mode SVG Icons ──
-  const NavDivider = () => <div className="w-px h-10 flex-shrink-0" style={{ backgroundColor: '#e2ddd6' }} />;
+  const NavDivider = () => <div className="w-px h-10 flex-shrink-0 bg-border" />;
 
   const pressStyle = "transition-transform duration-150 ease-out active:scale-[0.96]";
 
