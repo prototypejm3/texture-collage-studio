@@ -144,6 +144,7 @@ export function TopToolbar({
     window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: false }));
   };
 
+  const isMobile = useIsMobile();
   const isStudio = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
