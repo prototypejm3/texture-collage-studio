@@ -840,40 +840,73 @@ const Index = () => {
         {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
           {sounds.kidMode ? (
-            /* Kid mode: wooden tray */
-            <div
-              className="relative flex items-center justify-center gap-3 px-5 py-3"
-              style={{
-                background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
-                borderRadius: '0 0 10px 10px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
-                border: '2px solid rgba(0,0,0,0.15)',
-                borderTop: 'none',
-              }}
-            >
-              <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
-                background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
-                borderRadius: '0 0 10px 10px',
-              }} />
+            /* Kid mode: wooden tray + actions on the right */
+            <div className="flex items-center justify-between w-full px-4">
+              <div className="flex-1" />
               <div
-                className="absolute pointer-events-none"
+                className="relative flex items-center justify-center gap-3 px-5 py-3"
                 style={{
-                  top: -14, left: -2, width: 'calc(100% + 4px)', height: 18,
-                  background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
-                  borderRadius: '6px 6px 0 0',
-                  border: '2px solid rgba(0,0,0,0.12)', borderBottom: 'none',
-                  transform: 'rotateX(-20deg)', transformOrigin: 'bottom center',
-                  boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
+                  background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
+                  borderRadius: '0 0 10px 10px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
+                  border: '2px solid rgba(0,0,0,0.15)',
+                  borderTop: 'none',
                 }}
-              />
-              <BoxButton id="mybox" icon="📦" label="Keep It!" isActive={activeBox === 'mybox'}
-                onClick={() => { toggleBox('mybox'); kidTutorial.triggerBox(); }} kidMode={true} />
-              <BoxButton id="textures" icon="🎨" label="Colors" isActive={activeBox === 'textures'}
-                onClick={() => { toggleBox('textures'); kidTutorial.triggerColor(); }} kidMode={true} />
-              <BoxButton id="tools" icon="🖼️" label="Frame" isActive={activeBox === 'tools'}
-                onClick={() => { toggleBox('tools'); kidTutorial.triggerFrame(); }} kidMode={true} />
-              <BoxButton id="stencils" icon="🧸" label="Shapes" isActive={activeBox === 'stencils'}
-                onClick={() => toggleBox('stencils')} kidMode={true} />
+              >
+                <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
+                  background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
+                  borderRadius: '0 0 10px 10px',
+                }} />
+                <div
+                  className="absolute pointer-events-none"
+                  style={{
+                    top: -14, left: -2, width: 'calc(100% + 4px)', height: 18,
+                    background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
+                    borderRadius: '6px 6px 0 0',
+                    border: '2px solid rgba(0,0,0,0.12)', borderBottom: 'none',
+                    transform: 'rotateX(-20deg)', transformOrigin: 'bottom center',
+                    boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
+                  }}
+                />
+                <BoxButton id="mybox" icon="📦" label="Keep It!" isActive={activeBox === 'mybox'}
+                  onClick={() => { toggleBox('mybox'); kidTutorial.triggerBox(); }} kidMode={true} />
+                <BoxButton id="textures" icon="🎨" label="Colors" isActive={activeBox === 'textures'}
+                  onClick={() => { toggleBox('textures'); kidTutorial.triggerColor(); }} kidMode={true} />
+                <BoxButton id="tools" icon="🖼️" label="Frame" isActive={activeBox === 'tools'}
+                  onClick={() => { toggleBox('tools'); kidTutorial.triggerFrame(); }} kidMode={true} />
+                <BoxButton id="stencils" icon="🧸" label="Shapes" isActive={activeBox === 'stencils'}
+                  onClick={() => toggleBox('stencils')} kidMode={true} />
+              </div>
+              {/* Start Over / Save / Download */}
+              <div className="flex-1 flex items-center justify-end gap-3">
+                <button onClick={handleClearAll} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Start Over">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="6" width="14" height="14" rx="2" fill="#c4956a"/>
+                    <rect x="5" y="6" width="14" height="3" rx="1" fill="#a0724a"/>
+                    <rect x="8" y="9" width="2" height="8" rx="0.5" fill="#8B5E3C" opacity="0.6"/>
+                    <rect x="14" y="9" width="2" height="8" rx="0.5" fill="#8B5E3C" opacity="0.6"/>
+                  </svg>
+                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Start Over</span>
+                </button>
+                <button onClick={handleSaveToWall} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Save">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <rect x="4" y="4" width="16" height="16" rx="3" fill="#c4956a"/>
+                    <rect x="4" y="4" width="16" height="5" rx="1.5" fill="#a0724a"/>
+                    <rect x="7" y="6" width="10" height="2" rx="0.5" fill="#d4c4a8"/>
+                    <rect x="8" y="12" width="8" height="5" rx="1" fill="#f5ede0"/>
+                  </svg>
+                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Save</span>
+                </button>
+                <button onClick={handleExport} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Download">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="14" width="14" height="6" rx="2" fill="#c4956a"/>
+                    <rect x="5" y="14" width="14" height="2" rx="1" fill="#a0724a"/>
+                    <path d="M12 4V13" stroke="#6b4c2a" strokeWidth="2" strokeLinecap="round"/>
+                    <polyline points="9,11 12,14 15,11" stroke="#6b4c2a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Download</span>
+                </button>
+              </div>
             </div>
           ) : (
             /* Adult mode: tools left, save/download right */
