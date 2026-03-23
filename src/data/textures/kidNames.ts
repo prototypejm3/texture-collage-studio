@@ -86,9 +86,7 @@ export const kidTextureNames: Record<string, string> = {
   // Villa
   'villa-sand': 'Beach Sand',             // sandy linen
 
-  // Leuven
-  'leuven-olive': 'Caterpillar',           // olive green linen
-  'leuven-snow': 'Snowball',               // white linen
+  // Leuven — removed
 
   // Key Largo
   'keylargo-zenith-teal': 'Mermaid Green', // teal performance
