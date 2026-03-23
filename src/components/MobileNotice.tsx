@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor } from 'lucide-react';
 
 const DISMISSED_KEY = 'mobile-notice-dismissed';
 
@@ -10,10 +9,29 @@ export function MobileNotice() {
   useEffect(() => {
     const isMobile = window.innerWidth < 640 && 'ontouchstart' in window;
     const dismissed = localStorage.getItem(DISMISSED_KEY);
-    if (isMobile && !dismissed) {
-      setShow(true);
-    }
+    if (!isMobile || dismissed) return;
+
+    // Delay mobile hint so it doesn't overlap with onboarding prompts
+    const timer = setTimeout(() => {
+      // Check if a stencil/color prompt is active
+      const stencilPromptActive = document.querySelector('[data-studio-hint]');
+      if (!stencilPromptActive) {
+        setShow(true);
+      }
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  // Auto-dismiss after 6 seconds
+  useEffect(() => {
+    if (!show) return;
+    const timer = setTimeout(() => {
+      setShow(false);
+      localStorage.setItem(DISMISSED_KEY, '1');
+    }, 6000);
+    return () => clearTimeout(timer);
+  }, [show]);
 
   const dismiss = () => {
     setShow(false);
@@ -24,39 +42,27 @@ export function MobileNotice() {
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="fixed z-[900] left-1/2 -translate-x-1/2"
+          style={{ top: 16 }}
           onClick={dismiss}
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="bg-card rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-border text-center"
-            onClick={(e) => e.stopPropagation()}
+          <div
+            className="px-4 py-2 rounded-full text-[13px] font-medium cursor-pointer select-none"
+            style={{
+              background: 'hsla(0, 0%, 100%, 0.65)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              color: 'hsl(var(--foreground))',
+              boxShadow: '0 2px 12px hsla(0, 0%, 0%, 0.08)',
+              border: '1px solid hsla(0, 0%, 0%, 0.06)',
+            }}
           >
-            <div className="text-4xl mb-3">👀</div>
-            <h2 className="text-lg font-bold text-foreground mb-1">
-              Hey! We noticed you're on mobile
-            </h2>
-            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-              You can keep going — but this is <span className="font-semibold text-foreground">way better on desktop</span>.
-            </p>
-            <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mb-5">
-              <Monitor className="w-4 h-4" />
-              <span>Best on laptop or tablet</span>
-            </div>
-            <button
-              onClick={dismiss}
-              className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
-            >
-              Got it, let me in! 🎨
-            </button>
-          </motion.div>
+            Best experienced on a larger screen
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
