@@ -387,15 +387,59 @@ function ColorWheelButton({ selected, onClick }: { selected: boolean; onClick: (
 }
 
 // ── Dropdown wrapper ──
-function DropdownMenu({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) {
-  if (!isOpen) return null;
-  return (
+function DropdownMenu({
+  isOpen,
+  onClose,
+  children,
+  anchorRef,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  anchorRef: React.RefObject<HTMLElement>;
+}) {
+  const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
+
+  useEffect(() => {
+    if (!isOpen || !anchorRef.current) return;
+
+    const updatePosition = () => {
+      const rect = anchorRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setPosition({
+        left: rect.left + rect.width / 2,
+        top: rect.top - 6,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen, anchorRef]);
+
+  if (!isOpen || !position) return null;
+
+  return createPortal(
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[300px] overflow-y-auto" style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div
+        className="fixed z-50 max-h-[300px] min-w-[150px] overflow-y-auto rounded-lg border border-border bg-popover py-1 shadow-lg"
+        style={{
+          left: position.left,
+          top: position.top,
+          transform: 'translate(-50%, -100%)',
+          fontFamily: 'system-ui, sans-serif',
+        }}
+      >
         {children}
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 
