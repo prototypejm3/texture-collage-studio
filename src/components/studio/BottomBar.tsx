@@ -376,43 +376,6 @@ export function BottomBar({
       )}
 
       <div className="flex-1" />
-
-       {/* Actions — kid mode: vertical pill next to box */}
-       {kidMode && (
-         <div className="flex flex-col items-center rounded-2xl overflow-hidden" style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}>
-           <button onClick={onClear} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Start Over">
-             <TrashCanIcon />
-             <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
-           </button>
-           <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-           {onSaveToWall && (
-             <>
-               <button onClick={onSaveToWall} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Save">
-                 <SaveBoxIcon />
-                 <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
-               </button>
-               <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-             </>
-           )}
-           <button
-             onClick={() => {
-               if (isPremium) {
-                 onSave();
-               } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
-                 incrementFreeExportCount();
-                 onSave();
-               } else {
-                 onRequestUpgrade?.();
-               }
-             }}
-             className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95"
-             title="Download"
-           >
-             <DownloadTrayIcon />
-             <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
-           </button>
-         </div>
-       )}
     </div>
   );
 }
