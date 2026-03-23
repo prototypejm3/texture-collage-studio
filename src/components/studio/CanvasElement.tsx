@@ -26,8 +26,8 @@ function getClipPath(shape: CanvasElementType['shape']): string | undefined {
       // Long horizontal strip with slightly uneven edges
       return 'polygon(1% 5%, 15% 0%, 35% 3%, 55% 0%, 75% 4%, 92% 1%, 99% 8%, 100% 40%, 99% 70%, 100% 92%, 98% 100%, 82% 96%, 62% 100%, 42% 97%, 22% 100%, 5% 96%, 0% 92%, 1% 60%, 0% 30%)';
     case 'rectangle':
-      // Slightly imperfect rectangle
-      return 'polygon(2% 1%, 50% 0%, 98% 2%, 100% 50%, 99% 98%, 50% 100%, 1% 99%, 0% 50%)';
+      // Wider rectangle with slightly imperfect edges
+      return 'polygon(1% 2%, 25% 0%, 50% 1%, 75% 0%, 99% 2%, 100% 35%, 99% 65%, 100% 98%, 75% 100%, 50% 99%, 25% 100%, 1% 98%, 0% 65%, 1% 35%)';
     default:
       return undefined;
   }
