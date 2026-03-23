@@ -337,38 +337,42 @@ export function BottomBar({
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Actions — kid mode only (adult actions moved to bottom bar) */}
-      {kidMode && (
-        <div className="flex items-center gap-1">
-          <button onClick={onClear} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Start Over">
-            <TrashCanIcon />
-            <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
-          </button>
-          {onSaveToWall && (
-            <button onClick={onSaveToWall} className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95" title="Save">
-              <SaveBoxIcon />
-              <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
-            </button>
-          )}
-          <button
-            onClick={() => {
-              if (isPremium) {
-                onSave();
-              } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
-                incrementFreeExportCount();
-                onSave();
-              } else {
-                onRequestUpgrade?.();
-              }
-            }}
-            className="flex items-center gap-1 px-1.5 py-1 rounded-lg transition-all hover:scale-105 active:scale-95"
-            title="Download"
-          >
-            <DownloadTrayIcon />
-            <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
-          </button>
-        </div>
-      )}
+       {/* Actions — kid mode: unified pill */}
+       {kidMode && (
+         <div className="flex items-center rounded-full overflow-hidden" style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}>
+           <button onClick={onClear} className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95" title="Start Over">
+             <TrashCanIcon />
+             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
+           </button>
+           <div className="w-px h-5" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
+           {onSaveToWall && (
+             <>
+               <button onClick={onSaveToWall} className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95" title="Save">
+                 <SaveBoxIcon />
+                 <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
+               </button>
+               <div className="w-px h-5" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
+             </>
+           )}
+           <button
+             onClick={() => {
+               if (isPremium) {
+                 onSave();
+               } else if (getFreeExportCount() < FREE_EXPORT_LIMIT) {
+                 incrementFreeExportCount();
+                 onSave();
+               } else {
+                 onRequestUpgrade?.();
+               }
+             }}
+             className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95"
+             title="Download"
+           >
+             <DownloadTrayIcon />
+             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
+           </button>
+         </div>
+       )}
     </div>
   );
 }

@@ -215,14 +215,6 @@ export function TopToolbar({
             >
               <SwatchboxLogo height={32} />
             </Link>
-            {/* Mode toggle right after logo */}
-            <button
-              onClick={handleKidToggle}
-              className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
-              title="Switch to Granny Mode"
-            >
-              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
-            </button>
             <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link to="/wall" data-nav="wall"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
@@ -310,22 +302,14 @@ export function TopToolbar({
                 </button>
               </>
             )}
-            {user ? (
-              <>
-                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: 'hsl(var(--toybox-text))' }}>
-                  <span className="text-sm">👤</span>{user.email?.split('@')[0]}
-                </span>
-                <button onClick={() => signOut()}
-                  className="flex items-center gap-1 px-2 py-1 text-xs transition-colors"
-                  style={{ color: 'hsl(var(--toybox-text))' }}
-                ><LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Bye!</span></button>
-              </>
-            ) : (
-              <Link to="/auth"
-                className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-full text-white hover:opacity-90 transition-colors"
-                style={{ backgroundColor: 'hsl(var(--toybox-orange))' }}
-              >✨ Join</Link>
-            )}
+             {/* Mode toggle replaces user info in kid mode */}
+             <button
+               onClick={handleKidToggle}
+               className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
+               title="Switch to Granny Mode"
+             >
+               <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
+             </button>
           </div>
         </>
       ) : !kidMode && isMobile ? (
