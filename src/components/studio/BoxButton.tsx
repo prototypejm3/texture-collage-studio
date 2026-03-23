@@ -15,9 +15,9 @@ interface BoxButtonProps {
 function SaveIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <rect x="10" y="22" width="28" height="18" rx="2" fill="#c4956a" stroke="#a0713a" strokeWidth="1.5" />
-      <line x1="24" y1="22" x2="24" y2="40" stroke="#a0713a" strokeWidth="1" opacity="0.4" />
-      <path d="M8 22 L14 14 L34 14 L40 22 Z" fill="#d9a97c" stroke="#a0713a" strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x="10" y="22" width="28" height="18" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="1.5" />
+      <line x1="24" y1="22" x2="24" y2="40" stroke="#5a8a6a" strokeWidth="1" opacity="0.4" />
+      <path d="M8 22 L14 14 L34 14 L40 22 Z" fill="#a8d4b8" stroke="#5a8a6a" strokeWidth="1.5" strokeLinejoin="round" />
       <rect x="21" y="13" width="6" height="27" rx="1" fill="#f7f0e8" opacity="0.5" />
     </svg>
   );
