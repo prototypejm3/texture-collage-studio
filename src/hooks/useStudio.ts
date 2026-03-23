@@ -348,7 +348,7 @@ export function useStudio() {
         effects: { ...defaultEffects },
         sectionId: section.id,
         clipPathD: normalizedPath,
-        stencilMode: mode,
+        stencilMode: 'outline',
       });
     });
     setElements(prev => [...prev, ...newElements]);
