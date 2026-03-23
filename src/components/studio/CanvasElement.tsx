@@ -200,8 +200,17 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
     ? clipPath 
     : hasScissorEdge ? undefined : (edgeClipPath || clipPath);
 
+  const hasShadowFilter = element.effects.shadowDepth === 'lifted' || element.effects.shadowDepth === 'floating';
+  const hasBlendMode = element.blendMode && element.blendMode !== 'normal';
+  const shadowFilter = element.effects.shadowDepth === 'lifted'
+    ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
+    : element.effects.shadowDepth === 'floating'
+      ? 'drop-shadow(0 12px 16px hsla(220, 20%, 12%, 0.3)) drop-shadow(0 4px 4px hsla(220, 20%, 12%, 0.15))'
+      : undefined;
+
   return (
     // Outer wrapper: handles position, rotation, shadow (shadow not clipped)
+    // When blend mode is active, shadow goes on an extra outer layer to avoid filter isolating blend
     <div
       ref={ref}
       onPointerDown={handlePointerDown}
@@ -227,13 +236,10 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         zIndex: element.zIndex,
         touchAction: 'none',
         opacity: element.opacity != null ? element.opacity / 100 : 1,
-        mixBlendMode: (element.blendMode && element.blendMode !== 'normal' ? element.blendMode : undefined) as any,
+        mixBlendMode: (hasBlendMode ? element.blendMode : undefined) as any,
         transition: 'width 0.15s ease, height 0.15s ease, left 0.15s ease, top 0.15s ease',
-        filter: element.effects.shadowDepth === 'lifted'
-          ? 'drop-shadow(0 4px 6px hsla(220, 20%, 12%, 0.25))'
-          : element.effects.shadowDepth === 'floating'
-            ? 'drop-shadow(0 12px 16px hsla(220, 20%, 12%, 0.3)) drop-shadow(0 4px 4px hsla(220, 20%, 12%, 0.15))'
-            : undefined,
+        // Only apply filter when no blend mode (filter isolates blend)
+        filter: !hasBlendMode ? shadowFilter : undefined,
       }}
     >
       {/* Remove button */}
