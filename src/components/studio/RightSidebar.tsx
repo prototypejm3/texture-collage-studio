@@ -206,8 +206,8 @@ export function RightSidebar({
   const letterIds = new Set(letterStencils.map(l => l.id));
   const numberSymbolIds = new Set(numberSymbolStencils.map(n => n.id));
   const communityDiyIds = new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']);
-  const funIds = new Set(funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id));
-  const grannyIds = new Set(grannyStencils.map(g => g.id));
+  const funIds = new Set([...funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id), 'champagne-coupe', 'cocktail-umbrella']);
+  const grannyIds = new Set(grannyStencils.filter(g => g.id !== 'champagne-coupe' && g.id !== 'cocktail-umbrella').map(g => g.id));
   const animalBugSeaIds = new Set([
     ...['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face'],
     ...['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird'],
