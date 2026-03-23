@@ -523,7 +523,6 @@ export function TopToolbar({
                         <button key={value}
                           onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
                           className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium text-primary' : 'text-foreground'}`}
-                          style={{ color: ambientSound === value ? '#5a8a6a' : '#3d3530' }}
                         >{label}</button>
                       ))}
                     </div>
