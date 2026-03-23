@@ -1108,9 +1108,8 @@ const Index = () => {
         {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
           {sounds.kidMode ? (
-            /* Kid mode: wooden tray + actions on the right */
-            <div className="flex items-center justify-between w-full px-4">
-              <div className="flex-1" />
+            /* Kid mode: wooden tray centered */
+            <div className="flex items-center justify-center w-full px-4">
               <div
                 className="relative flex items-center justify-center gap-3 px-5 py-3"
                 style={{
