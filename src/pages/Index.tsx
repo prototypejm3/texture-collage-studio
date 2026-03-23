@@ -39,6 +39,8 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
+import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
+import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 
 
 const Index = () => {
