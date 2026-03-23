@@ -477,10 +477,10 @@ export function Canvas({
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: deskInset,
-            right: deskInset,
-            top: deskInset,
-            bottom: deskInset,
+            left: deskInsetX,
+            right: deskInsetX,
+            top: deskInsetY,
+            bottom: deskInsetY,
             borderRadius: 16,
             boxShadow: '0 12px 60px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.25)',
           }} />
