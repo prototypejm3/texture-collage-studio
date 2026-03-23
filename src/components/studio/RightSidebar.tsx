@@ -786,7 +786,7 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMode = false, isOwner = false, isPublic = false, onSelect, onToggleHidden, onToggleFav, onDelete, onReport, onTogglePublic, onTransferToKid }: {
+function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMode = false, isOwner = false, isPublic = false, onSelect, onToggleHidden, onToggleFav, onDelete, onReport, onTogglePublic }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
@@ -801,10 +801,8 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
   onDelete: () => void;
   onReport: () => void;
   onTogglePublic?: () => void;
-  onTransferToKid?: () => void;
 }) {
   const isAiGenerated = vibe.id.startsWith('ai-');
-  const [transferred, setTransferred] = useState(false);
   const [fadingOut, setFadingOut] = useState(false);
 
   // Kid mode card — keep original simple layout
@@ -834,13 +832,14 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
     );
   }
 
-  // Adult mode — inline action icons
-  const handleTransfer = (e: React.MouseEvent) => {
+  const handleHideOrDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (onTransferToKid) {
-      onTransferToKid();
-      setTransferred(true);
-      setTimeout(() => setTransferred(false), 2000);
+    if (isOwner || isAiGenerated) {
+      setFadingOut(true);
+      setTimeout(() => onDelete(), 300);
+    } else {
+      setFadingOut(true);
+      setTimeout(() => onToggleHidden(), 300);
     }
   };
 
