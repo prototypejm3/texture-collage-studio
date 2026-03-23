@@ -714,14 +714,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="AMBIENCE" />
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div ref={lightingMenuRef} className="relative">
             <ToolbarButton
               active={showLightingMenu || settings.lightingPreset !== 'none'}
-              onClick={() => setShowLightingMenu(!showLightingMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowHangingMenu(false);
+                setShowSoundMenu(false);
+                setShowLightingMenu(!showLightingMenu);
+              }}
               icon={(c) => <LightingIcon color={c} />}
               label="Lighting"
             />
-            <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)}>
+            <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
               {lightingPresets.map(lp => (
                 <button key={lp.value}
@@ -733,14 +738,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </DropdownMenu>
           </div>
 
-          <div className="relative">
+          <div ref={soundMenuRef} className="relative">
             <ToolbarButton
               active={showSoundMenu || settings.ambientSound !== 'none'}
-              onClick={() => setShowSoundMenu(!showSoundMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowHangingMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(!showSoundMenu);
+              }}
               icon={(c) => <SoundIcon color={c} />}
               label="Sound"
             />
-            <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)}>
+            <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               {ambientSounds.map(as => (
                 <button key={as.value}
