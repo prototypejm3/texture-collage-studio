@@ -5,6 +5,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
 import { grannyStencils } from '@/data/grannyStencils';
 import { sportsStencils, anchorStencils, worldStencils } from '@/data/sportsStencils';
+import { portraitStencils } from '@/data/portraitStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Palette, EyeOff, Eye, Globe, GlobeLock, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp, ArrowRightLeft, Star } from 'lucide-react';
