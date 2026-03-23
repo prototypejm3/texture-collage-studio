@@ -15,6 +15,7 @@ import { LightingOverlay } from '@/components/wall/LightingOverlay';
 import { AmbientSoundPlayer } from '@/components/wall/AmbientSound';
 import { ArtistNoteModal } from '@/components/wall/ArtistNoteModal';
 import { NavBar } from '@/components/NavBar';
+import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { OnboardingTutorial } from '@/components/OnboardingTutorial';
 import { DesignStatus, DesignSize, FrameStyle, HangingStyle, WallBackground, SavedDesign } from '@/types/wall';
 import { Expand, Download, MoreHorizontal, Plus, Trash2, ChevronDown, Pencil, Check } from 'lucide-react';
@@ -691,6 +692,11 @@ const MyWall = () => {
         onClose={() => setGallerySubmitId(null)}
       />
       <OnboardingTutorial page="wall" />
+      <FloatingMusicButton
+        kidMode={kidMode}
+        ambientSound={currentSettings.ambientSound || 'none'}
+        onAmbientSoundChange={(sound) => handleUpdateSettings({ ambientSound: sound })}
+      />
     </div>
   );
 };
