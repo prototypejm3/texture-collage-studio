@@ -42,15 +42,15 @@ export function HouseIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
       {/* Roof */}
-      <path d="M3 10 L11 3 L19 10" fill="#c4956a" stroke="#a0713a" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M3 10 L11 3 L19 10" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="1.2" strokeLinejoin="round" />
       {/* Body */}
-      <rect x="5" y="10" width="12" height="9" fill="#f7f0e8" stroke="#a0713a" strokeWidth="1" />
+      <rect x="5" y="10" width="12" height="9" fill="#f7f0e8" stroke="#5a8a6a" strokeWidth="1" />
       {/* Door */}
-      <rect x="9" y="13" width="4" height="6" rx="1" fill="#c4956a" />
+      <rect x="9" y="13" width="4" height="6" rx="1" fill="#7aaa8a" />
       {/* Window */}
-      <rect x="6.5" y="12" width="3" height="3" rx="0.5" fill="#87ceeb" stroke="#a0713a" strokeWidth="0.8" />
+      <rect x="6.5" y="12" width="3" height="3" rx="0.5" fill="#87ceeb" stroke="#5a8a6a" strokeWidth="0.8" />
       {/* Flag */}
-      <line x1="14" y1="3" x2="14" y2="7" stroke="#a0713a" strokeWidth="1" />
+      <line x1="14" y1="3" x2="14" y2="7" stroke="#5a8a6a" strokeWidth="1" />
       <polygon points="14,3 18,4.5 14,6" fill="#f97316" />
     </svg>
   );
