@@ -5,7 +5,7 @@
 export const kidTextureNames: Record<string, string> = {
   // Royale (Velvet)
   'royale-blush': 'Cotton Candy',        // soft pink velvet
-  'royale-gunmetal': 'Stormy Cloud',      // dark gray velvet
+  'royale-gunmetal': 'Night Sky',          // dark gray velvet
   'royale-evergreen': 'Dinosaur Green',   // deep green velvet
   'royale-apple': 'Frog Belly',           // bright green velvet
   'royale-hacienda': 'Cinnamon Swirl',    // warm reddish-brown
@@ -37,7 +37,7 @@ export const kidTextureNames: Record<string, string> = {
   'sunbrella-fog': 'Foggy Morning',        // light gray
   'sunbrella-sea': 'Swimming Pool',        // sea blue
   'sunbrella-wisteria': 'Unicorn Purple',  // purple
-  'sunbrella-lagoon': 'Lily Pad',          // green lagoon
+  'sunbrella-lagoon': 'Lagoon Splash',     // green lagoon
   'sunbrella-loft-white': 'Marshmallow',   // soft white
 
   // Bubbly (Textured Weave)
@@ -55,7 +55,7 @@ export const kidTextureNames: Record<string, string> = {
   'crave-mocha-latte': 'Milk Chocolate',   // medium brown
   'crave-ginger-tea': 'Ginger Snap',       // warm ginger
   'crave-berry-hibiscus': 'Raspberry',     // berry red-pink
-  'crave-greenery': 'Fern Leaf',           // leafy green
+  'crave-greenery': 'Grasshopper',         // leafy green
   'crave-lava-rock': 'Volcano Rock',       // very dark brown-black
   'crave-irish-cream': 'Caramel Swirl',    // light tan-cream
 
@@ -77,7 +77,7 @@ export const kidTextureNames: Record<string, string> = {
   'nepal-teal': 'Parrot Feather',          // teal textured
 
   // Sorrento
-  'sorrento-teal': 'Sea Glass',            // teal textured
+  'sorrento-teal': 'Sun Ray',              // teal textured
 
   // Kenley
   'kenley-spruce': 'Pine Tree',            // dark green velvet
@@ -172,7 +172,7 @@ export const kidTextureNames: Record<string, string> = {
 
   // Ripple
   'ripple-cream': 'Vanilla Pudding',       // cream wavy
-  'ripple-ink': 'Blackberry Jam',          // dark wavy
+  'ripple-ink': 'Oreo Cream',              // dark wavy
   'ripple-kraft': 'Paper Bag',             // brown kraft wavy
   'ripple-lattice': 'Waffle Cone',         // tan lattice
   'ripple-parchment': 'Treasure Map',      // old parchment
@@ -266,7 +266,7 @@ export const kidTextureNames: Record<string, string> = {
   'gemini': 'Twin Stars',                  // abstract pattern
 
   // Chat
-  'chat': 'Happy Chat',                    // abstract pattern
+  'chat': 'Old TV',                        // abstract pattern
 
   // Bisous
   'bisous-blues': 'Blueberry Kiss',        // blue with kiss prints
