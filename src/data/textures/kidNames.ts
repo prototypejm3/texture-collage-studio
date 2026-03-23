@@ -37,7 +37,7 @@ export const kidTextureNames: Record<string, string> = {
   'sunbrella-fog': 'Foggy Morning',        // light gray
   'sunbrella-sea': 'Swimming Pool',        // sea blue
   'sunbrella-wisteria': 'Unicorn Purple',  // purple
-  'sunbrella-lagoon': 'Lily Pad',          // green lagoon
+  'sunbrella-lagoon': 'Lagoon Splash',     // green lagoon
   'sunbrella-loft-white': 'Marshmallow',   // soft white
 
   // Bubbly (Textured Weave)
