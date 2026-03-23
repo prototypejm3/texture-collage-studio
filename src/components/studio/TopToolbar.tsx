@@ -337,7 +337,7 @@ export function TopToolbar({
               <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                 <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
               </svg>
-              Create
+              Workspace
             </Link>
           </div>
           <div className="flex-1" />
