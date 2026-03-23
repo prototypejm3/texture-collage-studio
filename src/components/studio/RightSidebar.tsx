@@ -553,7 +553,7 @@ export function RightSidebar({
 
             {/* Stencil Grid — flat, filtered by category */}
             <div className="p-1.5">
-              <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-5 sm:grid-cols-6 md:grid-cols-8'}`}>
+              <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4 sm:grid-cols-5'}`}>
                 {(() => {
                   // Kid mode "Made By Us" shows community vibes
                   if (kidMode && activeCategory === 'Community') {
