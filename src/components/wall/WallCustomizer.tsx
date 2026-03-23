@@ -448,7 +448,7 @@ function DropdownMenu({
   );
 }
 
-export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, onRequestUpgrade, isPremium }: WallCustomizerProps) {
+export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, onRequestUpgrade, isPremium, kidDesigns = [], onEditDesign }: WallCustomizerProps) {
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
