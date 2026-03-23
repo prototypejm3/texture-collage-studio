@@ -693,7 +693,7 @@ const Index = () => {
                     Size:
                   </span>
                   {(['S', 'M', 'L'] as const).map(size => {
-                    const isDefault = size === 'M';
+                    const isDefault = size === 'L';
                     return (
                       <button
                         key={size}
