@@ -519,8 +519,8 @@ const MyWall = () => {
                 // Kid-simplified tabs
                 <>
                   {([
-                    ['all', '🎨 My Art'],
                     ['display', '⭐ On Wall'],
+                    ['all', '🎨 My Art'],
                     ['hidden', '📦 In Box'],
                   ] as const).map(([val, label]) => (
                     <button
