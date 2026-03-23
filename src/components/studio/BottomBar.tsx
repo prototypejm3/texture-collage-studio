@@ -71,9 +71,6 @@ export function BottomBar({
   backgroundTextureId, onBackgroundChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
-  const [showRoomTheme, setShowRoomTheme] = useState(false);
-  const roomThemeRef = useRef<HTMLDivElement>(null);
-  const [roomTheme, setRoomTheme] = useRoomTheme();
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
