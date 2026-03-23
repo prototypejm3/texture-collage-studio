@@ -624,38 +624,54 @@ const Index = () => {
               onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
-            {/* Stencil mode picker — inline above canvas */}
-            {showStencilModePicker && studio.activeVibe && sounds.kidMode && (
+            {/* Stencil size picker — inline above canvas */}
+            {showStencilSizePicker && studio.activeVibe && (
               <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50" data-box-drawer onClick={e => e.stopPropagation()}>
-                <div
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-lg"
-                  style={{ background: '#f5ede0', border: '1px solid #e8ddd0' }}
+                <motion.div
+                  initial={sounds.kidMode ? { scale: 0.8, opacity: 0 } : { opacity: 0 }}
+                  animate={sounds.kidMode ? { scale: 1, opacity: 1 } : { opacity: 1 }}
+                  transition={sounds.kidMode ? { type: 'spring', stiffness: 400, damping: 15 } : { duration: 0.15, ease: 'easeOut' }}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl shadow-lg"
+                  style={{
+                    background: sounds.kidMode ? '#f5ede0' : '#faf8f5',
+                    border: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}`,
+                  }}
                 >
                   <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: '#3d3530' }}>
-                    Place as:
+                    Size:
                   </span>
+                  {(['S', 'M', 'L'] as const).map(size => {
+                    const isDefault = size === 'M';
+                    return (
+                      <button
+                        key={size}
+                        onClick={() => handlePlaceStencilSize(size)}
+                        className="flex items-center justify-center rounded-full transition-all active:scale-95"
+                        style={{
+                          width: 44,
+                          height: 28,
+                          borderRadius: 20,
+                          fontSize: 12,
+                          fontWeight: 600,
+                          background: isDefault
+                            ? (sounds.kidMode ? '#f97316' : '#5a8a6a')
+                            : (sounds.kidMode ? '#f7f0e8' : '#f0ebe3'),
+                          color: isDefault
+                            ? 'white'
+                            : (sounds.kidMode ? '#6b4c2a' : '#3d3530'),
+                        }}
+                      >
+                        {size}
+                      </button>
+                    );
+                  })}
                   <button
-                    onClick={() => handlePlaceStencilMode('outline')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors border border-border hover:bg-accent"
-                    style={{ color: '#3d3530' }}
-                  >
-                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#3d3530" strokeWidth="1.5"><rect x="2" y="2" width="16" height="16" rx="3" /></svg>
-                    Outline
-                  </button>
-                  <button
-                    onClick={() => handlePlaceStencilMode('filled')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="3" fill="currentColor" /></svg>
-                    Filled
-                  </button>
-                  <button
-                    onClick={() => setShowStencilModePicker(false)}
+                    onClick={() => setShowStencilSizePicker(false)}
                     className="p-1 rounded-lg hover:bg-black/5 ml-1"
                   >
                     <X className="w-3 h-3" style={{ color: '#3d3530' }} />
                   </button>
-                </div>
+                </motion.div>
               </div>
             )}
 
