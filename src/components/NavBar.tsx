@@ -97,9 +97,9 @@ function ModeTogglePill({ kidMode, onClick }: { kidMode: boolean; onClick: () =>
       >
         <KidFace size={kidMode ? 28 : 22} />
       </div>
-      {/* Arrow */}
+      {/* Arrow — points toward the other mode */}
       <div className="flex-1 flex items-center justify-center">
-        <svg width="14" height="10" viewBox="0 0 16 10" fill="none">
+        <svg width="14" height="10" viewBox="0 0 16 10" fill="none" style={{ transform: kidMode ? 'none' : 'scaleX(-1)' }}>
           <line x1="2" y1="5" x2="12" y2="5" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
           <polyline points="10,2 13,5 10,8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.6" />
         </svg>
