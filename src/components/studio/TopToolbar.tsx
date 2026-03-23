@@ -158,21 +158,14 @@ export function TopToolbar({
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
         ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
-        : 'h-[72px] border-b'
+        : 'h-[56px] border-b'
     }`}
     style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
       {kidMode ? (
-        /* ── Kid Mode Nav (unchanged) ── */
+        /* ── Kid Mode Nav ── */
         <>
           <div className="flex items-center gap-1.5 md:gap-3">
-            <button
-              onClick={handleKidToggle}
-              className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
-              title="Switch to Granny Mode"
-            >
-              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
-            </button>
             <Link
               to="/"
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 ${
@@ -182,6 +175,14 @@ export function TopToolbar({
             >
               <SwatchboxLogo height={32} />
             </Link>
+            {/* Mode toggle right after logo */}
+            <button
+              onClick={handleKidToggle}
+              className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
+              title="Switch to Granny Mode"
+            >
+              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
+            </button>
             <div className="w-px h-8 hidden md:block" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
             <Link to="/wall" data-nav="wall"
               className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all hover:scale-105 active:scale-95 ${
@@ -290,10 +291,11 @@ export function TopToolbar({
       ) : (
         /* ── Adult Mode Nav ── */
         <>
-          <div className="flex items-center gap-3">
-            {/* 1. Logo */}
+          {/* LEFT SIDE: Logo → Create → divider → Workspace → Gallery → AI Mode → divider → Dark/Light → Music → Volume */}
+          <div className="flex items-center gap-2.5">
+            {/* Logo */}
             <Link to="/" className={pressStyle} title="Swatchbox Studio">
-              <svg width="140" height="46" viewBox="0 0 360 120">
+              <svg width="120" height="40" viewBox="0 0 360 120">
                 <rect x="0" y="0" width="360" height="120" rx="24" fill="#fdf6ee" stroke="#e8ddd0" strokeWidth="1.5"/>
                 <rect x="12" y="16" width="88" height="88" rx="16" fill="#c4956a"/>
                 <line x1="24" y1="16" x2="21" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
@@ -326,16 +328,195 @@ export function TopToolbar({
               </svg>
             </Link>
 
-            {/* 2. Mode Toggle Pill */}
+            {/* Create */}
+            <Link to="/"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-white font-bold text-[13px]`}
+              style={{ backgroundColor: '#5a8a6a' }}
+              title="Create"
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+              </svg>
+              Create
+            </Link>
+
+            <NavDivider />
+
+            {/* Workspace */}
+            <Link to="/wall" data-nav="wall"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
+              title="Workspace"
+            >
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                <rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2.5" fill="none"/>
+                <rect x="1" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="14" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="1" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
+                <rect x="5" y="5" width="10" height="10" fill="white"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
+            </Link>
+
+            {/* Gallery */}
+            <Link to="/gallery" data-nav="gallery"
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
+              title="Gallery"
+            >
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                <polygon points="10,1 1,7 19,7" fill="#5a8a6a"/>
+                <rect x="1" y="7" width="18" height="2" fill="#3d6a4a"/>
+                <rect x="3" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="7" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="11" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
+                <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
+            </Link>
+
+            {/* AI Mode */}
+            <button onClick={handleAiToggle}
+              className={`${pressStyle} hidden sm:flex items-center gap-1 px-1.5 py-1 rounded-md`}
+              style={{ backgroundColor: aiEnabled ? 'rgba(90,138,106,0.12)' : 'transparent' }}
+              title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#5a8a6a"/>
+                <circle cx="12" cy="3" r="1" fill="#5a8a6a" opacity="0.5"/>
+              </svg>
+              <span style={{ color: '#3d3530', fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI</span>
+            </button>
+
+            <NavDivider />
+
+            {/* Light/Dark Toggle */}
+            <button onClick={toggle}
+              className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden flex-shrink-0`}
+              style={{ width: 36, height: 20, backgroundColor: '#3d3530' }}
+              title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
+                <circle cx="6" cy="6" r="5" fill="#5a4a3a"/>
+                <circle cx="8" cy="4" r="4" fill="#faf8f5"/>
+              </svg>
+              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute right-1.5 top-1/2 -translate-y-1/2">
+                <circle cx="6" cy="6" r="3.5" fill="#fbbf24"/>
+              </svg>
+              <div className="absolute w-4 h-4 rounded-full bg-white/90 shadow-sm transition-all duration-200 top-0.5"
+                style={{ left: dark ? 2 : 18 }}
+              />
+            </button>
+
+            {/* Music */}
+            {onAmbientSoundChange && (
+              <div className="relative">
+                <button onClick={() => setShowSoundMenu(!showSoundMenu)}
+                  className={pressStyle}
+                  title="Ambient sound"
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <polygon points="1,6 1,10 4,10 8,14 8,2 4,6" fill="#94a3b8"/>
+                    <path d="M10 5C11.5 6.5 11.5 9.5 10 11" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                    <path d="M12 3C14.5 5.5 14.5 10.5 12 13" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  </svg>
+                </button>
+                {showSoundMenu && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
+                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                      <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+                      {([['none', 'Off'], ['gallery', 'Gallery'], ['loft', 'Lofi'], ['home', 'Chill']] as const).map(([value, label]) => (
+                        <button key={value}
+                          onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
+                          className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium' : ''}`}
+                          style={{ color: ambientSound === value ? '#5a8a6a' : '#3d3530' }}
+                        >{label}</button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1" />
+
+          {/* RIGHT SIDE: Reset → Save → divider → Download → divider → Username → Out → Toggle */}
+          <div className="flex items-center gap-2">
+            {/* Reset */}
+            <button onClick={onClear} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Reset">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+              <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
+            </button>
+
+            {/* Save */}
+            {onSaveToWall && (
+              <button onClick={onSaveToWall} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Save">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <rect x="2" y="2" width="12" height="12" rx="2" fill="#5a8a6a"/>
+                  <rect x="2" y="2" width="12" height="4" rx="1" fill="#7aaa8a"/>
+                  <rect x="5" y="4" width="6" height="1.5" rx="0.5" fill="#d4edda"/>
+                </svg>
+                <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Save</span>
+              </button>
+            )}
+
+            <NavDivider />
+
+            {/* Download */}
+            <button onClick={onSave}
+              className={`${pressStyle} flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-white font-bold text-[13px]`}
+              style={{ backgroundColor: '#5a8a6a' }}
+              title="Download"
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="12" width="12" height="2" rx="1" fill="white"/>
+                <path d="M8 2V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                <polyline points="5,8 8,11 11,8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+              Download
+            </button>
+
+            <NavDivider />
+
+            {/* Auth */}
+            {user ? (
+              <>
+                <span className="items-center gap-1 hidden sm:flex min-w-[60px]" style={{ color: '#3d3530', fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+                    <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
+                    <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
+                  </svg>
+                  <span className="truncate max-w-[80px]">{user.email?.split('@')[0]}</span>
+                </span>
+                <button onClick={() => signOut()} title="Sign out"
+                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0`}
+                  style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
+                >
+                  <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Out</span>
+                </button>
+              </>
+            ) : (
+              <Link to="/auth" title="Sign in"
+                className={`${pressStyle} flex items-center gap-1 px-3 py-1.5 text-[12px] font-medium rounded-[20px] text-white`}
+                style={{ backgroundColor: '#5a8a6a' }}
+              >Sign In</Link>
+            )}
+
+            {/* Mode Toggle Pill — far right */}
             <button
               onClick={handleKidToggle}
-              className={`${pressStyle} flex items-center h-12 rounded-3xl overflow-hidden`}
-              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 112 }}
+              className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
+              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 68, height: 32 }}
               title="Switch to Kids Mode"
             >
               {/* Kid face */}
               <div className="flex items-center justify-center w-1/2 h-full">
-                <svg width="28" height="28" viewBox="0 0 28 28">
+                <svg width="18" height="18" viewBox="0 0 28 28">
                   <circle cx="14" cy="16" r="10" fill="white"/>
                   <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
                   <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
@@ -346,10 +527,10 @@ export function TopToolbar({
                 </svg>
               </div>
               {/* Divider */}
-              <div className="w-px h-8" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="w-px h-5" style={{ backgroundColor: '#e2ddd6' }} />
               {/* Grandma face */}
-              <div className="flex items-center justify-center w-1/2 h-full" style={{ backgroundColor: '#f0ebe3' }}>
-                <svg width="28" height="28" viewBox="0 0 28 28">
+              <div className="flex items-center justify-center w-1/2 h-full">
+                <svg width="18" height="18" viewBox="0 0 28 28">
                   <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
                   <ellipse cx="14" cy="7" rx="10" ry="5" fill="#c4c4c4"/>
                   <circle cx="14" cy="4" r="4" fill="#b0b0b0"/>
@@ -363,197 +544,6 @@ export function TopToolbar({
                 </svg>
               </div>
             </button>
-
-            {/* 3. Create */}
-            <Link to="/"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-4 py-2 rounded-[20px] text-white font-bold text-[13px]`}
-              style={{ backgroundColor: '#5a8a6a' }}
-              title="Create"
-            >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
-              </svg>
-              Create
-            </Link>
-
-            <NavDivider />
-
-            {/* 5. Workspace */}
-            <Link to="/wall" data-nav="wall"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-2 py-1`}
-              title="Workspace"
-            >
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2.5" fill="none"/>
-                <rect x="1" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="14" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="1" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="5" y="5" width="10" height="10" fill="white"/>
-              </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
-            </Link>
-
-            <NavDivider />
-
-            {/* 7. Gallery */}
-            <Link to="/gallery" data-nav="gallery"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-2 py-1`}
-              title="Gallery"
-            >
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <polygon points="10,1 1,7 19,7" fill="#5a8a6a"/>
-                <rect x="1" y="7" width="18" height="2" fill="#3d6a4a"/>
-                <rect x="3" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="7" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="11" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
-              </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
-            </Link>
-          </div>
-
-          <div className="flex-1" />
-
-          {/* Right side */}
-          <div className="flex items-center gap-2.5">
-            {/* 9. AI Mode */}
-            <button onClick={handleAiToggle}
-              className={`${pressStyle} hidden sm:flex items-center gap-1 px-2 py-1 rounded-md`}
-              style={{ backgroundColor: aiEnabled ? 'rgba(90,138,106,0.12)' : 'transparent' }}
-              title={aiEnabled ? 'AI Stencils (on)' : 'AI Stencils (off)'}
-            >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#5a8a6a"/>
-                <circle cx="12" cy="3" r="1" fill="#5a8a6a" opacity="0.5"/>
-              </svg>
-              <span style={{ color: '#3d3530', fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI Mode</span>
-            </button>
-
-            <NavDivider />
-
-            {/* 11. Light/Dark Toggle */}
-            <button onClick={toggle}
-              className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden`}
-              style={{ width: 36, height: 20, backgroundColor: '#3d3530' }}
-              title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {/* Moon */}
-              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
-                <circle cx="6" cy="6" r="5" fill="#5a4a3a"/>
-                <circle cx="8" cy="4" r="4" fill="#faf8f5"/>
-              </svg>
-              {/* Sun */}
-              <svg width="10" height="10" viewBox="0 0 12 12" className="absolute right-1.5 top-1/2 -translate-y-1/2">
-                <circle cx="6" cy="6" r="3.5" fill="#fbbf24"/>
-              </svg>
-              {/* Indicator */}
-              <div className="absolute w-4 h-4 rounded-full bg-white/90 shadow-sm transition-all duration-200 top-0.5"
-                style={{ left: dark ? 2 : 18 }}
-              />
-            </button>
-
-            <NavDivider />
-
-            {/* 13. Sound */}
-            {onAmbientSoundChange && (
-              <>
-                <div className="relative">
-                  <button onClick={() => setShowSoundMenu(!showSoundMenu)}
-                    className={pressStyle}
-                    title="Ambient sound"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <polygon points="1,6 1,10 4,10 8,14 8,2 4,6" fill="#94a3b8"/>
-                      <path d="M10 5C11.5 6.5 11.5 9.5 10 11" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                      <path d="M12 3C14.5 5.5 14.5 10.5 12 13" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                    </svg>
-                  </button>
-                  {showSoundMenu && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
-                      <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
-                        <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-                        {([['none', 'Off'], ['gallery', 'Gallery'], ['loft', 'Lofi'], ['home', 'Chill']] as const).map(([value, label]) => (
-                          <button key={value}
-                            onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
-                            className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium' : ''}`}
-                            style={{ color: ambientSound === value ? '#5a8a6a' : '#3d3530' }}
-                          >{label}</button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <NavDivider />
-              </>
-            )}
-
-            {/* 15. Reset */}
-            <button onClick={onClear} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Reset">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-              </svg>
-              <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
-            </button>
-
-            <NavDivider />
-
-            {/* 17. Save */}
-            {onSaveToWall && (
-              <button onClick={onSaveToWall} className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`} title="Save">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <rect x="2" y="2" width="12" height="12" rx="2" fill="#5a8a6a"/>
-                  <rect x="2" y="2" width="12" height="4" rx="1" fill="#7aaa8a"/>
-                  <rect x="5" y="4" width="6" height="1.5" rx="0.5" fill="#d4edda"/>
-                </svg>
-                <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Save</span>
-              </button>
-            )}
-
-            {/* 18. Download */}
-            <button onClick={onSave}
-              className={`${pressStyle} flex items-center gap-1.5 px-4 py-2 rounded-[20px] text-white font-bold text-[13px]`}
-              style={{ backgroundColor: '#5a8a6a' }}
-              title="Download"
-            >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <rect x="2" y="12" width="12" height="2" rx="1" fill="white"/>
-                <path d="M8 2V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                <polyline points="5,8 8,11 11,8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-              </svg>
-              Download
-            </button>
-
-            {/* Auth */}
-            {user ? (
-              <>
-                <NavDivider />
-                <span className="text-xs items-center gap-1 hidden sm:flex" style={{ color: '#3d3530', fontFamily: 'system-ui,sans-serif' }}>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
-                    <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
-                  </svg>
-                  {user.email?.split('@')[0]}
-                </span>
-                <button onClick={() => signOut()} title="Sign out"
-                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1`}
-                  style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
-                >
-                  <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
-                </button>
-              </>
-            ) : (
-              <>
-                <NavDivider />
-                <Link to="/auth" title="Sign in"
-                  className={`${pressStyle} flex items-center gap-1 px-3 py-1.5 text-[12px] font-medium rounded-[20px] text-white`}
-                  style={{ backgroundColor: '#5a8a6a' }}
-                >Sign In</Link>
-              </>
-            )}
           </div>
         </>
       )}
