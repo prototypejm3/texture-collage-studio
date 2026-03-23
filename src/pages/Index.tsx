@@ -825,7 +825,7 @@ const Index = () => {
                   className="overflow-visible relative"
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340),
-                    maxHeight: isMobile ? '45vh' : 360,
+                    maxHeight: isMobile ? '55vh' : 460,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
