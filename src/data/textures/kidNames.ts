@@ -172,7 +172,7 @@ export const kidTextureNames: Record<string, string> = {
 
   // Ripple
   'ripple-cream': 'Vanilla Pudding',       // cream wavy
-  'ripple-ink': 'Blackberry Jam',          // dark wavy
+  'ripple-ink': 'Oreo Cream',              // dark wavy
   'ripple-kraft': 'Paper Bag',             // brown kraft wavy
   'ripple-lattice': 'Waffle Cone',         // tan lattice
   'ripple-parchment': 'Treasure Map',      // old parchment
