@@ -36,61 +36,64 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="relative z-20 mb-2 p-3 rounded-2xl max-w-[200px] max-h-[160px] overflow-y-auto"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative z-20 mb-1 overflow-hidden rounded-xl"
             style={{
               background: '#1e3a8a',
-              boxShadow: '0 8px 24px rgba(30, 64, 175, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+              boxShadow: '0 4px 16px rgba(30, 64, 175, 0.25)',
+              width: 176,
             }}
           >
-            {items.length === 0 ? (
-              <p className="text-center text-xs" style={{ color: '#93c5fd' }}>
-                Your tin is empty — add some colors!
-              </p>
-            ) : (
-              <div className="grid grid-cols-3 gap-1.5">
-                {items.map(item => {
-                  const tex = allTextures.find(t => t.id === item.textureId);
-                  return (
-                    <div
-                      key={item.id}
-                      className="relative group cursor-grab active:cursor-grabbing hover:scale-110 transition-transform"
-                      draggable
-                      onDragStart={(e) => {
-                        e.dataTransfer.setData('textureId', item.textureId);
-                        e.dataTransfer.setData('fromBox', item.id);
-                      }}
-                      onDragEnd={(e) => {
-                        if (e.dataTransfer.dropEffect !== 'none') onDragOutItem(item);
-                      }}
-                      onClick={() => onDragOutItem(item)}
-                    >
-                      {tex && (
-                        <div
-                          className="w-10 h-10 rounded-lg"
-                          style={{
-                            background: tex.cssBackground,
-                            backgroundSize: tex.cssBackground.startsWith('url(') ? 'cover' : '20px 20px',
-                            boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
-                          }}
-                        />
-                      )}
-                      <button
-                        data-box-item-remove
-                        onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }}
-                        className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: '#ef4444', color: 'white' }}
+            <div className="p-2.5">
+              {items.length === 0 ? (
+                <p className="text-center text-xs py-2" style={{ color: '#93c5fd' }}>
+                  Empty — drag swatches here
+                </p>
+              ) : (
+                <div className="grid grid-cols-4 gap-1.5 max-h-[100px] overflow-y-auto">
+                  {items.map(item => {
+                    const tex = allTextures.find(t => t.id === item.textureId);
+                    return (
+                      <div
+                        key={item.id}
+                        className="relative group cursor-grab active:cursor-grabbing hover:scale-105 transition-transform"
+                        draggable
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('textureId', item.textureId);
+                          e.dataTransfer.setData('fromBox', item.id);
+                        }}
+                        onDragEnd={(e) => {
+                          if (e.dataTransfer.dropEffect !== 'none') onDragOutItem(item);
+                        }}
+                        onClick={() => onDragOutItem(item)}
                       >
-                        <X className="w-2 h-2" />
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                        {tex && (
+                          <div
+                            className="w-9 h-9 rounded-md"
+                            style={{
+                              background: tex.cssBackground,
+                              backgroundSize: tex.cssBackground.startsWith('url(') ? 'cover' : '20px 20px',
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                            }}
+                          />
+                        )}
+                        <button
+                          data-box-item-remove
+                          onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }}
+                          className="absolute -top-1 -right-1 w-3 h-3 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ background: '#ef4444', color: 'white' }}
+                        >
+                          <X className="w-2 h-2" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
