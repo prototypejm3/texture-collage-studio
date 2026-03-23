@@ -403,8 +403,8 @@ export function Canvas({
     const aspect = baseSize.w / baseSize.h;
     // Mobile desk mode: shrink canvas so it fits on the desk surface
     const isMobileDesk = isMobileCanvas && !easelMode;
-    const widthFraction = isMobileDesk ? 0.55 : isMobileCanvas ? 0.85 : easelMode ? 0.45 : 0.58;
-    const heightFraction = isMobileDesk ? 0.40 : isMobileCanvas ? 0.60 : easelMode ? 0.62 : 0.75;
+    const widthFraction = isMobileDesk ? 0.55 : isMobileCanvas ? 0.85 : easelMode ? 0.45 : 0.68;
+    const heightFraction = isMobileDesk ? 0.40 : isMobileCanvas ? 0.60 : easelMode ? 0.62 : 0.85;
     const maxW = Math.min(containerSize.width * widthFraction, baseSize.w);
     const maxH = Math.min(containerSize.height * heightFraction, baseSize.h);
     let w = maxW;
