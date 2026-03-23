@@ -863,7 +863,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                       <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
                       <div className="space-y-1">
                         {items.map(hs => (
-                          <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}>{hs.label}</button>
+                          <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{hs.label}</button>
                         ))}
                       </div>
                     </div>
