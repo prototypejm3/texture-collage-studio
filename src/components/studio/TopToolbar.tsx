@@ -387,9 +387,9 @@ export function TopToolbar({
           {/* LEFT SIDE: Logo → Create → divider → Workspace → Gallery → AI Mode → divider → Dark/Light → Music → Volume */}
           <div className="flex items-center gap-2.5">
             {/* Logo */}
-            <Link to="/" className={pressStyle} title="Swatchbox Studio">
+            <Link to="/" className={`${pressStyle} text-foreground`} title="Swatchbox Studio">
               <svg width="120" height="40" viewBox="0 0 360 120">
-                <rect x="0" y="0" width="360" height="120" rx="24" fill="#fdf6ee" stroke="#e8ddd0" strokeWidth="1.5"/>
+                <rect x="0" y="0" width="360" height="120" rx="24" fill={dark ? 'hsl(220,30%,20%)' : '#fdf6ee'} stroke={dark ? 'hsl(220,25%,30%)' : '#e8ddd0'} strokeWidth="1.5"/>
                 <rect x="12" y="16" width="88" height="88" rx="16" fill="#c4956a"/>
                 <line x1="24" y1="16" x2="21" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
                 <line x1="36" y1="16" x2="33" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
@@ -397,7 +397,7 @@ export function TopToolbar({
                 <line x1="60" y1="16" x2="57" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
                 <line x1="72" y1="16" x2="69" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
                 <line x1="84" y1="16" x2="81" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
-                <rect x="22" y="26" width="68" height="68" rx="10" fill="#f5ede0"/>
+                <rect x="22" y="26" width="68" height="68" rx="10" fill={dark ? '#3a3228' : '#f5ede0'}/>
                 <ellipse cx="56" cy="86" rx="24" ry="18" fill="#c4956a"/>
                 <ellipse cx="56" cy="88" rx="14" ry="13" fill="#d9a97c"/>
                 <circle cx="56" cy="58" r="22" fill="#c4956a"/>
@@ -410,8 +410,8 @@ export function TopToolbar({
                 <circle cx="94" cy="22" r="4" fill="#b07d52"/>
                 <circle cx="18" cy="98" r="4" fill="#b07d52"/>
                 <circle cx="94" cy="98" r="4" fill="#b07d52"/>
-                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Swatchbox</text>
-                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Studio</text>
+                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="currentColor">Swatchbox</text>
+                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="currentColor">Studio</text>
                 <circle cx="116" cy="100" r="6" fill="#f87171"/>
                 <circle cx="134" cy="100" r="6" fill="#fbbf24"/>
                 <circle cx="152" cy="100" r="6" fill="#4ade80"/>
