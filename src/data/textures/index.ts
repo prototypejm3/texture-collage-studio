@@ -38,7 +38,6 @@ export const textures: TextureSwatch[] = [
   { id: 'sunbrella-sea', name: 'Sea Breeze', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
   { id: 'sunbrella-wisteria', name: 'Lavender Spritz', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
   { id: 'sunbrella-lagoon', name: 'Lagoon Punch', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
-  { id: 'sunbrella-white', name: 'Blanc de Blanc', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
   { id: 'sunbrella-loft-white', name: 'Elderflower', category: 'Sunbrella', cssBackground: img('sunbrella-loft-white.png') },
 
   // ── Bubbly (Textured Weave) ──
@@ -87,9 +86,6 @@ export const textures: TextureSwatch[] = [
   // ── Villa ──
   { id: 'villa-sand', name: 'Paloma', category: 'Villa', cssBackground: img('villa-sand.png') },
 
-  // ── Leuven ──
-  { id: 'leuven-olive', name: 'Vesper', category: 'Leuven', cssBackground: img('leuven-olive.png') },
-  { id: 'leuven-snow', name: 'Snowball', category: 'Leuven', cssBackground: img('leuven-snow.png') },
 
   // ── Key Largo ──
   { id: 'keylargo-zenith-teal', name: 'Daiquiri', category: 'Key Largo', cssBackground: img('keylargo-zenith-teal.png') },
@@ -131,10 +127,10 @@ export const textures: TextureSwatch[] = [
   { id: 'prime-peacock', name: 'Peacock Punch', category: 'Prime', cssBackground: img('prime-peacock.png') },
 
   // ── Tussah ──
-  { id: 'tussah-silk', name: 'Silk Sling', category: 'Tussah', cssBackground: img('tussah-silk.png') },
+  
 
   // ── Bloke ──
-  { id: 'bloke-cotton', name: 'Gin Rickey', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
+  
 
   // ── Leather ──
   { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
@@ -237,7 +233,6 @@ export const textures: TextureSwatch[] = [
 
   // ── ShayShari ──
   { id: 'shayshari-terra', name: 'Corinne Crush', category: 'ShayShari', cssBackground: img('novelty-shayshari-terra.png') },
-  { id: 'shayshari-berry', name: 'ShayShari', category: 'ShayShari', cssBackground: img('shayshari-berry.png') },
   { id: 'shayshari-sage', name: 'ShayShari Seltzer', category: 'ShayShari', cssBackground: img('novelty-shayshari-sage.png') },
   { id: 'shayshari-sand', name: 'Sand', category: 'Villa', cssBackground: img('novelty-shayshari-sand.png') },
 

@@ -38,7 +38,6 @@ export const kidTextureNames: Record<string, string> = {
   'sunbrella-sea': 'Swimming Pool',        // sea blue
   'sunbrella-wisteria': 'Unicorn Purple',  // purple
   'sunbrella-lagoon': 'Lily Pad',          // green lagoon
-  'sunbrella-white': 'Snowflake',          // bright white
   'sunbrella-loft-white': 'Marshmallow',   // soft white
 
   // Bubbly (Textured Weave)
@@ -87,9 +86,7 @@ export const kidTextureNames: Record<string, string> = {
   // Villa
   'villa-sand': 'Beach Sand',             // sandy linen
 
-  // Leuven
-  'leuven-olive': 'Caterpillar',           // olive green linen
-  'leuven-snow': 'Snowball',               // white linen
+  // Leuven — removed
 
   // Key Largo
   'keylargo-zenith-teal': 'Mermaid Green', // teal performance
@@ -130,11 +127,7 @@ export const kidTextureNames: Record<string, string> = {
   'prime-stone': 'River Rock',             // stone gray velvet
   'prime-peacock': 'Peacock Feather',      // deep teal velvet
 
-  // Tussah
-  'tussah-silk': 'Silk Ribbon',            // natural silk
-
   // Bloke
-  'bloke-cotton': 'Pillow White',          // white cotton
 
   // Leather
   'leather-bourbon': 'Honey Bear',        // warm honey-brown leather
@@ -237,7 +230,6 @@ export const kidTextureNames: Record<string, string> = {
 
   // ShayShari (Signature)
   'shayshari-terra': 'Clay Pot',           // terracotta
-  'shayshari-berry': 'Berry Blast',        // berry pink
   'shayshari-sage': 'Sage Leaf',           // sage green
   'shayshari-sand': 'Sand Dune',           // sandy
 

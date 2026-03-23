@@ -5,14 +5,11 @@
  */
 export const kidColorOrder: Record<string, number> = {
   // Whites
-  'sunbrella-white': 10,
   'sunbrella-loft-white': 11,
-  'leuven-snow': 12,
   'karina-cloud': 13,
   'soul-cloud': 14,
   'nico-oyster': 15,
   'borough-cotton': 16,
-  'bloke-cotton': 17,
   'cotton-natural': 18,
   'marble-carrara': 19,
 
@@ -59,7 +56,6 @@ export const kidColorOrder: Record<string, number> = {
   'alix-blush': 76,
   'alix-rose': 77,
   'marble-rosa': 78,
-  'shayshari-berry': 79,
   'crave-berry-hibiscus': 80,
   'royale-hacienda': 81,
   'banks-currant': 82,
@@ -115,7 +111,6 @@ export const kidColorOrder: Record<string, number> = {
   'suede-ace-forest': 149,
 
   // Olive
-  'leuven-olive': 155,
   'faithful-olive': 156,
   'felt-olive': 157,
   'cord-fine-olive': 158,
