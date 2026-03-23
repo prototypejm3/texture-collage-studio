@@ -679,13 +679,22 @@ export function Canvas({
         </div>
       )}
 
-      {/* Adult Mode Butter Cookies Tin */}
+      {/* Adult Mode Butter Cookies Tin — draggable */}
       {!kidMode && (
         <div
-          className="absolute z-30"
+          ref={adultBoxRef}
+          className="absolute z-30 cursor-grab active:cursor-grabbing"
           style={{
-            right: 16,
-            bottom: 44,
+            left: adultBoxPos.x,
+            ...(adultBoxPos.y < 0 ? { bottom: 44 } : { top: adultBoxPos.y }),
+          }}
+          onMouseDown={(e) => {
+            if ((e.target as HTMLElement).closest('[data-box-item-remove]')) return;
+            e.stopPropagation();
+            e.preventDefault();
+            setIsAdultBoxDragging(true);
+            const currentTop = adultBoxRef.current ? adultBoxRef.current.getBoundingClientRect().top - (containerRef.current?.getBoundingClientRect().top || 0) : 0;
+            adultBoxDragStart.current = { mx: e.clientX, my: e.clientY, bx: adultBoxPos.x, by: currentTop };
           }}
           onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
           onDragLeave={() => setBoxHover(false)}
