@@ -402,7 +402,7 @@ export function RightSidebar({
         {activeTab === 'stencils' ? (
           <div className="flex flex-col">
             {/* AI Stencil + AI Mood — shown when AI enabled (parents control via top bar toggle) */}
-            {!kidMode && (
+             {aiEnabled && !kidMode && (
             <div className="px-2 py-1.5 border-b border-border bg-muted/30">
               <div className="flex gap-1.5">
                 {/* AI Stencil */}
