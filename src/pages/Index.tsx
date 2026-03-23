@@ -1094,13 +1094,19 @@ const Index = () => {
               </svg>
               <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Save</span>
             </button>
-            <button onClick={handleExport} className="flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg" title="Download">
+            <button onClick={studio.undo} disabled={!studio.canUndo} className={`flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg ${!studio.canUndo ? 'opacity-40' : ''}`} title="Undo">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <rect x="4" y="14" width="16" height="7" rx="3" fill="#c4956a"/>
-                <rect x="6" y="15" width="12" height="5" rx="2" fill="#d9a97c"/>
-                <path d="M12 4V14M12 14L9 11M12 14L15 11" stroke="#c4956a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 9h11a4 4 0 0 1 0 8H9" stroke="#c4956a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <polyline points="7,12 4,9 7,6" stroke="#c4956a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
               </svg>
-              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Download</span>
+              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Undo</span>
+            </button>
+            <button onClick={studio.redo} disabled={!studio.canRedo} className={`flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg ${!studio.canRedo ? 'opacity-40' : ''}`} title="Redo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 9H9a4 4 0 0 0 0 8h6" stroke="#c4956a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <polyline points="17,12 20,9 17,6" stroke="#c4956a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              </svg>
+              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Redo</span>
             </button>
           </div>
         )}
