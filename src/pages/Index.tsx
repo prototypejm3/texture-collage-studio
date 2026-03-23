@@ -840,6 +840,16 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Mobile Undo/Redo/Reset */}
+        <MobileCanvasActions
+          kidMode={sounds.kidMode}
+          onUndo={studio.undo}
+          onRedo={studio.redo}
+          onReset={handleClearAll}
+          canUndo={studio.canUndo}
+          canRedo={studio.canRedo}
+        />
+
         {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
           {sounds.kidMode ? (
