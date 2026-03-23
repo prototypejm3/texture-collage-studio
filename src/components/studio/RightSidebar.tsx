@@ -553,7 +553,7 @@ export function RightSidebar({
 
             {/* Stencil Grid — flat, filtered by category */}
             <div className="p-1.5">
-              <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-5 sm:grid-cols-6 md:grid-cols-8'}`}>
+              <div className={`grid gap-1.5 ${kidMode ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4 sm:grid-cols-5'}`}>
                 {(() => {
                   // Kid mode "Made By Us" shows community vibes
                   if (kidMode && activeCategory === 'Community') {
@@ -618,7 +618,7 @@ export function RightSidebar({
                   <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Make a shape and share it!' : 'Generate one with AI and make it public!'}</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-1.5">
                   {communityVibes.map(vibe => {
                     const record = social.publicStencils.find(s => s.id === vibe.id);
                     const creator = 'creator' in vibe ? (vibe as any).creator : undefined;
@@ -651,7 +651,7 @@ export function RightSidebar({
                   <p className="text-[9px] text-muted-foreground mt-0.5">{kidMode ? 'Put away shapes you don\'t want to see' : 'Hide stencils from the Stencils tab'}</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-1">
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-1.5">
                   {hiddenVibes.map(vibe => (
                     <motion.div
                       key={vibe.id}
