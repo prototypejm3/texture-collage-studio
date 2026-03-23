@@ -458,6 +458,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
   const [showFrameMenu, setShowFrameMenu] = useState(false);
   const [showHangingMenu, setShowHangingMenu] = useState(false);
+  const [showMobilePanel, setShowMobilePanel] = useState(false);
   const [showLightingMenu, setShowLightingMenu] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
