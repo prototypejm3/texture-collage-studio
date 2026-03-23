@@ -509,6 +509,8 @@ const MyWall = () => {
               onStepBack={() => setStepBackMode(true)}
               onRequestUpgrade={() => setShowPaywall(true)}
               isPremium={isPremium}
+              kidDesigns={wall.designs.filter(d => d.createdInMode === 'kid' && d.studioState)}
+              onEditDesign={handleOpen}
             />
           )}
 
