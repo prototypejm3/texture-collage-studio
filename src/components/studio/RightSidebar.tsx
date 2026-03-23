@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { ChevronLeft } from 'lucide-react';
 import { vibes } from '@/data/vibes';
 import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
@@ -512,43 +513,56 @@ export function RightSidebar({
             </div>
             )}
 
-            {/* Category filter pills */}
+            {/* Category filter pills — collapse when a category is selected */}
             <div className="px-2 py-0.5 border-b border-border bg-secondary/20">
-              <div className="flex flex-wrap gap-0.5">
+              {activeCategory !== 'All' ? (
                 <button
                   onClick={() => setActiveCategory('All')}
-                  className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === 'All'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                  }`}
+                  className="flex items-center gap-1 py-0.5 text-[10px] font-semibold text-foreground hover:text-primary transition-colors"
                 >
-                  {kidMode ? '🌟 All' : 'All'}
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>{kidMode
+                    ? (themeSections.find(s => s.label === activeCategory)?.kidLabel || activeCategory)
+                    : `${themeSections.find(s => s.label === activeCategory)?.emoji || ''} ${activeCategory}`
+                  }</span>
                 </button>
-                {themeSections.map(section => (
+              ) : (
+                <div className="flex flex-wrap gap-0.5">
                   <button
-                    key={section.label}
-                    onClick={() => setActiveCategory(section.label)}
-                    className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === section.label
+                    onClick={() => setActiveCategory('All')}
+                    className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === 'All'
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-secondary text-secondary-foreground hover:bg-accent'
                     }`}
                   >
-                    {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
+                    {kidMode ? '🌟 All' : 'All'}
                   </button>
-                ))}
-                {kidMode && communityVibes.length > 0 && (
-                  <button
-                    onClick={() => setActiveCategory('Community')}
-                    className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${
-                      activeCategory === 'Community'
+                  {themeSections.map(section => (
+                    <button
+                      key={section.label}
+                      onClick={() => setActiveCategory(section.label)}
+                      className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${activeCategory === section.label
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                    }`}
-                  >
-                    🎪 Friends
-                  </button>
-                )}
-              </div>
+                      }`}
+                    >
+                      {kidMode ? section.kidLabel : `${section.emoji} ${section.label}`}
+                    </button>
+                  ))}
+                  {kidMode && communityVibes.length > 0 && (
+                    <button
+                      onClick={() => setActiveCategory('Community')}
+                      className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${
+                        activeCategory === 'Community'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
+                      }`}
+                    >
+                      🎪 Friends
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Stencil Grid — flat, filtered by category */}
