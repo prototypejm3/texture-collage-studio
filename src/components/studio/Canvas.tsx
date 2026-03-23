@@ -624,8 +624,8 @@ export function Canvas({
             }
           }}
         >
-          <span className="text-xl leading-none">🗑️</span>
-          <span className={`text-[8px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Trash</span>
+          <TrashCanIcon />
+          <span className={`text-[10px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Toss</span>
         </div>
       )}
 

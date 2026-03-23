@@ -487,7 +487,9 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         </div>
         <div className="w-px h-6 bg-border mx-1" />
         <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Duplicate"><Copy className="w-3.5 h-3.5" /></Button>
-        <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Delete"><Trash2 className="w-3.5 h-3.5" /></Button>
+        <button onClick={onDelete} className="h-8 w-8 p-0 flex items-center justify-center rounded-md hover:bg-secondary transition-colors group" title="Remove">
+          <X className="w-4 h-4 transition-colors" style={{ color: '#94a3b8' }} onMouseEnter={e => (e.currentTarget.style.color = '#e05c5c')} onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')} />
+        </button>
         {onBringForward && (
           <Button size="sm" variant="ghost" onClick={onBringForward} className="h-8 w-8 p-0" title="Bring Forward"><ArrowUp className="w-3.5 h-3.5" /></Button>
         )}
