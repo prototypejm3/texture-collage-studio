@@ -418,49 +418,59 @@ export function TopToolbar({
 
             {/* Workspace */}
             <Link to="/"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-white font-bold text-[13px]`}
-              style={{ backgroundColor: '#5a8a6a' }}
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+                isStudio ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+              style={isStudio ? { backgroundColor: '#5a8a6a' } : undefined}
               title="Workspace"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill={isStudio ? 'white' : '#94a3b8'}/>
               </svg>
               Workspace
             </Link>
 
-            <NavDivider />
+            <div className="w-px h-5 bg-border mx-0.5" />
 
             {/* Studio */}
             <Link to="/wall" data-nav="wall"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+                isWall ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+              style={isWall ? { backgroundColor: '#5a8a6a' } : undefined}
               title="Studio"
             >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                <rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2.5" fill="none"/>
-                <rect x="1" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="14" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="1" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
-                <rect x="5" y="5" width="10" height="10" fill="white"/>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                <rect x="1" y="1" width="18" height="18" rx="2" stroke={isWall ? 'white' : '#5a8a6a'} strokeWidth="2.5" fill="none"/>
+                <rect x="1" y="1" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+                <rect x="14" y="1" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+                <rect x="1" y="14" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+                <rect x="14" y="14" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+                <rect x="5" y="5" width="10" height="10" fill={isWall ? '#5a8a6a' : 'white'}/>
               </svg>
-              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Studio</span>
+              Studio
             </Link>
+
+            <div className="w-px h-5 bg-border mx-0.5" />
 
             {/* Showcase */}
             <Link to="/gallery" data-nav="gallery"
-              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
+              className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+                isGallery ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+              style={isGallery ? { backgroundColor: '#5a8a6a' } : undefined}
               title="Showcase"
             >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                <polygon points="10,1 1,7 19,7" fill="#5a8a6a"/>
-                <rect x="1" y="7" width="18" height="2" fill="#3d6a4a"/>
-                <rect x="3" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="7" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="11" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
-                <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                <polygon points="10,1 1,7 19,7" fill={isGallery ? 'white' : '#5a8a6a'}/>
+                <rect x="1" y="7" width="18" height="2" fill={isGallery ? 'rgba(255,255,255,0.7)' : '#3d6a4a'}/>
+                <rect x="3" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+                <rect x="7" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+                <rect x="11" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+                <rect x="15" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+                <rect x="1" y="17" width="18" height="2" rx="0.5" fill={isGallery ? 'white' : '#5a8a6a'}/>
               </svg>
-              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Showcase</span>
+              Showcase
             </Link>
 
             {/* AI Mode */}
