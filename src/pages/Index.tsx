@@ -755,7 +755,7 @@ const Index = () => {
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
-                      border: '1px solid rgba(139,94,60,0.4)',
+                      border: '1px solid rgba(90,138,106,0.4)',
                     } : {
                       borderRadius: 16,
                       boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
