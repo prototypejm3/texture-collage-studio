@@ -364,13 +364,22 @@ const Index = () => {
   }, [studio]);
 
   const handlePlaceStencilSize = useCallback((size: string) => {
-    studio.placeStencil(size);
+    studio.previewStencilSize(size);
+  }, [studio]);
+
+  const handleCommitStencil = useCallback(() => {
+    studio.commitPreview();
     setShowStencilSizePicker(false);
     const isKid = (() => { try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; } })();
     toast({
       title: isKid ? '✓ Added!' : 'Added to canvas',
       duration: 1500,
     });
+  }, [studio]);
+
+  const handleCancelStencil = useCallback(() => {
+    studio.cancelPreview();
+    setShowStencilSizePicker(false);
   }, [studio]);
 
   // Auto-save to Room Box before clearing (kids never lose work)
