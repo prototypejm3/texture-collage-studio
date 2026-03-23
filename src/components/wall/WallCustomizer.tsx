@@ -1,6 +1,7 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd, Palette, Upload } from 'lucide-react';
+import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd, Palette, Upload, ChevronDown } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WallCustomizerProps {
   settings: WallSettings;
@@ -466,23 +467,24 @@ function AdultBackgroundPicker({ settings, onUpdate, isPremium, onRequestUpgrade
     reader.readAsDataURL(file);
   };
 
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Wall</span>
+  const isMobile = useIsMobile();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-      <div className="flex items-center gap-1.5 flex-wrap">
-        {adultBgGroups.map(group => (
-          <div key={group.label} className="flex items-center gap-1">
-            <span className="text-[8px] text-muted-foreground uppercase tracking-wider mr-0.5">{group.label}</span>
+  const pickerContent = (
+    <div className={`flex items-center gap-1.5 flex-wrap ${isMobile ? 'flex-col items-start gap-2 p-3' : ''}`}>
+      {adultBgGroups.map(group => (
+        <div key={group.label} className={`flex items-center gap-1 ${isMobile ? 'w-full' : ''}`}>
+          <span className="text-[8px] text-muted-foreground uppercase tracking-wider mr-0.5">{group.label}</span>
+          <div className="flex items-center gap-1 flex-wrap">
             {group.items.map(bg => {
               const isSelected = settings.background === bg.value;
               return (
                 <button
                   key={bg.value}
-                  onClick={() => onUpdate({ background: bg.value })}
+                  onClick={() => { onUpdate({ background: bg.value }); if (isMobile) setMobileOpen(false); }}
                   className={`rounded-full flex-shrink-0 transition-all hover:scale-110 ${isSelected ? 'ring-2 ring-primary ring-offset-1' : ''}`}
                   style={{
-                    width: 28, height: 28,
+                    width: isMobile ? 36 : 28, height: isMobile ? 36 : 28,
                     background: bg.gradient || bg.fill,
                     border: `1px solid hsl(var(--border))`,
                   }}
@@ -490,52 +492,82 @@ function AdultBackgroundPicker({ settings, onUpdate, isPremium, onRequestUpgrade
                 />
               );
             })}
-            <div className="w-px h-5 bg-border mx-1" />
           </div>
-        ))}
-
-        {/* Color picker */}
-        <div className="relative flex items-center">
-          <button
-            onClick={() => setShowPicker(!showPicker)}
-            className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center ${settings.background === 'custom' && settings.customWallImage?.startsWith('#') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-            style={{
-              width: 28, height: 28,
-              background: 'conic-gradient(hsl(0,70%,60%), hsl(60,70%,60%), hsl(120,70%,60%), hsl(180,70%,60%), hsl(240,70%,60%), hsl(300,70%,60%), hsl(360,70%,60%))',
-              border: '1px solid hsl(var(--border))',
-            }}
-            title="Color Picker"
-          >
-            <Palette className="w-3 h-3 text-white drop-shadow-sm" />
-          </button>
-          {showPicker && (
-            <>
-              <div className="fixed inset-0 z-40" onClick={() => setShowPicker(false)} />
-              <div className="absolute bottom-full left-0 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
-                <input
-                  type="color"
-                  value={customColor}
-                  onChange={(e) => handleColorChange(e.target.value)}
-                  className="w-32 h-32 cursor-pointer border-none rounded-md"
-                  style={{ padding: 0 }}
-                />
-                <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
-              </div>
-            </>
-          )}
+          {!isMobile && <div className="w-px h-5 bg-border mx-1" />}
         </div>
+      ))}
 
-        {/* Upload custom */}
+      {/* Color picker */}
+      <div className="relative flex items-center">
         <button
-          onClick={() => fileInputRef.current?.click()}
-          className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center bg-secondary ${settings.background === 'custom' && settings.customWallImage?.startsWith('data:') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-          style={{ width: 28, height: 28, border: '1px solid hsl(var(--border))' }}
-          title="Upload Background"
+          onClick={() => setShowPicker(!showPicker)}
+          className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center ${settings.background === 'custom' && settings.customWallImage?.startsWith('#') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+          style={{
+            width: isMobile ? 36 : 28, height: isMobile ? 36 : 28,
+            background: 'conic-gradient(hsl(0,70%,60%), hsl(60,70%,60%), hsl(120,70%,60%), hsl(180,70%,60%), hsl(240,70%,60%), hsl(300,70%,60%), hsl(360,70%,60%))',
+            border: '1px solid hsl(var(--border))',
+          }}
+          title="Color Picker"
         >
-          <Upload className="w-3 h-3 text-muted-foreground" />
+          <Palette className="w-3 h-3 text-white drop-shadow-sm" />
         </button>
-        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+        {showPicker && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setShowPicker(false)} />
+            <div className="absolute bottom-full left-0 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
+              <input
+                type="color"
+                value={customColor}
+                onChange={(e) => handleColorChange(e.target.value)}
+                className="w-32 h-32 cursor-pointer border-none rounded-md"
+                style={{ padding: 0 }}
+              />
+              <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
+            </div>
+          </>
+        )}
       </div>
+
+      {/* Upload custom */}
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center bg-secondary ${settings.background === 'custom' && settings.customWallImage?.startsWith('data:') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+        style={{ width: isMobile ? 36 : 28, height: isMobile ? 36 : 28, border: '1px solid hsl(var(--border))' }}
+        title="Upload Background"
+      >
+        <Upload className="w-3 h-3 text-muted-foreground" />
+      </button>
+      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <div className="relative flex items-center gap-2">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-popover text-muted-foreground hover:bg-secondary transition-colors"
+        >
+          <span className="text-[11px] font-medium uppercase tracking-wider">Wall</span>
+          <ChevronDown className={`w-3 h-3 transition-transform ${mobileOpen ? 'rotate-180' : ''}`} />
+        </button>
+        {mobileOpen && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setMobileOpen(false)} />
+            <div className="absolute left-0 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-lg min-w-[240px]">
+              <p className="px-3 pt-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">Wall Background</p>
+              {pickerContent}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Wall</span>
+      {pickerContent}
     </div>
   );
 }
