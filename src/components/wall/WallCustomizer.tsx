@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { Lock, GripHorizontal, ChevronUp, ChevronDown } from 'lucide-react';
+import { Lock, GripHorizontal, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -366,6 +366,24 @@ function ColorWheelButton({ selected, onClick }: { selected: boolean; onClick: (
       }}
     >
       <div className="w-3 h-3 rounded-full bg-white mx-auto mt-[5px]" />
+    </button>
+  );
+}
+
+// ── Upload wallpaper button ──
+function UploadWallpaperButton({ selected, onClick }: { selected: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center"
+      style={{
+        width: 26, height: 26,
+        background: selected ? '#5a8a6a' : '#f0ebe3',
+        border: selected ? '2.5px solid #5a8a6a' : '1px solid #e2ddd6',
+      }}
+      title="Upload wallpaper"
+    >
+      <ImagePlus className="w-3 h-3" style={{ color: selected ? 'white' : '#94a3b8' }} />
     </button>
   );
 }
@@ -814,6 +832,29 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                 <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
               </div>
             </DropdownMenu>
+          </div>
+
+          {/* Upload wallpaper */}
+          <div className="relative">
+            <UploadWallpaperButton
+              selected={settings.background === 'custom' && !!settings.customWallImage && !settings.customWallImage.startsWith('#') && !settings.customWallImage.startsWith('rgb')}
+              onClick={() => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = (e) => {
+                  const file = (e.target as HTMLInputElement).files?.[0];
+                  if (!file) return;
+                  const reader = new FileReader();
+                  reader.onload = (ev) => {
+                    const dataUrl = ev.target?.result as string;
+                    onUpdate({ background: 'custom', customWallImage: dataUrl });
+                  };
+                  reader.readAsDataURL(file);
+                };
+                input.click();
+              }}
+            />
           </div>
         </div>
       </div>
