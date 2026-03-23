@@ -32,7 +32,7 @@ export const LABELS = {
   },
   adult: {
     // Nav
-    myRoom: "My Studio",
+    myRoom: "Studio",
     showAndTell: "Showcase",
     // Toolbar
     save: "Save",
