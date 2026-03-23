@@ -539,7 +539,7 @@ export function TopToolbar({
             {/* Auth */}
             {user ? (
               <>
-                <span className="items-center gap-1 hidden sm:flex min-w-[60px]" style={{ color: '#3d3530', fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
+                <span className="items-center gap-1 hidden sm:flex min-w-[60px] text-foreground" style={{ fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
                     <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
                     <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
