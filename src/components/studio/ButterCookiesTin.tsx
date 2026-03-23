@@ -250,12 +250,14 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
         </div>
 
         {/* Label below */}
-        <div className="absolute text-center w-full" style={{ bottom: -20 }}>
+        <div className="absolute text-center w-full" style={{ bottom: -22 }}>
           <span style={{
             fontFamily: 'system-ui, sans-serif',
-            fontSize: 13,
-            fontWeight: 600,
-            color: '#3d3530',
+            fontSize: 14,
+            fontWeight: 800,
+            color: '#fdf6ee',
+            textShadow: '0 1px 3px rgba(0,0,0,0.7), 0 0 6px rgba(0,0,0,0.4)',
+            letterSpacing: '0.5px',
           }}>Swatch Tin</span>
         </div>
       </motion.div>
