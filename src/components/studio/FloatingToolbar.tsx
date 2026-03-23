@@ -466,7 +466,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
               className="h-8 px-2 gap-1" title={s.label}
             >
               <StencilIcon shape={s.value} active={element.shape === s.value} />
-              <span className="text-[9px] hidden sm:inline">{s.label}</span>
+              <span className="text-[9px] hidden sm:inline text-foreground">{s.label}</span>
             </Button>
           ))}
         </div>
