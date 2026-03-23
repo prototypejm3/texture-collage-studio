@@ -312,7 +312,31 @@ export function Canvas({
     };
   }, [isBoxDragging]);
 
-  // Toolbox dragging
+  // Adult box dragging
+  useEffect(() => {
+    if (!isAdultBoxDragging) return;
+    const handleMove = (e: PointerEvent) => {
+      const dx = e.clientX - adultBoxDragStart.current.mx;
+      const dy = e.clientY - adultBoxDragStart.current.my;
+      setAdultBoxPos({ x: adultBoxDragStart.current.bx + dx, y: adultBoxDragStart.current.by + dy });
+    };
+    const handleUp = () => {
+      setIsAdultBoxDragging(false);
+    };
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
+    };
+  }, [isAdultBoxDragging]);
+
+  // Persist adult box position
+  useEffect(() => {
+    localStorage.setItem('adult-box-pos', JSON.stringify(adultBoxPos));
+  }, [adultBoxPos]);
+
+
   useEffect(() => {
     if (!isToolboxDragging) return;
     const handleMove = (e: PointerEvent) => {
