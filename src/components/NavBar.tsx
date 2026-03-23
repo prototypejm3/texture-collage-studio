@@ -135,15 +135,8 @@ export function NavBar() {
                </Link>
              )}
 
-             {/* Mode toggle pill - far right */}
-             <motion.button
-               whileTap={{ scale: 0.93 }}
-               onClick={handleToggleKidMode}
-               className="rounded-full overflow-hidden transition-all hover:scale-105"
-               title="Switch to Granny Mode"
-             >
-               <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
-             </motion.button>
+              {/* Mode toggle pill - far right */}
+              <ModeTogglePill kidMode={kidMode} onClick={handleToggleKidMode} />
            </div>
          </nav>
         <GrownUpCheckModal
