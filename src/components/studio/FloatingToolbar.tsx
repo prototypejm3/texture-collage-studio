@@ -578,6 +578,15 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
           </div>
         </motion.div>
       )}
+
+      {/* Remove from canvas link — adult mode bottom */}
+      <button
+        onClick={onDelete}
+        className="w-full text-center py-2 mt-1 transition-colors hover:underline"
+        style={{ color: '#94a3b8', fontSize: 12, fontWeight: 400 }}
+      >
+        Remove from canvas
+      </button>
     </div>
   );
 }
