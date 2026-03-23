@@ -715,7 +715,7 @@ const Index = () => {
             )}
 
             {/* ── DRAWER / PANEL ── */}
-            {activeBox && activeBox !== 'mybox' && !(activeBox === 'toolbox' && !sounds.kidMode) && (
+            {activeBox && activeBox !== 'mybox' && (
               isMobile ? (
                 /* ── Mobile: bottom slide-up panel for ALL tools ── */
                 <>
