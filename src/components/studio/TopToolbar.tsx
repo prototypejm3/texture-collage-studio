@@ -152,7 +152,7 @@ export function TopToolbar({
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
   // ── Adult Mode SVG Icons ──
-  const NavDivider = () => <div className="w-px h-10 flex-shrink-0" style={{ backgroundColor: '#e2ddd6' }} />;
+  const NavDivider = () => <div className="w-px h-10 flex-shrink-0 bg-border" />;
 
   const pressStyle = "transition-transform duration-150 ease-out active:scale-[0.96]";
 
@@ -171,9 +171,8 @@ export function TopToolbar({
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
         ? 'h-[56px] md:h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
-        : 'h-[56px] border-b'
+        : 'h-[56px] border-b border-border bg-popover'
     }`}
-    style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
       {kidMode && isMobile ? (
         /* ── Kid Mode MOBILE Nav ── */
@@ -352,7 +351,7 @@ export function TopToolbar({
             <button
               onClick={handleKidToggle}
               className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 48, height: 22 }}
+              style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 48, height: 22 }}
               title="Switch to Kids Mode"
             >
               <div className="flex items-center justify-center w-1/2 h-full">
@@ -366,7 +365,7 @@ export function TopToolbar({
                   <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
                 </svg>
               </div>
-              <div className="w-px h-3" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="w-px h-3 bg-border" />
               <div className="flex items-center justify-center w-1/2 h-full">
                 <svg width="12" height="12" viewBox="0 0 28 28">
                   <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
@@ -388,9 +387,9 @@ export function TopToolbar({
           {/* LEFT SIDE: Logo → Create → divider → Workspace → Gallery → AI Mode → divider → Dark/Light → Music → Volume */}
           <div className="flex items-center gap-2.5">
             {/* Logo */}
-            <Link to="/" className={pressStyle} title="Swatchbox Studio">
+            <Link to="/" className={`${pressStyle} text-foreground`} title="Swatchbox Studio">
               <svg width="120" height="40" viewBox="0 0 360 120">
-                <rect x="0" y="0" width="360" height="120" rx="24" fill="#fdf6ee" stroke="#e8ddd0" strokeWidth="1.5"/>
+                <rect x="0" y="0" width="360" height="120" rx="24" fill={dark ? 'hsl(220,30%,20%)' : '#fdf6ee'} stroke={dark ? 'hsl(220,25%,30%)' : '#e8ddd0'} strokeWidth="1.5"/>
                 <rect x="12" y="16" width="88" height="88" rx="16" fill="#c4956a"/>
                 <line x1="24" y1="16" x2="21" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
                 <line x1="36" y1="16" x2="33" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
@@ -398,7 +397,7 @@ export function TopToolbar({
                 <line x1="60" y1="16" x2="57" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
                 <line x1="72" y1="16" x2="69" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.35"/>
                 <line x1="84" y1="16" x2="81" y2="104" stroke="#b07d52" strokeWidth="1.2" opacity="0.25"/>
-                <rect x="22" y="26" width="68" height="68" rx="10" fill="#f5ede0"/>
+                <rect x="22" y="26" width="68" height="68" rx="10" fill={dark ? '#3a3228' : '#f5ede0'}/>
                 <ellipse cx="56" cy="86" rx="24" ry="18" fill="#c4956a"/>
                 <ellipse cx="56" cy="88" rx="14" ry="13" fill="#d9a97c"/>
                 <circle cx="56" cy="58" r="22" fill="#c4956a"/>
@@ -411,8 +410,8 @@ export function TopToolbar({
                 <circle cx="94" cy="22" r="4" fill="#b07d52"/>
                 <circle cx="18" cy="98" r="4" fill="#b07d52"/>
                 <circle cx="94" cy="98" r="4" fill="#b07d52"/>
-                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Swatchbox</text>
-                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Studio</text>
+                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="currentColor">Swatchbox</text>
+                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="currentColor">Studio</text>
                 <circle cx="116" cy="100" r="6" fill="#f87171"/>
                 <circle cx="134" cy="100" r="6" fill="#fbbf24"/>
                 <circle cx="152" cy="100" r="6" fill="#4ade80"/>
@@ -449,7 +448,7 @@ export function TopToolbar({
                 <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
                 <rect x="5" y="5" width="10" height="10" fill="white"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
             </Link>
 
             {/* Gallery */}
@@ -466,7 +465,7 @@ export function TopToolbar({
                 <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
                 <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
             </Link>
 
             {/* AI Mode */}
@@ -479,7 +478,7 @@ export function TopToolbar({
                 <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#5a8a6a"/>
                 <circle cx="12" cy="3" r="1" fill="#5a8a6a" opacity="0.5"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI</span>
+              <span className="text-foreground" style={{ fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI</span>
             </button>
 
             <NavDivider />
@@ -487,7 +486,7 @@ export function TopToolbar({
             {/* Light/Dark Toggle */}
             <button onClick={toggle}
               className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden flex-shrink-0`}
-              style={{ width: 36, height: 20, backgroundColor: '#3d3530' }}
+              style={{ width: 36, height: 20, backgroundColor: dark ? '#4a5568' : '#3d3530' }}
               title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
@@ -523,8 +522,7 @@ export function TopToolbar({
                       {([['none', 'Off'], ['gallery', 'Gallery'], ['loft', 'Lofi'], ['home', 'Chill']] as const).map(([value, label]) => (
                         <button key={value}
                           onClick={() => { onAmbientSoundChange(value as any); setShowSoundMenu(false); }}
-                          className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium' : ''}`}
-                          style={{ color: ambientSound === value ? '#5a8a6a' : '#3d3530' }}
+                          className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary ${ambientSound === value ? 'font-medium text-primary' : 'text-foreground'}`}
                         >{label}</button>
                       ))}
                     </div>
@@ -541,7 +539,7 @@ export function TopToolbar({
             {/* Auth */}
             {user ? (
               <>
-                <span className="items-center gap-1 hidden sm:flex min-w-[60px]" style={{ color: '#3d3530', fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
+                <span className="items-center gap-1 hidden sm:flex min-w-[60px] text-foreground" style={{ fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
                     <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
                     <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
@@ -549,8 +547,8 @@ export function TopToolbar({
                   <span className="truncate max-w-[80px]">{user.email?.split('@')[0]}</span>
                 </span>
                 <button onClick={() => signOut()} title="Sign out"
-                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0`}
-                  style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
+                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0 text-muted-foreground`}
+                  style={{ fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
                 >
                   <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Out</span>
                 </button>
@@ -566,7 +564,7 @@ export function TopToolbar({
             <button
               onClick={handleKidToggle}
               className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 68, height: 32 }}
+              style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 68, height: 32 }}
               title="Switch to Kids Mode"
             >
               {/* Kid face */}
@@ -582,7 +580,7 @@ export function TopToolbar({
                 </svg>
               </div>
               {/* Divider */}
-              <div className="w-px h-5" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="w-px h-5 bg-border" />
               {/* Grandma face */}
               <div className="flex items-center justify-center w-1/2 h-full">
                 <svg width="18" height="18" viewBox="0 0 28 28">
