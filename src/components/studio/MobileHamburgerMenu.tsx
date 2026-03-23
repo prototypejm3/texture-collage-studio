@@ -93,7 +93,7 @@ export function MobileHamburgerMenu({
               {kidMode ? (
                 <>
                   <MenuItem
-                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><path d="M10 2L2 9H4V16H8V12H12V12H16V9H18L10 2Z" fill="#c4956a"/></svg>}
+                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><path d="M10 2L2 9H4V16H8V12H12V12H16V9H18L10 2Z" fill="#7aaa8a"/></svg>}
                     label="My Room"
                     onClick={() => window.location.href = '/wall'}
                   />
