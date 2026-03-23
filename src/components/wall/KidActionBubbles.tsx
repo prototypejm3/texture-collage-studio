@@ -250,7 +250,7 @@ export function KidActionBubbles({
   const getLabel = (action: BubbleAction) => {
     if (action.id === 'hide') return design.hidden ? 'Show' : 'Hide';
     if (action.id === 'pin') return design.pinned ? 'Unpin' : 'Pin';
-    if (action.id === 'gallery') return design.gallerySubmissionId ? 'Submitted' : 'Gallery';
+    if (action.id === 'gallery') return design.gallerySubmissionId ? 'Shared!' : (isKid ? 'Share!' : 'Gallery');
     return action.label;
   };
 
