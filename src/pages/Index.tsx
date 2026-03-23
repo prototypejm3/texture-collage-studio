@@ -653,11 +653,11 @@ const Index = () => {
                   transition={sounds.kidMode ? { type: 'spring', stiffness: 400, damping: 15 } : { duration: 0.15, ease: 'easeOut' }}
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl shadow-lg"
                   style={{
-                    background: sounds.kidMode ? '#f5ede0' : '#faf8f5',
-                    border: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}`,
+                    background: sounds.kidMode ? '#f5ede0' : 'hsl(var(--popover))',
+                    border: `1px solid ${sounds.kidMode ? '#e8ddd0' : 'hsl(var(--border))'}`,
                   }}
                 >
-                  <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: '#3d3530' }}>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: 'hsl(var(--foreground))' }}>
                     Size:
                   </span>
                   {(['S', 'M', 'L'] as const).map(size => {
@@ -676,10 +676,10 @@ const Index = () => {
                           transition: 'all 0.15s ease',
                           background: isActive
                             ? (sounds.kidMode ? '#f97316' : '#5a8a6a')
-                            : (sounds.kidMode ? '#f7f0e8' : '#f0ebe3'),
+                            : (sounds.kidMode ? '#f7f0e8' : 'hsl(var(--secondary))'),
                           color: isActive
                             ? 'white'
-                            : (sounds.kidMode ? '#6b4c2a' : '#3d3530'),
+                            : (sounds.kidMode ? '#6b4c2a' : 'hsl(var(--foreground))'),
                         }}
                       >
                         {size}
@@ -708,7 +708,7 @@ const Index = () => {
                     onClick={handleCancelStencil}
                     className="p-1 rounded-lg hover:bg-black/5 ml-0.5"
                   >
-                    <X className="w-3 h-3" style={{ color: '#3d3530' }} />
+                    <X className="w-3 h-3" style={{ color: 'hsl(var(--foreground))' }} />
                   </button>
                 </motion.div>
               </div>
@@ -735,7 +735,7 @@ const Index = () => {
                       borderRadius: '20px 20px 0 0',
                       background: sounds.kidMode
                         ? 'rgba(253, 246, 238, 0.95)'
-                        : 'rgba(245, 237, 224, 0.95)',
+                        : 'hsl(var(--popover) / 0.95)',
                       backdropFilter: 'blur(12px)',
                       WebkitBackdropFilter: 'blur(12px)',
                       boxShadow: '0 -8px 24px rgba(0,0,0,0.12)',
@@ -757,7 +757,7 @@ const Index = () => {
                         fontFamily: 'system-ui',
                         fontSize: 14,
                         fontWeight: 700,
-                        color: sounds.kidMode ? '#3a5c4a' : '#3d3530',
+                        color: sounds.kidMode ? '#3a5c4a' : 'hsl(var(--foreground))',
                       }}>
                         {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
                         {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Stencils')}
@@ -766,7 +766,7 @@ const Index = () => {
                         {activeBox === 'toolbox' && (sounds.kidMode ? '🧰 Tools' : 'Tool Box')}
                       </span>
                       <button onClick={closeBox} className="p-1.5 rounded-lg hover:bg-black/5 transition-colors">
-                        <X className="w-4 h-4" style={{ color: '#94a3b8' }} />
+                        <X className="w-4 h-4" style={{ color: 'hsl(var(--muted-foreground))' }} />
                       </button>
                     </div>
                     {/* Content */}
@@ -835,7 +835,7 @@ const Index = () => {
                             onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                           />
                           {sounds.kidMode && (
-                            <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e8ddd0' }}>
+                            <div className="mt-3 pt-3 border-t" style={{ borderColor: 'hsl(var(--border))' }}>
                               <RoomThemePicker theme={roomTheme} onThemeChange={setRoomTheme} />
                             </div>
                           )}
@@ -912,8 +912,8 @@ const Index = () => {
                     } : {
                       borderRadius: 16,
                       boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-                      border: '1px solid #e8ddd0',
-                      background: '#f5ede0',
+                      border: '1px solid hsl(var(--border))',
+                      background: 'hsl(var(--popover))',
                     }),
                   }}
                 >
@@ -954,7 +954,7 @@ const Index = () => {
                     </div>
                   ) : (
                     <div className="flex items-center justify-between px-3 py-2 cursor-grab active:cursor-grabbing"
-                      style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}
+                      style={{ borderBottom: '1px solid hsl(var(--border))', borderRadius: '16px 16px 0 0' }}
                       onPointerDown={(e) => {
                         e.preventDefault();
                         const el = (e.currentTarget.closest('[data-box-drawer]') as HTMLElement);
@@ -972,7 +972,7 @@ const Index = () => {
                         window.addEventListener('pointerup', onUp);
                       }}
                     >
-                      <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: 'hsl(var(--foreground))' }}>
                         {activeBox === 'textures' && 'Swatches'}
                         {activeBox === 'stencils' && 'Stencils'}
                         {activeBox === 'tools' && 'Display'}
@@ -983,7 +983,7 @@ const Index = () => {
                         onClick={closeBox}
                         className="p-1 rounded-lg hover:bg-black/5 transition-colors"
                       >
-                        <X className="w-3.5 h-3.5" style={{ color: '#3d3530' }} />
+                        <X className="w-3.5 h-3.5" style={{ color: 'hsl(var(--foreground))' }} />
                       </button>
                     </div>
                   )}
@@ -991,7 +991,7 @@ const Index = () => {
                   {/* Content */}
                   <div className="overflow-y-auto overflow-x-visible" style={{
                     maxHeight: 336,
-                    background: sounds.kidMode ? 'hsl(var(--popover))' : '#f5ede0',
+                    background: sounds.kidMode ? 'hsl(var(--popover))' : 'hsl(var(--popover))',
                     borderRadius: sounds.kidMode ? undefined : '0 0 16px 16px',
                   }}>
                     {activeBox === 'textures' && (
@@ -1045,7 +1045,7 @@ const Index = () => {
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                         />
                         {sounds.kidMode && (
-                          <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e8ddd0' }}>
+                          <div className="mt-3 pt-3 border-t" style={{ borderColor: 'hsl(var(--border))' }}>
                             <RoomThemePicker theme={roomTheme} onThemeChange={setRoomTheme} />
                           </div>
                         )}
