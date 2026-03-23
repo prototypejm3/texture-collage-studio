@@ -428,7 +428,7 @@ function DropdownMenu({
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
       <div
-        className="fixed z-50 max-h-[300px] min-w-[150px] overflow-y-auto rounded-lg border border-border bg-popover py-1 shadow-lg"
+        className="fixed z-50 max-h-[320px] max-w-[min(92vw,28rem)] overflow-y-auto rounded-lg border border-border bg-popover p-2 shadow-lg"
         style={{
           left: position.left,
           top: position.top,
@@ -649,14 +649,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Frames"
             />
             <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
-              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
-              {allFrameStyles.map(fs => (
-                <button key={fs.value}
-                  onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium' : ''}`}
-                  style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
-                >{fs.label}</button>
-              ))}
+              <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
+              <div className="grid grid-cols-2 gap-1">
+                {allFrameStyles.map(fs => (
+                  <button key={fs.value}
+                    onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
+                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`}
+                    style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
+                  >{fs.label}</button>
+                ))}
+              </div>
             </DropdownMenu>
           </div>
 
@@ -673,22 +675,26 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Hanging"
             />
             <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
-              {['Style', 'String', 'Nail'].map(group => {
-                const items = hangingStyles.filter(h => h.group === group);
-                if (!items.length) return null;
-                return (
-                  <div key={group}>
-                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
-                    {items.map(hs => (
-                      <button key={hs.value}
-                        onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
-                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium' : ''}`}
-                        style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
-                      >{hs.label}</button>
-                    ))}
-                  </div>
-                );
-              })}
+              <div className="grid grid-cols-3 gap-2">
+                {['Style', 'String', 'Nail'].map(group => {
+                  const items = hangingStyles.filter(h => h.group === group);
+                  if (!items.length) return null;
+                  return (
+                    <div key={group} className="min-w-[90px]">
+                      <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                      <div className="space-y-1">
+                        {items.map(hs => (
+                          <button key={hs.value}
+                            onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
+                            className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`}
+                            style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
+                          >{hs.label}</button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </DropdownMenu>
           </div>
 
@@ -727,14 +733,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Lighting"
             />
             <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
-              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
-              {lightingPresets.map(lp => (
-                <button key={lp.value}
-                  onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium' : ''}`}
-                  style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
-                >{lp.label}</button>
-              ))}
+              <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
+              <div className="grid grid-cols-2 gap-1">
+                {lightingPresets.map(lp => (
+                  <button key={lp.value}
+                    onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
+                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`}
+                    style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
+                  >{lp.label}</button>
+                ))}
+              </div>
             </DropdownMenu>
           </div>
 
@@ -751,14 +759,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Sound"
             />
             <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
-              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-              {ambientSounds.map(as => (
-                <button key={as.value}
-                  onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium' : ''}`}
-                  style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}
-                >{as.label}</button>
-              ))}
+              <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+              <div className="grid grid-cols-2 gap-1">
+                {ambientSounds.map(as => (
+                  <button key={as.value}
+                    onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
+                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`}
+                    style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}
+                  >{as.label}</button>
+                ))}
+              </div>
             </DropdownMenu>
           </div>
 
