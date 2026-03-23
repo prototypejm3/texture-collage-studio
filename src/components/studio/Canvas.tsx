@@ -9,6 +9,7 @@ import { textures } from '@/data/textures';
 import { ShapeIcon } from './TextureLibrary';
 import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
+import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon } from './ToyboxIcons';
 import concreteFloor from '@/assets/concrete-floor.jpg';
 import kidTable from '@/assets/kid-table.jpg';
@@ -669,7 +670,7 @@ export function Canvas({
             }
           }}
         >
-          <MaybeBox
+          <TreasureChest
             items={boxItems}
             onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
             onDragOutItem={(item) => {
