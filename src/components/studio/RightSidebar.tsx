@@ -897,7 +897,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
       </div>
       {/* Name + inline action icons */}
       <div className="flex items-center justify-center gap-0.5 mt-0.5">
-        <p className="text-[8px] text-muted-foreground truncate">{vibe.emoji} {vibe.name}</p>
+        <p className="text-[8px] text-muted-foreground truncate">{kidMode ? `${vibe.emoji} ` : ''}{vibe.name}</p>
         <div className="flex items-center gap-px shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">
           {/* Favorite */}
           {isLoggedIn && !isAiGenerated && (
@@ -920,7 +920,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
               className="p-[2px] rounded-full transition-colors text-muted-foreground/60 hover:text-muted-foreground"
               title={transferred ? 'Added to Kids!' : 'Copy to Kid Mode'}
             >
-              {transferred ? <Check className="w-2 h-2 text-emerald-500" /> : <span className="text-[8px] leading-none">🧸</span>}
+              {transferred ? <Check className="w-2 h-2 text-emerald-500" /> : <span className="text-[8px] leading-none">👦</span>}
             </motion.button>
           )}
           {/* Hide or Delete */}
