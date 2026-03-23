@@ -412,11 +412,12 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                 <button
                   key={bg.value}
                   onClick={() => onUpdate({ background: bg.value })}
-                  className="relative rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                  className="relative rounded-lg transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
                   style={{
-                    width: 68, height: 68,
+                    width: 56, height: 56,
                     backgroundColor: bg.fill,
-                    border: `2.5px solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                    border: `${isSelected ? '3px' : '2px'} solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                    boxShadow: isSelected ? '0 0 0 2px #f9731640' : 'inset 0 0 0 2px rgba(255,255,255,0.5)',
                   }}
                   title={bg.kidLabel}
                 >
