@@ -451,10 +451,79 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   // Adult mode — new grouped toolbar
   const isCustomColor = settings.background === 'custom' && settings.customWallImage?.startsWith('#');
 
+  // Hideable state
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Draggable state
+  const [position, setPosition] = useState<{ x: number; y: number }>(() => {
+    try {
+      const saved = localStorage.getItem('wall-toolbar-pos');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return { x: 0, y: 0 };
+  });
+  const isDragging = useRef(false);
+  const dragStart = useRef({ x: 0, y: 0 });
+  const posStart = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('wall-toolbar-pos', JSON.stringify(position));
+    } catch {}
+  }, [position]);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    isDragging.current = true;
+    dragStart.current = { x: e.clientX, y: e.clientY };
+    posStart.current = { ...position };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    e.preventDefault();
+  }, [position]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    setPosition({ x: posStart.current.x + dx, y: posStart.current.y + dy });
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  // Collapsed: show a small pill to re-open
+  if (isCollapsed) {
+    return (
+      <div
+        className="flex items-center gap-1.5 cursor-pointer select-none transition-all hover:scale-105"
+        style={{
+          position: 'relative',
+          left: position.x,
+          top: position.y,
+          background: '#f5f3f0',
+          border: '1px solid #e2ddd6',
+          borderRadius: 20,
+          padding: '6px 14px',
+          width: 'fit-content',
+          fontFamily: 'system-ui, sans-serif',
+        }}
+        onClick={() => setIsCollapsed(false)}
+      >
+        <ChevronDown className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+        <span style={{ fontSize: 10, fontWeight: 600, color: '#94a3b8', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+          Show Toolbar
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div
       className="flex items-center overflow-x-auto scrollbar-none"
       style={{
+        position: 'relative',
+        left: position.x,
+        top: position.y,
         height: 80,
         background: '#f5f3f0',
         borderBottom: '1px solid #e2ddd6',
@@ -464,6 +533,28 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         fontFamily: 'system-ui, sans-serif',
       }}
     >
+      {/* Drag handle + hide button */}
+      <div className="flex flex-col items-center gap-1 shrink-0 mr-1">
+        <button
+          onClick={() => setIsCollapsed(true)}
+          className="p-0.5 rounded hover:bg-secondary/60 transition-colors"
+          title="Hide toolbar"
+        >
+          <ChevronUp className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+        </button>
+        <div
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-secondary/60 transition-colors touch-none"
+          title="Drag to move"
+        >
+          <GripHorizontal className="w-4 h-4" style={{ color: '#94a3b8' }} />
+        </div>
+      </div>
+
+      <div style={{ width: 1, height: 48, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
+
       {/* ── GROUP 1: ARRANGE ── */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="ARRANGE" />
