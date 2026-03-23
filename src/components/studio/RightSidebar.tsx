@@ -667,19 +667,6 @@ export function RightSidebar({
                         toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
                       }}
                       onTogglePublic={() => social.togglePublic(vibe.id)}
-                      onTransferToKid={() => {
-                        try {
-                          const key = 'kid-mode-stencils';
-                          const existing = JSON.parse(localStorage.getItem(key) || '[]');
-                          if (!existing.find((s: any) => s.id === vibe.id)) {
-                            existing.push({ id: vibe.id, name: vibe.name, emoji: vibe.emoji, viewBox: vibe.viewBox, sections: vibe.sections });
-                            localStorage.setItem(key, JSON.stringify(existing));
-                          }
-                          toast({ title: '✅ Copied to Kids', description: `"${vibe.name}" is now available in Kid Mode.` });
-                        } catch {
-                          toast({ title: 'Error', description: 'Could not transfer stencil.' });
-                        }
-                      }}
                     />
                   ));
                 })()}
@@ -786,7 +773,7 @@ export function RightSidebar({
   );
 }
 
-function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMode = false, isOwner = false, isPublic = false, onSelect, onToggleHidden, onToggleFav, onDelete, onReport, onTogglePublic, onTransferToKid }: {
+function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMode = false, isOwner = false, isPublic = false, onSelect, onToggleHidden, onToggleFav, onDelete, onReport, onTogglePublic }: {
   vibe: Vibe;
   isActive: boolean;
   isHidden: boolean;
@@ -801,10 +788,8 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
   onDelete: () => void;
   onReport: () => void;
   onTogglePublic?: () => void;
-  onTransferToKid?: () => void;
 }) {
   const isAiGenerated = vibe.id.startsWith('ai-');
-  const [transferred, setTransferred] = useState(false);
   const [fadingOut, setFadingOut] = useState(false);
 
   // Kid mode card — keep original simple layout
@@ -834,16 +819,6 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
     );
   }
 
-  // Adult mode — inline action icons
-  const handleTransfer = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onTransferToKid) {
-      onTransferToKid();
-      setTransferred(true);
-      setTimeout(() => setTransferred(false), 2000);
-    }
-  };
-
   const handleHideOrDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isOwner || isAiGenerated) {
@@ -854,6 +829,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
       setTimeout(() => onToggleHidden(), 300);
     }
   };
+
 
   return (
     <motion.div
@@ -873,15 +849,39 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
       >
         <VibePreviewSVG vibe={vibe} />
 
+        {/* Favorite — top-right */}
+        {isLoggedIn && !isAiGenerated && (
+          <motion.button
+            whileTap={{ scale: 1.3 }}
+            onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
+            className={`absolute top-0.5 right-0.5 p-[3px] rounded-full transition-all duration-200 opacity-[0.45] group-hover:opacity-100 ${
+              isFavorited ? 'bg-amber-400/90 text-white' : 'bg-background/70 text-muted-foreground hover:bg-background'
+            }`}
+            title={isFavorited ? 'Unfavorite' : 'Favorite'}
+          >
+            <Star className={`w-2.5 h-2.5 ${isFavorited ? 'fill-current' : ''}`} />
+          </motion.button>
+        )}
+
+        {/* Hide/Delete — top-left */}
+        {(isLoggedIn || isAiGenerated) && (
+          <motion.button
+            whileTap={{ scale: 1.3 }}
+            onClick={handleHideOrDelete}
+            className="absolute top-0.5 left-0.5 p-[3px] rounded-full bg-background/70 text-muted-foreground hover:bg-background transition-all duration-200 opacity-[0.45] group-hover:opacity-100"
+            title={(isOwner || isAiGenerated) ? 'Delete' : 'Hide'}
+          >
+            {(isOwner || isAiGenerated) ? <Trash2 className="w-2.5 h-2.5" /> : <EyeOff className="w-2.5 h-2.5" />}
+          </motion.button>
+        )}
+
         {isActive && (
           <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-primary flex items-center justify-center">
             <Check className="w-1.5 h-1.5 text-primary-foreground" />
           </div>
         )}
-        {isAiGenerated && (
-          <div className="absolute top-0.5 left-0.5 px-0.5 py-0 rounded bg-primary/90 text-primary-foreground font-bold uppercase tracking-wider text-[5px]">AI</div>
-        )}
-        {/* Public/Private badge — bottom-left, only for owned stencils */}
+
+        {/* Public/Private badge — bottom-left */}
         {isOwner && onTogglePublic && (
           <motion.button
             whileTap={{ scale: 1.2 }}
@@ -895,47 +895,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
           </motion.button>
         )}
       </div>
-      {/* Name + inline action icons */}
-      <div className="flex items-center justify-center gap-0.5 mt-0.5">
-        <p className="text-[8px] text-muted-foreground truncate">{kidMode ? `${vibe.emoji} ` : ''}{vibe.name}</p>
-        <div className="flex items-center gap-px shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">
-          {/* Favorite */}
-          {isLoggedIn && !isAiGenerated && (
-            <motion.button
-              whileTap={{ scale: 1.3 }}
-              onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
-              className={`p-[2px] rounded-full transition-colors ${
-                isFavorited ? 'text-amber-400' : 'text-muted-foreground/60 hover:text-muted-foreground'
-              }`}
-              title={isFavorited ? 'Unfavorite' : 'Favorite'}
-            >
-              <Star className={`w-2 h-2 ${isFavorited ? 'fill-current' : ''}`} />
-            </motion.button>
-          )}
-          {/* Transfer to Kid Mode */}
-          {isLoggedIn && (
-            <motion.button
-              whileTap={{ scale: 1.3 }}
-              onClick={handleTransfer}
-              className="p-[2px] rounded-full transition-colors text-muted-foreground/60 hover:text-muted-foreground"
-              title={transferred ? 'Added to Kids!' : 'Copy to Kid Mode'}
-            >
-              {transferred ? <Check className="w-2 h-2 text-emerald-500" /> : <span className="text-[8px] leading-none">👦</span>}
-            </motion.button>
-          )}
-          {/* Hide or Delete */}
-          {(isLoggedIn || isAiGenerated) && (
-            <motion.button
-              whileTap={{ scale: 1.3 }}
-              onClick={handleHideOrDelete}
-              className="p-[2px] rounded-full transition-colors text-muted-foreground/60 hover:text-muted-foreground"
-              title={(isOwner || isAiGenerated) ? 'Delete' : 'Hide'}
-            >
-              {(isOwner || isAiGenerated) ? <Trash2 className="w-2 h-2" /> : <EyeOff className="w-2 h-2" />}
-            </motion.button>
-          )}
-        </div>
-      </div>
+      <p className="text-[8px] text-muted-foreground mt-0.5 truncate text-center">{kidMode ? `${vibe.emoji} ` : ''}{vibe.name}</p>
     </motion.div>
   );
 }
