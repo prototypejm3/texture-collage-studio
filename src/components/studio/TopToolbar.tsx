@@ -386,37 +386,7 @@ export function TopToolbar({
           <div className="flex-1" />
           <div className="flex items-center gap-1.5">
             <MobileHamburgerMenu {...mobileMenuProps} />
-            <button
-              onClick={handleKidToggle}
-              className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-              style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 48, height: 22 }}
-              title="Switch to Kids Mode"
-            >
-              <div className="flex items-center justify-center w-1/2 h-full">
-                <svg width="12" height="12" viewBox="0 0 28 28">
-                  <circle cx="14" cy="16" r="10" fill="white"/>
-                  <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                  <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                  <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
-                  <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
-                  <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
-                  <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
-                </svg>
-              </div>
-              <div className="w-px h-3 bg-border" />
-              <div className="flex items-center justify-center w-1/2 h-full">
-                <svg width="12" height="12" viewBox="0 0 28 28">
-                  <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
-                  <ellipse cx="14" cy="7" rx="10" ry="5" fill="#c4c4c4"/>
-                  <circle cx="14" cy="4" r="4" fill="#b0b0b0"/>
-                  <circle cx="10" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
-                  <circle cx="18" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
-                  <circle cx="10" cy="15" r="1" fill="#5a4a3a"/>
-                  <circle cx="18" cy="15" r="1" fill="#5a4a3a"/>
-                  <path d="M12 19 Q14 21 16 19" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
-                </svg>
-              </div>
-            </button>
+            <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
       ) : (
