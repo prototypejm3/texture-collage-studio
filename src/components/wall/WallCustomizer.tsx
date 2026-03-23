@@ -518,13 +518,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           <div className="relative">
             <ToolbarButton
               active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')}
-              onClick={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
+              onClick={() => setShowHangingMenu(!showHangingMenu)}
               icon={(c) => <HangingIcon color={c} />}
               label="Hanging"
-              locked={!isPremium}
-              onRequestUpgrade={onRequestUpgrade}
             />
-            <DropdownMenu isOpen={showHangingMenu && isPremium} onClose={() => setShowHangingMenu(false)}>
+            <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)}>
               {['Style', 'String', 'Nail'].map(group => {
                 const items = hangingStyles.filter(h => h.group === group);
                 if (!items.length) return null;
