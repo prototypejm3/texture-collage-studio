@@ -1157,14 +1157,7 @@ const Index = () => {
               {/* Save/Download row */}
               <div className="flex items-center justify-center gap-2 pb-1.5">
                 {/* Reset */}
-                <button onClick={handleClearAll} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Reset">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                    <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                  </svg>
-                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
-                </button>
-                {/* Easel */}
+                {/* Easel / Desk */}
                 <button
                   onClick={() => setEaselMode(prev => !prev)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all active:scale-[0.94] text-[11px] font-medium border ${
@@ -1181,7 +1174,15 @@ const Index = () => {
                     <line x1="6" y1="16" x2="3" y2="23" />
                     <line x1="18" y1="16" x2="21" y2="23" />
                   </svg>
-                  Easel
+                  Easel / Desk
+                </button>
+                {/* Reset */}
+                <button onClick={handleClearAll} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Reset">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
                 </button>
                 {/* Save */}
                 <button onClick={handleSaveToWall} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Save">
