@@ -299,7 +299,7 @@ export function TopToolbar({
              {/* Mode toggle replaces user info in kid mode */}
              <button
                onClick={handleKidToggle}
-                className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden ring-[3px] ring-blue-500"
+                className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden"
                 title="Switch to Granny Mode"
               >
                 <img src={kidGrannyToggle} alt="Kids → Granny" className="h-14 w-auto" />
