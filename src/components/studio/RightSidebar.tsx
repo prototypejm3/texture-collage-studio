@@ -899,7 +899,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
               }`}
               title={transferred ? 'Added to Kids!' : 'Copy to Kid Mode'}
             >
-              {transferred ? <Check className="w-2.5 h-2.5" /> : <ArrowRightLeft className="w-2.5 h-2.5" />}
+              {transferred ? <Check className="w-2.5 h-2.5" /> : <span className="text-[9px] leading-none">🧸</span>}
             </motion.button>
           )}
 
