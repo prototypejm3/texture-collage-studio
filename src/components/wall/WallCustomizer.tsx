@@ -428,7 +428,7 @@ function DropdownMenu({
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
       <div
-        className="fixed z-50 max-h-[300px] min-w-[150px] overflow-y-auto rounded-lg border border-border bg-popover py-1 shadow-lg"
+        className="fixed z-50 max-h-[320px] max-w-[min(92vw,28rem)] overflow-y-auto rounded-lg border border-border bg-popover p-2 shadow-lg"
         style={{
           left: position.left,
           top: position.top,
