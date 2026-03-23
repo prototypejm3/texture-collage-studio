@@ -38,7 +38,6 @@ export const textures: TextureSwatch[] = [
   { id: 'sunbrella-sea', name: 'Sea Breeze', category: 'Sunbrella', cssBackground: img('sunbrella-sea.png') },
   { id: 'sunbrella-wisteria', name: 'Lavender Spritz', category: 'Sunbrella', cssBackground: img('sunbrella-wisteria.png') },
   { id: 'sunbrella-lagoon', name: 'Lagoon Punch', category: 'Sunbrella', cssBackground: img('sunbrella-lagoon.png') },
-  { id: 'sunbrella-white', name: 'Blanc de Blanc', category: 'Sunbrella', cssBackground: img('sunbrella-white.png') },
   { id: 'sunbrella-loft-white', name: 'Elderflower', category: 'Sunbrella', cssBackground: img('sunbrella-loft-white.png') },
 
   // ── Bubbly (Textured Weave) ──
