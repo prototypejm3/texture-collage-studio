@@ -183,7 +183,7 @@ export function TopToolbar({
             </Link>
             <button
               onClick={handleKidToggle}
-              className="transition-all active:scale-[0.94] rounded-full overflow-hidden ring-2 ring-blue-500"
+              className="transition-all active:scale-[0.94] rounded-full overflow-hidden"
               title="Switch to Granny Mode"
             >
               <img src={kidGrannyToggle} alt="Kids → Granny" className="h-9 w-auto" />
