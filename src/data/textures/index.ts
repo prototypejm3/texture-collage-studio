@@ -132,7 +132,7 @@ export const textures: TextureSwatch[] = [
   
 
   // ── Bloke ──
-  { id: 'bloke-cotton', name: 'Gin Rickey', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
+  
 
   // ── Leather ──
   { id: 'leather-bourbon', name: 'Bourbon', category: 'Leather', cssBackground: img('leather-bourbon.png') },
