@@ -105,15 +105,15 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
         transition={{ duration: 0.12 }}
         className="relative cursor-pointer select-none"
         title="Swatch Tin"
-        style={{ width: 176, height: isOpen ? 130 : 182 }}
+        style={{ width: 176, height: 182 }}
       >
         {/* Lid */}
         <motion.div
           animate={isOpen
-            ? { x: -34, y: -36, rotate: -12 }
-            : { x: 0, y: 0, rotate: 0 }
+            ? { y: -8, rotate: -6 }
+            : { y: 0, rotate: 0 }
           }
-          transition={{ duration: 0.25, type: 'spring', stiffness: 300, damping: 20 }}
+          transition={{ duration: 0.2, type: 'spring', stiffness: 350, damping: 22 }}
           className="absolute"
           style={{
             width: 184,
