@@ -508,7 +508,7 @@ const Index = () => {
   // Panel opacity based on focus mode
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden pb-[48px] md:pb-0">
       {/* Mobile welcome — no discouraging banner */}
 
       {/* Top bar with nav + focus toggle */}
