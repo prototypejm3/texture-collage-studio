@@ -472,7 +472,19 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         </div>
       )}
 
-      <div className="flex items-center gap-1 mb-2 px-1">
+      {/* Edge Style — under Elements */}
+      <div className="mb-2 px-1">
+        <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style</label>
+        <div className="flex flex-wrap gap-1">
+          {edgeOptions.map(o => (
+            <button key={o.value} onClick={() => onUpdateEffects({ edgeStyle: o.value })}
+              className={`flex items-center gap-1 text-[10px] py-1.5 px-2 rounded-md transition-colors ${element.effects.edgeStyle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
+              <EdgeIcon edge={o.value} size={16} /><span className="hidden sm:inline">{o.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
         <div className="flex items-center gap-1">
           <Maximize2 className="w-3 h-3 text-muted-foreground" />
           <input type="number" value={Math.round(element.width)} onChange={e => onUpdate({ width: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
