@@ -423,37 +423,36 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
   }
 
   return (
-    <div className="p-3 space-y-2">
+    <div className="p-2 space-y-1">
       {/* Header with undo/redo/delete */}
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
           {elementCount !== undefined ? `${elementCount} element${elementCount !== 1 ? 's' : ''}` : 'Element'}
         </span>
         <div className="flex gap-0.5">
           {onUndo && (
-            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-7 w-7 p-0" title="Undo">
-              <Undo2 className="w-3.5 h-3.5" />
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-6 w-6 p-0" title="Undo">
+              <Undo2 className="w-3 h-3" />
             </Button>
           )}
           {onRedo && (
-            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-7 w-7 p-0" title="Redo">
-              <Redo2 className="w-3.5 h-3.5" />
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-6 w-6 p-0" title="Redo">
+              <Redo2 className="w-3 h-3" />
             </Button>
           )}
-          <button onClick={onDelete} className="h-7 w-7 p-0 flex items-center justify-center rounded-md hover:bg-secondary transition-colors" title="Remove">
-            <X className="w-3.5 h-3.5 transition-colors" style={{ color: '#94a3b8' }} onMouseEnter={e => (e.currentTarget.style.color = '#e05c5c')} onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')} />
+          <button onClick={onDelete} className="h-6 w-6 p-0 flex items-center justify-center rounded-md hover:bg-secondary transition-colors" title="Remove">
+            <X className="w-3 h-3 transition-colors" style={{ color: '#94a3b8' }} onMouseEnter={e => (e.currentTarget.style.color = '#e05c5c')} onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')} />
           </button>
         </div>
       </div>
 
-
-      <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors mb-1">
+      <button onClick={() => setShowShapes(!showShapes)} className="flex items-center gap-1 w-full px-1.5 py-1 text-[11px] font-medium text-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
         Elements
         {showShapes ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
       </button>
 
       {showShapes && (
-        <div className="flex flex-wrap items-center gap-1 mb-2 px-1">
+        <div className="flex flex-wrap items-center gap-0.5 mb-1 px-0.5">
           {shapeOptions.map(s => (
             <Button key={s.value} size="sm" variant={element.shape === s.value ? 'default' : 'ghost'}
               onClick={() => {
@@ -463,73 +462,74 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
                 else { updates.width = element.width; updates.height = Math.min(element.width, element.height); }
                 onUpdate(updates);
               }}
-              className="h-8 px-2 gap-1" title={s.label}
+              className="h-7 px-1.5 gap-0.5" title={s.label}
             >
               <StencilIcon shape={s.value} active={element.shape === s.value} />
-              <span className="text-[9px] hidden sm:inline text-foreground">{s.label}</span>
+              <span className="text-[8px] hidden sm:inline text-foreground">{s.label}</span>
             </Button>
           ))}
         </div>
       )}
 
-      {/* Edge Style — under Elements */}
-      <div className="mb-2 px-1">
-        <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edge Style</label>
-        <div className="flex flex-wrap gap-1">
+      {/* Edge Style */}
+      <div className="mb-1 px-0.5">
+        <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Edge Style</label>
+        <div className="flex flex-wrap gap-0.5">
           {edgeOptions.map(o => (
             <button key={o.value} onClick={() => onUpdateEffects({ edgeStyle: o.value })}
-              className={`flex items-center gap-1 text-[10px] py-1.5 px-2 rounded-md transition-colors ${element.effects.edgeStyle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
-              <EdgeIcon edge={o.value} size={16} /><span className="hidden sm:inline">{o.label}</span>
+              className={`flex items-center gap-0.5 text-[9px] py-1 px-1.5 rounded-md transition-colors ${element.effects.edgeStyle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
+              <EdgeIcon edge={o.value} size={14} /><span className="hidden sm:inline">{o.label}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="flex items-center gap-1 mb-2 px-1">
-        <div className="flex items-center gap-1">
-          <Maximize2 className="w-3 h-3 text-muted-foreground" />
-          <input type="number" value={Math.round(element.width)} onChange={e => onUpdate({ width: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
-          <span className="text-xs text-muted-foreground">×</span>
-          <input type="number" value={Math.round(element.height)} onChange={e => onUpdate({ height: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
+      {/* Size / Rotation / Actions — compact row */}
+      <div className="flex items-center gap-0.5 mb-1 px-0.5 flex-wrap">
+        <div className="flex items-center gap-0.5">
+          <Maximize2 className="w-2.5 h-2.5 text-muted-foreground" />
+          <input type="number" value={Math.round(element.width)} onChange={e => onUpdate({ width: Number(e.target.value) || 50 })} className="w-10 h-6 text-[10px] text-center bg-secondary text-foreground rounded-md border-none" />
+          <span className="text-[10px] text-muted-foreground">×</span>
+          <input type="number" value={Math.round(element.height)} onChange={e => onUpdate({ height: Number(e.target.value) || 50 })} className="w-10 h-6 text-[10px] text-center bg-secondary text-foreground rounded-md border-none" />
         </div>
-        <div className="w-px h-6 bg-border mx-1" />
-        <div className="flex items-center gap-1">
-          <RotateCw className="w-3 h-3 text-muted-foreground" />
-          <input type="number" value={element.rotation} onChange={e => onUpdate({ rotation: Number(e.target.value) })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
-          <span className="text-[10px] text-muted-foreground">°</span>
+        <div className="w-px h-5 bg-border mx-0.5" />
+        <div className="flex items-center gap-0.5">
+          <RotateCw className="w-2.5 h-2.5 text-muted-foreground" />
+          <input type="number" value={element.rotation} onChange={e => onUpdate({ rotation: Number(e.target.value) })} className="w-10 h-6 text-[10px] text-center bg-secondary text-foreground rounded-md border-none" />
+          <span className="text-[9px] text-muted-foreground">°</span>
         </div>
-        <div className="w-px h-6 bg-border mx-1" />
-        <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-8 w-8 p-0" title="Duplicate"><Copy className="w-3.5 h-3.5" /></Button>
-        <button onClick={onDelete} className="h-8 w-8 p-0 flex items-center justify-center rounded-md hover:bg-secondary transition-colors group" title="Remove">
-          <X className="w-4 h-4 transition-colors" style={{ color: '#94a3b8' }} onMouseEnter={e => (e.currentTarget.style.color = '#e05c5c')} onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')} />
+        <div className="w-px h-5 bg-border mx-0.5" />
+        <Button size="sm" variant="ghost" onClick={onDuplicate} className="h-6 w-6 p-0" title="Duplicate"><Copy className="w-3 h-3" /></Button>
+        <button onClick={onDelete} className="h-6 w-6 p-0 flex items-center justify-center rounded-md hover:bg-secondary transition-colors" title="Remove">
+          <X className="w-3 h-3 transition-colors" style={{ color: '#94a3b8' }} onMouseEnter={e => (e.currentTarget.style.color = '#e05c5c')} onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')} />
         </button>
         {onBringForward && (
-          <Button size="sm" variant="ghost" onClick={onBringForward} className="h-8 w-8 p-0" title="Bring Forward"><ArrowUp className="w-3.5 h-3.5" /></Button>
+          <Button size="sm" variant="ghost" onClick={onBringForward} className="h-6 w-6 p-0" title="Bring Forward"><ArrowUp className="w-3 h-3" /></Button>
         )}
         {onSendBackward && (
-          <Button size="sm" variant="ghost" onClick={onSendBackward} className="h-8 w-8 p-0" title="Send Backward"><ArrowDown className="w-3.5 h-3.5" /></Button>
+          <Button size="sm" variant="ghost" onClick={onSendBackward} className="h-6 w-6 p-0" title="Send Backward"><ArrowDown className="w-3 h-3" /></Button>
         )}
       </div>
 
-      {/* Opacity & Blend Mode */}
-      <button onClick={() => setShowBlending(!showBlending)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
+      {/* Opacity & Blend Mode — collapsed by default */}
+      <button onClick={() => setShowBlending(!showBlending)} className="flex items-center gap-1 w-full px-1.5 py-1 text-[11px] font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
         Opacity & Blending
         {showBlending ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
       </button>
 
       {showBlending && (
         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden">
-          <div className="space-y-3 pt-2 px-1">
+          <div className="space-y-2 pt-1 px-0.5">
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Opacity — {element.opacity ?? 100}%</label>
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Opacity — {element.opacity ?? 100}%</label>
               <Slider value={[element.opacity ?? 100]} onValueChange={([v]) => onUpdate({ opacity: v })} min={5} max={100} step={1} className="w-full" />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Blend Mode</label>
-              <div className="flex flex-wrap gap-1">
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Blend Mode</label>
+              <div className="flex flex-wrap gap-0.5">
                 {blendModeOptions.map(bm => (
                   <button key={bm.value} onClick={() => onUpdate({ blendMode: bm.value })}
-                    className={`text-[10px] py-1 px-2 rounded-md transition-colors ${(element.blendMode || 'normal') === bm.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`}>
+                    className={`text-[9px] py-0.5 px-1.5 rounded-md transition-colors ${(element.blendMode || 'normal') === bm.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`}>
                     {bm.label}
                   </button>
                 ))}
@@ -539,40 +539,41 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         </motion.div>
       )}
 
-      <button onClick={() => setShowEffects(!showEffects)} className="flex items-center gap-1.5 w-full px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
+      {/* Material Effects — collapsed by default */}
+      <button onClick={() => setShowEffects(!showEffects)} className="flex items-center gap-1 w-full px-1.5 py-1 text-[11px] font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
         Material Effects
         {showEffects ? <ChevronUp className="w-3 h-3 ml-auto" /> : <ChevronDown className="w-3 h-3 ml-auto" />}
       </button>
 
       {showEffects && (
         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden">
-          <div className="space-y-3 pt-2 px-1">
+          <div className="space-y-2 pt-1 px-0.5">
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Bleach / Fade — {element.effects.bleachFade}%</label>
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Bleach / Fade — {element.effects.bleachFade}%</label>
               <Slider value={[element.effects.bleachFade]} onValueChange={([v]) => onUpdateEffects({ bleachFade: v })} max={100} step={1} className="w-full" />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Wrinkle</label>
-              <div className="flex gap-1">
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Wrinkle</label>
+              <div className="flex gap-0.5">
                 {wrinkleOptions.map(o => (
                   <button key={o.value} onClick={() => onUpdateEffects({ wrinkle: o.value })}
-                    className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${element.effects.wrinkle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
-                    <WrinkleIcon level={o.value} size={16} /><span className="text-[8px]">{o.label}</span>
+                    className={`flex-1 flex flex-col items-center gap-0 text-[9px] py-1 rounded-md transition-colors ${element.effects.wrinkle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
+                    <WrinkleIcon level={o.value} size={14} /><span className="text-[7px]">{o.label}</span>
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Grain / Texture Boost — {element.effects.grainBoost}%</label>
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Grain / Texture Boost — {element.effects.grainBoost}%</label>
               <Slider value={[element.effects.grainBoost]} onValueChange={([v]) => onUpdateEffects({ grainBoost: v })} max={100} step={1} className="w-full" />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Shadow Depth</label>
-              <div className="flex gap-1">
+              <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Shadow Depth</label>
+              <div className="flex gap-0.5">
                 {shadowOptions.map(o => (
                   <button key={o.value} onClick={() => onUpdateEffects({ shadowDepth: o.value })}
-                    className={`flex-1 flex flex-col items-center gap-0.5 text-[10px] py-1.5 rounded-md transition-colors ${element.effects.shadowDepth === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
-                    <ShadowIcon depth={o.value} size={16} /><span className="text-[8px]">{o.label}</span>
+                    className={`flex-1 flex flex-col items-center gap-0 text-[9px] py-1 rounded-md transition-colors ${element.effects.shadowDepth === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
+                    <ShadowIcon depth={o.value} size={14} /><span className="text-[7px]">{o.label}</span>
                   </button>
                 ))}
               </div>
@@ -580,15 +581,6 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
           </div>
         </motion.div>
       )}
-
-      {/* Remove from canvas link — adult mode bottom */}
-      <button
-        onClick={onDelete}
-        className="w-full text-center py-2 mt-1 transition-colors hover:underline"
-        style={{ color: '#94a3b8', fontSize: 12, fontWeight: 400 }}
-      >
-        Remove from canvas
-      </button>
     </div>
   );
 }
