@@ -179,7 +179,7 @@ export function TextureLibrary({
     filtered = [...filtered].sort((a, b) => {
       const oa = kidColorOrder[a.id] ?? 999;
       const ob = kidColorOrder[b.id] ?? 999;
-      return oa - ob;
+      return ob - oa;
     });
   }
 
