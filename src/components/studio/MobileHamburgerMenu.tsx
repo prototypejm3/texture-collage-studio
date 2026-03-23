@@ -28,9 +28,9 @@ export function MobileHamburgerMenu({
   // Close on route change
   useEffect(() => { setOpen(false); }, []);
 
-  const accentColor = kidMode ? '#c4956a' : '#5a8a6a';
+  const accentColor = kidMode ? '#7aaa8a' : '#5a8a6a';
   const bgColor = kidMode ? 'hsl(var(--toybox-bg))' : '#faf8f5';
-  const textColor = kidMode ? '#6b4c2a' : '#3d3530';
+  const textColor = kidMode ? '#3a5c4a' : '#3d3530';
   const mutedColor = '#94a3b8';
 
   const MenuItem = ({ icon, label, onClick, active }: { icon: React.ReactNode; label: string; onClick?: () => void; active?: boolean }) => (
