@@ -486,7 +486,7 @@ export function TopToolbar({
             {/* Light/Dark Toggle */}
             <button onClick={toggle}
               className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden flex-shrink-0`}
-              style={{ width: 36, height: 20, backgroundColor: '#3d3530' }}
+              style={{ width: 36, height: 20, backgroundColor: dark ? '#4a5568' : '#3d3530' }}
               title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
