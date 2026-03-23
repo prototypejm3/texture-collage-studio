@@ -128,7 +128,7 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
                         />
                       )}
                       <p className="text-[10px] mt-0.5 truncate text-center" style={{ color: '#f5ede0', maxWidth: 52 }}>
-                        {tex?.name || ''}
+                        {kidTextureNames[tex?.id || ''] || tex?.name || ''}
                       </p>
                       <button
                         data-box-item-remove
