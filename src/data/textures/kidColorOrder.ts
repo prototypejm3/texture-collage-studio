@@ -112,7 +112,6 @@ export const kidColorOrder: Record<string, number> = {
   'suede-ace-forest': 149,
 
   // Olive
-  'leuven-olive': 155,
   'faithful-olive': 156,
   'felt-olive': 157,
   'cord-fine-olive': 158,
