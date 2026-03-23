@@ -979,6 +979,8 @@ export function Canvas({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        position: 'relative' as const,
+        zIndex: 2,
         ...(easelMode ? {
           transform: 'rotateX(8deg)',
           transformStyle: 'preserve-3d' as const,
