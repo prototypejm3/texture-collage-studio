@@ -277,6 +277,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             clipPath: finalClipPath,
             borderRadius,
             filter,
+            userSelect: 'none',
+            pointerEvents: 'none',
           }}
         >
           <span
