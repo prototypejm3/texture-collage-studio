@@ -350,17 +350,17 @@ const Index = () => {
 
   const handleSelectVibe = useCallback((vibe: Vibe) => {
     studio.selectVibe(vibe);
-    if (sounds.kidMode) {
-      setShowStencilModePicker(true);
-    } else {
-      // Adult mode: always place as outline stencil immediately
-      studio.placeStencil('outline');
-    }
-  }, [studio, sounds.kidMode]);
+    setShowStencilSizePicker(true);
+  }, [studio]);
 
-  const handlePlaceStencilMode = useCallback((mode: StencilMode) => {
-    studio.placeStencil(mode);
-    setShowStencilModePicker(false);
+  const handlePlaceStencilSize = useCallback((size: string) => {
+    studio.placeStencil(size);
+    setShowStencilSizePicker(false);
+    const isKid = (() => { try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; } })();
+    toast({
+      title: isKid ? '✓ Added!' : 'Added to canvas',
+      duration: 1500,
+    });
   }, [studio]);
 
   // Auto-save to Room Box before clearing (kids never lose work)
