@@ -338,42 +338,6 @@ export function BottomBar({
         </>
       )}
 
-      {/* Room Theme picker — kid mode only */}
-      {kidMode && (
-        <>
-          <div className="w-px h-4 bg-border mx-0.5" />
-          <div className="relative" ref={roomThemeRef}>
-            <button
-              onClick={() => setShowRoomTheme(v => !v)}
-              className="flex items-center gap-1 px-2 py-1 rounded-lg transition-colors text-[11px] font-semibold"
-              style={{
-                background: showRoomTheme ? 'hsl(var(--primary))' : 'hsl(var(--secondary))',
-                color: showRoomTheme ? 'hsl(var(--primary-foreground))' : 'hsl(var(--secondary-foreground))',
-              }}
-            >
-              <span className="text-sm">🏠</span>
-              Room
-            </button>
-            <AnimatePresence>
-              {showRoomTheme && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowRoomTheme(false)} />
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute bottom-full left-0 mb-2 z-50 p-4 rounded-2xl shadow-xl border border-border"
-                    style={{ backgroundColor: '#fdf6ee' }}
-                  >
-                    <RoomThemePicker theme={roomTheme} onThemeChange={(t) => { setRoomTheme(t); setShowRoomTheme(false); }} />
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
-        </>
-      )}
 
       <div className="flex-1" />
     </div>
