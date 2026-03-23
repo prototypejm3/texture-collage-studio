@@ -580,7 +580,7 @@ export function TopToolbar({
                 </svg>
               </div>
               {/* Divider */}
-              <div className="w-px h-5" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="w-px h-5 bg-border" />
               {/* Grandma face */}
               <div className="flex items-center justify-center w-1/2 h-full">
                 <svg width="18" height="18" viewBox="0 0 28 28">
