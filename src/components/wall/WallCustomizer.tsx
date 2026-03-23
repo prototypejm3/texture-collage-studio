@@ -26,32 +26,8 @@ const kidBackgrounds: { value: WallBackground; label: string; kidLabel: string; 
   { value: 'wood-oak-wall', label: 'Linen', kidLabel: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6' },
 ];
 
-// ── Adult mode backgrounds (grouped) ──
-const adultBgGroups: { label: string; items: { value: WallBackground; label: string; fill: string; gradient?: string }[] }[] = [
-  {
-    label: 'Wood',
-    items: [
-      { value: 'wood-birch-wall', label: 'Birch', fill: '#d9a97c' },
-      { value: 'wood-oak-wall', label: 'Oak', fill: '#c4956a' },
-      { value: 'wood-walnut-wall', label: 'Walnut', fill: '#7c3f1e' },
-    ],
-  },
-  {
-    label: 'Brick',
-    items: [
-      { value: 'white-brick', label: 'White Brick', fill: '#f5f0ec' },
-      { value: 'brick', label: 'Red Brick', fill: '#c4a090' },
-    ],
-  },
-  {
-    label: 'Wallpaper',
-    items: [
-      { value: 'blush', label: 'Blush', fill: '#fdf0f0', gradient: '#f9a8d4' },
-      { value: 'floral', label: 'Floral', fill: '#f0f4ff', gradient: '#a78bfa' },
-      { value: 'mint', label: 'Mint', fill: '#f0fdf4', gradient: '#4ade80' },
-    ],
-  },
-];
+// ── Adult mode single wallpaper option ──
+const adultWallpaperOption = { value: 'floral' as WallBackground, label: 'Wallpaper', fill: '#f0f4ff', gradient: '#a78bfa' };
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'shadow-box', label: 'Shadow Box' },
@@ -790,32 +766,13 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       {/* ── GROUP 4: WALL ── */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="WALL" />
-        <div className="flex items-center gap-3">
-          {adultBgGroups.map((group, gi) => (
-            <div key={group.label} className="flex items-center gap-1.5">
-              <div className="flex flex-col items-center gap-0.5">
-                <span style={{ fontSize: 9, fontWeight: 500, color: '#94a3b8', fontFamily: 'system-ui, sans-serif' }}>{group.label}</span>
-                <div className="flex items-center gap-1">
-                  {group.items.map(bg => {
-                    const isWallpaper = group.label === 'Wallpaper';
-                    return (
-                      <WallSwatch
-                        key={bg.value}
-                        fill={bg.fill}
-                        pattern={isWallpaper ? bg.gradient : undefined}
-                        selected={settings.background === bg.value}
-                        onClick={() => onUpdate({ background: bg.value })}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-              {gi < adultBgGroups.length - 1 && (
-                <div style={{ width: 1, height: 40, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
-              )}
-            </div>
-          ))}
-
+        <div className="flex items-center gap-2">
+          <WallSwatch
+            fill={adultWallpaperOption.fill}
+            pattern={adultWallpaperOption.gradient}
+            selected={settings.background === adultWallpaperOption.value}
+            onClick={() => onUpdate({ background: adultWallpaperOption.value })}
+          />
           {/* Color wheel */}
           <div ref={colorPickerRef} className="relative">
             <ColorWheelButton
