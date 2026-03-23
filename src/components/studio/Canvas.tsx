@@ -486,10 +486,10 @@ export function Canvas({
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: deskInset,
-            right: deskInset,
-            top: deskInset,
-            bottom: deskInset,
+            left: deskInsetX,
+            right: deskInsetX,
+            top: deskInsetY,
+            bottom: deskInsetY,
             borderRadius: 16,
             overflow: 'hidden',
           }}>
