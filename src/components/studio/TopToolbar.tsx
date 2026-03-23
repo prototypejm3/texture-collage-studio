@@ -274,7 +274,7 @@ export function TopToolbar({
                   className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
                   style={{ backgroundColor: kidSoundsEnabled ? 'hsl(var(--toybox-sfx-bg))' : 'transparent' }}
                   title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
-                ><SpeakerIcon /></button>
+                ><MusicNoteIcon /></button>
                 {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
