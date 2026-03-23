@@ -830,16 +830,6 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
     }
   };
 
-  const handleHideOrDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isOwner || isAiGenerated) {
-      setFadingOut(true);
-      setTimeout(() => onDelete(), 300);
-    } else {
-      setFadingOut(true);
-      setTimeout(() => onToggleHidden(), 300);
-    }
-  };
 
   return (
     <motion.div
