@@ -1242,7 +1242,7 @@ const Index = () => {
                     <line x1="6" y1="16" x2="3" y2="23" />
                     <line x1="18" y1="16" x2="21" y2="23" />
                   </svg>
-                  Easel / Desk
+                  {easelMode ? 'Easel' : 'Desk'}
                 </button>
                 {/* Reset */}
                 <button onClick={handleClearAll} className="flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96]" title="Reset">

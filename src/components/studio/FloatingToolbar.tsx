@@ -376,7 +376,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
                 <motion.button
                   key={shape.id}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => onUpdate({ shape: shape.id })}
+                  onClick={() => onUpdate({ shape: shape.id, clipPathD: undefined })}
                   className={`flex items-center gap-0.5 px-2 py-1 rounded-full text-[9px] font-bold transition-all ${
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30'
@@ -448,7 +448,7 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
               <motion.button
                 key={shape.id}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => onUpdate({ shape: shape.id })}
+                onClick={() => onUpdate({ shape: shape.id, clipPathD: undefined })}
                 className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] font-bold transition-all ${
                   isActive
                     ? 'bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30'
