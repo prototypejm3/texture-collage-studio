@@ -40,7 +40,7 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="mb-2 p-3 rounded-2xl max-w-[200px] max-h-[160px] overflow-y-auto"
+            className="relative z-20 mb-2 p-3 rounded-2xl max-w-[200px] max-h-[160px] overflow-y-auto"
             style={{
               background: '#1e3a8a',
               boxShadow: '0 8px 24px rgba(30, 64, 175, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
