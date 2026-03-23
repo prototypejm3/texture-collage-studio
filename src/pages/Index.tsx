@@ -1164,6 +1164,25 @@ const Index = () => {
                   </svg>
                   <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
                 </button>
+                {/* Easel */}
+                <button
+                  onClick={() => setEaselMode(prev => !prev)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all active:scale-[0.94] text-[11px] font-medium border ${
+                    easelMode
+                      ? 'text-white border-transparent'
+                      : 'text-foreground border-border hover:bg-accent bg-secondary'
+                  }`}
+                  style={easelMode ? { backgroundColor: '#5a8a6a' } : undefined}
+                  title={easelMode ? 'Switch to flat desk' : 'Switch to easel'}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="4" y="3" width="16" height="13" rx="1" />
+                    <line x1="3" y1="16" x2="21" y2="16" />
+                    <line x1="6" y1="16" x2="3" y2="23" />
+                    <line x1="18" y1="16" x2="21" y2="23" />
+                  </svg>
+                  Easel
+                </button>
                 {/* Save */}
                 <button onClick={handleSaveToWall} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Save">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
