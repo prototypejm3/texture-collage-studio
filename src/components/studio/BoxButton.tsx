@@ -145,9 +145,9 @@ function AdultFrameIcon() {
 function AdultElementsIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 72 72" fill="none">
-      <polygon points="36,6 14,62 58,62" fill="#e8c49a"/>
-      <rect x="36" y="22" width="32" height="32" rx="5" fill="#d9a97c"/>
-      <circle cx="24" cy="34" r="18" fill="#c4956a"/>
+      <polygon points="36,6 14,62 58,62" fill="#c8e6d0"/>
+      <rect x="36" y="22" width="32" height="32" rx="5" fill="#a8d4b8"/>
+      <circle cx="24" cy="34" r="18" fill="#7aaa8a"/>
     </svg>
   );
 }
