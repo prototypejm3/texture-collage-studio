@@ -301,7 +301,7 @@ export function RightSidebar({
     : [
         { id: 'stencils', label: 'Templates', icon: Palette },
         { id: 'community', label: 'Community', icon: Globe },
-        ...(hiddenVibes.length > 0 ? [{ id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length }] : []),
+        { id: 'hidden' as Tab, label: 'Hidden', icon: EyeOff, count: hiddenVibes.length },
       ];
 
   return (
