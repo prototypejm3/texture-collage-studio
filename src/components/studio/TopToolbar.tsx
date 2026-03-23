@@ -7,6 +7,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
 import { SwatchboxLogo } from '@/components/SwatchboxLogo';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MobileHamburgerMenu } from './MobileHamburgerMenu';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
   HouseIcon, TentIcon,
