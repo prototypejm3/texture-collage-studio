@@ -127,11 +127,7 @@ export const kidTextureNames: Record<string, string> = {
   'prime-stone': 'River Rock',             // stone gray velvet
   'prime-peacock': 'Peacock Feather',      // deep teal velvet
 
-  // Tussah
-  'tussah-silk': 'Silk Ribbon',            // natural silk
-
   // Bloke
-  'bloke-cotton': 'Pillow White',          // white cotton
 
   // Leather
   'leather-bourbon': 'Honey Bear',        // warm honey-brown leather
