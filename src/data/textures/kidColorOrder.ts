@@ -11,7 +11,6 @@ export const kidColorOrder: Record<string, number> = {
   'nico-oyster': 15,
   'borough-cotton': 16,
   'cotton-natural': 18,
-  'cotton-natural': 18,
   'marble-carrara': 19,
 
   // Cream / beige / sand
