@@ -134,6 +134,11 @@ const Index = () => {
     }
   }, [studio.selectedSectionId]);
 
+  // Reset drawer drag position when switching panels
+  useEffect(() => {
+    setDrawerPos(null);
+  }, [activeBox]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
