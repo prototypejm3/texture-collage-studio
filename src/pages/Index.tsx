@@ -1149,36 +1149,6 @@ const Index = () => {
                 <BoxButton id="stencils" icon="🧸" label="Shapes" isActive={activeBox === 'stencils'}
                   onClick={() => toggleBox('stencils')} kidMode={true} />
               </div>
-              {/* Start Over / Save / Download */}
-              <div className="flex-1 flex items-center justify-end gap-3">
-                <button onClick={handleClearAll} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Start Over">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="5" y="6" width="14" height="14" rx="2" fill="#c4956a"/>
-                    <rect x="5" y="6" width="14" height="3" rx="1" fill="#a0724a"/>
-                    <rect x="8" y="9" width="2" height="8" rx="0.5" fill="#8B5E3C" opacity="0.6"/>
-                    <rect x="14" y="9" width="2" height="8" rx="0.5" fill="#8B5E3C" opacity="0.6"/>
-                  </svg>
-                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Start Over</span>
-                </button>
-                <button onClick={handleSaveToWall} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Save">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="4" y="4" width="16" height="16" rx="3" fill="#c4956a"/>
-                    <rect x="4" y="4" width="16" height="5" rx="1.5" fill="#a0724a"/>
-                    <rect x="7" y="6" width="10" height="2" rx="0.5" fill="#d4c4a8"/>
-                    <rect x="8" y="12" width="8" height="5" rx="1" fill="#f5ede0"/>
-                  </svg>
-                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Save</span>
-                </button>
-                <button onClick={handleExport} className="flex items-center gap-1.5 transition-transform active:scale-[0.93]" title="Download">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="5" y="14" width="14" height="6" rx="2" fill="#c4956a"/>
-                    <rect x="5" y="14" width="14" height="2" rx="1" fill="#a0724a"/>
-                    <path d="M12 4V13" stroke="#6b4c2a" strokeWidth="2" strokeLinecap="round"/>
-                    <polyline points="9,11 12,14 15,11" stroke="#6b4c2a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                  </svg>
-                  <span style={{ color: '#6b4c2a', fontSize: 12, fontWeight: 600, fontFamily: 'system-ui,sans-serif' }}>Download</span>
-                </button>
-              </div>
             </div>
           ) : (
             /* Adult mode: tools left, save/download right */
