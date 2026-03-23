@@ -301,8 +301,8 @@ export function useStudio() {
     accent: 'cotton-terracotta',
   };
 
-  // Place current stencil as free elements on canvas
-  const placeStencil = useCallback((mode: StencilMode = 'outline') => {
+  // Place current stencil as free elements on canvas (outline only)
+  const placeStencil = useCallback((sizeOrMode?: string) => {
     if (!activeVibe) return;
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
@@ -310,7 +310,9 @@ export function useStudio() {
     const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
-    const targetSize = 300;
+    // Size mapping: S=80, M=160, L=280
+    const sizeMap: Record<string, number> = { S: 80, M: 160, L: 280, outline: 300, filled: 300 };
+    const targetSize = sizeMap[sizeOrMode || 'M'] || 160;
     const scaleFactor = targetSize / Math.max(vbW, vbH);
 
     sections.forEach(section => {
