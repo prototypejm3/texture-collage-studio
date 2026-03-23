@@ -181,13 +181,7 @@ export function TopToolbar({
             <Link to="/" className="transition-transform active:scale-[0.94]">
               <SwatchboxLogo height={28} />
             </Link>
-            <button
-              onClick={handleKidToggle}
-              className="transition-all active:scale-[0.94] rounded-full overflow-hidden"
-              title="Switch to Granny Mode"
-            >
-              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-9 w-auto" />
-            </button>
+            <ModeTogglePillKid onClick={handleKidToggle} />
             <Link to="/"
               className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
               style={{ backgroundColor: '#f97316' }}
