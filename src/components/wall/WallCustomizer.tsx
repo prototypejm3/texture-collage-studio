@@ -510,8 +510,47 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
     isDragging.current = false;
   }, []);
 
-  // Kid mode — unchanged
+  // Kid mode
   if (kidMode) {
+    if (isMobile) {
+      // Mobile: compact circular icons in a fixed bottom bar
+      return (
+        <div
+          className="fixed left-0 right-0 z-30 flex items-center justify-center gap-2 px-3"
+          style={{
+            bottom: 48,
+            height: 56,
+            background: 'rgba(253,246,238,0.95)',
+            backdropFilter: 'blur(12px)',
+            borderTop: '2px solid #e2ddd6',
+          }}
+        >
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#5a7a8a', letterSpacing: 0.5 }}>Wall:</span>
+          {kidBackgrounds.map(bg => {
+            const isSelected = settings.background === bg.value;
+            const IconComp = wallIcons[bg.value];
+            return (
+              <button
+                key={bg.value}
+                onClick={() => onUpdate({ background: bg.value })}
+                className="rounded-full transition-transform hover:scale-110 overflow-hidden flex-shrink-0 flex items-center justify-center"
+                style={{
+                  width: 38, height: 38,
+                  backgroundColor: bg.fill,
+                  border: `${isSelected ? '3px' : '1.5px'} solid ${isSelected ? '#f97316' : '#e2ddd6'}`,
+                  boxShadow: isSelected ? '0 0 0 2px #f9731640' : 'none',
+                }}
+                title={bg.kidLabel}
+              >
+                {IconComp && <IconComp />}
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+
+    // Desktop kid mode
     return (
       <div className="flex flex-wrap items-center gap-4 px-1">
         <div className="mr-auto" />
