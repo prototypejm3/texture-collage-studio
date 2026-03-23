@@ -174,6 +174,48 @@ export function TrashCanIcon() {
   );
 }
 
+export function TrashCanIconAnimated({ lidOpen }: { lidOpen: boolean }) {
+  return (
+    <svg width="51" height="51" viewBox="0 0 40 40" fill="none">
+      <ellipse cx="20" cy="36" rx="10" ry="2.5" fill="#b07d52" opacity="0.3" />
+      <path d="M10 14 C10 12 11 11 13 11 L27 11 C29 11 30 12 30 14 L30 32 C30 34 28 36 25 36 L15 36 C12 36 10 34 10 32 Z" fill="#c4956a" />
+      <path d="M12 14 C12 13 13 12 14 12 L26 12 C27 12 28 13 28 14 L28 31 C28 33 26.5 34.5 24 34.5 L16 34.5 C13.5 34.5 12 33 12 31 Z" fill="#d9a97c" />
+      <line x1="15" y1="13" x2="15" y2="34" stroke="#c4956a" strokeWidth="0.6" opacity="0.4" />
+      <line x1="20" y1="12" x2="20" y2="35" stroke="#c4956a" strokeWidth="0.6" opacity="0.3" />
+      <line x1="25" y1="13" x2="25" y2="34" stroke="#c4956a" strokeWidth="0.6" opacity="0.4" />
+      {/* Lid — animates open/close */}
+      <g style={{
+        transformOrigin: '8px 10.5px',
+        transform: lidOpen ? 'rotate(-25deg) translateY(-3px)' : 'rotate(0deg) translateY(0)',
+        transition: 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+      }}>
+        <rect x="8" y="9" width="24" height="3.5" rx="1.8" fill="#c4956a" stroke="#a0713a" strokeWidth="0.6" />
+        <rect x="15" y="5.5" width="10" height="4.5" rx="2.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.6" />
+        <rect x="16.5" y="6.5" width="7" height="2.5" rx="1.2" fill="#d9a97c" />
+      </g>
+      <circle cx="16" cy="23" r="1.5" fill="#6b4c2a" />
+      <circle cx="24" cy="23" r="1.5" fill="#6b4c2a" />
+      <circle cx="16.5" cy="22.3" r="0.5" fill="white" opacity="0.6" />
+      <circle cx="24.5" cy="22.3" r="0.5" fill="white" opacity="0.6" />
+      <ellipse cx="13.5" cy="25.5" rx="2" ry="1.3" fill="#f4a6a0" opacity="0.45" />
+      <ellipse cx="26.5" cy="25.5" rx="2" ry="1.3" fill="#f4a6a0" opacity="0.45" />
+      {lidOpen ? (
+        <ellipse cx="20" cy="28" rx="4" ry="3" fill="#6b4c2a" />
+      ) : (
+        <path d="M16 27 Q20 31 24 27" stroke="#6b4c2a" strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      )}
+      <circle cx="6" cy="13" r="1.2" fill="#f87171" />
+      <circle cx="34" cy="15" r="1.2" fill="#fbbf24" />
+      <circle cx="7" cy="22" r="1" fill="#4ade80" />
+      <circle cx="33" cy="25" r="1.1" fill="#38bdf8" />
+      <circle cx="32" cy="10" r="1" fill="#a78bfa" />
+      <circle cx="8" cy="9" r="1.1" fill="#f97316" />
+      <circle cx="34" cy="32" r="0.9" fill="#f87171" />
+      <circle cx="6" cy="30" r="0.8" fill="#fbbf24" />
+    </svg>
+  );
+}
+
 export function SaveBoxIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
