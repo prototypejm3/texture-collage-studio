@@ -73,79 +73,8 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
 
   return (
     <div ref={containerRef} className="flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
-      {/* Swatch grid when open */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="relative z-20 mb-1 p-3 max-w-[220px] max-h-[160px] overflow-y-auto"
-            style={{
-              background: '#78350f',
-              borderRadius: '0 0 16px 16px',
-              boxShadow: '0 8px 24px rgba(120, 53, 15, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
-            }}
-          >
-            {items.length === 0 ? (
-              <div className="flex flex-col items-center gap-1 py-2">
-                <svg width="20" height="20" viewBox="0 0 20 20">
-                  <path d="M10 0L12 7.5L20 10L12 12.5L10 20L8 12.5L0 10L8 7.5Z" fill="#fbbf24" opacity="0.6"/>
-                </svg>
-                <p className="text-center text-[11px] font-medium" style={{ color: '#c4956a' }}>
-                  Add your first color!
-                </p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-3 gap-2">
-                {items.map(item => {
-                  const tex = allTextures.find(t => t.id === item.textureId);
-                  return (
-                    <div
-                      key={item.id}
-                      className="relative group cursor-grab active:cursor-grabbing hover:scale-110 transition-transform"
-                      draggable
-                      onDragStart={(e) => {
-                        e.dataTransfer.setData('textureId', item.textureId);
-                        e.dataTransfer.setData('fromBox', item.id);
-                      }}
-                      onDragEnd={(e) => {
-                        if (e.dataTransfer.dropEffect !== 'none') onDragOutItem(item);
-                      }}
-                      onClick={() => onDragOutItem(item)}
-                    >
-                      {tex && (
-                        <div
-                          style={{
-                            width: 52,
-                            height: 52,
-                            borderRadius: 8,
-                            background: tex.cssBackground,
-                            backgroundSize: tex.cssBackground.startsWith('url(') ? 'cover' : '20px 20px',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-                          }}
-                        />
-                      )}
-                      <p className="text-[10px] mt-0.5 truncate text-center" style={{ color: '#f5ede0', maxWidth: 52 }}>
-                        {kidTextureNames[tex?.id || ''] || tex?.name || ''}
-                      </p>
-                      <button
-                        data-box-item-remove
-                        onClick={(e) => { e.stopPropagation(); onRemoveItem(item.id); }}
-                        className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: '#ef4444', color: 'white' }}
-                      >
-                        <X className="w-2.5 h-2.5" />
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+
 
       {/* The treasure chest */}
       <motion.div
