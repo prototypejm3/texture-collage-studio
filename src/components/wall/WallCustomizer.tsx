@@ -675,22 +675,26 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Hanging"
             />
             <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
-              {['Style', 'String', 'Nail'].map(group => {
-                const items = hangingStyles.filter(h => h.group === group);
-                if (!items.length) return null;
-                return (
-                  <div key={group}>
-                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
-                    {items.map(hs => (
-                      <button key={hs.value}
-                        onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
-                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium' : ''}`}
-                        style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
-                      >{hs.label}</button>
-                    ))}
-                  </div>
-                );
-              })}
+              <div className="grid grid-cols-3 gap-2">
+                {['Style', 'String', 'Nail'].map(group => {
+                  const items = hangingStyles.filter(h => h.group === group);
+                  if (!items.length) return null;
+                  return (
+                    <div key={group} className="min-w-[90px]">
+                      <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                      <div className="space-y-1">
+                        {items.map(hs => (
+                          <button key={hs.value}
+                            onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
+                            className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`}
+                            style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
+                          >{hs.label}</button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </DropdownMenu>
           </div>
 
