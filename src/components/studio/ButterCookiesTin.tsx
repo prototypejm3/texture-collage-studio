@@ -256,7 +256,7 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
             fontSize: 13,
             fontWeight: 600,
             color: '#3d3530',
-          }}>Butter Cookies</span>
+          }}>Swatch Tin</span>
         </div>
       </motion.div>
     </div>
