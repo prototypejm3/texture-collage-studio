@@ -166,9 +166,9 @@ export function SaveBoxIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       {/* Box body */}
-      <rect x="3" y="8" width="12" height="8" rx="1" fill="#c4956a" stroke="#a0713a" strokeWidth="0.8" />
+      <rect x="3" y="8" width="12" height="8" rx="1" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="0.8" />
       {/* Lid */}
-      <path d="M2 8 L5 4 L13 4 L16 8 Z" fill="#d9a97c" stroke="#a0713a" strokeWidth="0.8" strokeLinejoin="round" />
+      <path d="M2 8 L5 4 L13 4 L16 8 Z" fill="#a8d4b8" stroke="#5a8a6a" strokeWidth="0.8" strokeLinejoin="round" />
       {/* Tape */}
       <rect x="7.5" y="3.5" width="3" height="12" rx="0.5" fill="#f7f0e8" opacity="0.4" />
     </svg>
