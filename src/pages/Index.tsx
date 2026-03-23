@@ -78,6 +78,7 @@ const Index = () => {
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [showStencilSizePicker, setShowStencilSizePicker] = useState(false);
   const { activeBox, toggleBox, closeBox, openBox } = useActiveBox();
+  const [roomTheme, setRoomTheme] = useRoomTheme();
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
   const [drawerPos, setDrawerPos] = useState<{ x: number; y: number } | null>(null);
