@@ -186,7 +186,7 @@ export function TopToolbar({
               className="transition-all active:scale-[0.94] rounded-full overflow-hidden ring-2 ring-blue-500"
               title="Switch to Granny Mode"
             >
-              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-6 w-auto" />
+              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-9 w-auto" />
             </button>
             <Link to="/"
               className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
