@@ -98,7 +98,7 @@ export function MobileHamburgerMenu({
                     onClick={() => window.location.href = '/wall'}
                   />
                   <MenuItem
-                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,2 2,8 18,8" fill="#c4956a"/><rect x="4" y="8" width="12" height="8" fill="#d9a97c"/></svg>}
+                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,2 2,8 18,8" fill="#7aaa8a"/><rect x="4" y="8" width="12" height="8" fill="#a8d4b8"/></svg>}
                     label="Show & Tell"
                     onClick={() => window.location.href = '/gallery'}
                   />
