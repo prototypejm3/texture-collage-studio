@@ -294,6 +294,8 @@ export function RightSidebar({
   // Hidden stencils: built-in vibes that are hidden
   const hiddenVibes = vibes.filter(v => social.hiddenIds.has(v.id));
 
+  const templateInputRef2 = useRef<HTMLInputElement>(null);
+
   const tabs: { id: Tab; label: string; icon: any; count?: number }[] = kidMode
     ? [{ id: 'stencils', label: 'Shapes', icon: Palette }]
     : [
@@ -305,10 +307,9 @@ export function RightSidebar({
   return (
     <div className="flex flex-col h-full bg-card">
       {/* Tab switcher */}
-      {/* Filter pills — matches texture category pills */}
       {!kidMode && (
       <div className="px-2 py-1 border-b border-border bg-secondary/30">
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1 items-center">
           {tabs.map(tab => (
             <button
               key={tab.id}
@@ -326,6 +327,50 @@ export function RightSidebar({
               )}
             </button>
           ))}
+          {/* Reference upload button — sits next to Community in green */}
+          {!customTemplate ? (
+            <>
+              <button
+                onClick={() => isPremium ? templateInputRef2.current?.click() : onRequestUpgrade()}
+                className={`flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
+                  isPremium
+                    ? 'bg-[hsl(145,25%,38%)] text-white hover:bg-[hsl(145,25%,32%)]'
+                    : 'bg-secondary/50 text-muted-foreground/60 cursor-not-allowed'
+                }`}
+                title={isPremium ? 'Upload reference image' : 'Premium feature'}
+              >
+                {isPremium ? <ImagePlus className="w-2.5 h-2.5" /> : <Lock className="w-2.5 h-2.5" />}
+                Reference
+              </button>
+              <input
+                ref={templateInputRef2}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file && file.type.startsWith('image/')) onUploadTemplate(file);
+                  e.target.value = '';
+                }}
+              />
+            </>
+          ) : (
+            <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[hsl(145,25%,38%)] text-white text-[10px]">
+              <span className="truncate max-w-[60px]" title={customTemplate.name}>📷 {customTemplate.name}</span>
+              <input
+                type="range"
+                min={5}
+                max={80}
+                step={5}
+                value={templateOpacity * 100}
+                onChange={(e) => onTemplateOpacityChange(Number(e.target.value) / 100)}
+                className="w-10 h-1 accent-white"
+              />
+              <button onClick={onClearTemplate} className="p-0.5 rounded hover:bg-white/20 transition-colors" title="Remove reference">
+                <X className="w-2.5 h-2.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       )}
