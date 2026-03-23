@@ -127,13 +127,14 @@ interface BubbleAction {
 }
 
 const kidBubbleActions: BubbleAction[] = [
-  { id: 'grow',   emoji: '±',  label: 'Size',   angle: -108, sound: 'grow' },
-  { id: 'cut',    emoji: '🖼️', label: 'Frame',  angle: -60,  sound: 'pop' },
-  { id: 'hang',   emoji: '📌', label: 'Hang',   angle: -12,  sound: 'pop' },
-  { id: 'spin',   emoji: '🔄', label: 'Spin',   angle: 36,   sound: 'spin' },
-  { id: 'save',   emoji: '📦', label: 'Box',    angle: 84,   sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
-  { id: 'open',   emoji: '🖍️', label: 'Open',   angle: 132,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
-  { id: 'delete', emoji: '🗑️', label: 'Delete', angle: 180,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
+  { id: 'grow',    emoji: '±',  label: 'Size',      angle: -120, sound: 'grow' },
+  { id: 'cut',     emoji: '🖼️', label: 'Frame',     angle: -75,  sound: 'pop' },
+  { id: 'hang',    emoji: '📌', label: 'Hang',      angle: -30,  sound: 'pop' },
+  { id: 'spin',    emoji: '🔄', label: 'Spin',      angle: 15,   sound: 'spin' },
+  { id: 'gallery', emoji: '⭐', label: 'Share!',    angle: 60,   sound: 'sparkle', color: 'hsl(280, 60%, 90%)' },
+  { id: 'save',    emoji: '📦', label: 'Box',       angle: 105,  sound: 'sparkle', color: 'hsl(45, 80%, 90%)' },
+  { id: 'open',    emoji: '🖍️', label: 'Open',      angle: 150,  sound: 'pop',     color: 'hsl(200, 70%, 90%)' },
+  { id: 'delete',  emoji: '🗑️', label: 'Delete',    angle: 195,  sound: 'poof',    color: 'hsl(0, 70%, 92%)' },
 ];
 
 const kidHangCycle: HangingStyle[] = ['red-tack', 'cork-tack', 'string', 'floating'];
