@@ -1075,7 +1075,7 @@ const Index = () => {
 
         {/* Kid mode actions — horizontal below canvas */}
         {sounds.kidMode && (
-          <div className="flex items-center justify-center gap-4 py-1.5 shrink-0">
+          <div className="w-full flex items-center justify-center gap-4 py-1.5 shrink-0">
             <button onClick={handleClearAll} className="flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg" title="Start Over">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <rect x="5" y="6" width="14" height="14" rx="2" fill="#c4956a"/>
