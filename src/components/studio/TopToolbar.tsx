@@ -156,16 +156,55 @@ export function TopToolbar({
 
   const pressStyle = "transition-transform duration-150 ease-out active:scale-[0.96]";
 
+  // Shared mobile hamburger props
+  const mobileMenuProps = {
+    kidMode, dark, onToggleTheme: toggle,
+    ambientSound: ambientSound as string | undefined,
+    onAmbientSoundChange,
+    kidSoundsEnabled, onKidSoundsToggle,
+    onClear, onSave,
+    aiEnabled, onAiToggle: handleAiToggle,
+  };
+
   return (
     <>
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
-        ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
+        ? 'h-[56px] md:h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
         : 'h-[56px] border-b'
     }`}
     style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
-      {kidMode ? (
+      {kidMode && isMobile ? (
+        /* ── Kid Mode MOBILE Nav ── */
+        <>
+          <div className="flex items-center gap-1.5">
+            <Link to="/" className="transition-transform active:scale-[0.94]">
+              <SwatchboxLogo height={28} />
+            </Link>
+            <button
+              onClick={handleKidToggle}
+              className="transition-all active:scale-[0.94] rounded-full overflow-hidden ring-2 ring-blue-500"
+              title="Switch to Granny Mode"
+            >
+              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-6 w-auto" />
+            </button>
+            <Link to="/"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
+              style={{ backgroundColor: '#f97316' }}
+            >
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+              </svg>
+              Create
+            </Link>
+          </div>
+          <div className="flex-1" />
+          <MobileHamburgerMenu {...mobileMenuProps} />
+        </>
+      ) : kidMode ? (
+        /* ── Kid Mode DESKTOP Nav ── */
+        <>
         /* ── Kid Mode Nav ── */
         <>
           <div className="flex items-center gap-1.5 md:gap-3">
