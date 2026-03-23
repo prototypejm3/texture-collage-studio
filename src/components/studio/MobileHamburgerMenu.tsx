@@ -28,9 +28,9 @@ export function MobileHamburgerMenu({
   // Close on route change
   useEffect(() => { setOpen(false); }, []);
 
-  const accentColor = kidMode ? '#c4956a' : '#5a8a6a';
+  const accentColor = kidMode ? '#7aaa8a' : '#5a8a6a';
   const bgColor = kidMode ? 'hsl(var(--toybox-bg))' : '#faf8f5';
-  const textColor = kidMode ? '#6b4c2a' : '#3d3530';
+  const textColor = kidMode ? '#3a5c4a' : '#3d3530';
   const mutedColor = '#94a3b8';
 
   const MenuItem = ({ icon, label, onClick, active }: { icon: React.ReactNode; label: string; onClick?: () => void; active?: boolean }) => (
@@ -93,18 +93,18 @@ export function MobileHamburgerMenu({
               {kidMode ? (
                 <>
                   <MenuItem
-                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><path d="M10 2L2 9H4V16H8V12H12V12H16V9H18L10 2Z" fill="#c4956a"/></svg>}
+                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><path d="M10 2L2 9H4V16H8V12H12V12H16V9H18L10 2Z" fill="#7aaa8a"/></svg>}
                     label="My Room"
                     onClick={() => window.location.href = '/wall'}
                   />
                   <MenuItem
-                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,2 2,8 18,8" fill="#c4956a"/><rect x="4" y="8" width="12" height="8" fill="#d9a97c"/></svg>}
+                    icon={<svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,2 2,8 18,8" fill="#7aaa8a"/><rect x="4" y="8" width="12" height="8" fill="#a8d4b8"/></svg>}
                     label="Show & Tell"
                     onClick={() => window.location.href = '/gallery'}
                   />
                   {onAiToggle && (
                     <MenuItem
-                      icon={<svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#c4956a"/></svg>}
+                      icon={<svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#7aaa8a"/></svg>}
                       label={`AI Mode ${aiEnabled ? '(On)' : '(Off)'}`}
                       onClick={onAiToggle}
                       active={aiEnabled}

@@ -53,12 +53,14 @@
 
     /* Toybox kid-mode palette */
     --toybox-bg: 37 60% 96%;
-    --toybox-border: 33 30% 88%;
-    --toybox-text: 27 45% 28%;
-    --toybox-card: 33 40% 95%;
+    --toybox-border: 145 20% 78%;
+    --toybox-text: 145 30% 28%;
+    --toybox-card: 145 25% 92%;
     --toybox-orange: 24 95% 53%;
-    --toybox-wood: 27 40% 45%;
+    --toybox-wood: 145 25% 42%;
     --toybox-sfx-bg: 0 70% 93%;
+    --toybox-accent: 145 30% 55%;
+    --toybox-accent-light: 145 30% 72%;
   }
 
   .dark {
@@ -98,12 +100,14 @@
 
     /* Toybox kid-mode palette — dark */
     --toybox-bg: 220 30% 18%;
-    --toybox-border: 220 20% 28%;
-    --toybox-text: 33 30% 82%;
+    --toybox-border: 145 15% 32%;
+    --toybox-text: 145 20% 78%;
     --toybox-card: 220 25% 22%;
     --toybox-orange: 24 90% 55%;
-    --toybox-wood: 27 30% 55%;
+    --toybox-wood: 145 20% 50%;
     --toybox-sfx-bg: 0 40% 25%;
+    --toybox-accent: 145 25% 48%;
+    --toybox-accent-light: 145 20% 60%;
   }
 }
 
