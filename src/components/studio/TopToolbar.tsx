@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FrameStyle, AmbientSound } from '@/types/wall';
@@ -151,6 +152,60 @@ export function TopToolbar({
 
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
+  // ── Mode toggle pill for kid mode (matches granny mode style) ──
+  const ModeTogglePillKid = ({ onClick }: { onClick: () => void }) => (
+    <motion.button
+      whileTap={{ scale: 0.93 }}
+      onClick={onClick}
+      className="flex items-center rounded-full overflow-hidden flex-shrink-0 transition-all hover:scale-105"
+      style={{ backgroundColor: '#5a8a6a', width: 96, height: 44, padding: 3 }}
+      title="Switch to Granny Mode"
+    >
+      {/* Kid side — active */}
+      <div className="flex items-center justify-center rounded-full" style={{ width: 38, height: 38, backgroundColor: '#dfe8df', boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>
+        <svg width={28} height={28} viewBox="0 0 40 40">
+          <circle cx="10" cy="10" r="6" fill="#c4956a" />
+          <circle cx="10" cy="10" r="3.5" fill="#dbb896" />
+          <circle cx="30" cy="10" r="6" fill="#c4956a" />
+          <circle cx="30" cy="10" r="3.5" fill="#dbb896" />
+          <circle cx="20" cy="22" r="14" fill="#c4956a" />
+          <circle cx="20" cy="24" r="10" fill="#dbb896" />
+          <circle cx="15" cy="22" r="2" fill="#3d2b1f" />
+          <circle cx="25" cy="22" r="2" fill="#3d2b1f" />
+          <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
+          <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
+          <circle cx="15.5" cy="8" r="1" fill="#e05c5c" />
+          <circle cx="20" cy="5.5" r="1" fill="#e05c5c" />
+          <circle cx="24.5" cy="8" r="1" fill="#e05c5c" />
+        </svg>
+      </div>
+      {/* Arrow */}
+      <div className="flex-1 flex items-center justify-center">
+        <svg width="14" height="10" viewBox="0 0 16 10" fill="none">
+          <line x1="2" y1="5" x2="12" y2="5" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+          <polyline points="10,2 13,5 10,8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.6" />
+        </svg>
+      </div>
+      {/* Granny side — inactive */}
+      <div className="flex items-center justify-center rounded-full" style={{ width: 38, height: 38 }}>
+        <svg width={22} height={22} viewBox="0 0 40 40">
+          <circle cx="20" cy="8" r="5" fill="#a0a0a0" />
+          <circle cx="18" cy="6" r="1.2" fill="#fbbf24" />
+          <circle cx="22" cy="6" r="1.2" fill="#fbbf24" />
+          <circle cx="8" cy="18" r="4" fill="#a0a0a0" />
+          <circle cx="32" cy="18" r="4" fill="#a0a0a0" />
+          <circle cx="20" cy="22" r="13" fill="#dbb896" />
+          <rect x="10" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+          <rect x="22" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+          <line x1="18" y1="21" x2="22" y2="21" stroke="#5a8a6a" strokeWidth="1.5" />
+          <circle cx="14" cy="21" r="1.5" fill="#3d2b1f" />
+          <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
+          <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      </div>
+    </motion.button>
+  );
+
   // ── Adult Mode SVG Icons ──
   const NavDivider = () => <div className="w-px h-10 flex-shrink-0 bg-border" />;
 
@@ -181,13 +236,7 @@ export function TopToolbar({
             <Link to="/" className="transition-transform active:scale-[0.94]">
               <SwatchboxLogo height={28} />
             </Link>
-            <button
-              onClick={handleKidToggle}
-              className="transition-all active:scale-[0.94] rounded-full overflow-hidden"
-              title="Switch to Granny Mode"
-            >
-              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-9 w-auto" />
-            </button>
+            <ModeTogglePillKid onClick={handleKidToggle} />
             <Link to="/"
               className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
               style={{ backgroundColor: '#f97316' }}
@@ -296,14 +345,8 @@ export function TopToolbar({
                 </button>
               </>
             )}
-             {/* Mode toggle replaces user info in kid mode */}
-             <button
-               onClick={handleKidToggle}
-                className="transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden"
-                title="Switch to Granny Mode"
-              >
-                <img src={kidGrannyToggle} alt="Kids → Granny" className="h-14 w-auto" />
-             </button>
+             {/* Mode toggle — same style as granny mode */}
+             <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
       ) : !kidMode && isMobile ? (
@@ -343,37 +386,7 @@ export function TopToolbar({
           <div className="flex-1" />
           <div className="flex items-center gap-1.5">
             <MobileHamburgerMenu {...mobileMenuProps} />
-            <button
-              onClick={handleKidToggle}
-              className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-              style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 48, height: 22 }}
-              title="Switch to Kids Mode"
-            >
-              <div className="flex items-center justify-center w-1/2 h-full">
-                <svg width="12" height="12" viewBox="0 0 28 28">
-                  <circle cx="14" cy="16" r="10" fill="white"/>
-                  <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                  <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                  <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
-                  <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
-                  <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
-                  <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
-                </svg>
-              </div>
-              <div className="w-px h-3 bg-border" />
-              <div className="flex items-center justify-center w-1/2 h-full">
-                <svg width="12" height="12" viewBox="0 0 28 28">
-                  <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
-                  <ellipse cx="14" cy="7" rx="10" ry="5" fill="#c4c4c4"/>
-                  <circle cx="14" cy="4" r="4" fill="#b0b0b0"/>
-                  <circle cx="10" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
-                  <circle cx="18" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
-                  <circle cx="10" cy="15" r="1" fill="#5a4a3a"/>
-                  <circle cx="18" cy="15" r="1" fill="#5a4a3a"/>
-                  <path d="M12 19 Q14 21 16 19" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
-                </svg>
-              </div>
-            </button>
+            <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
       ) : (

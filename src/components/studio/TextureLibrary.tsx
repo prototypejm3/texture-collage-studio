@@ -62,17 +62,17 @@ interface TextureGroup {
 // Adult mode: 12 detailed groups
 const adultGroups: TextureGroup[] = [
   { label: 'Velvet', kidLabel: '', categories: ['Royale', 'Banks', 'Prime', 'Kenley'] },
-  { label: 'Soft', kidLabel: '', categories: ['Crave', 'Bentley', 'Lucky'] },
+  { label: 'Stripe', kidLabel: '', categories: ['Crave', 'Bentley', 'Lucky'] },
   { label: 'Linen', kidLabel: '', categories: ['Milo', 'Faithful', 'Leuven', 'Merit', 'Villa'] },
   
   { label: 'Woven', kidLabel: '', categories: ['Cody', 'Bubbly', 'Synergy', 'Checker'] },
   { label: 'Textured', kidLabel: '', categories: ['Karina', 'Borough', 'Soul', 'Nepal', 'Sorrento', 'Sunbrella', 'Key Largo'] },
-  { label: 'Smooth', kidLabel: '', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
-  { label: 'Cotton & Felt', kidLabel: '', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
+  { label: 'Cotton', kidLabel: '', categories: ['Flat Silk', 'Tussah', 'Essence', 'Nico'] },
+  { label: 'Felt', kidLabel: '', categories: ['Taylor Felt', 'Bloke', 'Felt', 'Cotton', 'Yarn', 'Corduroy'] },
   { label: 'Leather', kidLabel: '', categories: ['Leather'] },
   { label: 'Hard', kidLabel: '', categories: ['Wood', 'Marble', 'Concrete'] },
   { label: 'Patterns', kidLabel: '', categories: ['Animal', 'Stripe', 'Grid', 'Ripple', 'Speckle', 'Tie-dye', 'Maze', 'Riviera', 'Kaplan', 'Skott'] },
-  { label: 'Signature', kidLabel: '', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup'] },
+  { label: 'Signature', kidLabel: '', categories: ['Alix', 'Corinne', 'Nicole', 'ShayShari', 'Suede Ace', 'Jayme', 'Byrd', 'JaymeLyn', 'Claude', 'Gemini', 'Chat', 'Bisous', 'Sunny Pup', 'Magenta Mrstik', "Shelly's Volleyball"] },
 ];
 
 // Kid mode: 6 simplified mega-groups
