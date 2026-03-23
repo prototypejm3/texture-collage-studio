@@ -77,7 +77,7 @@ export const kidTextureNames: Record<string, string> = {
   'nepal-teal': 'Parrot Feather',          // teal textured
 
   // Sorrento
-  'sorrento-teal': 'Sea Glass',            // teal textured
+  'sorrento-teal': 'Sun Ray',              // teal textured
 
   // Kenley
   'kenley-spruce': 'Pine Tree',            // dark green velvet
