@@ -482,7 +482,7 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
         <div className="w-px h-6 bg-border mx-1" />
         <div className="flex items-center gap-1">
           <RotateCw className="w-3 h-3 text-muted-foreground" />
-          <input type="number" value={element.rotation} onChange={e => onUpdate({ rotation: Number(e.target.value) })} className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none" />
+          <input type="number" value={element.rotation} onChange={e => onUpdate({ rotation: Number(e.target.value) })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
           <span className="text-[10px] text-muted-foreground">°</span>
         </div>
         <div className="w-px h-6 bg-border mx-1" />
