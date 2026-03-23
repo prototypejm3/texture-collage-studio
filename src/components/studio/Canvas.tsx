@@ -470,24 +470,26 @@ export function Canvas({
 
       {/* Wood desk surface — rectangular desk with rounded corners and concrete border */}
       {!easelMode && (() => {
-        const deskInset = kidMode ? 56 : 28;
+        const isNarrow = containerSize.width > 0 && containerSize.width < 768;
+        const deskInsetX = kidMode ? (isNarrow ? 16 : 56) : (isNarrow ? 12 : 28);
+        const deskInsetY = kidMode ? (isNarrow ? 56 : 56) : (isNarrow ? 48 : 28);
         return (
         <>
           {/* Desk shadow on floor */}
           <div className="absolute pointer-events-none" style={{
-            left: deskInset,
-            right: deskInset,
-            top: deskInset,
-            bottom: deskInset,
+            left: deskInsetX,
+            right: deskInsetX,
+            top: deskInsetY,
+            bottom: deskInsetY,
             borderRadius: 16,
             boxShadow: '0 12px 60px rgba(0,0,0,0.45), 0 4px 20px rgba(0,0,0,0.25)',
           }} />
           {/* Desk wood surface */}
           <div className="absolute pointer-events-none" style={{
-            left: deskInset,
-            right: deskInset,
-            top: deskInset,
-            bottom: deskInset,
+            left: deskInsetX,
+            right: deskInsetX,
+            top: deskInsetY,
+            bottom: deskInsetY,
             borderRadius: 16,
             overflow: 'hidden',
           }}>
