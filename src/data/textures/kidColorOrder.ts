@@ -57,7 +57,6 @@ export const kidColorOrder: Record<string, number> = {
   'alix-blush': 76,
   'alix-rose': 77,
   'marble-rosa': 78,
-  'shayshari-berry': 79,
   'crave-berry-hibiscus': 80,
   'royale-hacienda': 81,
   'banks-currant': 82,
