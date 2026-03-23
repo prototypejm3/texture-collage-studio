@@ -552,11 +552,7 @@ export function RightSidebar({
                   {kidMode && communityVibes.length > 0 && (
                     <button
                       onClick={() => setActiveCategory('Community')}
-                      className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] ${
-                        activeCategory === 'Community'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                      }`}
+                      className={`rounded-full transition-all font-semibold px-1.5 py-0.5 text-[9px] bg-secondary text-secondary-foreground hover:bg-accent`}
                     >
                       🎪 Friends
                     </button>
