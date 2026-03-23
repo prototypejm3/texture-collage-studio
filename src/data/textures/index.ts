@@ -86,8 +86,6 @@ export const textures: TextureSwatch[] = [
   // ── Villa ──
   { id: 'villa-sand', name: 'Paloma', category: 'Villa', cssBackground: img('villa-sand.png') },
 
-  // ── Leuven ──
-  { id: 'leuven-olive', name: 'Vesper', category: 'Leuven', cssBackground: img('leuven-olive.png') },
 
   // ── Key Largo ──
   { id: 'keylargo-zenith-teal', name: 'Daiquiri', category: 'Key Largo', cssBackground: img('keylargo-zenith-teal.png') },
