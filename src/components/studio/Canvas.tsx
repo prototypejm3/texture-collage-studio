@@ -209,9 +209,15 @@ export function Canvas({
   }, [kidCanvasStyle]);
 
   const isOverBox = useCallback((clientX: number, clientY: number) => {
-    if (!boxRef.current || !kidMode) return false;
-    const rect = boxRef.current.getBoundingClientRect();
-    return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+    if (kidMode) {
+      if (!boxRef.current) return false;
+      const rect = boxRef.current.getBoundingClientRect();
+      return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+    } else {
+      if (!adultBoxRef.current) return false;
+      const rect = adultBoxRef.current.getBoundingClientRect();
+      return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+    }
   }, [kidMode]);
 
   // Check if a mouse position is over the trash zone
