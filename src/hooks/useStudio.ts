@@ -664,12 +664,12 @@ export function useStudio() {
         const sorted = [...prev].sort((a, b) => a.zIndex - b.zIndex);
         const idx = sorted.findIndex(e => e.id === id);
         if (idx < 0 || idx >= sorted.length - 1) return prev;
-        const myZ = sorted[idx].zIndex;
-        const aboveZ = sorted[idx + 1].zIndex;
+        // Reassign sequential zIndex values with the two swapped
+        const swapped = [...sorted];
+        [swapped[idx], swapped[idx + 1]] = [swapped[idx + 1], swapped[idx]];
         return prev.map(e => {
-          if (e.id === id) return { ...e, zIndex: aboveZ };
-          if (e.id === sorted[idx + 1].id) return { ...e, zIndex: myZ };
-          return e;
+          const newIdx = swapped.findIndex(s => s.id === e.id);
+          return { ...e, zIndex: newIdx };
         });
       });
     }, []),
@@ -678,12 +678,11 @@ export function useStudio() {
         const sorted = [...prev].sort((a, b) => a.zIndex - b.zIndex);
         const idx = sorted.findIndex(e => e.id === id);
         if (idx <= 0) return prev;
-        const myZ = sorted[idx].zIndex;
-        const belowZ = sorted[idx - 1].zIndex;
+        const swapped = [...sorted];
+        [swapped[idx], swapped[idx - 1]] = [swapped[idx - 1], swapped[idx]];
         return prev.map(e => {
-          if (e.id === id) return { ...e, zIndex: belowZ };
-          if (e.id === sorted[idx - 1].id) return { ...e, zIndex: myZ };
-          return e;
+          const newIdx = swapped.findIndex(s => s.id === e.id);
+          return { ...e, zIndex: newIdx };
         });
       });
     }, []),
