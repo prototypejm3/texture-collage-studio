@@ -1361,6 +1361,28 @@ const Index = () => {
         onAdvance={kidOnboarding.advanceTo}
       />
 
+      {/* Mobile floating easel toggle — next to music button */}
+      {isMobile && (
+        <button
+          onClick={() => setEaselMode(prev => !prev)}
+          className="fixed z-[55] flex items-center justify-center rounded-full transition-transform active:scale-[0.94]"
+          style={{
+            right: 54, top: 60,
+            width: 36, height: 36,
+            backgroundColor: easelMode ? '#5a8a6a' : '#a0713a',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          }}
+          title={easelMode ? 'Switch to Desk' : 'Switch to Easel'}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="4" y="3" width="16" height="13" rx="1" />
+            <line x1="3" y1="16" x2="21" y2="16" />
+            <line x1="6" y1="16" x2="3" y2="23" />
+            <line x1="18" y1="16" x2="21" y2="23" />
+          </svg>
+        </button>
+      )}
+
       {/* Mobile components */}
       <FloatingMusicButton
         kidMode={sounds.kidMode}
