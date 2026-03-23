@@ -120,6 +120,8 @@ export function useStudio() {
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
   const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
   const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
+  const [previewSize, setPreviewSize] = useState<string | null>(null);
+  const [previewElementIds, setPreviewElementIds] = useState<string[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -301,22 +303,20 @@ export function useStudio() {
     accent: 'cotton-terracotta',
   };
 
-  // Place current stencil as free elements on canvas (outline only)
-  const placeStencil = useCallback((sizeOrMode?: string) => {
-    if (!activeVibe) return;
+  // Build stencil elements for a given size without committing
+  const buildStencilElements = useCallback((sizeOrMode?: string) => {
+    if (!activeVibe) return [];
     const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
 
     const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
-    // Size mapping: S=100, M=180, L=300 (default)
     const sizeMap: Record<string, number> = { S: 100, M: 180, L: 300, outline: 300, filled: 300 };
     const targetSize = sizeMap[sizeOrMode || 'L'] || 300;
     const scaleFactor = targetSize / Math.max(vbW, vbH);
 
     sections.forEach(section => {
-      // Always outline: only use fill if user explicitly set one
       let textureId = vibeFills[section.id] || '';
 
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
@@ -351,6 +351,47 @@ export function useStudio() {
         stencilMode: 'outline',
       });
     });
+    return newElements;
+  }, [activeVibe, vibeFills, deletedSections]);
+
+  // Preview stencil at a size (non-destructive — replaces previous preview)
+  const previewStencilSize = useCallback((size: string) => {
+    // Remove previous preview elements
+    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    const newElements = buildStencilElements(size);
+    const ids = newElements.map(e => e.id);
+    setPreviewElementIds(ids);
+    setPreviewSize(size);
+    setElements(prev => [...prev, ...newElements]);
+  }, [buildStencilElements, previewElementIds]);
+
+  // Commit preview — keep elements, clear vibe state
+  const commitPreview = useCallback(() => {
+    setPreviewElementIds([]);
+    setPreviewSize(null);
+    setActiveVibe(null);
+    setVibeFills({});
+    setSelectedSectionId(null);
+    setCustomSections([]);
+    setSectionTransforms({});
+    setDeletedSections(new Set());
+  }, []);
+
+  // Cancel preview — remove preview elements, restore vibe
+  const cancelPreview = useCallback(() => {
+    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    setPreviewElementIds([]);
+    setPreviewSize(null);
+  }, [previewElementIds]);
+
+  // Place current stencil as free elements on canvas (outline only)
+  const placeStencil = useCallback((sizeOrMode?: string) => {
+    // If there's an active preview, just commit it
+    if (previewElementIds.length > 0) {
+      commitPreview();
+      return;
+    }
+    const newElements = buildStencilElements(sizeOrMode);
     setElements(prev => [...prev, ...newElements]);
     setActiveVibe(null);
     setVibeFills({});
@@ -358,7 +399,7 @@ export function useStudio() {
     setCustomSections([]);
     setSectionTransforms({});
     setDeletedSections(new Set());
-  }, [activeVibe, vibeFills, deletedSections]);
+  }, [buildStencilElements, previewElementIds, commitPreview]);
 
   // ── Custom drawn sections ──
 
@@ -598,7 +639,11 @@ export function useStudio() {
     selectSection,
     shuffleVibeFills,
     placeStencil,
-    // Custom sections
+    previewStencilSize,
+    commitPreview,
+    cancelPreview,
+    previewSize,
+    previewElementIds,
     addCustomSection,
     deleteCustomSection,
     deleteSection,

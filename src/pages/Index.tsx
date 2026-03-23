@@ -364,13 +364,22 @@ const Index = () => {
   }, [studio]);
 
   const handlePlaceStencilSize = useCallback((size: string) => {
-    studio.placeStencil(size);
+    studio.previewStencilSize(size);
+  }, [studio]);
+
+  const handleCommitStencil = useCallback(() => {
+    studio.commitPreview();
     setShowStencilSizePicker(false);
     const isKid = (() => { try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; } })();
     toast({
       title: isKid ? '✓ Added!' : 'Added to canvas',
       duration: 1500,
     });
+  }, [studio]);
+
+  const handleCancelStencil = useCallback(() => {
+    studio.cancelPreview();
+    setShowStencilSizePicker(false);
   }, [studio]);
 
   // Auto-save to Room Box before clearing (kids never lose work)
@@ -635,8 +644,8 @@ const Index = () => {
             />
 
 
-            {/* Stencil size picker — inline above canvas */}
-            {showStencilSizePicker && studio.activeVibe && (
+            {/* Stencil size picker — inline above canvas with live preview */}
+            {showStencilSizePicker && (studio.activeVibe || studio.previewSize) && (
               <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50" data-box-drawer onClick={e => e.stopPropagation()}>
                 <motion.div
                   initial={sounds.kidMode ? { scale: 0.8, opacity: 0 } : { opacity: 0 }}
@@ -652,22 +661,23 @@ const Index = () => {
                     Size:
                   </span>
                   {(['S', 'M', 'L'] as const).map(size => {
-                    const isDefault = size === 'L';
+                    const isActive = studio.previewSize === size;
                     return (
                       <button
                         key={size}
                         onClick={() => handlePlaceStencilSize(size)}
-                        className="flex items-center justify-center rounded-full transition-all active:scale-95"
+                        className="flex items-center justify-center rounded-full active:scale-95"
                         style={{
                           width: 44,
                           height: 28,
                           borderRadius: 20,
                           fontSize: 12,
                           fontWeight: 600,
-                          background: isDefault
+                          transition: 'all 0.15s ease',
+                          background: isActive
                             ? (sounds.kidMode ? '#f97316' : '#5a8a6a')
                             : (sounds.kidMode ? '#f7f0e8' : '#f0ebe3'),
-                          color: isDefault
+                          color: isActive
                             ? 'white'
                             : (sounds.kidMode ? '#6b4c2a' : '#3d3530'),
                         }}
@@ -676,9 +686,27 @@ const Index = () => {
                       </button>
                     );
                   })}
+                  {/* Confirm */}
+                  {studio.previewSize && (
+                    <button
+                      onClick={handleCommitStencil}
+                      className="flex items-center justify-center rounded-full active:scale-95 ml-1"
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 20,
+                        background: sounds.kidMode ? '#22c55e' : '#5a8a6a',
+                        color: 'white',
+                        fontSize: 14,
+                        fontWeight: 700,
+                      }}
+                    >
+                      ✓
+                    </button>
+                  )}
                   <button
-                    onClick={() => setShowStencilSizePicker(false)}
-                    className="p-1 rounded-lg hover:bg-black/5 ml-1"
+                    onClick={handleCancelStencil}
+                    className="p-1 rounded-lg hover:bg-black/5 ml-0.5"
                   >
                     <X className="w-3 h-3" style={{ color: '#3d3530' }} />
                   </button>
