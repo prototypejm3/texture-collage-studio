@@ -902,7 +902,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               <div className="grid grid-cols-2 gap-1">
                 {ambientSounds.map(as => (
-                  <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}>{as.label}</button>
+                  <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{as.label}</button>
                 ))}
               </div>
             </DropdownMenu>
