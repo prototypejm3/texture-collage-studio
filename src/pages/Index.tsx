@@ -763,7 +763,11 @@ const Index = () => {
               ) : (
               <div
                 data-box-drawer
-                className="absolute z-40 bottom-8 right-8"
+                className="absolute z-40"
+                style={drawerPos
+                  ? { left: drawerPos.x, top: drawerPos.y }
+                  : { bottom: 8, right: 8 }
+                }
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
