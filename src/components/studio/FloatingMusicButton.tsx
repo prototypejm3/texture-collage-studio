@@ -19,7 +19,7 @@ export function FloatingMusicButton({ kidMode, ambientSound, onAmbientSoundChang
   const currentLabel = ambientSound && ambientSound !== 'none' ? soundLabels[ambientSound] || trackName : trackName;
 
   return (
-    <div className="fixed z-[55] md:hidden" style={{ right: 16, bottom: 72 }}>
+    <div className="fixed z-[55]" style={{ right: 16, bottom: 72 }}>
       <AnimatePresence>
         {expanded && (
           <motion.div
