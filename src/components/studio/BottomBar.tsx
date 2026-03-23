@@ -4,7 +4,6 @@ import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { TrashCanIcon, SaveBoxIcon, DownloadTrayIcon } from './ToyboxIcons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RoomThemePicker, useRoomTheme } from './RoomThemePicker';
 
 const FREE_EXPORT_LIMIT = 1;
 const EXPORT_COUNT_KEY = 'free-export-count';
@@ -72,9 +71,6 @@ export function BottomBar({
   backgroundTextureId, onBackgroundChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
-  const [showRoomTheme, setShowRoomTheme] = useState(false);
-  const roomThemeRef = useRef<HTMLDivElement>(null);
-  const [roomTheme, setRoomTheme] = useRoomTheme();
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
@@ -338,42 +334,6 @@ export function BottomBar({
         </>
       )}
 
-      {/* Room Theme picker — kid mode only */}
-      {kidMode && (
-        <>
-          <div className="w-px h-4 bg-border mx-0.5" />
-          <div className="relative" ref={roomThemeRef}>
-            <button
-              onClick={() => setShowRoomTheme(v => !v)}
-              className="flex items-center gap-1 px-2 py-1 rounded-lg transition-colors text-[11px] font-semibold"
-              style={{
-                background: showRoomTheme ? 'hsl(var(--primary))' : 'hsl(var(--secondary))',
-                color: showRoomTheme ? 'hsl(var(--primary-foreground))' : 'hsl(var(--secondary-foreground))',
-              }}
-            >
-              <span className="text-sm">🏠</span>
-              Room
-            </button>
-            <AnimatePresence>
-              {showRoomTheme && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowRoomTheme(false)} />
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute bottom-full left-0 mb-2 z-50 p-4 rounded-2xl shadow-xl border border-border"
-                    style={{ backgroundColor: '#fdf6ee' }}
-                  >
-                    <RoomThemePicker theme={roomTheme} onThemeChange={(t) => { setRoomTheme(t); setShowRoomTheme(false); }} />
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
-        </>
-      )}
 
       <div className="flex-1" />
     </div>

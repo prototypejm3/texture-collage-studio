@@ -43,6 +43,7 @@ import { TextPanel } from '@/components/studio/TextPanel';
 import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
+import { RoomThemePicker, useRoomTheme } from '@/components/studio/RoomThemePicker';
 
 
 const Index = () => {
@@ -77,6 +78,7 @@ const Index = () => {
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
   const [showStencilSizePicker, setShowStencilSizePicker] = useState(false);
   const { activeBox, toggleBox, closeBox, openBox } = useActiveBox();
+  const [roomTheme, setRoomTheme] = useRoomTheme();
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
   const [drawerPos, setDrawerPos] = useState<{ x: number; y: number } | null>(null);
@@ -823,7 +825,7 @@ const Index = () => {
                   className="overflow-visible relative"
                   style={{
                     width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340),
-                    maxHeight: isMobile ? '45vh' : 360,
+                    maxHeight: isMobile ? '55vh' : 460,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
@@ -963,6 +965,11 @@ const Index = () => {
                           backgroundTextureId={studio.backgroundTextureId}
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
                         />
+                        {sounds.kidMode && (
+                          <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e8ddd0' }}>
+                            <RoomThemePicker theme={roomTheme} onThemeChange={setRoomTheme} />
+                          </div>
+                        )}
                       </div>
                     )}
 
