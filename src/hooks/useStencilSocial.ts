@@ -148,6 +148,20 @@ export function useStencilSocial() {
     await supabase.from('stencil_reports').insert({ user_id: user.id, stencil_id: stencilId, reason } as any);
   }, [user]);
 
+  // Toggle public/private visibility for owned stencils
+  const togglePublic = useCallback(async (stencilId: string) => {
+    if (!user) return;
+    const record = myStencils.find(s => s.id === stencilId);
+    if (!record) return;
+    await supabase
+      .from('stencils')
+      .update({ is_public: !record.is_public } as any)
+      .eq('id', stencilId)
+      .eq('user_id', user.id);
+    await fetchMyStencils();
+    await fetchPublicStencils();
+  }, [user, myStencils, fetchMyStencils, fetchPublicStencils]);
+
   // Convert DB record to Vibe
   const recordToVibe = (record: StencilRecord): Vibe => ({
     id: record.id,
@@ -170,6 +184,7 @@ export function useStencilSocial() {
     saveStencil,
     toggleFavorite,
     toggleHidden,
+    togglePublic,
     deleteStencil,
     reportStencil,
     recordToVibe,
