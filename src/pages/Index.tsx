@@ -79,6 +79,8 @@ const Index = () => {
   const { activeBox, toggleBox, closeBox, openBox } = useActiveBox();
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
+  const [drawerPos, setDrawerPos] = useState<{ x: number; y: number } | null>(null);
+  const drawerDragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const [workstationName, setWorkstationName] = useState(() => {
     return localStorage.getItem('workstationName') || '';
   });
