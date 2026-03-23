@@ -683,7 +683,7 @@ const Index = () => {
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between px-3 py-3" style={{ borderBottom: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}` }}>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#6b4c2a' : '#3d3530' }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#3a5c4a' : '#3d3530' }}>
                         {activeBox === 'textures' && (sounds.kidMode ? 'Colors' : 'Swatches')}
                         {activeBox === 'stencils' && (sounds.kidMode ? 'Shapes' : 'Stencils')}
                       </span>
