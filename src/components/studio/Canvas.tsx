@@ -1254,7 +1254,7 @@ export function Canvas({
       })()}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
-      {!easelMode && (
+      {!easelMode && kidMode && (
         <div
           className="absolute z-20"
           style={{
