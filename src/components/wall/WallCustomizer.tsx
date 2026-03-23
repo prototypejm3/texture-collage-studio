@@ -649,14 +649,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Frames"
             />
             <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
-              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
-              {allFrameStyles.map(fs => (
-                <button key={fs.value}
-                  onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium' : ''}`}
-                  style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
-                >{fs.label}</button>
-              ))}
+              <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
+              <div className="grid grid-cols-2 gap-1">
+                {allFrameStyles.map(fs => (
+                  <button key={fs.value}
+                    onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
+                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`}
+                    style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
+                  >{fs.label}</button>
+                ))}
+              </div>
             </DropdownMenu>
           </div>
 
