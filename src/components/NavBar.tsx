@@ -266,37 +266,8 @@ export function NavBar() {
              >Sign In</Link>
            )}
 
-           {/* Mode Toggle Pill — far right */}
-           <button
-             onClick={handleToggleKidMode}
-             className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-             style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 68, height: 32 }}
-             title="Switch to Kids Mode"
-           >
-             <div className="flex items-center justify-center w-1/2 h-full">
-               <svg width="18" height="18" viewBox="0 0 28 28">
-                 <circle cx="14" cy="16" r="10" fill="white"/>
-                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
-                 <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
-                 <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
-                 <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
-               </svg>
-             </div>
-             <div className="w-px h-5 bg-border" />
-             <div className="flex items-center justify-center w-1/2 h-full">
-               <svg width="18" height="18" viewBox="0 0 28 28">
-                 <circle cx="14" cy="16" r="10" fill="#e8ddd0"/>
-                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <path d="M11 18 Q14 20 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
-                 <ellipse cx="14" cy="10" rx="7" ry="3" fill="#c4956a"/>
-                 <circle cx="10" cy="10" r="1.2" fill="#c4956a"/>
-                 <circle cx="18" cy="10" r="1.2" fill="#c4956a"/>
-               </svg>
-             </div>
-           </button>
+            {/* Mode Toggle Pill — far right */}
+            <ModeTogglePill kidMode={kidMode} onClick={handleToggleKidMode} />
          </div>
        </nav>
       <GrownUpCheckModal
