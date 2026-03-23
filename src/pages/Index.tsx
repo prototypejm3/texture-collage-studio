@@ -1146,23 +1146,10 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            /* Adult mode: tools left, save/download right */
-            <div className="flex items-center justify-between w-full px-4 py-2">
-              <div className="flex items-center gap-6">
-                <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
-                  onClick={() => toggleBox('textures')} kidMode={false} />
-                <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
-                  onClick={() => toggleBox('tools')} kidMode={false} />
-                <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
-                  onClick={() => toggleBox('stencils')} kidMode={false} />
-                <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
-                  onClick={() => toggleBox('text')} kidMode={false} />
-                {studio.elements.length > 0 && (
-                  <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
-                    onClick={() => toggleBox('toolbox')} kidMode={false} />
-                )}
-              </div>
-              <div className="flex items-center gap-2">
+            /* Adult mode: tools centered, save/download above */
+            <div className="flex flex-col items-center w-full">
+              {/* Save/Download row */}
+              <div className="flex items-center justify-center gap-2 pb-1.5">
                 {/* Reset */}
                 <button onClick={handleClearAll} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Reset">
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -1195,6 +1182,21 @@ const Index = () => {
                   </svg>
                   Download
                 </button>
+              </div>
+              {/* Tool buttons centered */}
+              <div className="flex items-center justify-center gap-6 py-2">
+                <BoxButton id="textures" icon="" label="Swatches" isActive={activeBox === 'textures'}
+                  onClick={() => toggleBox('textures')} kidMode={false} />
+                <BoxButton id="tools" icon="" label="Display" isActive={activeBox === 'tools'}
+                  onClick={() => toggleBox('tools')} kidMode={false} />
+                <BoxButton id="stencils" icon="" label="Stencils" isActive={activeBox === 'stencils'}
+                  onClick={() => toggleBox('stencils')} kidMode={false} />
+                <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
+                  onClick={() => toggleBox('text')} kidMode={false} />
+                {studio.elements.length > 0 && (
+                  <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
+                    onClick={() => toggleBox('toolbox')} kidMode={false} />
+                )}
               </div>
             </div>
           )}
