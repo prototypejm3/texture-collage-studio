@@ -10,7 +10,7 @@ import { ShapeIcon } from './TextureLibrary';
 import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
-import { TrashCanIcon } from './ToyboxIcons';
+import { TrashCanIcon, TrashCanIconAnimated } from './ToyboxIcons';
 import { RoomThemeBackground } from './RoomThemeBackground';
 import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
@@ -151,6 +151,7 @@ export function Canvas({
   }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
   const [trashHover, setTrashHover] = useState(false);
+  const [trashLidOpen, setTrashLidOpen] = useState(false);
   const trashRef = useRef<HTMLDivElement>(null);
   const [boxItems, setBoxItems] = useState<BoxItem[]>(() => {
     try { const raw = localStorage.getItem('kid-maybe-box'); return raw ? JSON.parse(raw) : []; } catch { return []; }
@@ -638,6 +639,8 @@ export function Canvas({
             e.preventDefault();
             e.stopPropagation();
             setTrashHover(false);
+            setTrashLidOpen(true);
+            setTimeout(() => setTrashLidOpen(false), 600);
             if (selectedId) {
               onDeleteElement(selectedId);
               onSelect(null);
@@ -647,7 +650,7 @@ export function Canvas({
             }
           }}
         >
-          <TrashCanIcon />
+          <TrashCanIconAnimated lidOpen={trashHover || trashLidOpen} />
           <span className={`text-[10px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Toss</span>
         </div>
       )}
