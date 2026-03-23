@@ -633,11 +633,11 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
             </div>
             <div>
               <label className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5 block">Wrinkle</label>
-              <div className="flex gap-0.5">
+              <div className="flex flex-wrap gap-0.5">
                 {wrinkleOptions.map(o => (
                   <button key={o.value} onClick={() => onUpdateEffects({ wrinkle: o.value })}
-                    className={`flex-1 flex flex-col items-center gap-0 text-[9px] py-1 rounded-md transition-colors ${element.effects.wrinkle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent'}`} title={o.label}>
-                    <WrinkleIcon level={o.value} size={14} /><span className="text-[7px]">{o.label}</span>
+                    className={`px-2 py-0.5 rounded-full text-[9px] font-medium transition-colors ${element.effects.wrinkle === o.value ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-accent border border-border'}`}>
+                    {o.label}
                   </button>
                 ))}
               </div>
