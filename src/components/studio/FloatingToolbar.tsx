@@ -267,6 +267,13 @@ function edgeDisplayName(edge: EdgeStyle): string {
 }
 
 function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete, onUndo, onRedo, canUndo, canRedo }: Props) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
   const handleToolTap = (toolId: string) => {
     switch (toolId) {
       case 'grow':
@@ -316,6 +323,78 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
     }
   };
 
+  // Mobile: compact radial-style circle menu
+  if (isMobile) {
+    return (
+      <div className="space-y-2 px-1 pb-2" data-kid-toolbox>
+        {/* Undo/Redo/Delete row */}
+        <div className="flex items-center justify-end gap-1 px-1">
+          {onUndo && (
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-7 w-7 p-0" title="Undo">
+              <Undo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          {onRedo && (
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-7 w-7 p-0" title="Redo">
+              <Redo2 className="w-3.5 h-3.5" />
+            </Button>
+          )}
+          <Button size="sm" variant="ghost" onClick={onDelete} className="h-7 w-7 p-0 text-destructive hover:text-destructive" title="Remove">
+            <Trash2 className="w-3.5 h-3.5" />
+          </Button>
+        </div>
+
+        {/* Circular tool grid */}
+        <div className="flex flex-wrap justify-center gap-2 px-2">
+          {kidTools.map(tool => {
+            const subtitle = getSubtitle(tool.id);
+            return (
+              <motion.button
+                key={tool.id}
+                whileTap={{ scale: 0.88 }}
+                onClick={() => handleToolTap(tool.id)}
+                className="flex flex-col items-center justify-center rounded-full transition-colors border border-border bg-secondary hover:bg-accent"
+                style={{ width: 56, height: 56 }}
+              >
+                <ToolIcon id={tool.id} size={18} />
+                <span className="text-[7px] font-semibold text-foreground leading-tight mt-0.5">{tool.label}</span>
+                {subtitle && (
+                  <span className="text-[6px] text-muted-foreground leading-none">{subtitle}</span>
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {/* Shape pills — compact row */}
+        <div>
+          <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-wider mb-1 block px-2">Shape</span>
+          <div className="flex flex-wrap gap-1 px-2">
+            {kidShapes.map(shape => {
+              const isActive = element.shape === shape.id;
+              return (
+                <motion.button
+                  key={shape.id}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => onUpdate({ shape: shape.id })}
+                  className={`flex items-center gap-0.5 px-2 py-1 rounded-full text-[9px] font-bold transition-all ${
+                    isActive
+                      ? 'bg-primary text-primary-foreground shadow-sm ring-2 ring-primary/30'
+                      : 'bg-secondary text-foreground border border-border hover:bg-accent'
+                  }`}
+                >
+                  <span className="text-[10px]">{shape.emoji}</span>
+                  {shape.label}
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: original grid layout
   return (
     <div className="p-3 space-y-3" data-kid-toolbox>
       {/* Header with undo/redo */}
