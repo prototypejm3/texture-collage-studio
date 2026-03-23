@@ -636,14 +636,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="DISPLAY" />
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div ref={frameMenuRef} className="relative">
             <ToolbarButton
               active={showFrameMenu}
-              onClick={() => setShowFrameMenu(!showFrameMenu)}
+              onClick={() => {
+                setShowHangingMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(false);
+                setShowFrameMenu(!showFrameMenu);
+              }}
               icon={(c) => <FramesIcon color={c} />}
               label="Frames"
             />
-            <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)}>
+            <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
               {allFrameStyles.map(fs => (
                 <button key={fs.value}
@@ -655,14 +660,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </DropdownMenu>
           </div>
 
-          <div className="relative">
+          <div ref={hangingMenuRef} className="relative">
             <ToolbarButton
               active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')}
-              onClick={() => setShowHangingMenu(!showHangingMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(false);
+                setShowHangingMenu(!showHangingMenu);
+              }}
               icon={(c) => <HangingIcon color={c} />}
               label="Hanging"
             />
-            <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)}>
+            <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
               {['Style', 'String', 'Nail'].map(group => {
                 const items = hangingStyles.filter(h => h.group === group);
                 if (!items.length) return null;
