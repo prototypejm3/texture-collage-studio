@@ -503,10 +503,10 @@ export function TopToolbar({
                   className={pressStyle}
                   title="Ambient sound"
                 >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <circle cx="5" cy="12" r="2.5" fill="#94a3b8"/>
-                    <rect x="7" y="3" width="1.5" height="9.5" rx="0.5" fill="#94a3b8"/>
-                    <path d="M7.5 3C7.5 3 10 2 13 3.5V7C10 5.5 7.5 6.5 7.5 6.5" fill="#94a3b8" opacity="0.7"/>
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+                    <circle cx="5" cy="12" r="2.5" fill="#5a8a6a"/>
+                    <rect x="7" y="3" width="1.5" height="9.5" rx="0.5" fill="#5a8a6a"/>
+                    <path d="M7.5 3C7.5 3 10 2 13 3.5V7C10 5.5 7.5 6.5 7.5 6.5" fill="#5a8a6a" opacity="0.7"/>
                   </svg>
                 </button>
                 {showSoundMenu && (
