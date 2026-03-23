@@ -31,7 +31,7 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
   }, [isOpen]);
 
   return (
-    <div ref={containerRef} className="flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+    <div ref={containerRef} className="flex flex-col items-center" style={{ transform: 'scale(0.8)', transformOrigin: 'top left' }} onClick={(e) => e.stopPropagation()}>
       {/* Swatch grid when open */}
       <AnimatePresence>
         {isOpen && (

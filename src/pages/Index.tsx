@@ -677,7 +677,7 @@ const Index = () => {
             )}
 
             {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
-            {activeBox && activeBox !== 'mybox' && (
+            {activeBox && activeBox !== 'mybox' && !(activeBox === 'toolbox' && !sounds.kidMode) && (
               isMobile && (activeBox === 'textures' || activeBox === 'stencils') ? (
                 /* Mobile: side drawer from right for Colors/Stencils */
                 <>
@@ -953,6 +953,61 @@ const Index = () => {
             )}
 
           </div>
+
+          {/* Right-side Tool Box panel — adult mode only */}
+          {!sounds.kidMode && activeBox === 'toolbox' && studio.elements.length > 0 && (
+            <div
+              data-box-drawer
+              className="h-full overflow-y-auto shrink-0 border-l"
+              style={{
+                width: 320,
+                background: '#f5ede0',
+                borderColor: '#e8ddd0',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-3 py-2" style={{ borderBottom: '1px solid #e8ddd0' }}>
+                <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>Tool Box</span>
+                <button onClick={closeBox} className="p-1 rounded-lg hover:bg-black/5 transition-colors">
+                  <X className="w-3.5 h-3.5" style={{ color: '#3d3530' }} />
+                </button>
+              </div>
+              <div className="p-3">
+                <FloatingToolbar
+                  element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
+                  onUpdate={(updates) => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) { studio.updateElement(targetId, updates); kidOnboarding.notifyMove(); }
+                  }}
+                  onUpdateEffects={(effects) => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) { studio.updateEffects(targetId, effects); kidOnboarding.notifyToolUse(); }
+                  }}
+                  onDuplicate={() => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) studio.duplicateElement(targetId);
+                  }}
+                  onDelete={() => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) { studio.deleteElement(targetId); sounds.playDelete(); sounds.trackAction(); }
+                  }}
+                  onUndo={studio.undo}
+                  onRedo={studio.redo}
+                  canUndo={studio.canUndo}
+                  canRedo={studio.canRedo}
+                  elementCount={studio.elements.length}
+                  onBringForward={() => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) studio.bringForward(targetId);
+                  }}
+                  onSendBackward={() => {
+                    const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                    if (targetId) studio.sendBackward(targetId);
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Mobile Undo/Redo/Reset */}

@@ -82,7 +82,7 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
         whileTap={{ scale: 0.96 }}
         className="relative cursor-pointer select-none"
         title="My Treasure Box"
-        style={{ width: 220, height: isOpen ? 100 : 170, transform: 'scale(0.85)', transformOrigin: 'top left' }}
+        style={{ width: 220, height: isOpen ? 100 : 170, transform: 'scale(0.68)', transformOrigin: 'top left' }}
       >
         {/* Sparkle burst */}
         <AnimatePresence>
