@@ -316,15 +316,8 @@ export function useStudio() {
     const scaleFactor = targetSize / Math.max(vbW, vbH);
 
     sections.forEach(section => {
-      let textureId: string;
-      if (mode === 'filled') {
-        // Auto-fill: use existing fill, tone-based default, or random
-        textureId = vibeFills[section.id] 
-          || pickTextureForTone(activeVibe, section.tone);
-      } else {
-        // Outline: only use if user explicitly set one
-        textureId = vibeFills[section.id] || '';
-      }
+      // Always outline: only use fill if user explicitly set one
+      let textureId = vibeFills[section.id] || '';
 
       const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
       let minX = vbW, minY = vbH, maxX = 0, maxY = 0;
