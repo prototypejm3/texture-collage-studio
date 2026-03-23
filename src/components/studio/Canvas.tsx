@@ -510,13 +510,17 @@ export function Canvas({
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
-      {/* Background — concrete floor (normal) or kid table (kids mode) */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
-        backgroundSize: kidMode ? 'cover' : '512px 512px',
-        backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
-        backgroundPosition: 'center',
-      }} />
+      {/* Background — concrete floor (normal) or kid table / themed (kids mode) */}
+      {kidMode && roomTheme !== 'art-desk' ? (
+        <RoomThemeBackground theme={roomTheme} width={containerSize.width} height={containerSize.height} />
+      ) : (
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
+          backgroundSize: kidMode ? 'cover' : '512px 512px',
+          backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
+          backgroundPosition: 'center',
+        }} />
+      )}
 
       {/* Wood desk surface — rectangular desk with rounded corners and concrete border */}
       {!easelMode && (() => {
