@@ -160,51 +160,149 @@ export function NavBar() {
     );
   }
 
+  const pressStyle = 'transition-transform active:scale-[0.96]';
+
   // ── Granny Mode Nav ──
   return (
     <>
-       <nav className="h-12 border-b border-border bg-background flex items-center px-4 gap-6 flex-shrink-0">
+       <nav className="h-14 border-b border-border flex items-center px-4 gap-3 flex-shrink-0" style={{ backgroundColor: dark ? 'hsl(var(--background))' : '#faf8f5' }}>
          <div className="flex items-center gap-2.5">
-           <SwatchboxLogo height={32} />
+           <Link to="/" className={`${pressStyle}`} title="Swatchbox Studio">
+             <SwatchboxLogo height={32} />
+           </Link>
          </div>
 
          <div className="hidden md:flex items-center gap-1">
-           <Link to="/" title="Open the creative studio" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isStudio ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-             <Brush className="w-4 h-4" /> Create
+           {/* Create */}
+           <Link to="/"
+             className={`${pressStyle} flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+               isStudio ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+             }`}
+             style={isStudio ? { backgroundColor: '#5a8a6a' } : undefined}
+             title="Create"
+           >
+             <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+               <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill={isStudio ? 'white' : '#94a3b8'}/>
+             </svg>
+             Create
            </Link>
-           <Link to="/wall" data-nav="wall" title="View and arrange your artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isWall ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-             <Grid2x2 className="w-4 h-4" /> My Studio
+
+           <div className="w-px h-5 bg-border mx-0.5" />
+
+           {/* My Studio */}
+           <Link to="/wall" data-nav="wall"
+             className={`${pressStyle} flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+               isWall ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+             }`}
+             style={isWall ? { backgroundColor: '#5a8a6a' } : undefined}
+             title="My Studio"
+           >
+             <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+               <rect x="1" y="1" width="18" height="18" rx="2" stroke={isWall ? 'white' : '#5a8a6a'} strokeWidth="2.5" fill="none"/>
+               <rect x="1" y="1" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+               <rect x="14" y="1" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+               <rect x="1" y="14" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+               <rect x="14" y="14" width="5" height="5" rx="1" fill={isWall ? 'white' : '#7aaa8a'}/>
+               <rect x="5" y="5" width="10" height="10" fill={isWall ? '#5a8a6a' : 'white'}/>
+             </svg>
+             My Studio
            </Link>
-           <Link to="/gallery" data-nav="gallery" title="Browse community artwork" className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${isGallery ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'}`}>
-             <Landmark className="w-4 h-4" /> Showcase
+
+           <div className="w-px h-5 bg-border mx-0.5" />
+
+           {/* Showcase */}
+           <Link to="/gallery" data-nav="gallery"
+             className={`${pressStyle} flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] font-bold text-[13px] ${
+               isGallery ? 'text-white' : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+             }`}
+             style={isGallery ? { backgroundColor: '#5a8a6a' } : undefined}
+             title="Showcase"
+           >
+             <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+               <polygon points="10,1 1,7 19,7" fill={isGallery ? 'white' : '#5a8a6a'}/>
+               <rect x="1" y="7" width="18" height="2" fill={isGallery ? 'rgba(255,255,255,0.7)' : '#3d6a4a'}/>
+               <rect x="3" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+               <rect x="7" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+               <rect x="11" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+               <rect x="15" y="9" width="3" height="8" rx="0.5" fill={isGallery ? 'rgba(255,255,255,0.8)' : '#7aaa8a'}/>
+               <rect x="1" y="17" width="18" height="2" rx="0.5" fill={isGallery ? 'white' : '#5a8a6a'}/>
+             </svg>
+             Showcase
            </Link>
          </div>
 
          <div className="ml-auto flex items-center gap-2">
-           <button onClick={toggle} className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors" title={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
-             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+           {/* Light/Dark Toggle */}
+           <button onClick={toggle}
+             className={`${pressStyle} relative flex items-center rounded-[10px] overflow-hidden flex-shrink-0`}
+             style={{ width: 36, height: 20, backgroundColor: dark ? '#4a5568' : '#3d3530' }}
+             title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+           >
+             <svg width="10" height="10" viewBox="0 0 12 12" className="absolute left-1.5 top-1/2 -translate-y-1/2">
+               <circle cx="6" cy="6" r="5" fill="#5a4a3a"/>
+               <circle cx="8" cy="4" r="4" fill="#faf8f5"/>
+             </svg>
+             <svg width="10" height="10" viewBox="0 0 12 12" className="absolute right-1.5 top-1/2 -translate-y-1/2">
+               <circle cx="6" cy="6" r="3.5" fill="#fbbf24"/>
+             </svg>
+             <div className="absolute w-4 h-4 rounded-full bg-white/90 shadow-sm transition-all duration-200 top-0.5"
+               style={{ left: dark ? 2 : 18 }}
+             />
            </button>
+
            {user ? (
              <>
-               <span className="text-xs text-muted-foreground items-center gap-1 hidden sm:flex min-w-[60px]">
-                 <User className="w-3 h-3" /> {user.email?.split('@')[0]}
+               <span className="items-center gap-1 hidden sm:flex min-w-[60px] text-foreground" style={{ fontSize: 12, fontFamily: 'system-ui,sans-serif' }}>
+                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+                   <circle cx="8" cy="5" r="4" fill="#94a3b8"/>
+                   <ellipse cx="8" cy="14" rx="6" ry="4" fill="#94a3b8"/>
+                 </svg>
+                 <span className="truncate max-w-[80px]">{user.email?.split('@')[0]}</span>
                </span>
-               <button onClick={() => signOut()} title="Sign out" className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-                 <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Sign Out</span>
+               <button onClick={() => signOut()} title="Sign out"
+                 className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0 text-muted-foreground`}
+                 style={{ fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
+               >
+                 <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Out</span>
                </button>
              </>
            ) : (
-             <Link to="/auth" title="Sign in" className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-               <LogIn className="w-3 h-3" /> Sign In
-             </Link>
+             <Link to="/auth" title="Sign in"
+               className={`${pressStyle} flex items-center gap-1 px-3 py-1.5 text-[12px] font-medium rounded-[20px] text-white`}
+               style={{ backgroundColor: '#5a8a6a' }}
+             >Sign In</Link>
            )}
-           {/* Mode toggle - far right */}
+
+           {/* Mode Toggle Pill — far right */}
            <button
              onClick={handleToggleKidMode}
+             className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
+             style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 68, height: 32 }}
              title="Switch to Kids Mode"
-             className="px-2 py-0.5 rounded-full text-[10px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all"
            >
-             → 🧒
+             <div className="flex items-center justify-center w-1/2 h-full">
+               <svg width="18" height="18" viewBox="0 0 28 28">
+                 <circle cx="14" cy="16" r="10" fill="white"/>
+                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
+                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
+                 <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
+                 <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
+                 <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
+                 <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
+               </svg>
+             </div>
+             <div className="w-px h-5 bg-border" />
+             <div className="flex items-center justify-center w-1/2 h-full">
+               <svg width="18" height="18" viewBox="0 0 28 28">
+                 <circle cx="14" cy="16" r="10" fill="#e8ddd0"/>
+                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
+                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
+                 <path d="M11 18 Q14 20 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
+                 <ellipse cx="14" cy="10" rx="7" ry="3" fill="#c4956a"/>
+                 <circle cx="10" cy="10" r="1.2" fill="#c4956a"/>
+                 <circle cx="18" cy="10" r="1.2" fill="#c4956a"/>
+               </svg>
+             </div>
            </button>
          </div>
        </nav>
