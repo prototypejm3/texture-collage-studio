@@ -1,6 +1,7 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
 import { Lock, GripHorizontal, ChevronUp, ChevronDown } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WallCustomizerProps {
@@ -386,15 +387,59 @@ function ColorWheelButton({ selected, onClick }: { selected: boolean; onClick: (
 }
 
 // ── Dropdown wrapper ──
-function DropdownMenu({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) {
-  if (!isOpen) return null;
-  return (
+function DropdownMenu({
+  isOpen,
+  onClose,
+  children,
+  anchorRef,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  anchorRef: React.RefObject<HTMLElement>;
+}) {
+  const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
+
+  useEffect(() => {
+    if (!isOpen || !anchorRef.current) return;
+
+    const updatePosition = () => {
+      const rect = anchorRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setPosition({
+        left: rect.left + rect.width / 2,
+        top: rect.top - 6,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen, anchorRef]);
+
+  if (!isOpen || !position) return null;
+
+  return createPortal(
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[300px] overflow-y-auto" style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div
+        className="fixed z-50 max-h-[300px] min-w-[150px] overflow-y-auto rounded-lg border border-border bg-popover py-1 shadow-lg"
+        style={{
+          left: position.left,
+          top: position.top,
+          transform: 'translate(-50%, -100%)',
+          fontFamily: 'system-ui, sans-serif',
+        }}
+      >
         {children}
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 
@@ -414,6 +459,10 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [customColor, setCustomColor] = useState('#f5f0e8');
+  const frameMenuRef = useRef<HTMLDivElement>(null);
+  const hangingMenuRef = useRef<HTMLDivElement>(null);
+  const lightingMenuRef = useRef<HTMLDivElement>(null);
+  const soundMenuRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   // Hideable state
@@ -587,14 +636,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="DISPLAY" />
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div ref={frameMenuRef} className="relative">
             <ToolbarButton
               active={showFrameMenu}
-              onClick={() => setShowFrameMenu(!showFrameMenu)}
+              onClick={() => {
+                setShowHangingMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(false);
+                setShowFrameMenu(!showFrameMenu);
+              }}
               icon={(c) => <FramesIcon color={c} />}
               label="Frames"
             />
-            <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)}>
+            <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
               {allFrameStyles.map(fs => (
                 <button key={fs.value}
@@ -606,14 +660,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </DropdownMenu>
           </div>
 
-          <div className="relative">
+          <div ref={hangingMenuRef} className="relative">
             <ToolbarButton
               active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')}
-              onClick={() => setShowHangingMenu(!showHangingMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(false);
+                setShowHangingMenu(!showHangingMenu);
+              }}
               icon={(c) => <HangingIcon color={c} />}
               label="Hanging"
             />
-            <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)}>
+            <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
               {['Style', 'String', 'Nail'].map(group => {
                 const items = hangingStyles.filter(h => h.group === group);
                 if (!items.length) return null;
@@ -655,14 +714,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="AMBIENCE" />
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div ref={lightingMenuRef} className="relative">
             <ToolbarButton
               active={showLightingMenu || settings.lightingPreset !== 'none'}
-              onClick={() => setShowLightingMenu(!showLightingMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowHangingMenu(false);
+                setShowSoundMenu(false);
+                setShowLightingMenu(!showLightingMenu);
+              }}
               icon={(c) => <LightingIcon color={c} />}
               label="Lighting"
             />
-            <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)}>
+            <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
               {lightingPresets.map(lp => (
                 <button key={lp.value}
@@ -674,14 +738,19 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </DropdownMenu>
           </div>
 
-          <div className="relative">
+          <div ref={soundMenuRef} className="relative">
             <ToolbarButton
               active={showSoundMenu || settings.ambientSound !== 'none'}
-              onClick={() => setShowSoundMenu(!showSoundMenu)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowHangingMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(!showSoundMenu);
+              }}
               icon={(c) => <SoundIcon color={c} />}
               label="Sound"
             />
-            <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)}>
+            <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               {ambientSounds.map(as => (
                 <button key={as.value}
