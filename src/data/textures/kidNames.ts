@@ -55,7 +55,7 @@ export const kidTextureNames: Record<string, string> = {
   'crave-mocha-latte': 'Milk Chocolate',   // medium brown
   'crave-ginger-tea': 'Ginger Snap',       // warm ginger
   'crave-berry-hibiscus': 'Raspberry',     // berry red-pink
-  'crave-greenery': 'Fern Leaf',           // leafy green
+  'crave-greenery': 'Grasshopper',         // leafy green
   'crave-lava-rock': 'Volcano Rock',       // very dark brown-black
   'crave-irish-cream': 'Caramel Swirl',    // light tan-cream
 
