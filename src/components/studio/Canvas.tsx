@@ -639,6 +639,8 @@ export function Canvas({
             e.preventDefault();
             e.stopPropagation();
             setTrashHover(false);
+            setTrashLidOpen(true);
+            setTimeout(() => setTrashLidOpen(false), 600);
             if (selectedId) {
               onDeleteElement(selectedId);
               onSelect(null);
@@ -648,7 +650,7 @@ export function Canvas({
             }
           }}
         >
-          <TrashCanIcon />
+          <TrashCanIconAnimated lidOpen={trashHover || trashLidOpen} />
           <span className={`text-[10px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Toss</span>
         </div>
       )}
