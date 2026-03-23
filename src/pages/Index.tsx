@@ -683,7 +683,7 @@ const Index = () => {
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between px-3 py-3" style={{ borderBottom: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}` }}>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#6b4c2a' : '#3d3530' }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#3a5c4a' : '#3d3530' }}>
                         {activeBox === 'textures' && (sounds.kidMode ? 'Colors' : 'Swatches')}
                         {activeBox === 'stencils' && (sounds.kidMode ? 'Shapes' : 'Stencils')}
                       </span>
@@ -755,7 +755,7 @@ const Index = () => {
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
-                      border: '1px solid rgba(139,94,60,0.4)',
+                      border: '1px solid rgba(90,138,106,0.4)',
                     } : {
                       borderRadius: 16,
                       boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
@@ -767,7 +767,7 @@ const Index = () => {
                   {/* Header */}
                   {sounds.kidMode ? (
                     <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
-                      style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                      style={{ background: 'linear-gradient(180deg, #5a8a6a, #3d6a4a)', borderRadius: '8px 8px 0 0' }}>
                       <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
                         {activeBox === 'textures' && '🎨 Colors'}
                         {activeBox === 'stencils' && '🧸 Shapes'}
