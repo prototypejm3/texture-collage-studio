@@ -4,7 +4,6 @@ import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { TrashCanIcon, SaveBoxIcon, DownloadTrayIcon } from './ToyboxIcons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RoomThemePicker, useRoomTheme } from './RoomThemePicker';
 
 const FREE_EXPORT_LIMIT = 1;
 const EXPORT_COUNT_KEY = 'free-export-count';
