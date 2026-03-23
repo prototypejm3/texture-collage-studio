@@ -56,9 +56,10 @@ export function useWall() {
     }
   }, [settings]);
 
-  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
+  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string, createdInMode?: 'kid' | 'adult'): string => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
+    const mode = createdInMode || (() => { try { return localStorage.getItem('kid-mode') !== 'false' ? 'kid' as const : 'adult' as const; } catch { return 'kid' as const; } })();
     const design: SavedDesign = {
       id, name,
       vibeName,
@@ -73,6 +74,7 @@ export function useWall() {
       frameStyle: settings.defaultFrameStyle,
       displaySize: 'medium',
       studioState,
+      createdInMode: mode,
     };
     setDesigns(prev => [design, ...prev]);
     return id;
