@@ -239,7 +239,7 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
             <rect x="98" y="-3" width="24" height="6" rx="3" fill="#d97706" />
           </svg>
 
-          {/* Inside preview swatches when open */}
+          {/* Inside preview swatches when open — draggable */}
           {isOpen && items.length > 0 && (
             <div
               className="absolute inset-x-[20px] top-[8px] bottom-[8px] flex flex-wrap gap-1.5 items-start content-start p-2 overflow-hidden"
@@ -250,6 +250,17 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
                 return tex ? (
                   <div
                     key={item.id}
+                    className="cursor-grab active:cursor-grabbing hover:scale-110 transition-transform"
+                    draggable
+                    onDragStart={(e) => {
+                      e.dataTransfer.setData('textureId', item.textureId);
+                      e.dataTransfer.setData('fromBox', item.id);
+                    }}
+                    onDragEnd={(e) => {
+                      if (e.dataTransfer.dropEffect !== 'none') onDragOutItem(item);
+                    }}
+                    onClick={(e) => { e.stopPropagation(); onDragOutItem(item); }}
+                    title="Drag out or tap to place"
                     style={{
                       width: 36,
                       height: 36,
