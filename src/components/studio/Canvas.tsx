@@ -11,6 +11,8 @@ import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon } from './ToyboxIcons';
+import { RoomThemeBackground } from './RoomThemeBackground';
+import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
 import kidTable from '@/assets/kid-table.jpg';
 import kidArtFrame from '@/assets/kid-art-frame.png';
