@@ -215,6 +215,8 @@ export function RightSidebar({
   ]);
 
   const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean; grannyOnly?: boolean }[] = [
+    { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
+    { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, grannyOnly: true },
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     // Adults: merged Animals & Bugs; Kids keep separate categories
     ...(kidMode ? [
@@ -228,13 +230,10 @@ export function RightSidebar({
     { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
     { label: 'Patterns', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
-    { label: kidMode ? 'Numbers & Symbols' : '# & @$*', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
-    { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
-    { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: communityDiyIds },
     { label: 'Sports', kidLabel: '⚽ Sports', emoji: '⚽', ids: new Set([...sportsStencils, ...anchorStencils, ...worldStencils].map(s => s.id)) },
-    // All granny stencils in one category for adult mode
-    { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, grannyOnly: true },
+    { label: kidMode ? 'Numbers & Symbols' : '# & @$*', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
   ];
 
   const themedIds = new Set<string>();
