@@ -789,9 +789,26 @@ const Index = () => {
                 >
                   {/* Header */}
                   {sounds.kidMode ? (
-                    <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
-                      style={{ background: 'linear-gradient(180deg, #5a8a6a, #3d6a4a)', borderRadius: '8px 8px 0 0' }}>
-                      <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
+                    <div className="flex items-center justify-between px-2 py-1 border-b border-border/50 cursor-grab active:cursor-grabbing"
+                      style={{ background: 'linear-gradient(180deg, #5a8a6a, #3d6a4a)', borderRadius: '8px 8px 0 0' }}
+                      onPointerDown={(e) => {
+                        e.preventDefault();
+                        const el = (e.currentTarget.closest('[data-box-drawer]') as HTMLElement);
+                        const rect = el.getBoundingClientRect();
+                        const parentRect = el.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 };
+                        drawerDragRef.current = { startX: e.clientX, startY: e.clientY, origX: rect.left - parentRect.left, origY: rect.top - parentRect.top };
+                        const onMove = (ev: PointerEvent) => {
+                          if (!drawerDragRef.current) return;
+                          const dx = ev.clientX - drawerDragRef.current.startX;
+                          const dy = ev.clientY - drawerDragRef.current.startY;
+                          setDrawerPos({ x: drawerDragRef.current.origX + dx, y: drawerDragRef.current.origY + dy });
+                        };
+                        const onUp = () => { drawerDragRef.current = null; window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
+                        window.addEventListener('pointermove', onMove);
+                        window.addEventListener('pointerup', onUp);
+                      }}
+                    >
+                      <span className="text-[10px] font-bold uppercase tracking-wider select-none" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
                         {activeBox === 'textures' && '🎨 Colors'}
                         {activeBox === 'stencils' && '🧸 Shapes'}
                         {activeBox === 'tools' && '🖼️ Frame'}
@@ -806,8 +823,25 @@ const Index = () => {
                       </button>
                     </div>
                   ) : (
-                    <div className="flex items-center justify-between px-3 py-2"
-                      style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}>
+                    <div className="flex items-center justify-between px-3 py-2 cursor-grab active:cursor-grabbing"
+                      style={{ borderBottom: '1px solid #e8ddd0', borderRadius: '16px 16px 0 0' }}
+                      onPointerDown={(e) => {
+                        e.preventDefault();
+                        const el = (e.currentTarget.closest('[data-box-drawer]') as HTMLElement);
+                        const rect = el.getBoundingClientRect();
+                        const parentRect = el.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 };
+                        drawerDragRef.current = { startX: e.clientX, startY: e.clientY, origX: rect.left - parentRect.left, origY: rect.top - parentRect.top };
+                        const onMove = (ev: PointerEvent) => {
+                          if (!drawerDragRef.current) return;
+                          const dx = ev.clientX - drawerDragRef.current.startX;
+                          const dy = ev.clientY - drawerDragRef.current.startY;
+                          setDrawerPos({ x: drawerDragRef.current.origX + dx, y: drawerDragRef.current.origY + dy });
+                        };
+                        const onUp = () => { drawerDragRef.current = null; window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
+                        window.addEventListener('pointermove', onMove);
+                        window.addEventListener('pointerup', onUp);
+                      }}
+                    >
                       <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#3d3530' }}>
                         {activeBox === 'textures' && 'Swatches'}
                         {activeBox === 'stencils' && 'Stencils'}
