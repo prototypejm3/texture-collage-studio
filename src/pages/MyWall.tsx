@@ -408,6 +408,15 @@ const MyWall = () => {
                               }`}
                             >
                               {w.settings.title}
+                              {/* Show kid-created designs count */}
+                              {(() => {
+                                const kidCount = wall.designs.filter(d => (d.wallId || 'wall-default') === w.id && d.createdInMode === 'kid').length;
+                                return kidCount > 0 ? (
+                                  <span className="ml-1.5 text-[8px] px-1 py-0.5 rounded bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
+                                    From Kids Mode
+                                  </span>
+                                ) : null;
+                              })()}
                             </button>
                             <button
                               onClick={(e) => {

@@ -324,7 +324,7 @@ function SectionLabel({ text }: { text: string }) {
 
 // ── Divider ──
 function ToolbarDivider() {
-  return <div style={{ width: 1, height: 64, backgroundColor: '#e2ddd6', flexShrink: 0 }} />;
+  return <div style={{ width: 1, height: 64, backgroundColor: 'hsl(var(--border))', flexShrink: 0 }} />;
 }
 
 // ── Wall swatch circle ──
@@ -595,8 +595,8 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           position: 'relative',
           left: position.x,
           top: position.y,
-          background: '#f5f3f0',
-          border: '1px solid #e2ddd6',
+          background: 'hsl(var(--popover))',
+          border: '1px solid hsl(var(--border))',
           borderRadius: 20,
           padding: '6px 14px',
           width: 'fit-content',
@@ -643,7 +643,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         {/* Slide-up panel */}
         {showMobilePanel && (
           <>
-            <div className="fixed inset-0 z-25" onClick={() => setShowMobilePanel(false)} />
+            <div className="fixed inset-0 z-[25]" onClick={() => setShowMobilePanel(false)} />
             <div
               className="fixed left-0 right-0 z-30"
               style={{
@@ -803,8 +803,8 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         left: position.x,
         top: position.y,
         height: 80,
-        background: '#f5f3f0',
-        borderBottom: '1px solid #e2ddd6',
+        background: 'hsl(var(--popover))',
+        borderBottom: '1px solid hsl(var(--border))',
         borderRadius: 12,
         padding: '0 16px',
         gap: 16,
@@ -821,7 +821,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         </div>
       </div>
 
-      <div style={{ width: 1, height: 48, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
+      <div style={{ width: 1, height: 48, backgroundColor: 'hsl(var(--border))', flexShrink: 0 }} />
 
       {/* GROUP 1: ARRANGE */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
@@ -845,7 +845,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
               <div className="grid grid-cols-2 gap-1">
                 {allFrameStyles.map(fs => (
-                  <button key={fs.value} onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}>{fs.label}</button>
+                  <button key={fs.value} onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{fs.label}</button>
                 ))}
               </div>
             </DropdownMenu>
@@ -863,7 +863,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                       <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
                       <div className="space-y-1">
                         {items.map(hs => (
-                          <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}>{hs.label}</button>
+                          <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{hs.label}</button>
                         ))}
                       </div>
                     </div>
@@ -890,7 +890,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
               <div className="grid grid-cols-2 gap-1">
                 {lightingPresets.map(lp => (
-                  <button key={lp.value} onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}>{lp.label}</button>
+                  <button key={lp.value} onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{lp.label}</button>
                 ))}
               </div>
             </DropdownMenu>
@@ -902,7 +902,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               <div className="grid grid-cols-2 gap-1">
                 {ambientSounds.map(as => (
-                  <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}>{as.label}</button>
+                  <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{as.label}</button>
                 ))}
               </div>
             </DropdownMenu>
