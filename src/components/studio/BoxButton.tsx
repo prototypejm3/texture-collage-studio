@@ -167,12 +167,12 @@ function AdultTextIcon() {
 function AdultToolBoxIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-      <rect x="8" y="24" width="48" height="32" rx="4" fill="#c4956a"/>
-      <rect x="12" y="28" width="40" height="24" rx="2" fill="#d9a97c"/>
-      <rect x="4" y="18" width="56" height="10" rx="3" fill="#b07d52"/>
-      <rect x="24" y="14" width="16" height="8" rx="3" fill="none" stroke="#b07d52" strokeWidth="3"/>
-      <line x1="20" y1="36" x2="44" y2="36" stroke="#c4956a" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="20" y1="42" x2="36" y2="42" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+      <rect x="8" y="24" width="48" height="32" rx="4" fill="#7aaa8a"/>
+      <rect x="12" y="28" width="40" height="24" rx="2" fill="#a8d4b8"/>
+      <rect x="4" y="18" width="56" height="10" rx="3" fill="#5a8a6a"/>
+      <rect x="24" y="14" width="16" height="8" rx="3" fill="none" stroke="#5a8a6a" strokeWidth="3"/>
+      <line x1="20" y1="36" x2="44" y2="36" stroke="#7aaa8a" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="20" y1="42" x2="36" y2="42" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
     </svg>
   );
 }
