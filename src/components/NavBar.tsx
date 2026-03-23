@@ -26,6 +26,100 @@ function useTheme() {
   return { dark, toggle: () => setDark(d => !d) };
 }
 
+// ── Kid face SVG ──
+function KidFace({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40">
+      <circle cx="10" cy="10" r="6" fill="#c4956a" />
+      <circle cx="10" cy="10" r="3.5" fill="#dbb896" />
+      <circle cx="30" cy="10" r="6" fill="#c4956a" />
+      <circle cx="30" cy="10" r="3.5" fill="#dbb896" />
+      <circle cx="20" cy="22" r="14" fill="#c4956a" />
+      <circle cx="20" cy="24" r="10" fill="#dbb896" />
+      <circle cx="15" cy="22" r="2" fill="#3d2b1f" />
+      <circle cx="25" cy="22" r="2" fill="#3d2b1f" />
+      <circle cx="15.7" cy="21.3" r="0.7" fill="white" />
+      <circle cx="25.7" cy="21.3" r="0.7" fill="white" />
+      <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
+      <path d="M17 27 Q20 30 23 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
+      <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
+      <circle cx="15.5" cy="8" r="1" fill="#e05c5c" />
+      <circle cx="20" cy="5.5" r="1" fill="#e05c5c" />
+      <circle cx="24.5" cy="8" r="1" fill="#e05c5c" />
+    </svg>
+  );
+}
+
+// ── Granny face SVG ──
+function GrannyFace({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40">
+      <circle cx="20" cy="8" r="5" fill="#a0a0a0" />
+      <circle cx="18" cy="6" r="1.2" fill="#fbbf24" />
+      <circle cx="22" cy="6" r="1.2" fill="#fbbf24" />
+      <circle cx="8" cy="18" r="4" fill="#a0a0a0" />
+      <circle cx="32" cy="18" r="4" fill="#a0a0a0" />
+      <circle cx="20" cy="22" r="13" fill="#dbb896" />
+      <rect x="10" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+      <rect x="22" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+      <line x1="18" y1="21" x2="22" y2="21" stroke="#5a8a6a" strokeWidth="1.5" />
+      <circle cx="14" cy="21" r="1.5" fill="#3d2b1f" />
+      <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
+      <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// ── Mode toggle pill ──
+function ModeTogglePill({ kidMode, onClick }: { kidMode: boolean; onClick: () => void }) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.93 }}
+      onClick={onClick}
+      className="flex items-center rounded-full overflow-hidden flex-shrink-0 transition-all hover:scale-105"
+      style={{
+        backgroundColor: '#5a8a6a',
+        width: 96,
+        height: 44,
+        padding: 3,
+      }}
+      title={kidMode ? 'Switch to Granny Mode' : 'Switch to Kids Mode'}
+    >
+      {/* Kid side */}
+      <div
+        className="flex items-center justify-center rounded-full transition-all duration-200"
+        style={{
+          width: 38,
+          height: 38,
+          backgroundColor: kidMode ? '#dfe8df' : 'transparent',
+          boxShadow: kidMode ? '0 2px 6px rgba(0,0,0,0.15)' : 'none',
+        }}
+      >
+        <KidFace size={kidMode ? 28 : 22} />
+      </div>
+      {/* Arrow */}
+      <div className="flex-1 flex items-center justify-center">
+        <svg width="14" height="10" viewBox="0 0 16 10" fill="none">
+          <line x1="2" y1="5" x2="12" y2="5" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+          <polyline points="10,2 13,5 10,8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.6" />
+        </svg>
+      </div>
+      {/* Granny side */}
+      <div
+        className="flex items-center justify-center rounded-full transition-all duration-200"
+        style={{
+          width: 38,
+          height: 38,
+          backgroundColor: !kidMode ? '#dfe8df' : 'transparent',
+          boxShadow: !kidMode ? '0 2px 6px rgba(0,0,0,0.15)' : 'none',
+        }}
+      >
+        <GrannyFace size={!kidMode ? 28 : 22} />
+      </div>
+    </motion.button>
+  );
+}
+
 export function NavBar() {
   const location = useLocation();
   const { user, signOut } = useAuth();
@@ -135,15 +229,8 @@ export function NavBar() {
                </Link>
              )}
 
-             {/* Mode toggle pill - far right */}
-             <motion.button
-               whileTap={{ scale: 0.93 }}
-               onClick={handleToggleKidMode}
-               className="rounded-full overflow-hidden transition-all hover:scale-105"
-               title="Switch to Granny Mode"
-             >
-               <img src={kidGrannyToggle} alt="Kids → Granny" className="h-10 w-auto" />
-             </motion.button>
+              {/* Mode toggle pill - far right */}
+              <ModeTogglePill kidMode={kidMode} onClick={handleToggleKidMode} />
            </div>
          </nav>
         <GrownUpCheckModal
@@ -273,37 +360,8 @@ export function NavBar() {
              >Sign In</Link>
            )}
 
-           {/* Mode Toggle Pill — far right */}
-           <button
-             onClick={handleToggleKidMode}
-             className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-             style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 68, height: 32 }}
-             title="Switch to Kids Mode"
-           >
-             <div className="flex items-center justify-center w-1/2 h-full">
-               <svg width="18" height="18" viewBox="0 0 28 28">
-                 <circle cx="14" cy="16" r="10" fill="white"/>
-                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
-                 <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
-                 <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
-                 <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
-               </svg>
-             </div>
-             <div className="w-px h-5 bg-border" />
-             <div className="flex items-center justify-center w-1/2 h-full">
-               <svg width="18" height="18" viewBox="0 0 28 28">
-                 <circle cx="14" cy="16" r="10" fill="#e8ddd0"/>
-                 <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
-                 <path d="M11 18 Q14 20 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
-                 <ellipse cx="14" cy="10" rx="7" ry="3" fill="#c4956a"/>
-                 <circle cx="10" cy="10" r="1.2" fill="#c4956a"/>
-                 <circle cx="18" cy="10" r="1.2" fill="#c4956a"/>
-               </svg>
-             </div>
-           </button>
+            {/* Mode Toggle Pill — far right */}
+            <ModeTogglePill kidMode={kidMode} onClick={handleToggleKidMode} />
          </div>
        </nav>
       <GrownUpCheckModal
