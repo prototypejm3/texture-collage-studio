@@ -233,7 +233,7 @@ export function RightSidebar({
     { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
     { label: 'Patterns', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
-    { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: communityDiyIds },
+    { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: communityDiyIds, adultOnly: true },
     { label: 'Sports', kidLabel: '⚽ Sports', emoji: '⚽', ids: new Set([...sportsStencils, ...anchorStencils, ...worldStencils].map(s => s.id)) },
     { label: kidMode ? 'Numbers & Symbols' : '# & @$*', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
