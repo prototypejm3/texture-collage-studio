@@ -692,6 +692,11 @@ const MyWall = () => {
         onClose={() => setGallerySubmitId(null)}
       />
       <OnboardingTutorial page="wall" />
+      <FloatingMusicButton
+        kidMode={kidMode}
+        ambientSound={currentSettings.ambientSound || 'none'}
+        onAmbientSoundChange={(sound) => handleUpdateSettings({ ambientSound: sound })}
+      />
     </div>
   );
 };
