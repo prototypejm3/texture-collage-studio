@@ -664,6 +664,7 @@ export function Canvas({
           style={{
             left: boxPos.x,
             ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
+            ...(isMobileCanvas ? { transform: 'scale(0.45)', transformOrigin: 'bottom left' } : {}),
           }}
           onMouseDown={(e) => {
             // Allow drag from anywhere on the box — only skip tiny remove buttons inside items
