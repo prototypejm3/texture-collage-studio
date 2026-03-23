@@ -192,6 +192,7 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
             width: 176,
             height: 130,
             background: '#1e40af',
+            zIndex: 10,
             boxShadow: isHovered
               ? '0 8px 28px rgba(30, 64, 175, 0.4)'
               : '0 8px 24px rgba(30, 64, 175, 0.2)',
