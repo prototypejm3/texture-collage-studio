@@ -897,7 +897,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
       </div>
       {/* Name + inline action icons */}
       <div className="flex items-center justify-center gap-0.5 mt-0.5">
-        <p className="text-[8px] text-muted-foreground truncate">{vibe.emoji} {vibe.name}</p>
+        <p className="text-[8px] text-muted-foreground truncate">{kidMode ? `${vibe.emoji} ` : ''}{vibe.name}</p>
         <div className="flex items-center gap-px shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">
           {/* Favorite */}
           {isLoggedIn && !isAiGenerated && (
