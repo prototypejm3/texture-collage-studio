@@ -56,7 +56,7 @@ function ColorsIcon() {
 function FrameIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <rect x="8" y="10" width="32" height="28" rx="2" fill="#c4956a" stroke="#a0713a" strokeWidth="1.5" />
+      <rect x="8" y="10" width="32" height="28" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="1.5" />
       <rect x="13" y="15" width="22" height="18" rx="1" fill="#87ceeb" />
       <path d="M13 27 Q20 24 24 27 Q28 30 35 26 L35 33 L13 33 Z" fill="#7ec87e" />
       <circle cx="30" cy="20" r="3.5" fill="#fbbf24" />
