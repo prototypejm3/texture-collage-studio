@@ -10,6 +10,7 @@ interface Props {
 
 export function FloatingMusicButton({ kidMode, ambientSound, onAmbientSoundChange }: Props) {
   const [expanded, setExpanded] = useState(false);
+  const isMobile = useIsMobile();
 
   if (!onAmbientSoundChange) return null;
 
