@@ -195,7 +195,7 @@ export function TopToolbar({
               <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                 <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
               </svg>
-              Create
+              Workspace
             </Link>
           </div>
           <div className="flex-1" />
@@ -337,7 +337,7 @@ export function TopToolbar({
               <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                 <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
               </svg>
-              Create
+              Workspace
             </Link>
           </div>
           <div className="flex-1" />
@@ -416,24 +416,24 @@ export function TopToolbar({
               </svg>
             </Link>
 
-            {/* Create */}
+            {/* Workspace */}
             <Link to="/"
               className={`${pressStyle} hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-white font-bold text-[13px]`}
               style={{ backgroundColor: '#5a8a6a' }}
-              title="Create"
+              title="Workspace"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                 <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
               </svg>
-              Create
+              Workspace
             </Link>
 
             <NavDivider />
 
-            {/* Workspace */}
+            {/* Studio */}
             <Link to="/wall" data-nav="wall"
               className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
-              title="Workspace"
+              title="Studio"
             >
               <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                 <rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2.5" fill="none"/>
@@ -443,13 +443,13 @@ export function TopToolbar({
                 <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
                 <rect x="5" y="5" width="10" height="10" fill="white"/>
               </svg>
-              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Studio</span>
             </Link>
 
-            {/* Gallery */}
+            {/* Showcase */}
             <Link to="/gallery" data-nav="gallery"
               className={`${pressStyle} hidden md:flex items-center gap-1.5 px-1.5 py-1`}
-              title="Gallery"
+              title="Showcase"
             >
               <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                 <polygon points="10,1 1,7 19,7" fill="#5a8a6a"/>
@@ -460,7 +460,7 @@ export function TopToolbar({
                 <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
                 <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
               </svg>
-              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Showcase</span>
             </Link>
 
             {/* AI Mode */}
