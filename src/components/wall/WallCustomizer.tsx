@@ -1,5 +1,5 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { LayoutGrid, AlignJustify, Check, Frame, Move, Lamp, Volume2, Tag, Wand2, Eye, Lock, LampDesk, GalleryVerticalEnd, Palette, Upload, ChevronDown } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -14,13 +14,7 @@ interface WallCustomizerProps {
   isPremium: boolean;
 }
 
-const layouts: { value: WallLayout; label: string; icon: React.ReactNode }[] = [
-  { value: 'freeform', label: 'Freeform', icon: <Move className="w-3.5 h-3.5" /> },
-  { value: 'grid', label: 'Grid', icon: <LayoutGrid className="w-3.5 h-3.5" /> },
-  { value: 'single', label: 'List', icon: <AlignJustify className="w-3.5 h-3.5" /> },
-];
-
-// Kid mode backgrounds (cute icons)
+// ── Kid mode backgrounds ──
 const kidBackgrounds: { value: WallBackground; label: string; kidLabel: string; fill: string; borderColor: string }[] = [
   { value: 'white-brick', label: 'Cloud', kidLabel: '☁️ Cloud', fill: '#f5f5f0', borderColor: '#e2ddd6' },
   { value: 'wood-birch-wall', label: 'Sunset', kidLabel: '☀️ Sunset', fill: '#fef3e8', borderColor: '#e2ddd6' },
@@ -31,33 +25,80 @@ const kidBackgrounds: { value: WallBackground; label: string; kidLabel: string; 
   { value: 'wood-oak-wall', label: 'Linen', kidLabel: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6' },
 ];
 
-// Adult mode backgrounds (grouped)
+// ── Adult mode backgrounds (grouped) ──
 const adultBgGroups: { label: string; items: { value: WallBackground; label: string; fill: string; gradient?: string }[] }[] = [
   {
     label: 'Wood',
     items: [
-      { value: 'wood-birch-wall', label: 'Birch', fill: '#e8d5b8', gradient: 'linear-gradient(145deg, hsl(35, 40%, 78%), hsl(30, 35%, 68%))' },
-      { value: 'wood-oak-wall', label: 'Oak', fill: '#c4956a', gradient: 'linear-gradient(145deg, hsl(28, 45%, 58%), hsl(25, 40%, 48%))' },
-      { value: 'wood-walnut-wall', label: 'Walnut', fill: '#6b4226', gradient: 'linear-gradient(145deg, hsl(20, 45%, 30%), hsl(18, 40%, 22%))' },
+      { value: 'wood-birch-wall', label: 'Birch', fill: '#d9a97c' },
+      { value: 'wood-oak-wall', label: 'Oak', fill: '#c4956a' },
+      { value: 'wood-walnut-wall', label: 'Walnut', fill: '#7c3f1e' },
     ],
   },
   {
     label: 'Brick',
     items: [
-      { value: 'white-brick', label: 'White Brick', fill: '#f5f5f0' },
-      { value: 'brick', label: 'Red Brick', fill: '#b8725a', gradient: 'linear-gradient(145deg, hsl(15, 40%, 52%), hsl(12, 35%, 42%))' },
+      { value: 'white-brick', label: 'White Brick', fill: '#f5f0ec' },
+      { value: 'brick', label: 'Red Brick', fill: '#c4a090' },
     ],
   },
   {
     label: 'Wallpaper',
     items: [
-      { value: 'floral', label: 'Floral', fill: '#f5ede5', gradient: 'radial-gradient(circle at 30% 40%, hsl(340,50%,80%) 3px, transparent 3px), radial-gradient(circle at 70% 60%, hsl(280,40%,75%) 3px, transparent 3px), linear-gradient(hsl(40,30%,95%), hsl(40,30%,95%))' },
-      { value: 'blush', label: 'Blush', fill: '#fdf0f0' },
-      { value: 'mint', label: 'Mint', fill: '#edf4ed' },
+      { value: 'blush', label: 'Blush', fill: '#fdf0f0', gradient: '#f9a8d4' },
+      { value: 'floral', label: 'Floral', fill: '#f0f4ff', gradient: '#a78bfa' },
+      { value: 'mint', label: 'Mint', fill: '#f0fdf4', gradient: '#4ade80' },
     ],
   },
 ];
 
+const allFrameStyles: { value: FrameStyle; label: string }[] = [
+  { value: 'shadow-box', label: 'Shadow Box' },
+  { value: 'gold', label: 'Gold' },
+  { value: 'chrome', label: 'Chrome' },
+  { value: 'copper', label: 'Copper' },
+  { value: 'silver', label: 'Silver' },
+  { value: 'black', label: 'Black' },
+  { value: 'minimal', label: 'Minimal' },
+  { value: 'wood', label: 'Wood' },
+  { value: 'floating', label: 'Floating' },
+  { value: 'polaroid', label: 'Polaroid' },
+  { value: 'none', label: 'None' },
+];
+
+const hangingStyles: { value: HangingStyle; label: string; group?: string }[] = [
+  { value: 'floating', label: 'Floating', group: 'Style' },
+  { value: 'string', label: 'String', group: 'String' },
+  { value: 'lighted-string', label: 'Lighted', group: 'String' },
+  { value: 'metal-wire', label: 'Metal', group: 'String' },
+  { value: 'hemp', label: 'Hemp', group: 'String' },
+  { value: 'white-string', label: 'White', group: 'String' },
+  { value: 'braided', label: 'Braided', group: 'String' },
+  { value: 'pink-yarn', label: 'Pink Yarn', group: 'String' },
+  { value: 'beaded', label: 'Beaded', group: 'String' },
+  { value: 'hook', label: 'Hook', group: 'Style' },
+  { value: 'shelf', label: 'Shelf', group: 'Style' },
+  { value: 'silver-screw', label: 'Silver Screw', group: 'Nail' },
+  { value: 'red-tack', label: 'Red Tack', group: 'Nail' },
+  { value: 'cork-tack', label: 'Cork Tack', group: 'Nail' },
+];
+
+const lightingPresets: { value: LightingPreset; label: string }[] = [
+  { value: 'none', label: 'Off' },
+  { value: 'gallery', label: 'Gallery' },
+  { value: 'golden-hour', label: 'Golden Hour' },
+  { value: 'dramatic', label: 'Dramatic' },
+  { value: 'soft-diffused', label: 'Soft' },
+];
+
+const ambientSounds: { value: AmbientSound; label: string }[] = [
+  { value: 'none', label: 'Off' },
+  { value: 'gallery', label: 'Gallery' },
+  { value: 'loft', label: 'Loft' },
+  { value: 'home', label: 'Home' },
+];
+
+// ── Kid mode wall icons ──
 function WallIconCloud() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -68,7 +109,6 @@ function WallIconCloud() {
     </svg>
   );
 }
-
 function WallIconSunset() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -81,7 +121,6 @@ function WallIconSunset() {
     </svg>
   );
 }
-
 function WallIconSage() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -93,7 +132,6 @@ function WallIconSage() {
     </svg>
   );
 }
-
 function WallIconBlush() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -103,7 +141,6 @@ function WallIconBlush() {
     </svg>
   );
 }
-
 function WallIconApple() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -114,7 +151,6 @@ function WallIconApple() {
     </svg>
   );
 }
-
 function WallIconForest() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -126,7 +162,6 @@ function WallIconForest() {
     </svg>
   );
 }
-
 function WallIconLinen() {
   return (
     <svg viewBox="0 0 40 40" className="w-full h-full">
@@ -150,55 +185,220 @@ const wallIcons: Record<string, React.FC> = {
   'wood-oak-wall': WallIconLinen,
 };
 
-const allFrameStyles: { value: FrameStyle; label: string }[] = [
-  { value: 'shadow-box', label: 'Shadow Box' },
-  { value: 'gold', label: 'Gold' },
-  { value: 'chrome', label: 'Chrome' },
-  { value: 'copper', label: 'Copper' },
-  { value: 'silver', label: 'Silver' },
-  { value: 'black', label: 'Black' },
-  { value: 'minimal', label: 'Minimal' },
-  { value: 'wood', label: 'Wood' },
-  { value: 'floating', label: 'Floating' },
-  { value: 'polaroid', label: 'Polaroid' },
-  { value: 'none', label: 'None' },
-];
+// ── SVG Icons for new toolbar ──
+function MoveIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <line x1="9" y1="2" x2="9" y2="16" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+      <line x1="2" y1="9" x2="16" y2="9" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+      <polygon points="9,1 7,4 11,4" fill={color}/>
+      <polygon points="9,17 7,14 11,14" fill={color}/>
+      <polygon points="1,9 4,7 4,11" fill={color}/>
+      <polygon points="17,9 14,7 14,11" fill={color}/>
+    </svg>
+  );
+}
+function GridIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="1" y="1" width="6" height="6" rx="1.5" fill={color}/>
+      <rect x="9" y="1" width="6" height="6" rx="1.5" fill={color}/>
+      <rect x="1" y="9" width="6" height="6" rx="1.5" fill={color}/>
+      <rect x="9" y="9" width="6" height="6" rx="1.5" fill={color}/>
+    </svg>
+  );
+}
+function ListIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="2" y1="4" x2="14" y2="4" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+      <line x1="2" y1="8" x2="14" y2="8" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+      <line x1="2" y1="12" x2="14" y2="12" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+function FramesIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="2" y="2" width="12" height="12" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
+      <rect x="2" y="2" width="3" height="3" rx="0.5" fill={color}/>
+      <rect x="11" y="2" width="3" height="3" rx="0.5" fill={color}/>
+      <rect x="2" y="11" width="3" height="3" rx="0.5" fill={color}/>
+      <rect x="11" y="11" width="3" height="3" rx="0.5" fill={color}/>
+    </svg>
+  );
+}
+function HangingIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M4 2 Q8 6 12 2" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+      <line x1="6" y1="4" x2="6" y2="9" stroke={color} strokeWidth="1.2"/>
+      <line x1="10" y1="4" x2="10" y2="9" stroke={color} strokeWidth="1.2"/>
+      <rect x="4" y="9" width="8" height="5" rx="1" fill={color} opacity="0.4"/>
+    </svg>
+  );
+}
+function LabelsIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="2" y="3" width="12" height="2.5" rx="1.25" fill={color}/>
+      <rect x="3" y="7" width="10" height="2.5" rx="1.25" fill={color}/>
+      <rect x="4" y="11" width="8" height="2.5" rx="1.25" fill={color}/>
+    </svg>
+  );
+}
+function ViewIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <ellipse cx="8" cy="8" rx="7" ry="4" stroke={color} strokeWidth="1.5" fill="none"/>
+      <circle cx="8" cy="8" r="2.5" fill={color}/>
+    </svg>
+  );
+}
+function LightingIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <ellipse cx="8" cy="7" rx="3.5" ry="4" stroke={color} strokeWidth="1.4" fill="none"/>
+      <line x1="6.5" y1="11" x2="9.5" y2="11" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
+      <line x1="8" y1="2" x2="8" y2="0.5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="3" y1="4" x2="2" y2="3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="13" y1="4" x2="14" y2="3" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="2" y1="7" x2="0.5" y2="7" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="14" y1="7" x2="15.5" y2="7" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+function SoundIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="5" cy="12" r="2.5" fill={color}/>
+      <rect x="7" y="3" width="1.5" height="9.5" rx="0.5" fill={color}/>
+      <path d="M7.5 3C7.5 3 10 2 13 3.5V7C10 5.5 7.5 6.5 7.5 6.5" fill={color} opacity="0.7"/>
+    </svg>
+  );
+}
+function CurateIcon({ color = '#94a3b8' }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <polyline points="3,9 6.5,12.5 13,4" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    </svg>
+  );
+}
 
-const hangingStyles: { value: HangingStyle; label: string; emoji: string; group?: string }[] = [
-  { value: 'floating', label: 'Floating', emoji: '✨', group: 'Style' },
-  { value: 'string', label: 'String', emoji: '🧵', group: 'String' },
-  { value: 'lighted-string', label: 'Lighted', emoji: '💡', group: 'String' },
-  { value: 'metal-wire', label: 'Metal', emoji: '🔗', group: 'String' },
-  { value: 'hemp', label: 'Hemp', emoji: '🌿', group: 'String' },
-  { value: 'white-string', label: 'White', emoji: '🤍', group: 'String' },
-  { value: 'braided', label: 'Braided', emoji: '🪢', group: 'String' },
-  { value: 'pink-yarn', label: 'Pink Yarn', emoji: '🩷', group: 'String' },
-  { value: 'beaded', label: 'Beaded', emoji: '📿', group: 'String' },
-  { value: 'hook', label: 'Hook', emoji: '🪝', group: 'Style' },
-  { value: 'shelf', label: 'Shelf', emoji: '🪵', group: 'Style' },
-  { value: 'silver-screw', label: 'Silver Screw', emoji: '🔩', group: 'Nail' },
-  { value: 'red-tack', label: 'Red Tack', emoji: '📌', group: 'Nail' },
-  { value: 'cork-tack', label: 'Cork Tack', emoji: '🟤', group: 'Nail' },
-];
+// ── Toolbar button component ──
+function ToolbarButton({ active, onClick, icon, label, locked, onRequestUpgrade }: {
+  active?: boolean;
+  onClick: () => void;
+  icon: (color: string) => React.ReactNode;
+  label?: string;
+  locked?: boolean;
+  onRequestUpgrade?: () => void;
+}) {
+  const handleClick = () => {
+    if (locked && onRequestUpgrade) {
+      onRequestUpgrade();
+      return;
+    }
+    onClick();
+  };
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <button
+        onClick={handleClick}
+        className="relative flex items-center justify-center transition-all active:scale-[0.94]"
+        style={{
+          width: 40, height: 40,
+          borderRadius: '50%',
+          background: active ? '#5a8a6a' : '#f0ebe3',
+          border: active ? 'none' : '1.2px solid #e2ddd6',
+        }}
+      >
+        {icon(active ? 'white' : '#94a3b8')}
+        {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5" style={{ color: '#5a8a6a' }} />}
+      </button>
+      {label && (
+        <span style={{ fontSize: 9, color: '#94a3b8', fontFamily: 'system-ui, sans-serif' }}>{label}</span>
+      )}
+    </div>
+  );
+}
 
-const lightingPresets: { value: LightingPreset; label: string; emoji: string }[] = [
-  { value: 'none', label: 'Off', emoji: '○' },
-  { value: 'gallery', label: 'Gallery', emoji: '🖼' },
-  { value: 'golden-hour', label: 'Golden Hour', emoji: '🌅' },
-  { value: 'dramatic', label: 'Dramatic', emoji: '🎭' },
-  { value: 'soft-diffused', label: 'Soft', emoji: '☁️' },
-];
+// ── Section label ──
+function SectionLabel({ text }: { text: string }) {
+  return (
+    <span style={{
+      fontSize: 9, fontWeight: 600, color: '#94a3b8',
+      letterSpacing: 1, textTransform: 'uppercase' as const,
+      fontFamily: 'system-ui, sans-serif',
+    }}>{text}</span>
+  );
+}
 
-const ambientSounds: { value: AmbientSound; label: string; emoji: string }[] = [
-  { value: 'none', label: 'Off', emoji: '🔇' },
-  { value: 'gallery', label: 'Gallery', emoji: '🏛' },
-  { value: 'loft', label: 'Loft', emoji: '🏙' },
-  { value: 'home', label: 'Home', emoji: '🏠' },
-];
+// ── Divider ──
+function ToolbarDivider() {
+  return <div style={{ width: 1, height: 64, backgroundColor: '#e2ddd6', flexShrink: 0 }} />;
+}
+
+// ── Wall swatch circle ──
+function WallSwatch({ fill, pattern, selected, onClick }: {
+  fill: string;
+  pattern?: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-full flex-shrink-0 transition-all hover:scale-110 relative overflow-hidden"
+      style={{
+        width: 26, height: 26,
+        backgroundColor: fill,
+        border: selected ? '2.5px solid #5a8a6a' : '1px solid #e2ddd6',
+      }}
+    >
+      {pattern && (
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 26 26">
+          <circle cx="7" cy="7" r="1.5" fill={pattern} opacity="0.7"/>
+          <circle cx="17" cy="9" r="1.5" fill={pattern} opacity="0.7"/>
+          <circle cx="9" cy="18" r="1.5" fill={pattern} opacity="0.7"/>
+          <circle cx="19" cy="17" r="1.5" fill={pattern} opacity="0.7"/>
+        </svg>
+      )}
+    </button>
+  );
+}
+
+// ── Color wheel ──
+function ColorWheelButton({ selected, onClick }: { selected: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-full flex-shrink-0 transition-all hover:scale-110"
+      style={{
+        width: 26, height: 26,
+        background: 'conic-gradient(#f87171, #fbbf24, #4ade80, #38bdf8, #a78bfa, #f87171)',
+        border: selected ? '2.5px solid #5a8a6a' : '1px solid #e2ddd6',
+      }}
+    >
+      <div className="w-3 h-3 rounded-full bg-white mx-auto mt-[5px]" />
+    </button>
+  );
+}
+
+// ── Dropdown wrapper ──
+function DropdownMenu({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) {
+  if (!isOpen) return null;
+  return (
+    <>
+      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <div className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]" style={{ fontFamily: 'system-ui, sans-serif' }}>
+        {children}
+      </div>
+    </>
+  );
+}
 
 export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyHangingToAll, onAutoCurate, onStepBack, onRequestUpgrade, isPremium }: WallCustomizerProps) {
-  const [showFrameMenu, setShowFrameMenu] = useState(false);
-  const [showHangingMenu, setShowHangingMenu] = useState(false);
   const [kidMode, setKidMode] = useState(() => {
     try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; }
   });
@@ -207,399 +407,278 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
+
+  const [showFrameMenu, setShowFrameMenu] = useState(false);
+  const [showHangingMenu, setShowHangingMenu] = useState(false);
   const [showLightingMenu, setShowLightingMenu] = useState(false);
   const [showSoundMenu, setShowSoundMenu] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [customColor, setCustomColor] = useState('#f5f0e8');
+  const isMobile = useIsMobile();
 
-  const handlePremiumClick = (action: () => void) => {
-    if (!isPremium) {
-      onRequestUpgrade?.();
-      return;
-    }
-    action();
-  };
-
-  const iconClass = (active?: boolean, locked?: boolean) => `relative p-2 rounded-full border shadow-sm transition-colors ${
-    locked
-      ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
-      : active
-        ? 'bg-primary text-primary-foreground border-primary'
-        : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-  }`;
-
-  return (
-    <div className="flex flex-wrap items-center gap-4 px-1">
-      <div className="mr-auto" />
-
-      <div className="flex items-center gap-2.5">
-        {/* Layout picker — grid is free, others are premium */}
-        <div className="flex flex-col items-center gap-0.5">
-          <div className="flex items-center gap-1 rounded-full border border-border bg-popover p-1 shadow-sm">
-            {layouts.map(l => {
-              const locked = l.value !== 'grid' && !isPremium;
-              return (
-                <button
-                  key={l.value}
-                  onClick={() => locked ? onRequestUpgrade?.() : onUpdate({ layout: l.value })}
-                  className={`relative p-2 rounded-full border shadow-sm transition-colors ${
-                    settings.layout === l.value
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : locked
-                        ? 'bg-popover text-muted-foreground/40 border-border cursor-not-allowed'
-                        : 'bg-popover text-muted-foreground border-border hover:bg-secondary hover:text-foreground'
-                  }`}
-                  title={locked ? 'Premium — unlock to use' : l.label}
-                >
-                  {l.icon}
-                  {locked && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-                </button>
-              );
-            })}
-          </div>
-          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Layout</span>
-        </div>
-
-        {/* Apply frame to all */}
-        <PremiumIconButton
-          icon={<Frame className="w-3.5 h-3.5" />}
-          isPremium={isPremium}
-          isOpen={showFrameMenu}
-          onToggle={() => isPremium ? setShowFrameMenu(!showFrameMenu) : onRequestUpgrade?.()}
-          onClose={() => setShowFrameMenu(false)}
-          iconClass={iconClass(false, !isPremium)}
-          title="Apply frame to all"
-          label="Frames"
-        >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
-          {allFrameStyles.map(fs => (
-            <button
-              key={fs.value}
-              onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
-              className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-            >
-              {fs.label}
-            </button>
-          ))}
-        </PremiumIconButton>
-
-        {/* Hanging style */}
-        <PremiumIconButton
-          icon={<GalleryVerticalEnd className="w-3.5 h-3.5" />}
-          isPremium={isPremium}
-          isOpen={showHangingMenu}
-          onToggle={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
-          onClose={() => setShowHangingMenu(false)}
-          iconClass={iconClass(settings.defaultHangingStyle !== 'floating', !isPremium)}
-          title="Hanging style"
-          label="Hanging"
-        >
-          {['Style', 'String', 'Nail'].map(group => {
-            const items = hangingStyles.filter(h => h.group === group);
-            if (items.length === 0) return null;
+  // Kid mode — unchanged
+  if (kidMode) {
+    return (
+      <div className="flex flex-wrap items-center gap-4 px-1">
+        <div className="mr-auto" />
+        <div className="flex items-center gap-4">
+          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>Wall:</span>
+          {kidBackgrounds.map(bg => {
+            const isSelected = settings.background === bg.value;
+            const IconComp = wallIcons[bg.value];
             return (
-              <div key={group}>
-                <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
-                {items.map(hs => (
-                  <button
-                    key={hs.value}
-                    onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
-                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === hs.value ? 'text-primary font-medium' : 'text-foreground'}`}
-                  >
-                    <span>{hs.emoji}</span> {hs.label}
-                  </button>
-                ))}
-              </div>
+              <button
+                key={bg.value}
+                onClick={() => onUpdate({ background: bg.value })}
+                className="relative rounded-lg transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
+                style={{
+                  width: 56, height: 56,
+                  backgroundColor: bg.fill,
+                  border: `${isSelected ? '3px' : '2px'} solid ${isSelected ? '#f97316' : bg.borderColor}`,
+                  boxShadow: isSelected ? '0 0 0 2px #f9731640' : 'inset 0 0 0 2px rgba(255,255,255,0.5)',
+                }}
+                title={bg.kidLabel}
+              >
+                {IconComp && <IconComp />}
+              </button>
             );
           })}
-          <div className="border-t border-border my-1" />
-          <button
-            onClick={() => { onApplyHangingToAll?.('spotlight'); setShowHangingMenu(false); }}
-            className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.defaultHangingStyle === 'spotlight' ? 'text-primary font-medium' : 'text-foreground'}`}
-          >
-            <span>💡</span> Spotlight
-          </button>
-        </PremiumIconButton>
-
-        {/* Lighting presets */}
-        <PremiumIconButton
-          icon={<Lamp className="w-3.5 h-3.5" />}
-          isPremium={isPremium}
-          isOpen={showLightingMenu}
-          onToggle={() => isPremium ? setShowLightingMenu(!showLightingMenu) : onRequestUpgrade?.()}
-          onClose={() => setShowLightingMenu(false)}
-          iconClass={iconClass(settings.lightingPreset !== 'none', !isPremium)}
-          title="Lighting"
-          label="Lighting"
-        >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
-          {lightingPresets.map(lp => (
-            <button
-              key={lp.value}
-              onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
-              className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.lightingPreset === lp.value ? 'text-primary font-medium' : 'text-foreground'}`}
-            >
-              <span>{lp.emoji}</span> {lp.label}
-            </button>
-          ))}
-        </PremiumIconButton>
-
-        {/* Ambient sound */}
-        <PremiumIconButton
-          icon={<Volume2 className="w-3.5 h-3.5" />}
-          isPremium={isPremium}
-          isOpen={showSoundMenu}
-          onToggle={() => isPremium ? setShowSoundMenu(!showSoundMenu) : onRequestUpgrade?.()}
-          onClose={() => setShowSoundMenu(false)}
-          iconClass={iconClass(settings.ambientSound !== 'none', !isPremium)}
-          title="Ambient sound"
-          label="Sound"
-        >
-          <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
-          {ambientSounds.map(as => (
-            <button
-              key={as.value}
-              onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
-              className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary flex items-center gap-2 ${settings.ambientSound === as.value ? 'text-primary font-medium' : 'text-foreground'}`}
-            >
-              <span>{as.emoji}</span> {as.label}
-            </button>
-          ))}
-        </PremiumIconButton>
-
-        {/* Title cards toggle */}
-        <div className="flex flex-col items-center gap-0.5">
-          <button
-            onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
-            className={iconClass(settings.showTitleCards, false)}
-            title="Museum labels"
-          >
-            <Tag className="w-3.5 h-3.5" />
-          </button>
-          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Labels</span>
         </div>
-
-        {/* Auto-curate */}
-        <div className="flex flex-col items-center gap-0.5">
-          <button
-            onClick={() => handlePremiumClick(() => onAutoCurate?.())}
-            className={iconClass(false, !isPremium)}
-            title={isPremium ? 'Arrange Nicely' : 'Premium — unlock to use'}
-          >
-            <Wand2 className="w-3.5 h-3.5" />
-            {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-          </button>
-          <span className="text-[8px] text-muted-foreground uppercase tracking-wider">Curate</span>
-        </div>
-
-        {/* Step back — free for everyone */}
-        {onStepBack && (
-          <div className="flex flex-col items-center gap-0.5">
-            <button onClick={onStepBack} className={iconClass()} title="Step back">
-              <Eye className="w-3.5 h-3.5" />
-            </button>
-            <span className="text-[8px] text-muted-foreground uppercase tracking-wider">View</span>
-          </div>
-        )}
-
-        {/* Background picker */}
-        {kidMode ? (
-          /* Kid mode: cute circle icons */
-          <div className="flex items-center gap-4">
-            <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>🎨 Wall:</span>
-            {kidBackgrounds.map(bg => {
-              const isSelected = settings.background === bg.value;
-              const IconComp = wallIcons[bg.value];
-              return (
-                <button
-                  key={bg.value}
-                  onClick={() => onUpdate({ background: bg.value })}
-                  className="relative rounded-lg transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
-                  style={{
-                    width: 56, height: 56,
-                    backgroundColor: bg.fill,
-                    border: `${isSelected ? '3px' : '2px'} solid ${isSelected ? '#f97316' : bg.borderColor}`,
-                    boxShadow: isSelected ? '0 0 0 2px #f9731640' : 'inset 0 0 0 2px rgba(255,255,255,0.5)',
-                  }}
-                  title={bg.kidLabel}
-                >
-                  {IconComp && <IconComp />}
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          /* Adult mode: grouped background picker with color picker + upload */
-          <AdultBackgroundPicker
-            settings={settings}
-            onUpdate={onUpdate}
-            isPremium={isPremium}
-            onRequestUpgrade={onRequestUpgrade}
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ─── Adult Background Picker ─── */
-function AdultBackgroundPicker({ settings, onUpdate, isPremium, onRequestUpgrade }: {
-  settings: WallSettings;
-  onUpdate: (updates: Partial<WallSettings>) => void;
-  isPremium: boolean;
-  onRequestUpgrade?: () => void;
-}) {
-  const [showPicker, setShowPicker] = useState(false);
-  const [customColor, setCustomColor] = useState('#f5f0e8');
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleColorChange = (color: string) => {
-    setCustomColor(color);
-    // Store color in customWallImage as a color value
-    onUpdate({ background: 'custom', customWallImage: color });
-  };
-
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const dataUrl = ev.target?.result as string;
-      onUpdate({ background: 'custom', customWallImage: dataUrl });
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const isMobile = useIsMobile();
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const pickerContent = (
-    <div className={`flex items-center gap-1.5 flex-wrap ${isMobile ? 'flex-col items-start gap-2 p-3' : ''}`}>
-      {adultBgGroups.map(group => (
-        <div key={group.label} className={`flex items-center gap-1 ${isMobile ? 'w-full' : ''}`}>
-          <span className="text-[8px] text-muted-foreground uppercase tracking-wider mr-0.5">{group.label}</span>
-          <div className="flex items-center gap-1 flex-wrap">
-            {group.items.map(bg => {
-              const isSelected = settings.background === bg.value;
-              return (
-                <button
-                  key={bg.value}
-                  onClick={() => { onUpdate({ background: bg.value }); if (isMobile) setMobileOpen(false); }}
-                  className={`rounded-full flex-shrink-0 transition-all hover:scale-110 ${isSelected ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-                  style={{
-                    width: isMobile ? 36 : 28, height: isMobile ? 36 : 28,
-                    background: bg.gradient || bg.fill,
-                    border: `1px solid hsl(var(--border))`,
-                  }}
-                  title={bg.label}
-                />
-              );
-            })}
-          </div>
-          {!isMobile && <div className="w-px h-5 bg-border mx-1" />}
-        </div>
-      ))}
-
-      {/* Color picker */}
-      <div className="relative flex items-center">
-        <button
-          onClick={() => setShowPicker(!showPicker)}
-          className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center ${settings.background === 'custom' && settings.customWallImage?.startsWith('#') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-          style={{
-            width: isMobile ? 36 : 28, height: isMobile ? 36 : 28,
-            background: 'conic-gradient(hsl(0,70%,60%), hsl(60,70%,60%), hsl(120,70%,60%), hsl(180,70%,60%), hsl(240,70%,60%), hsl(300,70%,60%), hsl(360,70%,60%))',
-            border: '1px solid hsl(var(--border))',
-          }}
-          title="Color Picker"
-        >
-          <Palette className="w-3 h-3 text-white drop-shadow-sm" />
-        </button>
-        {showPicker && (
-          <>
-            <div className="fixed inset-0 z-40" onClick={() => setShowPicker(false)} />
-            <div className="absolute bottom-full left-0 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
-              <input
-                type="color"
-                value={customColor}
-                onChange={(e) => handleColorChange(e.target.value)}
-                className="w-32 h-32 cursor-pointer border-none rounded-md"
-                style={{ padding: 0 }}
-              />
-              <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* Upload custom */}
-      <button
-        onClick={() => fileInputRef.current?.click()}
-        className={`rounded-full flex-shrink-0 transition-all hover:scale-110 flex items-center justify-center bg-secondary ${settings.background === 'custom' && settings.customWallImage?.startsWith('data:') ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-        style={{ width: isMobile ? 36 : 28, height: isMobile ? 36 : 28, border: '1px solid hsl(var(--border))' }}
-        title="Upload Background"
-      >
-        <Upload className="w-3 h-3 text-muted-foreground" />
-      </button>
-      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleUpload} />
-    </div>
-  );
-
-  if (isMobile) {
-    return (
-      <div className="relative flex items-center gap-2">
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-popover text-muted-foreground hover:bg-secondary transition-colors"
-        >
-          <span className="text-[11px] font-medium uppercase tracking-wider">Wall</span>
-          <ChevronDown className={`w-3 h-3 transition-transform ${mobileOpen ? 'rotate-180' : ''}`} />
-        </button>
-        {mobileOpen && (
-          <>
-            <div className="fixed inset-0 z-40" onClick={() => setMobileOpen(false)} />
-            <div className="absolute left-0 bottom-full z-50 mb-2 bg-popover border border-border rounded-xl shadow-lg min-w-[240px]">
-              <p className="px-3 pt-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">Wall Background</p>
-              {pickerContent}
-            </div>
-          </>
-        )}
       </div>
     );
   }
 
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Wall</span>
-      {pickerContent}
-    </div>
-  );
-}
+  // Adult mode — new grouped toolbar
+  const isCustomColor = settings.background === 'custom' && settings.customWallImage?.startsWith('#');
 
-/* ─── Premium icon button with lock badge ─── */
-function PremiumIconButton({ icon, isPremium, isOpen, onToggle, onClose, iconClass, title, label, children }: {
-  icon: React.ReactNode;
-  isPremium: boolean;
-  isOpen: boolean;
-  onToggle: () => void;
-  onClose: () => void;
-  iconClass: string;
-  title: string;
-  label?: string;
-  children: React.ReactNode;
-}) {
   return (
-    <div className="relative flex flex-col items-center gap-0.5">
-      <button onClick={onToggle} className={iconClass} title={isPremium ? title : 'Premium — unlock to use'}>
-        {icon}
-        {!isPremium && <Lock className="w-2 h-2 absolute -top-0.5 -right-0.5 text-primary/60" />}
-      </button>
-      {label && <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{label}</span>}
-      {isOpen && isPremium && (
-        <>
-          <div className="fixed inset-0 z-40" onClick={onClose} />
-          <div className="absolute right-0 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]">
-            {children}
+    <div
+      className="flex items-center overflow-x-auto scrollbar-none"
+      style={{
+        height: 80,
+        background: '#f5f3f0',
+        borderBottom: '1px solid #e2ddd6',
+        borderRadius: 12,
+        padding: '0 16px',
+        gap: 16,
+        fontFamily: 'system-ui, sans-serif',
+      }}
+    >
+      {/* ── GROUP 1: ARRANGE ── */}
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <SectionLabel text="ARRANGE" />
+        <div className="flex items-center gap-2">
+          <ToolbarButton
+            active={settings.layout === 'freeform'}
+            onClick={() => onUpdate({ layout: 'freeform' })}
+            icon={(c) => <MoveIcon color={c} />}
+          />
+          <ToolbarButton
+            active={settings.layout === 'grid'}
+            onClick={() => onUpdate({ layout: 'grid' })}
+            icon={(c) => <GridIcon color={c} />}
+            locked={!isPremium && settings.layout !== 'grid'}
+            onRequestUpgrade={onRequestUpgrade}
+          />
+          <ToolbarButton
+            active={settings.layout === 'single'}
+            onClick={() => onUpdate({ layout: 'single' })}
+            icon={(c) => <ListIcon color={c} />}
+            locked={!isPremium}
+            onRequestUpgrade={onRequestUpgrade}
+          />
+        </div>
+      </div>
+
+      <ToolbarDivider />
+
+      {/* ── GROUP 2: DISPLAY ── */}
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <SectionLabel text="DISPLAY" />
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <ToolbarButton
+              active={showFrameMenu}
+              onClick={() => isPremium ? setShowFrameMenu(!showFrameMenu) : onRequestUpgrade?.()}
+              icon={(c) => <FramesIcon color={c} />}
+              label="Frames"
+              locked={!isPremium}
+              onRequestUpgrade={onRequestUpgrade}
+            />
+            <DropdownMenu isOpen={showFrameMenu && isPremium} onClose={() => setShowFrameMenu(false)}>
+              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
+              {allFrameStyles.map(fs => (
+                <button key={fs.value}
+                  onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
+                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium' : ''}`}
+                  style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
+                >{fs.label}</button>
+              ))}
+            </DropdownMenu>
           </div>
-        </>
-      )}
+
+          <div className="relative">
+            <ToolbarButton
+              active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')}
+              onClick={() => isPremium ? setShowHangingMenu(!showHangingMenu) : onRequestUpgrade?.()}
+              icon={(c) => <HangingIcon color={c} />}
+              label="Hanging"
+              locked={!isPremium}
+              onRequestUpgrade={onRequestUpgrade}
+            />
+            <DropdownMenu isOpen={showHangingMenu && isPremium} onClose={() => setShowHangingMenu(false)}>
+              {['Style', 'String', 'Nail'].map(group => {
+                const items = hangingStyles.filter(h => h.group === group);
+                if (!items.length) return null;
+                return (
+                  <div key={group}>
+                    <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                    {items.map(hs => (
+                      <button key={hs.value}
+                        onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
+                        className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium' : ''}`}
+                        style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
+                      >{hs.label}</button>
+                    ))}
+                  </div>
+                );
+              })}
+            </DropdownMenu>
+          </div>
+
+          <ToolbarButton
+            active={settings.showTitleCards}
+            onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
+            icon={(c) => <LabelsIcon color={c} />}
+            label="Labels"
+          />
+
+          <ToolbarButton
+            active={false}
+            onClick={() => onStepBack?.()}
+            icon={(c) => <ViewIcon color={c} />}
+            label="View"
+          />
+        </div>
+      </div>
+
+      <ToolbarDivider />
+
+      {/* ── GROUP 3: AMBIENCE ── */}
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <SectionLabel text="AMBIENCE" />
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <ToolbarButton
+              active={showLightingMenu || settings.lightingPreset !== 'none'}
+              onClick={() => isPremium ? setShowLightingMenu(!showLightingMenu) : onRequestUpgrade?.()}
+              icon={(c) => <LightingIcon color={c} />}
+              label="Lighting"
+              locked={!isPremium}
+              onRequestUpgrade={onRequestUpgrade}
+            />
+            <DropdownMenu isOpen={showLightingMenu && isPremium} onClose={() => setShowLightingMenu(false)}>
+              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
+              {lightingPresets.map(lp => (
+                <button key={lp.value}
+                  onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
+                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium' : ''}`}
+                  style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
+                >{lp.label}</button>
+              ))}
+            </DropdownMenu>
+          </div>
+
+          <div className="relative">
+            <ToolbarButton
+              active={showSoundMenu || settings.ambientSound !== 'none'}
+              onClick={() => isPremium ? setShowSoundMenu(!showSoundMenu) : onRequestUpgrade?.()}
+              icon={(c) => <SoundIcon color={c} />}
+              label="Sound"
+              locked={!isPremium}
+              onRequestUpgrade={onRequestUpgrade}
+            />
+            <DropdownMenu isOpen={showSoundMenu && isPremium} onClose={() => setShowSoundMenu(false)}>
+              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+              {ambientSounds.map(as => (
+                <button key={as.value}
+                  onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
+                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium' : ''}`}
+                  style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}
+                >{as.label}</button>
+              ))}
+            </DropdownMenu>
+          </div>
+
+          <ToolbarButton
+            active={false}
+            onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()}
+            icon={(c) => <CurateIcon color={c} />}
+            label="Curate"
+            locked={!isPremium}
+            onRequestUpgrade={onRequestUpgrade}
+          />
+        </div>
+      </div>
+
+      <ToolbarDivider />
+
+      {/* ── GROUP 4: WALL ── */}
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <SectionLabel text="WALL" />
+        <div className="flex items-center gap-3">
+          {adultBgGroups.map((group, gi) => (
+            <div key={group.label} className="flex items-center gap-1.5">
+              <div className="flex flex-col items-center gap-0.5">
+                <span style={{ fontSize: 9, fontWeight: 500, color: '#94a3b8', fontFamily: 'system-ui, sans-serif' }}>{group.label}</span>
+                <div className="flex items-center gap-1">
+                  {group.items.map(bg => {
+                    const isWallpaper = group.label === 'Wallpaper';
+                    return (
+                      <WallSwatch
+                        key={bg.value}
+                        fill={bg.fill}
+                        pattern={isWallpaper ? bg.gradient : undefined}
+                        selected={settings.background === bg.value}
+                        onClick={() => onUpdate({ background: bg.value })}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+              {gi < adultBgGroups.length - 1 && (
+                <div style={{ width: 1, height: 40, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
+              )}
+            </div>
+          ))}
+
+          {/* Color wheel */}
+          <div className="relative">
+            <ColorWheelButton
+              selected={!!isCustomColor}
+              onClick={() => setShowColorPicker(!showColorPicker)}
+            />
+            {showColorPicker && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowColorPicker(false)} />
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
+                  <input
+                    type="color"
+                    value={customColor}
+                    onChange={(e) => {
+                      setCustomColor(e.target.value);
+                      onUpdate({ background: 'custom', customWallImage: e.target.value });
+                    }}
+                    className="w-32 h-32 cursor-pointer border-none rounded-md"
+                    style={{ padding: 0 }}
+                  />
+                  <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
