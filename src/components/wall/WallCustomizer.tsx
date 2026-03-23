@@ -464,6 +464,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const hangingMenuRef = useRef<HTMLDivElement>(null);
   const lightingMenuRef = useRef<HTMLDivElement>(null);
   const soundMenuRef = useRef<HTMLDivElement>(null);
+  const colorPickerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   // Hideable state
@@ -816,29 +817,36 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           ))}
 
           {/* Color wheel */}
-          <div className="relative">
+          <div ref={colorPickerRef} className="relative">
             <ColorWheelButton
               selected={!!isCustomColor}
-              onClick={() => setShowColorPicker(!showColorPicker)}
+              onClick={() => {
+                setShowFrameMenu(false);
+                setShowHangingMenu(false);
+                setShowLightingMenu(false);
+                setShowSoundMenu(false);
+                setShowColorPicker(!showColorPicker);
+              }}
             />
-            {showColorPicker && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowColorPicker(false)} />
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 z-50 mb-2 p-3 bg-popover border border-border rounded-lg shadow-lg">
-                  <input
-                    type="color"
-                    value={customColor}
-                    onChange={(e) => {
-                      setCustomColor(e.target.value);
-                      onUpdate({ background: 'custom', customWallImage: e.target.value });
-                    }}
-                    className="w-32 h-32 cursor-pointer border-none rounded-md"
-                    style={{ padding: 0 }}
-                  />
-                  <p className="text-[9px] text-muted-foreground mt-1 text-center">{customColor}</p>
-                </div>
-              </>
-            )}
+            <DropdownMenu
+              isOpen={showColorPicker}
+              onClose={() => setShowColorPicker(false)}
+              anchorRef={colorPickerRef}
+            >
+              <div className="flex flex-col items-center gap-2 p-1">
+                <input
+                  type="color"
+                  value={customColor}
+                  onChange={(e) => {
+                    setCustomColor(e.target.value);
+                    onUpdate({ background: 'custom', customWallImage: e.target.value });
+                  }}
+                  className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent"
+                  style={{ padding: 0 }}
+                />
+                <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
+              </div>
+            </DropdownMenu>
           </div>
         </div>
       </div>
