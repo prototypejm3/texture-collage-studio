@@ -1290,7 +1290,7 @@ const Index = () => {
                   onClick={() => toggleBox('stencils')} kidMode={false} />
                 <BoxButton id="text" icon="" label="Text" isActive={activeBox === 'text'}
                   onClick={() => toggleBox('text')} kidMode={false} />
-                {studio.elements.length > 0 && (
+                {studio.elements.length > 0 && !isMobile && (
                   <BoxButton id="toolbox" icon="" label="Tool Box" isActive={activeBox === 'toolbox'}
                     onClick={() => toggleBox('toolbox')} kidMode={false} />
                 )}
