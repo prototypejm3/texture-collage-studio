@@ -1225,7 +1225,8 @@ const Index = () => {
               {/* Save/Download row */}
               <div className="flex items-center justify-center gap-2 pb-1.5">
                 {/* Reset */}
-                {/* Easel / Desk */}
+                {/* Easel / Desk — hidden on mobile, shown as floating button */}
+                {!isMobile && (
                 <button
                   onClick={() => setEaselMode(prev => !prev)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all active:scale-[0.94] text-[11px] font-medium border ${
@@ -1244,6 +1245,7 @@ const Index = () => {
                   </svg>
                   {easelMode ? 'Easel' : 'Desk'}
                 </button>
+                )}
                 {/* Reset */}
                 <button onClick={handleClearAll} className="flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96]" title="Reset">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
