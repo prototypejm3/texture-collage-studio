@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { textures } from '@/data/textures';
+import { kidTextureNames } from '@/data/textures/kidNames';
 import { TextureSwatch } from '@/types/studio';
 import { X, Plus } from 'lucide-react';
 import { BoxItem } from './MaybeBox';
