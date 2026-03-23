@@ -266,7 +266,7 @@ export const kidTextureNames: Record<string, string> = {
   'gemini': 'Twin Stars',                  // abstract pattern
 
   // Chat
-  'chat': 'Happy Chat',                    // abstract pattern
+  'chat': 'Old TV',                        // abstract pattern
 
   // Bisous
   'bisous-blues': 'Blueberry Kiss',        // blue with kiss prints
