@@ -41,22 +41,7 @@ export function BuildPanel({
 
   return (
     <div className="flex flex-col h-full bg-popover">
-      {/* Header */}
-      <div className="flex items-center justify-between px-3 py-1 border-b border-border bg-secondary/30 shrink-0">
-        <div className="flex items-center gap-1.5">
-        </div>
-        <div className="flex items-center gap-1.5">
-          {!stencilsPoppedOut && (
-            <button
-              onClick={onPopOutStencils}
-              className="p-0.5 text-muted-foreground hover:text-foreground transition-colors"
-              title="Pop out to floating panel"
-            >
-              <ExternalLink className="w-3 h-3" />
-            </button>
-          )}
-        </div>
-      </div>
+      {/* Pop-out button only when needed */}
 
       <div className="flex-1 overflow-y-auto">
         {!stencilsPoppedOut ? (
