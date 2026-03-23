@@ -129,7 +129,7 @@ export const textures: TextureSwatch[] = [
   { id: 'prime-peacock', name: 'Peacock Punch', category: 'Prime', cssBackground: img('prime-peacock.png') },
 
   // ── Tussah ──
-  { id: 'tussah-silk', name: 'Silk Sling', category: 'Tussah', cssBackground: img('tussah-silk.png') },
+  
 
   // ── Bloke ──
   { id: 'bloke-cotton', name: 'Gin Rickey', category: 'Bloke', cssBackground: img('bloke-cotton.png') },
