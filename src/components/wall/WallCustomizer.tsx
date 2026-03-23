@@ -459,6 +459,10 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const [showSoundMenu, setShowSoundMenu] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [customColor, setCustomColor] = useState('#f5f0e8');
+  const frameMenuRef = useRef<HTMLDivElement>(null);
+  const hangingMenuRef = useRef<HTMLDivElement>(null);
+  const lightingMenuRef = useRef<HTMLDivElement>(null);
+  const soundMenuRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   // Hideable state
