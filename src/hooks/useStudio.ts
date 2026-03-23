@@ -120,6 +120,8 @@ export function useStudio() {
   const [backgroundTextureId, setBackgroundTextureId] = useState<string | null>(null);
   const [sectionTransforms, setSectionTransforms] = useState<SectionTransforms>({});
   const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
+  const [previewSize, setPreviewSize] = useState<string | null>(null);
+  const [previewElementIds, setPreviewElementIds] = useState<string[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
