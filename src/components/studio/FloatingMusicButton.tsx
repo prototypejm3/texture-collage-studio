@@ -21,14 +21,14 @@ export function FloatingMusicButton({ kidMode, ambientSound, onAmbientSoundChang
   const currentLabel = ambientSound && ambientSound !== 'none' ? soundLabels[ambientSound] || trackName : trackName;
 
   return (
-    <div className="fixed z-[55]" style={{ right: 16, bottom: 72 }}>
+    <div className="fixed z-[55]" style={isMobile ? { right: 12, top: 60 } : { right: 16, bottom: 72 }}>
       <AnimatePresence>
         {expanded && (
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: isMobile ? -8 : 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            className="absolute bottom-[44px] right-0 rounded-lg px-3 py-2 min-w-[120px]"
+            exit={{ opacity: 0, y: isMobile ? -8 : 8 }}
+            className={`absolute ${isMobile ? 'top-[44px]' : 'bottom-[44px]'} right-0 rounded-lg px-3 py-2 min-w-[120px]`}
             style={{ backgroundColor: 'rgba(61,53,48,0.85)' }}
           >
             <p className="text-white text-[9px] font-medium mb-1.5" style={{ fontFamily: 'system-ui,sans-serif' }}>
