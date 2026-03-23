@@ -715,9 +715,12 @@ export function Canvas({
           ref={adultBoxRef}
           className="absolute z-30 cursor-grab active:cursor-grabbing"
           style={{
-            left: adultBoxPos.x,
-            ...(adultBoxPos.y < 0 ? { bottom: 44 } : { top: adultBoxPos.y }),
-            ...(isMobileCanvas ? { transform: 'scale(0.45)', transformOrigin: 'bottom left' } : {}),
+            ...(isMobileCanvas
+              ? { left: 8, top: 8, transform: 'scale(0.4)', transformOrigin: 'top left' }
+              : {
+                  left: adultBoxPos.x,
+                  ...(adultBoxPos.y < 0 ? { bottom: 44 } : { top: adultBoxPos.y }),
+                }),
           }}
           onMouseDown={(e) => {
             if ((e.target as HTMLElement).closest('[data-box-item-remove]')) return;
