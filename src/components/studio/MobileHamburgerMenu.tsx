@@ -115,12 +115,12 @@ export function MobileHamburgerMenu({
                 <>
                   <MenuItem
                     icon={<svg width="16" height="16" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="2" stroke="#5a8a6a" strokeWidth="2" fill="none"/><rect x="1" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/><rect x="14" y="1" width="5" height="5" rx="1" fill="#7aaa8a"/><rect x="1" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/><rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/></svg>}
-                    label="Workspace"
+                    label="Studio"
                     onClick={() => window.location.href = '/wall'}
                   />
                   <MenuItem
                     icon={<svg width="16" height="16" viewBox="0 0 20 20"><polygon points="10,1 1,7 19,7" fill="#5a8a6a"/><rect x="1" y="7" width="18" height="2" fill="#3d6a4a"/><rect x="3" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/><rect x="8" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/><rect x="14" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/></svg>}
-                    label="Gallery"
+                    label="Showcase"
                     onClick={() => window.location.href = '/gallery'}
                   />
                   {onAiToggle && (

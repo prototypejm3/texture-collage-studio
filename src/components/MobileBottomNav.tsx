@@ -113,7 +113,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
               className="flex flex-col items-center gap-0.5 px-4 py-1.5 text-primary"
             >
               <Brush className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Create</span>
+              <span className="text-[10px] font-medium">Workspace</span>
             </Link>
             <button
               onClick={onOpenContext}
@@ -143,7 +143,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
               }`}
             >
               <Grid2x2 className="w-5 h-5" />
-              <span className="text-[10px] font-medium">My Wall</span>
+              <span className="text-[10px] font-medium">Studio</span>
             </Link>
             <Link
               to="/gallery"
@@ -152,7 +152,7 @@ export function MobileBottomNav({ onOpenBuild, onOpenContext, buildOpen, context
               }`}
             >
               <Landmark className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Gallery</span>
+              <span className="text-[10px] font-medium">Showcase</span>
             </Link>
           </>
         )}
