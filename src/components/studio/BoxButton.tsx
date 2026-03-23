@@ -128,16 +128,16 @@ function AdultColorsIcon() {
 function AdultFrameIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 72 72" fill="none">
-      <rect x="4" y="4" width="64" height="64" rx="6" fill="none" stroke="#c4956a" strokeWidth="8"/>
+      <rect x="4" y="4" width="64" height="64" rx="6" fill="none" stroke="#7aaa8a" strokeWidth="8"/>
       <rect x="18" y="18" width="36" height="36" rx="3" fill="#f0e8dc"/>
-      <line x1="20" y1="20" x2="26" y2="20" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="20" x2="20" y2="26" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="20" x2="46" y2="20" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="20" x2="52" y2="26" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="52" x2="26" y2="52" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="52" x2="20" y2="46" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="52" x2="46" y2="52" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="52" x2="52" y2="46" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="20" x2="26" y2="20" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="20" x2="20" y2="26" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="20" x2="46" y2="20" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="20" x2="52" y2="26" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="52" x2="26" y2="52" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="52" x2="20" y2="46" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="52" x2="46" y2="52" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="52" x2="52" y2="46" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
     </svg>
   );
 }
