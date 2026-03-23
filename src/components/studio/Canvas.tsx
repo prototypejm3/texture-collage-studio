@@ -649,7 +649,46 @@ export function Canvas({
         </div>
       )}
 
-      {/* Kid Toolbox on desk — only when element selected */}
+      {/* Adult Mode Butter Cookies Tin */}
+      {!kidMode && (
+        <div
+          className="absolute z-30"
+          style={{
+            right: 16,
+            bottom: 44,
+          }}
+          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setBoxHover(true); }}
+          onDragLeave={() => setBoxHover(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setBoxHover(false);
+            const fromBox = e.dataTransfer.getData('fromBox');
+            if (fromBox) return;
+            const textureId = e.dataTransfer.getData('textureId');
+            if (textureId) {
+              setBoxItems(prev => [...prev, { id: generateBoxItemId(), textureId }]);
+              onBoxSave?.();
+            }
+          }}
+        >
+          <ButterCookiesTin
+            items={boxItems}
+            onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
+            onDragOutItem={(item) => {
+              setBoxItems(prev => prev.filter(i => i.id !== item.id));
+              if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                onTableDrop(item.textureId, rect.width / 2, rect.height / 2);
+              }
+            }}
+            isHovered={boxHover}
+            customTextures={customTextures}
+          />
+        </div>
+      )}
+
+
       {kidMode && selectedId && elements.find(e => e.id === selectedId) && onUpdateElement && onUpdateEffects && onDuplicateElement && (() => {
         const el = elements.find(e => e.id === selectedId)!;
         const edgeCycle: import('@/types/studio').EdgeStyle[] = ['clean', 'soft-fray', 'rough-torn', 'pinking', 'scallop', 'zigzag', 'wave'];
