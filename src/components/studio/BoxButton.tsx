@@ -69,13 +69,13 @@ function FrameIcon() {
 function ShapesIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <ellipse cx="24" cy="30" rx="8" ry="9" fill="#c4956a" />
-      <ellipse cx="24" cy="31" rx="5" ry="6" fill="#d9a97c" />
-      <circle cx="24" cy="20" r="7" fill="#c4956a" />
-      <circle cx="17" cy="15" r="3.5" fill="#c4956a" />
-      <circle cx="31" cy="15" r="3.5" fill="#c4956a" />
-      <circle cx="17" cy="15" r="2" fill="#d9a97c" />
-      <circle cx="31" cy="15" r="2" fill="#d9a97c" />
+      <ellipse cx="24" cy="30" rx="8" ry="9" fill="#7aaa8a" />
+      <ellipse cx="24" cy="31" rx="5" ry="6" fill="#a8d4b8" />
+      <circle cx="24" cy="20" r="7" fill="#7aaa8a" />
+      <circle cx="17" cy="15" r="3.5" fill="#7aaa8a" />
+      <circle cx="31" cy="15" r="3.5" fill="#7aaa8a" />
+      <circle cx="17" cy="15" r="2" fill="#a8d4b8" />
+      <circle cx="31" cy="15" r="2" fill="#a8d4b8" />
       <path d="M18 24 Q24 27 30 24" stroke="#fb923c" strokeWidth="2.5" fill="none" strokeLinecap="round" />
       <polygon points="10,10 11,13 14,13 11.5,15 12.5,18 10,16 7.5,18 8.5,15 6,13 9,13" fill="#fbbf24" />
       <polygon points="37,9 34,15 36,15 33,21 39,14 37,14" fill="#fb923c" />
