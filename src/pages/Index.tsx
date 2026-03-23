@@ -679,7 +679,7 @@ const Index = () => {
                             : (sounds.kidMode ? '#f7f0e8' : 'hsl(var(--secondary))'),
                           color: isActive
                             ? 'white'
-                            : (sounds.kidMode ? '#6b4c2a' : '#3d3530'),
+                            : (sounds.kidMode ? '#6b4c2a' : 'hsl(var(--foreground))'),
                         }}
                       >
                         {size}
