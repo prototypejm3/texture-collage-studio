@@ -654,7 +654,7 @@ const Index = () => {
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl shadow-lg"
                   style={{
                     background: sounds.kidMode ? '#f5ede0' : '#faf8f5',
-                    border: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}`,
+                    border: `1px solid ${sounds.kidMode ? '#e8ddd0' : 'hsl(var(--border))'}`,
                   }}
                 >
                   <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: 'hsl(var(--foreground))' }}>
@@ -676,7 +676,7 @@ const Index = () => {
                           transition: 'all 0.15s ease',
                           background: isActive
                             ? (sounds.kidMode ? '#f97316' : '#5a8a6a')
-                            : (sounds.kidMode ? '#f7f0e8' : '#f0ebe3'),
+                            : (sounds.kidMode ? '#f7f0e8' : 'hsl(var(--secondary))'),
                           color: isActive
                             ? 'white'
                             : (sounds.kidMode ? '#6b4c2a' : '#3d3530'),
