@@ -69,19 +69,20 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
 
 const hangingStyles: { value: HangingStyle; label: string; group?: string }[] = [
   { value: 'floating', label: 'Floating', group: 'Style' },
+  { value: 'hook', label: 'Hook', group: 'Style' },
+  { value: 'shelf', label: 'Shelf', group: 'Style' },
+  { value: 'spotlight', label: 'Spotlight', group: 'Style' },
   { value: 'string', label: 'String', group: 'String' },
   { value: 'lighted-string', label: 'Lighted', group: 'String' },
-  { value: 'metal-wire', label: 'Metal', group: 'String' },
+  { value: 'metal-wire', label: 'Metal Wire', group: 'String' },
   { value: 'hemp', label: 'Hemp', group: 'String' },
   { value: 'white-string', label: 'White', group: 'String' },
   { value: 'braided', label: 'Braided', group: 'String' },
   { value: 'pink-yarn', label: 'Pink Yarn', group: 'String' },
   { value: 'beaded', label: 'Beaded', group: 'String' },
-  { value: 'hook', label: 'Hook', group: 'Style' },
-  { value: 'shelf', label: 'Shelf', group: 'Style' },
-  { value: 'silver-screw', label: 'Silver Screw', group: 'Nail' },
   { value: 'red-tack', label: 'Red Tack', group: 'Nail' },
   { value: 'cork-tack', label: 'Cork Tack', group: 'Nail' },
+  { value: 'silver-screw', label: 'Silver Screw', group: 'Nail' },
 ];
 
 const lightingPresets: { value: LightingPreset; label: string }[] = [
@@ -428,7 +429,7 @@ function DropdownMenu({
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
       <div
-        className="fixed z-50 max-h-[320px] max-w-[min(92vw,28rem)] overflow-y-auto rounded-lg border border-border bg-popover p-2 shadow-lg"
+        className="fixed z-50 max-h-[min(70vh,28rem)] max-w-[min(92vw,28rem)] overflow-y-auto rounded-lg border border-border bg-popover p-2 shadow-lg"
         style={{
           left: position.left,
           top: position.top,
