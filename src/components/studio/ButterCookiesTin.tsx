@@ -101,7 +101,7 @@ export function ButterCookiesTin({ items, onRemoveItem, onDragOutItem, isHovered
         whileTap={{ scale: 0.94 }}
         transition={{ duration: 0.12 }}
         className="relative cursor-pointer select-none"
-        title="Your saved colors"
+        title="Swatch Tin"
         style={{ width: 176, height: isOpen ? 130 : 182 }}
       >
         {/* Lid */}
