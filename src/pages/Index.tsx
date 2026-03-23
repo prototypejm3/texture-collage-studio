@@ -1,4 +1,5 @@
 import { useRef, useCallback, useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { toPng } from 'html-to-image';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
