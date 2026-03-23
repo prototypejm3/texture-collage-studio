@@ -171,9 +171,8 @@ export function TopToolbar({
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
         ? 'h-[56px] md:h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
-        : 'h-[56px] border-b'
+        : 'h-[56px] border-b border-border bg-popover'
     }`}
-    style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
       {kidMode && isMobile ? (
         /* ── Kid Mode MOBILE Nav ── */
