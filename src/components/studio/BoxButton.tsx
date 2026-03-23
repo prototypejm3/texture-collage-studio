@@ -27,7 +27,7 @@ function ColorsIcon() {
   const colors = [
     ['#f87171', '#fbbf24', '#4ade80'],
     ['#38bdf8', '#a78bfa', '#fb923c'],
-    ['#c4956a', '#94a3b8', '#f9a8d4'],
+    ['#7aaa8a', '#94a3b8', '#f9a8d4'],
   ];
   const size = 11;
   const gap = 3;
