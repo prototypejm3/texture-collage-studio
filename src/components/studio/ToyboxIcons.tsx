@@ -101,7 +101,7 @@ export function SunIcon() {
 export function MoonIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M13 3 A7 7 0 1 0 13 15 A5.5 5.5 0 0 1 13 3Z" fill="#6b4c2a" />
+      <path d="M13 3 A7 7 0 1 0 13 15 A5.5 5.5 0 0 1 13 3Z" fill="#3a5c4a" />
     </svg>
   );
 }
