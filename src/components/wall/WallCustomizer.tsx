@@ -270,13 +270,14 @@ function CurateIcon({ color = '#94a3b8' }: { color?: string }) {
 }
 
 // ── Toolbar button component ──
-function ToolbarButton({ active, onClick, icon, label, locked, onRequestUpgrade }: {
+function ToolbarButton({ active, onClick, icon, label, locked, onRequestUpgrade, compact }: {
   active?: boolean;
   onClick: () => void;
   icon: (color: string) => React.ReactNode;
   label?: string;
   locked?: boolean;
   onRequestUpgrade?: () => void;
+  compact?: boolean;
 }) {
   const handleClick = () => {
     if (locked && onRequestUpgrade) {
@@ -285,13 +286,14 @@ function ToolbarButton({ active, onClick, icon, label, locked, onRequestUpgrade 
     }
     onClick();
   };
+  const size = compact ? 32 : 40;
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center gap-0.5 shrink-0">
       <button
         onClick={handleClick}
         className="relative flex items-center justify-center transition-all active:scale-[0.94]"
         style={{
-          width: 40, height: 40,
+          width: size, height: size,
           borderRadius: '50%',
           background: active ? '#5a8a6a' : '#f0ebe3',
           border: active ? 'none' : '1.2px solid #e2ddd6',
