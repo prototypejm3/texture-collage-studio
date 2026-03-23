@@ -104,7 +104,7 @@ export function MobileHamburgerMenu({
                   />
                   {onAiToggle && (
                     <MenuItem
-                      icon={<svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#c4956a"/></svg>}
+                      icon={<svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#7aaa8a"/></svg>}
                       label={`AI Mode ${aiEnabled ? '(On)' : '(Off)'}`}
                       onClick={onAiToggle}
                       active={aiEnabled}
