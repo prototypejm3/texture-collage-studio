@@ -151,6 +151,7 @@ export function Canvas({
   }, [onSelectTableElement]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; elementId: string; isTable: boolean } | null>(null);
   const [trashHover, setTrashHover] = useState(false);
+  const [trashLidOpen, setTrashLidOpen] = useState(false);
   const trashRef = useRef<HTMLDivElement>(null);
   const [boxItems, setBoxItems] = useState<BoxItem[]>(() => {
     try { const raw = localStorage.getItem('kid-maybe-box'); return raw ? JSON.parse(raw) : []; } catch { return []; }
