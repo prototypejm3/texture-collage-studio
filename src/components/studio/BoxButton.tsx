@@ -15,9 +15,9 @@ interface BoxButtonProps {
 function SaveIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <rect x="10" y="22" width="28" height="18" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="1.5" />
-      <line x1="24" y1="22" x2="24" y2="40" stroke="#5a8a6a" strokeWidth="1" opacity="0.4" />
-      <path d="M8 22 L14 14 L34 14 L40 22 Z" fill="#a8d4b8" stroke="#5a8a6a" strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x="10" y="22" width="28" height="18" rx="2" fill="#c4956a" stroke="#a0713a" strokeWidth="1.5" />
+      <line x1="24" y1="22" x2="24" y2="40" stroke="#a0713a" strokeWidth="1" opacity="0.4" />
+      <path d="M8 22 L14 14 L34 14 L40 22 Z" fill="#d9b88c" stroke="#a0713a" strokeWidth="1.5" strokeLinejoin="round" />
       <rect x="21" y="13" width="6" height="27" rx="1" fill="#f7f0e8" opacity="0.5" />
     </svg>
   );
@@ -27,7 +27,7 @@ function ColorsIcon() {
   const colors = [
     ['#f87171', '#fbbf24', '#4ade80'],
     ['#38bdf8', '#a78bfa', '#fb923c'],
-    ['#7aaa8a', '#94a3b8', '#f9a8d4'],
+    ['#c4956a', '#94a3b8', '#f9a8d4'],
   ];
   const size = 11;
   const gap = 3;
@@ -56,7 +56,7 @@ function ColorsIcon() {
 function FrameIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <rect x="8" y="10" width="32" height="28" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="1.5" />
+      <rect x="8" y="10" width="32" height="28" rx="2" fill="#c4956a" stroke="#a0713a" strokeWidth="1.5" />
       <rect x="13" y="15" width="22" height="18" rx="1" fill="#87ceeb" />
       <path d="M13 27 Q20 24 24 27 Q28 30 35 26 L35 33 L13 33 Z" fill="#7ec87e" />
       <circle cx="30" cy="20" r="3.5" fill="#fbbf24" />
@@ -69,13 +69,13 @@ function FrameIcon() {
 function ShapesIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-      <ellipse cx="24" cy="30" rx="8" ry="9" fill="#7aaa8a" />
-      <ellipse cx="24" cy="31" rx="5" ry="6" fill="#a8d4b8" />
-      <circle cx="24" cy="20" r="7" fill="#7aaa8a" />
-      <circle cx="17" cy="15" r="3.5" fill="#7aaa8a" />
-      <circle cx="31" cy="15" r="3.5" fill="#7aaa8a" />
-      <circle cx="17" cy="15" r="2" fill="#a8d4b8" />
-      <circle cx="31" cy="15" r="2" fill="#a8d4b8" />
+      <ellipse cx="24" cy="30" rx="8" ry="9" fill="#c4956a" />
+      <ellipse cx="24" cy="31" rx="5" ry="6" fill="#d9b88c" />
+      <circle cx="24" cy="20" r="7" fill="#c4956a" />
+      <circle cx="17" cy="15" r="3.5" fill="#c4956a" />
+      <circle cx="31" cy="15" r="3.5" fill="#c4956a" />
+      <circle cx="17" cy="15" r="2" fill="#d9b88c" />
+      <circle cx="31" cy="15" r="2" fill="#d9b88c" />
       <path d="M18 24 Q24 27 30 24" stroke="#fb923c" strokeWidth="2.5" fill="none" strokeLinecap="round" />
       <polygon points="10,10 11,13 14,13 11.5,15 12.5,18 10,16 7.5,18 8.5,15 6,13 9,13" fill="#fbbf24" />
       <polygon points="37,9 34,15 36,15 33,21 39,14 37,14" fill="#fb923c" />
@@ -101,10 +101,10 @@ const kidSvgIcons: Record<string, React.FC> = {
 function AdultSaveIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-      <rect x="8" y="26" width="48" height="38" rx="4" fill="#7aaa8a"/>
-      <rect x="4" y="14" width="56" height="16" rx="4" fill="#a8d4b8"/>
-      <rect x="27" y="14" width="10" height="16" rx="2" fill="#c8e6d0"/>
-      <line x1="32" y1="30" x2="32" y2="64" stroke="#5a8a6a" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+      <rect x="8" y="26" width="48" height="38" rx="4" fill="#c4956a"/>
+      <rect x="4" y="14" width="56" height="16" rx="4" fill="#d9b88c"/>
+      <rect x="27" y="14" width="10" height="16" rx="2" fill="#e8d4bc"/>
+      <line x1="32" y1="30" x2="32" y2="64" stroke="#a0713a" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
     </svg>
   );
 }
@@ -128,16 +128,16 @@ function AdultColorsIcon() {
 function AdultFrameIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 72 72" fill="none">
-      <rect x="4" y="4" width="64" height="64" rx="6" fill="none" stroke="#7aaa8a" strokeWidth="8"/>
+      <rect x="4" y="4" width="64" height="64" rx="6" fill="none" stroke="#c4956a" strokeWidth="8"/>
       <rect x="18" y="18" width="36" height="36" rx="3" fill="#f0e8dc"/>
-      <line x1="20" y1="20" x2="26" y2="20" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="20" x2="20" y2="26" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="20" x2="46" y2="20" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="20" x2="52" y2="26" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="52" x2="26" y2="52" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="20" y1="52" x2="20" y2="46" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="52" x2="46" y2="52" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-      <line x1="52" y1="52" x2="52" y2="46" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="20" x2="26" y2="20" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="20" x2="20" y2="26" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="20" x2="46" y2="20" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="20" x2="52" y2="26" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="52" x2="26" y2="52" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="20" y1="52" x2="20" y2="46" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="52" x2="46" y2="52" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <line x1="52" y1="52" x2="52" y2="46" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
     </svg>
   );
 }
@@ -145,9 +145,9 @@ function AdultFrameIcon() {
 function AdultElementsIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 72 72" fill="none">
-      <polygon points="36,6 14,62 58,62" fill="#c8e6d0"/>
-      <rect x="36" y="22" width="32" height="32" rx="5" fill="#a8d4b8"/>
-      <circle cx="24" cy="34" r="18" fill="#7aaa8a"/>
+      <polygon points="36,6 14,62 58,62" fill="#e8d4bc"/>
+      <rect x="36" y="22" width="32" height="32" rx="5" fill="#d9b88c"/>
+      <circle cx="24" cy="34" r="18" fill="#c4956a"/>
     </svg>
   );
 }
@@ -155,11 +155,11 @@ function AdultElementsIcon() {
 function AdultTextIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-      <rect x="14" y="12" width="36" height="6" rx="2" fill="#7aaa8a"/>
-      <rect x="29" y="12" width="6" height="40" rx="2" fill="#7aaa8a"/>
-      <rect x="23" y="48" width="18" height="4" rx="1.5" fill="#7aaa8a"/>
-      <line x1="16" y1="58" x2="48" y2="58" stroke="#a8d4b8" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="20" y1="62" x2="44" y2="62" stroke="#a8d4b8" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+      <rect x="14" y="12" width="36" height="6" rx="2" fill="#c4956a"/>
+      <rect x="29" y="12" width="6" height="40" rx="2" fill="#c4956a"/>
+      <rect x="23" y="48" width="18" height="4" rx="1.5" fill="#c4956a"/>
+      <line x1="16" y1="58" x2="48" y2="58" stroke="#d9b88c" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="20" y1="62" x2="44" y2="62" stroke="#d9b88c" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
     </svg>
   );
 }
@@ -167,12 +167,12 @@ function AdultTextIcon() {
 function AdultToolBoxIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-      <rect x="8" y="24" width="48" height="32" rx="4" fill="#7aaa8a"/>
-      <rect x="12" y="28" width="40" height="24" rx="2" fill="#a8d4b8"/>
-      <rect x="4" y="18" width="56" height="10" rx="3" fill="#5a8a6a"/>
-      <rect x="24" y="14" width="16" height="8" rx="3" fill="none" stroke="#5a8a6a" strokeWidth="3"/>
-      <line x1="20" y1="36" x2="44" y2="36" stroke="#7aaa8a" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="20" y1="42" x2="36" y2="42" stroke="#7aaa8a" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+      <rect x="8" y="24" width="48" height="32" rx="4" fill="#c4956a"/>
+      <rect x="12" y="28" width="40" height="24" rx="2" fill="#d9b88c"/>
+      <rect x="4" y="18" width="56" height="10" rx="3" fill="#a0713a"/>
+      <rect x="24" y="14" width="16" height="8" rx="3" fill="none" stroke="#a0713a" strokeWidth="3"/>
+      <line x1="20" y1="36" x2="44" y2="36" stroke="#c4956a" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="20" y1="42" x2="36" y2="42" stroke="#c4956a" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
     </svg>
   );
 }
