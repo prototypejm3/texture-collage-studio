@@ -208,25 +208,34 @@ export function RightSidebar({
   const communityDiyIds = new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']);
   const funIds = new Set(funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id));
   const grannyIds = new Set(grannyStencils.map(g => g.id));
+  const grannyIds = new Set(grannyStencils.map(g => g.id));
+  const animalBugSeaIds = new Set([
+    ...['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face'],
+    ...['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird'],
+    ...['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark'],
+  ]);
+
   const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean; grannyOnly?: boolean }[] = [
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
-    { label: 'Animals', kidLabel: '🐶 Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
-    { label: 'Insects & Bugs', kidLabel: '🐛 Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
-    { label: 'Sea Life', kidLabel: '🐟 Ocean', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
-    { label: 'Food & Fruit', kidLabel: '🍕 Food', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
+    // Adults: merged Animals & Bugs; Kids keep separate categories
+    ...(kidMode ? [
+      { label: 'Animals', kidLabel: '🐶 Animals', emoji: '🐾', ids: new Set(['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face']) },
+      { label: 'Insects & Bugs', kidLabel: '🐛 Bugs', emoji: '🦋', ids: new Set(['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird']) },
+      { label: 'Sea Life', kidLabel: '🐟 Ocean', emoji: '🐠', ids: new Set(['fish', 'octopus', 'crab', 'seahorse', 'lobster', 'school-fish', 'shark']) },
+    ] : [
+      { label: 'Animals & Bugs', kidLabel: '🐶 Animals', emoji: '🐾', ids: animalBugSeaIds },
+    ]),
+    { label: kidMode ? 'Food & Fruit' : 'Food', kidLabel: '🍕 Food', emoji: '🍎', ids: new Set(['fruit-bowl', 'strawberry-fruit', 'grapes', 'eggplant', 'tomato', 'broccoli', 'orange-slice', 'banana', 'apple', 'pear', 'corn', 'carrot']) },
     { label: 'Space', kidLabel: '🚀 Space', emoji: '🚀', ids: new Set(['solar-system', 'astronaut', 'alien', 'saturn']) },
-    { label: 'Art & Pattern', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
+    { label: 'Patterns', kidLabel: '🎨 Art', emoji: '🎨', ids: new Set(['mandala', 'mandala-flower']), adultOnly: true },
     { label: 'Music', kidLabel: '🎵 Music', emoji: '🎵', ids: new Set([]) },
-    { label: 'Numbers & Symbols', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
+    { label: kidMode ? 'Numbers & Symbols' : '# & @$*', kidLabel: '🔢 123s', emoji: '#️⃣', ids: numberSymbolIds },
     { label: 'Letters', kidLabel: '🔤 ABCs', emoji: '🔤', ids: letterIds },
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
     { label: 'Community DIY', kidLabel: '🛠️ DIY', emoji: '🛠️', ids: communityDiyIds },
     { label: 'Sports', kidLabel: '⚽ Sports', emoji: '⚽', ids: new Set([...sportsStencils, ...anchorStencils, ...worldStencils].map(s => s.id)) },
-    // Granny Mode categories
-    { label: 'Granny Tea', kidLabel: '☕ Tea & Table', emoji: '☕', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Tea').map(g => g.id)), grannyOnly: true },
-    { label: 'Granny Sewing', kidLabel: '🧵 Sewing Drawer', emoji: '🧵', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Sewing').map(g => g.id)), grannyOnly: true },
-    { label: 'Granny Keepsakes', kidLabel: '🗝️ Keepsakes', emoji: '🗝️', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Keepsakes').map(g => g.id)), grannyOnly: true },
-    { label: 'Granny Kitchen', kidLabel: '🍪 Kitchen', emoji: '🍪', ids: new Set(grannyStencils.filter(g => g.category === 'Granny Kitchen').map(g => g.id)), grannyOnly: true },
+    // All granny stencils in one category for adult mode
+    { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, grannyOnly: true },
   ];
 
   const themedIds = new Set<string>();
