@@ -653,7 +653,7 @@ const Index = () => {
                   transition={sounds.kidMode ? { type: 'spring', stiffness: 400, damping: 15 } : { duration: 0.15, ease: 'easeOut' }}
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl shadow-lg"
                   style={{
-                    background: sounds.kidMode ? '#f5ede0' : '#faf8f5',
+                    background: sounds.kidMode ? '#f5ede0' : 'hsl(var(--popover))',
                     border: `1px solid ${sounds.kidMode ? '#e8ddd0' : 'hsl(var(--border))'}`,
                   }}
                 >
@@ -757,7 +757,7 @@ const Index = () => {
                         fontFamily: 'system-ui',
                         fontSize: 14,
                         fontWeight: 700,
-                        color: sounds.kidMode ? '#3a5c4a' : '#3d3530',
+                        color: sounds.kidMode ? '#3a5c4a' : 'hsl(var(--foreground))',
                       }}>
                         {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
                         {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Stencils')}
@@ -991,7 +991,7 @@ const Index = () => {
                   {/* Content */}
                   <div className="overflow-y-auto overflow-x-visible" style={{
                     maxHeight: 336,
-                    background: sounds.kidMode ? 'hsl(var(--popover))' : '#f5ede0',
+                    background: sounds.kidMode ? 'hsl(var(--popover))' : 'hsl(var(--popover))',
                     borderRadius: sounds.kidMode ? undefined : '0 0 16px 16px',
                   }}>
                     {activeBox === 'textures' && (
