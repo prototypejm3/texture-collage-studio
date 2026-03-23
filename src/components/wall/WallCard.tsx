@@ -53,6 +53,16 @@ const hangingOptions: { value: HangingStyle; label: string; emoji: string }[] = 
   { value: 'hook', label: 'Hook', emoji: '🪝' },
   { value: 'shelf', label: 'Shelf', emoji: '🪵' },
   { value: 'spotlight', label: 'Spotlight', emoji: '🔦' },
+  { value: 'lighted-string', label: 'Lighted String', emoji: '💡' },
+  { value: 'metal-wire', label: 'Metal Wire', emoji: '🔗' },
+  { value: 'hemp', label: 'Hemp', emoji: '🪢' },
+  { value: 'white-string', label: 'White String', emoji: '🤍' },
+  { value: 'braided', label: 'Braided', emoji: '🪡' },
+  { value: 'pink-yarn', label: 'Pink Yarn', emoji: '🧶' },
+  { value: 'beaded', label: 'Beaded', emoji: '📿' },
+  { value: 'silver-screw', label: 'Silver Screw', emoji: '🔩' },
+  { value: 'red-tack', label: 'Red Tack', emoji: '📌' },
+  { value: 'cork-tack', label: 'Cork Tack', emoji: '📍' },
 ];
 
 /* ─── Shadow box configs per frame style ─── */
