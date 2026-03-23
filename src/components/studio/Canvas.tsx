@@ -628,8 +628,8 @@ export function Canvas({
               : 'bg-muted/40 border-border/60 hover:bg-muted/60'
           } border-2 border-dashed`}
           style={{
-            width: 85,
-            height: 85,
+            width: 102,
+            height: 102,
             bottom: easelMode ? 16 : 44,
             right: easelMode ? 16 : 44,
           }}
