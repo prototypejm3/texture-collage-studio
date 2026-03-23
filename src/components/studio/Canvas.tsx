@@ -250,9 +250,8 @@ export function Canvas({
 
   // Trash & Maybe Box zones: handle element on pointer up (mouse + touch)
   useEffect(() => {
-    if (!kidMode) return;
     const handlePointerUp = (e: PointerEvent) => {
-      // Check Maybe Box first
+      // Check Box (both kid and adult mode)
       if (isOverBox(e.clientX, e.clientY)) {
         if (selectedTableId) {
           const tel = tableElements.find(t => t.id === selectedTableId);
@@ -275,8 +274,8 @@ export function Canvas({
         setTrashHover(false);
         return;
       }
-      // Check Trash
-      if (isOverTrash(e.clientX, e.clientY)) {
+      // Check Trash (kid mode only)
+      if (kidMode && isOverTrash(e.clientX, e.clientY)) {
         if (selectedTableId) {
           onTableElementDelete(selectedTableId);
           setSelectedTableId(null);
@@ -290,7 +289,7 @@ export function Canvas({
     };
     const handlePointerMove = (e: PointerEvent) => {
       if (e.pressure > 0 && (selectedId || selectedTableId)) {
-        setTrashHover(isOverTrash(e.clientX, e.clientY));
+        if (kidMode) setTrashHover(isOverTrash(e.clientX, e.clientY));
         setBoxHover(isOverBox(e.clientX, e.clientY));
       }
     };
