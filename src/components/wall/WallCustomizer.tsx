@@ -643,7 +643,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         {/* Slide-up panel */}
         {showMobilePanel && (
           <>
-            <div className="fixed inset-0 z-25" onClick={() => setShowMobilePanel(false)} />
+            <div className="fixed inset-0 z-[25]" onClick={() => setShowMobilePanel(false)} />
             <div
               className="fixed left-0 right-0 z-30"
               style={{
