@@ -74,7 +74,7 @@ const Index = () => {
     try { return localStorage.getItem('stencils-collapsed') === 'true'; } catch { return false; }
   });
   const [textureApplyMode, setTextureApplyMode] = useState<'swatch' | 'background'>('swatch');
-  const [showStencilModePicker, setShowStencilModePicker] = useState(false);
+  const [showStencilSizePicker, setShowStencilSizePicker] = useState(false);
   const { activeBox, toggleBox, closeBox, openBox } = useActiveBox();
   const [tableSurface, setTableSurface] = useState<TableSurface>('birch');
   const [easelMode, setEaselMode] = useState(true);
