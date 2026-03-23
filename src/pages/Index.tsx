@@ -661,6 +661,87 @@ const Index = () => {
 
             {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
             {activeBox && activeBox !== 'mybox' && (
+              isMobile && (activeBox === 'textures' || activeBox === 'stencils') ? (
+                /* Mobile: side drawer from right for Colors/Stencils */
+                <>
+                  <div
+                    className="absolute inset-0 z-30 bg-black/20"
+                    onClick={closeBox}
+                  />
+                  <div
+                    data-box-drawer
+                    className="absolute top-0 right-0 bottom-0 z-40 overflow-hidden"
+                    style={{
+                      width: '85vw',
+                      maxWidth: 320,
+                      background: sounds.kidMode ? '#fdf6ee' : '#faf8f5',
+                      borderLeft: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}`,
+                      borderRadius: '16px 0 0 16px',
+                      animation: 'slide-in-from-right 250ms ease forwards',
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-3 py-3" style={{ borderBottom: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}` }}>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#6b4c2a' : '#3d3530' }}>
+                        {activeBox === 'textures' && (sounds.kidMode ? 'Colors' : 'Swatches')}
+                        {activeBox === 'stencils' && (sounds.kidMode ? 'Shapes' : 'Stencils')}
+                      </span>
+                      <button onClick={closeBox} className="p-1 rounded-lg hover:bg-black/5 transition-colors">
+                        <X className="w-4 h-4" style={{ color: '#94a3b8' }} />
+                      </button>
+                    </div>
+                    <div className="overflow-y-auto" style={{ height: 'calc(100% - 52px)' }}>
+                      {activeBox === 'textures' && (
+                        <TextureLibrary
+                          onDragStart={handleDragStartLib}
+                          onTextureClick={handleTextureClick}
+                          activeSectionId={studio.selectedSectionId}
+                          customTextures={customTextures}
+                          onUploadTexture={handleUploadTexture}
+                          onRemoveCustomTexture={removeCustomTexture}
+                          isPremium={isPremium}
+                          onRequestUpgrade={() => setShowPaywall(true)}
+                          applyMode={textureApplyMode}
+                          onApplyModeChange={setTextureApplyMode}
+                          backgroundTextureId={studio.backgroundTextureId}
+                          drawMode={studio.drawMode}
+                          onToggleDrawMode={() => { studio.setCrayonMode(false); studio.setDrawMode(!studio.drawMode); }}
+                          nextShape={studio.nextShape}
+                          onSetNextShape={(shape) => { studio.setNextShape(shape); sounds.playShapeSelect(shape); }}
+                          crayonMode={studio.crayonMode}
+                          crayonTextureId={studio.crayonTextureId}
+                          onToggleCrayonMode={() => {
+                            const next = !studio.crayonMode;
+                            studio.setCrayonMode(next);
+                            if (!next) { studio.setDrawMode(false); studio.setCrayonTextureId(null); }
+                          }}
+                          onSetCrayonTexture={(id) => { studio.setCrayonTextureId(id); studio.setDrawMode(true); }}
+                        />
+                      )}
+                      {activeBox === 'stencils' && (
+                        <BuildPanel
+                          isPremium={isPremium}
+                          onRequestUpgrade={() => setShowPaywall(true)}
+                          activeVibeId={studio.activeVibe?.id ?? null}
+                          onSelectVibe={handleSelectVibe}
+                          onShuffleVibeFills={studio.shuffleVibeFills}
+                          onPlaceStencil={studio.placeStencil}
+                          onGenerateMood={handleGenerateMood}
+                          isGeneratingMood={vibeGen.isGenerating}
+                          customTemplate={customTemplate}
+                          templateOpacity={templateOpacity}
+                          onUploadTemplate={handleUploadTemplate}
+                          onClearTemplate={clearTemplate}
+                          onTemplateOpacityChange={setTemplateOpacity}
+                          stencilsPoppedOut={false}
+                          onPopOutStencils={() => {}}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </>
+              ) : (
               <div
                 data-box-drawer
                 className="absolute z-40 bottom-8 right-8"
