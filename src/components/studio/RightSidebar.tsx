@@ -667,19 +667,6 @@ export function RightSidebar({
                         toast({ title: '🚩 Reported', description: `Thanks! We'll review "${vibe.name}".` });
                       }}
                       onTogglePublic={() => social.togglePublic(vibe.id)}
-                      onTransferToKid={() => {
-                        try {
-                          const key = 'kid-mode-stencils';
-                          const existing = JSON.parse(localStorage.getItem(key) || '[]');
-                          if (!existing.find((s: any) => s.id === vibe.id)) {
-                            existing.push({ id: vibe.id, name: vibe.name, emoji: vibe.emoji, viewBox: vibe.viewBox, sections: vibe.sections });
-                            localStorage.setItem(key, JSON.stringify(existing));
-                          }
-                          toast({ title: '✅ Copied to Kids', description: `"${vibe.name}" is now available in Kid Mode.` });
-                        } catch {
-                          toast({ title: 'Error', description: 'Could not transfer stencil.' });
-                        }
-                      }}
                     />
                   ));
                 })()}
