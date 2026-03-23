@@ -499,13 +499,11 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           <div className="relative">
             <ToolbarButton
               active={showFrameMenu}
-              onClick={() => isPremium ? setShowFrameMenu(!showFrameMenu) : onRequestUpgrade?.()}
+              onClick={() => setShowFrameMenu(!showFrameMenu)}
               icon={(c) => <FramesIcon color={c} />}
               label="Frames"
-              locked={!isPremium}
-              onRequestUpgrade={onRequestUpgrade}
             />
-            <DropdownMenu isOpen={showFrameMenu && isPremium} onClose={() => setShowFrameMenu(false)}>
+            <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)}>
               <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
               {allFrameStyles.map(fs => (
                 <button key={fs.value}
