@@ -586,15 +586,15 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         }}
       >
         {/* Arrange */}
-        <ToolbarButton active={settings.layout === 'freeform'} onClick={() => onUpdate({ layout: 'freeform' })} icon={(c) => <MoveIcon color={c} />} />
-        <ToolbarButton active={settings.layout === 'grid'} onClick={() => onUpdate({ layout: 'grid' })} icon={(c) => <GridIcon color={c} />} locked={!isPremium && settings.layout !== 'grid'} onRequestUpgrade={onRequestUpgrade} />
-        <ToolbarButton active={settings.layout === 'single'} onClick={() => onUpdate({ layout: 'single' })} icon={(c) => <ListIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
+        <ToolbarButton compact active={settings.layout === 'freeform'} onClick={() => onUpdate({ layout: 'freeform' })} icon={(c) => <MoveIcon color={c} />} />
+        <ToolbarButton compact active={settings.layout === 'grid'} onClick={() => onUpdate({ layout: 'grid' })} icon={(c) => <GridIcon color={c} />} locked={!isPremium && settings.layout !== 'grid'} onRequestUpgrade={onRequestUpgrade} />
+        <ToolbarButton compact active={settings.layout === 'single'} onClick={() => onUpdate({ layout: 'single' })} icon={(c) => <ListIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
 
         <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
 
         {/* Display */}
         <div ref={frameMenuRef} className="relative">
-          <ToolbarButton active={showFrameMenu} onClick={() => { setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowFrameMenu(!showFrameMenu); }} icon={(c) => <FramesIcon color={c} />} />
+          <ToolbarButton compact active={showFrameMenu} onClick={() => { setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowFrameMenu(!showFrameMenu); }} icon={(c) => <FramesIcon color={c} />} />
           <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
             <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
             <div className="grid grid-cols-2 gap-1">
@@ -605,7 +605,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </DropdownMenu>
         </div>
         <div ref={hangingMenuRef} className="relative">
-          <ToolbarButton active={showHangingMenu || settings.defaultHangingStyle !== 'floating'} onClick={() => { setShowFrameMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowHangingMenu(!showHangingMenu); }} icon={(c) => <HangingIcon color={c} />} />
+          <ToolbarButton compact active={showHangingMenu || settings.defaultHangingStyle !== 'floating'} onClick={() => { setShowFrameMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowHangingMenu(!showHangingMenu); }} icon={(c) => <HangingIcon color={c} />} />
           <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
             <div className="grid grid-cols-3 gap-2">
               {['Style', 'String', 'Nail'].map(group => {
@@ -625,14 +625,14 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </div>
           </DropdownMenu>
         </div>
-        <ToolbarButton active={settings.showTitleCards} onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })} icon={(c) => <LabelsIcon color={c} />} />
-        <ToolbarButton active={false} onClick={() => onStepBack?.()} icon={(c) => <ViewIcon color={c} />} />
+        <ToolbarButton compact active={settings.showTitleCards} onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })} icon={(c) => <LabelsIcon color={c} />} />
+        <ToolbarButton compact active={false} onClick={() => onStepBack?.()} icon={(c) => <ViewIcon color={c} />} />
 
         <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
 
         {/* Ambience */}
         <div ref={lightingMenuRef} className="relative">
-          <ToolbarButton active={showLightingMenu || settings.lightingPreset !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowSoundMenu(false); setShowLightingMenu(!showLightingMenu); }} icon={(c) => <LightingIcon color={c} />} />
+          <ToolbarButton compact active={showLightingMenu || settings.lightingPreset !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowSoundMenu(false); setShowLightingMenu(!showLightingMenu); }} icon={(c) => <LightingIcon color={c} />} />
           <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
             <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
             <div className="grid grid-cols-2 gap-1">
@@ -643,7 +643,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </DropdownMenu>
         </div>
         <div ref={soundMenuRef} className="relative">
-          <ToolbarButton active={showSoundMenu || settings.ambientSound !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(!showSoundMenu); }} icon={(c) => <SoundIcon color={c} />} />
+          <ToolbarButton compact active={showSoundMenu || settings.ambientSound !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(!showSoundMenu); }} icon={(c) => <SoundIcon color={c} />} />
           <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
             <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
             <div className="grid grid-cols-2 gap-1">
@@ -653,7 +653,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </div>
           </DropdownMenu>
         </div>
-        <ToolbarButton active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
+        <ToolbarButton compact active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
 
         <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
 
