@@ -1177,39 +1177,39 @@ const Index = () => {
                   Easel / Desk
                 </button>
                 {/* Reset */}
-                <button onClick={handleClearAll} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Reset">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                    <polyline points="1,8 3,11 5.5,9" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <button onClick={handleClearAll} className="flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96]" title="Reset">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="1,8 3,11 5.5,9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Reset</span>
+                  <span className="text-[13px] font-medium text-foreground/70">Reset</span>
                 </button>
                 {/* Save */}
-                <button onClick={handleSaveToWall} className="flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96]" title="Save">
+                <button onClick={handleSaveToWall} className="flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96]" title="Save">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                     <rect x="2" y="2" width="12" height="12" rx="2" fill="#5a8a6a"/>
                     <rect x="2" y="2" width="12" height="4" rx="1" fill="#7aaa8a"/>
                     <rect x="5" y="4" width="6" height="1.5" rx="0.5" fill="#d4edda"/>
                   </svg>
-                  <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Save</span>
+                  <span className="text-[13px] font-semibold text-foreground">Save</span>
                 </button>
                 {/* Undo */}
                 <button onClick={studio.undo} disabled={!studio.canUndo}
-                  className={`flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96] ${!studio.canUndo ? 'opacity-40' : ''}`} title="Undo">
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96] ${!studio.canUndo ? 'opacity-40' : ''}`} title="Undo">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 6h8a3 3 0 0 1 0 6H7" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                    <polyline points="5,8 3,6 5,4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <path d="M3 6h8a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="5,8 3,6 5,4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Undo</span>
+                  <span className="text-[13px] font-medium text-foreground/70">Undo</span>
                 </button>
                 {/* Redo */}
                 <button onClick={studio.redo} disabled={!studio.canRedo}
-                  className={`flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96] ${!studio.canRedo ? 'opacity-40' : ''}`} title="Redo">
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 transition-transform active:scale-[0.96] ${!studio.canRedo ? 'opacity-40' : ''}`} title="Redo">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M13 6H5a3 3 0 0 0 0 6h4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                    <polyline points="11,8 13,6 11,4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <path d="M13 6H5a3 3 0 0 0 0 6h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="11,8 13,6 11,4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Redo</span>
+                  <span className="text-[13px] font-medium text-foreground/70">Redo</span>
                 </button>
               </div>
               {/* Tool buttons centered */}
