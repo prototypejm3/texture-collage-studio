@@ -677,7 +677,7 @@ const Index = () => {
             )}
 
             {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
-            {activeBox && activeBox !== 'mybox' && (
+            {activeBox && activeBox !== 'mybox' && !(activeBox === 'toolbox' && !sounds.kidMode) && (
               isMobile && (activeBox === 'textures' || activeBox === 'stencils') ? (
                 /* Mobile: side drawer from right for Colors/Stencils */
                 <>
