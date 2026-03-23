@@ -324,7 +324,7 @@ function SectionLabel({ text }: { text: string }) {
 
 // ── Divider ──
 function ToolbarDivider() {
-  return <div style={{ width: 1, height: 64, backgroundColor: '#e2ddd6', flexShrink: 0 }} />;
+  return <div style={{ width: 1, height: 64, backgroundColor: 'hsl(var(--border))', flexShrink: 0 }} />;
 }
 
 // ── Wall swatch circle ──
