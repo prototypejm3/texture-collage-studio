@@ -350,9 +350,10 @@ export function Canvas({
   const canvasSize = useMemo(() => {
     if (!containerSize.width || !containerSize.height) return baseSize;
     const aspect = baseSize.w / baseSize.h;
-    // Mobile: use more of the screen; Desktop: cap at 55%
-    const widthFraction = isMobileCanvas ? 0.85 : 0.45;
-    const heightFraction = isMobileCanvas ? 0.60 : 0.62;
+    // Mobile desk mode: shrink canvas so it fits on the desk surface
+    const isMobileDesk = isMobileCanvas && !easelMode;
+    const widthFraction = isMobileDesk ? 0.55 : isMobileCanvas ? 0.85 : 0.45;
+    const heightFraction = isMobileDesk ? 0.40 : isMobileCanvas ? 0.60 : 0.62;
     const maxW = Math.min(containerSize.width * widthFraction, baseSize.w);
     const maxH = Math.min(containerSize.height * heightFraction, baseSize.h);
     let w = maxW;
@@ -361,8 +362,8 @@ export function Canvas({
       h = maxH;
       w = h * aspect;
     }
-    return { w: Math.round(Math.max(w, 200)), h: Math.round(Math.max(h, 200)) };
-  }, [containerSize, baseSize, isMobileCanvas]);
+    return { w: Math.round(Math.max(w, 160)), h: Math.round(Math.max(h, 160)) };
+  }, [containerSize, baseSize, isMobileCanvas, easelMode]);
 
   const { w, h } = canvasSize;
 
