@@ -130,7 +130,7 @@ export function useStudio() {
     // Set dimensions based on shape
     let w = 100, h = 100;
     if (nextShape === 'strip') { w = 180; h = 40; }
-    else if (nextShape === 'rectangle') { w = 180; h = 80; }
+    else if (nextShape === 'rectangle') { w = 360; h = 60; }
     const newEl: CanvasElement = {
       id,
       textureId,
