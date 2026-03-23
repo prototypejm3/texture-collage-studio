@@ -135,29 +135,41 @@ export function SpeakerIcon() {
 
 export function TrashCanIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      {/* Cookie jar body */}
-      <rect x="5" y="7" width="12" height="12" rx="3" fill="#c4956a" />
-      <rect x="6" y="8" width="10" height="10" rx="2.5" fill="#d9a97c" />
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+      {/* Shadow/base */}
+      <ellipse cx="20" cy="36" rx="10" ry="2.5" fill="#b07d52" opacity="0.3" />
+      {/* Jar body - rounded */}
+      <path d="M10 14 C10 12 11 11 13 11 L27 11 C29 11 30 12 30 14 L30 32 C30 34 28 36 25 36 L15 36 C12 36 10 34 10 32 Z" fill="#c4956a" />
+      <path d="M12 14 C12 13 13 12 14 12 L26 12 C27 12 28 13 28 14 L28 31 C28 33 26.5 34.5 24 34.5 L16 34.5 C13.5 34.5 12 33 12 31 Z" fill="#d9a97c" />
+      {/* Wood grain lines */}
+      <line x1="15" y1="13" x2="15" y2="34" stroke="#c4956a" strokeWidth="0.6" opacity="0.4" />
+      <line x1="20" y1="12" x2="20" y2="35" stroke="#c4956a" strokeWidth="0.6" opacity="0.3" />
+      <line x1="25" y1="13" x2="25" y2="34" stroke="#c4956a" strokeWidth="0.6" opacity="0.4" />
       {/* Lid */}
-      <rect x="4" y="5.5" width="14" height="2.5" rx="1.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.5" />
+      <rect x="8" y="9" width="24" height="3.5" rx="1.8" fill="#c4956a" stroke="#a0713a" strokeWidth="0.6" />
       {/* Knob */}
-      <rect x="8.5" y="3.5" width="5" height="2.5" rx="1.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.5" />
+      <rect x="15" y="5.5" width="10" height="4.5" rx="2.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.6" />
+      <rect x="16.5" y="6.5" width="7" height="2.5" rx="1.2" fill="#d9a97c" />
       {/* Face - eyes */}
-      <circle cx="8.5" cy="13" r="1" fill="#6b4c2a" />
-      <circle cx="13.5" cy="13" r="1" fill="#6b4c2a" />
+      <circle cx="16" cy="23" r="1.5" fill="#6b4c2a" />
+      <circle cx="24" cy="23" r="1.5" fill="#6b4c2a" />
+      {/* Eye shine */}
+      <circle cx="16.5" cy="22.3" r="0.5" fill="white" opacity="0.6" />
+      <circle cx="24.5" cy="22.3" r="0.5" fill="white" opacity="0.6" />
       {/* Rosy cheeks */}
-      <circle cx="7" cy="14.5" r="1" fill="#f4a6a0" opacity="0.5" />
-      <circle cx="15" cy="14.5" r="1" fill="#f4a6a0" opacity="0.5" />
+      <ellipse cx="13.5" cy="25.5" rx="2" ry="1.3" fill="#f4a6a0" opacity="0.45" />
+      <ellipse cx="26.5" cy="25.5" rx="2" ry="1.3" fill="#f4a6a0" opacity="0.45" />
       {/* Smile */}
-      <path d="M9 15.5 Q11 17.5 13 15.5" stroke="#6b4c2a" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      <path d="M16 27 Q20 31 24 27" stroke="#6b4c2a" strokeWidth="1.1" fill="none" strokeLinecap="round" />
       {/* Confetti dots */}
-      <circle cx="4" cy="8" r="0.8" fill="#f87171" />
-      <circle cx="18" cy="9" r="0.8" fill="#fbbf24" />
-      <circle cx="5" cy="12" r="0.6" fill="#4ade80" />
-      <circle cx="17" cy="14" r="0.7" fill="#38bdf8" />
-      <circle cx="16" cy="6" r="0.6" fill="#a78bfa" />
-      <circle cx="6" cy="6" r="0.7" fill="#f97316" />
+      <circle cx="6" cy="13" r="1.2" fill="#f87171" />
+      <circle cx="34" cy="15" r="1.2" fill="#fbbf24" />
+      <circle cx="7" cy="22" r="1" fill="#4ade80" />
+      <circle cx="33" cy="25" r="1.1" fill="#38bdf8" />
+      <circle cx="32" cy="10" r="1" fill="#a78bfa" />
+      <circle cx="8" cy="9" r="1.1" fill="#f97316" />
+      <circle cx="34" cy="32" r="0.9" fill="#f87171" />
+      <circle cx="6" cy="30" r="0.8" fill="#fbbf24" />
     </svg>
   );
 }
