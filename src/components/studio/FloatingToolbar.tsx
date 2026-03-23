@@ -221,6 +221,32 @@ function ToolIcon({ id, size = 32 }: { id: string; size?: number }) {
           <line x1="16" y1="22" x2="24" y2="18" stroke="hsl(30, 15%, 60%)" strokeWidth="0.6" opacity="0.3" />
         </svg>
       );
+    case 'toss':
+      return (
+        <svg width={size} height={size} viewBox="0 0 32 32">
+          {/* Cookie jar body */}
+          <rect x="7" y="10" width="18" height="18" rx="4.5" fill="#7aaa8a" />
+          <rect x="8.5" y="11.5" width="15" height="15" rx="3.5" fill="#a8d4b8" />
+          {/* Lid */}
+          <rect x="5.5" y="7.5" width="21" height="4" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="0.6" />
+          {/* Knob */}
+          <rect x="12" y="4.5" width="8" height="4" rx="2" fill="#7aaa8a" stroke="#5a8a6a" strokeWidth="0.6" />
+          {/* Face - eyes */}
+          <circle cx="12.5" cy="19" r="1.3" fill="#3a5c4a" />
+          <circle cx="19.5" cy="19" r="1.3" fill="#3a5c4a" />
+          {/* Rosy cheeks */}
+          <circle cx="10.5" cy="21" r="1.2" fill="#f4a6a0" opacity="0.45" />
+          <circle cx="21.5" cy="21" r="1.2" fill="#f4a6a0" opacity="0.45" />
+          {/* Smile */}
+          <path d="M13 22.5 Q16 25 19 22.5" stroke="#3a5c4a" strokeWidth="1" fill="none" strokeLinecap="round" />
+          {/* Confetti */}
+          <circle cx="5" cy="12" r="1" fill="#f87171" />
+          <circle cx="27" cy="13" r="1" fill="#fbbf24" />
+          <circle cx="6" cy="18" r="0.8" fill="#4ade80" />
+          <circle cx="26" cy="20" r="0.9" fill="#38bdf8" />
+          <circle cx="25" cy="8" r="0.8" fill="#a78bfa" />
+        </svg>
+      );
     default:
       return null;
   }
