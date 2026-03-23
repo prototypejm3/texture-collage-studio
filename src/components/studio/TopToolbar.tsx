@@ -547,8 +547,8 @@ export function TopToolbar({
                   <span className="truncate max-w-[80px]">{user.email?.split('@')[0]}</span>
                 </span>
                 <button onClick={() => signOut()} title="Sign out"
-                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0`}
-                  style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
+                  className={`${pressStyle} flex items-center gap-1 px-1.5 py-1 flex-shrink-0 text-muted-foreground`}
+                  style={{ fontSize: 11, fontFamily: 'system-ui,sans-serif' }}
                 >
                   <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Out</span>
                 </button>
