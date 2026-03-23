@@ -337,21 +337,21 @@ export function BottomBar({
       {/* Spacer */}
       <div className="flex-1" />
 
-       {/* Actions — kid mode: unified pill */}
+       {/* Actions — kid mode: vertical pill next to box */}
        {kidMode && (
-         <div className="flex items-center rounded-full overflow-hidden" style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}>
-           <button onClick={onClear} className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95" title="Start Over">
+         <div className="flex flex-col items-center rounded-2xl overflow-hidden" style={{ backgroundColor: 'hsl(var(--toybox-card))', border: '1.5px solid hsl(var(--toybox-border))' }}>
+           <button onClick={onClear} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Start Over">
              <TrashCanIcon />
-             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
+             <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
            </button>
-           <div className="w-px h-5" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
+           <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
            {onSaveToWall && (
              <>
-               <button onClick={onSaveToWall} className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95" title="Save">
+               <button onClick={onSaveToWall} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Save">
                  <SaveBoxIcon />
-                 <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
+                 <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
                </button>
-               <div className="w-px h-5" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
+               <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
              </>
            )}
            <button
@@ -365,11 +365,11 @@ export function BottomBar({
                  onRequestUpgrade?.();
                }
              }}
-             className="flex items-center gap-1 px-2.5 py-1.5 transition-all hover:bg-black/5 active:scale-95"
+             className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95"
              title="Download"
            >
              <DownloadTrayIcon />
-             <span className="hidden sm:inline text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
+             <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
            </button>
          </div>
        )}
