@@ -1024,6 +1024,14 @@ const Index = () => {
         onSkip={kidOnboarding.skip}
         onAdvance={kidOnboarding.advanceTo}
       />
+
+      {/* Mobile components */}
+      <FloatingMusicButton
+        kidMode={sounds.kidMode}
+        ambientSound={ambientSound}
+        onAmbientSoundChange={setAmbientSound}
+      />
+      <MobileStudioBottomNav kidMode={sounds.kidMode} />
     </div>
   );
 };
