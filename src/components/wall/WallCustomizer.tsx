@@ -761,6 +761,32 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                 </div>
                 <ToolbarButton compact active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} label="Curate" locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
               </div>
+
+              {/* Kid's Designs section */}
+              {!kidMode && kidDesigns.length > 0 && onEditDesign && (
+                <div className="mt-3 pt-3" style={{ borderTop: '1px solid hsl(var(--border))' }}>
+                  <span style={{ fontSize: 9, fontWeight: 600, color: 'hsl(var(--muted-foreground))', letterSpacing: 1, textTransform: 'uppercase' }}>Kid's Designs</span>
+                  <div className="flex items-center gap-2 mt-2 overflow-x-auto scrollbar-none pb-1">
+                    {kidDesigns.slice(0, 8).map(d => (
+                      <button
+                        key={d.id}
+                        onClick={() => onEditDesign(d.id)}
+                        className="relative flex-shrink-0 rounded-lg overflow-hidden transition-transform hover:scale-105 active:scale-95 group"
+                        style={{
+                          width: 52, height: 52,
+                          border: '2px solid hsl(var(--border))',
+                        }}
+                        title={`Edit: ${d.name}`}
+                      >
+                        <img src={d.previewImage} alt={d.name} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                          <Pencil className="w-3 h-3 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
