@@ -478,7 +478,7 @@ export function TopToolbar({
                 <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5Z" fill="#5a8a6a"/>
                 <circle cx="12" cy="3" r="1" fill="#5a8a6a" opacity="0.5"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI</span>
+              <span className="text-foreground" style={{ fontSize: 11, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>AI</span>
             </button>
 
             <NavDivider />
