@@ -686,39 +686,63 @@ const Index = () => {
               </div>
             )}
 
-            {/* ── DRAWER opens on the wood surface inside the canvas area ── */}
+            {/* ── DRAWER / PANEL ── */}
             {activeBox && activeBox !== 'mybox' && !(activeBox === 'toolbox' && !sounds.kidMode) && (
-              isMobile && (activeBox === 'textures' || activeBox === 'stencils') ? (
-                /* Mobile: side drawer from right for Colors/Stencils */
+              isMobile ? (
+                /* ── Mobile: bottom slide-up panel for ALL tools ── */
                 <>
                   <div
-                    className="absolute inset-0 z-30 bg-black/20"
+                    className="fixed inset-0 z-[60]"
+                    style={{ background: 'rgba(0,0,0,0.15)' }}
                     onClick={closeBox}
                   />
-                  <div
-                    data-box-drawer
-                    className="absolute top-0 right-0 bottom-0 z-40 overflow-hidden"
+                  <motion.div
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+                    className="fixed bottom-0 left-0 right-0 z-[70] overflow-hidden"
                     style={{
-                      width: '85vw',
-                      maxWidth: 320,
-                      background: sounds.kidMode ? '#fdf6ee' : '#faf8f5',
-                      borderLeft: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}`,
-                      borderRadius: '16px 0 0 16px',
-                      animation: 'slide-in-from-right 250ms ease forwards',
+                      maxHeight: '42vh',
+                      borderRadius: '20px 20px 0 0',
+                      background: sounds.kidMode
+                        ? 'rgba(253, 246, 238, 0.95)'
+                        : 'rgba(245, 237, 224, 0.95)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      boxShadow: '0 -8px 24px rgba(0,0,0,0.12)',
                     }}
                     onClick={(e) => e.stopPropagation()}
                   >
+                    {/* Drag handle */}
+                    <div className="flex justify-center pt-2 pb-1">
+                      <div style={{
+                        width: 40,
+                        height: 4,
+                        borderRadius: 999,
+                        background: 'rgba(0,0,0,0.15)',
+                      }} />
+                    </div>
                     {/* Header */}
-                    <div className="flex items-center justify-between px-3 py-3" style={{ borderBottom: `1px solid ${sounds.kidMode ? '#e8ddd0' : '#e2ddd6'}` }}>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: sounds.kidMode ? '#3a5c4a' : '#3d3530' }}>
-                        {activeBox === 'textures' && (sounds.kidMode ? 'Colors' : 'Swatches')}
-                        {activeBox === 'stencils' && (sounds.kidMode ? 'Shapes' : 'Stencils')}
+                    <div className="flex items-center justify-between px-4 pb-2">
+                      <span style={{
+                        fontFamily: 'system-ui',
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: sounds.kidMode ? '#3a5c4a' : '#3d3530',
+                      }}>
+                        {activeBox === 'textures' && (sounds.kidMode ? '🎨 Colors' : 'Swatches')}
+                        {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Stencils')}
+                        {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
+                        {activeBox === 'text' && 'Text'}
+                        {activeBox === 'toolbox' && (sounds.kidMode ? '🧰 Tools' : 'Tool Box')}
                       </span>
-                      <button onClick={closeBox} className="p-1 rounded-lg hover:bg-black/5 transition-colors">
+                      <button onClick={closeBox} className="p-1.5 rounded-lg hover:bg-black/5 transition-colors">
                         <X className="w-4 h-4" style={{ color: '#94a3b8' }} />
                       </button>
                     </div>
-                    <div className="overflow-y-auto" style={{ height: 'calc(100% - 52px)' }}>
+                    {/* Content */}
+                    <div className="overflow-y-auto px-1" style={{ maxHeight: 'calc(42vh - 56px)' }}>
                       {activeBox === 'textures' && (
                         <TextureLibrary
                           onDragStart={handleDragStartLib}
@@ -765,8 +789,78 @@ const Index = () => {
                           onPopOutStencils={() => {}}
                         />
                       )}
+                      {activeBox === 'tools' && (
+                        <div className="p-3">
+                          <BottomBar
+                            wallFrameStyle={studio.wallFrameStyle}
+                            onWallFrameStyleChange={studio.setWallFrameStyle}
+                            onClear={handleClearAll}
+                            onSave={handleExport}
+                            onSaveToWall={handleSaveToWall}
+                            isPremium={isPremium}
+                            onRequestUpgrade={() => setShowPaywall(true)}
+                            tableSurface={tableSurface}
+                            onTableSurfaceChange={setTableSurface}
+                            easelMode={easelMode}
+                            onToggleEasel={() => setEaselMode(prev => !prev)}
+                            backgroundTextureId={studio.backgroundTextureId}
+                            onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
+                          />
+                          {sounds.kidMode && (
+                            <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e8ddd0' }}>
+                              <RoomThemePicker theme={roomTheme} onThemeChange={setRoomTheme} />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {activeBox === 'text' && (
+                        <TextPanel
+                          onAddText={(text, opts) => {
+                            studio.addTextElement(text, 150, 150, opts);
+                            closeBox();
+                          }}
+                          selectedElement={studio.selectedId ? studio.elements.find(e => e.id === studio.selectedId) : null}
+                          onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
+                        />
+                      )}
+                      {activeBox === 'toolbox' && studio.elements.length > 0 && (
+                        <div className="p-3">
+                          <FloatingToolbar
+                            element={studio.selectedId ? (studio.elements.find(e => e.id === studio.selectedId) || studio.elements[studio.elements.length - 1]) : studio.elements[studio.elements.length - 1]}
+                            onUpdate={(updates) => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) { studio.updateElement(targetId, updates); kidOnboarding.notifyMove(); }
+                            }}
+                            onUpdateEffects={(effects) => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) { studio.updateEffects(targetId, effects); kidOnboarding.notifyToolUse(); }
+                            }}
+                            onDuplicate={() => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) studio.duplicateElement(targetId);
+                            }}
+                            onDelete={() => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) { studio.deleteElement(targetId); sounds.playDelete(); sounds.trackAction(); }
+                            }}
+                            onUndo={studio.undo}
+                            onRedo={studio.redo}
+                            canUndo={studio.canUndo}
+                            canRedo={studio.canRedo}
+                            elementCount={studio.elements.length}
+                            onBringForward={() => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) studio.bringForward(targetId);
+                            }}
+                            onSendBackward={() => {
+                              const targetId = studio.selectedId || studio.elements[studio.elements.length - 1]?.id;
+                              if (targetId) studio.sendBackward(targetId);
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  </motion.div>
                 </>
               ) : (
               <div
@@ -781,8 +875,8 @@ const Index = () => {
                 <div
                   className="overflow-visible relative"
                   style={{
-                    width: isMobile ? 300 : (activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340),
-                    maxHeight: isMobile ? '55vh' : 460,
+                    width: activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340,
+                    maxHeight: 460,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
@@ -868,7 +962,7 @@ const Index = () => {
 
                   {/* Content */}
                   <div className="overflow-y-auto overflow-x-visible" style={{
-                    maxHeight: isMobile ? 'calc(45vh - 28px)' : 336,
+                    maxHeight: 336,
                     background: sounds.kidMode ? 'hsl(var(--popover))' : '#f5ede0',
                     borderRadius: sounds.kidMode ? undefined : '0 0 16px 16px',
                   }}>
