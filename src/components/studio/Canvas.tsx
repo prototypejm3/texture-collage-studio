@@ -11,6 +11,8 @@ import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon } from './ToyboxIcons';
+import { RoomThemeBackground } from './RoomThemeBackground';
+import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
 import kidTable from '@/assets/kid-table.jpg';
 import kidArtFrame from '@/assets/kid-art-frame.png';
@@ -199,6 +201,16 @@ export function Canvas({
     const handler = (e: Event) => setKidMode((e as CustomEvent).detail);
     window.addEventListener('kid-mode-change', handler);
     return () => window.removeEventListener('kid-mode-change', handler);
+  }, []);
+
+  // Room theme for kids mode
+  const [roomTheme, setRoomTheme] = useState<RoomTheme>(() => {
+    try { return (localStorage.getItem('kidsRoomTheme') as RoomTheme) || 'art-desk'; } catch { return 'art-desk'; }
+  });
+  useEffect(() => {
+    const handler = (e: Event) => setRoomTheme((e as CustomEvent).detail as RoomTheme);
+    window.addEventListener('room-theme-change', handler);
+    return () => window.removeEventListener('room-theme-change', handler);
   }, []);
 
   // Kid canvas style: rainbow or plain
@@ -498,13 +510,17 @@ export function Canvas({
       onDrop={handleTableDrop}
       onClick={() => { onSelect(null); setSelectedTableId(null); }}
     >
-      {/* Background — concrete floor (normal) or kid table (kids mode) */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
-        backgroundSize: kidMode ? 'cover' : '512px 512px',
-        backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
-        backgroundPosition: 'center',
-      }} />
+      {/* Background — concrete floor (normal) or kid table / themed (kids mode) */}
+      {kidMode && roomTheme !== 'art-desk' ? (
+        <RoomThemeBackground theme={roomTheme} width={containerSize.width} height={containerSize.height} />
+      ) : (
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: `url(${kidMode ? kidTable : concreteFloor})`,
+          backgroundSize: kidMode ? 'cover' : '512px 512px',
+          backgroundRepeat: kidMode ? 'no-repeat' : 'repeat',
+          backgroundPosition: 'center',
+        }} />
+      )}
 
       {/* Wood desk surface — rectangular desk with rounded corners and concrete border */}
       {!easelMode && (() => {
