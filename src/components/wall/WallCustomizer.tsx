@@ -733,14 +733,16 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
               label="Lighting"
             />
             <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
-              <p className="px-3 py-1 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
-              {lightingPresets.map(lp => (
-                <button key={lp.value}
-                  onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
-                  className={`w-full text-left px-3 py-1.5 text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium' : ''}`}
-                  style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
-                >{lp.label}</button>
-              ))}
+              <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
+              <div className="grid grid-cols-2 gap-1">
+                {lightingPresets.map(lp => (
+                  <button key={lp.value}
+                    onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
+                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`}
+                    style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
+                  >{lp.label}</button>
+                ))}
+              </div>
             </DropdownMenu>
           </div>
 
