@@ -10,7 +10,7 @@ import { ShapeIcon } from './TextureLibrary';
 import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
-import { TrashCanIcon } from './ToyboxIcons';
+import { TrashCanIcon, TrashCanIconAnimated } from './ToyboxIcons';
 import { RoomThemeBackground } from './RoomThemeBackground';
 import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
