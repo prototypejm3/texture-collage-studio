@@ -670,7 +670,7 @@ export function Canvas({
             }
           }}
         >
-          <MaybeBox
+          <TreasureChest
             items={boxItems}
             onRemoveItem={(id) => setBoxItems(prev => prev.filter(i => i.id !== id))}
             onDragOutItem={(item) => {
