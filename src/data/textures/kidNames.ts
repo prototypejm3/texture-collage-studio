@@ -5,7 +5,7 @@
 export const kidTextureNames: Record<string, string> = {
   // Royale (Velvet)
   'royale-blush': 'Cotton Candy',        // soft pink velvet
-  'royale-gunmetal': 'Stormy Cloud',      // dark gray velvet
+  'royale-gunmetal': 'Night Sky',          // dark gray velvet
   'royale-evergreen': 'Dinosaur Green',   // deep green velvet
   'royale-apple': 'Frog Belly',           // bright green velvet
   'royale-hacienda': 'Cinnamon Swirl',    // warm reddish-brown
