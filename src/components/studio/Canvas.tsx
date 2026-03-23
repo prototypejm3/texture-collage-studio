@@ -662,9 +662,12 @@ export function Canvas({
           data-kid-box
           className="absolute z-30"
           style={{
-            left: boxPos.x,
-            ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
-            ...(isMobileCanvas ? { transform: 'scale(0.45)', transformOrigin: 'bottom left' } : {}),
+            ...(isMobileCanvas
+              ? { left: 8, top: 8, transform: 'scale(0.4)', transformOrigin: 'top left' }
+              : {
+                  left: boxPos.x,
+                  ...(boxPos.y < 0 ? { bottom: 44 } : { top: boxPos.y }),
+                }),
           }}
           onMouseDown={(e) => {
             // Allow drag from anywhere on the box — only skip tiny remove buttons inside items
