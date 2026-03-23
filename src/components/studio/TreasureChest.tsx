@@ -119,12 +119,12 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
         {/* Lid */}
         <motion.div
           animate={isOpen
-            ? { rotate: -15, y: -5, x: -20 }
-            : { rotate: 0, y: 0, x: 0 }
+            ? { rotate: -12, y: -4 }
+            : { rotate: 0, y: 0 }
           }
           transition={isOpen
-            ? { duration: 0.3, type: 'spring', stiffness: 300, damping: 15 }
-            : { duration: 0.25, type: 'spring', stiffness: 400, damping: 20 }
+            ? { duration: 0.25, type: 'spring', stiffness: 350, damping: 18 }
+            : { duration: 0.2, type: 'spring', stiffness: 400, damping: 22 }
           }
           className="absolute"
           style={{
