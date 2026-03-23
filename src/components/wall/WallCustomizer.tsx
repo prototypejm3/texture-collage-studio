@@ -543,7 +543,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const isCustomColor = settings.background === 'custom' && settings.customWallImage?.startsWith('#');
 
   // Collapsed: show a small pill to re-open
-  if (isCollapsed) {
+  if (isCollapsed && !isMobile) {
     return (
       <div
         className="flex items-center gap-1.5 cursor-pointer select-none transition-all hover:scale-105"
@@ -568,6 +568,122 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
     );
   }
 
+  // ── MOBILE BOTTOM BAR ──
+  if (isMobile) {
+    return (
+      <div
+        className="fixed bottom-[48px] left-0 right-0 z-30 flex items-center overflow-x-auto scrollbar-none"
+        style={{
+          height: 52,
+          background: 'hsl(var(--popover) / 0.95)',
+          backdropFilter: 'blur(12px)',
+          borderTop: '1px solid hsl(var(--border))',
+          padding: '0 8px',
+          gap: 4,
+          fontFamily: 'system-ui, sans-serif',
+        }}
+      >
+        {/* Arrange */}
+        <ToolbarButton active={settings.layout === 'freeform'} onClick={() => onUpdate({ layout: 'freeform' })} icon={(c) => <MoveIcon color={c} />} />
+        <ToolbarButton active={settings.layout === 'grid'} onClick={() => onUpdate({ layout: 'grid' })} icon={(c) => <GridIcon color={c} />} locked={!isPremium && settings.layout !== 'grid'} onRequestUpgrade={onRequestUpgrade} />
+        <ToolbarButton active={settings.layout === 'single'} onClick={() => onUpdate({ layout: 'single' })} icon={(c) => <ListIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
+
+        <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
+
+        {/* Display */}
+        <div ref={frameMenuRef} className="relative">
+          <ToolbarButton active={showFrameMenu} onClick={() => { setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowFrameMenu(!showFrameMenu); }} icon={(c) => <FramesIcon color={c} />} />
+          <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
+            <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
+            <div className="grid grid-cols-2 gap-1">
+              {allFrameStyles.map(fs => (
+                <button key={fs.value} onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{fs.label}</button>
+              ))}
+            </div>
+          </DropdownMenu>
+        </div>
+        <div ref={hangingMenuRef} className="relative">
+          <ToolbarButton active={showHangingMenu || settings.defaultHangingStyle !== 'floating'} onClick={() => { setShowFrameMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowHangingMenu(!showHangingMenu); }} icon={(c) => <HangingIcon color={c} />} />
+          <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
+            <div className="grid grid-cols-3 gap-2">
+              {['Style', 'String', 'Nail'].map(group => {
+                const items = hangingStyles.filter(h => h.group === group);
+                if (!items.length) return null;
+                return (
+                  <div key={group} className="min-w-[80px]">
+                    <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
+                    <div className="space-y-1">
+                      {items.map(hs => (
+                        <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-1.5 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{hs.label}</button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </DropdownMenu>
+        </div>
+        <ToolbarButton active={settings.showTitleCards} onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })} icon={(c) => <LabelsIcon color={c} />} />
+        <ToolbarButton active={false} onClick={() => onStepBack?.()} icon={(c) => <ViewIcon color={c} />} />
+
+        <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
+
+        {/* Ambience */}
+        <div ref={lightingMenuRef} className="relative">
+          <ToolbarButton active={showLightingMenu || settings.lightingPreset !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowSoundMenu(false); setShowLightingMenu(!showLightingMenu); }} icon={(c) => <LightingIcon color={c} />} />
+          <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
+            <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
+            <div className="grid grid-cols-2 gap-1">
+              {lightingPresets.map(lp => (
+                <button key={lp.value} onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }} className={`rounded-md px-2 py-1.5 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{lp.label}</button>
+              ))}
+            </div>
+          </DropdownMenu>
+        </div>
+        <div ref={soundMenuRef} className="relative">
+          <ToolbarButton active={showSoundMenu || settings.ambientSound !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(!showSoundMenu); }} icon={(c) => <SoundIcon color={c} />} />
+          <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
+            <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
+            <div className="grid grid-cols-2 gap-1">
+              {ambientSounds.map(as => (
+                <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-1.5 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : 'hsl(var(--foreground))' }}>{as.label}</button>
+              ))}
+            </div>
+          </DropdownMenu>
+        </div>
+        <ToolbarButton active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
+
+        <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
+
+        {/* Wall swatches */}
+        {adultWallOptions.map(bg => (
+          <WallSwatch key={bg.value} fill={bg.fill} pattern={bg.gradient} selected={settings.background === bg.value} onClick={() => onUpdate({ background: bg.value })} />
+        ))}
+        <div ref={colorPickerRef} className="relative">
+          <ColorWheelButton selected={!!isCustomColor} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowColorPicker(!showColorPicker); }} />
+          <DropdownMenu isOpen={showColorPicker} onClose={() => setShowColorPicker(false)} anchorRef={colorPickerRef}>
+            <div className="flex flex-col items-center gap-2 p-1">
+              <input type="color" value={customColor} onChange={(e) => { setCustomColor(e.target.value); onUpdate({ background: 'custom', customWallImage: e.target.value }); }} className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent" style={{ padding: 0 }} />
+              <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
+            </div>
+          </DropdownMenu>
+        </div>
+        <div className="relative">
+          <UploadWallpaperButton
+            selected={settings.background === 'custom' && !!settings.customWallImage && !settings.customWallImage.startsWith('#') && !settings.customWallImage.startsWith('rgb')}
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file'; input.accept = 'image/*';
+              input.onchange = (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = (ev) => { onUpdate({ background: 'custom', customWallImage: ev.target?.result as string }); }; reader.readAsDataURL(file); };
+              input.click();
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ── DESKTOP TOOLBAR (unchanged) ──
   return (
     <div
       className="flex items-center overflow-x-auto scrollbar-none"
@@ -586,96 +702,46 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
     >
       {/* Drag handle + hide button */}
       <div className="flex flex-col items-center gap-1 shrink-0 mr-1">
-        <button
-          onClick={() => setIsCollapsed(true)}
-          className="p-0.5 rounded hover:bg-secondary/60 transition-colors"
-          title="Hide toolbar"
-        >
+        <button onClick={() => setIsCollapsed(true)} className="p-0.5 rounded hover:bg-secondary/60 transition-colors" title="Hide toolbar">
           <ChevronUp className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
         </button>
-        <div
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-secondary/60 transition-colors touch-none"
-          title="Drag to move"
-        >
+        <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-secondary/60 transition-colors touch-none" title="Drag to move">
           <GripHorizontal className="w-4 h-4" style={{ color: '#94a3b8' }} />
         </div>
       </div>
 
       <div style={{ width: 1, height: 48, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
 
-      {/* ── GROUP 1: ARRANGE ── */}
+      {/* GROUP 1: ARRANGE */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="ARRANGE" />
         <div className="flex items-center gap-2">
-          <ToolbarButton
-            active={settings.layout === 'freeform'}
-            onClick={() => onUpdate({ layout: 'freeform' })}
-            icon={(c) => <MoveIcon color={c} />}
-          />
-          <ToolbarButton
-            active={settings.layout === 'grid'}
-            onClick={() => onUpdate({ layout: 'grid' })}
-            icon={(c) => <GridIcon color={c} />}
-            locked={!isPremium && settings.layout !== 'grid'}
-            onRequestUpgrade={onRequestUpgrade}
-          />
-          <ToolbarButton
-            active={settings.layout === 'single'}
-            onClick={() => onUpdate({ layout: 'single' })}
-            icon={(c) => <ListIcon color={c} />}
-            locked={!isPremium}
-            onRequestUpgrade={onRequestUpgrade}
-          />
+          <ToolbarButton active={settings.layout === 'freeform'} onClick={() => onUpdate({ layout: 'freeform' })} icon={(c) => <MoveIcon color={c} />} />
+          <ToolbarButton active={settings.layout === 'grid'} onClick={() => onUpdate({ layout: 'grid' })} icon={(c) => <GridIcon color={c} />} locked={!isPremium && settings.layout !== 'grid'} onRequestUpgrade={onRequestUpgrade} />
+          <ToolbarButton active={settings.layout === 'single'} onClick={() => onUpdate({ layout: 'single' })} icon={(c) => <ListIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
         </div>
       </div>
 
       <ToolbarDivider />
 
-      {/* ── GROUP 2: DISPLAY ── */}
+      {/* GROUP 2: DISPLAY */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="DISPLAY" />
         <div className="flex items-center gap-2">
           <div ref={frameMenuRef} className="relative">
-            <ToolbarButton
-              active={showFrameMenu}
-              onClick={() => {
-                setShowHangingMenu(false);
-                setShowLightingMenu(false);
-                setShowSoundMenu(false);
-                setShowFrameMenu(!showFrameMenu);
-              }}
-              icon={(c) => <FramesIcon color={c} />}
-              label="Frames"
-            />
+            <ToolbarButton active={showFrameMenu} onClick={() => { setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowFrameMenu(!showFrameMenu); }} icon={(c) => <FramesIcon color={c} />} label="Frames" />
             <DropdownMenu isOpen={showFrameMenu} onClose={() => setShowFrameMenu(false)} anchorRef={frameMenuRef}>
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Apply to all</p>
               <div className="grid grid-cols-2 gap-1">
                 {allFrameStyles.map(fs => (
-                  <button key={fs.value}
-                    onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }}
-                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`}
-                    style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}
-                  >{fs.label}</button>
+                  <button key={fs.value} onClick={() => { onApplyFrameToAll?.(fs.value); setShowFrameMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultFrameStyle === fs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultFrameStyle === fs.value ? '#5a8a6a' : '#3d3530' }}>{fs.label}</button>
                 ))}
               </div>
             </DropdownMenu>
           </div>
 
           <div ref={hangingMenuRef} className="relative">
-            <ToolbarButton
-              active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')}
-              onClick={() => {
-                setShowFrameMenu(false);
-                setShowLightingMenu(false);
-                setShowSoundMenu(false);
-                setShowHangingMenu(!showHangingMenu);
-              }}
-              icon={(c) => <HangingIcon color={c} />}
-              label="Hanging"
-            />
+            <ToolbarButton active={showHangingMenu || (settings.defaultHangingStyle !== 'floating')} onClick={() => { setShowFrameMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowHangingMenu(!showHangingMenu); }} icon={(c) => <HangingIcon color={c} />} label="Hanging" />
             <DropdownMenu isOpen={showHangingMenu} onClose={() => setShowHangingMenu(false)} anchorRef={hangingMenuRef}>
               <div className="grid grid-cols-3 gap-2">
                 {['Style', 'String', 'Nail'].map(group => {
@@ -686,11 +752,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
                       <p className="px-2 pb-1 text-[9px] text-muted-foreground uppercase tracking-widest">{group}</p>
                       <div className="space-y-1">
                         {items.map(hs => (
-                          <button key={hs.value}
-                            onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }}
-                            className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`}
-                            style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}
-                          >{hs.label}</button>
+                          <button key={hs.value} onClick={() => { onApplyHangingToAll?.(hs.value); setShowHangingMenu(false); }} className={`w-full rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.defaultHangingStyle === hs.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.defaultHangingStyle === hs.value ? '#5a8a6a' : '#3d3530' }}>{hs.label}</button>
                         ))}
                       </div>
                     </div>
@@ -700,157 +762,70 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
             </DropdownMenu>
           </div>
 
-          <ToolbarButton
-            active={settings.showTitleCards}
-            onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })}
-            icon={(c) => <LabelsIcon color={c} />}
-            label="Labels"
-          />
-
-          <ToolbarButton
-            active={false}
-            onClick={() => onStepBack?.()}
-            icon={(c) => <ViewIcon color={c} />}
-            label="View"
-          />
+          <ToolbarButton active={settings.showTitleCards} onClick={() => onUpdate({ showTitleCards: !settings.showTitleCards })} icon={(c) => <LabelsIcon color={c} />} label="Labels" />
+          <ToolbarButton active={false} onClick={() => onStepBack?.()} icon={(c) => <ViewIcon color={c} />} label="View" />
         </div>
       </div>
 
       <ToolbarDivider />
 
-      {/* ── GROUP 3: AMBIENCE ── */}
+      {/* GROUP 3: AMBIENCE */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="AMBIENCE" />
         <div className="flex items-center gap-2">
           <div ref={lightingMenuRef} className="relative">
-            <ToolbarButton
-              active={showLightingMenu || settings.lightingPreset !== 'none'}
-              onClick={() => {
-                setShowFrameMenu(false);
-                setShowHangingMenu(false);
-                setShowSoundMenu(false);
-                setShowLightingMenu(!showLightingMenu);
-              }}
-              icon={(c) => <LightingIcon color={c} />}
-              label="Lighting"
-            />
+            <ToolbarButton active={showLightingMenu || settings.lightingPreset !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowSoundMenu(false); setShowLightingMenu(!showLightingMenu); }} icon={(c) => <LightingIcon color={c} />} label="Lighting" />
             <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Lighting</p>
               <div className="grid grid-cols-2 gap-1">
                 {lightingPresets.map(lp => (
-                  <button key={lp.value}
-                    onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }}
-                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`}
-                    style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}
-                  >{lp.label}</button>
+                  <button key={lp.value} onClick={() => { onUpdate({ lightingPreset: lp.value }); setShowLightingMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.lightingPreset === lp.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.lightingPreset === lp.value ? '#5a8a6a' : '#3d3530' }}>{lp.label}</button>
                 ))}
               </div>
             </DropdownMenu>
           </div>
 
           <div ref={soundMenuRef} className="relative">
-            <ToolbarButton
-              active={showSoundMenu || settings.ambientSound !== 'none'}
-              onClick={() => {
-                setShowFrameMenu(false);
-                setShowHangingMenu(false);
-                setShowLightingMenu(false);
-                setShowSoundMenu(!showSoundMenu);
-              }}
-              icon={(c) => <SoundIcon color={c} />}
-              label="Sound"
-            />
+            <ToolbarButton active={showSoundMenu || settings.ambientSound !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(!showSoundMenu); }} icon={(c) => <SoundIcon color={c} />} label="Sound" />
             <DropdownMenu isOpen={showSoundMenu} onClose={() => setShowSoundMenu(false)} anchorRef={soundMenuRef}>
               <p className="px-2 pb-2 text-[9px] text-muted-foreground uppercase tracking-widest">Ambiance</p>
               <div className="grid grid-cols-2 gap-1">
                 {ambientSounds.map(as => (
-                  <button key={as.value}
-                    onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }}
-                    className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`}
-                    style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}
-                  >{as.label}</button>
+                  <button key={as.value} onClick={() => { onUpdate({ ambientSound: as.value }); setShowSoundMenu(false); }} className={`rounded-md px-2 py-2 text-left text-xs hover:bg-secondary ${settings.ambientSound === as.value ? 'font-medium bg-secondary/70' : ''}`} style={{ color: settings.ambientSound === as.value ? '#5a8a6a' : '#3d3530' }}>{as.label}</button>
                 ))}
               </div>
             </DropdownMenu>
           </div>
 
-          <ToolbarButton
-            active={false}
-            onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()}
-            icon={(c) => <CurateIcon color={c} />}
-            label="Curate"
-            locked={!isPremium}
-            onRequestUpgrade={onRequestUpgrade}
-          />
+          <ToolbarButton active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} label="Curate" locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
         </div>
       </div>
 
       <ToolbarDivider />
 
-      {/* ── GROUP 4: WALL ── */}
+      {/* GROUP 4: WALL */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="WALL" />
         <div className="flex items-center gap-2">
           {adultWallOptions.map(bg => (
-            <WallSwatch
-              key={bg.value}
-              fill={bg.fill}
-              pattern={bg.gradient}
-              selected={settings.background === bg.value}
-              onClick={() => onUpdate({ background: bg.value })}
-            />
+            <WallSwatch key={bg.value} fill={bg.fill} pattern={bg.gradient} selected={settings.background === bg.value} onClick={() => onUpdate({ background: bg.value })} />
           ))}
-          {/* Color wheel */}
           <div ref={colorPickerRef} className="relative">
-            <ColorWheelButton
-              selected={!!isCustomColor}
-              onClick={() => {
-                setShowFrameMenu(false);
-                setShowHangingMenu(false);
-                setShowLightingMenu(false);
-                setShowSoundMenu(false);
-                setShowColorPicker(!showColorPicker);
-              }}
-            />
-            <DropdownMenu
-              isOpen={showColorPicker}
-              onClose={() => setShowColorPicker(false)}
-              anchorRef={colorPickerRef}
-            >
+            <ColorWheelButton selected={!!isCustomColor} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowColorPicker(!showColorPicker); }} />
+            <DropdownMenu isOpen={showColorPicker} onClose={() => setShowColorPicker(false)} anchorRef={colorPickerRef}>
               <div className="flex flex-col items-center gap-2 p-1">
-                <input
-                  type="color"
-                  value={customColor}
-                  onChange={(e) => {
-                    setCustomColor(e.target.value);
-                    onUpdate({ background: 'custom', customWallImage: e.target.value });
-                  }}
-                  className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent"
-                  style={{ padding: 0 }}
-                />
+                <input type="color" value={customColor} onChange={(e) => { setCustomColor(e.target.value); onUpdate({ background: 'custom', customWallImage: e.target.value }); }} className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent" style={{ padding: 0 }} />
                 <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
               </div>
             </DropdownMenu>
           </div>
-
-          {/* Upload wallpaper */}
           <div className="relative">
             <UploadWallpaperButton
               selected={settings.background === 'custom' && !!settings.customWallImage && !settings.customWallImage.startsWith('#') && !settings.customWallImage.startsWith('rgb')}
               onClick={() => {
                 const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = (e) => {
-                  const file = (e.target as HTMLInputElement).files?.[0];
-                  if (!file) return;
-                  const reader = new FileReader();
-                  reader.onload = (ev) => {
-                    const dataUrl = ev.target?.result as string;
-                    onUpdate({ background: 'custom', customWallImage: dataUrl });
-                  };
-                  reader.readAsDataURL(file);
-                };
+                input.type = 'file'; input.accept = 'image/*';
+                input.onchange = (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = (ev) => { onUpdate({ background: 'custom', customWallImage: ev.target?.result as string }); }; reader.readAsDataURL(file); };
                 input.click();
               }}
             />
