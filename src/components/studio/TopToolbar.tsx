@@ -564,7 +564,7 @@ export function TopToolbar({
             <button
               onClick={handleKidToggle}
               className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
-              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 68, height: 32 }}
+              style={{ backgroundColor: dark ? 'hsl(var(--secondary))' : '#f0ebe3', border: `1px solid ${dark ? 'hsl(var(--border))' : '#e2ddd6'}`, width: 68, height: 32 }}
               title="Switch to Kids Mode"
             >
               {/* Kid face */}
