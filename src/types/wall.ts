@@ -39,6 +39,7 @@ export interface SavedDesign {
   rotation?: number;
   studioState?: string;
   gallerySubmissionId?: string;
+  createdInMode?: 'kid' | 'adult';
 }
 
 export interface WallSettings {

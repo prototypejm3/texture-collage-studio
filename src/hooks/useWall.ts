@@ -56,9 +56,10 @@ export function useWall() {
     }
   }, [settings]);
 
-  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
+  const addDesign = useCallback((preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string, createdInMode?: 'kid' | 'adult'): string => {
     const id = `design-${nextDesignId++}`;
     const now = new Date().toISOString();
+    const mode = createdInMode || (() => { try { return localStorage.getItem('kid-mode') !== 'false' ? 'kid' as const : 'adult' as const; } catch { return 'kid' as const; } })();
     const design: SavedDesign = {
       id, name,
       vibeName,
@@ -73,6 +74,7 @@ export function useWall() {
       frameStyle: settings.defaultFrameStyle,
       displaySize: 'medium',
       studioState,
+      createdInMode: mode,
     };
     setDesigns(prev => [design, ...prev]);
     return id;
@@ -81,10 +83,11 @@ export function useWall() {
   // Draft: upsert a draft by draftKey (returns the draft id)
   const saveDraft = useCallback((draftKey: string, preview: string, name: string, vibeName?: string, studioState?: string, stencilCreator?: string): string => {
     const now = new Date().toISOString();
+    const mode = (() => { try { return localStorage.getItem('kid-mode') !== 'false' ? 'kid' as const : 'adult' as const; } catch { return 'kid' as const; } })();
     setDesigns(prev => {
       const existing = prev.find(d => d.id === draftKey);
       if (existing) {
-        return prev.map(d => d.id === draftKey ? { ...d, previewImage: preview, name, vibeName, stencilCreator, studioState, updatedAt: now } : d);
+        return prev.map(d => d.id === draftKey ? { ...d, previewImage: preview, name, vibeName, stencilCreator, studioState, updatedAt: now, createdInMode: d.createdInMode || mode } : d);
       }
       const design: SavedDesign = {
         id: draftKey,
@@ -101,6 +104,7 @@ export function useWall() {
         frameStyle: settings.defaultFrameStyle,
         displaySize: 'medium',
         studioState,
+        createdInMode: mode,
       };
       return [design, ...prev];
     });
