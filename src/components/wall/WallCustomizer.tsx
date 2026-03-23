@@ -585,6 +585,33 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           fontFamily: 'system-ui, sans-serif',
         }}
       >
+        {/* Wall swatches — first for quick access */}
+        {adultWallOptions.map(bg => (
+          <WallSwatch key={bg.value} fill={bg.fill} pattern={bg.gradient} selected={settings.background === bg.value} onClick={() => onUpdate({ background: bg.value })} />
+        ))}
+        <div ref={colorPickerRef} className="relative">
+          <ColorWheelButton selected={!!isCustomColor} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowColorPicker(!showColorPicker); }} />
+          <DropdownMenu isOpen={showColorPicker} onClose={() => setShowColorPicker(false)} anchorRef={colorPickerRef}>
+            <div className="flex flex-col items-center gap-2 p-1">
+              <input type="color" value={customColor} onChange={(e) => { setCustomColor(e.target.value); onUpdate({ background: 'custom', customWallImage: e.target.value }); }} className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent" style={{ padding: 0 }} />
+              <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
+            </div>
+          </DropdownMenu>
+        </div>
+        <div className="relative">
+          <UploadWallpaperButton
+            selected={settings.background === 'custom' && !!settings.customWallImage && !settings.customWallImage.startsWith('#') && !settings.customWallImage.startsWith('rgb')}
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file'; input.accept = 'image/*';
+              input.onchange = (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = (ev) => { onUpdate({ background: 'custom', customWallImage: ev.target?.result as string }); }; reader.readAsDataURL(file); };
+              input.click();
+            }}
+          />
+        </div>
+
+        <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
+
         {/* Arrange */}
         <ToolbarButton compact active={settings.layout === 'freeform'} onClick={() => onUpdate({ layout: 'freeform' })} icon={(c) => <MoveIcon color={c} />} />
         <ToolbarButton compact active={settings.layout === 'grid'} onClick={() => onUpdate({ layout: 'grid' })} icon={(c) => <GridIcon color={c} />} locked={!isPremium && settings.layout !== 'grid'} onRequestUpgrade={onRequestUpgrade} />
@@ -630,7 +657,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
 
         <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
 
-        {/* Ambience */}
+        {/* Ambience — at the end */}
         <div ref={lightingMenuRef} className="relative">
           <ToolbarButton compact active={showLightingMenu || settings.lightingPreset !== 'none'} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowSoundMenu(false); setShowLightingMenu(!showLightingMenu); }} icon={(c) => <LightingIcon color={c} />} />
           <DropdownMenu isOpen={showLightingMenu} onClose={() => setShowLightingMenu(false)} anchorRef={lightingMenuRef}>
@@ -654,33 +681,6 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
           </DropdownMenu>
         </div>
         <ToolbarButton compact active={false} onClick={() => isPremium ? onAutoCurate?.() : onRequestUpgrade?.()} icon={(c) => <CurateIcon color={c} />} locked={!isPremium} onRequestUpgrade={onRequestUpgrade} />
-
-        <div style={{ width: 1, height: 28, backgroundColor: 'hsl(var(--border))', flexShrink: 0, margin: '0 2px' }} />
-
-        {/* Wall swatches */}
-        {adultWallOptions.map(bg => (
-          <WallSwatch key={bg.value} fill={bg.fill} pattern={bg.gradient} selected={settings.background === bg.value} onClick={() => onUpdate({ background: bg.value })} />
-        ))}
-        <div ref={colorPickerRef} className="relative">
-          <ColorWheelButton selected={!!isCustomColor} onClick={() => { setShowFrameMenu(false); setShowHangingMenu(false); setShowLightingMenu(false); setShowSoundMenu(false); setShowColorPicker(!showColorPicker); }} />
-          <DropdownMenu isOpen={showColorPicker} onClose={() => setShowColorPicker(false)} anchorRef={colorPickerRef}>
-            <div className="flex flex-col items-center gap-2 p-1">
-              <input type="color" value={customColor} onChange={(e) => { setCustomColor(e.target.value); onUpdate({ background: 'custom', customWallImage: e.target.value }); }} className="h-32 w-32 cursor-pointer rounded-md border-none bg-transparent" style={{ padding: 0 }} />
-              <p className="text-[9px] text-muted-foreground text-center uppercase tracking-wide">{customColor}</p>
-            </div>
-          </DropdownMenu>
-        </div>
-        <div className="relative">
-          <UploadWallpaperButton
-            selected={settings.background === 'custom' && !!settings.customWallImage && !settings.customWallImage.startsWith('#') && !settings.customWallImage.startsWith('rgb')}
-            onClick={() => {
-              const input = document.createElement('input');
-              input.type = 'file'; input.accept = 'image/*';
-              input.onchange = (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = (ev) => { onUpdate({ background: 'custom', customWallImage: ev.target?.result as string }); }; reader.readAsDataURL(file); };
-              input.click();
-            }}
-          />
-        </div>
       </div>
     );
   }
