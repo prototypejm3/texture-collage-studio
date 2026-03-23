@@ -465,7 +465,7 @@ export function TopToolbar({
                 <rect x="15" y="9" width="3" height="8" rx="0.5" fill="#7aaa8a"/>
                 <rect x="1" y="17" width="18" height="2" rx="0.5" fill="#5a8a6a"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Gallery</span>
             </Link>
 
             {/* AI Mode */}
