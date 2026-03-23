@@ -230,7 +230,6 @@ export const kidTextureNames: Record<string, string> = {
 
   // ShayShari (Signature)
   'shayshari-terra': 'Clay Pot',           // terracotta
-  'shayshari-berry': 'Berry Blast',        // berry pink
   'shayshari-sage': 'Sage Leaf',           // sage green
   'shayshari-sand': 'Sand Dune',           // sandy
 
