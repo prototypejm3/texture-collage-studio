@@ -735,7 +735,7 @@ const Index = () => {
                       borderRadius: '20px 20px 0 0',
                       background: sounds.kidMode
                         ? 'rgba(253, 246, 238, 0.95)'
-                        : 'rgba(245, 237, 224, 0.95)',
+                        : 'hsl(var(--popover) / 0.95)',
                       backdropFilter: 'blur(12px)',
                       WebkitBackdropFilter: 'blur(12px)',
                       boxShadow: '0 -8px 24px rgba(0,0,0,0.12)',
