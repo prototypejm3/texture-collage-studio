@@ -622,7 +622,7 @@ function getSwatchAspect(shape?: ElementShape): string {
   }
 }
 
-function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false, isActiveBackground = false, activeShape }: {
+function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRemoveCustomTexture, viewMode = 'swatch', kidMode = false, isMobile = false, isActiveBackground = false, activeShape }: {
   tex: TextureSwatch;
   isFav: boolean;
   onToggleFav: () => void;
@@ -631,6 +631,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
   onRemoveCustomTexture: (id: string) => void;
   viewMode?: 'swatch' | 'tiled';
   kidMode?: boolean;
+  isMobile?: boolean;
   isActiveBackground?: boolean;
   activeShape?: ElementShape;
 }) {
@@ -645,6 +646,58 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
 
   const borderRadius = getSwatchBorderRadius(activeShape);
   const aspectRatio = getSwatchAspect(activeShape);
+
+  // Mobile: horizontal card layout with big preview + readable name
+  if (isMobile) {
+    const cellBg = kidMode ? '#f7f0e8' : '#f5ede0';
+    const cellBorder = kidMode ? '#e8ddd0' : '#e2ddd6';
+    const selectedBorder = kidMode ? '#f97316' : '#5a8a6a';
+    return (
+      <motion.div
+        draggable
+        onDragStart={(e) => {
+          (e as any).dataTransfer?.setData('textureId', tex.id);
+          onDragStart(tex.id);
+        }}
+        onClick={() => onTextureClick?.(tex.id)}
+        whileTap={{ scale: 0.97 }}
+        className="cursor-pointer group relative flex items-center gap-3 p-2"
+        style={{
+          background: cellBg,
+          border: `${isActiveBackground ? '2px' : '1px'} solid ${isActiveBackground ? selectedBorder : cellBorder}`,
+          borderRadius: 12,
+          height: 72,
+          ...(isActiveBackground ? { backgroundColor: `${selectedBorder}14` } : {}),
+        }}
+      >
+        <div
+          className="w-12 h-12 flex-shrink-0 shadow-sm"
+          style={{
+            background: tex.cssBackground,
+            backgroundSize: bgSize,
+            borderRadius: 8,
+          }}
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold truncate" style={{ color: kidMode ? '#6b4c2a' : '#3d3530' }}>
+            {displayName}
+          </p>
+          <p className="text-[11px] truncate" style={{ color: '#94a3b8' }}>
+            {tex.category}
+          </p>
+        </div>
+        {/* Favorite star */}
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleFav(); }}
+          className={`p-1 rounded-full transition-all ${
+            isFav ? 'bg-primary/90 text-primary-foreground' : 'text-muted-foreground opacity-0 group-hover:opacity-100'
+          }`}
+        >
+          <Star className={`w-3 h-3 ${isFav ? 'fill-current' : ''}`} />
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
