@@ -1173,20 +1173,23 @@ const Index = () => {
                   </svg>
                   <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Save</span>
                 </button>
-                {/* Divider */}
-                <div className="w-px h-5" style={{ backgroundColor: '#e2ddd6' }} />
-                {/* Download */}
-                <button onClick={handleExport}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-white font-bold text-[13px] transition-transform active:scale-[0.96]"
-                  style={{ backgroundColor: '#5a8a6a' }}
-                  title="Download"
-                >
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                    <rect x="2" y="12" width="12" height="2" rx="1" fill="white"/>
-                    <path d="M8 2V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                    <polyline points="5,8 8,11 11,8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                {/* Undo */}
+                <button onClick={studio.undo} disabled={!studio.canUndo}
+                  className={`flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96] ${!studio.canUndo ? 'opacity-40' : ''}`} title="Undo">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 6h8a3 3 0 0 1 0 6H7" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="5,8 3,6 5,4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                  Download
+                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Undo</span>
+                </button>
+                {/* Redo */}
+                <button onClick={studio.redo} disabled={!studio.canRedo}
+                  className={`flex items-center gap-1 px-1.5 py-1 transition-transform active:scale-[0.96] ${!studio.canRedo ? 'opacity-40' : ''}`} title="Redo">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M13 6H5a3 3 0 0 0 0 6h4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+                    <polyline points="11,8 13,6 11,4" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                  <span style={{ color: '#94a3b8', fontSize: 11, fontFamily: 'system-ui,sans-serif' }}>Redo</span>
                 </button>
               </div>
               {/* Tool buttons centered */}
