@@ -391,7 +391,7 @@ function DropdownMenu({ isOpen, onClose, children }: { isOpen: boolean; onClose:
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute left-1/2 -translate-x-1/2 top-full z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px]" style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-full z-50 mb-1 bg-popover border border-border rounded-lg shadow-lg py-1 min-w-[150px] max-h-[300px] overflow-y-auto" style={{ fontFamily: 'system-ui, sans-serif' }}>
         {children}
       </div>
     </>
