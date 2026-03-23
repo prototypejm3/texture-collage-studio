@@ -205,8 +205,6 @@ export function TopToolbar({
       ) : kidMode ? (
         /* ── Kid Mode DESKTOP Nav ── */
         <>
-        /* ── Kid Mode Nav ── */
-        <>
           <div className="flex items-center gap-1.5 md:gap-3">
             <Link
               to="/"
