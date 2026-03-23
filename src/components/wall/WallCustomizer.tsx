@@ -26,8 +26,15 @@ const kidBackgrounds: { value: WallBackground; label: string; kidLabel: string; 
   { value: 'wood-oak-wall', label: 'Linen', kidLabel: '🧸 Linen', fill: '#f5ede0', borderColor: '#e2ddd6' },
 ];
 
-// ── Adult mode single wallpaper option ──
-const adultWallpaperOption = { value: 'floral' as WallBackground, label: 'Wallpaper', fill: '#f0f4ff', gradient: '#a78bfa' };
+// ── Adult mode wall backgrounds ──
+const adultWallOptions: { value: WallBackground; label: string; fill: string; gradient?: string }[] = [
+  { value: 'wood-birch-wall', label: 'Birch', fill: '#d9a97c' },
+  { value: 'wood-oak-wall', label: 'Oak', fill: '#c4956a' },
+  { value: 'wood-walnut-wall', label: 'Walnut', fill: '#7c3f1e' },
+  { value: 'white-brick', label: 'White Brick', fill: '#f5f0ec' },
+  { value: 'brick', label: 'Red Brick', fill: '#c4a090' },
+  { value: 'floral', label: 'Wallpaper', fill: '#f0f4ff', gradient: '#a78bfa' },
+];
 
 const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'shadow-box', label: 'Shadow Box' },
@@ -767,12 +774,15 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       <div className="flex flex-col items-center gap-0.5 shrink-0">
         <SectionLabel text="WALL" />
         <div className="flex items-center gap-2">
-          <WallSwatch
-            fill={adultWallpaperOption.fill}
-            pattern={adultWallpaperOption.gradient}
-            selected={settings.background === adultWallpaperOption.value}
-            onClick={() => onUpdate({ background: adultWallpaperOption.value })}
-          />
+          {adultWallOptions.map(bg => (
+            <WallSwatch
+              key={bg.value}
+              fill={bg.fill}
+              pattern={bg.gradient}
+              selected={settings.background === bg.value}
+              onClick={() => onUpdate({ background: bg.value })}
+            />
+          ))}
           {/* Color wheel */}
           <div ref={colorPickerRef} className="relative">
             <ColorWheelButton
