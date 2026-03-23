@@ -101,10 +101,10 @@ const kidSvgIcons: Record<string, React.FC> = {
 function AdultSaveIcon() {
   return (
     <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-      <rect x="8" y="26" width="48" height="38" rx="4" fill="#c4956a"/>
-      <rect x="4" y="14" width="56" height="16" rx="4" fill="#d9a97c"/>
-      <rect x="27" y="14" width="10" height="16" rx="2" fill="#e8c49a"/>
-      <line x1="32" y1="30" x2="32" y2="64" stroke="#b07d52" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+      <rect x="8" y="26" width="48" height="38" rx="4" fill="#7aaa8a"/>
+      <rect x="4" y="14" width="56" height="16" rx="4" fill="#a8d4b8"/>
+      <rect x="27" y="14" width="10" height="16" rx="2" fill="#c8e6d0"/>
+      <line x1="32" y1="30" x2="32" y2="64" stroke="#5a8a6a" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
     </svg>
   );
 }
