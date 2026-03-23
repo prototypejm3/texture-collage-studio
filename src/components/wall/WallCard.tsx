@@ -337,169 +337,26 @@ export function WallCard({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.97 }}
               transition={{ duration: 0.18 }}
-              className="absolute left-0 right-0 top-full mt-2 z-50 bg-popover border border-border rounded-xl shadow-xl p-4 space-y-4"
+              className="absolute left-0 right-0 top-full mt-2 z-50 max-h-[min(70vh,40rem)] overflow-y-auto bg-popover border border-border rounded-xl shadow-xl p-4 space-y-4"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-foreground">Edit Design</span>
-                <button onClick={() => setEditPanelOpen(false)} className="p-1 rounded-lg hover:bg-secondary">
-                  <X className="w-3.5 h-3.5 text-muted-foreground" />
-                </button>
-              </div>
-
-              {/* Name */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Name</label>
-                <input
-                  ref={nameRef}
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value.slice(0, 100))}
-                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                  placeholder="Title"
-                  autoFocus
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Description</label>
-                <input
-                  value={editDesc}
-                  onChange={(e) => setEditDesc(e.target.value.slice(0, 200))}
-                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                  placeholder="Add a description…"
-                />
-              </div>
-
-              {/* Artist */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Artist</label>
-                <input
-                  value={editArtist}
-                  onChange={(e) => setEditArtist(e.target.value.slice(0, 100))}
-                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Museum Label Fields */}
-              <div className="border-t border-border pt-3 mt-1">
-                <p className="text-[9px] uppercase tracking-widest text-muted-foreground mb-2">Museum Label</p>
-                
-                {/* Materials */}
-                <div className="mb-2">
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Materials</label>
-                  <input
-                    value={editMaterials}
-                    onChange={(e) => setEditMaterials(e.target.value.slice(0, 100))}
-                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    placeholder="Denim, Leather, Silk"
-                  />
-                </div>
-
-                {/* Curator Note */}
-                <div className="mb-2">
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Curator Note</label>
-                  <input
-                    value={editCuratorNote}
-                    onChange={(e) => setEditCuratorNote(e.target.value.slice(0, 200))}
-                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    placeholder="Exploring texture through contrast…"
-                  />
-                </div>
-
-                {/* Edition */}
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Edition</label>
-                  <input
-                    value={editEdition}
-                    onChange={(e) => setEditEdition(e.target.value.slice(0, 50))}
-                    className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    placeholder="Edition 1 of 10"
-                  />
-                </div>
-              </div>
-
-              {/* Size */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Size</label>
-                <div className="flex gap-1">
-                  {sizeOptions.map(s => {
-                    const Icon = s.icon;
-                    return (
-                      <button
-                        key={s.value}
-                        onClick={() => onSizeChange(design.id, s.value)}
-                        className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] rounded-md transition-colors ${
-                          (design.displaySize || 'medium') === s.value
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                        }`}
-                      >
-                        <Icon className="w-3 h-3" />
-                        {s.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Status */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Status</label>
-                <div className="flex gap-1">
-                  {statusOptions.map(s => (
-                    <button
-                      key={s.value}
-                      onClick={() => onUpdate(design.id, { status: s.value, hidden: s.value === 'hidden' })}
-                      className={`px-2.5 py-1.5 text-[11px] rounded-md transition-colors ${
-                        design.status === s.value
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Frame */}
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Frame</label>
-                <div className="flex gap-1 flex-wrap">
-                  {frameStyleList.map(f => (
-                    <button
-                      key={f.value}
-                      onClick={() => onFrameStyleChange(design.id, f.value)}
-                      className={`px-2 py-1.5 text-[11px] rounded-md transition-colors ${
-                        design.frameStyle === f.value
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                      }`}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
+...
               {/* Hanging Style */}
               <div>
                 <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5 block">Display</label>
-                <div className="flex gap-1 flex-wrap">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                   {hangingOptions.map(h => (
                     <button
                       key={h.value}
                       onClick={() => onUpdate(design.id, { hangingStyle: h.value })}
-                      className={`px-2 py-1.5 text-[11px] rounded-md transition-colors flex items-center gap-1 ${
+                      className={`px-2 py-2 text-[11px] rounded-md transition-colors flex items-center justify-center gap-1 text-center min-h-9 ${
                         (design.hangingStyle || 'floating') === h.value
                           ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground'
                       }`}
                     >
-                      <span className="text-[10px]">{h.emoji}</span> {h.label}
+                      <span className="text-[10px]">{h.emoji}</span>
+                      <span className="leading-tight">{h.label}</span>
                     </button>
                   ))}
                 </div>
