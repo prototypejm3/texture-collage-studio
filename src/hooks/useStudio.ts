@@ -310,9 +310,9 @@ export function useStudio() {
     const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
-    // Size mapping: S=80, M=160, L=280
-    const sizeMap: Record<string, number> = { S: 80, M: 160, L: 280, outline: 300, filled: 300 };
-    const targetSize = sizeMap[sizeOrMode || 'M'] || 160;
+    // Size mapping: S=100, M=180, L=300 (default)
+    const sizeMap: Record<string, number> = { S: 100, M: 180, L: 300, outline: 300, filled: 300 };
+    const targetSize = sizeMap[sizeOrMode || 'L'] || 300;
     const scaleFactor = targetSize / Math.max(vbW, vbH);
 
     sections.forEach(section => {
