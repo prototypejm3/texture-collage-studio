@@ -456,7 +456,6 @@ const Index = () => {
 
   const handleTextureClick = useCallback((textureId: string) => {
     if (studio.crayonMode) {
-      // In crayon mode, clicking a texture picks the crayon color and enters draw mode
       studio.setCrayonTextureId(textureId);
       studio.setDrawMode(true);
       return;
@@ -467,9 +466,26 @@ const Index = () => {
       studio.fillSection(studio.selectedSectionId, textureId);
       sounds.playDrop();
       sounds.trackAction();
+    } else if (studio.selectedId) {
+      // If an element is selected, apply color to it
+      studio.updateElement(studio.selectedId, { textureId });
+      sounds.playDrop();
+    } else {
+      // Tap-to-place: place a new swatch centered on canvas
+      const canvasEl = canvasRef.current;
+      const cx = canvasEl ? canvasEl.clientWidth / 2 - 50 : 150;
+      const cy = canvasEl ? canvasEl.clientHeight / 2 - 50 : 150;
+      // Offset slightly if there are already elements (stack offset)
+      const offset = (studio.elements.length % 10) * 8;
+      studio.addElement(textureId, cx + offset, cy + offset);
+      sounds.playPop();
+      sounds.trackAction();
+      toast({
+        title: sounds.kidMode ? '✓ Added!' : 'Added to canvas',
+        duration: 1500,
+      });
     }
-    // In 'swatch' mode with no section selected, clicking does nothing (drag to add)
-  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode]);
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode, studio.selectedId, studio.elements.length]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);

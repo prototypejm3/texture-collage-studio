@@ -168,12 +168,7 @@ export function MobileHamburgerMenu({
 
               <div className="w-full h-px my-1" style={{ backgroundColor: kidMode ? 'hsl(var(--toybox-border))' : '#e2ddd6' }} />
 
-              {/* Start Over / Download */}
-              <MenuItem
-                icon={<svg width="14" height="14" viewBox="0 0 16 16"><path d="M2 8C2 4.7 4.7 2 8 2C11.3 2 14 4.7 14 8C14 11.3 11.3 14 8 14C5.8 14 3.9 12.8 3 11" stroke={mutedColor} strokeWidth="1.8" strokeLinecap="round" fill="none"/><polyline points="1,8 3,11 5.5,9" stroke={mutedColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>}
-                label="Start Over"
-                onClick={onClear}
-              />
+              {/* Download */}
               <MenuItem
                 icon={<svg width="14" height="14" viewBox="0 0 16 16"><rect x="2" y="12" width="12" height="2" rx="1" fill={accentColor}/><path d="M8 2V10" stroke={accentColor} strokeWidth="2" strokeLinecap="round"/><polyline points="5,8 8,11 11,8" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>}
                 label="Download"
