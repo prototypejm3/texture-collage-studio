@@ -253,7 +253,7 @@ export function TopToolbar({
                 {showSoundMenu && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setShowSoundMenu(false)} />
-                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[110px]">
+                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg py-0.5 min-w-[120px]">
                       <p className="px-2 py-0.5 text-[8px] text-muted-foreground uppercase tracking-widest">Music</p>
                       {([['none', 'Off', '🔇'], ['gallery', 'Music Box', '🎵'], ['loft', 'Dance Party', '🕺'], ['home', 'Sleepy Time', '🌙']] as const).map(([value, label, emoji]) => (
                         <button key={value}
@@ -261,30 +261,25 @@ export function TopToolbar({
                           className={`w-full text-left px-2 py-1 text-[10px] hover:bg-secondary flex items-center gap-1.5 ${ambientSound === value ? 'text-primary font-medium' : 'text-foreground'}`}
                         ><span>{emoji}</span> {label}</button>
                       ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-            {onKidSoundsToggle && (
-              <div className="relative">
-                <button
-                  onClick={() => { if (kidSoundsEnabled) setShowSfxVolume(v => !v); else onKidSoundsToggle(true); }}
-                  onContextMenu={(e) => { e.preventDefault(); onKidSoundsToggle(!kidSoundsEnabled); }}
-                  className="p-0.5 rounded-full transition-all hover:scale-110 active:scale-90"
-                  style={{ backgroundColor: kidSoundsEnabled ? 'hsl(var(--toybox-sfx-bg))' : 'transparent' }}
-                  title={kidSoundsEnabled ? 'Click: volume · Right-click: mute' : 'Enable sound effects'}
-                ><MusicNoteIcon /></button>
-                {showSfxVolume && kidSoundsEnabled && onKidSoundsVolume && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowSfxVolume(false)} />
-                    <div className="absolute right-0 top-full z-50 mt-0.5 bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[120px]">
-                      <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">🔊 Volume</p>
-                      <input type="range" min={0} max={100} step={5} value={Math.round((kidSoundsVolume || 0.4) * 100)}
-                        onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)} className="w-full h-1 accent-primary" />
-                      <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
-                      <button onClick={() => { onKidSoundsToggle(false); setShowSfxVolume(false); }}
-                        className="w-full mt-1 text-[9px] text-muted-foreground hover:text-foreground transition-colors">🔇 Mute</button>
+                      {/* Volume control */}
+                      {onKidSoundsToggle && (
+                        <div className="border-t border-border mt-0.5 pt-1 px-2 pb-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="text-[8px] text-muted-foreground uppercase tracking-widest">🔊 Volume</p>
+                            <button onClick={() => { onKidSoundsToggle(!kidSoundsEnabled); }}
+                              className="text-[8px] text-muted-foreground hover:text-foreground transition-colors">
+                              {kidSoundsEnabled ? '🔇 Mute' : '🔊 On'}
+                            </button>
+                          </div>
+                          {kidSoundsEnabled && onKidSoundsVolume && (
+                            <>
+                              <input type="range" min={0} max={100} step={5} value={Math.round((kidSoundsVolume || 0.4) * 100)}
+                                onChange={(e) => onKidSoundsVolume(Number(e.target.value) / 100)} className="w-full h-1 accent-primary" />
+                              <p className="text-[8px] text-muted-foreground text-center mt-0.5">{Math.round((kidSoundsVolume || 0.4) * 100)}%</p>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
