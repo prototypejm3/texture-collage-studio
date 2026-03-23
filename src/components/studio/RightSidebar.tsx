@@ -5,6 +5,7 @@ import { letterStencils, numberSymbolStencils } from '@/data/letterStencils';
 import { funStencils } from '@/data/funStencils';
 import { grannyStencils } from '@/data/grannyStencils';
 import { sportsStencils, anchorStencils, worldStencils } from '@/data/sportsStencils';
+import { portraitStencils } from '@/data/portraitStencils';
 import { Vibe } from '@/types/studio';
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, Lock, Check, Palette, EyeOff, Eye, Globe, GlobeLock, Save, ImagePlus, X, Trash2, Flag, Heart, Stamp, ArrowRightLeft, Star } from 'lucide-react';
@@ -199,7 +200,7 @@ export function RightSidebar({
 
   // Include all non-hidden vibes (including categorized ones like Music)
   const filteredVibes = vibes.filter(v => !social.hiddenIds.has(v.id) && v.category !== 'Community');
-  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...sportsStencils, ...anchorStencils, ...worldStencils, ...aiGeneratedVibes];
+  const allVibes = [...filteredVibes, ...letterStencils, ...numberSymbolStencils, ...(kidMode ? [] : funStencils), ...(kidMode ? [] : grannyStencils), ...(kidMode ? [] : portraitStencils), ...sportsStencils, ...anchorStencils, ...worldStencils, ...aiGeneratedVibes];
   const builtInCategoryVibes = vibes.filter(v => v.category === 'Community');
 
   // Theme groupings for organized display
@@ -208,6 +209,7 @@ export function RightSidebar({
   const communityDiyIds = new Set(['tarot-card', 'zodiac-wheel', 'street-lamp']);
   const funIds = new Set([...funStencils.filter(f => !communityDiyIds.has(f.id)).map(f => f.id), 'champagne-coupe', 'cocktail-umbrella']);
   const grannyIds = new Set(grannyStencils.filter(g => g.id !== 'champagne-coupe' && g.id !== 'cocktail-umbrella').map(g => g.id));
+  const portraitIds = new Set(portraitStencils.map(p => p.id));
   const animalBugSeaIds = new Set([
     ...['cozy-soft', 'rugged-warm', 'bear', 'owl', 'turtle', 'lion', 'rabbit', 'dinosaur', 'giraffe', 'cow', 'parrot', 'pig', 'frog', 'lizard', 'monkey-face'],
     ...['butterfly', 'butterfly-alt', 'butterfly-bold', 'beehive', 'bee', 'bee-simple', 'dragonfly', 'snail', 'worm', 'caterpillar', 'ladybug', 'hummingbird'],
@@ -216,6 +218,7 @@ export function RightSidebar({
 
   const themeGroups: { label: string; kidLabel: string; emoji: string; ids: Set<string>; adultOnly?: boolean; grannyOnly?: boolean }[] = [
     { label: 'For Fun', kidLabel: 'For Fun', emoji: '✨', ids: funIds, adultOnly: true },
+    { label: 'Portraits', kidLabel: 'Portraits', emoji: '👩', ids: portraitIds, adultOnly: true },
     { label: 'Keepsakes', kidLabel: '☕ Keepsakes', emoji: '🗝️', ids: grannyIds, grannyOnly: true },
     { label: 'Nature & Scenery', kidLabel: '🌳 Outside', emoji: '🌿', ids: new Set(['sunset', 'ocean', 'rainbow', 'mushroom', 'flower', 'sun', 'tree']) },
     // Adults: merged Animals & Bugs; Kids keep separate categories
