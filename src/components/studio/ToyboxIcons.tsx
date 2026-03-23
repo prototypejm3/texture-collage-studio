@@ -135,7 +135,7 @@ export function SpeakerIcon() {
 
 export function TrashCanIcon() {
   return (
-    <svg width="39" height="39" viewBox="0 0 40 40" fill="none">
+    <svg width="51" height="51" viewBox="0 0 40 40" fill="none">
       {/* Shadow/base */}
       <ellipse cx="20" cy="36" rx="10" ry="2.5" fill="#b07d52" opacity="0.3" />
       {/* Jar body - rounded */}
