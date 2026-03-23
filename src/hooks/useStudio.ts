@@ -639,7 +639,11 @@ export function useStudio() {
     selectSection,
     shuffleVibeFills,
     placeStencil,
-    // Custom sections
+    previewStencilSize,
+    commitPreview,
+    cancelPreview,
+    previewSize,
+    previewElementIds,
     addCustomSection,
     deleteCustomSection,
     deleteSection,
