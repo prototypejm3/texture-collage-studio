@@ -5,14 +5,12 @@
  */
 export const kidColorOrder: Record<string, number> = {
   // Whites
-  'sunbrella-white': 10,
   'sunbrella-loft-white': 11,
-  'leuven-snow': 12,
   'karina-cloud': 13,
   'soul-cloud': 14,
   'nico-oyster': 15,
   'borough-cotton': 16,
-  'bloke-cotton': 17,
+  'cotton-natural': 18,
   'cotton-natural': 18,
   'marble-carrara': 19,
 
