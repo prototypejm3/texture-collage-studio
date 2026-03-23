@@ -821,7 +821,7 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
         </div>
       </div>
 
-      <div style={{ width: 1, height: 48, backgroundColor: '#e2ddd6', flexShrink: 0 }} />
+      <div style={{ width: 1, height: 48, backgroundColor: 'hsl(var(--border))', flexShrink: 0 }} />
 
       {/* GROUP 1: ARRANGE */}
       <div className="flex flex-col items-center gap-0.5 shrink-0">
