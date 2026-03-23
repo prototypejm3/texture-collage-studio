@@ -670,7 +670,7 @@ function SwatchItem({ tex, isFav, onToggleFav, onDragStart, onTextureClick, onRe
           aspectRatio,
         }}
       />
-      <p className={`${kidMode ? 'text-[10px]' : 'text-[8px]'} text-muted-foreground mt-0.5 truncate text-center leading-tight`}>
+      <p className={`${kidMode ? 'text-[11px] font-semibold' : 'text-[9px]'} text-muted-foreground mt-0.5 text-center leading-tight ${kidMode ? 'whitespace-normal line-clamp-2' : 'truncate'}`}>
         {displayName}
       </p>
       {/* Favorite star */}

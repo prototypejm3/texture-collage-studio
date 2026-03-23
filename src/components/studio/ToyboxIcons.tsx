@@ -135,16 +135,29 @@ export function SpeakerIcon() {
 
 export function TrashCanIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      {/* Cookie jar body */}
+      <rect x="5" y="7" width="12" height="12" rx="3" fill="#c4956a" />
+      <rect x="6" y="8" width="10" height="10" rx="2.5" fill="#d9a97c" />
       {/* Lid */}
-      <rect x="3" y="3" width="12" height="2" rx="0.5" fill="#c4956a" />
-      <rect x="7" y="1.5" width="4" height="2" rx="0.5" fill="#c4956a" />
-      {/* Can */}
-      <path d="M4 5 L5 16 L13 16 L14 5" fill="#d9a97c" stroke="#a0713a" strokeWidth="0.8" />
-      {/* Lines */}
-      <line x1="7" y1="7" x2="7" y2="14" stroke="#a0713a" strokeWidth="0.8" opacity="0.5" />
-      <line x1="9" y1="7" x2="9" y2="14" stroke="#a0713a" strokeWidth="0.8" opacity="0.5" />
-      <line x1="11" y1="7" x2="11" y2="14" stroke="#a0713a" strokeWidth="0.8" opacity="0.5" />
+      <rect x="4" y="5.5" width="14" height="2.5" rx="1.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.5" />
+      {/* Knob */}
+      <rect x="8.5" y="3.5" width="5" height="2.5" rx="1.2" fill="#c4956a" stroke="#a0713a" strokeWidth="0.5" />
+      {/* Face - eyes */}
+      <circle cx="8.5" cy="13" r="1" fill="#6b4c2a" />
+      <circle cx="13.5" cy="13" r="1" fill="#6b4c2a" />
+      {/* Rosy cheeks */}
+      <circle cx="7" cy="14.5" r="1" fill="#f4a6a0" opacity="0.5" />
+      <circle cx="15" cy="14.5" r="1" fill="#f4a6a0" opacity="0.5" />
+      {/* Smile */}
+      <path d="M9 15.5 Q11 17.5 13 15.5" stroke="#6b4c2a" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      {/* Confetti dots */}
+      <circle cx="4" cy="8" r="0.8" fill="#f87171" />
+      <circle cx="18" cy="9" r="0.8" fill="#fbbf24" />
+      <circle cx="5" cy="12" r="0.6" fill="#4ade80" />
+      <circle cx="17" cy="14" r="0.7" fill="#38bdf8" />
+      <circle cx="16" cy="6" r="0.6" fill="#a78bfa" />
+      <circle cx="6" cy="6" r="0.7" fill="#f97316" />
     </svg>
   );
 }

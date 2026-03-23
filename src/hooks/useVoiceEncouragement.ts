@@ -26,14 +26,16 @@ export function useVoiceEncouragement() {
   const speak = useCallback((text: string) => {
     if (!('speechSynthesis' in window)) return;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.1;
-    utterance.volume = 0.6;
-    // Try to pick a soft, natural voice
+    // Cute cartoon character voice: high pitch, slightly fast
+    utterance.rate = 1.25;
+    utterance.pitch = 1.8;
+    utterance.volume = 0.65;
+    // Pick a higher-pitched voice for cartoon feel
     const voices = speechSynthesis.getVoices();
-    const preferred = voices.find(v => 
-      v.lang.startsWith('en') && (v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Google'))
-    ) || voices.find(v => v.lang.startsWith('en'));
+    const preferred = voices.find(v =>
+      v.lang.startsWith('en') && (v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google US English'))
+    ) || voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'))
+      || voices.find(v => v.lang.startsWith('en'));
     if (preferred) utterance.voice = preferred;
     speechSynthesis.speak(utterance);
   }, []);
