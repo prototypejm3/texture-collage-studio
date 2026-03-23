@@ -416,41 +416,6 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
   const [customColor, setCustomColor] = useState('#f5f0e8');
   const isMobile = useIsMobile();
 
-  // Kid mode — unchanged
-  if (kidMode) {
-    return (
-      <div className="flex flex-wrap items-center gap-4 px-1">
-        <div className="mr-auto" />
-        <div className="flex items-center gap-4">
-          <span className="text-[13px] font-semibold" style={{ color: '#5a7a8a' }}>Wall:</span>
-          {kidBackgrounds.map(bg => {
-            const isSelected = settings.background === bg.value;
-            const IconComp = wallIcons[bg.value];
-            return (
-              <button
-                key={bg.value}
-                onClick={() => onUpdate({ background: bg.value })}
-                className="relative rounded-lg transition-transform hover:scale-110 overflow-hidden flex-shrink-0"
-                style={{
-                  width: 56, height: 56,
-                  backgroundColor: bg.fill,
-                  border: `${isSelected ? '3px' : '2px'} solid ${isSelected ? '#f97316' : bg.borderColor}`,
-                  boxShadow: isSelected ? '0 0 0 2px #f9731640' : 'inset 0 0 0 2px rgba(255,255,255,0.5)',
-                }}
-                title={bg.kidLabel}
-              >
-                {IconComp && <IconComp />}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
-  // Adult mode — new grouped toolbar
-  const isCustomColor = settings.background === 'custom' && settings.customWallImage?.startsWith('#');
-
   // Hideable state
   const [isCollapsed, setIsCollapsed] = useState(false);
 
