@@ -1,6 +1,6 @@
 import { WallSettings, WallLayout, WallBackground, FrameStyle, HangingStyle, LightingPreset, AmbientSound } from '@/types/wall';
-import { Lock } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Lock, GripHorizontal, ChevronUp, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WallCustomizerProps {
