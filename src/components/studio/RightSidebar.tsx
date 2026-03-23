@@ -920,7 +920,7 @@ function StencilCard({ vibe, isActive, isHidden, isFavorited, isLoggedIn, kidMod
               className="p-[2px] rounded-full transition-colors text-muted-foreground/60 hover:text-muted-foreground"
               title={transferred ? 'Added to Kids!' : 'Copy to Kid Mode'}
             >
-              {transferred ? <Check className="w-2 h-2 text-emerald-500" /> : <span className="text-[8px] leading-none">🧸</span>}
+              {transferred ? <Check className="w-2 h-2 text-emerald-500" /> : <span className="text-[8px] leading-none">👦</span>}
             </motion.button>
           )}
           {/* Hide or Delete */}
