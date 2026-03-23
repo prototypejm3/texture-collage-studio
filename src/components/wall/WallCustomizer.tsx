@@ -46,7 +46,6 @@ const allFrameStyles: { value: FrameStyle; label: string }[] = [
   { value: 'minimal', label: 'Minimal' },
   { value: 'wood', label: 'Wood' },
   { value: 'floating', label: 'Floating' },
-  { value: 'polaroid', label: 'Polaroid' },
   { value: 'none', label: 'None' },
 ];
 
