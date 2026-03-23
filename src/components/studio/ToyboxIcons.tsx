@@ -66,7 +66,7 @@ export function TentIcon() {
       {/* Door */}
       <path d="M9 18 L11 12 L13 18" fill="#c2410c" />
       {/* Flag */}
-      <line x1="11" y1="4" x2="11" y2="1" stroke="#a0713a" strokeWidth="1" />
+      <line x1="11" y1="4" x2="11" y2="1" stroke="#5a8a6a" strokeWidth="1" />
       <polygon points="11,1 15,2.5 11,4" fill="#f87171" />
     </svg>
   );
