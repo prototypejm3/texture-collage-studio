@@ -39,6 +39,8 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
+import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
+import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 
 
 const Index = () => {
@@ -506,7 +508,7 @@ const Index = () => {
   // Panel opacity based on focus mode
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden pb-[48px] md:pb-0">
       {/* Mobile welcome — no discouraging banner */}
 
       {/* Top bar with nav + focus toggle */}
@@ -1022,6 +1024,14 @@ const Index = () => {
         onSkip={kidOnboarding.skip}
         onAdvance={kidOnboarding.advanceTo}
       />
+
+      {/* Mobile components */}
+      <FloatingMusicButton
+        kidMode={sounds.kidMode}
+        ambientSound={ambientSound}
+        onAmbientSoundChange={setAmbientSound}
+      />
+      <MobileStudioBottomNav kidMode={sounds.kidMode} />
     </div>
   );
 };

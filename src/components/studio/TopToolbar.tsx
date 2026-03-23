@@ -7,6 +7,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { GrownUpCheckModal } from './GrownUpCheckModal';
 import { AiWelcomeModal } from './AiWelcomeModal';
 import { SwatchboxLogo } from '@/components/SwatchboxLogo';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MobileHamburgerMenu } from './MobileHamburgerMenu';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
 import {
   HouseIcon, TentIcon,
@@ -142,6 +144,7 @@ export function TopToolbar({
     window.dispatchEvent(new CustomEvent('kid-mode-change', { detail: false }));
   };
 
+  const isMobile = useIsMobile();
   const isStudio = location.pathname === '/' || location.pathname === '/create';
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
@@ -153,17 +156,54 @@ export function TopToolbar({
 
   const pressStyle = "transition-transform duration-150 ease-out active:scale-[0.96]";
 
+  // Shared mobile hamburger props
+  const mobileMenuProps = {
+    kidMode, dark, onToggleTheme: toggle,
+    ambientSound: ambientSound as string | undefined,
+    onAmbientSoundChange,
+    kidSoundsEnabled, onKidSoundsToggle,
+    onClear, onSave,
+    aiEnabled, onAiToggle: handleAiToggle,
+  };
+
   return (
     <>
     <div className={`flex items-center px-2 md:px-4 relative ${
       kidMode
-        ? 'h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
+        ? 'h-[56px] md:h-[64px] border-b bg-[hsl(var(--toybox-bg))] border-[hsl(var(--toybox-border))]'
         : 'h-[56px] border-b'
     }`}
     style={!kidMode ? { backgroundColor: '#faf8f5', borderBottomColor: '#e2ddd6' } : undefined}
     >
-      {kidMode ? (
-        /* ── Kid Mode Nav ── */
+      {kidMode && isMobile ? (
+        /* ── Kid Mode MOBILE Nav ── */
+        <>
+          <div className="flex items-center gap-1.5">
+            <Link to="/" className="transition-transform active:scale-[0.94]">
+              <SwatchboxLogo height={28} />
+            </Link>
+            <button
+              onClick={handleKidToggle}
+              className="transition-all active:scale-[0.94] rounded-full overflow-hidden ring-2 ring-blue-500"
+              title="Switch to Granny Mode"
+            >
+              <img src={kidGrannyToggle} alt="Kids → Granny" className="h-6 w-auto" />
+            </button>
+            <Link to="/"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
+              style={{ backgroundColor: '#f97316' }}
+            >
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+              </svg>
+              Create
+            </Link>
+          </div>
+          <div className="flex-1" />
+          <MobileHamburgerMenu {...mobileMenuProps} />
+        </>
+      ) : kidMode ? (
+        /* ── Kid Mode DESKTOP Nav ── */
         <>
           <div className="flex items-center gap-1.5 md:gap-3">
             <Link
@@ -288,8 +328,78 @@ export function TopToolbar({
             )}
           </div>
         </>
+      ) : !kidMode && isMobile ? (
+        /* ── Adult Mode MOBILE Nav ── */
+        <>
+          <div className="flex items-center gap-1.5">
+            <Link to="/" className="transition-transform active:scale-[0.94]" title="Swatchbox Studio">
+              <svg width="90" height="30" viewBox="0 0 360 120">
+                <rect x="0" y="0" width="360" height="120" rx="24" fill="#fdf6ee" stroke="#e8ddd0" strokeWidth="1.5"/>
+                <rect x="12" y="16" width="88" height="88" rx="16" fill="#c4956a"/>
+                <rect x="22" y="26" width="68" height="68" rx="10" fill="#f5ede0"/>
+                <circle cx="56" cy="58" r="22" fill="#c4956a"/>
+                <circle cx="40" cy="42" r="10" fill="#c4956a"/>
+                <circle cx="40" cy="42" r="6" fill="#d9a97c"/>
+                <circle cx="72" cy="42" r="10" fill="#c4956a"/>
+                <circle cx="72" cy="42" r="6" fill="#d9a97c"/>
+                <text x="116" y="52" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Swatchbox</text>
+                <text x="116" y="80" fontFamily="system-ui,sans-serif" fontSize="26" fontWeight="800" fill="#3d3530">Studio</text>
+                <circle cx="116" cy="100" r="6" fill="#f87171"/>
+                <circle cx="134" cy="100" r="6" fill="#fbbf24"/>
+                <circle cx="152" cy="100" r="6" fill="#4ade80"/>
+                <circle cx="170" cy="100" r="6" fill="#38bdf8"/>
+                <circle cx="188" cy="100" r="6" fill="#a78bfa"/>
+                <circle cx="206" cy="100" r="6" fill="#f97316"/>
+              </svg>
+            </Link>
+            <Link to="/"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
+              style={{ backgroundColor: '#5a8a6a' }}
+            >
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" fill="white"/>
+              </svg>
+              Create
+            </Link>
+          </div>
+          <div className="flex-1" />
+          <div className="flex items-center gap-1.5">
+            <MobileHamburgerMenu {...mobileMenuProps} />
+            <button
+              onClick={handleKidToggle}
+              className={`${pressStyle} flex items-center rounded-3xl overflow-hidden flex-shrink-0`}
+              style={{ backgroundColor: '#f0ebe3', border: '1px solid #e2ddd6', width: 48, height: 22 }}
+              title="Switch to Kids Mode"
+            >
+              <div className="flex items-center justify-center w-1/2 h-full">
+                <svg width="12" height="12" viewBox="0 0 28 28">
+                  <circle cx="14" cy="16" r="10" fill="white"/>
+                  <circle cx="10" cy="14" r="1.5" fill="#5a4a3a"/>
+                  <circle cx="18" cy="14" r="1.5" fill="#5a4a3a"/>
+                  <path d="M11 18 Q14 21 17 18" fill="none" stroke="#5a4a3a" strokeWidth="1.2" strokeLinecap="round"/>
+                  <polygon points="8,8 14,3 20,8" fill="#fbbf24"/>
+                  <circle cx="11" cy="7" r="1" fill="#e05c5c"/>
+                  <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
+                </svg>
+              </div>
+              <div className="w-px h-3" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="flex items-center justify-center w-1/2 h-full">
+                <svg width="12" height="12" viewBox="0 0 28 28">
+                  <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
+                  <ellipse cx="14" cy="7" rx="10" ry="5" fill="#c4c4c4"/>
+                  <circle cx="14" cy="4" r="4" fill="#b0b0b0"/>
+                  <circle cx="10" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
+                  <circle cx="18" cy="15" r="3.5" fill="none" stroke="#5a8a6a" strokeWidth="1.5"/>
+                  <circle cx="10" cy="15" r="1" fill="#5a4a3a"/>
+                  <circle cx="18" cy="15" r="1" fill="#5a4a3a"/>
+                  <path d="M12 19 Q14 21 16 19" fill="none" stroke="#5a4a3a" strokeWidth="1" strokeLinecap="round"/>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </>
       ) : (
-        /* ── Adult Mode Nav ── */
+        /* ── Adult Mode DESKTOP Nav ── */
         <>
           {/* LEFT SIDE: Logo → Create → divider → Workspace → Gallery → AI Mode → divider → Dark/Light → Music → Volume */}
           <div className="flex items-center gap-2.5">
