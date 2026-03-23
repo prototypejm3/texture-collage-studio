@@ -475,9 +475,9 @@ export function FloatingToolbar({ element, onUpdate, onUpdateEffects, onDuplicat
       <div className="flex items-center gap-1 mb-2 px-1">
         <div className="flex items-center gap-1">
           <Maximize2 className="w-3 h-3 text-muted-foreground" />
-          <input type="number" value={Math.round(element.width)} onChange={e => onUpdate({ width: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none" />
+          <input type="number" value={Math.round(element.width)} onChange={e => onUpdate({ width: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
           <span className="text-xs text-muted-foreground">×</span>
-          <input type="number" value={Math.round(element.height)} onChange={e => onUpdate({ height: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary rounded-md border-none" />
+          <input type="number" value={Math.round(element.height)} onChange={e => onUpdate({ height: Number(e.target.value) || 50 })} className="w-12 h-7 text-xs text-center bg-secondary text-foreground rounded-md border-none" />
         </div>
         <div className="w-px h-6 bg-border mx-1" />
         <div className="flex items-center gap-1">
