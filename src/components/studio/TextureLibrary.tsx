@@ -391,11 +391,12 @@ export function TextureLibrary({
         )}
       </div>
 
-      {/* Category filter tabs — below header */}
+      {/* Category filter tabs — below header (adult mode only) */}
+      {!kidMode && (
       <div className="px-2 py-1 border-b border-border flex flex-wrap gap-1">
         <button
           onClick={() => setActiveGroup('All')}
-          className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
+          className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
             activeGroup === 'All'
               ? 'bg-primary text-primary-foreground'
               : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -405,13 +406,13 @@ export function TextureLibrary({
         </button>
         <button
           onClick={() => setActiveGroup('Favorites')}
-          className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors flex items-center gap-0.5 ${
+          className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors flex items-center gap-0.5 ${
             activeGroup === 'Favorites'
               ? 'bg-primary text-primary-foreground'
               : 'bg-secondary text-secondary-foreground hover:bg-accent'
           }`}
         >
-          {kidMode ? '📦 My Box' : <><Star className="w-2.5 h-2.5" /> My Collection</>}
+          <Star className="w-2.5 h-2.5" /> My Collection
           {favIds.size > 0 && (
             <span className="text-[8px] ml-0.5 opacity-70">{favIds.size}</span>
           )}
@@ -419,7 +420,7 @@ export function TextureLibrary({
         {showCustomTab && (
           <button
             onClick={() => setActiveGroup('Custom')}
-            className={`px-1.5 py-0.5 ${kidMode ? 'text-[12px] font-semibold' : 'text-[10px]'} rounded-full transition-colors ${
+            className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${
               activeGroup === 'Custom'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
@@ -428,25 +429,20 @@ export function TextureLibrary({
             ✨ Mine
           </button>
         )}
-        {(kidMode ? kidGroups : adultGroups).map(group => {
-          const label = kidMode ? group.kidLabel : group.label;
-          return (
+        {adultGroups.map(group => (
             <button
               key={group.label}
               onClick={() => setActiveGroup(group.label)}
-              className={`rounded-full transition-colors ${kidMode
-                ? 'px-2 py-0.5 text-[11px] font-semibold'
-                : 'px-1.5 py-0.5 text-[10px]'
-              } ${activeGroup === group.label
+              className={`px-1.5 py-0.5 text-[10px] rounded-full transition-colors ${activeGroup === group.label
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-secondary text-secondary-foreground hover:bg-accent'
               }`}
             >
-              {label}
+              {group.label}
             </button>
-        );
-        })}
+        ))}
       </div>
+      )}
 
       {/* Texture grid */}
       <div className="flex-1 overflow-y-auto texture-panel p-2">
