@@ -448,7 +448,7 @@ export function TopToolbar({
                 <rect x="14" y="14" width="5" height="5" rx="1" fill="#7aaa8a"/>
                 <rect x="5" y="5" width="10" height="10" fill="white"/>
               </svg>
-              <span style={{ color: '#3d3530', fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
+              <span className="text-foreground" style={{ fontSize: 12, fontWeight: 500, fontFamily: 'system-ui,sans-serif' }}>Workspace</span>
             </Link>
 
             {/* Gallery */}
