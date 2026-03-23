@@ -365,7 +365,7 @@ export function TopToolbar({
                   <circle cx="17" cy="7" r="1" fill="#e05c5c"/>
                 </svg>
               </div>
-              <div className="w-px h-3" style={{ backgroundColor: '#e2ddd6' }} />
+              <div className="w-px h-3 bg-border" />
               <div className="flex items-center justify-center w-1/2 h-full">
                 <svg width="12" height="12" viewBox="0 0 28 28">
                   <circle cx="14" cy="16" r="10" fill="#f5dfc8"/>
