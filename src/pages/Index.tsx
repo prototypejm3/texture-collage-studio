@@ -115,9 +115,9 @@ const Index = () => {
     }
   }, [sounds.kidMode]);
 
-  // Auto-open Tool Box when elements exist on canvas
+  // Auto-open Tool Box when elements are added or selected
   useEffect(() => {
-    if (studio.elements.length > 0 && activeBox !== 'toolbox') {
+    if (studio.elements.length > 0) {
       openBox('toolbox');
     }
   }, [studio.elements.length]);
