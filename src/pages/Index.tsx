@@ -767,7 +767,7 @@ const Index = () => {
                   {/* Header */}
                   {sounds.kidMode ? (
                     <div className="flex items-center justify-between px-2 py-1 border-b border-border/50"
-                      style={{ background: 'linear-gradient(180deg, #a0724a, #8B5E3C)', borderRadius: '8px 8px 0 0' }}>
+                      style={{ background: 'linear-gradient(180deg, #5a8a6a, #3d6a4a)', borderRadius: '8px 8px 0 0' }}>
                       <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'hsla(35, 80%, 90%, 0.95)' }}>
                         {activeBox === 'textures' && '🎨 Colors'}
                         {activeBox === 'stencils' && '🧸 Shapes'}
