@@ -634,49 +634,6 @@ const Index = () => {
               onDuplicateElement={(id) => studio.duplicateElement(id)}
             />
 
-            {/* Kid mode actions pill — stacked next to treasure box */}
-            {sounds.kidMode && (
-              <div
-                className="absolute z-30 flex flex-col items-center rounded-2xl overflow-hidden"
-                style={{
-                  bottom: easelMode ? 16 : 44,
-                  right: easelMode ? 120 : 148,
-                  backgroundColor: 'hsl(var(--toybox-card))',
-                  border: '1.5px solid hsl(var(--toybox-border))',
-                }}
-              >
-                <button onClick={handleClearAll} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Start Over">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="5" y="6" width="14" height="14" rx="2" fill="#c4956a"/>
-                    <rect x="7" y="8" width="10" height="10" rx="1" fill="#d9a97c"/>
-                    <rect x="9" y="4" width="6" height="3" rx="1" fill="#c4956a"/>
-                    <line x1="10" y1="11" x2="10" y2="16" stroke="#b07d52" strokeWidth="1"/>
-                    <line x1="14" y1="11" x2="14" y2="16" stroke="#b07d52" strokeWidth="1"/>
-                  </svg>
-                  <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Start Over</span>
-                </button>
-                <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-                <button onClick={handleSaveToWall} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Save">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="4" y="4" width="16" height="16" rx="3" fill="#c4956a"/>
-                    <rect x="6" y="6" width="12" height="12" rx="2" fill="#d9a97c"/>
-                    <rect x="8" y="3" width="8" height="4" rx="1.5" fill="#c4956a"/>
-                    <circle cx="12" cy="13" r="3" fill="#c4956a"/>
-                    <circle cx="12" cy="13" r="1.5" fill="#d9a97c"/>
-                  </svg>
-                  <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Save</span>
-                </button>
-                <div className="h-px w-4/5 mx-auto" style={{ backgroundColor: 'hsl(var(--toybox-border))' }} />
-                <button onClick={handleExport} className="flex items-center gap-1.5 px-2.5 py-1.5 w-full transition-all hover:bg-black/5 active:scale-95" title="Download">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="4" y="14" width="16" height="7" rx="3" fill="#c4956a"/>
-                    <rect x="6" y="15" width="12" height="5" rx="2" fill="#d9a97c"/>
-                    <path d="M12 4V14M12 14L9 11M12 14L15 11" stroke="#c4956a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <span className="text-xs font-medium" style={{ color: 'hsl(var(--toybox-text))' }}>Download</span>
-                </button>
-              </div>
-            )}
 
             {/* Stencil size picker — inline above canvas */}
             {showStencilSizePicker && studio.activeVibe && (
@@ -1115,6 +1072,38 @@ const Index = () => {
           canUndo={studio.canUndo}
           canRedo={studio.canRedo}
         />
+
+        {/* Kid mode actions — horizontal below canvas */}
+        {sounds.kidMode && (
+          <div className="flex items-center justify-center gap-4 py-1.5 shrink-0">
+            <button onClick={handleClearAll} className="flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg" title="Start Over">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="6" width="14" height="14" rx="2" fill="#c4956a"/>
+                <rect x="7" y="8" width="10" height="10" rx="1" fill="#d9a97c"/>
+                <rect x="9" y="4" width="6" height="3" rx="1" fill="#c4956a"/>
+              </svg>
+              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Start Over</span>
+            </button>
+            <button onClick={handleSaveToWall} className="flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg" title="Save">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="4" width="16" height="16" rx="3" fill="#c4956a"/>
+                <rect x="6" y="6" width="12" height="12" rx="2" fill="#d9a97c"/>
+                <rect x="8" y="3" width="8" height="4" rx="1.5" fill="#c4956a"/>
+                <circle cx="12" cy="13" r="3" fill="#c4956a"/>
+                <circle cx="12" cy="13" r="1.5" fill="#d9a97c"/>
+              </svg>
+              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Save</span>
+            </button>
+            <button onClick={handleExport} className="flex items-center gap-1.5 transition-all hover:bg-black/5 active:scale-95 px-2 py-1 rounded-lg" title="Download">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="14" width="16" height="7" rx="3" fill="#c4956a"/>
+                <rect x="6" y="15" width="12" height="5" rx="2" fill="#d9a97c"/>
+                <path d="M12 4V14M12 14L9 11M12 14L15 11" stroke="#c4956a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-[11px] font-medium" style={{ color: '#6b4c2a' }}>Download</span>
+            </button>
+          </div>
+        )}
 
         {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
