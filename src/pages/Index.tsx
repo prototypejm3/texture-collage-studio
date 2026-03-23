@@ -43,6 +43,7 @@ import { TextPanel } from '@/components/studio/TextPanel';
 import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
+import { RoomThemePicker, useRoomTheme } from '@/components/studio/RoomThemePicker';
 
 
 const Index = () => {
