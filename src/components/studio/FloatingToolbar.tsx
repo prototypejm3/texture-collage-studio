@@ -1,7 +1,7 @@
 import { CanvasElement, ElementShape, EdgeStyle, WrinkleLevel, ShadowDepth, MaterialEffects, BlendMode } from '@/types/studio';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp, Undo2, Redo2, ArrowUp, ArrowDown } from 'lucide-react';
+import { Copy, Trash2, RotateCw, RectangleHorizontal, Minus, Maximize2, ChevronDown, ChevronUp, Undo2, Redo2, ArrowUp, ArrowDown, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
