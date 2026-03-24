@@ -96,8 +96,16 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
   const getPoint = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!svgRef.current) return null;
     const rect = svgRef.current.getBoundingClientRect();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    let clientX: number, clientY: number;
+    if ('touches' in e) {
+      const touch = e.touches[0] || (e as any).changedTouches?.[0];
+      if (!touch) return null;
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
     const scaleX = canvasWidth / rect.width;
     const scaleY = canvasHeight / rect.height;
     return {
