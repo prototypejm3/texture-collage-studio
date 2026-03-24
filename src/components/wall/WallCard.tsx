@@ -337,7 +337,7 @@ export function WallCard({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.97 }}
               transition={{ duration: 0.18 }}
-              className="absolute left-0 right-0 top-full mt-2 z-50 max-h-[min(70vh,40rem)] overflow-y-auto bg-popover border border-border rounded-xl shadow-xl p-4 space-y-4"
+              className="absolute left-0 right-0 bottom-full mb-2 z-50 max-h-[min(70vh,40rem)] overflow-y-auto bg-popover border border-border rounded-xl shadow-xl p-4 space-y-4"
               onClick={(e) => e.stopPropagation()}
             >
 ...
