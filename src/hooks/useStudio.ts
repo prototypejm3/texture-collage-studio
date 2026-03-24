@@ -69,6 +69,8 @@ export function useStudio() {
   const historyRef = useRef<CanvasElement[][]>([[]]);
   const historyIndexRef = useRef(0);
   const maxHistory = 50;
+  // Force re-render when history index changes
+  const [historyVersion, setHistoryVersion] = useState(0);
 
   const pushHistory = useCallback((next: CanvasElement[]) => {
     const idx = historyIndexRef.current;
@@ -87,9 +89,6 @@ export function useStudio() {
       return next;
     });
   }, [pushHistory]);
-
-  // Force re-render when history index changes
-  const [historyVersion, setHistoryVersion] = useState(0);
 
   const undo = useCallback(() => {
     const idx = historyIndexRef.current;
