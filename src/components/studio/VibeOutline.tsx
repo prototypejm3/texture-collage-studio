@@ -429,6 +429,42 @@ export function VibeOutline({
         const toolbarX = ((cx + t.x) / vbW) * canvasWidth;
         const toolbarY = ((cy + t.y) / vbH) * canvasHeight - 45;
 
+        // Kid mode check
+        const isKidMode = (() => { try { return localStorage.getItem('kid-mode') !== 'false'; } catch { return true; } })();
+
+        // Kid mode: simplified toolbar with only +1, duplicate, delete
+        if (isKidMode) {
+          return (
+            <div
+              className="absolute z-[30] flex items-center gap-1.5 bg-popover border border-border rounded-full shadow-lg px-2 py-1.5"
+              style={{
+                left: toolbarX,
+                top: Math.max(4, toolbarY),
+                transform: 'translateX(-50%)',
+              }}
+            >
+              {/* Duplicate */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onDuplicateSection(selectedSectionId); }}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-secondary hover:bg-accent text-foreground transition-colors"
+                title="Copy"
+              >
+                <span className="text-sm">📄</span>
+              </button>
+
+              {/* Delete */}
+              <button
+                onClick={(e) => { e.stopPropagation(); onDeleteSection(selectedSectionId); }}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-destructive/15 hover:bg-destructive/30 text-destructive transition-colors"
+                title="Delete"
+              >
+                <span className="text-sm">🗑️</span>
+              </button>
+            </div>
+          );
+        }
+
+        // Adult mode: full toolbar
         return (
           <div
             className="absolute z-[30] flex items-center gap-1 bg-popover border border-border rounded-lg shadow-lg px-1.5 py-1"
