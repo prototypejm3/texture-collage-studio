@@ -87,11 +87,15 @@ export function useStudio() {
     });
   }, [pushHistory]);
 
+  // Force re-render when history index changes
+  const [historyVersion, setHistoryVersion] = useState(0);
+
   const undo = useCallback(() => {
     const idx = historyIndexRef.current;
     if (idx <= 0) return;
     historyIndexRef.current = idx - 1;
     _setElements(historyRef.current[idx - 1]);
+    setHistoryVersion(v => v + 1);
   }, []);
 
   const redo = useCallback(() => {
@@ -99,10 +103,11 @@ export function useStudio() {
     if (idx >= historyRef.current.length - 1) return;
     historyIndexRef.current = idx + 1;
     _setElements(historyRef.current[idx + 1]);
+    setHistoryVersion(v => v + 1);
   }, []);
 
-  const canUndo = historyIndexRef.current > 0;
-  const canRedo = historyIndexRef.current < historyRef.current.length - 1;
+  const canUndo = historyVersion >= 0 && historyIndexRef.current > 0;
+  const canRedo = historyVersion >= 0 && historyIndexRef.current < historyRef.current.length - 1;
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');

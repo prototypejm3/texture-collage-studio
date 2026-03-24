@@ -652,6 +652,9 @@ export function Canvas({
         >
           <TrashCanIconAnimated lidOpen={trashHover || trashLidOpen} />
           <span className={`text-[10px] font-bold mt-0.5 ${trashHover ? 'text-destructive' : 'text-muted-foreground'}`}>Toss</span>
+          {!trashHover && (
+            <span className="text-[7px] text-muted-foreground/50 mt-0.5">Drag here</span>
+          )}
         </div>
       )}
 

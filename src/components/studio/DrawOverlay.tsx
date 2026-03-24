@@ -197,11 +197,11 @@ export function DrawOverlay({ canvasWidth, canvasHeight, onFinishDraw, onCancel,
         width="100%"
         height="100%"
         className="absolute inset-0"
-        style={{ overflow: 'visible' }}
+        style={{ overflow: 'visible', touchAction: 'none' }}
         onMouseDown={handleStart}
         onMouseMove={handleMove}
         onMouseUp={handleEnd}
-        
+        onMouseLeave={handleEnd}
         onTouchStart={handleStart}
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}

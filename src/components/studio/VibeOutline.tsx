@@ -296,11 +296,7 @@ export function VibeOutline({
                 className={`pointer-events-auto ${draggingId === section.id ? 'cursor-grabbing' : 'cursor-grab'}`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (isFilled && !isSelected) {
-                    onSelectSection(section.id);
-                  } else if (!isFilled) {
-                    onSelectSection(section.id);
-                  }
+                  onSelectSection(section.id);
                 }}
                 onMouseDown={(e) => handleSectionMouseDown(e, section.id)}
                 onDragOver={(e) => {
