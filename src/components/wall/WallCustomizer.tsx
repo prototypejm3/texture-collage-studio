@@ -518,10 +518,10 @@ export function WallCustomizer({ settings, onUpdate, onApplyFrameToAll, onApplyH
       // Mobile: compact circular icons in a fixed bottom bar
       return (
         <div
-          className="fixed left-0 right-0 z-30 flex items-center justify-center gap-2 px-3"
+          className="fixed left-0 right-0 z-30 flex items-center justify-center gap-2.5 px-3"
           style={{
-            bottom: 48,
-            height: 56,
+            bottom: 0,
+            height: 52,
             background: 'rgba(253,246,238,0.95)',
             backdropFilter: 'blur(12px)',
             borderTop: '2px solid #e2ddd6',

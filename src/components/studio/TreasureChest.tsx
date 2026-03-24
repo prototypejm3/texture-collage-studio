@@ -294,6 +294,16 @@ export function TreasureChest({ items, onRemoveItem, onDragOutItem, isHovered, c
             color: '#6b4c2a',
           }}>My Treasure Box</span>
         </div>
+
+        {/* Drop hints */}
+        {!isOpen && items.length === 0 && (
+          <div className="absolute pointer-events-none" style={{ bottom: -52, left: '50%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>
+            <div className="flex items-center gap-1 opacity-60">
+              <div style={{ width: 14, height: 14, borderRadius: 3, background: 'linear-gradient(135deg, hsl(24,60%,65%), hsl(24,40%,50%))', border: '1px solid hsl(24,30%,40%)' }} />
+              <span style={{ fontSize: 10, fontWeight: 600, color: '#6b4c2a' }}>Drag Swatch Here</span>
+            </div>
+          </div>
+        )}
       </motion.div>
     </div>
   );

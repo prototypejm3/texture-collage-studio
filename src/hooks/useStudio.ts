@@ -69,6 +69,8 @@ export function useStudio() {
   const historyRef = useRef<CanvasElement[][]>([[]]);
   const historyIndexRef = useRef(0);
   const maxHistory = 50;
+  // Force re-render when history index changes
+  const [historyVersion, setHistoryVersion] = useState(0);
 
   const pushHistory = useCallback((next: CanvasElement[]) => {
     const idx = historyIndexRef.current;
@@ -77,6 +79,7 @@ export function useStudio() {
     if (newHistory.length > maxHistory) newHistory.shift();
     historyRef.current = newHistory;
     historyIndexRef.current = newHistory.length - 1;
+    setHistoryVersion(v => v + 1);
   }, []);
 
   const setElements: typeof _setElements = useCallback((action) => {
@@ -92,6 +95,7 @@ export function useStudio() {
     if (idx <= 0) return;
     historyIndexRef.current = idx - 1;
     _setElements(historyRef.current[idx - 1]);
+    setHistoryVersion(v => v + 1);
   }, []);
 
   const redo = useCallback(() => {
@@ -99,10 +103,11 @@ export function useStudio() {
     if (idx >= historyRef.current.length - 1) return;
     historyIndexRef.current = idx + 1;
     _setElements(historyRef.current[idx + 1]);
+    setHistoryVersion(v => v + 1);
   }, []);
 
-  const canUndo = historyIndexRef.current > 0;
-  const canRedo = historyIndexRef.current < historyRef.current.length - 1;
+  const canUndo = historyVersion >= 0 && historyIndexRef.current > 0;
+  const canRedo = historyVersion >= 0 && historyIndexRef.current < historyRef.current.length - 1;
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [frameSize, setFrameSize] = useState<FrameSize>('12x12');
