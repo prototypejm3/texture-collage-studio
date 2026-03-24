@@ -77,6 +77,7 @@ export function useStudio() {
     if (newHistory.length > maxHistory) newHistory.shift();
     historyRef.current = newHistory;
     historyIndexRef.current = newHistory.length - 1;
+    setHistoryVersion(v => v + 1);
   }, []);
 
   const setElements: typeof _setElements = useCallback((action) => {
