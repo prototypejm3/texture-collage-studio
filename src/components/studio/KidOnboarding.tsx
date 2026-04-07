@@ -125,8 +125,8 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
             transition={{ type: 'spring', damping: 12, stiffness: 150 }}
             className="text-center"
           >
-            <div className="text-6xl mb-4">🎨</div>
-            <h1 className="text-4xl font-extrabold text-white drop-shadow-lg">
+            <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🎨</div>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white drop-shadow-lg">
               Let's play!
             </h1>
           </motion.div>
@@ -161,27 +161,27 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-primary text-primary-foreground px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3"
+              className="bg-primary text-primary-foreground px-3 py-2 sm:px-5 sm:py-3 rounded-xl sm:rounded-2xl shadow-xl flex items-center gap-2 sm:gap-3 max-w-[85vw]"
             >
-              <span className="text-3xl">👇</span>
+              <span className="text-xl sm:text-3xl">👇</span>
               <div>
-                <p className="text-lg font-bold leading-tight">Pick a stencil or a color!</p>
-                <p className="text-xs opacity-80">Drag a swatch or stencil onto the canvas</p>
+                <p className="text-sm sm:text-lg font-bold leading-tight">Pick a stencil or color!</p>
+                <p className="text-[10px] sm:text-xs opacity-80">Drag onto the canvas</p>
               </div>
             </motion.div>
 
             {/* Bouncing arrow pointing down to swatches */}
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 6, 0] }}
               transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-3xl"
+              className="text-xl sm:text-3xl"
             >
               ⬇️
             </motion.div>
 
             <button
               onClick={onSkip}
-              className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors mt-1"
+              className="px-4 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground hover:bg-accent transition-colors mt-1"
             >
               Skip
             </button>
@@ -216,18 +216,18 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
               key={`bubble-${step}`}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-primary text-primary-foreground px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3"
+              className="bg-primary text-primary-foreground px-3 py-2 sm:px-5 sm:py-3 rounded-xl sm:rounded-2xl shadow-xl flex items-center gap-2 sm:gap-3 max-w-[85vw]"
             >
-              <span className="text-3xl">{stepConfig[step].emoji}</span>
+              <span className="text-xl sm:text-3xl">{stepConfig[step].emoji}</span>
               <div>
-                <p className="text-lg font-bold leading-tight">{stepConfig[step].title}</p>
-                <p className="text-xs opacity-80">{stepConfig[step].sub}</p>
+                <p className="text-sm sm:text-lg font-bold leading-tight">{stepConfig[step].title}</p>
+                <p className="text-[10px] sm:text-xs opacity-80">{stepConfig[step].sub}</p>
               </div>
             </motion.div>
 
             <button
               onClick={onSkip}
-              className="text-[10px] text-muted-foreground/60 hover:text-muted-foreground transition-colors mt-1"
+              className="px-4 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground hover:bg-accent transition-colors mt-1"
             >
               Skip
             </button>
@@ -341,9 +341,9 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
             transition={{ type: 'spring', damping: 10, stiffness: 120, delay: 0.2 }}
             className="text-center bg-primary/90 backdrop-blur-sm text-primary-foreground px-8 py-5 rounded-3xl shadow-2xl"
           >
-            <div className="text-5xl mb-2">🎉</div>
-            <h2 className="text-2xl font-extrabold">You're ready!</h2>
-            <p className="text-sm opacity-80 mt-1">Go make something awesome!</p>
+            <div className="text-3xl sm:text-5xl mb-2">🎉</div>
+            <h2 className="text-xl sm:text-2xl font-extrabold">You're ready!</h2>
+            <p className="text-xs sm:text-sm opacity-80 mt-1">Go make something awesome!</p>
           </motion.div>
         </motion.div>
       )}
