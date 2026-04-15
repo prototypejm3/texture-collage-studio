@@ -1350,7 +1350,7 @@ const Index = () => {
           </filter>
         </defs>
       </svg>
-      <OnboardingTutorial page="studio" />
+      
       {sounds.kidMode && <CelebrationOverlay toasts={celebration.toasts} />}
       {sounds.kidMode && <GhostHand hint={kidTutorial.activeHint} />}
       {sounds.kidMode && <TutorialReplayButton onReplay={kidTutorial.resetAll} />}
