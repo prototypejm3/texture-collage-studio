@@ -127,6 +127,7 @@ export function useStudio() {
   const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
   const [previewSize, setPreviewSize] = useState<string | null>(null);
   const [previewElementIds, setPreviewElementIds] = useState<string[]>([]);
+  const previewIdsRef = useRef<string[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
