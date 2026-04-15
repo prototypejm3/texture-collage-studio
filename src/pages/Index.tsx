@@ -653,6 +653,21 @@ const Index = () => {
               onKidTutorialBox={kidTutorial.triggerBox}
             />
 
+  // Place a word as individual letter stencils across the canvas
+  const handlePlaceWord = useCallback((letters: Vibe[]) => {
+    const spacing = Math.min(80, 300 / Math.max(letters.length, 1));
+    const startX = Math.max(10, 150 - (letters.length * spacing) / 2);
+    letters.forEach((letterVibe, i) => {
+      studio.selectVibe(letterVibe);
+      const elems = studio.buildStencilElements?.('S') || [];
+      elems.forEach(el => {
+        studio.addRawElement?.({ ...el, x: startX + i * spacing, y: 120 });
+      });
+    });
+    studio.selectVibe(null as any);
+    closeBox();
+    toast({ title: '✨ Word added!', duration: 1500 });
+  }, [studio, closeBox]);
 
             {/* Stencil size picker — inline above canvas with live preview */}
             {showStencilSizePicker && (studio.activeVibe || studio.previewSize) && (
