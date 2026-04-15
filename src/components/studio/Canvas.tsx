@@ -2,6 +2,7 @@ import { useRef, useCallback, useMemo, useState, useEffect } from 'react';
 import { CanvasElement, FrameSize, FrameColor, Vibe, VibeFills, TextureSwatch, SectionTransform, SectionTransforms, ElementShape, MaterialEffects, defaultEffects } from '@/types/studio';
 import { FrameStyle } from '@/types/wall';
 import { CanvasElementComponent } from './CanvasElement';
+import { KidSwatchBubbles } from './KidSwatchBubbles';
 import { VibeOutline } from './VibeOutline';
 import { DrawOverlay } from './DrawOverlay';
 import { CustomTemplate } from '@/hooks/useCustomTemplate';
