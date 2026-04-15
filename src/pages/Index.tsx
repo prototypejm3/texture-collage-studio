@@ -1114,6 +1114,10 @@ const Index = () => {
                       />
                     )}
 
+                    {activeBox === 'letters' && (
+                      <KidLettersPanel onPlaceWord={handlePlaceWord} />
+                    )}
+
                     {activeBox === 'toolbox' && studio.elements.length > 0 && (
                       <div className="p-3">
                         <FloatingToolbar
