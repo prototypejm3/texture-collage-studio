@@ -485,18 +485,22 @@ const Index = () => {
       studio.fillSection(studio.selectedSectionId, textureId);
       sounds.playDrop();
       sounds.trackAction();
-    } else if (studio.selectedId) {
-      // If an element is selected, apply color to it
+    } else if (!sounds.kidMode && studio.selectedId) {
+      // Adult mode: if an element is selected, apply color to it
       studio.updateElement(studio.selectedId, { textureId });
       sounds.playDrop();
     } else {
       // Tap-to-place: place a new swatch centered on canvas
+      // In kid mode, always place a new swatch (never recolor selected)
       const canvasEl = canvasRef.current;
       const cx = canvasEl ? canvasEl.clientWidth / 2 - 50 : 150;
       const cy = canvasEl ? canvasEl.clientHeight / 2 - 50 : 150;
-      // Offset slightly if there are already elements (stack offset)
       const offset = (studio.elements.length % 10) * 8;
       studio.addElement(textureId, cx + offset, cy + offset);
+      // In kid mode, deselect so next tap also places a new swatch
+      if (sounds.kidMode) {
+        studio.setSelectedId(null);
+      }
       sounds.playPop();
       sounds.trackAction();
       toast({
@@ -504,7 +508,7 @@ const Index = () => {
         duration: 1500,
       });
     }
-  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode, studio.selectedId, studio.elements.length]);
+  }, [studio.selectedSectionId, studio.fillSection, textureApplyMode, studio.setBackgroundTextureId, studio.backgroundTextureId, studio.crayonMode, studio.setCrayonTextureId, studio.setDrawMode, studio.selectedId, studio.elements.length, sounds.kidMode]);
 
   const handleUploadTexture = useCallback(async (file: File) => {
     await addCustomTexture(file);
