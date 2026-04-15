@@ -156,6 +156,11 @@ export function useStudio() {
     return id;
   }, [nextShape]);
 
+  // Add pre-built elements directly (used by Letters panel)
+  const addRawElements = useCallback((els: CanvasElement[]) => {
+    setElements(prev => [...prev, ...els]);
+  }, []);
+
   const addTextElement = useCallback((text: string, x: number, y: number, opts?: { fontFamily?: string; fontSize?: number; fontWeight?: number; textColor?: string; textAlign?: 'left' | 'center' | 'right' }) => {
     const id = `el-${nextId++}`;
     const newEl: CanvasElement = {
