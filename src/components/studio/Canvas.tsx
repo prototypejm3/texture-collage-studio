@@ -12,6 +12,8 @@ import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon, TrashCanIconAnimated } from './ToyboxIcons';
+import { KidToolBox } from './KidToolBox';
+import { BoxId } from '@/hooks/useActiveBox';
 import { RoomThemeBackground } from './RoomThemeBackground';
 import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
@@ -95,6 +97,12 @@ interface Props {
   onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
   onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
   onDuplicateElement?: (id: string) => void;
+  // Kid tool boxes on table
+  activeBox?: BoxId;
+  onToggleBox?: (id: BoxId) => void;
+  onKidTutorialColor?: () => void;
+  onKidTutorialFrame?: () => void;
+  onKidTutorialBox?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -144,6 +152,11 @@ export function Canvas({
   onUpdateElement,
   onUpdateEffects,
   onDuplicateElement,
+  activeBox,
+  onToggleBox,
+  onKidTutorialColor,
+  onKidTutorialFrame,
+  onKidTutorialBox,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedTableId = selectedTableElementId ?? null;
@@ -1025,6 +1038,41 @@ export function Canvas({
           </div>
         );
       })()}
+
+      {/* Kid Tool Boxes on the table */}
+      {kidMode && onToggleBox && (
+        <div
+          className="absolute z-20 flex items-end gap-1"
+          style={{
+            bottom: easelMode ? 20 : 56,
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <KidToolBox
+            id="textures"
+            label="Colors"
+            variant="colors"
+            isOpen={activeBox === 'textures'}
+            onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
+          />
+          <KidToolBox
+            id="tools"
+            label="Frame"
+            variant="frame"
+            isOpen={activeBox === 'tools'}
+            onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
+          />
+          <KidToolBox
+            id="stencils"
+            label="Shapes"
+            variant="shapes"
+            isOpen={activeBox === 'stencils'}
+            onToggle={() => onToggleBox('stencils')}
+          />
+        </div>
+      )}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && kidMode && (
