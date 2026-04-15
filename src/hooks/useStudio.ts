@@ -321,7 +321,7 @@ export function useStudio() {
     const sections = vibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
 
-    const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
+    const vbParts = (vibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
     const sizeMap: Record<string, number> = { S: 100, M: 180, L: 300, outline: 300, filled: 300 };
