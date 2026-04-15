@@ -142,7 +142,7 @@ export function KidOnboardingOverlay({ step, active, onSkip, onAdvance }: Overla
           exit={{ opacity: 0, y: 10 }}
           transition={{ type: 'spring', damping: 15 }}
           className="fixed z-[300] pointer-events-auto"
-          style={{ bottom: 'calc(30% + 8px)', left: '50%', transform: 'translateX(-50%)' }}
+          style={{ bottom: 8, left: '50%', transform: 'translateX(-50%)' }}
         >
           <div className="flex flex-col items-center gap-2">
             {/* Step dots */}
