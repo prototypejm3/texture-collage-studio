@@ -127,6 +127,7 @@ export function useStudio() {
   const [deletedSections, setDeletedSections] = useState<Set<string>>(new Set());
   const [previewSize, setPreviewSize] = useState<string | null>(null);
   const [previewElementIds, setPreviewElementIds] = useState<string[]>([]);
+  const previewIdsRef = useRef<string[]>([]);
 
   const selectedElement = elements.find(e => e.id === selectedId) || null;
 
@@ -361,17 +362,20 @@ export function useStudio() {
 
   // Preview stencil at a size (non-destructive — replaces previous preview)
   const previewStencilSize = useCallback((size: string) => {
-    // Remove previous preview elements
-    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    // Remove previous preview elements using ref (avoids stale closure)
+    const oldIds = previewIdsRef.current;
+    setElements(prev => prev.filter(e => !oldIds.includes(e.id)));
     const newElements = buildStencilElements(size);
     const ids = newElements.map(e => e.id);
+    previewIdsRef.current = ids;
     setPreviewElementIds(ids);
     setPreviewSize(size);
     setElements(prev => [...prev, ...newElements]);
-  }, [buildStencilElements, previewElementIds]);
+  }, [buildStencilElements]);
 
   // Commit preview — keep elements, clear vibe state
   const commitPreview = useCallback(() => {
+    previewIdsRef.current = [];
     setPreviewElementIds([]);
     setPreviewSize(null);
     setActiveVibe(null);
@@ -384,10 +388,12 @@ export function useStudio() {
 
   // Cancel preview — remove preview elements, restore vibe
   const cancelPreview = useCallback(() => {
-    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    const oldIds = previewIdsRef.current;
+    setElements(prev => prev.filter(e => !oldIds.includes(e.id)));
+    previewIdsRef.current = [];
     setPreviewElementIds([]);
     setPreviewSize(null);
-  }, [previewElementIds]);
+  }, []);
 
   // Place current stencil as free elements on canvas (outline only)
   const placeStencil = useCallback((sizeOrMode?: string) => {
