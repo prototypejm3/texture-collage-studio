@@ -5,7 +5,7 @@ interface KidToolBoxProps {
   label: string;
   isOpen: boolean;
   onToggle: () => void;
-  variant: 'colors' | 'frame' | 'shapes';
+  variant: 'colors' | 'frame' | 'shapes' | 'letters';
 }
 
 /* Small illustrated toy boxes that sit on the table surface in Kid mode */
