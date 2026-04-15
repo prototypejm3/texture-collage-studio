@@ -12,6 +12,8 @@ import { MaybeBox, BoxItem, generateBoxItemId } from './MaybeBox';
 import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon, TrashCanIconAnimated } from './ToyboxIcons';
+import { KidToolBox } from './KidToolBox';
+import { BoxId } from '@/hooks/useActiveBox';
 import { RoomThemeBackground } from './RoomThemeBackground';
 import { RoomTheme } from './RoomThemePicker';
 import concreteFloor from '@/assets/concrete-floor.jpg';
@@ -95,6 +97,12 @@ interface Props {
   onUpdateElement?: (id: string, updates: Partial<CanvasElement>) => void;
   onUpdateEffects?: (id: string, effects: Partial<MaterialEffects>) => void;
   onDuplicateElement?: (id: string) => void;
+  // Kid tool boxes on table
+  activeBox?: BoxId;
+  onToggleBox?: (id: BoxId) => void;
+  onKidTutorialColor?: () => void;
+  onKidTutorialFrame?: () => void;
+  onKidTutorialBox?: () => void;
 }
 
 const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
@@ -144,6 +152,11 @@ export function Canvas({
   onUpdateElement,
   onUpdateEffects,
   onDuplicateElement,
+  activeBox,
+  onToggleBox,
+  onKidTutorialColor,
+  onKidTutorialFrame,
+  onKidTutorialBox,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const selectedTableId = selectedTableElementId ?? null;
