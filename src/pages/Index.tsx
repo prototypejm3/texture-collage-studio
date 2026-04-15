@@ -789,6 +789,7 @@ const Index = () => {
                         {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Stencils')}
                         {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && '🔤 Letters'}
                         {activeBox === 'toolbox' && (sounds.kidMode ? '🧰 Tools' : 'Tool Box')}
                       </span>
                       <button onClick={closeBox} className="p-1.5 rounded-lg hover:bg-black/5 transition-colors">
