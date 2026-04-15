@@ -766,17 +766,7 @@ export function Canvas({
       )}
 
 
-      {kidMode && selectedId && elements.find(e => e.id === selectedId) && onUpdateElement && onUpdateEffects && onDuplicateElement && (
-        <KidSwatchBubbles
-          element={elements.find(e => e.id === selectedId)!}
-          isOpen={true}
-          onClose={() => onSelect(null)}
-          onUpdate={(updates) => onUpdateElement(selectedId!, updates)}
-          onUpdateEffects={(effects) => onUpdateEffects(selectedId!, effects)}
-          onDuplicate={() => onDuplicateElement(selectedId!)}
-          onDelete={() => { onDeleteElement(selectedId!); onSelect(null); }}
-        />
-      )}
+
 
       <div style={{
         display: 'flex',
