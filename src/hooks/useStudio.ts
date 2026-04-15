@@ -375,6 +375,7 @@ export function useStudio() {
 
   // Commit preview — keep elements, clear vibe state
   const commitPreview = useCallback(() => {
+    previewIdsRef.current = [];
     setPreviewElementIds([]);
     setPreviewSize(null);
     setActiveVibe(null);
@@ -387,10 +388,12 @@ export function useStudio() {
 
   // Cancel preview — remove preview elements, restore vibe
   const cancelPreview = useCallback(() => {
-    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    const oldIds = previewIdsRef.current;
+    setElements(prev => prev.filter(e => !oldIds.includes(e.id)));
+    previewIdsRef.current = [];
     setPreviewElementIds([]);
     setPreviewSize(null);
-  }, [previewElementIds]);
+  }, []);
 
   // Place current stencil as free elements on canvas (outline only)
   const placeStencil = useCallback((sizeOrMode?: string) => {
