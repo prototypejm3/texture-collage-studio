@@ -1008,6 +1008,7 @@ const Index = () => {
                         {activeBox === 'stencils' && 'Stencils'}
                         {activeBox === 'tools' && 'Display'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && 'Letters'}
                         {activeBox === 'toolbox' && 'Tool Box'}
                       </span>
                       <button
