@@ -877,6 +877,9 @@ const Index = () => {
                           onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
                         />
                       )}
+                      {activeBox === 'letters' && (
+                        <KidLettersPanel onPlaceWord={handlePlaceWord} />
+                      )}
                       {activeBox === 'toolbox' && studio.elements.length > 0 && (
                         <div className="p-3">
                           <FloatingToolbar
