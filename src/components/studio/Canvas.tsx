@@ -1039,6 +1039,41 @@ export function Canvas({
         );
       })()}
 
+      {/* Kid Tool Boxes on the table */}
+      {kidMode && onToggleBox && (
+        <div
+          className="absolute z-20 flex items-end gap-1"
+          style={{
+            bottom: easelMode ? 20 : 56,
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <KidToolBox
+            id="textures"
+            label="Colors"
+            variant="colors"
+            isOpen={activeBox === 'textures'}
+            onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
+          />
+          <KidToolBox
+            id="tools"
+            label="Frame"
+            variant="frame"
+            isOpen={activeBox === 'tools'}
+            onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
+          />
+          <KidToolBox
+            id="stencils"
+            label="Shapes"
+            variant="shapes"
+            isOpen={activeBox === 'stencils'}
+            onToggle={() => onToggleBox('stencils')}
+          />
+        </div>
+      )}
+
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && kidMode && (
         <div

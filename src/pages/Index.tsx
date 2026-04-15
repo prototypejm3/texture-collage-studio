@@ -1186,43 +1186,8 @@ const Index = () => {
         {/* ── BOX BUTTONS ── */}
         <div className="relative shrink-0 flex justify-center py-3 overflow-visible" data-box-btn>
           {sounds.kidMode ? (
-            /* Kid mode: wooden tray centered */
-            <div className="flex items-center justify-center w-full px-4">
-              <div
-                className="relative flex items-center justify-center gap-3 px-5 py-3"
-                style={{
-                  background: 'linear-gradient(180deg, #a0724a 0%, #8B5E3C 40%, #7a5018 100%)',
-                  borderRadius: '0 0 10px 10px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.2)',
-                  border: '2px solid rgba(0,0,0,0.15)',
-                  borderTop: 'none',
-                }}
-              >
-                <div className="absolute inset-0 opacity-15 pointer-events-none" style={{
-                  background: 'repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(255,255,255,0.08) 12px, rgba(255,255,255,0.08) 13px)',
-                  borderRadius: '0 0 10px 10px',
-                }} />
-                <div
-                  className="absolute pointer-events-none"
-                  style={{
-                    top: -14, left: -2, width: 'calc(100% + 4px)', height: 18,
-                    background: 'linear-gradient(180deg, #c07830 0%, #a86828 100%)',
-                    borderRadius: '6px 6px 0 0',
-                    border: '2px solid rgba(0,0,0,0.12)', borderBottom: 'none',
-                    transform: 'rotateX(-20deg)', transformOrigin: 'bottom center',
-                    boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
-                  }}
-                />
-                <BoxButton id="mybox" icon="📦" label="Keep It!" isActive={activeBox === 'mybox'}
-                  onClick={() => { toggleBox('mybox'); kidTutorial.triggerBox(); }} kidMode={true} />
-                <BoxButton id="textures" icon="🎨" label="Colors" isActive={activeBox === 'textures'}
-                  onClick={() => { toggleBox('textures'); kidTutorial.triggerColor(); }} kidMode={true} />
-                <BoxButton id="tools" icon="🖼️" label="Frame" isActive={activeBox === 'tools'}
-                  onClick={() => { toggleBox('tools'); kidTutorial.triggerFrame(); }} kidMode={true} />
-                <BoxButton id="stencils" icon="🧸" label="Shapes" isActive={activeBox === 'stencils'}
-                  onClick={() => toggleBox('stencils')} kidMode={true} />
-              </div>
-            </div>
+            /* Kid mode: boxes live on the table in Canvas — nothing here */
+            <div />
           ) : (
             /* Adult mode: tools centered, save/download above */
             <div className="flex flex-col items-center w-full">
