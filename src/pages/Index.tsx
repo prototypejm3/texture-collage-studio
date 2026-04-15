@@ -40,6 +40,7 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
+import { KidLettersPanel } from '@/components/studio/KidLettersPanel';
 import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
@@ -381,6 +382,22 @@ const Index = () => {
     studio.cancelPreview();
     setShowStencilSizePicker(false);
   }, [studio]);
+
+  // Place a word as individual letter stencils across the canvas
+  const handlePlaceWord = useCallback((letters: Vibe[]) => {
+    const spacing = 70;
+    const totalW = letters.length * spacing;
+    const startX = Math.max(10, 150 - totalW / 2);
+    const allElements: any[] = [];
+    letters.forEach((letterVibe, i) => {
+      const elems = studio.buildStencilElements('S', letterVibe);
+      const shifted = elems.map(el => ({ ...el, x: el.x + startX + i * spacing, y: el.y + 100, id: `el-${Date.now()}-${i}-${el.id}` }));
+      allElements.push(...shifted);
+    });
+    studio.addRawElements(allElements);
+    closeBox();
+    toast({ title: '✨ Word added!', duration: 1500 });
+  }, [studio, closeBox]);
 
   // Auto-save to Room Box before clearing (kids never lose work)
   const handleClearAll = useCallback(async () => {
@@ -772,6 +789,7 @@ const Index = () => {
                         {activeBox === 'stencils' && (sounds.kidMode ? '🧸 Shapes' : 'Stencils')}
                         {activeBox === 'tools' && (sounds.kidMode ? '🖼️ Frame' : 'Display')}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && '🔤 Letters'}
                         {activeBox === 'toolbox' && (sounds.kidMode ? '🧰 Tools' : 'Tool Box')}
                       </span>
                       <button onClick={closeBox} className="p-1.5 rounded-lg hover:bg-black/5 transition-colors">
@@ -860,6 +878,9 @@ const Index = () => {
                           onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
                         />
                       )}
+                      {activeBox === 'letters' && (
+                        <KidLettersPanel onPlaceWord={handlePlaceWord} />
+                      )}
                       {activeBox === 'toolbox' && studio.elements.length > 0 && (
                         <div className="p-3">
                           <FloatingToolbar
@@ -912,7 +933,7 @@ const Index = () => {
                 <div
                   className="overflow-visible relative"
                   style={{
-                    width: activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'toolbox' ? 380 : 340,
+                    width: activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'letters' ? 340 : activeBox === 'toolbox' ? 380 : 340,
                     maxHeight: 460,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
@@ -952,6 +973,7 @@ const Index = () => {
                         {activeBox === 'stencils' && '🧸 Shapes'}
                         {activeBox === 'tools' && '🖼️ Frame'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && '🔤 Letters'}
                       </span>
                       <button
                         onClick={closeBox}
@@ -986,6 +1008,7 @@ const Index = () => {
                         {activeBox === 'stencils' && 'Stencils'}
                         {activeBox === 'tools' && 'Display'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && 'Letters'}
                         {activeBox === 'toolbox' && 'Tool Box'}
                       </span>
                       <button
@@ -1092,6 +1115,10 @@ const Index = () => {
                         selectedElement={studio.selectedId ? studio.elements.find(e => e.id === studio.selectedId) : null}
                         onUpdateElement={(id, updates) => studio.updateElement(id, updates)}
                       />
+                    )}
+
+                    {activeBox === 'letters' && (
+                      <KidLettersPanel onPlaceWord={handlePlaceWord} />
                     )}
 
                     {activeBox === 'toolbox' && studio.elements.length > 0 && (

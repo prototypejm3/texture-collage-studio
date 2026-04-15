@@ -1071,6 +1071,13 @@ export function Canvas({
             isOpen={activeBox === 'stencils'}
             onToggle={() => onToggleBox('stencils')}
           />
+          <KidToolBox
+            id="letters"
+            label="Letters"
+            variant="letters"
+            isOpen={activeBox === 'letters'}
+            onToggle={() => onToggleBox('letters')}
+          />
         </div>
       )}
 

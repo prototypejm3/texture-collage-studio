@@ -5,7 +5,7 @@ interface KidToolBoxProps {
   label: string;
   isOpen: boolean;
   onToggle: () => void;
-  variant: 'colors' | 'frame' | 'shapes';
+  variant: 'colors' | 'frame' | 'shapes' | 'letters';
 }
 
 /* Small illustrated toy boxes that sit on the table surface in Kid mode */
@@ -106,10 +106,37 @@ function ShapesBoxSVG({ isOpen }: { isOpen: boolean }) {
   );
 }
 
+function LettersBoxSVG({ isOpen }: { isOpen: boolean }) {
+  return (
+    <svg width="90" height="80" viewBox="0 0 90 80" fill="none">
+      <ellipse cx="45" cy="76" rx="38" ry="4" fill="#00000020" />
+      {/* Body — warm orange */}
+      <rect x="8" y="32" width="74" height="44" rx="6" fill="#d97706" />
+      <rect x="12" y="36" width="66" height="36" rx="4" fill="#f59e0b" />
+      {/* Letters on body */}
+      <text x="20" y="58" fontFamily="system-ui" fontWeight="800" fontSize="18" fill="#fff">A</text>
+      <text x="36" y="62" fontFamily="system-ui" fontWeight="800" fontSize="14" fill="#fef3c7">B</text>
+      <text x="50" y="56" fontFamily="system-ui" fontWeight="800" fontSize="16" fill="#fff">C</text>
+      <text x="62" y="64" fontFamily="system-ui" fontWeight="800" fontSize="12" fill="#fef3c7">Z</text>
+      {/* Lid */}
+      <g style={{
+        transformOrigin: '8px 32px',
+        transform: isOpen ? 'rotate(-30deg) translateY(-6px)' : 'rotate(0deg)',
+        transition: 'transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+      }}>
+        <rect x="4" y="22" width="82" height="14" rx="5" fill="#b45309" stroke="#92400e" strokeWidth="0.8" />
+        <rect x="30" y="17" width="30" height="8" rx="4" fill="#b45309" stroke="#92400e" strokeWidth="0.8" />
+        <rect x="33" y="19" width="24" height="4" rx="2" fill="#f59e0b" />
+      </g>
+    </svg>
+  );
+}
+
 const variantSVG: Record<string, React.FC<{ isOpen: boolean }>> = {
   colors: ColorsBoxSVG,
   frame: FrameBoxSVG,
   shapes: ShapesBoxSVG,
+  letters: LettersBoxSVG,
 };
 
 export function KidToolBox({ id, label, isOpen, onToggle, variant }: KidToolBoxProps) {

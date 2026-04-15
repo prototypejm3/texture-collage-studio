@@ -156,6 +156,11 @@ export function useStudio() {
     return id;
   }, [nextShape]);
 
+  // Add pre-built elements directly (used by Letters panel)
+  const addRawElements = useCallback((els: CanvasElement[]) => {
+    setElements(prev => [...prev, ...els]);
+  }, []);
+
   const addTextElement = useCallback((text: string, x: number, y: number, opts?: { fontFamily?: string; fontSize?: number; fontWeight?: number; textColor?: string; textAlign?: 'left' | 'center' | 'right' }) => {
     const id = `el-${nextId++}`;
     const newEl: CanvasElement = {
@@ -310,12 +315,13 @@ export function useStudio() {
   };
 
   // Build stencil elements for a given size without committing
-  const buildStencilElements = useCallback((sizeOrMode?: string) => {
-    if (!activeVibe) return [];
-    const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
+  const buildStencilElements = useCallback((sizeOrMode?: string, vibeOverride?: Vibe) => {
+    const vibe = vibeOverride || activeVibe;
+    if (!vibe) return [];
+    const sections = vibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
 
-    const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
+    const vbParts = (vibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
     const vbW = vbParts[2] || 480;
     const vbH = vbParts[3] || 480;
     const sizeMap: Record<string, number> = { S: 100, M: 180, L: 300, outline: 300, filled: 300 };
@@ -637,6 +643,8 @@ export function useStudio() {
     // Free-mode
     addTextElement,
     addElement,
+    addRawElements,
+    buildStencilElements,
     updateElement,
     updateEffects,
     deleteElement,
