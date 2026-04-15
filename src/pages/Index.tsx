@@ -645,6 +645,11 @@ const Index = () => {
               onUpdateElement={(id, updates) => { studio.updateElement(id, updates); kidOnboarding.notifyMove(); }}
               onUpdateEffects={(id, effects) => { studio.updateEffects(id, effects); kidOnboarding.notifyToolUse(); }}
               onDuplicateElement={(id) => studio.duplicateElement(id)}
+              activeBox={activeBox}
+              onToggleBox={toggleBox}
+              onKidTutorialColor={kidTutorial.triggerColor}
+              onKidTutorialFrame={kidTutorial.triggerFrame}
+              onKidTutorialBox={kidTutorial.triggerBox}
             />
 
 
