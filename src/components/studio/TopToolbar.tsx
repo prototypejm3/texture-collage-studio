@@ -152,57 +152,50 @@ export function TopToolbar({
 
   const currentFrameLabel = frameStyleList.find(f => f.id === wallFrameStyle)?.label || 'Gold';
 
-  // ── Mode toggle pill for kid mode (matches granny mode style) ──
+  // ── Mode toggle pill — shows only current mode with switch label ──
   const ModeTogglePillKid = ({ onClick }: { onClick: () => void }) => (
     <motion.button
       whileTap={{ scale: 0.93 }}
       onClick={onClick}
-      className="flex items-center rounded-full overflow-hidden flex-shrink-0 transition-all hover:scale-105"
-      style={{ backgroundColor: '#5a8a6a', width: 96, height: 44, padding: 3 }}
-      title="Switch to Granny Mode"
+      className="flex items-center gap-1.5 rounded-full overflow-hidden flex-shrink-0 transition-all hover:scale-105 px-3"
+      style={{ backgroundColor: kidMode ? '#f97316' : '#5a8a6a', height: 38 }}
+      title={kidMode ? 'Switch to Granny Mode' : 'Switch to Kid Mode'}
     >
-      {/* Kid side — active */}
-      <div className="flex items-center justify-center rounded-full" style={{ width: 38, height: 38, backgroundColor: '#dfe8df', boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>
-        <svg width={28} height={28} viewBox="0 0 40 40">
-          <circle cx="10" cy="10" r="6" fill="#c4956a" />
-          <circle cx="10" cy="10" r="3.5" fill="#dbb896" />
-          <circle cx="30" cy="10" r="6" fill="#c4956a" />
-          <circle cx="30" cy="10" r="3.5" fill="#dbb896" />
-          <circle cx="20" cy="22" r="14" fill="#c4956a" />
-          <circle cx="20" cy="24" r="10" fill="#dbb896" />
-          <circle cx="15" cy="22" r="2" fill="#3d2b1f" />
-          <circle cx="25" cy="22" r="2" fill="#3d2b1f" />
-          <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
-          <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
-          <circle cx="15.5" cy="8" r="1" fill="#e05c5c" />
-          <circle cx="20" cy="5.5" r="1" fill="#e05c5c" />
-          <circle cx="24.5" cy="8" r="1" fill="#e05c5c" />
-        </svg>
-      </div>
-      {/* Arrow */}
-      <div className="flex-1 flex items-center justify-center">
-        <svg width="14" height="10" viewBox="0 0 16 10" fill="none">
-          <line x1="2" y1="5" x2="12" y2="5" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
-          <polyline points="10,2 13,5 10,8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.6" />
-        </svg>
-      </div>
-      {/* Granny side — inactive */}
-      <div className="flex items-center justify-center rounded-full" style={{ width: 38, height: 38 }}>
-        <svg width={22} height={22} viewBox="0 0 40 40">
-          <circle cx="20" cy="8" r="5" fill="#a0a0a0" />
-          <circle cx="18" cy="6" r="1.2" fill="#fbbf24" />
-          <circle cx="22" cy="6" r="1.2" fill="#fbbf24" />
-          <circle cx="8" cy="18" r="4" fill="#a0a0a0" />
-          <circle cx="32" cy="18" r="4" fill="#a0a0a0" />
-          <circle cx="20" cy="22" r="13" fill="#dbb896" />
-          <rect x="10" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
-          <rect x="22" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
-          <line x1="18" y1="21" x2="22" y2="21" stroke="#5a8a6a" strokeWidth="1.5" />
-          <circle cx="14" cy="21" r="1.5" fill="#3d2b1f" />
-          <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
-          <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-      </div>
+      {kidMode ? (
+        <>
+          <svg width={22} height={22} viewBox="0 0 40 40">
+            <circle cx="10" cy="10" r="6" fill="#c4956a" />
+            <circle cx="10" cy="10" r="3.5" fill="#dbb896" />
+            <circle cx="30" cy="10" r="6" fill="#c4956a" />
+            <circle cx="30" cy="10" r="3.5" fill="#dbb896" />
+            <circle cx="20" cy="22" r="14" fill="#c4956a" />
+            <circle cx="20" cy="24" r="10" fill="#dbb896" />
+            <circle cx="15" cy="22" r="2" fill="#3d2b1f" />
+            <circle cx="25" cy="22" r="2" fill="#3d2b1f" />
+            <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
+            <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
+          </svg>
+          <span className="text-white font-bold text-xs whitespace-nowrap">Kid Mode</span>
+        </>
+      ) : (
+        <>
+          <svg width={22} height={22} viewBox="0 0 40 40">
+            <circle cx="20" cy="8" r="5" fill="#ddd" />
+            <circle cx="18" cy="6" r="1.2" fill="#fbbf24" />
+            <circle cx="22" cy="6" r="1.2" fill="#fbbf24" />
+            <circle cx="8" cy="18" r="4" fill="#ddd" />
+            <circle cx="32" cy="18" r="4" fill="#ddd" />
+            <circle cx="20" cy="22" r="13" fill="#dbb896" />
+            <rect x="10" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+            <rect x="22" y="18" width="8" height="6" rx="2" fill="none" stroke="#5a8a6a" strokeWidth="1.8" />
+            <line x1="18" y1="21" x2="22" y2="21" stroke="#5a8a6a" strokeWidth="1.5" />
+            <circle cx="14" cy="21" r="1.5" fill="#3d2b1f" />
+            <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
+            <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+          <span className="text-white font-bold text-xs whitespace-nowrap">Granny Mode</span>
+        </>
+      )}
     </motion.button>
   );
 
