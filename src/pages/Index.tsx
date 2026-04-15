@@ -972,6 +972,7 @@ const Index = () => {
                         {activeBox === 'stencils' && '🧸 Shapes'}
                         {activeBox === 'tools' && '🖼️ Frame'}
                         {activeBox === 'text' && 'Text'}
+                        {activeBox === 'letters' && '🔤 Letters'}
                       </span>
                       <button
                         onClick={closeBox}
