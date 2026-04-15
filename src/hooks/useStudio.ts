@@ -642,6 +642,8 @@ export function useStudio() {
     // Free-mode
     addTextElement,
     addElement,
+    addRawElements,
+    buildStencilElements,
     updateElement,
     updateEffects,
     deleteElement,
