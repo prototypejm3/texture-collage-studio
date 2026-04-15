@@ -388,17 +388,13 @@ const Index = () => {
     const spacing = 70;
     const totalW = letters.length * spacing;
     const startX = Math.max(10, 150 - totalW / 2);
+    const allElements: any[] = [];
     letters.forEach((letterVibe, i) => {
-      // Temporarily select this vibe to build its elements
-      const oldVibe = studio.activeVibe;
-      studio.selectVibe(letterVibe);
-      const elems = studio.buildStencilElements('S');
-      // Offset each letter's elements
+      const elems = studio.buildStencilElements('S', letterVibe);
       const shifted = elems.map(el => ({ ...el, x: el.x + startX + i * spacing, y: el.y + 100, id: `el-${Date.now()}-${i}-${el.id}` }));
-      studio.addRawElements(shifted);
+      allElements.push(...shifted);
     });
-    // Clear vibe state
-    studio.selectVibe(null as any);
+    studio.addRawElements(allElements);
     closeBox();
     toast({ title: '✨ Word added!', duration: 1500 });
   }, [studio, closeBox]);
