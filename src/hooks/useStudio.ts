@@ -315,9 +315,10 @@ export function useStudio() {
   };
 
   // Build stencil elements for a given size without committing
-  const buildStencilElements = useCallback((sizeOrMode?: string) => {
-    if (!activeVibe) return [];
-    const sections = activeVibe.sections.filter(s => !deletedSections.has(s.id));
+  const buildStencilElements = useCallback((sizeOrMode?: string, vibeOverride?: Vibe) => {
+    const vibe = vibeOverride || activeVibe;
+    if (!vibe) return [];
+    const sections = vibe.sections.filter(s => !deletedSections.has(s.id));
     const newElements: CanvasElement[] = [];
 
     const vbParts = (activeVibe.viewBox || '0 0 480 480').split(/\s+/).map(Number);
