@@ -362,14 +362,16 @@ export function useStudio() {
 
   // Preview stencil at a size (non-destructive — replaces previous preview)
   const previewStencilSize = useCallback((size: string) => {
-    // Remove previous preview elements
-    setElements(prev => prev.filter(e => !previewElementIds.includes(e.id)));
+    // Remove previous preview elements using ref (avoids stale closure)
+    const oldIds = previewIdsRef.current;
+    setElements(prev => prev.filter(e => !oldIds.includes(e.id)));
     const newElements = buildStencilElements(size);
     const ids = newElements.map(e => e.id);
+    previewIdsRef.current = ids;
     setPreviewElementIds(ids);
     setPreviewSize(size);
     setElements(prev => [...prev, ...newElements]);
-  }, [buildStencilElements, previewElementIds]);
+  }, [buildStencilElements]);
 
   // Commit preview — keep elements, clear vibe state
   const commitPreview = useCallback(() => {
