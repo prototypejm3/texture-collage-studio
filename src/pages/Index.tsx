@@ -40,6 +40,7 @@ import { useActiveBox } from '@/hooks/useActiveBox';
 import { BoxButton } from '@/components/studio/BoxButton';
 import { ExpandableDrawer } from '@/components/studio/ExpandableDrawer';
 import { TextPanel } from '@/components/studio/TextPanel';
+import { KidLettersPanel } from '@/components/studio/KidLettersPanel';
 import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
