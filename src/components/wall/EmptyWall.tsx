@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { getLabels } from '@/lib/labels';
+import { useLanguage } from '@/hooks/useLanguage';
 
 export function EmptyWall() {
   const [kidMode, setKidMode] = useState(() => {
@@ -13,6 +15,9 @@ export function EmptyWall() {
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  const { lang } = useLanguage();
+  const labels = getLabels(kidMode, lang);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,21 +28,19 @@ export function EmptyWall() {
         {kidMode ? <span className="text-4xl">🎨</span> : <Plus className="w-8 h-8 text-muted-foreground" />}
       </div>
       <h2 className="text-lg font-semibold text-foreground mb-2">
-        {kidMode ? "Let's make something!" : 'Start your first piece'}
+        {labels.letsMakeSomething}
       </h2>
       <p className="text-sm text-muted-foreground mb-6 max-w-xs">
-        {kidMode
-          ? 'Go create something awesome and it will show up here! ✨'
-          : 'Create a shadow box design and save it to begin building your personal wall.'}
+        {labels.startFirstPiece}
       </p>
       <Link
         to="/"
         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
       >
         {kidMode ? (
-          <>🖍️ Start Creating!</>
+          <>{labels.startCreating}</>
         ) : (
-          <><Plus className="w-4 h-4" /> Create Design</>
+          <><Plus className="w-4 h-4" /> {labels.createDesign}</>
         )}
       </Link>
     </motion.div>

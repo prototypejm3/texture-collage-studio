@@ -11,6 +11,9 @@ import { SwatchboxLogo } from '@/components/SwatchboxLogo';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileHamburgerMenu } from './MobileHamburgerMenu';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
+import { LanguagePill } from './LanguagePill';
+import { getLabels } from '@/lib/labels';
+import { useLanguage } from '@/hooks/useLanguage';
 import {
   HouseIcon, TentIcon,
   SparkleIcon, SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon, MusicNoteIcon,
@@ -94,6 +97,10 @@ export function TopToolbar({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // i18n
+  const { lang } = useLanguage();
+  const labels = getLabels(kidMode, lang);
+
   // AI stencil toggle (on by default)
   const [aiEnabled, setAiEnabled] = useState(() => {
     try { return localStorage.getItem('ai-stencil-enabled') !== 'false'; } catch { return true; }
@@ -175,7 +182,7 @@ export function TopToolbar({
             <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
             <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
           </svg>
-          <span className="text-white font-bold text-xs whitespace-nowrap">Kid Mode</span>
+          <span className="text-white font-bold text-xs whitespace-nowrap">{labels.kidMode}</span>
         </>
       ) : (
         <>
@@ -193,7 +200,7 @@ export function TopToolbar({
             <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
             <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
-          <span className="text-white font-bold text-xs whitespace-nowrap">Granny Mode</span>
+          <span className="text-white font-bold text-xs whitespace-nowrap">{labels.grannyMode}</span>
         </>
       )}
     </motion.button>
@@ -229,6 +236,7 @@ export function TopToolbar({
             <Link to="/" className="transition-transform active:scale-[0.94]">
               <SwatchboxLogo height={28} />
             </Link>
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
             <Link to="/"
               className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
@@ -339,6 +347,7 @@ export function TopToolbar({
               </>
             )}
              {/* Mode toggle — same style as granny mode */}
+             <LanguagePill kidMode={kidMode} />
              <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
@@ -379,6 +388,7 @@ export function TopToolbar({
           <div className="flex-1" />
           <div className="flex items-center gap-1.5">
             <MobileHamburgerMenu {...mobileMenuProps} />
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
@@ -572,6 +582,7 @@ export function TopToolbar({
             )}
 
             {/* Mode Toggle Pill — far right */}
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
