@@ -182,7 +182,7 @@ export function TopToolbar({
             <ellipse cx="20" cy="25" rx="2.5" ry="1.8" fill="#3d2b1f" />
             <polygon points="12,11 14,4 17,9 20,3 23,9 26,4 28,11" fill="#fbbf24" />
           </svg>
-          <span className="text-white font-bold text-xs whitespace-nowrap">Kid Mode</span>
+          <span className="text-white font-bold text-xs whitespace-nowrap">{labels.kidMode}</span>
         </>
       ) : (
         <>
@@ -200,7 +200,7 @@ export function TopToolbar({
             <circle cx="26" cy="21" r="1.5" fill="#3d2b1f" />
             <path d="M16 27 Q20 30 24 27" fill="none" stroke="#3d2b1f" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
-          <span className="text-white font-bold text-xs whitespace-nowrap">Granny Mode</span>
+          <span className="text-white font-bold text-xs whitespace-nowrap">{labels.grannyMode}</span>
         </>
       )}
     </motion.button>
