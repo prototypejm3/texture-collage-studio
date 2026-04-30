@@ -117,5 +117,5 @@ const minimalProfile: Vibe = {
 };
 
 export const portraitStencils: Vibe[] = [
-  sideProfile, frontFace, backView, closeupHand, headWrap, minimalProfile,
+  sideProfile, frontFace, backView, closeupHand, minimalProfile,
 ];
