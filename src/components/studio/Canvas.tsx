@@ -184,7 +184,7 @@ export function Canvas({
   const adultBoxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const [isAdultBoxDragging, setIsAdultBoxDragging] = useState(false);
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
-    try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+    try { const raw = localStorage.getItem('kid-easel-btn-pos-v2'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
 
 
@@ -378,10 +378,10 @@ export function Canvas({
     return () => obs.disconnect();
   }, []);
 
-  // Default easel button position to bottom center once we know container size
+  // Default easel button position to top center once we know container size
   useEffect(() => {
     if (easelBtnPos.x === -1 && containerSize.width > 0) {
-      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: containerSize.height - 52 });
+      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: 8 });
     }
   }, [containerSize, easelBtnPos.x]);
 
@@ -992,7 +992,7 @@ export function Canvas({
 
       {/* Easel/Desk toggle — draggable on the floor */}
       {onToggleEasel && kidMode && (() => {
-        const btnKey = 'kid-easel-btn-pos';
+        const btnKey = 'kid-easel-btn-pos-v2';
         return (
           <div
             className="absolute z-20 cursor-grab active:cursor-grabbing"
