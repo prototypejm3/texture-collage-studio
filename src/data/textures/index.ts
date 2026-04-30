@@ -314,7 +314,7 @@ export const textures: TextureSwatch[] = [
   },
   {
     id: 'sig-julian',
-    name: 'Julian', // amber whiskey sour vibe
+    name: 'JJulian', // amber whiskey sour vibe
     category: 'Signature Sips',
     cssBackground:
       'radial-gradient(circle at 30% 25%, #f4d6a0 0%, transparent 55%), radial-gradient(circle at 75% 70%, #b8762e 0%, transparent 60%), linear-gradient(135deg, #e0a96d 0%, #6b3a14 100%)',
