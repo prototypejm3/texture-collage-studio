@@ -184,7 +184,7 @@ export function Canvas({
   const adultBoxDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const [isAdultBoxDragging, setIsAdultBoxDragging] = useState(false);
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
-    try { const raw = localStorage.getItem('kid-easel-btn-pos'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
+    try { const raw = localStorage.getItem('kid-easel-btn-pos-v2'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
 
 
