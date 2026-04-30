@@ -992,7 +992,7 @@ export function Canvas({
 
       {/* Easel/Desk toggle — draggable on the floor */}
       {onToggleEasel && kidMode && (() => {
-        const btnKey = 'kid-easel-btn-pos';
+        const btnKey = 'kid-easel-btn-pos-v2';
         return (
           <div
             className="absolute z-20 cursor-grab active:cursor-grabbing"
