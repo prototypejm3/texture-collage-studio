@@ -12,6 +12,7 @@ export type TextureCategory =
   | 'Skott' | 'Kaplan' | 'Riviera'
   | 'Nicole' | 'Byrd' | 'JaymeLyn' | 'Claude' | 'Gemini' | 'Chat'
   | 'Bisous' | 'Sunny Pup' | 'Magenta Mrstik' | "Shelly's Volleyball"
+  | 'Signature Sips'
   | 'Custom';
 
 export type ElementType = 'shape' | 'image' | 'text';
