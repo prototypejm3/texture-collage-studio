@@ -10,6 +10,8 @@ interface Props {
 export function MobileStudioBottomNav({ kidMode }: Props) {
   const location = useLocation();
   const isStudio = location.pathname === '/' || location.pathname === '/create';
+  const { lang } = useLanguage();
+  const labels = getLabels(kidMode, lang);
   const isWall = location.pathname === '/wall';
   const isGallery = location.pathname === '/gallery';
 
@@ -43,7 +45,7 @@ export function MobileStudioBottomNav({ kidMode }: Props) {
             </svg>
           )}
           <span className="text-[9px] font-medium" style={{ color: isWall ? activeColor : inactiveColor }}>
-            {kidMode ? 'My Room' : 'Studio'}
+            {labels.myRoom}
           </span>
         </Link>
 
@@ -60,7 +62,7 @@ export function MobileStudioBottomNav({ kidMode }: Props) {
             <rect x="14" y="9" width="3" height="8" rx="0.5" fill={isGallery ? activeColor : inactiveColor}/>
           </svg>
           <span className="text-[9px] font-medium" style={{ color: isGallery ? activeColor : inactiveColor }}>
-            {kidMode ? 'Show & Tell' : 'Showcase'}
+            {labels.showAndTell}
           </span>
         </Link>
 
@@ -74,7 +76,7 @@ export function MobileStudioBottomNav({ kidMode }: Props) {
             <ellipse cx="10" cy="18" rx="7" ry="5" fill={inactiveColor}/>
           </svg>
           <span className="text-[9px] font-medium" style={{ color: inactiveColor }}>
-            Profile
+            {labels.profile}
           </span>
         </Link>
       </div>
