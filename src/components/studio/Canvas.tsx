@@ -378,10 +378,10 @@ export function Canvas({
     return () => obs.disconnect();
   }, []);
 
-  // Default easel button position to bottom center once we know container size
+  // Default easel button position to top center once we know container size
   useEffect(() => {
     if (easelBtnPos.x === -1 && containerSize.width > 0) {
-      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: containerSize.height - 52 });
+      setEaselBtnPos({ x: containerSize.width / 2 - 70, y: 8 });
     }
   }, [containerSize, easelBtnPos.x]);
 
