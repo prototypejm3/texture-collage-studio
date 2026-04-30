@@ -926,15 +926,17 @@ const Index = () => {
                 className="absolute z-40"
                 style={drawerPos
                   ? { left: drawerPos.x, top: drawerPos.y }
-                  : { bottom: 8, right: 8 }
+                  : activeBox === 'toolbox'
+                    ? { top: 8, right: 8 }
+                    : { bottom: 8, right: 8 }
                 }
                 onClick={(e) => e.stopPropagation()}
               >
                 <div
                   className="overflow-visible relative"
                   style={{
-                    width: activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'letters' ? 340 : activeBox === 'toolbox' ? 380 : 340,
-                    maxHeight: 460,
+                    width: activeBox === 'tools' ? 520 : activeBox === 'text' ? 360 : activeBox === 'letters' ? 340 : activeBox === 'toolbox' ? 230 : 340,
+                    maxHeight: activeBox === 'toolbox' ? 300 : 460,
                     ...(sounds.kidMode ? {
                       borderRadius: 8,
                       boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
