@@ -326,4 +326,11 @@ export const textures: TextureSwatch[] = [
     cssBackground:
       'radial-gradient(circle at 25% 30%, #fff4b8 0%, transparent 55%), radial-gradient(circle at 80% 75%, #f5a623 0%, transparent 55%), linear-gradient(160deg, #ffeb8a 0%, #d97706 100%)',
   },
+  {
+    id: 'sig-mihn-maroone',
+    name: 'Mihn Maroone', // deep maroon with chestnut warmth
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 30% 25%, #b85575 0%, transparent 55%), radial-gradient(circle at 75% 70%, #3a0a18 0%, transparent 60%), linear-gradient(135deg, #7a1f35 0%, #2a0610 100%)',
+  },
 ];
