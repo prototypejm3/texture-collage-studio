@@ -97,6 +97,10 @@ export function TopToolbar({
     return () => window.removeEventListener('kid-mode-change', handler);
   }, []);
 
+  // i18n
+  const { lang } = useLanguage();
+  const labels = getLabels(kidMode, lang);
+
   // AI stencil toggle (on by default)
   const [aiEnabled, setAiEnabled] = useState(() => {
     try { return localStorage.getItem('ai-stencil-enabled') !== 'false'; } catch { return true; }
