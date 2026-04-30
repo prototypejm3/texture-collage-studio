@@ -1044,7 +1044,7 @@ export function Canvas({
         <div
           className="absolute z-20 flex items-end gap-1"
           style={{
-            bottom: easelMode ? 20 : 56,
+            bottom: easelMode ? 4 : 16,
             left: '50%',
             transform: 'translateX(-50%)',
           }}
