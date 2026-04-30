@@ -236,6 +236,7 @@ export function TopToolbar({
             <Link to="/" className="transition-transform active:scale-[0.94]">
               <SwatchboxLogo height={28} />
             </Link>
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
             <Link to="/"
               className="flex items-center gap-1 px-2.5 py-1 rounded-[20px] text-white font-bold text-[11px] transition-transform active:scale-[0.94]"
@@ -346,6 +347,7 @@ export function TopToolbar({
               </>
             )}
              {/* Mode toggle — same style as granny mode */}
+             <LanguagePill kidMode={kidMode} />
              <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
@@ -386,6 +388,7 @@ export function TopToolbar({
           <div className="flex-1" />
           <div className="flex items-center gap-1.5">
             <MobileHamburgerMenu {...mobileMenuProps} />
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
@@ -579,6 +582,7 @@ export function TopToolbar({
             )}
 
             {/* Mode Toggle Pill — far right */}
+            <LanguagePill kidMode={kidMode} />
             <ModeTogglePillKid onClick={handleKidToggle} />
           </div>
         </>
