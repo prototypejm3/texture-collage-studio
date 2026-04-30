@@ -11,6 +11,9 @@ import { SwatchboxLogo } from '@/components/SwatchboxLogo';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileHamburgerMenu } from './MobileHamburgerMenu';
 import kidGrannyToggle from '@/assets/kid-granny-toggle.png';
+import { LanguagePill } from './LanguagePill';
+import { getLabels } from '@/lib/labels';
+import { useLanguage } from '@/hooks/useLanguage';
 import {
   HouseIcon, TentIcon,
   SparkleIcon, SunIcon as ToySunIcon, MoonIcon as ToyMoonIcon, MusicNoteIcon,
