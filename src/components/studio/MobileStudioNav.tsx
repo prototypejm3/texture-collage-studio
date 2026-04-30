@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { getLabels } from '@/lib/labels';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface Props {
   kidMode: boolean;
