@@ -396,28 +396,28 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
 
   // Desktop: original grid layout
   return (
-    <div className="p-3 space-y-3" data-kid-toolbox>
+    <div className="p-2 space-y-2" data-kid-toolbox>
       {/* Header with undo/redo */}
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-foreground">🧰 Tool Box</span>
-        <div className="flex gap-1">
+        <span className="text-[10px] font-bold text-foreground">🧰 Tools</span>
+        <div className="flex gap-0.5">
           {onUndo && (
-            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-8 w-8 p-0" title="Undo">
-              <Undo2 className="w-4 h-4" />
+            <Button size="sm" variant="ghost" onClick={onUndo} disabled={!canUndo} className="h-6 w-6 p-0" title="Undo">
+              <Undo2 className="w-3 h-3" />
             </Button>
           )}
           {onRedo && (
-            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-8 w-8 p-0" title="Redo">
-              <Redo2 className="w-4 h-4" />
+            <Button size="sm" variant="ghost" onClick={onRedo} disabled={!canRedo} className="h-6 w-6 p-0" title="Redo">
+              <Redo2 className="w-3 h-3" />
             </Button>
           )}
-          <Button size="sm" variant="ghost" onClick={onDelete} className="h-8 w-8 p-0 text-destructive hover:text-destructive" title="Remove">
-            <Trash2 className="w-4 h-4" />
+          <Button size="sm" variant="ghost" onClick={onDelete} className="h-6 w-6 p-0 text-destructive hover:text-destructive" title="Remove">
+            <Trash2 className="w-3 h-3" />
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-1.5">
+      <div className="grid grid-cols-3 gap-1">
         {kidTools.map(tool => {
           const subtitle = getSubtitle(tool.id);
           return (
@@ -426,10 +426,10 @@ function KidToolBox({ element, onUpdate, onUpdateEffects, onDuplicate, onDelete,
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
               onClick={() => handleToolTap(tool.id)}
-              className="flex flex-col items-center justify-center gap-0 rounded-lg p-1.5 min-h-[48px] transition-colors border border-border bg-secondary hover:bg-accent"
+              className="flex flex-col items-center justify-center gap-0 rounded-md p-1 min-h-[40px] transition-colors border border-border bg-secondary hover:bg-accent"
             >
-              <ToolIcon id={tool.id} size={22} />
-              <span className="text-[9px] font-semibold text-foreground leading-tight">{tool.label}</span>
+              <ToolIcon id={tool.id} size={16} />
+              <span className="text-[8px] font-semibold text-foreground leading-tight">{tool.label}</span>
               {subtitle && (
                 <span className="text-[7px] text-muted-foreground leading-tight">{subtitle}</span>
               )}
