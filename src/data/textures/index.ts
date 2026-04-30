@@ -333,4 +333,11 @@ export const textures: TextureSwatch[] = [
     cssBackground:
       'radial-gradient(circle at 30% 25%, #b85575 0%, transparent 55%), radial-gradient(circle at 75% 70%, #3a0a18 0%, transparent 60%), linear-gradient(135deg, #7a1f35 0%, #2a0610 100%)',
   },
+  {
+    id: 'sig-ines-purple',
+    name: 'Ines Purple', // lush violet with orchid highlights
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 30% 25%, #d4a5e8 0%, transparent 55%), radial-gradient(circle at 75% 70%, #4a1d6b 0%, transparent 60%), linear-gradient(135deg, #8a4ec4 0%, #2d0a4a 100%)',
+  },
 ];
