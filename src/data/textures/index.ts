@@ -282,4 +282,48 @@ export const textures: TextureSwatch[] = [
 
   // ── Shelly's Volleyball ──
   { id: 'shellys-volleyball', name: "Shelly's Volleyball", category: "Shelly's Volleyball", cssBackground: img('novelty-shellys-volleyball.png') },
+
+  // ── Signature Sips (CSS gradients — no image asset needed) ──
+  {
+    id: 'sig-marion',
+    name: 'Marion', // French "Marionberry" — deep berry kir
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 30% 25%, #9d4d6b 0%, transparent 55%), radial-gradient(circle at 75% 70%, #4a1d33 0%, transparent 60%), linear-gradient(135deg, #6b2845 0%, #2d0e1f 100%)',
+  },
+  {
+    id: 'sig-clara',
+    name: 'Clara', // French "Clairet" rosé / Cointreau blush
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 25% 30%, #ffd4c2 0%, transparent 50%), radial-gradient(circle at 80% 75%, #f59ab0 0%, transparent 55%), linear-gradient(160deg, #fbe1d6 0%, #e89aa7 100%)',
+  },
+  {
+    id: 'sig-hugo-spritz',
+    name: 'Hugo Spritz', // elderflower, prosecco, mint
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 30% 25%, #e8f5d8 0%, transparent 55%), radial-gradient(circle at 75% 70%, #b8e0a4 0%, transparent 50%), linear-gradient(135deg, #d4ecc4 0%, #7fb968 100%)',
+  },
+  {
+    id: 'sig-gok-gozel',
+    name: 'Gök Güzel', // Turkish for "very beautiful sky"
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 25% 30%, #c2e4f5 0%, transparent 55%), radial-gradient(circle at 80% 75%, #5a8fc4 0%, transparent 60%), linear-gradient(180deg, #a8d0ec 0%, #2d5a8a 100%)',
+  },
+  {
+    id: 'sig-julian',
+    name: 'Julian', // amber whiskey sour vibe
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 30% 25%, #f4d6a0 0%, transparent 55%), radial-gradient(circle at 75% 70%, #b8762e 0%, transparent 60%), linear-gradient(135deg, #e0a96d 0%, #6b3a14 100%)',
+  },
+  {
+    id: 'sig-tumeric-lemonade',
+    name: 'Turmeric Lemonade',
+    category: 'Signature Sips',
+    cssBackground:
+      'radial-gradient(circle at 25% 30%, #fff4b8 0%, transparent 55%), radial-gradient(circle at 80% 75%, #f5a623 0%, transparent 55%), linear-gradient(160deg, #ffeb8a 0%, #d97706 100%)',
+  },
 ];
