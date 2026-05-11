@@ -53,6 +53,8 @@ const Index = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const studio = useStudio();
+  const studioTabs = useStudioTabs();
+  const lastLoadedTabRef = useRef<string | null>(null);
   const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
   const wall = useWall();
