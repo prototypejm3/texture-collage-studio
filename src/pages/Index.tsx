@@ -629,7 +629,18 @@ const Index = () => {
         canRedo={studio.canRedo}
       />
 
+      <StudioTabs
+        tabs={studioTabs.tabs}
+        activeTabId={studioTabs.activeTabId}
+        onSwitch={handleSwitchTab}
+        onAdd={handleAddAndSwitch}
+        onClose={handleCloseTab}
+        onRename={studioTabs.renameTab}
+        kidMode={sounds.kidMode}
+      />
+
       <div className="flex-1 flex flex-col relative overflow-hidden">
+
         {/* ── Canvas area ── */}
         <div className="flex-1 relative overflow-hidden min-h-0 flex">
           <div className="flex-1 relative overflow-hidden min-h-0" onClick={(e) => { if ((e.target as HTMLElement).closest('[data-box-btn], [data-box-drawer]')) return; closeBox(); }}>
