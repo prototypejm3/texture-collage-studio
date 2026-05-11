@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { MobileNotice } from "@/components/MobileNotice";
+import { ModePickerModal } from "@/components/ModePickerModal";
 import Index from "./pages/Index.tsx";
 import MyWall from "./pages/MyWall.tsx";
 import Gallery from "./pages/Gallery.tsx";
