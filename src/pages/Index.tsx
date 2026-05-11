@@ -45,12 +45,16 @@ import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
 import { RoomThemePicker, useRoomTheme } from '@/components/studio/RoomThemePicker';
+import { StudioTabs } from '@/components/studio/StudioTabs';
+import { useStudioTabs } from '@/hooks/useStudioTabs';
 
 
 const Index = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const studio = useStudio();
+  const studioTabs = useStudioTabs();
+  const lastLoadedTabRef = useRef<string | null>(null);
   const { customTextures, addCustomTexture, removeCustomTexture } = useCustomTextures();
   const { customTemplate, templateOpacity, setTemplateOpacity, uploadTemplate, clearTemplate } = useCustomTemplate();
   const wall = useWall();
@@ -180,6 +184,42 @@ const Index = () => {
       }
     }
   }, []);
+
+  // Load active studio tab state when the active tab changes (mount, switch, close)
+  useEffect(() => {
+    if (lastLoadedTabRef.current === studioTabs.activeTabId) return;
+    // Skip the initial load if we're loading a wall design via ?edit
+    if (lastLoadedTabRef.current === null && searchParams.get('edit')) {
+      lastLoadedTabRef.current = studioTabs.activeTabId;
+      return;
+    }
+    if (studioTabs.activeTab.state) {
+      studio.loadState(studioTabs.activeTab.state);
+    } else {
+      studio.clearCanvas();
+    }
+    lastLoadedTabRef.current = studioTabs.activeTabId;
+    draftKeyRef.current = `draft-${studioTabs.activeTabId}`;
+    setEditingDesignId(null);
+  }, [studioTabs.activeTabId, studioTabs.activeTab]);
+
+  const handleSwitchTab = useCallback((id: string) => {
+    if (id === studioTabs.activeTabId) return;
+    studioTabs.saveActiveState(studio.getState());
+    studioTabs.switchTab(id);
+  }, [studioTabs, studio]);
+
+  // Add a new frame tab and switch to it (saves the current frame first)
+  const handleAddAndSwitch = useCallback(() => {
+    studioTabs.saveActiveState(studio.getState());
+    const newId = studioTabs.addTab();
+    if (newId) studioTabs.switchTab(newId);
+  }, [studioTabs, studio]);
+
+  const handleCloseTab = useCallback((id: string) => {
+    studioTabs.closeTab(id);
+  }, [studioTabs]);
+
 
   // Auto-save as draft every 15 seconds when canvas has content
   useEffect(() => {
@@ -589,7 +629,18 @@ const Index = () => {
         canRedo={studio.canRedo}
       />
 
+      <StudioTabs
+        tabs={studioTabs.tabs}
+        activeTabId={studioTabs.activeTabId}
+        onSwitch={handleSwitchTab}
+        onAdd={handleAddAndSwitch}
+        onClose={handleCloseTab}
+        onRename={studioTabs.renameTab}
+        kidMode={sounds.kidMode}
+      />
+
       <div className="flex-1 flex flex-col relative overflow-hidden">
+
         {/* ── Canvas area ── */}
         <div className="flex-1 relative overflow-hidden min-h-0 flex">
           <div className="flex-1 relative overflow-hidden min-h-0" onClick={(e) => { if ((e.target as HTMLElement).closest('[data-box-btn], [data-box-drawer]')) return; closeBox(); }}>
