@@ -209,13 +209,7 @@ const Index = () => {
     studioTabs.switchTab(id);
   }, [studioTabs, studio]);
 
-  const handleAddTab = useCallback(() => {
-    studioTabs.saveActiveState(studio.getState());
-    studioTabs.addTab();
-    // Effect picks up the new activeTabId? addTab doesn't switch — switch manually.
-  }, [studioTabs, studio]);
-
-  // addTab in hook doesn't auto-switch; do it after creation
+  // Add a new frame tab and switch to it (saves the current frame first)
   const handleAddAndSwitch = useCallback(() => {
     studioTabs.saveActiveState(studio.getState());
     const newId = studioTabs.addTab();
