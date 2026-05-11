@@ -45,6 +45,8 @@ import { MobileStudioBottomNav } from '@/components/studio/MobileStudioNav';
 import { FloatingMusicButton } from '@/components/studio/FloatingMusicButton';
 import { MobileCanvasActions } from '@/components/studio/MobileCanvasActions';
 import { RoomThemePicker, useRoomTheme } from '@/components/studio/RoomThemePicker';
+import { StudioTabs } from '@/components/studio/StudioTabs';
+import { useStudioTabs } from '@/hooks/useStudioTabs';
 
 
 const Index = () => {
