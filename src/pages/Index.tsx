@@ -185,6 +185,48 @@ const Index = () => {
     }
   }, []);
 
+  // Load active studio tab state when the active tab changes (mount, switch, close)
+  useEffect(() => {
+    if (lastLoadedTabRef.current === studioTabs.activeTabId) return;
+    // Skip the initial load if we're loading a wall design via ?edit
+    if (lastLoadedTabRef.current === null && searchParams.get('edit')) {
+      lastLoadedTabRef.current = studioTabs.activeTabId;
+      return;
+    }
+    if (studioTabs.activeTab.state) {
+      studio.loadState(studioTabs.activeTab.state);
+    } else {
+      studio.clearCanvas();
+    }
+    lastLoadedTabRef.current = studioTabs.activeTabId;
+    draftKeyRef.current = `draft-${studioTabs.activeTabId}`;
+    setEditingDesignId(null);
+  }, [studioTabs.activeTabId, studioTabs.activeTab]);
+
+  const handleSwitchTab = useCallback((id: string) => {
+    if (id === studioTabs.activeTabId) return;
+    studioTabs.saveActiveState(studio.getState());
+    studioTabs.switchTab(id);
+  }, [studioTabs, studio]);
+
+  const handleAddTab = useCallback(() => {
+    studioTabs.saveActiveState(studio.getState());
+    studioTabs.addTab();
+    // Effect picks up the new activeTabId? addTab doesn't switch — switch manually.
+  }, [studioTabs, studio]);
+
+  // addTab in hook doesn't auto-switch; do it after creation
+  const handleAddAndSwitch = useCallback(() => {
+    studioTabs.saveActiveState(studio.getState());
+    const newId = studioTabs.addTab();
+    if (newId) studioTabs.switchTab(newId);
+  }, [studioTabs, studio]);
+
+  const handleCloseTab = useCallback((id: string) => {
+    studioTabs.closeTab(id);
+  }, [studioTabs]);
+
+
   // Auto-save as draft every 15 seconds when canvas has content
   useEffect(() => {
     const hasContent = studio.elements.length > 0 || Object.keys(studio.vibeFills).length > 0;
