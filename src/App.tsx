@@ -45,6 +45,7 @@ const App = () => (
           </Routes>
           <NonStudioBottomNav />
           <MobileNotice />
+          <ModePickerModal />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
