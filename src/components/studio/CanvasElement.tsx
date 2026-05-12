@@ -133,6 +133,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const dragStart = useRef({ x: 0, y: 0, elX: 0, elY: 0 });
   const rotateStart = useRef({ angle: 0, startAngle: 0 });
 
+  const [showShapePicker, setShowShapePicker] = useState(false);
+
   // Unified pointer handler for both mouse and touch
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
