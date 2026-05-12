@@ -280,6 +280,52 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
         </div>
       )}
 
+      {/* Shape switcher (non-text elements only) */}
+      {isSelected && element.type !== 'text' && (
+        <div className="absolute -top-2.5 -left-2.5 z-50" style={{ transform: `rotate(${-element.rotation}deg)` }}>
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowShapePicker(s => !s);
+            }}
+            className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:scale-110 transition-transform pointer-events-auto"
+            title="Change shape"
+          >
+            <Shapes className="w-3 h-3" />
+          </button>
+          {showShapePicker && (
+            <div
+              onPointerDown={(e) => e.stopPropagation()}
+              className="absolute top-6 left-0 flex flex-wrap gap-1 p-1.5 rounded-lg bg-popover border border-border shadow-lg pointer-events-auto"
+              style={{ width: 156 }}
+            >
+              {SHAPE_PICKER.map(s => {
+                const active = element.shape === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const updates: Partial<CanvasElementType> = { shape: s.id, clipPathD: undefined };
+                      if (s.id === 'strip') { updates.width = 40; updates.height = 160; }
+                      else if (s.id === 'rectangle') { updates.width = 120; updates.height = 80; }
+                      onUpdate(updates);
+                      setShowShapePicker(false);
+                    }}
+                    title={s.label}
+                    className={`flex flex-col items-center justify-center w-11 h-11 rounded-md text-[8px] font-semibold transition-colors ${active ? 'bg-primary text-primary-foreground' : 'bg-secondary text-foreground hover:bg-accent'}`}
+                  >
+                    <span className="text-base leading-none">{s.emoji}</span>
+                    <span className="mt-0.5">{s.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Inner div: handles texture, clip-path OR mask-image (not both) */}
       {element.type === 'text' ? (
         <div
