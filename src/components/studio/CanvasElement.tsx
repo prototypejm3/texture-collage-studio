@@ -1,6 +1,15 @@
 import { useRef, useState, useCallback } from 'react';
-import { X, RotateCw } from 'lucide-react';
-import { CanvasElement as CanvasElementType, MaterialEffects, TextureSwatch } from '@/types/studio';
+import { X, RotateCw, Shapes } from 'lucide-react';
+import { CanvasElement as CanvasElementType, ElementShape, MaterialEffects, TextureSwatch } from '@/types/studio';
+
+const SHAPE_PICKER: { id: ElementShape; label: string; emoji: string }[] = [
+  { id: 'soft-square', label: 'Square', emoji: '🟧' },
+  { id: 'rectangle', label: 'Long', emoji: '▭' },
+  { id: 'circle', label: 'Circle', emoji: '⚫' },
+  { id: 'strip', label: 'Thin', emoji: '➖' },
+  { id: 'torn-edge', label: 'Ripped', emoji: '🧩' },
+  { id: 'blob', label: 'Blob', emoji: '🫧' },
+];
 import { textures } from '@/data/textures';
 
 /**
