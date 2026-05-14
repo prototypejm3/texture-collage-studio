@@ -915,6 +915,7 @@ export function Canvas({
                 }}
                 canvasRef={canvasRef}
                 customTextures={customTextures}
+                kidMode={kidMode}
               />
             ))}
           </div>
