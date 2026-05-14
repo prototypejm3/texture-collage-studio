@@ -124,9 +124,10 @@ interface Props {
   onMoveToTable?: (x: number, y: number) => void;
   canvasRef?: React.RefObject<HTMLDivElement>;
   customTextures?: TextureSwatch[];
+  kidMode?: boolean;
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [] }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [], kidMode = false }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
