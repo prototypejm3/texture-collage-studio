@@ -1077,7 +1077,7 @@ export function Canvas({
           style={
             toolboxesPos
               ? { left: toolboxesPos.x, top: toolboxesPos.y, touchAction: 'none' }
-              : { bottom: easelMode ? 4 : 16, left: '50%', transform: 'translateX(-50%)', touchAction: 'none' }
+              : { bottom: 12, left: '50%', transform: 'translateX(-50%)', touchAction: 'none' }
           }
           onPointerDown={(e) => {
             // Don't start drag when tapping a toolbox button itself
