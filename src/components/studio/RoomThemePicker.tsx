@@ -26,7 +26,7 @@ export function useRoomTheme() {
 // Art Desk card SVG
 function ArtDeskCard() {
   return (
-    <svg width="184" height="220" viewBox="0 0 184 220" fill="none">
+    <svg width="120" height="143" viewBox="0 0 184 220" fill="none">
       <rect width="184" height="220" rx="20" fill="#d4a96a" />
       {/* Wood grain */}
       <rect x="10" y="50" width="164" height="3" rx="1.5" fill="#c4956a" opacity="0.4" />
@@ -56,7 +56,7 @@ function ArtDeskCard() {
 // Sunny Day card SVG
 function SunnyDayCard() {
   return (
-    <svg width="184" height="220" viewBox="0 0 184 220" fill="none">
+    <svg width="120" height="143" viewBox="0 0 184 220" fill="none">
       {/* Sky */}
       <rect width="184" height="220" rx="20" fill="#bfdbfe" />
       {/* Grass */}
@@ -102,7 +102,7 @@ function SunnyDayCard() {
 // Magic Night card SVG
 function MagicNightCard() {
   return (
-    <svg width="184" height="220" viewBox="0 0 184 220" fill="none">
+    <svg width="120" height="143" viewBox="0 0 184 220" fill="none">
       <rect width="184" height="220" rx="20" fill="#1e1b4b" />
       {/* Aurora streaks */}
       <path d="M0 100 Q50 80 92 105 Q140 130 184 95" stroke="#4ade80" strokeWidth="6" fill="none" opacity="0.2" />
@@ -169,8 +169,8 @@ export function RoomThemePicker({ theme, onThemeChange }: RoomThemePickerProps) 
               <div
                 className="relative overflow-hidden transition-all"
                 style={{
-                  width: 184,
-                  height: 220,
+                  width: 120,
+                  height: 143,
                   borderRadius: 20,
                   border: isSelected ? '3px solid #f97316' : '1.5px solid #e8ddd0',
                   boxShadow: isSelected ? '0 4px 16px rgba(249,115,22,0.2)' : '0 2px 8px rgba(0,0,0,0.06)',
