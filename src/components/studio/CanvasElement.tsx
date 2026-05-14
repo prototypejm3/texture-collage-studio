@@ -124,9 +124,10 @@ interface Props {
   onMoveToTable?: (x: number, y: number) => void;
   canvasRef?: React.RefObject<HTMLDivElement>;
   customTextures?: TextureSwatch[];
+  kidMode?: boolean;
 }
 
-export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [] }: Props) {
+export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate, onDelete, onMoveToTable, canvasRef, customTextures = [], kidMode = false }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
@@ -281,7 +282,7 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
       )}
 
       {/* Shape switcher (non-text elements only) */}
-      {isSelected && element.type !== 'text' && (
+      {kidMode && isSelected && element.type !== 'text' && (
         <div className="absolute -top-2.5 -left-2.5 z-50" style={{ transform: `rotate(${-element.rotation}deg)` }}>
           <button
             onPointerDown={(e) => e.stopPropagation()}
