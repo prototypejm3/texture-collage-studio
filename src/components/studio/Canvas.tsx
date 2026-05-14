@@ -1068,11 +1068,27 @@ export function Canvas({
       {/* Kid Tool Boxes on the table */}
       {kidMode && onToggleBox && (
         <div
-          className="absolute z-20 flex items-end gap-1"
-          style={{
-            bottom: easelMode ? 4 : 16,
-            left: '50%',
-            transform: 'translateX(-50%)',
+          ref={toolboxesRef}
+          className="absolute z-20 flex items-end gap-1 cursor-grab active:cursor-grabbing"
+          style={
+            toolboxesPos
+              ? { left: toolboxesPos.x, top: toolboxesPos.y, touchAction: 'none' }
+              : { bottom: easelMode ? 4 : 16, left: '50%', transform: 'translateX(-50%)', touchAction: 'none' }
+          }
+          onPointerDown={(e) => {
+            // Don't start drag when tapping a toolbox button itself
+            if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
+            e.stopPropagation();
+            const rect = toolboxesRef.current?.getBoundingClientRect();
+            const containerRect = containerRef.current?.getBoundingClientRect();
+            if (!rect || !containerRect) return;
+            setIsToolboxesDragging(true);
+            toolboxesDragStart.current = {
+              mx: e.clientX,
+              my: e.clientY,
+              bx: rect.left - containerRect.left,
+              by: rect.top - containerRect.top,
+            };
           }}
           onClick={(e) => e.stopPropagation()}
         >
