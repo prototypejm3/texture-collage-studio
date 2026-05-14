@@ -23,6 +23,7 @@ type LabelDict = {
   stencils: string;
   assets: string;
   fun: string;
+  letters: string;
   kidsGallery: string;
   startOver: string;
   trash: string;
