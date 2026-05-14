@@ -149,13 +149,13 @@ export function KidToolBox({ id, label, isOpen, onToggle, variant }: KidToolBoxP
       whileTap={{ scale: 0.93 }}
       className="relative flex flex-col items-center select-none cursor-pointer"
       title={label}
-      style={{ width: 90, height: 90 }}
+      style={{ width: 118, height: 118 }}
     >
-      <div style={{ transform: 'scale(0.85)', transformOrigin: 'top center' }}>
+      <div style={{ transform: 'scale(1.1)', transformOrigin: 'top center' }}>
         {SVG && <SVG isOpen={isOpen} />}
       </div>
       <span
-        className="text-[10px] font-bold leading-none -mt-1"
+        className="text-[12px] font-bold leading-none mt-0.5"
         style={{ color: '#6b4c2a' }}
       >
         {label}
