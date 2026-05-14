@@ -192,12 +192,16 @@ export function Canvas({
   // Kid tool-boxes (Colors/Frame/Shapes/Letters) draggable position
   const toolboxesRef = useRef<HTMLDivElement>(null);
   const [toolboxesPos, setToolboxesPos] = useState<{ x: number; y: number } | null>(() => {
-    try { const raw = localStorage.getItem('kid-toolboxes-pos'); return raw ? JSON.parse(raw) : null; } catch { return null; }
+    // v2 reset: anchor boxes under the canvas by default
+    try {
+      const raw = localStorage.getItem('kid-toolboxes-pos-v2');
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
   });
   const toolboxesDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const [isToolboxesDragging, setIsToolboxesDragging] = useState(false);
   useEffect(() => {
-    if (toolboxesPos) { try { localStorage.setItem('kid-toolboxes-pos', JSON.stringify(toolboxesPos)); } catch {} }
+    if (toolboxesPos) { try { localStorage.setItem('kid-toolboxes-pos-v2', JSON.stringify(toolboxesPos)); } catch {} }
   }, [toolboxesPos]);
   useEffect(() => {
     if (!isToolboxesDragging) return;
