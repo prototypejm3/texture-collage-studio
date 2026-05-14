@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { FrameStyle } from '@/types/wall';
+import { FrameSize } from '@/types/studio';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { TrashCanIcon, SaveBoxIcon, DownloadTrayIcon } from './ToyboxIcons';
@@ -34,7 +35,16 @@ interface Props {
   onToggleEasel?: () => void;
   backgroundTextureId?: string | null;
   onBackgroundChange?: (id: string | null) => void;
+  frameSize?: FrameSize;
+  onFrameSizeChange?: (size: FrameSize) => void;
 }
+
+const frameSizeOptions: { id: FrameSize; label: string; kidLabel: string; w: number; h: number }[] = [
+  { id: '8x8', label: 'Small', kidLabel: 'S', w: 14, h: 14 },
+  { id: '12x12', label: 'Medium', kidLabel: 'M', w: 18, h: 18 },
+  { id: '16x16', label: 'Large', kidLabel: 'L', w: 22, h: 22 },
+  { id: 'gallery', label: 'Gallery', kidLabel: 'Wide', w: 26, h: 18 },
+];
 
 const canvasBgPresets = [
   { id: null, label: 'White', kidLabel: 'White', color: 'hsl(0,0%,98%)', emoji: '⬜' },
@@ -69,6 +79,7 @@ export function BottomBar({
   tableSurface = 'birch', onTableSurfaceChange,
   easelMode = true, onToggleEasel,
   backgroundTextureId, onBackgroundChange,
+  frameSize, onFrameSizeChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
   const [kidMode, setKidMode] = useState(() => {
@@ -243,6 +254,41 @@ export function BottomBar({
           </div>
         )}
       </div>
+
+      {/* Frame size picker */}
+      {onFrameSizeChange && frameSize && (
+        <>
+          <div className="w-px h-5 bg-border mx-1" />
+          <div className="flex items-center gap-1.5">
+            <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-1 ${kidMode ? 'text-[10px] font-semibold' : 'text-[9px] font-semibold'}`}>
+              {kidMode ? '📏' : 'SIZE'}
+            </span>
+            {frameSizeOptions.map(opt => {
+              const isActive = frameSize === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => onFrameSizeChange(opt.id)}
+                  title={opt.label}
+                  className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded-md transition-all ${
+                    isActive
+                      ? (kidMode ? 'bg-[#f97316]/15 ring-2 ring-[#f97316]' : 'bg-primary/10 ring-2 ring-primary')
+                      : 'hover:bg-accent'
+                  }`}
+                >
+                  <div
+                    className={`border-2 rounded-sm ${isActive ? 'border-[#f97316]' : 'border-foreground/50'}`}
+                    style={{ width: opt.w, height: opt.h }}
+                  />
+                  <span className="text-[9px] font-semibold text-foreground/70">
+                    {kidMode ? opt.kidLabel : opt.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       {kidMode && onTableSurfaceChange && (
         <>

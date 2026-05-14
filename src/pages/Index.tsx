@@ -911,6 +911,8 @@ const Index = () => {
                             onToggleEasel={() => setEaselMode(prev => !prev)}
                             backgroundTextureId={studio.backgroundTextureId}
                             onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
+                            frameSize={studio.frameSize}
+                            onFrameSizeChange={studio.setFrameSize}
                           />
                           {sounds.kidMode && (
                             <div className="mt-3 pt-3 border-t" style={{ borderColor: 'hsl(var(--border))' }}>
@@ -1128,6 +1130,8 @@ const Index = () => {
                           onToggleEasel={() => setEaselMode(prev => !prev)}
                           backgroundTextureId={studio.backgroundTextureId}
                           onBackgroundChange={(id) => studio.setBackgroundTextureId(id)}
+                          frameSize={studio.frameSize}
+                          onFrameSizeChange={studio.setFrameSize}
                         />
                         {sounds.kidMode && (
                           <div className="mt-3 pt-3 border-t" style={{ borderColor: 'hsl(var(--border))' }}>
