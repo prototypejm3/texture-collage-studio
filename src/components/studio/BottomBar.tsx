@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { FrameStyle } from '@/types/wall';
+import { FrameSize } from '@/types/studio';
 import { TableSurface } from './Canvas';
 import { Trash2, Save, Download, Lock, Scissors, Sparkles } from 'lucide-react';
 import { TrashCanIcon, SaveBoxIcon, DownloadTrayIcon } from './ToyboxIcons';
@@ -34,7 +35,16 @@ interface Props {
   onToggleEasel?: () => void;
   backgroundTextureId?: string | null;
   onBackgroundChange?: (id: string | null) => void;
+  frameSize?: FrameSize;
+  onFrameSizeChange?: (size: FrameSize) => void;
 }
+
+const frameSizeOptions: { id: FrameSize; label: string; kidLabel: string; w: number; h: number }[] = [
+  { id: '8x8', label: 'Small', kidLabel: 'S', w: 14, h: 14 },
+  { id: '12x12', label: 'Medium', kidLabel: 'M', w: 18, h: 18 },
+  { id: '16x16', label: 'Large', kidLabel: 'L', w: 22, h: 22 },
+  { id: 'gallery', label: 'Gallery', kidLabel: 'Wide', w: 26, h: 18 },
+];
 
 const canvasBgPresets = [
   { id: null, label: 'White', kidLabel: 'White', color: 'hsl(0,0%,98%)', emoji: '⬜' },
@@ -69,6 +79,7 @@ export function BottomBar({
   tableSurface = 'birch', onTableSurfaceChange,
   easelMode = true, onToggleEasel,
   backgroundTextureId, onBackgroundChange,
+  frameSize, onFrameSizeChange,
 }: Props) {
   const [showColorMenu, setShowColorMenu] = useState<string | null>(null);
   const [kidMode, setKidMode] = useState(() => {
