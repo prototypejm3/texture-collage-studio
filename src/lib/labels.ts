@@ -119,7 +119,7 @@ const LABELS_BY_LANG: Record<Lang, LabelsByMode> = {
       shapePanel: 'FORME', grow: 'Grandir', shrink: 'Rétrécir', cut: 'Couper',
       fade: 'Estomper', crumple: 'Froisser', twin: 'Jumeler', toss: 'Jeter',
       myBox: 'Mon Coffre au Trésor', stencils: 'Pochoirs', assets: 'Mes Trucs',
-      letters: 'Letters', fun: 'Fun', kidsGallery: 'Galerie', startOver: 'Recommencer',
+      letters: 'Lettres', fun: 'Fun', kidsGallery: 'Galerie', startOver: 'Recommencer',
       trash: 'Poubelle', sitDown: "S'asseoir", standUp: 'Se Lever',
       layers: 'Pile', tools: 'Outils Magiques',
       kidMode: 'Mode Enfant', grannyMode: 'Mode Mamie',
