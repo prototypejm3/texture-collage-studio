@@ -13,6 +13,8 @@ import { ButterCookiesTin } from './ButterCookiesTin';
 import { TreasureChest } from './TreasureChest';
 import { TrashCanIcon, TrashCanIconAnimated } from './ToyboxIcons';
 import { KidToolBox } from './KidToolBox';
+import { getLabels } from '@/lib/labels';
+import { useLanguage } from '@/hooks/useLanguage';
 import { BoxId } from '@/hooks/useActiveBox';
 import { RoomThemeBackground } from './RoomThemeBackground';
 import { RoomTheme } from './RoomThemePicker';
@@ -159,6 +161,7 @@ export function Canvas({
   onKidTutorialBox,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
   const selectedTableId = selectedTableElementId ?? null;
   const setSelectedTableId = useCallback((id: string | null) => {
     onSelectTableElement?.(id);
