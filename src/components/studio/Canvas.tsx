@@ -189,6 +189,28 @@ export function Canvas({
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
     try { const raw = localStorage.getItem('kid-easel-btn-pos-v2'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
+  // Kid tool-boxes (Colors/Frame/Shapes/Letters) draggable position
+  const toolboxesRef = useRef<HTMLDivElement>(null);
+  const [toolboxesPos, setToolboxesPos] = useState<{ x: number; y: number } | null>(() => {
+    try { const raw = localStorage.getItem('kid-toolboxes-pos'); return raw ? JSON.parse(raw) : null; } catch { return null; }
+  });
+  const toolboxesDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isToolboxesDragging, setIsToolboxesDragging] = useState(false);
+  useEffect(() => {
+    if (toolboxesPos) { try { localStorage.setItem('kid-toolboxes-pos', JSON.stringify(toolboxesPos)); } catch {} }
+  }, [toolboxesPos]);
+  useEffect(() => {
+    if (!isToolboxesDragging) return;
+    const onMove = (e: PointerEvent) => {
+      const dx = e.clientX - toolboxesDragStart.current.mx;
+      const dy = e.clientY - toolboxesDragStart.current.my;
+      setToolboxesPos({ x: toolboxesDragStart.current.bx + dx, y: toolboxesDragStart.current.by + dy });
+    };
+    const onUp = () => setIsToolboxesDragging(false);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    return () => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
+  }, [isToolboxesDragging]);
 
 
   // Persist box items & position
