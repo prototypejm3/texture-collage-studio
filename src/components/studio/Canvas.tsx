@@ -1054,34 +1054,41 @@ export function Canvas({
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          <KidToolBox
-            id="textures"
-            label="Colors"
-            variant="colors"
-            isOpen={activeBox === 'textures'}
-            onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
-          />
-          <KidToolBox
-            id="tools"
-            label="Frame"
-            variant="frame"
-            isOpen={activeBox === 'tools'}
-            onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
-          />
-          <KidToolBox
-            id="stencils"
-            label="Shapes"
-            variant="shapes"
-            isOpen={activeBox === 'stencils'}
-            onToggle={() => onToggleBox('stencils')}
-          />
-          <KidToolBox
-            id="letters"
-            label="Letters"
-            variant="letters"
-            isOpen={activeBox === 'letters'}
-            onToggle={() => onToggleBox('letters')}
-          />
+          {(() => {
+            const lbl = getLabels(true, lang);
+            return (
+              <>
+                <KidToolBox
+                  id="textures"
+                  label={lbl.colors}
+                  variant="colors"
+                  isOpen={activeBox === 'textures'}
+                  onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
+                />
+                <KidToolBox
+                  id="tools"
+                  label={lbl.frame}
+                  variant="frame"
+                  isOpen={activeBox === 'tools'}
+                  onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
+                />
+                <KidToolBox
+                  id="stencils"
+                  label={lbl.shapes}
+                  variant="shapes"
+                  isOpen={activeBox === 'stencils'}
+                  onToggle={() => onToggleBox('stencils')}
+                />
+                <KidToolBox
+                  id="letters"
+                  label={lbl.letters}
+                  variant="letters"
+                  isOpen={activeBox === 'letters'}
+                  onToggle={() => onToggleBox('letters')}
+                />
+              </>
+            );
+          })()}
         </div>
       )}
 
