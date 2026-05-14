@@ -255,6 +255,41 @@ export function BottomBar({
         )}
       </div>
 
+      {/* Frame size picker */}
+      {onFrameSizeChange && frameSize && (
+        <>
+          <div className="w-px h-5 bg-border mx-1" />
+          <div className="flex items-center gap-1.5">
+            <span className={`uppercase tracking-wider text-muted-foreground hidden sm:inline mr-1 ${kidMode ? 'text-[10px] font-semibold' : 'text-[9px] font-semibold'}`}>
+              {kidMode ? '📏' : 'SIZE'}
+            </span>
+            {frameSizeOptions.map(opt => {
+              const isActive = frameSize === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => onFrameSizeChange(opt.id)}
+                  title={opt.label}
+                  className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded-md transition-all ${
+                    isActive
+                      ? (kidMode ? 'bg-[#f97316]/15 ring-2 ring-[#f97316]' : 'bg-primary/10 ring-2 ring-primary')
+                      : 'hover:bg-accent'
+                  }`}
+                >
+                  <div
+                    className={`border-2 rounded-sm ${isActive ? 'border-[#f97316]' : 'border-foreground/50'}`}
+                    style={{ width: opt.w, height: opt.h }}
+                  />
+                  <span className="text-[9px] font-semibold text-foreground/70">
+                    {kidMode ? opt.kidLabel : opt.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+
       {kidMode && onTableSurfaceChange && (
         <>
           <div className="w-px h-4 bg-border mx-0.5 md:mx-2" />
