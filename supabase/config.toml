@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.generate-vibe]
 verify_jwt = false
+
+[functions.translate]
+verify_jwt = false

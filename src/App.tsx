@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { MobileNotice } from "@/components/MobileNotice";
 import { ModePickerModal } from "@/components/ModePickerModal";
+import { AutoTranslator } from "@/components/i18n/AutoTranslator";
 import Index from "./pages/Index.tsx";
 import MyWall from "./pages/MyWall.tsx";
 import Gallery from "./pages/Gallery.tsx";
@@ -46,6 +47,7 @@ const App = () => (
           <NonStudioBottomNav />
           <MobileNotice />
           <ModePickerModal />
+          <AutoTranslator />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
