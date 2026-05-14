@@ -138,39 +138,45 @@ export function BottomBar({
               style={{ background: 'linear-gradient(145deg, hsl(0,0%,98%), hsl(0,0%,92%))' }}
               title="White"
             />
-            {/* None */}
+            {/* None — premium */}
             <button
-              onClick={() => onWallFrameStyleChange('none')}
+              onClick={() => isPremium ? onWallFrameStyleChange('none') : onRequestUpgrade?.()}
               className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border border-dashed ${
                 wallFrameStyle === 'none'
                   ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
                   : 'border-border/40 hover:scale-110'
-              }`}
+              } ${!isPremium ? 'opacity-60' : ''}`}
               style={{ background: 'transparent' }}
-              title="None"
-            />
-            {/* Rainbow */}
+              title={isPremium ? 'None' : 'Premium — None'}
+            >
+              {!isPremium && <Lock className="w-2.5 h-2.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground/70" />}
+            </button>
+            {/* Rainbow — premium */}
             <button
-              onClick={() => onWallFrameStyleChange('rainbow')}
+              onClick={() => isPremium ? onWallFrameStyleChange('rainbow') : onRequestUpgrade?.()}
               className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
                 wallFrameStyle === 'rainbow'
                   ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
                   : 'border-border/40 hover:scale-110'
-              }`}
+              } ${!isPremium ? 'opacity-60' : ''}`}
               style={{ background: 'conic-gradient(hsl(0,80%,65%), hsl(40,90%,60%), hsl(60,90%,60%), hsl(120,60%,50%), hsl(200,80%,55%), hsl(270,70%,60%), hsl(0,80%,65%))' }}
-              title="Rainbow"
-            />
-            {/* Shadow Box */}
+              title={isPremium ? 'Rainbow' : 'Premium — Rainbow'}
+            >
+              {!isPremium && <Lock className="w-2.5 h-2.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white drop-shadow" />}
+            </button>
+            {/* Shadow Box — premium */}
             <button
-              onClick={() => onWallFrameStyleChange('shadow-box')}
+              onClick={() => isPremium ? onWallFrameStyleChange('shadow-box') : onRequestUpgrade?.()}
               className={`relative w-6 h-6 rounded-full transition-all flex-shrink-0 border ${
                 wallFrameStyle === 'shadow-box'
                   ? 'ring-2 ring-primary ring-offset-1 ring-offset-popover scale-110 border-primary/40'
                   : 'border-border/40 hover:scale-110'
-              }`}
+              } ${!isPremium ? 'opacity-60' : ''}`}
               style={{ background: 'linear-gradient(145deg, hsl(0,0%,45%), hsl(0,0%,30%))' }}
-              title="Shadow Box"
-            />
+              title={isPremium ? 'Shadow Box' : 'Premium — Shadow Box'}
+            >
+              {!isPremium && <Lock className="w-2.5 h-2.5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white" />}
+            </button>
           </div>
         ) : (
           /* Adult mode: everything visible inline, no popovers */
