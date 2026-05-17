@@ -1103,13 +1103,19 @@ export function Canvas({
                   className="absolute z-[1] cursor-grab active:cursor-grabbing"
                   style={{ left: pos.x, top: pos.y, touchAction: 'none' }}
                   onPointerDown={(e) => {
-                    if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
                     e.stopPropagation();
                     draggingBoxId.current = b.id;
+                    boxDragMoved.current = false;
                     boxDragOffset.current = { mx: e.clientX, my: e.clientY, bx: pos.x, by: pos.y };
                     setIsAnyBoxDragging(true);
                   }}
-                  onClick={(e) => e.stopPropagation()}
+                  onClickCapture={(e) => {
+                    if (boxDragMoved.current) {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      boxDragMoved.current = false;
+                    }
+                  }}
                 >
                   <KidToolBox
                     id={b.id}
