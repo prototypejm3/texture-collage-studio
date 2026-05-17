@@ -189,32 +189,37 @@ export function Canvas({
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
     try { const raw = localStorage.getItem('kid-easel-btn-pos-v2'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
-  // Kid tool-boxes (Colors/Frame/Shapes/Letters) draggable position
-  const toolboxesRef = useRef<HTMLDivElement>(null);
-  const [toolboxesPos, setToolboxesPos] = useState<{ x: number; y: number } | null>(() => {
-    // v2 reset: anchor boxes under the canvas by default
+  // Kid tool-boxes (Colors/Frame/Shapes/Letters) — each individually draggable
+  type ToolboxId = 'textures' | 'tools' | 'stencils' | 'letters';
+  const [toolboxPositions, setToolboxPositions] = useState<Partial<Record<ToolboxId, { x: number; y: number }>>>(() => {
     try {
-      const raw = localStorage.getItem('kid-toolboxes-pos-v2');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+      const raw = localStorage.getItem('kid-toolbox-positions-v1');
+      return raw ? JSON.parse(raw) : {};
+    } catch { return {}; }
   });
-  const toolboxesDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
-  const [isToolboxesDragging, setIsToolboxesDragging] = useState(false);
   useEffect(() => {
-    if (toolboxesPos) { try { localStorage.setItem('kid-toolboxes-pos-v2', JSON.stringify(toolboxesPos)); } catch {} }
-  }, [toolboxesPos]);
+    try { localStorage.setItem('kid-toolbox-positions-v1', JSON.stringify(toolboxPositions)); } catch {}
+  }, [toolboxPositions]);
+  const draggingBoxId = useRef<ToolboxId | null>(null);
+  const boxDragOffset = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isAnyBoxDragging, setIsAnyBoxDragging] = useState(false);
   useEffect(() => {
-    if (!isToolboxesDragging) return;
+    if (!isAnyBoxDragging) return;
     const onMove = (e: PointerEvent) => {
-      const dx = e.clientX - toolboxesDragStart.current.mx;
-      const dy = e.clientY - toolboxesDragStart.current.my;
-      setToolboxesPos({ x: toolboxesDragStart.current.bx + dx, y: toolboxesDragStart.current.by + dy });
+      const id = draggingBoxId.current;
+      if (!id) return;
+      const dx = e.clientX - boxDragOffset.current.mx;
+      const dy = e.clientY - boxDragOffset.current.my;
+      setToolboxPositions(prev => ({
+        ...prev,
+        [id]: { x: boxDragOffset.current.bx + dx, y: boxDragOffset.current.by + dy },
+      }));
     };
-    const onUp = () => setIsToolboxesDragging(false);
+    const onUp = () => { draggingBoxId.current = null; setIsAnyBoxDragging(false); };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     return () => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
-  }, [isToolboxesDragging]);
+  }, [isAnyBoxDragging]);
 
 
   // Persist box items & position
@@ -1069,70 +1074,53 @@ export function Canvas({
         );
       })()}
 
-      {/* Kid Tool Boxes on the table */}
-      {kidMode && onToggleBox && (
-        <div
-          ref={toolboxesRef}
-          className="absolute z-20 flex items-end gap-1 cursor-grab active:cursor-grabbing"
-          style={
-            toolboxesPos
-              ? { left: toolboxesPos.x, top: toolboxesPos.y, touchAction: 'none' }
-              : { bottom: 12, left: '50%', transform: 'translateX(-50%)', touchAction: 'none' }
-          }
-          onPointerDown={(e) => {
-            // Don't start drag when tapping a toolbox button itself
-            if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
-            e.stopPropagation();
-            const rect = toolboxesRef.current?.getBoundingClientRect();
-            const containerRect = containerRef.current?.getBoundingClientRect();
-            if (!rect || !containerRect) return;
-            setIsToolboxesDragging(true);
-            toolboxesDragStart.current = {
-              mx: e.clientX,
-              my: e.clientY,
-              bx: rect.left - containerRect.left,
-              by: rect.top - containerRect.top,
-            };
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {(() => {
-            const lbl = getLabels(true, lang);
-            return (
-              <>
-                <KidToolBox
-                  id="textures"
-                  label={lbl.colors}
-                  variant="colors"
-                  isOpen={activeBox === 'textures'}
-                  onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
-                />
-                <KidToolBox
-                  id="tools"
-                  label={lbl.frame}
-                  variant="frame"
-                  isOpen={activeBox === 'tools'}
-                  onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
-                />
-                <KidToolBox
-                  id="stencils"
-                  label={lbl.shapes}
-                  variant="shapes"
-                  isOpen={activeBox === 'stencils'}
-                  onToggle={() => onToggleBox('stencils')}
-                />
-                <KidToolBox
-                  id="letters"
-                  label={lbl.letters}
-                  variant="letters"
-                  isOpen={activeBox === 'letters'}
-                  onToggle={() => onToggleBox('letters')}
-                />
-              </>
-            );
-          })()}
-        </div>
-      )}
+      {/* Kid Tool Boxes on the table — each individually draggable */}
+      {kidMode && onToggleBox && (() => {
+        const lbl = getLabels(true, lang);
+        const boxes: Array<{ id: ToolboxId; label: string; variant: 'colors'|'frame'|'shapes'|'letters'; onToggle: () => void }> = [
+          { id: 'textures', label: lbl.colors, variant: 'colors', onToggle: () => { onToggleBox('textures'); onKidTutorialColor?.(); } },
+          { id: 'tools', label: lbl.frame, variant: 'frame', onToggle: () => { onToggleBox('tools'); onKidTutorialFrame?.(); } },
+          { id: 'stencils', label: lbl.shapes, variant: 'shapes', onToggle: () => onToggleBox('stencils') },
+          { id: 'letters', label: lbl.letters, variant: 'letters', onToggle: () => onToggleBox('letters') },
+        ];
+        const BOX_W = 118;
+        const GAP = 8;
+        const totalW = boxes.length * BOX_W + (boxes.length - 1) * GAP;
+        const containerW = containerRef.current?.getBoundingClientRect().width ?? 800;
+        const containerH = containerRef.current?.getBoundingClientRect().height ?? 600;
+        const startX = Math.max(8, (containerW - totalW) / 2);
+        const defaultY = Math.max(8, containerH - 118 - 12);
+        return (
+          <>
+            {boxes.map((b, i) => {
+              const pos = toolboxPositions[b.id] ?? { x: startX + i * (BOX_W + GAP), y: defaultY };
+              return (
+                <div
+                  key={b.id}
+                  className="absolute z-20 cursor-grab active:cursor-grabbing"
+                  style={{ left: pos.x, top: pos.y, touchAction: 'none' }}
+                  onPointerDown={(e) => {
+                    if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
+                    e.stopPropagation();
+                    draggingBoxId.current = b.id;
+                    boxDragOffset.current = { mx: e.clientX, my: e.clientY, bx: pos.x, by: pos.y };
+                    setIsAnyBoxDragging(true);
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <KidToolBox
+                    id={b.id}
+                    label={b.label}
+                    variant={b.variant}
+                    isOpen={activeBox === b.id}
+                    onToggle={b.onToggle}
+                  />
+                </div>
+              );
+            })}
+          </>
+        );
+      })()}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && kidMode && (
