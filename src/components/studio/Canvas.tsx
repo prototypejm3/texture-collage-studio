@@ -189,32 +189,37 @@ export function Canvas({
   const [easelBtnPos, setEaselBtnPos] = useState<{ x: number; y: number }>(() => {
     try { const raw = localStorage.getItem('kid-easel-btn-pos-v2'); return raw ? JSON.parse(raw) : { x: -1, y: -1 }; } catch { return { x: -1, y: -1 }; }
   });
-  // Kid tool-boxes (Colors/Frame/Shapes/Letters) draggable position
-  const toolboxesRef = useRef<HTMLDivElement>(null);
-  const [toolboxesPos, setToolboxesPos] = useState<{ x: number; y: number } | null>(() => {
-    // v2 reset: anchor boxes under the canvas by default
+  // Kid tool-boxes (Colors/Frame/Shapes/Letters) — each individually draggable
+  type ToolboxId = 'textures' | 'tools' | 'stencils' | 'letters';
+  const [toolboxPositions, setToolboxPositions] = useState<Partial<Record<ToolboxId, { x: number; y: number }>>>(() => {
     try {
-      const raw = localStorage.getItem('kid-toolboxes-pos-v2');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+      const raw = localStorage.getItem('kid-toolbox-positions-v1');
+      return raw ? JSON.parse(raw) : {};
+    } catch { return {}; }
   });
-  const toolboxesDragStart = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
-  const [isToolboxesDragging, setIsToolboxesDragging] = useState(false);
   useEffect(() => {
-    if (toolboxesPos) { try { localStorage.setItem('kid-toolboxes-pos-v2', JSON.stringify(toolboxesPos)); } catch {} }
-  }, [toolboxesPos]);
+    try { localStorage.setItem('kid-toolbox-positions-v1', JSON.stringify(toolboxPositions)); } catch {}
+  }, [toolboxPositions]);
+  const draggingBoxId = useRef<ToolboxId | null>(null);
+  const boxDragOffset = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const [isAnyBoxDragging, setIsAnyBoxDragging] = useState(false);
   useEffect(() => {
-    if (!isToolboxesDragging) return;
+    if (!isAnyBoxDragging) return;
     const onMove = (e: PointerEvent) => {
-      const dx = e.clientX - toolboxesDragStart.current.mx;
-      const dy = e.clientY - toolboxesDragStart.current.my;
-      setToolboxesPos({ x: toolboxesDragStart.current.bx + dx, y: toolboxesDragStart.current.by + dy });
+      const id = draggingBoxId.current;
+      if (!id) return;
+      const dx = e.clientX - boxDragOffset.current.mx;
+      const dy = e.clientY - boxDragOffset.current.my;
+      setToolboxPositions(prev => ({
+        ...prev,
+        [id]: { x: boxDragOffset.current.bx + dx, y: boxDragOffset.current.by + dy },
+      }));
     };
-    const onUp = () => setIsToolboxesDragging(false);
+    const onUp = () => { draggingBoxId.current = null; setIsAnyBoxDragging(false); };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     return () => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
-  }, [isToolboxesDragging]);
+  }, [isAnyBoxDragging]);
 
 
   // Persist box items & position
