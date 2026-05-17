@@ -202,6 +202,7 @@ export function Canvas({
   }, [toolboxPositions]);
   const draggingBoxId = useRef<ToolboxId | null>(null);
   const boxDragOffset = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
+  const boxDragMoved = useRef(false);
   const [isAnyBoxDragging, setIsAnyBoxDragging] = useState(false);
   useEffect(() => {
     if (!isAnyBoxDragging) return;
@@ -210,6 +211,8 @@ export function Canvas({
       if (!id) return;
       const dx = e.clientX - boxDragOffset.current.mx;
       const dy = e.clientY - boxDragOffset.current.my;
+      if (!boxDragMoved.current && Math.hypot(dx, dy) < 5) return;
+      boxDragMoved.current = true;
       setToolboxPositions(prev => ({
         ...prev,
         [id]: { x: boxDragOffset.current.bx + dx, y: boxDragOffset.current.by + dy },
