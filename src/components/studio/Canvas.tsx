@@ -1097,7 +1097,7 @@ export function Canvas({
               return (
                 <div
                   key={b.id}
-                  className="absolute z-20 cursor-grab active:cursor-grabbing"
+                  className="absolute z-[1] cursor-grab active:cursor-grabbing"
                   style={{ left: pos.x, top: pos.y, touchAction: 'none' }}
                   onPointerDown={(e) => {
                     if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
