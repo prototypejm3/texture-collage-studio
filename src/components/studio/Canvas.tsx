@@ -1074,70 +1074,53 @@ export function Canvas({
         );
       })()}
 
-      {/* Kid Tool Boxes on the table */}
-      {kidMode && onToggleBox && (
-        <div
-          ref={toolboxesRef}
-          className="absolute z-20 flex items-end gap-1 cursor-grab active:cursor-grabbing"
-          style={
-            toolboxesPos
-              ? { left: toolboxesPos.x, top: toolboxesPos.y, touchAction: 'none' }
-              : { bottom: 12, left: '50%', transform: 'translateX(-50%)', touchAction: 'none' }
-          }
-          onPointerDown={(e) => {
-            // Don't start drag when tapping a toolbox button itself
-            if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
-            e.stopPropagation();
-            const rect = toolboxesRef.current?.getBoundingClientRect();
-            const containerRect = containerRef.current?.getBoundingClientRect();
-            if (!rect || !containerRect) return;
-            setIsToolboxesDragging(true);
-            toolboxesDragStart.current = {
-              mx: e.clientX,
-              my: e.clientY,
-              bx: rect.left - containerRect.left,
-              by: rect.top - containerRect.top,
-            };
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {(() => {
-            const lbl = getLabels(true, lang);
-            return (
-              <>
-                <KidToolBox
-                  id="textures"
-                  label={lbl.colors}
-                  variant="colors"
-                  isOpen={activeBox === 'textures'}
-                  onToggle={() => { onToggleBox('textures'); onKidTutorialColor?.(); }}
-                />
-                <KidToolBox
-                  id="tools"
-                  label={lbl.frame}
-                  variant="frame"
-                  isOpen={activeBox === 'tools'}
-                  onToggle={() => { onToggleBox('tools'); onKidTutorialFrame?.(); }}
-                />
-                <KidToolBox
-                  id="stencils"
-                  label={lbl.shapes}
-                  variant="shapes"
-                  isOpen={activeBox === 'stencils'}
-                  onToggle={() => onToggleBox('stencils')}
-                />
-                <KidToolBox
-                  id="letters"
-                  label={lbl.letters}
-                  variant="letters"
-                  isOpen={activeBox === 'letters'}
-                  onToggle={() => onToggleBox('letters')}
-                />
-              </>
-            );
-          })()}
-        </div>
-      )}
+      {/* Kid Tool Boxes on the table — each individually draggable */}
+      {kidMode && onToggleBox && (() => {
+        const lbl = getLabels(true, lang);
+        const boxes: Array<{ id: ToolboxId; label: string; variant: 'colors'|'frame'|'shapes'|'letters'; onToggle: () => void }> = [
+          { id: 'textures', label: lbl.colors, variant: 'colors', onToggle: () => { onToggleBox('textures'); onKidTutorialColor?.(); } },
+          { id: 'tools', label: lbl.frame, variant: 'frame', onToggle: () => { onToggleBox('tools'); onKidTutorialFrame?.(); } },
+          { id: 'stencils', label: lbl.shapes, variant: 'shapes', onToggle: () => onToggleBox('stencils') },
+          { id: 'letters', label: lbl.letters, variant: 'letters', onToggle: () => onToggleBox('letters') },
+        ];
+        const BOX_W = 118;
+        const GAP = 8;
+        const totalW = boxes.length * BOX_W + (boxes.length - 1) * GAP;
+        const containerW = containerRef.current?.getBoundingClientRect().width ?? 800;
+        const containerH = containerRef.current?.getBoundingClientRect().height ?? 600;
+        const startX = Math.max(8, (containerW - totalW) / 2);
+        const defaultY = Math.max(8, containerH - 118 - 12);
+        return (
+          <>
+            {boxes.map((b, i) => {
+              const pos = toolboxPositions[b.id] ?? { x: startX + i * (BOX_W + GAP), y: defaultY };
+              return (
+                <div
+                  key={b.id}
+                  className="absolute z-20 cursor-grab active:cursor-grabbing"
+                  style={{ left: pos.x, top: pos.y, touchAction: 'none' }}
+                  onPointerDown={(e) => {
+                    if ((e.target as HTMLElement).closest('[data-box-btn]')) return;
+                    e.stopPropagation();
+                    draggingBoxId.current = b.id;
+                    boxDragOffset.current = { mx: e.clientX, my: e.clientY, bx: pos.x, by: pos.y };
+                    setIsAnyBoxDragging(true);
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <KidToolBox
+                    id={b.id}
+                    label={b.label}
+                    variant={b.variant}
+                    isOpen={activeBox === b.id}
+                    onToggle={b.onToggle}
+                  />
+                </div>
+              );
+            })}
+          </>
+        );
+      })()}
 
       {/* Desk Nameplate — on the wood, angled outward toward user */}
       {!easelMode && kidMode && (
