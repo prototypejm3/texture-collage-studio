@@ -117,6 +117,8 @@ const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
 const KID_TOOLBOX_SIZE = 118;
 const KID_TOOLBOX_GAP = 8;
 const KID_TOOLBOX_MARGIN = 12;
+// Reserve room for bottom toolbar (Start Over / Save / Undo / Redo) and tutorial bubble
+const KID_TOOLBOX_BOTTOM_RESERVE = 96;
 
 // Solid color fallbacks for basic frame options
 const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: string; innerBg: string; padding: number; borderRadius: number }> = {
@@ -216,7 +218,7 @@ export function Canvas({
     const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), Math.max(min, max));
     const clampPos = (pos: { x: number; y: number }) => ({
       x: clamp(pos.x, KID_TOOLBOX_MARGIN, container.width - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
-      y: clamp(pos.y, KID_TOOLBOX_MARGIN, container.height - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
+      y: clamp(pos.y, KID_TOOLBOX_MARGIN, container.height - KID_TOOLBOX_SIZE - KID_TOOLBOX_BOTTOM_RESERVE),
     });
 
     const safe = clampPos(next);
@@ -1166,7 +1168,7 @@ export function Canvas({
               return (
                 <div
                   key={b.id}
-                  className="absolute z-[3] cursor-grab active:cursor-grabbing"
+                  className="absolute z-[25] cursor-grab active:cursor-grabbing"
                   style={{ left: pos.x, top: pos.y, touchAction: 'none', userSelect: 'none' }}
                   onPointerDown={(e) => {
                     e.stopPropagation();
