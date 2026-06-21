@@ -1161,7 +1161,8 @@ export function Canvas({
         return (
           <>
             {boxes.map((b, i) => {
-              const pos = toolboxPositions[b.id] ?? getDefaultToolboxPosition(i, boxes.length);
+              const rawPos = toolboxPositions[b.id] ?? getDefaultToolboxPosition(i, boxes.length);
+              const pos = getSafeToolboxPosition(rawPos);
               return (
                 <div
                   key={b.id}
