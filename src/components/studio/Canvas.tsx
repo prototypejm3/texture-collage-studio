@@ -114,6 +114,10 @@ const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
   'gallery': { w: 600, h: 420 },
 };
 
+const KID_TOOLBOX_SIZE = 118;
+const KID_TOOLBOX_GAP = 8;
+const KID_TOOLBOX_MARGIN = 12;
+
 // Solid color fallbacks for basic frame options
 const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: string; innerBg: string; padding: number; borderRadius: number }> = {
   gold: { bg: 'linear-gradient(135deg, hsl(43, 74%, 60%), hsl(43, 74%, 45%), hsl(43, 74%, 65%))', border: '3px solid hsl(43, 60%, 40%)', shadow: 'hsla(43, 50%, 30%, 0.3)', innerBg: 'hsl(40, 20%, 97%)', padding: 8, borderRadius: 2 },
@@ -161,6 +165,7 @@ export function Canvas({
   onKidTutorialBox,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const artworkRef = useRef<HTMLDivElement>(null);
   const { lang } = useLanguage();
   const selectedTableId = selectedTableElementId ?? null;
   const setSelectedTableId = useCallback((id: string | null) => {
@@ -204,6 +209,73 @@ export function Canvas({
   const boxDragOffset = useRef({ mx: 0, my: 0, bx: 0, by: 0 });
   const boxDragMoved = useRef(false);
   const [isAnyBoxDragging, setIsAnyBoxDragging] = useState(false);
+  const getSafeToolboxPosition = useCallback((next: { x: number; y: number }) => {
+    const container = containerRef.current?.getBoundingClientRect();
+    if (!container) return next;
+
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), Math.max(min, max));
+    const clampPos = (pos: { x: number; y: number }) => ({
+      x: clamp(pos.x, KID_TOOLBOX_MARGIN, container.width - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
+      y: clamp(pos.y, KID_TOOLBOX_MARGIN, container.height - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
+    });
+
+    const safe = clampPos(next);
+    const artwork = artworkRef.current?.getBoundingClientRect();
+    if (!artwork) return safe;
+
+    const blocked = {
+      left: artwork.left - container.left - KID_TOOLBOX_MARGIN,
+      right: artwork.right - container.left + KID_TOOLBOX_MARGIN,
+      top: artwork.top - container.top - KID_TOOLBOX_MARGIN,
+      bottom: artwork.bottom - container.top + KID_TOOLBOX_MARGIN,
+    };
+    const overlapsArtwork = (pos: { x: number; y: number }) => (
+      pos.x < blocked.right &&
+      pos.x + KID_TOOLBOX_SIZE > blocked.left &&
+      pos.y < blocked.bottom &&
+      pos.y + KID_TOOLBOX_SIZE > blocked.top
+    );
+
+    if (!overlapsArtwork(safe)) return safe;
+
+    const candidates = [
+      { x: blocked.left - KID_TOOLBOX_SIZE, y: safe.y },
+      { x: blocked.right, y: safe.y },
+      { x: safe.x, y: blocked.top - KID_TOOLBOX_SIZE },
+      { x: safe.x, y: blocked.bottom },
+    ]
+      .map(clampPos)
+      .filter(pos => !overlapsArtwork(pos));
+
+    return candidates.sort((a, b) => (
+      Math.hypot(a.x - next.x, a.y - next.y) - Math.hypot(b.x - next.x, b.y - next.y)
+    ))[0] ?? safe;
+  }, []);
+  const getDefaultToolboxPosition = useCallback((index: number, total: number) => {
+    const container = containerRef.current?.getBoundingClientRect();
+    const artwork = artworkRef.current?.getBoundingClientRect();
+    if (!container || !artwork) {
+      const totalW = total * KID_TOOLBOX_SIZE + (total - 1) * KID_TOOLBOX_GAP;
+      return getSafeToolboxPosition({
+        x: Math.max(KID_TOOLBOX_MARGIN, (container?.width ?? 800 - totalW) / 2) + index * (KID_TOOLBOX_SIZE + KID_TOOLBOX_GAP),
+        y: Math.max(KID_TOOLBOX_MARGIN, (container?.height ?? 600) - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
+      });
+    }
+
+    const leftCount = Math.ceil(total / 2);
+    const isLeft = index < leftCount;
+    const sideIndex = isLeft ? index : index - leftCount;
+    const sideCount = isLeft ? leftCount : total - leftCount;
+    const artLeft = artwork.left - container.left;
+    const artRight = artwork.right - container.left;
+    const artMiddleY = (artwork.top + artwork.bottom) / 2 - container.top;
+    const groupH = sideCount * KID_TOOLBOX_SIZE + (sideCount - 1) * KID_TOOLBOX_GAP;
+
+    return getSafeToolboxPosition({
+      x: isLeft ? artLeft - KID_TOOLBOX_SIZE - KID_TOOLBOX_GAP * 2 : artRight + KID_TOOLBOX_GAP * 2,
+      y: artMiddleY - groupH / 2 + sideIndex * (KID_TOOLBOX_SIZE + KID_TOOLBOX_GAP),
+    });
+  }, [getSafeToolboxPosition]);
   useEffect(() => {
     if (!isAnyBoxDragging) return;
     const onMove = (e: PointerEvent) => {
@@ -215,14 +287,14 @@ export function Canvas({
       boxDragMoved.current = true;
       setToolboxPositions(prev => ({
         ...prev,
-        [id]: { x: boxDragOffset.current.bx + dx, y: boxDragOffset.current.by + dy },
+        [id]: getSafeToolboxPosition({ x: boxDragOffset.current.bx + dx, y: boxDragOffset.current.by + dy }),
       }));
     };
     const onUp = () => { draggingBoxId.current = null; setIsAnyBoxDragging(false); };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     return () => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); };
-  }, [isAnyBoxDragging]);
+  }, [isAnyBoxDragging, getSafeToolboxPosition]);
 
 
   // Persist box items & position
