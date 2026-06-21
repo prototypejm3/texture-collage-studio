@@ -257,7 +257,7 @@ export function Canvas({
     if (!container || !artwork) {
       const totalW = total * KID_TOOLBOX_SIZE + (total - 1) * KID_TOOLBOX_GAP;
       return getSafeToolboxPosition({
-        x: Math.max(KID_TOOLBOX_MARGIN, (container?.width ?? 800 - totalW) / 2) + index * (KID_TOOLBOX_SIZE + KID_TOOLBOX_GAP),
+        x: Math.max(KID_TOOLBOX_MARGIN, ((container?.width ?? 800) - totalW) / 2) + index * (KID_TOOLBOX_SIZE + KID_TOOLBOX_GAP),
         y: Math.max(KID_TOOLBOX_MARGIN, (container?.height ?? 600) - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
       });
     }
@@ -865,7 +865,7 @@ export function Canvas({
 
 
 
-      <div style={{
+      <div ref={artworkRef} style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -1158,22 +1158,15 @@ export function Canvas({
           { id: 'stencils', label: lbl.shapes, variant: 'shapes', onToggle: () => onToggleBox('stencils') },
           { id: 'letters', label: lbl.letters, variant: 'letters', onToggle: () => onToggleBox('letters') },
         ];
-        const BOX_W = 118;
-        const GAP = 8;
-        const totalW = boxes.length * BOX_W + (boxes.length - 1) * GAP;
-        const containerW = containerRef.current?.getBoundingClientRect().width ?? 800;
-        const containerH = containerRef.current?.getBoundingClientRect().height ?? 600;
-        const startX = Math.max(8, (containerW - totalW) / 2);
-        const defaultY = Math.max(8, containerH - 118 - 12);
         return (
           <>
             {boxes.map((b, i) => {
-              const pos = toolboxPositions[b.id] ?? { x: startX + i * (BOX_W + GAP), y: defaultY };
+              const pos = toolboxPositions[b.id] ?? getDefaultToolboxPosition(i, boxes.length);
               return (
                 <div
                   key={b.id}
-                  className="absolute z-[1] cursor-grab active:cursor-grabbing"
-                  style={{ left: pos.x, top: pos.y, touchAction: 'none' }}
+                  className="absolute z-[3] cursor-grab active:cursor-grabbing"
+                  style={{ left: pos.x, top: pos.y, touchAction: 'none', userSelect: 'none' }}
                   onPointerDown={(e) => {
                     e.stopPropagation();
                     draggingBoxId.current = b.id;
