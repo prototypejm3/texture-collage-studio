@@ -218,7 +218,7 @@ export function Canvas({
     const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), Math.max(min, max));
     const clampPos = (pos: { x: number; y: number }) => ({
       x: clamp(pos.x, KID_TOOLBOX_MARGIN, container.width - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
-      y: clamp(pos.y, KID_TOOLBOX_MARGIN, container.height - KID_TOOLBOX_SIZE - KID_TOOLBOX_MARGIN),
+      y: clamp(pos.y, KID_TOOLBOX_MARGIN, container.height - KID_TOOLBOX_SIZE - KID_TOOLBOX_BOTTOM_RESERVE),
     });
 
     const safe = clampPos(next);
