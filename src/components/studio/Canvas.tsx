@@ -117,6 +117,8 @@ const frameSizeMap: Record<FrameSize, { w: number; h: number }> = {
 const KID_TOOLBOX_SIZE = 118;
 const KID_TOOLBOX_GAP = 8;
 const KID_TOOLBOX_MARGIN = 12;
+// Reserve room for bottom toolbar (Start Over / Save / Undo / Redo) and tutorial bubble
+const KID_TOOLBOX_BOTTOM_RESERVE = 96;
 
 // Solid color fallbacks for basic frame options
 const wallFrameStyles: Record<FrameStyle, { bg: string; border: string; shadow: string; innerBg: string; padding: number; borderRadius: number }> = {
