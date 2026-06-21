@@ -1168,7 +1168,7 @@ export function Canvas({
               return (
                 <div
                   key={b.id}
-                  className="absolute z-[3] cursor-grab active:cursor-grabbing"
+                  className="absolute z-[25] cursor-grab active:cursor-grabbing"
                   style={{ left: pos.x, top: pos.y, touchAction: 'none', userSelect: 'none' }}
                   onPointerDown={(e) => {
                     e.stopPropagation();
