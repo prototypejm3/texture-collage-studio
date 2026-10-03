@@ -46,6 +46,32 @@ function getPathCenter(pathD: string): { cx: number; cy: number } {
   return count > 0 ? { cx: sumX / count, cy: sumY / count } : { cx: 240, cy: 240 };
 }
 
+/** Keep resizing anchored to the section's center instead of the SVG origin. */
+function getSectionTransform(
+  transform: SectionTransform,
+  cx: number,
+  cy: number,
+): string {
+  return `translate(${cx + transform.x} ${cy + transform.y}) rotate(${transform.rotation}) scale(${transform.scale}) translate(${-cx} ${-cy})`;
+}
+
+function getTransformedPoint(
+  x: number,
+  y: number,
+  transform: SectionTransform,
+  cx: number,
+  cy: number,
+): { x: number; y: number } {
+  const radians = transform.rotation * (Math.PI / 180);
+  const scaledX = (x - cx) * transform.scale;
+  const scaledY = (y - cy) * transform.scale;
+
+  return {
+    x: cx + transform.x + scaledX * Math.cos(radians) - scaledY * Math.sin(radians),
+    y: cy + transform.y + scaledX * Math.sin(radians) + scaledY * Math.cos(radians),
+  };
+}
+
 export function VibeOutline({
   vibe, fills, selectedSectionId,
   canvasWidth, canvasHeight,
@@ -229,8 +255,7 @@ export function VibeOutline({
               <clipPath key={`clip-${section.id}`} id={`clip-${section.id}`}>
                 <path
                   d={section.path}
-                  transform={`translate(${t.x}, ${t.y}) rotate(${t.rotation}, ${cx}, ${cy}) scale(${t.scale})`}
-                  style={{ transformOrigin: `${cx}px ${cy}px` }}
+                  transform={getSectionTransform(t, cx, cy)}
                 />
               </clipPath>
             );
@@ -274,7 +299,7 @@ export function VibeOutline({
           const isSelected = selectedSectionId === section.id;
           const t = sectionTransforms[section.id] || defaultSectionTransform;
           const { cx, cy } = getPathCenter(section.path);
-          const transform = `translate(${t.x}, ${t.y}) rotate(${t.rotation}, ${cx}, ${cy}) scale(${t.scale})`;
+          const transform = getSectionTransform(t, cx, cy);
 
           // Compute bounding box for resize handles
           const nums = section.path.match(/-?\d+(\.\d+)?/g)?.map(Number) || [];
@@ -287,7 +312,7 @@ export function VibeOutline({
           }
 
           return (
-            <g key={section.id} style={{ transformOrigin: `${cx}px ${cy}px` }}>
+            <g key={section.id}>
               {/* Hit area — draggable */}
               <path
                 d={section.path}
@@ -348,11 +373,11 @@ export function VibeOutline({
               {/* Resize handle — single bottom-right corner, small and unobtrusive */}
               {isSelected && minX !== Infinity && (() => {
                 const handleSize = 7;
-                const corner = { x: maxX, y: maxY };
+                 const corner = getTransformedPoint(maxX, maxY, t, cx, cy);
                 return (
                   <rect
-                    x={corner.x * t.scale + t.x - handleSize / 2}
-                    y={corner.y * t.scale + t.y - handleSize / 2}
+                     x={corner.x - handleSize / 2}
+                     y={corner.y - handleSize / 2}
                     width={handleSize}
                     height={handleSize}
                     rx={1.5}
@@ -370,6 +395,8 @@ export function VibeOutline({
               {isSelected && minX !== Infinity && (() => {
                 const midX = (minX + maxX) / 2;
                 const handleY = maxY + 12;
+                 const edgePoint = getTransformedPoint(midX, maxY, t, cx, cy);
+                 const handlePoint = getTransformedPoint(midX, handleY, t, cx, cy);
                 return (
                   <g
                     className="pointer-events-auto cursor-grab active:cursor-grabbing"
@@ -377,17 +404,17 @@ export function VibeOutline({
                   >
                     {/* Line from bottom edge to handle */}
                     <line
-                      x1={midX * t.scale + t.x}
-                      y1={maxY * t.scale + t.y}
-                      x2={midX * t.scale + t.x}
-                      y2={handleY * t.scale + t.y}
+                       x1={edgePoint.x}
+                       y1={edgePoint.y}
+                       x2={handlePoint.x}
+                       y2={handlePoint.y}
                       stroke="hsl(var(--primary))"
                       strokeWidth={1.5}
                       opacity={0.5}
                     />
                     <circle
-                      cx={midX * t.scale + t.x}
-                      cy={handleY * t.scale + t.y}
+                       cx={handlePoint.x}
+                       cy={handlePoint.y}
                       r={6}
                       fill="hsl(var(--primary))"
                       stroke="hsl(var(--primary-foreground))"
@@ -397,8 +424,8 @@ export function VibeOutline({
                     />
                     {/* Rotate icon — small arrow */}
                     <text
-                      x={midX * t.scale + t.x}
-                      y={handleY * t.scale + t.y + 0.5}
+                       x={handlePoint.x}
+                       y={handlePoint.y + 0.5}
                       textAnchor="middle"
                       dominantBaseline="central"
                       fontSize="7"
