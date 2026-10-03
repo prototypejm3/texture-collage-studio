@@ -1169,7 +1169,16 @@ export function Canvas({
                 <div
                   key={b.id}
                   className="absolute z-[25] cursor-grab active:cursor-grabbing"
-                  style={{ left: pos.x, top: pos.y, touchAction: 'none', userSelect: 'none' }}
+                  style={{
+                    left: pos.x,
+                    top: pos.y,
+                    touchAction: 'none',
+                    userSelect: 'none',
+                    // Safari depth-sorts the tilted easel canvas and ignores z-index;
+                    // lift boxes forward in 3D (scale compensates for perspective 1200px).
+                    transform: easelMode ? 'translateZ(120px) scale(0.9)' : 'translateZ(0)',
+                    willChange: 'transform',
+                  }}
                   onPointerDown={(e) => {
                     e.stopPropagation();
                     draggingBoxId.current = b.id;

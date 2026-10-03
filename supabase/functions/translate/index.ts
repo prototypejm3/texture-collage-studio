@@ -11,6 +11,9 @@ const LANG_NAMES: Record<string, string> = {
   fr: "French",
   de: "German",
   es: "Spanish",
+  nl: "Dutch",
+  zh: "Simplified Chinese",
+  ja: "Japanese",
 };
 
 Deno.serve(async (req) => {

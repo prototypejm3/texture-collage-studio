@@ -1,7 +1,7 @@
 // Lightweight i18n for core UI labels.
 // Manual switcher only — no auto-detect. Persisted in localStorage.
 
-export type Lang = 'en' | 'tr' | 'fr' | 'de' | 'es';
+export type Lang = 'en' | 'tr' | 'fr' | 'de' | 'es' | 'nl' | 'zh' | 'ja';
 
 export const SUPPORTED_LANGS: { code: Lang; label: string; flag: string }[] = [
   { code: 'en', label: 'English',  flag: '🇬🇧' },
@@ -9,6 +9,9 @@ export const SUPPORTED_LANGS: { code: Lang; label: string; flag: string }[] = [
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'de', label: 'Deutsch',  flag: '🇩🇪' },
   { code: 'es', label: 'Español',  flag: '🇪🇸' },
+  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
+  { code: 'zh', label: '中文',      flag: '🇨🇳' },
+  { code: 'ja', label: '日本語',    flag: '🇯🇵' },
 ];
 
 const STORAGE_KEY = 'app-lang';
