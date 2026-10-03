@@ -62,6 +62,19 @@ function getShadowStyle(depth: MaterialEffects['shadowDepth']): string {
   return 'none';
 }
 
+function getPathViewBox(pathD: string): string {
+  const values = pathD.match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
+  let maxX = 1;
+  let maxY = 1;
+
+  for (let index = 0; index < values.length - 1; index += 2) {
+    maxX = Math.max(maxX, values[index]);
+    maxY = Math.max(maxY, values[index + 1]);
+  }
+
+  return `0 0 ${maxX} ${maxY}`;
+}
+
 function getEdgeMask(edgeStyle: MaterialEffects['edgeStyle']): { maskImage?: string; borderRadius: string; edgeClipPath?: string } {
   let borderRadius = '4px';
   let maskImage: string | undefined;
@@ -200,6 +213,8 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
   const allTex = [...textures, ...customTextures];
   const texture = element.textureId ? allTex.find(t => t.id === element.textureId) : null;
   const isOutlineOnly = !texture;
+  const clipPathViewBox = element.clipPathD ? getPathViewBox(element.clipPathD) : undefined;
+  const textureClipId = `texture-clip-${element.id.replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
   const clipPath = element.clipPathD ? `path('${element.clipPathD}')` : getClipPath(element.shape);
   const filter = getFilterStyles(element.effects);
@@ -355,22 +370,42 @@ export function CanvasElementComponent({ element, isSelected, onSelect, onUpdate
             {element.text || ''}
           </span>
         </div>
-      ) : element.clipPathD && isOutlineOnly ? (
-        /* SVG stroke outline for stencil mode — shows actual shape outlines */
+      ) : element.clipPathD ? (
+        /* SVG keeps custom stencil paths proportional when Grow/Shrink changes the box. */
         <svg
           className="w-full h-full"
-          viewBox={`0 0 ${element.width} ${element.height}`}
+          viewBox={clipPathViewBox}
           preserveAspectRatio="none"
           style={{ filter }}
         >
-          <path
-            d={element.clipPathD}
-            fill="none"
-            stroke="hsl(var(--foreground) / 0.7)"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
+          {isOutlineOnly ? (
+            <path
+              d={element.clipPathD}
+              fill="none"
+              stroke="hsl(var(--foreground) / 0.7)"
+              strokeWidth="2.5"
+              vectorEffect="non-scaling-stroke"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          ) : (
+            <>
+              <defs>
+                <clipPath id={textureClipId}>
+                  <path d={element.clipPathD} fillRule="evenodd" clipRule="evenodd" />
+                </clipPath>
+              </defs>
+              <foreignObject width="100%" height="100%" clipPath={`url(#${textureClipId})`}>
+                <div
+                  className="w-full h-full"
+                  style={{
+                    background: texture.cssBackground,
+                    backgroundSize: texture.cssBackground.startsWith('url(') ? 'cover' : '40px 40px',
+                  }}
+                />
+              </foreignObject>
+            </>
+          )}
         </svg>
       ) : (
         <div
